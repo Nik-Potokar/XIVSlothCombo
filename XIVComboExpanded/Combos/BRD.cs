@@ -45,7 +45,9 @@ namespace XIVComboExpandedPlugin.Combos
                 IronJaws = 56,
                 BiteUpgrade = 64,
                 RefulgentArrow = 70,
+                Stormbite = 64,
                 BurstShot = 76;
+            
         }
     }
 
@@ -159,4 +161,5 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
          }
      }
+
 }

@@ -12,18 +12,24 @@ namespace XIVComboExpandedPlugin.Combos
             Deathflare = 3582,
             EnkindlePhoenix = 16516,
             EnkindleBahamut = 7429,
+            EnkindleInferno = 16803,
             DreadwyrmTrance = 3581,
             SummonBahamut = 7427,
             FirebirdTranceLow = 16513,
             FirebirdTranceHigh = 16549,
             Ruin1 = 163,
             Ruin3 = 3579,
+            Ruin4 = 7426,
             BrandOfPurgatory = 16515,
             FountainOfFire = 16514,
             Fester = 181,
             EnergyDrain = 16508,
             Painflare = 3578,
+            Miasma3 = 7425,
+            Bio3 = 7424,
+            Psysick = 16230,
             EnergySyphon = 16510;
+
 
         public static class Buffs
         {
@@ -33,7 +39,9 @@ namespace XIVComboExpandedPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Miasma3 = 1327,
+            Bio3 = 1326;
         }
 
         public static class Levels

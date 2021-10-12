@@ -20,6 +20,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, AST.Benefic2)]
         AstrologianBeneficFeature = 73,
 
+        [CustomComboInfo("Auto Lucid", "Uses lucid dreaming automaticly when below 8k mana.", AST.JobID, AST.LucidDreaming)]
+        AstrologianAutoLucidDreaming = 106,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -131,8 +134,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, DRK.Souleater, DRK.StalwartSoul)]
         DeliriumFeature = 57,
 
-        // [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, DRK.StalwartSoul)]
-        // DRKOvercapFeature = 85,
+        [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, DRK.StalwartSoul)]
+        DRKOvercapFeature = 85,
 
         #endregion
         // ====================================================================================
@@ -302,8 +305,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Seigan to Third Eye", "Replace Seigan with Third Eye when not procced.", SAM.JobID, SAM.Seigan)]
         SamuraiThirdEyeFeature = 51,
 
-        // [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu or Shifu depending on what is needed.", SAM.JobID, SAM.MeikyoShisui)]
-        // SamuraiJinpuShifuFeature = 81,
+        [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu or Shifu depending on what is needed.", SAM.JobID, SAM.MeikyoShisui)]
+        SamuraiJinpuShifuFeature = 81,
 
         [ConflictingCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
         [CustomComboInfo("Tsubame-gaeshi to Iaijutsu", "Replace Tsubame-gaeshi with Iaijutsu when Sen is empty.", SAM.JobID, SAM.TsubameGaeshi)]
@@ -349,6 +352,9 @@ namespace XIVComboExpandedPlugin
 
          [CustomComboInfo("Demi-Summon Combiners Ultra", "Dreadwyrm Trance, Summon Bahamut, Firebird Trance, Deathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button.\nRequires Demi-Summon Combiners feature.", SMN.JobID, SMN.DreadwyrmTrance)]
          SummonerDemiComboUltra = 80,
+
+        [CustomComboInfo("Summoner Auto", "Testing", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
+        SummonerDotFeature = 104,
 
         #endregion
         // ====================================================================================

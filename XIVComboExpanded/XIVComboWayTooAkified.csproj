@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Authors>Aki,attick,Kami,Daemitus</Authors>
     <Company>-</Company>
-    <Version>1.2.1.1</Version>
+    <Version>1.2.1.2</Version>
     <Description>Kinda too much lol</Description>
     <Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
-    <PackageProjectUrl>https://github.com/Nik-Potokar/XIVComboPlugin-master</PackageProjectUrl>
+    <PackageProjectUrl></PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -34,7 +34,7 @@
   <PropertyGroup>
     <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
     <AssemblyName>XIVComboWayTooAkified</AssemblyName>
-    <RootNamespace>XIVComboExpanded</RootNamespace>
+    <RootNamespace>XIVComboWayTooAkified</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

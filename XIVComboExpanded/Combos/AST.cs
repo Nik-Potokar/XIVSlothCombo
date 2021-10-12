@@ -19,6 +19,8 @@ namespace XIVComboExpandedPlugin.Combos
             Spire = 4406,
             MinorArcana = 7443,
             SleeveDraw = 7448,
+            Malefic4 = 16555,
+            LucidDreaming = 7562,
             Play = 17055;
 
         public static class Buffs

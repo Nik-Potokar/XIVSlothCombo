@@ -1,3 +1,5 @@
+using Dalamud.Game.ClientState.JobGauge.Types;
+
 namespace XIVComboExpandedPlugin.Combos
 {
     internal static class DRK
@@ -82,15 +84,12 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == DRK.StalwartSoul)
             {
-#if EXPANDEDEST
                 if (IsEnabled(CustomComboPreset.DRKOvercapFeature))
                 {
                     var gauge = GetJobGauge<DRKGauge>();
                     if (gauge.Blood >= 90 && HasEffect(DRK.Buffs.BloodWeapon))
                         return DRK.Quietus;
                 }
-#endif
-
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))

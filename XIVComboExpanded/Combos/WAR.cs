@@ -74,7 +74,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
 
-                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 80)
+                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 50)
                 {
                     return WAR.FellCleave;
                 }
