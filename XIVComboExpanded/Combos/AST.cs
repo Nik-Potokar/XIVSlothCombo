@@ -87,8 +87,14 @@ namespace XIVComboExpandedPlugin.Combos
                 if (level < AST.Levels.Benefic2)
                     return AST.Benefic;
             }
-
+            if (IsEnabled(CustomComboPreset.AstrologianAutoLucidDreaming))
+                {
+                    var lucidDreamingCd = GetCooldown(AST.LucidDreaming);
+                    if (!lucidDreamingCd.IsCooldown && LocalPlayer.CurrentMp < 8000)
+                        return AST.LucidDreaming;
+                }
             return actionID;
         }
-    }
+    } 
+
 }

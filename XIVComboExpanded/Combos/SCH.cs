@@ -11,7 +11,9 @@ namespace XIVComboExpandedPlugin.Combos
             FeyBless = 16543,
             Consolation = 16546,
             EnergyDrain = 167,
+            LucidDreaming = 7562,
             Aetherflow = 166;
+
 
         public static class Buffs
         {
@@ -58,7 +60,6 @@ namespace XIVComboExpandedPlugin.Combos
                 if (gauge.Aetherflow == 0)
                     return SCH.Aetherflow;
             }
-
             return actionID;
         }
     }

@@ -13,6 +13,7 @@ namespace XIVComboExpandedPlugin.Combos
             Cure2 = 135,
             AfflatusSolace = 16531,
             AfflatusRapture = 16534,
+            WhmLucidDreaming = 7562,
             AfflatusMisery = 16535;
 
         public static class Buffs
@@ -60,6 +61,7 @@ namespace XIVComboExpandedPlugin.Combos
             if (gauge.BloodLily == 3)
                 return WHM.AfflatusMisery;
 
+
             return actionID;
         }
     }
@@ -70,11 +72,14 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (level < WHM.Levels.Cure2)
-                return WHM.Cure;
-
+            if (actionID == WHM.Cure2)
+            {
+                if (level < WHM.Levels.Cure2)
+                    return WHM.Cure;
+            }
             return actionID;
         }
+
     }
 
     internal class WhiteMageAfflatusFeature : CustomCombo
@@ -100,7 +105,6 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return actionID;
             }
-
             return actionID;
         }
     }

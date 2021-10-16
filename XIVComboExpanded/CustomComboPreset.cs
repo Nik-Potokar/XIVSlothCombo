@@ -350,8 +350,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("ES Painflare", "Change Painflare into Energy Syphon when out of Aetherflow stacks", SMN.JobID, SMN.Painflare)]
         SummonerESPainflareCombo = 40,
 
-         [CustomComboInfo("Demi-Summon Combiners Ultra", "Dreadwyrm Trance, Summon Bahamut, Firebird Trance, Deathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button.\nRequires Demi-Summon Combiners feature.", SMN.JobID, SMN.DreadwyrmTrance)]
-         SummonerDemiComboUltra = 80,
+        [CustomComboInfo("Demi-Summon Combiners Ultra", "Dreadwyrm Trance, Summon Bahamut, Firebird Trance, Deathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button.\nRequires Demi-Summon Combiners feature.", SMN.JobID, SMN.DreadwyrmTrance)]
+        SummonerDemiComboUltra = 80,
 
         [CustomComboInfo("Summoner Auto", "Testing", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
         SummonerDotFeature = 104,
@@ -393,6 +393,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, WHM.Cure2, WHM.Medica)]
         WhiteMageAfflatusFeature = 77,
+
+        [CustomComboInfo("WHM Auto Lucid", "Never forget to lucid... wait this class can run out of mana???", WHM.JobID, WHM.WhmLucidDreaming )]
+        WhiteMageAutoLucidDreaming = 102,
 
         #endregion
         // ====================================================================================
