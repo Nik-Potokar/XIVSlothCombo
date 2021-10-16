@@ -1,3 +1,5 @@
+using Dalamud.Game.ClientState.JobGauge.Types;
+
 namespace XIVComboExpandedPlugin.Combos
 {
     internal static class NIN
@@ -60,6 +62,7 @@ namespace XIVComboExpandedPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == 2255)
+
             {
                 if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(2263u) == CustomCombo.OriginalHook(18807u))
                 {
@@ -71,10 +74,16 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         return 2242u;
                     }
+                    var huton = GetJobGauge<NINGauge>();
+                    if (lastComboMove == NIN.GustSlash && huton.HutonTimer < 30000)
+                    {
+                        return NIN.ArmorCrush;
+                    }
                     if (lastComboMove == 2242 && level >= 26)
                     {
                         return 2255u;
                     }
+
                 }
                 return 2240u;
             }
