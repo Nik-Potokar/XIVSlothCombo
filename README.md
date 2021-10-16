@@ -100,3 +100,23 @@ Secret forbidden combos are noted with a ⭐ icon.
 | WHM | Solace into Misery | Replaces Afflatus Solace with Afflatus Misery when Misery is ready to be used. |
 | WHM | Rapture into Misery | Replaces Afflatus Rapture with Afflatus Misery when Misery is ready to be used. |
 | WHM | Cure 2 to Cure Level Sync | Changes Cure 2 to Cure when below level 30 in synced content. |
+
+Extra stuff: 
+
+* Adjusted/Added Fell cleave on storms path combo (Needs some testing)
+* Blm Easy Rotation
+* Monk basic combo feature
+* Red Mage 1 Button oCGD (Not perfect needs some fixing)
+* Ast lucid feature
+
+In progress :
+
+whm lucid debug
+sch lucid debug
+
+
+
+This is only for personal use only but if you want something special added let me know.
+
+*** All credits goes to [daemitus](https://github.com/daemitus) for even making this possible please support him! 
+
