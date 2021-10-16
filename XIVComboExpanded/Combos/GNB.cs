@@ -65,8 +65,12 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (comboTime > 0)
                 {
+                    var bulletGauge = GetJobGauge<GNBGauge>();
                     if (lastComboMove == GNB.KeenEdge && level >= GNB.Levels.BrutalShell)
                         return GNB.BrutalShell;
+
+                    if (lastComboMove == GNB.BrutalShell && level >= 4 && bulletGauge.Ammo == 2)
+                        return GNB.BurstStrike;
 
                     if (lastComboMove == GNB.BrutalShell && level >= GNB.Levels.SolidBarrel)
                         return GNB.SolidBarrel;
