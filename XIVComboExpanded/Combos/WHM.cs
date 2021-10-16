@@ -13,8 +13,10 @@ namespace XIVComboExpandedPlugin.Combos
             Cure2 = 135,
             AfflatusSolace = 16531,
             AfflatusRapture = 16534,
-            WhmLucidDreaming = 7562,
+            LucidDreaming = 7562,
+            Raise = 125,
             AfflatusMisery = 16535;
+            
 
         public static class Buffs
         {

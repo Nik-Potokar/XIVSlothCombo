@@ -29,6 +29,7 @@ namespace XIVComboExpandedPlugin.Combos
             Fleche = 7517,
             ContreSixte = 7519,
             Engagement = 16527,
+            Verraise = 7523,
             Scorch = 16530;
 
         public static class Buffs

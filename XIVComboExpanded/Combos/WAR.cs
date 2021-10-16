@@ -28,7 +28,9 @@ namespace XIVComboExpandedPlugin.Combos
         {
             public const short
                 InnerRelease = 1177,
+                StormsEye = 90,
                 NascentChaos = 1897;
+                
         }
 
         public static class Debuffs
@@ -68,13 +70,16 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                         return WAR.Maim;
 
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && !HasEffect(WAR.Buffs.StormsEye))
+                        return WAR.StormsEye;
+
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
                         return WAR.StormsPath;
                 }
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
 
-                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 50)
+                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 70)
                 {
                     return WAR.FellCleave;
                 }

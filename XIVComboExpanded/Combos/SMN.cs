@@ -28,6 +28,7 @@ namespace XIVComboExpandedPlugin.Combos
             Miasma3 = 7425,
             Bio3 = 7424,
             Psysick = 16230,
+            Resurrection = 173,
             EnergySyphon = 16510;
 
 

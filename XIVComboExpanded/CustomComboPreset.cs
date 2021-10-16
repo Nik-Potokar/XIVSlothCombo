@@ -1,5 +1,6 @@
 using XIVComboExpandedPlugin.Combos;
 
+
 namespace XIVComboExpandedPlugin
 {
     /// <summary>
@@ -7,7 +8,8 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-        // Last enum used: 96
+        // Last enum used: 105
+
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -19,9 +21,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, AST.Benefic2)]
         AstrologianBeneficFeature = 73,
-
-        [CustomComboInfo("Auto Lucid", "Uses lucid dreaming automaticly when below 8k mana.", AST.JobID, AST.LucidDreaming)]
-        AstrologianAutoLucidDreaming = 106,
 
         #endregion
         // ====================================================================================
@@ -393,9 +392,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, WHM.Cure2, WHM.Medica)]
         WhiteMageAfflatusFeature = 77,
-
-        [CustomComboInfo("WHM Auto Lucid", "Never forget to lucid... wait this class can run out of mana???", WHM.JobID, WHM.WhmLucidDreaming )]
-        WhiteMageAutoLucidDreaming = 102,
 
         #endregion
         // ====================================================================================
