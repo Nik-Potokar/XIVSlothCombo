@@ -75,7 +75,7 @@ namespace XIVComboExpandedPlugin.Combos
                         return 2242u;
                     }
                     var huton = GetJobGauge<NINGauge>();
-                    if (lastComboMove == NIN.GustSlash && huton.HutonTimer < 30000)
+                    if (lastComboMove == NIN.GustSlash && level >= 45 && huton.HutonTimer < 30000)
                     {
                         return NIN.ArmorCrush;
                     }
