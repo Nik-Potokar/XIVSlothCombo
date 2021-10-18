@@ -355,6 +355,10 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Summoner Auto", "Testing", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
         SummonerDotFeature = 104,
 
+        [CustomComboInfo("Summoner Easy rotation", "Testing", SMN.JobID, SMN.Ruin3, SMN.Ruin4)]
+        SummonerEasyRotation = 106,
+
+
         #endregion
         // ====================================================================================
         #region WARRIOR

@@ -89,10 +89,7 @@ namespace XIVComboExpandedPlugin.Combos
                     return AST.Benefic;
             }
             return actionID;
-
-
         }
-
 
     }
 

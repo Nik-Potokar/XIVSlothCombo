@@ -35,7 +35,9 @@ namespace XIVComboExpandedPlugin.Combos
         public static class Buffs
         {
             public const short
+                FurtherRuin = 1212,
                 HellishConduit = 1867;
+
         }
 
         public static class Debuffs
@@ -164,5 +166,36 @@ namespace XIVComboExpandedPlugin.Combos
 
             return actionID;
         }
+    }
+
+    internal class SummonerEasyRotation : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerEasyRotation;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Ruin3)
+            {
+                var gauge = GetJobGauge<SMNGauge>();
+                if (gauge.TimerRemaining >= 18000 && HasEffect(SMN.Buffs.FurtherRuin))
+                    return SMN.Ruin4;
+                if (gauge.TimerRemaining >= 16000)
+                    return SMN.Ruin3;
+                if (gauge.TimerRemaining >= 13000)
+                    return SMN.Ruin3;
+                if (gauge.TimerRemaining >= 10000)
+                    return SMN.Ruin3;
+                if (gauge.TimerRemaining >= 7000)
+                    return SMN.Ruin3;
+                if (gauge.TimerRemaining >= 5000 && HasEffect(SMN.Buffs.FurtherRuin))
+                    return SMN.Ruin4;
+                if (gauge.TimerRemaining >= 3000 && HasEffect(SMN.Buffs.FurtherRuin))
+                    return SMN.Ruin4;
+                if (gauge.TimerRemaining >= 1000 && HasEffect(SMN.Buffs.FurtherRuin))
+                    return SMN.Ruin4;
+            }
+            return actionID;
+        }
+        
     }
 }
