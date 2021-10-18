@@ -179,6 +179,8 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<SMNGauge>();
                 if (gauge.TimerRemaining >= 18000 && HasEffect(SMN.Buffs.FurtherRuin))
                     return SMN.Ruin4;
+                if (gauge.TimerRemaining >= 17000)
+                    return SMN.EnkindleBahamut;
                 if (gauge.TimerRemaining >= 16000)
                     return SMN.Ruin3;
                 if (gauge.TimerRemaining >= 13000)
@@ -189,6 +191,8 @@ namespace XIVComboExpandedPlugin.Combos
                     return SMN.Ruin3;
                 if (gauge.TimerRemaining >= 5000 && HasEffect(SMN.Buffs.FurtherRuin))
                     return SMN.Ruin4;
+                if (gauge.TimerRemaining >= 4000)
+                    return SMN.EnkindleBahamut;
                 if (gauge.TimerRemaining >= 3000 && HasEffect(SMN.Buffs.FurtherRuin))
                     return SMN.Ruin4;
                 if (gauge.TimerRemaining >= 1000 && HasEffect(SMN.Buffs.FurtherRuin))
@@ -198,4 +202,6 @@ namespace XIVComboExpandedPlugin.Combos
         }
         
     }
+
 }
+

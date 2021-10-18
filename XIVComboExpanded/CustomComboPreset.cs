@@ -352,7 +352,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Demi-Summon Combiners Ultra", "Dreadwyrm Trance, Summon Bahamut, Firebird Trance, Deathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button.\nRequires Demi-Summon Combiners feature.", SMN.JobID, SMN.DreadwyrmTrance)]
         SummonerDemiComboUltra = 80,
 
-        [CustomComboInfo("Summoner Auto", "Testing", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
+        [CustomComboInfo("SummonerDotFeature", "Testing", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
         SummonerDotFeature = 104,
 
         [CustomComboInfo("Summoner Easy rotation", "Testing", SMN.JobID, SMN.Ruin3, SMN.Ruin4)]
