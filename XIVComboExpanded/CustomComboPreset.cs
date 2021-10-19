@@ -340,7 +340,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Demi-summon combiners", "Dreadwyrm Trance, Summon Bahamut, and Firebird Trance are now one button.\nDeathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button", SMN.JobID, SMN.DreadwyrmTrance, SMN.Deathflare)]
         SummonerDemiCombo = 28,
 
-        [CustomComboInfo("Brand of Purgatory Combo", "Replaces Fountain of Fire with Brand of Purgatory when under the affect of Hellish Conduit", SMN.JobID, SMN.Ruin1, SMN.Ruin3)]
+        [CustomComboInfo("Brand of Purgatory Combo", "Replaces Fountain of Fire with Brand of Purgatory when under the affect of Hellish Conduit + Enkindle Phoenix is now on same button!", SMN.JobID, SMN.Ruin1, SMN.Ruin3)]
         SummonerBoPCombo = 38,
 
         [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks", SMN.JobID, SMN.Fester)]
@@ -352,10 +352,10 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Demi-Summon Combiners Ultra", "Dreadwyrm Trance, Summon Bahamut, Firebird Trance, Deathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button.\nRequires Demi-Summon Combiners feature.", SMN.JobID, SMN.DreadwyrmTrance)]
         SummonerDemiComboUltra = 80,
 
-        [CustomComboInfo("SummonerDotFeature", "Testing", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
+        [CustomComboInfo("SummonerDotFeature", "Currently still in testing.. dont enable", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
         SummonerDotFeature = 104,
 
-        [CustomComboInfo("Summoner Easy rotation", "Testing", SMN.JobID, SMN.Ruin3, SMN.Ruin4)]
+        [CustomComboInfo("Summoner Easy rotation", "Whole bahamut rotation is now on ruin3 combo + Enkindle Bahamut on same button", SMN.JobID, SMN.Ruin3, SMN.Ruin4)]
         SummonerEasyRotation = 106,
 
 
