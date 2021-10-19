@@ -7,7 +7,7 @@ Extra stuff:
 * BLM Easy Rotation
 * Monk basic combo feature
 * Red Mage 1 Button oCGD (Not perfect needs some fixing)
-* Summoner easy bahamut rotation on ruin3
+* Summoner bahamut and phoenix phases are now on ruin3 including Enkindle Bahamut/Phoenix
 * Ninja huton/Armor crush combo on main combo when huton timer is low
 * Few more small tweaks 
 
@@ -15,9 +15,9 @@ In progress :
 
 Lucid dreaming stuff
 Summoner Dots on single button
+Improvements to RDM
 
 ## If you wish for something to be added or have a request please add it into the issues tab and il take a look.
-
 
 
 This is only for personal use only but if you want something special added let me know.
