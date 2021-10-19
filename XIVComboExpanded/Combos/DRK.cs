@@ -64,10 +64,17 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
                         return DRK.SyphonStrike;
-
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
+                var bloodgauge = GetJobGauge<DRKGauge>().Blood;
+                if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                {
+                    
+                    return DRK.Bloodspiller;
+
+                }
+                        
 
                 return DRK.HardSlash;
             }

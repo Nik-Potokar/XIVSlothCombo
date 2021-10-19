@@ -70,7 +70,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                         return WAR.Maim;
 
-                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && !HasEffect(WAR.Buffs.StormsEye))
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && !HasEffect(WAR.Buffs.StormsEye ))
                         return WAR.StormsEye;
 
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
@@ -79,7 +79,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
 
-                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 50)
+                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 70)
                 {
                     return WAR.FellCleave;
                 }
