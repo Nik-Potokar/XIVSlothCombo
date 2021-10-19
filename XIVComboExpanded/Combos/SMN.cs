@@ -43,8 +43,8 @@ namespace XIVComboExpandedPlugin.Combos
         public static class Debuffs
         {
             public const short
-            Miasma3 = 1327,
-            Bio3 = 1326;
+            Miasma3 = 1215,
+            Bio3 = 1214;
         }
 
         public static class Levels
@@ -113,13 +113,17 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == SMN.Ruin1 || actionID == SMN.Ruin3)
             {
+                var phoenix = GetCooldown(SMN.EnkindlePhoenix);
                 var gauge = GetJobGauge<SMNGauge>();
                 if (gauge.TimerRemaining > 0 && gauge.IsPhoenixReady)
                 {
+                    if (lastComboMove == SMN.FountainOfFire && !phoenix.IsCooldown)
+                        return SMN.EnkindlePhoenix;
                     if (HasEffect(SMN.Buffs.HellishConduit))
                         return SMN.BrandOfPurgatory;
 
                     return SMN.FountainOfFire;
+
                 }
 
                 return OriginalHook(SMN.Ruin3);
@@ -176,10 +180,11 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == SMN.Ruin3)
             {
+                var bahamudcd = GetCooldown(SMN.EnkindleBahamut);
                 var gauge = GetJobGauge<SMNGauge>();
                 if (gauge.TimerRemaining >= 18000 && HasEffect(SMN.Buffs.FurtherRuin))
                     return SMN.Ruin4;
-                if (gauge.TimerRemaining >= 17000)
+                if (gauge.TimerRemaining >= 17000 && !bahamudcd.IsCooldown)
                     return SMN.EnkindleBahamut;
                 if (gauge.TimerRemaining >= 16000)
                     return SMN.Ruin3;
@@ -190,8 +195,8 @@ namespace XIVComboExpandedPlugin.Combos
                 if (gauge.TimerRemaining >= 7000)
                     return SMN.Ruin3;
                 if (gauge.TimerRemaining >= 5000 && HasEffect(SMN.Buffs.FurtherRuin))
-                    return SMN.Ruin4;
-                if (gauge.TimerRemaining >= 4000)
+                    return SMN.Ruin4;                
+                if (gauge.TimerRemaining >= 4000 && !bahamudcd.IsCooldown)
                     return SMN.EnkindleBahamut;
                 if (gauge.TimerRemaining >= 3000 && HasEffect(SMN.Buffs.FurtherRuin))
                     return SMN.Ruin4;
@@ -202,6 +207,4 @@ namespace XIVComboExpandedPlugin.Combos
         }
         
     }
-
 }
-
