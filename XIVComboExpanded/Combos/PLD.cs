@@ -30,7 +30,8 @@ namespace XIVComboExpandedPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+                GoringBlade = 725;
         }
 
         public static class Levels
@@ -105,11 +106,16 @@ namespace XIVComboExpandedPlugin.Combos
 
                  if (comboTime > 0)
                 {
+                    var goringBladeDebuff = TargetHasEffect(PLD.Debuffs.GoringBlade);
                     if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
                         return PLD.RiotBlade;
 
+                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.GoringBlade && !goringBladeDebuff)
+                        return PLD.GoringBlade;
+
                     if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RageOfHalone)
                         return OriginalHook(PLD.RageOfHalone);
+
                 }
 
                  if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
