@@ -38,7 +38,7 @@ namespace XIVComboExpandedPlugin
             Service.IconReplacer = new IconReplacer();
 
             this.configWindow = new();
-            this.windowSystem = new("XIVComboExpanded");
+            this.windowSystem = new("XIVComboWayTooAkified");
             this.windowSystem.AddWindow(this.configWindow);
 
             Service.Interface.UiBuilder.OpenConfigUi += this.OnOpenConfigUi;
@@ -52,7 +52,7 @@ namespace XIVComboExpandedPlugin
         }
 
         /// <inheritdoc/>
-        public string Name => "XIV Combo Expanded";
+        public string Name => "XIVComboWayTooAkified";
 
         /// <inheritdoc/>
         public void Dispose()

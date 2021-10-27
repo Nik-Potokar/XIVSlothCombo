@@ -1,9 +1,9 @@
 {
   "Author": "attick, daemitus,Kami , Edited by aki for private use",
-  "Name": "XIVComboWayTooAkified",
+  "Name": "XIVCOMBOAKI",
   "Punchline": "Condenses combos and mutually exclusive abilities onto a single button.",
   "Description": "This plugin condenses combos and mutually exclusive abilities onto a single button. For example, a 1-2-3 combo would become 1-1-1.",
-  "RepoUrl": "",
-  "IconUrl": "",
+  "RepoUrl": "https://github.com/Nik-Potokar/XIVComboWayTooAkiiified",
+  "IconUrl": "https://avatars.githubusercontent.com/u/76532587?v=4",
   "ImageUrls": []
 }
