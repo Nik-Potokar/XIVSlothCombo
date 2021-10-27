@@ -5,7 +5,7 @@
         "AssemblyVersion": "1.0.2.3",
         "RepoUrl": "https://github.com/Nik-Potokar/XivComboAki/blob/main/XivComboAki.rar",
         "ApplicableVersion": "any",
-        "DalamudApiLevel": 3,
+        "DalamudApiLevel": 4,
         "DownloadLinkInstall": "https://github.com/Nik-Potokar/XivComboAki/blob/main/XivComboAki.rar",
         "IsHide": false,
         "IsTestingExclusive": false,
