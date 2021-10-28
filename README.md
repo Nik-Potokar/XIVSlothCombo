@@ -15,9 +15,9 @@ Extra stuff:
 
 In progress :
 
-Lucid dreaming stuff
-Summoner Dots on single button
-Improvements to RDM
+* Lucid dreaming stuff
+* Summoner Dots on single button
+* Improvements to RDM
 
 ## If you wish for something to be added or have a request please add it into the issues tab and il take a look.
 
