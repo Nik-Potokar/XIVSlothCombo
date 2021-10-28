@@ -49,6 +49,7 @@ namespace XIVComboExpandedPlugin.Combos
                 Decimate = 60,
                 MythrilTempestTrait = 74,
                 NascentFlash = 76,
+                InnerBeast = 35,
                 InnerChaos = 80;
         }
     }
@@ -79,12 +80,24 @@ namespace XIVComboExpandedPlugin.Combos
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
 
-                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 70)
+                if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
+                {
+                    return WAR.InnerBeast;
+                }
+                if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
+                {
+                    return WAR.InnerBeast;
+                }
+                if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 70)
+                {
+                    return WAR.FellCleave;
+                }
+                 if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.FellCleave && beastGauge >= 70)
                 {
                     return WAR.FellCleave;
                 }
 
-                 return WAR.HeavySwing;
+                return WAR.HeavySwing;
             }
 
             return actionID;

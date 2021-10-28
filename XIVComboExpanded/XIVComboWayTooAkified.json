@@ -5,5 +5,6 @@
   "Description": "This plugin condenses combos and mutually exclusive abilities onto a single button. For example, a 1-2-3 combo would become 1-1-1.",
   "RepoUrl": "https://github.com/Nik-Potokar/XIVComboWayTooAkiiified",
   "IconUrl": "https://avatars.githubusercontent.com/u/76532587?v=4",
-  "ImageUrls": []
+  "ImageUrls": [
+  ]
 }
