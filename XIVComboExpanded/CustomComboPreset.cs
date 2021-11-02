@@ -22,6 +22,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, AST.Benefic2)]
         AstrologianBeneficFeature = 73,
 
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE

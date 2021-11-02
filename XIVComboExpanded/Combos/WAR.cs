@@ -87,13 +87,6 @@ namespace XIVComboExpandedPlugin.Combos
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
                
-
-
-                if (lastComboMove == WAR.Maim && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
-                {
-                    return WAR.InnerBeast;
-                }
-
                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
                 {
                     return WAR.InnerBeast;
@@ -101,6 +94,10 @@ namespace XIVComboExpandedPlugin.Combos
                 if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
                 {
                     return WAR.InnerBeast;
+                }
+                if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGauge >= 70)
+                {
+                    return WAR.FellCleave;
                 }
                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 70)
                 {

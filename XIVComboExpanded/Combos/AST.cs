@@ -87,10 +87,10 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (level < AST.Levels.Benefic2)
                     return AST.Benefic;
+
             }
             return actionID;
         }
 
     }
-
 }
