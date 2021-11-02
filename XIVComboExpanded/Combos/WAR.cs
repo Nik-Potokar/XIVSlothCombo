@@ -1,4 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Structs;
+
 
 namespace XIVComboExpandedPlugin.Combos
 {
@@ -68,17 +70,29 @@ namespace XIVComboExpandedPlugin.Combos
 
                  if (comboTime > 0)
                 {
+                    var stormseyeduration = FindEffectAny(WAR.Buffs.StormsEye);
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                         return WAR.Maim;
 
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && !HasEffect(WAR.Buffs.StormsEye ))
                         return WAR.StormsEye;
 
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && HasEffect(WAR.Buffs.StormsEye) && stormseyeduration.RemainingTime < 15  )
+                        return WAR.StormsEye;
+
+
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
                         return WAR.StormsPath;
                 }
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
+               
+
+
+                if (lastComboMove == WAR.Maim && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
+                {
+                    return WAR.InnerBeast;
+                }
 
                 if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
                 {
@@ -93,7 +107,7 @@ namespace XIVComboExpandedPlugin.Combos
                     return WAR.FellCleave;
                 }
                  if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.FellCleave && beastGauge >= 70)
-                {
+                { 
                     return WAR.FellCleave;
                 }
 
@@ -176,5 +190,6 @@ namespace XIVComboExpandedPlugin.Combos
 
             return actionID;
         }
+
     }
 }

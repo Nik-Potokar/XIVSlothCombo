@@ -184,6 +184,7 @@ namespace XIVComboExpandedPlugin
             /// Gets the cooldown time remaining.
             /// </summary>
             public float CooldownRemaining => this.IsCooldown ? this.CooldownTotal - this.CooldownElapsed : 0;
+
         }
     }
 
