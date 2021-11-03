@@ -137,6 +137,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, DRK.StalwartSoul)]
         DRKOvercapFeature = 85,
 
+        [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, DRK.StalwartSoul)]
+        DRKLivingShadowFeature = 105,
+
         #endregion
         // ====================================================================================
         #region GUNBREAKER
