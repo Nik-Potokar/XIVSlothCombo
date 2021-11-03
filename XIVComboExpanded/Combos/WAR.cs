@@ -70,6 +70,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                  if (comboTime > 0)
                 {
+                    var beastGaugee = GetJobGauge<WARGauge>().BeastGauge;
                     var stormseyeduration = FindEffectAny(WAR.Buffs.StormsEye);
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                         return WAR.Maim;
@@ -80,6 +81,11 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && HasEffect(WAR.Buffs.StormsEye) && stormseyeduration.RemainingTime < 15  )
                         return WAR.StormsEye;
 
+                    if (lastComboMove == WAR.Maim && level <= 53 && beastGaugee >= 70)
+                        return WAR.InnerBeast;
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGaugee >= 70)
+                        return WAR.FellCleave;
+
 
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
                         return WAR.StormsPath;
@@ -87,11 +93,11 @@ namespace XIVComboExpandedPlugin.Combos
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
                
-                if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
+                if (lastComboMove == WAR.StormsPath && level <= 53 && beastGauge >= 70)
                 {
                     return WAR.InnerBeast;
                 }
-                if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.InnerBeast && beastGauge >= 70)
+                if (lastComboMove == WAR.StormsEye && level <= 53 && beastGauge >= 70)
                 {
                     return WAR.InnerBeast;
                 }
