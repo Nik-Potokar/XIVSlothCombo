@@ -73,19 +73,20 @@ namespace XIVComboExpandedPlugin.Combos
                 var gcdCooldown1 = GetCooldown(DRK.HardSlash);
                 var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
                 var gcdCooldown3 = GetCooldown(DRK.Souleater);
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
+                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining; 
 
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                {
+                    return DRK.LivingShadow;
+                }
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                {
+                    return DRK.LivingShadow;
+                }
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                {
+                    return DRK.LivingShadow;
+                }
                 if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
                 {
                     

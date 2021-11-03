@@ -137,8 +137,12 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, DRK.StalwartSoul)]
         DRKOvercapFeature = 85,
 
-        [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, DRK.StalwartSoul)]
+        [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, DRK.LivingShadow)]
         DRKLivingShadowFeature = 105,
+
+      //  [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
+      //  DRKEdgeOvercapFeature = 107, 
+     
 
         #endregion
         // ====================================================================================
