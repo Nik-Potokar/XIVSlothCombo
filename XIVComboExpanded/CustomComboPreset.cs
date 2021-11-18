@@ -8,7 +8,7 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-        // Last enum used: 105
+        // Last enum used: 106 - 107 is free
 
         // ====================================================================================
         #region ASTROLOGIAN
@@ -388,6 +388,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, WAR.NascentFlash)]
         WarriorNascentFlashFeature = 67,
+
+        [CustomComboInfo("Fellcleave/IB Feature", "Replaces Main Combo With Fellcleave/IB When you are about to overcap ", WAR.JobID, WAR.NascentFlash)]
+        WarriorFellCleaveOvercapFeature = 107,
 
         #endregion
         // ====================================================================================

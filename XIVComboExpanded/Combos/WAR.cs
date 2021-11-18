@@ -81,9 +81,9 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && HasEffect(WAR.Buffs.StormsEye) && stormseyeduration.RemainingTime < 15  )
                         return WAR.StormsEye;
 
-                    if (lastComboMove == WAR.Maim && level <= 53 && beastGaugee >= 70)
+                    if (lastComboMove == WAR.Maim && level <= 53 && beastGaugee >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                         return WAR.InnerBeast;
-                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGaugee >= 70)
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGaugee >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                         return WAR.FellCleave;
 
 
@@ -93,23 +93,23 @@ namespace XIVComboExpandedPlugin.Combos
 
                  var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
                
-                if (lastComboMove == WAR.StormsPath && level <= 53 && beastGauge >= 70)
+                if (lastComboMove == WAR.StormsPath && level <= 53 && beastGauge >= 80 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                 {
                     return WAR.InnerBeast;
                 }
-                if (lastComboMove == WAR.StormsEye && level <= 53 && beastGauge >= 70)
+                if (lastComboMove == WAR.StormsEye && level <= 53 && beastGauge >= 80 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                 {
                     return WAR.InnerBeast;
                 }
-                if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGauge >= 70)
+                if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGauge >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                 {
                     return WAR.FellCleave;
                 }
-                if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 70)
+                if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 80 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                 {
                     return WAR.FellCleave;
                 }
-                 if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.FellCleave && beastGauge >= 70)
+                 if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.FellCleave && beastGauge >= 80 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                 { 
                     return WAR.FellCleave;
                 }
