@@ -43,7 +43,9 @@ namespace XIVComboExpandedPlugin.Combos
                 Quietus = 64,
                 Delirium = 68,
                 StalwartSoul = 72,
+                EdgeOfShadow = 74,
                 Shadow = 74;
+
         }
     }
 
@@ -63,8 +65,24 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (comboTime > 0)
                 {
+                    var currentMp = LocalPlayer.CurrentMp;
+                    var gcd = GetCooldown(DRK.HardSlash);
+
                     if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
                         return DRK.SyphonStrike;
+                        if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
+                        {
+                            if (currentMp > 8000)
+                            {
+                            if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
+                                return DRK.EdgeOfShadow;
+                            if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                                return DRK.FloodOfDarkness;
+                            if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                                return DRK.EdgeOfDarkness;
+
+                            }
+                        }
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
@@ -79,11 +97,11 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return DRK.LivingShadow;
                 }
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown2.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
                 }
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown3.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
                 }

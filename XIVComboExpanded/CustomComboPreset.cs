@@ -140,9 +140,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, DRK.LivingShadow)]
         DRKLivingShadowFeature = 105,
 
-      //  [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
-      //  DRKEdgeOvercapFeature = 107, 
-     
+        [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
+        DarkManaOvercapFeature = 108, 
+
 
         #endregion
         // ====================================================================================
