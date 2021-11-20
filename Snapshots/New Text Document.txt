@@ -12,7 +12,6 @@ namespace XIVComboExpandedPlugin.Combos
         public const uint
             HeavySwing = 31,
             Maim = 37,
-            Berserk = 38,
             Overpower = 41,
             StormsPath = 42,
             StormsEye = 45,
@@ -21,8 +20,6 @@ namespace XIVComboExpandedPlugin.Combos
             Infuriate = 52,
             FellCleave = 3549,
             Decimate = 3550,
-            Upheaval = 7387,
-            InnerRelease = 8768,
             RawIntuition = 3551,
             MythrilTempest = 16462,
             ChaoticCyclone = 16463,
@@ -68,48 +65,58 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == WAR.StormsPath)
             {
-                var heavyswingCD = GetCooldown(WAR.HeavySwing);
-                var upheavalCD = GetCooldown(WAR.Upheaval);
-                var InnerreleaseCD = GetCooldown(WAR.InnerRelease);
-                var beserkCD = GetCooldown(WAR.Berserk);
-                var stormseyeBuff = FindEffectAny(WAR.Buffs.StormsEye);
-                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && HasEffect(WAR.Buffs.StormsEye) && heavyswingCD.CooldownRemaining > 0.7 && level >= 64 && (InnerreleaseCD.CooldownRemaining > 25 || beserkCD.CooldownRemaining > 2))
+                 if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
+                     return OriginalHook(WAR.FellCleave);
+
+                 if (comboTime > 0)
                 {
-                    return WAR.Upheaval;
+                    var beastGaugee = GetJobGauge<WARGauge>().BeastGauge;
+                    var stormseyeduration = FindEffectAny(WAR.Buffs.StormsEye);
+                    if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
+                        return WAR.Maim;
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && !HasEffect(WAR.Buffs.StormsEye))
+                        return WAR.StormsEye;
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && HasEffect(WAR.Buffs.StormsEye) && stormseyeduration.RemainingTime < 15  )
+                        return WAR.StormsEye;
+                    if (lastComboMove == WAR.Maim && level <= 53 && beastGaugee >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
+                        return WAR.InnerBeast;
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGaugee >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
+                        return WAR.FellCleave;
+                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
+                        return WAR.StormsPath;
                 }
-                if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
+
+                 var beastGauge = GetJobGauge<WARGauge>().BeastGauge;
+               
+                if (lastComboMove == WAR.StormsPath && level <= 53 && beastGauge >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
+                {
+                    return WAR.InnerBeast;
+                }
+                if (lastComboMove == WAR.StormsEye && level <= 53 && beastGauge >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
+                {
+                    return WAR.InnerBeast;
+                }
+                if (lastComboMove == WAR.Maim && level >= WAR.Levels.FellCleave && beastGauge >= 100 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                 {
                     return WAR.FellCleave;
                 }
-                if (comboTime > 0)
+                if (lastComboMove == WAR.StormsPath && level >= WAR.Levels.FellCleave && beastGauge >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
                 {
-                    var gauge = GetJobGauge<WARGauge>().BeastGauge;
-                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsEye && !HasEffectAny(WAR.Buffs.StormsEye))
-                        return WAR.StormsEye;
-                    if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
-                    {
-                        if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature))
-                        {
-                            return WAR.FellCleave;
-                        }
-                        return WAR.Maim;
-                    }
-                    if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
-                    {
-                        if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature))
-                        {
-                            return WAR.FellCleave;
-                        }
-                        if (stormseyeBuff.RemainingTime < 15 && IsEnabled(CustomComboPreset.WarriorStormsEyeCombo) && level >= 50)
-                            return WAR.StormsEye;
-                        return WAR.StormsPath;
-                    }
+                    return WAR.FellCleave;
                 }
+                 if (lastComboMove == WAR.StormsEye && level >= WAR.Levels.FellCleave && beastGauge >= 90 && IsEnabled(CustomComboPreset.WarriorFellCleaveOvercapFeature))
+                { 
+                    return WAR.FellCleave;
+                }
+
                 return WAR.HeavySwing;
             }
+
             return actionID;
         }
-        internal class WarriorStormsEyeCombo : CustomCombo
+    }
+
+    internal class WarriorStormsEyeCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.WarriorStormsEyeCombo;
 
@@ -183,6 +190,4 @@ namespace XIVComboExpandedPlugin.Combos
         }
 
     }
-   }
-
 }

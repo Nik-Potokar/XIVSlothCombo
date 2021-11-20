@@ -8,7 +8,7 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-        // Last enum used: 106 - 107 is free
+        // Last enum used: 110 is free
 
         // ====================================================================================
         #region ASTROLOGIAN
@@ -389,8 +389,11 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, WAR.NascentFlash)]
         WarriorNascentFlashFeature = 67,
 
-        [CustomComboInfo("Fellcleave/IB Feature", "Replaces Main Combo With Fellcleave/IB When you are about to overcap ", WAR.JobID, WAR.NascentFlash)]
+        [CustomComboInfo("Fellcleave/IB Feature", "Replaces Main Combo With Fellcleave/IB When you are about to overcap ", WAR.JobID, WAR.FellCleave, WAR.InnerBeast)]
         WarriorFellCleaveOvercapFeature = 107,
+
+        [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if Beserk/IR buff is present or Beserk/IR is ON CD", WAR.JobID, WAR.Upheaval)]
+        WarriorUpheavalMainComboFeature = 111,
 
         #endregion
         // ====================================================================================
@@ -410,5 +413,11 @@ namespace XIVComboExpandedPlugin
 
         #endregion
         // ====================================================================================
+        #region DISCIPLE OF MAGIC
+
+        //[CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
+       // DoMSwiftcastFeature = 109,
+
+        #endregion
     }
 }

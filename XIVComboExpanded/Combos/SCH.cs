@@ -12,7 +12,9 @@ namespace XIVComboExpandedPlugin.Combos
             Consolation = 16546,
             EnergyDrain = 167,
             LucidDreaming = 7562,
+            Resurrection = 173,
             Aetherflow = 166;
+
 
 
         public static class Buffs

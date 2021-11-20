@@ -16,7 +16,7 @@ namespace XIVComboExpandedPlugin
     /// <summary>
     /// Main plugin implementation.
     /// </summary>
-    public sealed partial class XIVComboWayTooAkified : IDalamudPlugin
+    public sealed partial class XIVComboWayTooAkiiified : IDalamudPlugin
     {
         private const string Command = "/pcombo";
 
@@ -24,10 +24,10 @@ namespace XIVComboExpandedPlugin
         private readonly ConfigWindow configWindow;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XIVComboWayTooAkified"/> class.
+        /// Initializes a new instance of the <see cref="XIVComboWayTooAkiiified"/> class.
         /// </summary>
         /// <param name="pluginInterface">Dalamud plugin interface.</param>
-        public XIVComboWayTooAkified(DalamudPluginInterface pluginInterface)
+        public XIVComboWayTooAkiiified(DalamudPluginInterface pluginInterface)
         {
             pluginInterface.Create<Service>();
 
