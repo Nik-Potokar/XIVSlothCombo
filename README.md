@@ -32,5 +32,5 @@ In progress :
 
 This is only for personal use only but if you want something special added let me know.
 
-*** All credits goes to [daemitus](https://github.com/daemitus) for even making this possible please support him! 
+*** Big Big  Thanks to [attick](https://github.com/attickdoor) && [daemitus](https://github.com/daemitus) For making it even possible, Please show them support for their original work <3 
 
