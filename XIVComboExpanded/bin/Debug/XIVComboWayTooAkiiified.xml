@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XIVComboWayTooAkiiified</name>
+    </assembly>
+    <members>
+        <member name="T:XIVComboExpandedPlugin.Combos.CustomCombo">
+            <summary>
+            Base class for each combo.
+            </summary>
+            <summary>
+            Passthrough methods and properties to IconReplacer. Shortens what it takes to call each method.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:XIVComboExpandedPlugin.Combos.CustomCombo"/> class.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Combos.CustomCombo.Preset">
+            <summary>
+            Gets the preset associated with this combo.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Combos.CustomCombo.ClassID">
+            <summary>
+            Gets the class ID associated with this combo.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Combos.CustomCombo.JobID">
+            <summary>
+            Gets the job ID associated with this combo.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Combos.CustomCombo.ActionIDs">
+            <summary>
+            Gets the action IDs associated with this combo.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.TryInvoke(System.UInt32,System.UInt32,System.Single,System.Byte,System.UInt32@)">
+            <summary>
+            Performs various checks then attempts to invoke the combo.
+            </summary>
+            <param name="actionID">Starting action ID.</param>
+            <param name="lastComboActionID">Last combo action.</param>
+            <param name="comboTime">Current combo time.</param>
+            <param name="level">Current player level.</param>
+            <param name="newActionID">Replacement action ID.</param>
+            <returns>True if the action has changed, otherwise false.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.Invoke(System.UInt32,System.UInt32,System.Single,System.Byte)">
+            <summary>
+            Invokes the combo.
+            </summary>
+            <param name="actionID">Starting action ID.</param>
+            <param name="lastComboActionID">Last combo action.</param>
+            <param name="comboTime">Current combo time.</param>
+            <param name="level">Current player level.</param>
+            <returns>The replacement action ID.</returns>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Combos.CustomCombo.LocalPlayer">
+            <summary>
+            Gets the player or null.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Combos.CustomCombo.CurrentTarget">
+            <summary>
+            Gets the current target or null.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.OriginalHook(System.UInt32)">
+            <summary>
+            Calls the original hook.
+            </summary>
+            <param name="actionID">Action ID.</param>
+            <returns>The result from the hook.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.IsEnabled(XIVComboExpandedPlugin.CustomComboPreset)">
+            <summary>
+            Determine if the given preset is enabled.
+            </summary>
+            <param name="preset">Preset to check.</param>
+            <returns>A value indicating whether the preset is enabled.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag)">
+            <summary>
+            Find if the player is in condition.
+            </summary>
+            <param name="flag">Condition flag.</param>
+            <returns>A value indicating whether the player is in the condition.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.HasEffect(System.Int16)">
+            <summary>
+            Find if an effect on the player exists.
+            The effect may be owned by the player or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>A value indicating if the effect exists.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.FindEffect(System.Int16)">
+            <summary>
+            Finds an effect on the player.
+            The effect must be owned by the player or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>Status object or null.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.TargetHasEffect(System.Int16)">
+            <summary>
+            Find if an effect on the target exists.
+            The effect must be owned by the player or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>A value indicating if the effect exists.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.FindTargetEffect(System.Int16)">
+            <summary>
+            Finds an effect on the current target.
+            The effect must be owned by the player or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>Status object or null.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.HasEffectAny(System.Int16)">
+            <summary>
+            Find if an effect on the player exists.
+            The effect may be owned by anyone or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>A value indicating if the effect exists.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.FindEffectAny(System.Int16)">
+            <summary>
+            Finds an effect on the player.
+            The effect may be owned by anyone or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>Status object or null.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.TargetHasEffectAny(System.Int16)">
+            <summary>
+            Find if an effect on the target exists.
+            The effect may be owned by anyone or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>A value indicating if the effect exists.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.FindTargetEffectAny(System.Int16)">
+            <summary>
+            Finds an effect on the current target.
+            The effect may be owned by anyone or unowned.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <returns>Status object or null.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.FindEffect(System.Int16,Dalamud.Game.ClientState.Objects.Types.GameObject,System.Nullable{System.UInt32})">
+            <summary>
+            Finds an effect on the given object.
+            </summary>
+            <param name="effectID">Status effect ID.</param>
+            <param name="obj">Object to look for effects on.</param>
+            <param name="sourceID">Source object ID.</param>
+            <returns>Status object or null.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.GetCooldown(System.UInt32)">
+            <summary>
+            Gets the cooldown data for an action.
+            </summary>
+            <param name="actionID">Action ID to check.</param>
+            <returns>Cooldown data.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.Combos.CustomCombo.GetJobGauge``1">
+            <summary>
+            Gets the job gauge.
+            </summary>
+            <typeparam name="T">Type of job gauge.</typeparam>
+            <returns>The job gauge.</returns>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.ConfigWindow">
+            <summary>
+            Plugin configuration window.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.ConfigWindow.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:XIVComboExpandedPlugin.ConfigWindow"/> class.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.ConfigWindow.Draw">
+            <inheritdoc/>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.ConflictingCombosAttribute">
+            <summary>
+            Attribute documenting conflicting presets for each combo.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.ConflictingCombosAttribute.#ctor(XIVComboExpandedPlugin.CustomComboPreset[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:XIVComboExpandedPlugin.ConflictingCombosAttribute"/> class.
+            </summary>
+            <param name="conflictingPresets">Presets that conflict with the given combo.</param>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.ConflictingCombosAttribute.ConflictingPresets">
+            <summary>
+            Gets the display name.
+            </summary>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.CustomComboInfoAttribute">
+            <summary>
+            Attribute documenting additional information for each combo.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.CustomComboInfoAttribute.#ctor(System.String,System.String,System.Byte,System.UInt32[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:XIVComboExpandedPlugin.CustomComboInfoAttribute"/> class.
+            </summary>
+            <param name="fancyName">Display name.</param>
+            <param name="description">Combo description.</param>
+            <param name="jobID">Associated job ID.</param>
+            <param name="actionIDs">Associated action IDs.</param>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.CustomComboInfoAttribute.FancyName">
+            <summary>
+            Gets the display name.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.CustomComboInfoAttribute.Description">
+            <summary>
+            Gets the description.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.CustomComboInfoAttribute.JobID">
+            <summary>
+            Gets the job ID.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.CustomComboInfoAttribute.JobName">
+            <summary>
+            Gets the job name.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.CustomComboInfoAttribute.ActionIDs">
+            <summary>
+            Gets the action IDs associated with the combo.
+            </summary>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.CustomComboPreset">
+            <summary>
+            Combo presets.
+            </summary>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.IconReplacer">
+            <summary>
+            This class facilitates the icon replacing.
+            </summary>
+            <summary>
+            Cooldown getters.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.IconReplacer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:XIVComboExpandedPlugin.IconReplacer"/> class.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.IconReplacer.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.IconReplacer.UpdateEnabledActionIDs">
+            <summary>
+            Update what action IDs are allowed to be modified. This pulls from <see cref="P:XIVComboExpandedPlugin.PluginConfiguration.EnabledActions"/>.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.IconReplacer.OriginalHook(System.UInt32)">
+            <summary>
+            Calls the original hook.
+            </summary>
+            <param name="actionID">Action ID.</param>
+            <returns>The result from the hook.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.IconReplacer.GetCooldown(System.UInt32)">
+            <summary>
+            Gets the cooldown data for an action.
+            </summary>
+            <param name="actionID">Action ID to check.</param>
+            <returns>Cooldown data.</returns>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.IconReplacer.CooldownData">
+            <summary>
+            Internal cooldown data.
+            </summary>
+        </member>
+        <member name="F:XIVComboExpandedPlugin.IconReplacer.CooldownData.IsCooldown">
+            <summary>
+            A value indicating whether the action is on cooldown.
+            </summary>
+        </member>
+        <member name="F:XIVComboExpandedPlugin.IconReplacer.CooldownData.ActionID">
+            <summary>
+            Action ID on cooldown.
+            </summary>
+        </member>
+        <member name="F:XIVComboExpandedPlugin.IconReplacer.CooldownData.CooldownElapsed">
+            <summary>
+            The elapsed cooldown time.
+            </summary>
+        </member>
+        <member name="F:XIVComboExpandedPlugin.IconReplacer.CooldownData.CooldownTotal">
+            <summary>
+            The total cooldown time.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.IconReplacer.CooldownData.CooldownRemaining">
+            <summary>
+            Gets the cooldown time remaining.
+            </summary>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.PluginAddressResolver">
+            <summary>
+            Plugin address resolver.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginAddressResolver.ComboTimer">
+            <summary>
+            Gets the address of the member ComboTimer.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginAddressResolver.LastComboMove">
+            <summary>
+            Gets the address of the member LastComboMove.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginAddressResolver.GetAdjustedActionId">
+            <summary>
+            Gets the address of fpGetAdjustedActionId.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginAddressResolver.IsActionIdReplaceable">
+            <summary>
+            Gets the address of fpIsIconReplacable.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginAddressResolver.GetActionCooldown">
+            <summary>
+            Gets the address of fpGetActionCooldown.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.PluginAddressResolver.Setup64Bit(Dalamud.Game.SigScanner)">
+            <inheritdoc/>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.PluginConfiguration">
+            <summary>
+            Plugin configuration.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginConfiguration.Version">
+            <summary>
+            Gets or sets the configuration version.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginConfiguration.EnabledActions">
+            <summary>
+            Gets or sets the collection of enabled combos.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginConfiguration.EnableSecretCombos">
+            <summary>
+            Gets or sets a value indicating whether to allow and display secret combos.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.PluginConfiguration.DancerDanceCompatActionIDs">
+            <summary>
+            Gets or sets an array of 4 ability IDs to interact with the <see cref="F:XIVComboExpandedPlugin.CustomComboPreset.DancerDanceComboCompatibility"/> combo.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.PluginConfiguration.Save">
+            <summary>
+            Save the configuration to disk.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.PluginConfiguration.IsEnabled(XIVComboExpandedPlugin.CustomComboPreset)">
+            <summary>
+            Gets a value indicating whether a preset is enabled.
+            </summary>
+            <param name="preset">Preset to check.</param>
+            <returns>The boolean representation.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.PluginConfiguration.IsSecret(XIVComboExpandedPlugin.CustomComboPreset)">
+            <summary>
+            Gets a value indicating whether a preset is secret.
+            </summary>
+            <param name="preset">Preset to check.</param>
+            <returns>The boolean representation.</returns>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.PluginConfiguration.GetConflicts(XIVComboExpandedPlugin.CustomComboPreset)">
+            <summary>
+            Gets an array of conflicting combo presets.
+            </summary>
+            <param name="preset">Preset to check.</param>
+            <returns>The conflicting presets.</returns>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.SecretCustomComboAttribute">
+            <summary>
+            Attribute designating secret combos.
+            </summary>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.Service">
+            <summary>
+            Dalamud and plugin services.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.Configuration">
+            <summary>
+            Gets or sets the plugin configuration.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.IconReplacer">
+            <summary>
+            Gets or sets the plugin icon replacer.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.Address">
+            <summary>
+            Gets or sets the plugin address resolver.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.Interface">
+            <summary>
+            Gets the Dalamud plugin interface.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.ChatGui">
+            <summary>
+            Gets the Dalamud chat gui.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.ClientState">
+            <summary>
+            Gets the Dalamud client state.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.CommandManager">
+            <summary>
+            Gets the Dalamud command manager.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.Condition">
+            <summary>
+            Gets the Dalamud condition.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.DataManager">
+            <summary>
+            Gets the Dalamud data manager.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.JobGauges">
+            <summary>
+            Gets the Dalamud job gauges.
+            </summary>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.Service.TargetManager">
+            <summary>
+            Gets the Dalamud target manager.
+            </summary>
+        </member>
+        <member name="T:XIVComboExpandedPlugin.XIVComboWayTooAkiiified">
+            <summary>
+            Main plugin implementation.
+            </summary>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.XIVComboWayTooAkiiified.#ctor(Dalamud.Plugin.DalamudPluginInterface)">
+            <summary>
+            Initializes a new instance of the <see cref="T:XIVComboExpandedPlugin.XIVComboWayTooAkiiified"/> class.
+            </summary>
+            <param name="pluginInterface">Dalamud plugin interface.</param>
+        </member>
+        <member name="P:XIVComboExpandedPlugin.XIVComboWayTooAkiiified.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:XIVComboExpandedPlugin.XIVComboWayTooAkiiified.Dispose">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

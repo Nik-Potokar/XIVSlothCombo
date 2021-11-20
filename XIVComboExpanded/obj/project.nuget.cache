@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "HGJScrt/7Bh3CLNaxFXL/vi1ARjy56zhlMnFGjJJ0FklljG9jXW/rQHCUQsEml3FGvfjK8K+ghLS+0ynx9b5IA==",
+  "success": true,
+  "projectFilePath": "D:\\FINAL FANTASY XIV - A Realm Reborn\\Dev\\API4\\XIVCOMBOAKI\\XIVComboExpanded\\XIVComboWayTooAkiiified.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Aki-N\\.nuget\\packages\\dalamudlinter\\1.0.3\\dalamudlinter.1.0.3.nupkg.sha512",
+    "C:\\Users\\Aki-N\\.nuget\\packages\\dalamudpackager\\2.1.4\\dalamudpackager.2.1.4.nupkg.sha512",
+    "C:\\Users\\Aki-N\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512"
+  ],
+  "logs": []
+}

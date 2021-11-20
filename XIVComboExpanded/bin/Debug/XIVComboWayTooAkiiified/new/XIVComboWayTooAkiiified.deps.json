@@ -1,0 +1,52 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "XIVComboWayTooAkiiified/1.0.0.5": {
+        "dependencies": {
+          "DalamudLinter": "1.0.3",
+          "DalamudPackager": "2.1.4",
+          "StyleCop.Analyzers": "1.1.118"
+        },
+        "runtime": {
+          "XIVComboWayTooAkiiified.dll": {}
+        }
+      },
+      "DalamudLinter/1.0.3": {},
+      "DalamudPackager/2.1.4": {},
+      "StyleCop.Analyzers/1.1.118": {}
+    }
+  },
+  "libraries": {
+    "XIVComboWayTooAkiiified/1.0.0.5": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DalamudLinter/1.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yODrbT8F73JJsvC3UbQ+Cn+huhH4TEYvlunjKUUed2SHBhGDJrkV8l21Xe9GMut4ZauPvySgYWUigX/msAAEag==",
+      "path": "dalamudlinter/1.0.3",
+      "hashPath": "dalamudlinter.1.0.3.nupkg.sha512"
+    },
+    "DalamudPackager/2.1.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+pMkfHq34+s75MxN4I1uIVCJJsC2JLx8cdH+nN2RugRkWkU0SmqknRjQVivSDX1apTjkEwZfoIhExSHDICNXVg==",
+      "path": "dalamudpackager/2.1.4",
+      "hashPath": "dalamudpackager.2.1.4.nupkg.sha512"
+    },
+    "StyleCop.Analyzers/1.1.118": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Onx6ovGSqXSK07n/0eM3ZusiNdB6cIlJdabQhWGgJp3Vooy9AaLS/tigeybOJAobqbtggTamoWndz72JscZBvw==",
+      "path": "stylecop.analyzers/1.1.118",
+      "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
+    }
+  }
+}
