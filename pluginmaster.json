@@ -1,15 +1,19 @@
-        "Author": "Aki"
-        "Name": "XivComobAkified",
-        "Description": "Edited XivCombo",
-        "InternalName": "XivComobAkified",
-        "AssemblyVersion": "1.0.2.3",
-        "RepoUrl": "https://github.com/Nik-Potokar/XivComboAki/blob/main/XivComboAki.rar",
+[
+    {
+        "Author": "attick, daemitus, alymphocyte, Aki",
+        "Name": "XIVComboWayTooAkiiified",
+        "Description": "XIVCombo But For Lazy Gamers, Should Have Everything That Original XIVCombo Has And More +++",
+        "InternalName": "XIVComboWayTooAkiiified",
+        "AssemblyVersion": "1.0.0.0",
+        "RepoUrl": "https://github.com/Nik-Potokar/XIVComboWayTooAkiiified",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 4,
-        "DownloadLinkInstall": "https://github.com/Nik-Potokar/XivComboAki/blob/main/XivComboAki.rar",
+        "DownloadLinkInstall": "https://github.com/Nik-Potokar/MyDalamudPlugins/raw/main/plugins/XIVComboWayTooAkiiified/latest.zip",
         "IsHide": false,
         "IsTestingExclusive": false,
-        "DownloadLinkTesting": "https://github.com/Nik-Potokar/XivComboAki/blob/main/XivComboAki.rar",
-        "DownloadLinkUpdate": "https://github.com/Nik-Potokar/XivComboAki/blob/main/XivComboAki.rar",
+        "DownloadLinkTesting": "https://github.com/Nik-Potokar/MyDalamudPlugins/raw/main/plugins/XIVComboWayTooAkiiified/latest.zip",
+        "DownloadLinkUpdate": "https://github.com/Nik-Potokar/MyDalamudPlugins/raw/main/plugins/XIVComboWayTooAkiiified/latest.zip",
         "DownloadCount": 0,
-        "LastUpdated": "1626301625"
+        "LastUpdated": "0"
+    }
+]
