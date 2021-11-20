@@ -1,5 +1,9 @@
 # Has everything that expanded xivcombo has
 
+### Repo Link
+`https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
+
+
 Extra stuff: 
 
 * Warrior storm's path/eye on single button depending if you have the buff or not + Fell cleave feature on it
@@ -22,6 +26,12 @@ In progress :
 ## If you wish for something to be added or have a request please add it into the issues tab and il take a look.
 
 # How to install
+
+* Copy the Custom Repo Link `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
+* Open dalamud settings ingame
+* Paste the link into the Custom Plugin repositories
+
+Or
 
 * Download the latest zip file under releases [Here](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/releases)
 * Navigate to your XIVLauncher folder inside AppData/Roaming
