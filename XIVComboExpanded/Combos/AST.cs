@@ -22,11 +22,13 @@ namespace XIVComboExpandedPlugin.Combos
             Malefic4 = 16555,
             LucidDreaming = 7562,
             Ascend = 3603,
+            Swiftcast = 7561,
             Play = 17055;
 
         public static class Buffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Swiftcast = 167;
         }
 
         public static class Debuffs
@@ -91,6 +93,22 @@ namespace XIVComboExpandedPlugin.Combos
             }
             return actionID;
         }
+        internal class AstrologianAscendFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAscendFeature;
 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == AST.Swiftcast)
+                {
+                    if(IsEnabled(CustomComboPreset.AstrologianAscendFeature))
+                    {
+                        if (HasEffect(AST.Buffs.Swiftcast))
+                            return AST.Ascend;
+                    }
+                }
+                return actionID;
+            }
+        }
     }
 }

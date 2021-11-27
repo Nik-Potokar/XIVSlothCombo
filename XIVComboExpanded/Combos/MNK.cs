@@ -14,6 +14,7 @@ namespace XIVComboExpandedPlugin.Combos
             ArmOfTheDestroyer = 62,
             Rockbreaker = 70,
             FourPointFury = 16473,
+            PerfectBalance = 69,
             TrueStrike = 54;
 
         public static class Buffs

@@ -13,13 +13,15 @@ namespace XIVComboExpandedPlugin.Combos
             EnergyDrain = 167,
             LucidDreaming = 7562,
             Resurrection = 173,
+            Swiftcast = 7561,
             Aetherflow = 166;
 
 
 
         public static class Buffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Swiftcast = 167;
         }
 
         public static class Debuffs

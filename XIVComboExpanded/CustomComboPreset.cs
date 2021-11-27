@@ -1,6 +1,5 @@
 using XIVComboExpandedPlugin.Combos;
 
-
 namespace XIVComboExpandedPlugin
 {
     /// <summary>
@@ -8,7 +7,7 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-        // Last enum used: 110 is free
+        // Last enum used: 113 is free
 
         // ====================================================================================
         #region ASTROLOGIAN
@@ -21,6 +20,10 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, AST.Benefic2)]
         AstrologianBeneficFeature = 73,
+
+        [CustomComboInfo("Swiftcast Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
+        AstrologianAscendFeature = 110,
+
 
 
         #endregion
@@ -199,7 +202,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Monk Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, MNK.DragonKick)]
         MnkBootshineFeature = 82,
 
-        [CustomComboInfo("Monk Basic Rotation", "Basic Monk Rotation Still in testing...", MNK.JobID, MNK.Bootshine)]
+        [CustomComboInfo("Monk Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, MNK.Bootshine)]
         MnkBasicCombo = 96,
 
         #endregion
@@ -366,7 +369,6 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Summoner Easy rotation", "Whole bahamut rotation is now on ruin3 combo + Enkindle Bahamut on same button", SMN.JobID, SMN.Ruin3, SMN.Ruin4)]
         SummonerEasyRotation = 106,
 
-
         #endregion
         // ====================================================================================
         #region WARRIOR
@@ -411,6 +413,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, WHM.Cure2, WHM.Medica)]
         WhiteMageAfflatusFeature = 77,
 
+        [CustomComboInfo("Swiftcast Into Raise", "Changes Swiftcast into Raise", WHM.JobID, WHM.Raise, WHM.Swiftcast)]
+        WHMRaiseFeature = 112,
         #endregion
         // ====================================================================================
         #region DISCIPLE OF MAGIC

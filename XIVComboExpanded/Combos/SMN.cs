@@ -29,6 +29,8 @@ namespace XIVComboExpandedPlugin.Combos
             Bio3 = 7424,
             Psysick = 16230,
             Resurrection = 173,
+            EgiAssault1 = 16509,
+            EgiAssault2 = 16512,
             EnergySyphon = 16510;
 
 
@@ -52,6 +54,7 @@ namespace XIVComboExpandedPlugin.Combos
             public const byte
                 Painflare = 52,
                 Ruin3 = 54,
+                EnhancedEgiAssault = 74,
                 EnhancedFirebirdTrance = 80;
         }
     }
@@ -200,11 +203,14 @@ namespace XIVComboExpandedPlugin.Combos
                     return SMN.EnkindleBahamut;
                 if (gauge.TimerRemaining >= 3000 && HasEffect(SMN.Buffs.FurtherRuin))
                     return SMN.Ruin4;
+                if (gauge.TimerRemaining >= 1000 && !bahamudcd.IsCooldown && lastComboMove == SMN.Ruin4 && !gauge.IsPhoenixReady)
+                    return SMN.EnkindleBahamut;
                 if (gauge.TimerRemaining >= 1000 && HasEffect(SMN.Buffs.FurtherRuin))
                     return SMN.Ruin4;
+                if (gauge.TimerRemaining >= 1000 && !bahamudcd.IsCooldown && lastComboMove == SMN.Ruin4 && !gauge.IsPhoenixReady)
+                    return SMN.EnkindleBahamut;
             }
             return actionID;
         }
-        
     }
 }
