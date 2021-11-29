@@ -66,5 +66,18 @@ namespace XIVComboExpandedPlugin.Combos
             }
             return actionID;
         }
+        internal class SchRaiseFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.SchRaiseFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == SCH.Resurrection && GetCooldown(SCH.Swiftcast).CooldownRemaining == 0)
+                    return SCH.Swiftcast;
+
+                return actionID;
+            }
+        }
+
     }
 }

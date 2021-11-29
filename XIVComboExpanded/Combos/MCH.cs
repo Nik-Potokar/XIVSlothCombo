@@ -15,6 +15,10 @@ namespace XIVComboExpandedPlugin.Combos
             GaussRound = 2874,
             Ricochet = 2890,
             HeatedSlugshot = 7412,
+            Drill = 16498,
+            HotShot = 2872,
+            Reassemble = 2876,
+            AirAnchor = 16500,
             Hypercharge = 17209,
             HeatBlast = 7410,
             SpreadShot = 2870,
@@ -44,6 +48,8 @@ namespace XIVComboExpandedPlugin.Combos
                 HeatBlast = 35,
                 RookOverdrive = 40,
                 Ricochet = 50,
+                Drill = 58,
+                AirAnchor = 76,
                 AutoCrossbow = 52,
                 HeatedSplitShot = 54,
                 HeatedSlugshot = 60,
@@ -61,6 +67,20 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == MCH.CleanShot || actionID == MCH.HeatedCleanShot)
             {
+                var reassembleCD = GetCooldown(MCH.Reassemble);
+                var gauge = GetJobGauge<MCHGauge>();
+                var drillCD = GetCooldown(MCH.Drill);
+                var AirAnchorCD = GetCooldown(MCH.AirAnchor);
+                var CD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
+                if(IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
+                {
+                    if (gauge.IsOverheated)
+                        return MCH.HeatBlast;
+                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && CD < 0)
+                        return MCH.Drill;
+                    if (reassembleCD.IsCooldown && AirAnchorCD.CooldownRemaining <= 1)
+                        return MCH.AirAnchor;
+                }
                 if (comboTime > 0)
                 {
                     if (lastComboMove == MCH.SplitShot && level >= MCH.Levels.SlugShot)
@@ -153,6 +173,32 @@ namespace XIVComboExpandedPlugin.Combos
             }
 
             return actionID;
+        }
+        internal class MchDrillAirFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.MchDrillAirFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == MCH.Drill || actionID  == MCH.HotShot || actionID == MCH.AirAnchor)
+                {
+                    if (level < MCH.Levels.Drill)
+                        return MCH.HotShot;
+
+                    
+                    var anchorHSCD = GetCooldown(MCH.AirAnchor);
+                    var drillCD = GetCooldown(MCH.Drill);
+
+                    if (!drillCD.IsCooldown && !anchorHSCD.IsCooldown)
+                        return actionID;
+
+                    return drillCD.CooldownRemaining < anchorHSCD.CooldownRemaining
+                        ? MCH.Drill
+                        : MCH.AirAnchor;
+
+                }
+                return actionID;
+            }
         }
     }
 }
