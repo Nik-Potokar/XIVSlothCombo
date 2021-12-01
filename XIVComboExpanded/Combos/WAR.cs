@@ -73,7 +73,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var InnerreleaseCD = GetCooldown(WAR.InnerRelease);
                 var beserkCD = GetCooldown(WAR.Berserk);
                 var stormseyeBuff = FindEffectAny(WAR.Buffs.StormsEye);
-                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && HasEffect(WAR.Buffs.StormsEye) && heavyswingCD.CooldownRemaining > 0.7 && level >= 64 && (InnerreleaseCD.CooldownRemaining > 25 || beserkCD.CooldownRemaining > 2))
+                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && HasEffect(WAR.Buffs.StormsEye) && heavyswingCD.CooldownRemaining > 0.7 && level >= 64 || (InnerreleaseCD.CooldownRemaining > 25 || beserkCD.CooldownRemaining > 2))
                 {
                     return WAR.Upheaval;
                 }
