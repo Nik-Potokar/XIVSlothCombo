@@ -21,6 +21,9 @@ namespace XIVComboExpandedPlugin.Combos
             Stormbite = 7407,
             RefulgentArrow = 7409,
             BurstShot = 16495,
+            Ladonsbite = 25783,
+            BlastArrow = 25784,
+            RadiantFinale = 25785,
             ApexArrow = 16496;
 
         public static class Buffs

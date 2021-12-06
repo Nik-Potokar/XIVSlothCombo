@@ -16,7 +16,7 @@ namespace XIVComboExpandedPlugin
         AstrologianCardsOnDrawFeature = 27,
 
         [CustomComboInfo("Minor Arcana to Sleeve Draw", "Changes Minor Arcana to Sleeve Draw when a card is not drawn.", AST.JobID, AST.MinorArcana)]
-        AstrologianSleeveDrawFeature = 75,
+        AstrologianCrownPlayFeature = 75,
 
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, AST.Benefic2)]
         AstrologianBeneficFeature = 73,
@@ -30,7 +30,7 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region BLACK MAGE
 
-        [CustomComboInfo("Enochian Stance Switcher", "Change Enochian to Fire 4 or Blizzard 4 depending on stance.", BLM.JobID, BLM.Enochian)]
+        [CustomComboInfo("Enochian Stance Switcher", "Change Enochian to Fire 4 or Blizzard 4 depending on stance.", BLM.JobID, BLM.Fire4)]
         BlackEnochianFeature = 25,
 
         [CustomComboInfo("Umbral Soul/Transpose Switcher", "Change Transpose into Umbral Soul when Umbral Soul is usable.", BLM.JobID, BLM.Transpose)]
@@ -54,7 +54,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Thunder", "Thunder 1/3 replaces Enochian/Fire 4/Blizzard 4 on Enochian switcher.\n Occurs when Thundercloud is up and either\n- Thundercloud buff on you is about to run out, or\n- Thunder debuff on your CURRENT target is about to run out\nassuming it won't interrupt timer upkeep.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Thunder, BLM.Thunder3)]
         BlackThunderFeature = 100,
 
-        [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Enochian)]
+        [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Fire4)]
         BlackDespairFeature = 101,
 
         #endregion
@@ -172,6 +172,12 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyFeature = 84,
 
+        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone on main combo.", GNB.JobID, GNB.DangerZone)]
+        GunbreakerDangerZoneFeature = 118,
+
+        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown)]
+        GunbreakerDoubleDownFeature = 119,
+
         #endregion
         // ====================================================================================
         #region MACHINIST
@@ -191,6 +197,12 @@ namespace XIVComboExpandedPlugin
         [SecretCustomCombo]
         [CustomComboInfo("Gauss Round / Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
         MachinistGaussRoundRicochetFeature = 66,
+
+        [CustomComboInfo("Drill/Air Feature", "Combines Drill/Air Anchor on one Button  ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
+        MchDrillAirFeature = 115,
+
+        [CustomComboInfo("Drill/Air Feature On Main Combo", "Drill/Air Feature is added onto main combo (Note: If will add them onto main combo ONLY if you are under Reassemble Buff Or Reassemble is on CD(Will do nothing if Reassemble is OFF CD)) ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        MachinistDrillAirOnMainCombo = 116,
 
         #endregion
         // ====================================================================================
@@ -344,15 +356,12 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("ED Aetherflow", "Change Energy Drain into Aetherflow when you have no more Aetherflow stacks.", SCH.JobID, SCH.EnergyDrain)]
         ScholarEnergyDrainFeature = 37,
 
+        [CustomComboInfo("Sch Raise Feature", "Replaces Rez with swiftcast when available.", SCH.JobID, SCH.Resurrection)]
+        SchRaiseFeature = 114,
+
         #endregion
         // ====================================================================================
         #region SUMMONER
-
-        [CustomComboInfo("Demi-summon combiners", "Dreadwyrm Trance, Summon Bahamut, and Firebird Trance are now one button.\nDeathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button", SMN.JobID, SMN.DreadwyrmTrance, SMN.Deathflare)]
-        SummonerDemiCombo = 28,
-
-        [CustomComboInfo("Brand of Purgatory Combo", "Replaces Fountain of Fire with Brand of Purgatory when under the affect of Hellish Conduit + Enkindle Phoenix is now on same button!", SMN.JobID, SMN.Ruin1, SMN.Ruin3)]
-        SummonerBoPCombo = 38,
 
         [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks", SMN.JobID, SMN.Fester)]
         SummonerEDFesterCombo = 39,
@@ -360,14 +369,13 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("ES Painflare", "Change Painflare into Energy Syphon when out of Aetherflow stacks", SMN.JobID, SMN.Painflare)]
         SummonerESPainflareCombo = 40,
 
-        [CustomComboInfo("Demi-Summon Combiners Ultra", "Dreadwyrm Trance, Summon Bahamut, Firebird Trance, Deathflare, Enkindle Bahamut, and Enkindle Phoenix are now one button.\nRequires Demi-Summon Combiners feature.", SMN.JobID, SMN.DreadwyrmTrance)]
-        SummonerDemiComboUltra = 80,
+        [CustomComboInfo("Bahamut/Phoenix on ruin3", "Adds Summon Bahamut/Phoenic on Ruin 3 combo", SMN.JobID, SMN.SummonBahamut, SMN.SummonBahamut, SMN.Ruin3)]
+        SummonerBahamutPhoenixFeature = 28,
 
-        [CustomComboInfo("SummonerDotFeature", "Currently still in testing.. dont enable", SMN.JobID, SMN.Miasma3, SMN.Bio3)]
-        SummonerDotFeature = 104,
+        [CustomComboInfo("Testing", "Only enable when testing", SMN.JobID, SMN.SummonBahamut, SMN.SummonBahamut, SMN.Ruin3)]
 
-        [CustomComboInfo("Summoner Easy rotation", "Whole bahamut rotation is now on ruin3 combo + Enkindle Bahamut on same button", SMN.JobID, SMN.Ruin3, SMN.Ruin4)]
-        SummonerEasyRotation = 106,
+        SummonnerTesting = 38,
+
 
         #endregion
         // ====================================================================================
@@ -396,6 +404,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if Beserk/IR buff is present or Beserk/IR is ON CD", WAR.JobID, WAR.Upheaval)]
         WarriorUpheavalMainComboFeature = 111,
+
+        [CustomComboInfo("Upheaval Feature During IR", "Adds upheaval onto main combo during InnerRelease", WAR.JobID, WAR.Upheaval)]
+        WarriorUpheavalMainComboFeatureDuringIR = 117,
 
         #endregion
         // ====================================================================================

@@ -24,6 +24,8 @@ namespace XIVComboExpandedPlugin.Combos
             BowShock = 16159,
             BurstStrike = 16162,
             FatedCircle = 16163,
+            DoubleDown = 25760,
+            DangerZone = 16144,
             Bloodfest = 16164;
 
         public static class Buffs
@@ -65,6 +67,11 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (comboTime > 0)
                 {
+                    var maincomboCD1 = GetCooldown(GNB.KeenEdge);
+                    var maincomboCD2 = GetCooldown(GNB.BrutalShell);
+                    var maincomboCD3 = GetCooldown(GNB.SolidBarrel);
+                    var dangerZoneCD = GetCooldown(GNB.DangerZone);
+                    var doubleDownCD = GetCooldown(GNB.DoubleDown);
                     var bulletGauge = GetJobGauge<GNBGauge>();
                     if (lastComboMove == GNB.KeenEdge && level >= GNB.Levels.BrutalShell)
                         return GNB.BrutalShell;
@@ -74,6 +81,10 @@ namespace XIVComboExpandedPlugin.Combos
 
                     if (lastComboMove == GNB.BrutalShell && level >= GNB.Levels.SolidBarrel)
                         return GNB.SolidBarrel;
+                    if (maincomboCD1.CooldownRemaining > 0.7 || (maincomboCD2.CooldownRemaining > 0.7) || ((maincomboCD3.CooldownRemaining > 0.7) && !dangerZoneCD.IsCooldown && level > 18 && IsEnabled(CustomComboPreset.GunbreakerDangerZoneFeature)))
+                        return GNB.DangerZone;
+                    if (maincomboCD1.CooldownRemaining > 0.7 || (maincomboCD2.CooldownRemaining > 0.7) || ((maincomboCD3.CooldownRemaining > 0.7) && !doubleDownCD.IsCooldown && HasEffect(GNB.Buffs.NoMercy) && level >= 90 && IsEnabled(CustomComboPreset.GunbreakerDoubleDownFeature)))
+                        return GNB.DoubleDown;
                 }
 
                 return GNB.KeenEdge;

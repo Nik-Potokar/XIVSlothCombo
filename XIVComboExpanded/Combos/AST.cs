@@ -23,6 +23,9 @@ namespace XIVComboExpandedPlugin.Combos
             LucidDreaming = 7562,
             Ascend = 3603,
             Swiftcast = 7561,
+            CrownPlay = 25869,
+            Astrodyne = 25870,
+            FallMalefic = 25871,
             Play = 17055;
 
         public static class Buffs
@@ -62,17 +65,17 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-     internal class AstrologianSleeveDrawFeature : CustomCombo
+     internal class AstrologianCrownPlayFeature : CustomCombo
      {
-         protected override CustomComboPreset Preset => CustomComboPreset.AstrologianSleeveDrawFeature;
+         protected override CustomComboPreset Preset => CustomComboPreset.AstrologianCrownPlayFeature;
     
          protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
          {
              if (actionID == AST.MinorArcana)
              {
                  var gauge = GetJobGauge<ASTGauge>().DrawnCard;
-                 if (gauge == CardType.NONE && level >= AST.Levels.SleeveDraw)
-                     return AST.SleeveDraw;
+                 if (gauge == CardType.NONE && level >= 70)
+                     return AST.CrownPlay;
              }
     
              return actionID;
@@ -106,6 +109,7 @@ namespace XIVComboExpandedPlugin.Combos
                         if (HasEffect(AST.Buffs.Swiftcast))
                             return AST.Ascend;
                     }
+                    return OriginalHook(AST.Swiftcast);
                 }
                 return actionID;
             }

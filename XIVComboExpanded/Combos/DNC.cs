@@ -12,6 +12,7 @@ namespace XIVComboExpandedPlugin.Combos
             Fountain = 15990,
             ReverseCascade = 15991,
             Fountainfall = 15992,
+            StarfallDance = 25792,
             // AoE
             Windmill = 15993,
             Bladeshower = 15994,
@@ -32,6 +33,7 @@ namespace XIVComboExpandedPlugin.Combos
             FanDance1 = 16007,
             FanDance2 = 16008,
             FanDance3 = 16009,
+            FanDance4 = 25791,
             // Other
             SaberDance = 16005,
             EnAvant = 16010,

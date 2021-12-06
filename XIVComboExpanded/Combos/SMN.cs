@@ -9,29 +9,27 @@ namespace XIVComboExpandedPlugin.Combos
         public const byte JobID = 27;
 
         public const uint
-            Deathflare = 3582,
-            EnkindlePhoenix = 16516,
-            EnkindleBahamut = 7429,
-            EnkindleInferno = 16803,
-            DreadwyrmTrance = 3581,
-            SummonBahamut = 7427,
-            FirebirdTranceLow = 16513,
-            FirebirdTranceHigh = 16549,
-            Ruin1 = 163,
+            Gemshine = 25883,
+            EnergyDrain = 16508,
+            Fester = 181,
+            Resurrection = 173,
+            SummonTopaz = 25803,
+            SummonEmerald = 25804,
+            SummonRuby = 25802,
+            PreciousBrilliance = 25884,
             Ruin3 = 3579,
             Ruin4 = 7426,
-            BrandOfPurgatory = 16515,
-            FountainOfFire = 16514,
-            Fester = 181,
-            EnergyDrain = 16508,
+            DreadwyrmTrance = 3581,
+            AstralFlow = 25822,
+            SummonBahamut = 7427,
+            SummonPhoenix = 25831,
+            EnkindleBahamut = 7429,
+            EnkindlePhoenix = 16516,
+            Deathflare = 3582,
             Painflare = 3578,
-            Miasma3 = 7425,
-            Bio3 = 7424,
-            Psysick = 16230,
-            Resurrection = 173,
-            EgiAssault1 = 16509,
-            EgiAssault2 = 16512,
             EnergySyphon = 16510;
+
+
 
 
         public static class Buffs
@@ -59,82 +57,7 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-    internal class SummonerDemiCombo : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerDemiCombo;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            // Replace Deathflare with demi enkindles
-            if (actionID == SMN.Deathflare)
-            {
-                var gauge = GetJobGauge<SMNGauge>();
-
-                if (gauge.IsPhoenixReady)
-                    return SMN.EnkindlePhoenix;
-
-                if (gauge.TimerRemaining > 0 && gauge.ReturnSummon != SummonPet.NONE)
-                    return SMN.EnkindleBahamut;
-
-                return actionID;
-            }
-
-            // Replace DWT with demi summons
-            if (actionID == SMN.DreadwyrmTrance)
-            {
-                var gauge = GetJobGauge<SMNGauge>();
-
-                 if (IsEnabled(CustomComboPreset.SummonerDemiComboUltra) && gauge.TimerRemaining > 0)
-                 {
-                    if (gauge.IsPhoenixReady)
-                         return SMN.EnkindlePhoenix;
-                
-                     if (gauge.ReturnSummon != SummonPet.NONE)
-                         return SMN.EnkindleBahamut;
-                
-                     return SMN.Deathflare;
-                 }
-
-                if (gauge.IsBahamutReady)
-                    return SMN.SummonBahamut;
-
-                if (gauge.IsPhoenixReady)
-                    return OriginalHook(SMN.FirebirdTranceLow);
-
-                return actionID;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class SummonerBoPCombo : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerBoPCombo;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SMN.Ruin1 || actionID == SMN.Ruin3)
-            {
-                var phoenix = GetCooldown(SMN.EnkindlePhoenix);
-                var gauge = GetJobGauge<SMNGauge>();
-                if (gauge.TimerRemaining > 0 && gauge.IsPhoenixReady)
-                {
-                    if (lastComboMove == SMN.FountainOfFire && !phoenix.IsCooldown)
-                        return SMN.EnkindlePhoenix;
-                    if (HasEffect(SMN.Buffs.HellishConduit))
-                        return SMN.BrandOfPurgatory;
-
-                    return SMN.FountainOfFire;
-
-                }
-
-                return OriginalHook(SMN.Ruin3);
-            }
-
-            return actionID;
-        }
-    }
+  
 
     internal class SummonerEDFesterCombo : CustomCombo
     {
@@ -142,11 +65,11 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Fester)
+            if (actionID == SMN.EnergyDrain)
             {
                 var gauge = GetJobGauge<SMNGauge>();
-                if (!gauge.HasAetherflowStacks)
-                    return SMN.EnergyDrain;
+                if (gauge.HasAetherflowStacks)
+                    return SMN.Fester;
             }
 
             return actionID;
@@ -170,47 +93,36 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return SMN.EnergySyphon;
             }
-
             return actionID;
         }
-    }
-
-    internal class SummonerEasyRotation : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerEasyRotation;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class SummonerBahamutPhoenixFeature : CustomCombo
         {
-            if (actionID == SMN.Ruin3)
+            protected override CustomComboPreset Preset => CustomComboPreset.SummonerBahamutPhoenixFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var bahamudcd = GetCooldown(SMN.EnkindleBahamut);
-                var gauge = GetJobGauge<SMNGauge>();
-                if (gauge.TimerRemaining >= 18000 && HasEffect(SMN.Buffs.FurtherRuin))
-                    return SMN.Ruin4;
-                if (gauge.TimerRemaining >= 16000 && !bahamudcd.IsCooldown && lastComboMove == SMN.Ruin4 && !gauge.IsPhoenixReady )
-                    return SMN.EnkindleBahamut;
-                if (gauge.TimerRemaining >= 16000)
-                    return SMN.Ruin3;
-                if (gauge.TimerRemaining >= 13000)
-                    return SMN.Ruin3;
-                if (gauge.TimerRemaining >= 10000)
-                    return SMN.Ruin3;
-                if (gauge.TimerRemaining >= 7000)
-                    return SMN.Ruin3;
-                if (gauge.TimerRemaining >= 5000 && HasEffect(SMN.Buffs.FurtherRuin))
-                    return SMN.Ruin4;
-                if (gauge.TimerRemaining >= 3000 && !bahamudcd.IsCooldown && lastComboMove == SMN.Ruin4 && !gauge.IsPhoenixReady )
-                    return SMN.EnkindleBahamut;
-                if (gauge.TimerRemaining >= 3000 && HasEffect(SMN.Buffs.FurtherRuin))
-                    return SMN.Ruin4;
-                if (gauge.TimerRemaining >= 1000 && !bahamudcd.IsCooldown && lastComboMove == SMN.Ruin4 && !gauge.IsPhoenixReady)
-                    return SMN.EnkindleBahamut;
-                if (gauge.TimerRemaining >= 1000 && HasEffect(SMN.Buffs.FurtherRuin))
-                    return SMN.Ruin4;
-                if (gauge.TimerRemaining >= 1000 && !bahamudcd.IsCooldown && lastComboMove == SMN.Ruin4 && !gauge.IsPhoenixReady)
-                    return SMN.EnkindleBahamut;
+                if (actionID == SMN.Ruin3)
+                {
+                    var summonBahamutCD = GetCooldown(SMN.SummonBahamut);
+                    var summonPhoenixCD = GetCooldown(SMN.SummonPhoenix);
+                    var deathFlareCD = GetCooldown(SMN.Deathflare);
+                    var gauge = GetJobGauge<SMNGauge>();
+                    var ruin3CD = GetCooldown(SMN.Ruin3);
+                    var enkindleBahamutCD = GetCooldown(SMN.EnkindleBahamut);
+                    if (IsEnabled(CustomComboPreset.SummonnerTesting))
+                    {
+                        if (!summonBahamutCD.IsCooldown && gauge.IsBahamutReady)
+                            return SMN.SummonBahamut;
+                        if (!deathFlareCD.IsCooldown && summonBahamutCD.IsCooldown && lastComboMove == SMN.SummonBahamut)
+                            return SMN.Deathflare;
+                        if (ruin3CD.CooldownRemaining > 0.7 && !enkindleBahamutCD.IsCooldown && !deathFlareCD.IsCooldown && lastComboMove == SMN.Deathflare)
+                            return SMN.EnkindleBahamut;
+                    }
+                    return OriginalHook(SMN.Ruin3);
+                }
+                return actionID;
             }
-            return actionID;
         }
     }
 }
+
