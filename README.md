@@ -1,3 +1,7 @@
+# Please forward all issues and suggestions to [Here](https://github.com/Nik-Potokar/MyDalamudPlugins)
+### Updated Daily
+# If something dosen't seem to be working please swap class or re-slot the skill
+
 # Has everything that expanded xivcombo has
 
 ### Repo Link
