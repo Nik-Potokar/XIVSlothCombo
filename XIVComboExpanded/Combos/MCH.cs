@@ -72,7 +72,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var drillCD = GetCooldown(MCH.Drill);
                 var AirAnchorCD = GetCooldown(MCH.AirAnchor);
                 var CD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
-                if(IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
+                if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
                     if (gauge.IsOverheated)
                         return MCH.HeatBlast;
@@ -109,10 +109,13 @@ namespace XIVComboExpandedPlugin.Combos
                 var ricochetCd = GetCooldown(MCH.Ricochet);
 
                 // Prioritize the original if both are off cooldown
+                if (level <= 49)
+                    return MCH.GaussRound;
+
                 if (!gaussCd.IsCooldown && !ricochetCd.IsCooldown)
                     return actionID;
 
-                if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining)
+                if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining )
                     return MCH.GaussRound;
                 else
                     return MCH.Ricochet;
@@ -180,12 +183,12 @@ namespace XIVComboExpandedPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == MCH.Drill || actionID  == MCH.HotShot || actionID == MCH.AirAnchor)
+                if (actionID == MCH.Drill || actionID == MCH.HotShot || actionID == MCH.AirAnchor)
                 {
                     if (level < MCH.Levels.Drill)
                         return MCH.HotShot;
 
-                    
+
                     var anchorHSCD = GetCooldown(MCH.AirAnchor);
                     var drillCD = GetCooldown(MCH.Drill);
 

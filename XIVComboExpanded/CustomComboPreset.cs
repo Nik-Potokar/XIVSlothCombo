@@ -48,7 +48,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Scathe/Xenoglossy Feature", "Scathe becomes Xenoglossy when available.", BLM.JobID, BLM.Scathe)]
         BlackScatheFeature = 95,
 
-        [CustomComboInfo("Fire 1/3", "Fire 1 becomes Fire 3 outside of Astral Fire, OR when Firestarter proc is up.", BLM.JobID, BLM.Fire3 , BLM.Fire)]
+        [CustomComboInfo("Fire 1/3", "Fire 1 becomes Fire 3 outside of Astral Fire, OR when Firestarter proc is up.", BLM.JobID, BLM.Fire3, BLM.Fire)]
         BlackFire13Feature = 98,
 
         [CustomComboInfo("Thunder", "Thunder 1/3 replaces Enochian/Fire 4/Blizzard 4 on Enochian switcher.\n Occurs when Thundercloud is up and either\n- Thundercloud buff on you is about to run out, or\n- Thunder debuff on your CURRENT target is about to run out\nassuming it won't interrupt timer upkeep.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Thunder, BLM.Thunder3)]
@@ -56,6 +56,10 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Fire4)]
         BlackDespairFeature = 101,
+
+        // [CustomComboInfo("All in one AoE Feature", "AoE version of all in one feature", BLM.JobID, BLM.Scathe)]
+        //  BlackAoEComboFeature = 125,
+
 
         #endregion
         // ====================================================================================
@@ -144,7 +148,7 @@ namespace XIVComboExpandedPlugin
         DRKLivingShadowFeature = 105,
 
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
-        DarkManaOvercapFeature = 108, 
+        DarkManaOvercapFeature = 108,
 
 
         #endregion
@@ -175,7 +179,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("DangerZoneFeature", "Adds DangerZone on main combo.", GNB.JobID, GNB.DangerZone)]
         GunbreakerDangerZoneFeature = 118,
 
-        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown)]
+        [CustomComboInfo("DoubleDownFeature", "Adds DangerZone on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown)]
         GunbreakerDoubleDownFeature = 119,
 
         #endregion
@@ -248,7 +252,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID, NIN.AeolianEdge)]
         NinjaNinjutsuFeature = 91,
 
-        [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, NIN.AeolianEdge, NIN.ArmorCrush, NIN.HakkeMujinsatsu , NIN.GustSlash , NIN.SpinningEdge)]
+        [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, NIN.AeolianEdge, NIN.ArmorCrush, NIN.HakkeMujinsatsu, NIN.GustSlash, NIN.SpinningEdge)]
         NinjaGCDNinjutsuFeature = 92,
 
 
@@ -302,7 +306,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Verproc into Jolt Plus Opener Feature", "Turns Verfire into Verthunder when out of combat.\nRequires Verproc into Jolt Plus.", RDM.JobID, RDM.Verfire)]
         RedMageVerprocOpenerFeature = 94,
 
-        [CustomComboInfo("Ogcd's all in one button", "Ogcd Combo", RDM.JobID, RDM.ContreSixte , RDM.Engagement , RDM.Fleche)]
+        [CustomComboInfo("Ogcd's all in one button", "Ogcd Combo", RDM.JobID, RDM.ContreSixte, RDM.Engagement, RDM.Fleche)]
         RedMageOgcdCombo = 99,
 
         #endregion
@@ -363,25 +367,36 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region SUMMONER
 
-        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks", SMN.JobID, SMN.Fester)]
+        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks and adds Ruin4 onto its combo", SMN.JobID, SMN.Fester)]
         SummonerEDFesterCombo = 39,
 
-        [CustomComboInfo("ES Painflare", "Change Painflare into Energy Syphon when out of Aetherflow stacks", SMN.JobID, SMN.Painflare)]
+        [CustomComboInfo("ES Painflare ", "Change Painflare into Energy Syphon when out of Aetherflow stacks adds Ruin4 onto its combo", SMN.JobID, SMN.Painflare)]
         SummonerESPainflareCombo = 40,
 
-        [CustomComboInfo("Bahamut/Phoenix on ruin3", "Adds Summon Bahamut/Phoenic on Ruin 3 combo", SMN.JobID, SMN.SummonBahamut, SMN.SummonBahamut, SMN.Ruin3)]
-        SummonerBahamutPhoenixFeature = 28,
+        [CustomComboInfo("Egi Astral Flow Feature", "Adds Egi's astral flow unique ability on main combo ", SMN.JobID, SMN.Fester, SMN.EnergyDrain, SMN.Ruin4)]
+        SummonerEgiUniqueSkillFeature = 28,
 
-        [CustomComboInfo("Testing", "Only enable when testing", SMN.JobID, SMN.SummonBahamut, SMN.SummonBahamut, SMN.Ruin3)]
+        [CustomComboInfo("Egi Astral Flow AoE Feature", "Adds Egi's astral flow unique ability on main AoE combo ", SMN.JobID, SMN.Tridisaster)]
+        SummonerEgiAoeComboFeature = 123,
 
-        SummonnerTesting = 38,
+        [CustomComboInfo("Easy Egi Feature", "Replaces Ruin3 with Egi single target skil.", SMN.JobID, SMN.Fester, SMN.EnergyDrain, SMN.Ruin4)]
+        SummonerEgiRuinFeature = 106,
+
+        [CustomComboInfo("Ruin3 Main Combo Feature +", "Adds deathflare, Enkindle bahamut/phoenix onto main combo", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        SummonerMainComboFeature = 104,
+
+        [CustomComboInfo("Summoner AoE Feature +", "Adds deathflare, Enkindle bahamut/phoenix onto AOE tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
+        SummonerAOEComboFeature = 122,
+
+
+
 
 
         #endregion
         // ====================================================================================
         #region WARRIOR
 
-        [CustomComboInfo("Storms Path Combo", "Replace Storms Path with its combo chain", WAR.JobID, WAR.StormsPath)]
+        [CustomComboInfo("Storms Path Combo", "All in one main combo feature adds Storm's Eye/Path", WAR.JobID, WAR.StormsPath)]
         WarriorStormsPathCombo = 8,
 
         [CustomComboInfo("Storms Eye Combo", "Replace Storms Eye with its combo chain", WAR.JobID, WAR.StormsEye)]
@@ -428,10 +443,24 @@ namespace XIVComboExpandedPlugin
         WHMRaiseFeature = 112,
         #endregion
         // ====================================================================================
+        #region Reaper
+
+        [CustomComboInfo("Reaper Main Combo Feature", "Main Combo on 1 button", RPR.JobID, RPR.Slice)]
+        ReaperSliceCombo = 124,
+
+        [CustomComboInfo("Reaper AOE Combo Feature", "AoE on one button", RPR.JobID, RPR.SpinningScythe)]
+        ReaperScytheCombo = 120,
+
+        [CustomComboInfo("Reaper Enshroud Feature", "Enshroud feature", RPR.JobID, RPR.Enshroud)]
+        ReaperEnshroudCommunioFeature = 121,
+
+
+        #endregion
+        // ====================================================================================
         #region DISCIPLE OF MAGIC
 
         //[CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
-       // DoMSwiftcastFeature = 109,
+        // DoMSwiftcastFeature = 109,
 
         #endregion
     }

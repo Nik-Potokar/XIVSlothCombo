@@ -70,10 +70,10 @@ namespace XIVComboExpandedPlugin.Combos
 
                     if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
                         return DRK.SyphonStrike;
-                        if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
+                    if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
+                    {
+                        if (currentMp > 8000)
                         {
-                            if (currentMp > 8000)
-                            {
                             if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
                                 return DRK.EdgeOfShadow;
                             if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
@@ -81,8 +81,8 @@ namespace XIVComboExpandedPlugin.Combos
                             if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
                                 return DRK.EdgeOfDarkness;
 
-                            }
                         }
+                    }
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
@@ -91,7 +91,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var gcdCooldown1 = GetCooldown(DRK.HardSlash);
                 var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
                 var gcdCooldown3 = GetCooldown(DRK.Souleater);
-                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining; 
+                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
 
                 if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
@@ -107,11 +107,11 @@ namespace XIVComboExpandedPlugin.Combos
                 }
                 if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
                 {
-                    
+
                     return DRK.Bloodspiller;
 
                 }
-                        
+
 
                 return DRK.HardSlash;
             }

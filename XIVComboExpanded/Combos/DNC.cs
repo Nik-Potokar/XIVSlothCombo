@@ -49,6 +49,8 @@ namespace XIVComboExpandedPlugin.Combos
                 FlourishingShower = 1817,
                 StandardStep = 1818,
                 TechnicalStep = 1819,
+                FlourishingSymetry = 2693,
+                FlourishingFlow = 2694,
                 FlourishingFanDance = 1820;
         }
 
@@ -163,16 +165,16 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == DNC.Flourish)
             {
-                if (HasEffect(DNC.Buffs.FlourishingFountain))
+                if (HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Fountainfall;
 
-                if (HasEffect(DNC.Buffs.FlourishingCascade))
+                if (HasEffect(DNC.Buffs.FlourishingSymetry))
                     return DNC.ReverseCascade;
 
-                if (HasEffect(DNC.Buffs.FlourishingShower))
+                if (HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Bloodshower;
 
-                if (HasEffect(DNC.Buffs.FlourishingWindmill))
+                if (HasEffect(DNC.Buffs.FlourishingSymetry))
                     return DNC.RisingWindmill;
 
                 return DNC.Flourish;
@@ -191,11 +193,11 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == DNC.Cascade)
             {
                 // From Fountain
-                if (HasEffect(DNC.Buffs.FlourishingFountain))
+                if (HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Fountainfall;
 
                 // From Cascade
-                if (HasEffect(DNC.Buffs.FlourishingCascade))
+                if (HasEffect(DNC.Buffs.FlourishingSymetry))
                     return DNC.ReverseCascade;
 
                 // Cascade Combo
@@ -218,11 +220,11 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == DNC.Windmill)
             {
                 // From Bladeshower
-                if (HasEffect(DNC.Buffs.FlourishingShower))
+                if (HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Bloodshower;
 
                 // From Windmill
-                if (HasEffect(DNC.Buffs.FlourishingWindmill))
+                if (HasEffect(DNC.Buffs.FlourishingSymetry))
                     return DNC.RisingWindmill;
 
                 // Windmill Combo

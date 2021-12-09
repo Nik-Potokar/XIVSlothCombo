@@ -16,6 +16,7 @@ namespace XIVComboExpandedPlugin.Combos
             Transpose = 149,
             Fire3 = 152,
             Thunder3 = 153,
+            Thunder4 = 7420,
             Blizzard3 = 154,
             Scathe = 156,
             Freeze = 159,
@@ -140,13 +141,27 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == BLM.Fire4)
             {
-                    var gauge = GetJobGauge<BLMGauge>();
-                    var thundercloudduration = FindEffectAny(BLM.Buffs.Thundercloud);
-                    var thunderdebuffontarget = FindTargetEffect(BLM.Debuffs.Thunder3);
-                    var thunderOneDebuff = FindTargetEffect(BLM.Debuffs.Thunder);
-                    if (gauge.InUmbralIce && level >= BLM.Levels.Blizzard4)
+                var gauge = GetJobGauge<BLMGauge>();
+                var thundercloudduration = FindEffectAny(BLM.Buffs.Thundercloud);
+                var thunderdebuffontarget = FindTargetEffect(BLM.Debuffs.Thunder3);
+                var thunderOneDebuff = FindTargetEffect(BLM.Debuffs.Thunder);
+                if (gauge.InUmbralIce && level >= BLM.Levels.Blizzard4)
+                {
+                    if (gauge.ElementTimeRemaining >= 5000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
                     {
-                        if (gauge.ElementTimeRemaining >= 5000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
+                        if (HasEffect(BLM.Buffs.Thundercloud))
+                        {
+                            if ((thundercloudduration.RemainingTime < 4 && thundercloudduration.RemainingTime > 0) || (TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4))
+                                return BLM.Thunder3;
+
+                        }
+                    }
+
+                    return BLM.Blizzard4;
+                }
+                if (level >= BLM.Levels.Fire4)
+                {
+                    if (gauge.ElementTimeRemaining >= 6000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
                     {
                         if (HasEffect(BLM.Buffs.Thundercloud))
                         {
@@ -155,32 +170,21 @@ namespace XIVComboExpandedPlugin.Combos
                         }
                     }
 
-                        return BLM.Blizzard4;
-                    }
-                    if (level >= BLM.Levels.Fire4)
-                        {
-                        if (gauge.ElementTimeRemaining >= 6000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
+                    if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature))
+                        return BLM.Fire3;
+                    if (LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && CustomCombo.IsEnabled(CustomComboPreset.BlackDespairFeature))
                     {
-                        if (HasEffect(BLM.Buffs.Thundercloud))
-                        {
-                            if ((thundercloudduration.RemainingTime < 4 && thundercloudduration.RemainingTime > 0) || (TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4))
-                                return BLM.Thunder3;
-                        }
+                        return BLM.Despair;
                     }
-
-                        if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature))
-                            return BLM.Fire3;
-                        if (LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && CustomCombo.IsEnabled(CustomComboPreset.BlackDespairFeature))
-                            {
-                                return BLM.Despair;
-                            }
-                        if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature)))
-                            return BLM.Fire;
-                        return BLM.Fire4;
-                        }
+                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && level == 90 ))
+                        return BLM.Paradox;
+                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature)))
+                        return BLM.Fire;
+                    return BLM.Fire4;
+                }
 
 
-                    if (gauge.ElementTimeRemaining >= 5000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature) && level < BLM.Levels.Thunder3)
+                if (gauge.ElementTimeRemaining >= 5000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature) && level < BLM.Levels.Thunder3)
                 {
                     if (HasEffect(BLM.Buffs.Thundercloud))
                     {
@@ -189,16 +193,18 @@ namespace XIVComboExpandedPlugin.Combos
                     }
                 }
 
-                    if (level < BLM.Levels.Fire3)
-                            return BLM.Fire;
-                    if (gauge.InAstralFire)
-                        {
-                            if (HasEffect(BLM.Buffs.Firestarter))
-                                return BLM.Fire3;
-                            return BLM.Fire;
-                        }
+                if (level < BLM.Levels.Fire3)
+                    return BLM.Fire;
+                if (gauge.InAstralFire)
+                {
+                    if(HasEffect(BLM.Buffs.Firestarter) && level == 90)
+                            return BLM.Paradox;
+                    if (HasEffect(BLM.Buffs.Firestarter))
+                        return BLM.Fire3;
+                    return BLM.Fire;
                 }
-            return actionID;
             }
+            return actionID;
         }
     }
+}

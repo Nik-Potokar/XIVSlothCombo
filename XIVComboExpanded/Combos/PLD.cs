@@ -19,6 +19,9 @@ namespace XIVComboExpandedPlugin.Combos
             Prominence = 16457,
             HolyCircle = 16458,
             Confiteor = 16459,
+            BladeOfFaith = 25748,
+            BladeOfTruth = 25749,
+            BladeOfValor = 25750,
             Atonement = 16460;
 
         public static class Buffs
@@ -44,7 +47,10 @@ namespace XIVComboExpandedPlugin.Combos
                 RoyalAuthority = 60,
                 HolyCircle = 72,
                 Atonement = 76,
-                Confiteor = 80;
+                Confiteor = 80,
+                BladeOfFaith = 90,
+                BladeOfTruth = 90,
+                BladeOfValor = 90;
         }
     }
 
@@ -56,11 +62,11 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == PLD.GoringBlade)
             {
-                 if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
+                if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
                 {
                     // Replace with Holy Spirit when Requiescat is up
                     if (HasEffect(PLD.Buffs.Requiescat))
-                     {
+                    {
                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && LocalPlayer.CurrentMp < 4000)
                             return PLD.Confiteor;
 
@@ -68,7 +74,7 @@ namespace XIVComboExpandedPlugin.Combos
                     }
                 }
 
-                 if (comboTime > 0)
+                if (comboTime > 0)
                 {
                     if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
                         return PLD.RiotBlade;
@@ -77,7 +83,7 @@ namespace XIVComboExpandedPlugin.Combos
                         return PLD.GoringBlade;
                 }
 
-                 return PLD.FastBlade;
+                return PLD.FastBlade;
             }
 
             return actionID;
@@ -92,19 +98,19 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == PLD.RoyalAuthority || actionID == PLD.RageOfHalone)
             {
-                 if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
-                 {
-                     // Replace with Holy Spirit when Requiescat is up
-                     if (HasEffect(PLD.Buffs.Requiescat))
-                     {
-                         // Replace with Confiteor when under 4000 MP
-                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && LocalPlayer.CurrentMp < 4000)
-                             return PLD.Confiteor;
-                         return PLD.HolySpirit;
+                if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
+                {
+                    // Replace with Holy Spirit when Requiescat is up
+                    if (HasEffect(PLD.Buffs.Requiescat))
+                    {
+                        // Replace with Confiteor when under 4000 MP
+                        if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && LocalPlayer.CurrentMp < 4000)
+                            return PLD.Confiteor;
+                        return PLD.HolySpirit;
                     }
-                 }
+                }
 
-                 if (comboTime > 0)
+                if (comboTime > 0)
                 {
                     var goringBladeDebuff = TargetHasEffect(PLD.Debuffs.GoringBlade);
                     var goingBladeDebuffTimer = FindTargetEffectAny(PLD.Debuffs.GoringBlade);
@@ -121,13 +127,13 @@ namespace XIVComboExpandedPlugin.Combos
                         return OriginalHook(PLD.RageOfHalone);
                 }
 
-                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
                 {
                     if (HasEffect(PLD.Buffs.SwordOath))
                         return PLD.Atonement;
                 }
 
-                 return PLD.FastBlade;
+                return PLD.FastBlade;
             }
 
             return actionID;
@@ -142,24 +148,24 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == PLD.Prominence)
             {
-                 if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
-                 {
-                     if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle)
-                     {
-                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && LocalPlayer.CurrentMp < 4000)
-                             return PLD.Confiteor;
+                if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
+                {
+                    if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle)
+                    {
+                        if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && LocalPlayer.CurrentMp < 4000)
+                            return PLD.Confiteor;
 
-                         return PLD.HolyCircle;
-                     }
-                 }
+                        return PLD.HolyCircle;
+                    }
+                }
 
-                 if (comboTime > 0)
+                if (comboTime > 0)
                 {
                     if (lastComboMove == PLD.TotalEclipse && level >= PLD.Levels.Prominence)
                         return PLD.Prominence;
                 }
 
-                 return PLD.TotalEclipse;
+                return PLD.TotalEclipse;
             }
 
             return actionID;
@@ -174,24 +180,28 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == PLD.HolySpirit)
             {
-                if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.Confiteor && LocalPlayer?.CurrentMp < 4000)
-                    return PLD.Confiteor;
+                if (actionID == PLD.HolySpirit || actionID == PLD.HolyCircle)
+                {
+                    if (lastComboMove == PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
+                        return PLD.BladeOfValor;
 
-                return PLD.HolySpirit;
+                    if (lastComboMove == PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
+                        return PLD.BladeOfTruth;
+
+                    if (lastComboMove == PLD.Confiteor && level >= PLD.Levels.BladeOfFaith)
+                        return PLD.BladeOfFaith;
+
+                    if (level >= PLD.Levels.Confiteor)
+                    {
+                        var requiescat = FindEffect(PLD.Buffs.Requiescat);
+                        if (requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000))
+                            return PLD.Confiteor;
+                    }
+                }
             }
-
-            if (actionID == PLD.HolyCircle)
-            {
-                if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.Confiteor && LocalPlayer?.CurrentMp < 4000)
-                    return PLD.Confiteor;
-
-                return PLD.HolyCircle;
-            }
-
             return actionID;
         }
     }
-
     internal class PaladinRequiescatCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.PaladinRequiescatCombo;
@@ -200,13 +210,25 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == PLD.Requiescat)
             {
-                if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.Confiteor)
-                    return PLD.Confiteor;
+                if (lastComboMove == PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
+                    return PLD.BladeOfValor;
 
-                return PLD.Requiescat;
+                if (lastComboMove == PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
+                    return PLD.BladeOfTruth;
+
+                if (lastComboMove == PLD.Confiteor && level >= PLD.Levels.BladeOfFaith)
+                    return PLD.BladeOfFaith;
+
+                if (level >= PLD.Levels.Confiteor)
+                {
+                    var requiescat = FindEffect(PLD.Buffs.Requiescat);
+                    if (requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000))
+                        return PLD.Confiteor;
+                }
             }
 
             return actionID;
         }
     }
 }
+

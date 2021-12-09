@@ -11,7 +11,7 @@ namespace XIVComboExpandedPlugin.Combos
             SpinningEdge = 2240,
             GustSlash = 2242,
             Hide = 2245,
-            Assassinate = 2246,
+            Assassinate = 8814,
             Mug = 2248,
             DeathBlossom = 2254,
             AeolianEdge = 2255,
@@ -75,7 +75,7 @@ namespace XIVComboExpandedPlugin.Combos
                         return 2242u;
                     }
                     var huton = GetJobGauge<NINGauge>();
-                    if (lastComboMove == NIN.GustSlash && level >= 20&& huton.HutonTimer < 30000)
+                    if (lastComboMove == NIN.GustSlash && level >= 20 && huton.HutonTimer < 30000)
                     {
                         return NIN.ArmorCrush;
                     }

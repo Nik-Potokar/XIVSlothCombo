@@ -50,7 +50,7 @@ namespace XIVComboExpandedPlugin.Combos
                 RefulgentArrow = 70,
                 Stormbite = 64,
                 BurstShot = 76;
-            
+
         }
     }
 
@@ -80,11 +80,11 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == BRD.HeavyShot || actionID == BRD.BurstShot)
             {
-                 var gauge = GetJobGauge<BRDGauge>().SoulVoice;
-                 if (gauge == 100 && IsEnabled(CustomComboPreset.BardApexFeature))
-                     return BRD.ApexArrow;
+                var gauge = GetJobGauge<BRDGauge>().SoulVoice;
+                if (gauge == 100 && IsEnabled(CustomComboPreset.BardApexFeature))
+                    return BRD.ApexArrow;
 
-                 if (HasEffect(BRD.Buffs.StraightShotReady))
+                if (HasEffect(BRD.Buffs.StraightShotReady))
                     return OriginalHook(BRD.RefulgentArrow);
             }
 
@@ -148,21 +148,21 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-     internal class BardApexFeature : CustomCombo
-     {
-         protected override CustomComboPreset Preset => CustomComboPreset.BardApexFeature;
-    
-         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-         {
-             if (actionID == BRD.QuickNock)
-             {
-                 var gauge = GetJobGauge<BRDGauge>();
-                 if (gauge.SoulVoice == 100)
-                     return BRD.ApexArrow;
-             }
-    
+    internal class BardApexFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardApexFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.QuickNock)
+            {
+                var gauge = GetJobGauge<BRDGauge>();
+                if (gauge.SoulVoice == 100)
+                    return BRD.ApexArrow;
+            }
+
             return actionID;
-         }
-     }
+        }
+    }
 
 }
