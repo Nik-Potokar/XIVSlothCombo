@@ -9,41 +9,75 @@ namespace XIVComboExpandedPlugin.Combos
         public const byte JobID = 27;
 
         public const uint
-            Gemshine = 25883,
-            EnergyDrain = 16508,
-            Fester = 181,
-            Resurrection = 173,
+            // summons
+            SummonRuby = 25802,
             SummonTopaz = 25803,
             SummonEmerald = 25804,
-            SummonRuby = 25802,
+
+            SummonIfrit = 25805,
+            SummonTitan = 25806,
+            SummonGaruda = 25807,
+
+            SummonIfrit2 = 25838,
+            SummonTitan2 = 25839,
+            SummonGaruda2 = 25840,
+
+            // summon abilities
+            Gemshine = 25883,
             PreciousBrilliance = 25884,
-            Ruin3 = 3579,
-            Ruin4 = 7426,
-            DreadwyrmTrance = 3581,
-            AstralFlow = 25822,
-            SummonBahamut = 7427,
-            SummonPhoenix = 25831,
-            EnkindleBahamut = 7429,
-            EnkindlePhoenix = 16516,
-            Deathflare = 3582,
-            Painflare = 3578,
-            AstralImpule = 25820,
-            FountainOfFire = 16514,
-            TopazRite = 25824,
+
+            // summon single targets
             RubyRite = 25823,
+            TopazRite = 25824,
             EmeraldRite = 25825,
-            Tridisaster = 25826,
-            AstralFlare = 25821,
-            EmeraldCata = 25834,
+
+            // summon aoes
             RubyCata = 25832,
             TopazCata = 25833,
-            BrandOfPurgatory = 16515,
-            Slipstream = 25837,
-            MountainBuster = 25836,
-            CrimsonStrike = 25885,
-            CrimsonCyclone = 25835,
-            EnergySyphon = 16510;
+            EmeraldCata = 25834,
 
+            // summon astral flows
+            CrimsonCyclone = 25835, // dash
+            CrimsonStrike = 25885, // melee
+            MountainBuster = 25836,
+            Slipstream = 25837,
+
+
+
+
+            // demisummons
+            SummonBahamut = 7427,
+            SummonPhoenix = 25831,
+
+            // demisummon abilities
+            AstralImpule = 25820, // single target bahamut gcd
+            AstralFlare = 25821, // aoe bahamut gcd
+            Deathflare = 3582, // damage ogcd bahamut
+            EnkindleBahamut = 7429,
+
+            FountainOfFire = 16514, // single target phoenix gcd
+            BrandOfPurgatory = 16515, // aoe phoenix gcd
+            Rekindle = 25830, // healing ogcd phoenix
+            EnkindlePhoenix = 16516,
+
+            // shared summon abilities
+            AstralFlow = 25822,
+
+            // summoner gcds
+            Ruin3 = 172,
+            Ruin4 = 7426,
+            Tridisaster = 16511,
+
+
+
+            // summoner ogcds
+            EnergyDrain = 16508,
+            Fester = 181,
+            EnergySyphon = 16510,
+            Painflare = 3578,
+
+            // revive
+            Resurrection = 173;
 
 
 
@@ -57,13 +91,6 @@ namespace XIVComboExpandedPlugin.Combos
 
         }
 
-        public static class Debuffs
-        {
-            public const short
-            Miasma3 = 1215,
-            Bio3 = 1214;
-        }
-
         public static class Levels
         {
             public const byte
@@ -75,9 +102,8 @@ namespace XIVComboExpandedPlugin.Combos
                 EnergySyphon = 52,
                 EnhancedFirebirdTrance = 80,
                 Slipstream = 86,
-                MountainBuster = 86,
-                CrimsonStrike = 86,
-                CrimsonCyclone = 86;
+                MountainBuster = 86;
+                //TODO: add summon levels
         }
     }
 
@@ -92,12 +118,12 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == SMN.Fester)
             {
                 var gauge = GetJobGauge<SMNGauge>();
-                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
+                //var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
                 var edrainCD = GetCooldown(SMN.EnergyDrain);
                 if (level >= SMN.Levels.EnergyDrain && !gauge.HasAetherflowStacks)
                     return SMN.EnergyDrain;
-                if (furtherRuin && edrainCD.IsCooldown)
-                    return SMN.Ruin4;
+                //if (furtherRuin && edrainCD.IsCooldown)
+                    //return SMN.Ruin4;
             }
             return actionID;
         }
@@ -111,12 +137,12 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == SMN.Painflare)
             {
                 var gauge = GetJobGauge<SMNGauge>();
-                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
+                //var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
                 var energysyphonCD = GetCooldown(SMN.EnergySyphon);
                 if (level >= SMN.Levels.EnergySyphon && !gauge.HasAetherflowStacks)
                     return SMN.EnergySyphon;
-                if (furtherRuin && energysyphonCD.IsCooldown)
-                    return SMN.Ruin4;
+                //if (furtherRuin && energysyphonCD.IsCooldown)
+                    //return SMN.Ruin4;
             }
             return actionID;
         }
@@ -129,21 +155,23 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == SMN.Ruin3)
+            if (actionID == SMN.Ruin3)
             {
-                 var gauge = GetJobGauge<SMNGauge>();
-                 var ruin3CD = GetCooldown(SMN.Ruin3);
-                 var astralcD = GetCooldown(SMN.AstralImpule);
-                 var deathflare = GetCooldown(SMN.Deathflare);
-                 var fountainfireCD = GetCooldown(SMN.FountainOfFire);
-                 var enkindleBahamut = GetCooldown(SMN.EnkindleBahamut);
-                 var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
-                 if (lastComboMove == SMN.AstralImpule && !deathflare.IsCooldown && astralcD.CooldownRemaining > 0.7)
+                var gauge = GetJobGauge<SMNGauge>();
+                var ruin3CD = GetCooldown(SMN.Ruin3);
+                var astralcD = GetCooldown(SMN.AstralImpule);
+                var deathflare = GetCooldown(SMN.Deathflare);
+                var fountainfireCD = GetCooldown(SMN.FountainOfFire);
+                var enkindleBahamut = GetCooldown(SMN.EnkindleBahamut);
+                var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
+
+                if (lastComboMove == SMN.AstralImpule && !deathflare.IsCooldown && astralcD.CooldownRemaining > 0.7)
                     return SMN.Deathflare;
-                 if (lastComboMove == SMN.AstralImpule && !enkindleBahamut.IsCooldown && astralcD.CooldownRemaining > 0.7)
+                if (lastComboMove == SMN.AstralImpule && !enkindleBahamut.IsCooldown && astralcD.CooldownRemaining > 0.7)
                     return SMN.EnkindleBahamut;
-                 if (lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.7)
+                if (lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.7)
                     return SMN.EnkindlePhoenix;
+
                 if (IsEnabled(CustomComboPreset.SummonerEgiUniqueSkillFeature))
                 {
                     var slipstreamCD = GetCooldown(SMN.Slipstream);
@@ -161,15 +189,16 @@ namespace XIVComboExpandedPlugin.Combos
                     if (gauge.IsIfritAttuned && !HasEffect(SMN.Buffs.IfritsFavor) && lastComboMove == SMN.CrimsonCyclone)
                         return SMN.CrimsonStrike;
                 }
+
                 if (IsEnabled(CustomComboPreset.SummonerEgiRuinFeature))
-                    {
+                {
                     if (gauge.IsGarudaAttuned)
                         return SMN.EmeraldRite;
                     if (gauge.IsTitanAttuned)
                         return SMN.TopazRite;
                     if (gauge.IsIfritAttuned)
                         return SMN.RubyRite;
-                    }
+                }
             }
             return actionID;
         }
