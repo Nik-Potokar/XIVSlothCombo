@@ -9,22 +9,28 @@
 
 
 Extra stuff: 
-
-* Warrior storm's path/eye on single button depending if you have the buff or not + Fell cleave feature on it
 * GNB Overcap feature on main 123 combo
 * BLM Easy Rotation
 * Monk basic combo feature
 * Red Mage 1 Button oCGD (Not perfect needs some fixing)
-* Summoner bahamut and phoenix phases are now on ruin3 including Enkindle Bahamut/Phoenix
 * Ninja huton/Armor crush combo on main combo when huton timer is low
 * Paladin DoT on main combo
 * DRK simplified 
 * Few more small tweaks 
 
+SMN:
+Demisummon combiners for Enkindle/Deathflare/Rekindle
+Individual combiners for every Egi aoe/single target/special attacks.
+Miscallaneous QoL Improvements
+
+WAR:
+Warrior storm's path/eye on single button depending if you have the buff or not + Fell cleave feature on it.
+
+
+
 In progress :
 
 * Lucid dreaming stuff
-* Summoner Dots on single button
 * Improvements to RDM
 
 ## If you wish for something to be added or have a request please add it into the issues tab and il take a look.
