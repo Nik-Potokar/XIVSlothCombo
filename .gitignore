@@ -1,2 +1,6 @@
-XIVComboExpanded/bin
-XIVComboExpanded/obj
+
+.vs/
+
+XIVComboExpanded/obj/
+
+XIVComboExpanded/bin/Debug/
