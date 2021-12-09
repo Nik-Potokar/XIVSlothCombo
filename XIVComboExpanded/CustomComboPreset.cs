@@ -460,7 +460,7 @@ namespace XIVComboExpandedPlugin
         WHMRaiseFeature = 1604,
         #endregion
         // ====================================================================================
-        #region Reaper
+        #region REAPER
 
         [CustomComboInfo("Reaper Main Combo Feature", "Main Combo on 1 button", RPR.JobID, RPR.Slice)]
         ReaperSliceCombo = 1700,
