@@ -15,7 +15,6 @@ Extra stuff:
 * Red Mage 1 Button oCGD (Not perfect needs some fixing)
 * Ninja huton/Armor crush combo on main combo when huton timer is low
 * Paladin DoT on main combo
-* DRK simplified 
 * Few more small tweaks 
 
 SMN:
@@ -26,6 +25,8 @@ Miscallaneous QoL Improvements
 WAR:
 Warrior storm's path/eye on single button depending if you have the buff or not + Fell cleave feature on it.
 
+DRK:
+Really fixed overcap features for aoe and single target combos.
 
 
 In progress :
