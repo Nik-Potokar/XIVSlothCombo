@@ -180,7 +180,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
                     return SMN.Slipstream;
-                else if (gauge.IsTitanAttuned && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
+                else if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
                     return SMN.MountainBuster;
                 else if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
                     return SMN.CrimsonCyclone;
@@ -229,19 +229,14 @@ namespace XIVComboExpandedPlugin.Combos
                         return SMN.Rekindle;
                 }
 
-                if (IsEnabled(CustomComboPreset.SummonerEgiAoeComboFeature))
-                {
-                    if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor))
-                        return SMN.Slipstream;
-                    else if ((gauge.IsTitanAttuned && HasEffect(SMN.Buffs.TitansFavor)) || (gauge.IsTitanAttuned && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazCata))
-                        return SMN.MountainBuster;
-                    else if (lastComboMove == SMN.TopazCata && HasEffect(SMN.Buffs.TitansFavor))
-                        return SMN.MountainBuster;
-                    else if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor))
-                        return SMN.CrimsonCyclone;
-                    else if (gauge.IsIfritAttuned && !HasEffect(SMN.Buffs.IfritsFavor) && lastComboMove == SMN.CrimsonCyclone)
-                        return SMN.CrimsonStrike;
-                }
+                if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
+                    return SMN.Slipstream;
+                else if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazCata && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
+                    return SMN.MountainBuster;
+                else if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
+                    return SMN.CrimsonCyclone;
+                else if (gauge.IsIfritAttuned && !HasEffect(SMN.Buffs.IfritsFavor) && lastComboMove == SMN.CrimsonCyclone && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
+                    return SMN.CrimsonStrike;
 
                 if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature))
                 {
