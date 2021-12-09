@@ -105,7 +105,6 @@ namespace XIVComboExpandedPlugin.Combos
                 EnhancedFirebirdTrance = 80,
                 Slipstream = 86,
                 MountainBuster = 86;
-                //TODO: add summon levels
         }
     }
 
@@ -181,9 +180,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
                     return SMN.Slipstream;
-                else if (((gauge.IsTitanAttuned && HasEffect(SMN.Buffs.TitansFavor)) || (gauge.IsTitanAttuned && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite)) && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
-                    return SMN.MountainBuster;
-                else if (lastComboMove == SMN.TopazRite && HasEffect(SMN.Buffs.TitansFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
+                else if (gauge.IsTitanAttuned && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
                     return SMN.MountainBuster;
                 else if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
                     return SMN.CrimsonCyclone;
