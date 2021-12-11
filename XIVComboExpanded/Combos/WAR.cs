@@ -168,7 +168,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                         return OriginalHook(WAR.Decimate);
-                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && !orogenyCD.IsCooldown && HasEffect(WAR.Buffs.InnerRelease))
+                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && !orogenyCD.IsCooldown && HasEffect(WAR.Buffs.InnerRelease) && level >= 86)
                         return OriginalHook(WAR.Orogeny);
 
 
@@ -186,11 +186,11 @@ namespace XIVComboExpandedPlugin.Combos
                                 return WAR.Decimate;
 
                         }
-                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && lastComboMove == WAR.Decimate))
+                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && lastComboMove == WAR.Decimate) && level >= 86)
                         {
                             return WAR.Orogeny;
                         }
-                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 ))
+                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && level >= 86))
                         {
                             return WAR.Orogeny;
                         }

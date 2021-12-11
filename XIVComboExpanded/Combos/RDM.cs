@@ -200,15 +200,29 @@ namespace XIVComboExpandedPlugin.Combos
                 if (lastComboMove == RDM.EnchantedRedoublement && level >= RDM.Levels.Verflare)
                     return RDM.Verflare;
 
+
+                //Thunder 3
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder3)
+                        return RDM.Verthunder3;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerFeature))
+                {
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder3)
+                        return RDM.Verthunder3;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
+                {
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
                         return RDM.Verthunder;
                 }
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerFeature))
                 {
-                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
                         return RDM.Verthunder;
                 }
 
