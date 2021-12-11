@@ -287,7 +287,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, PLD.CircleOfScorn, PLD.SpiritsWithin, PLD.Expiacion)]
         PaladinScornfulSpiritsFeature = 1007,
 
-        [CustomComboInfo("Easy Rotation Feature", "Adds Everything on Main Combo", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.HolySpirit, PLD.Confiteor)]
+        [CustomComboInfo("GCD's On Main Combo Feature", "Adds every GCD on main combo rotation, Weave oGCD abilities as needed", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.HolySpirit, PLD.Confiteor)]
         PaladingMainComboFeature = 1008,
 
         [CustomComboInfo("Standalone HolySpirit Confetior Feature", "Replaces Holyspirit into confetior combo", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle, PLD.Confiteor)]
@@ -492,20 +492,20 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region REAPER
 
-        [CustomComboInfo("Reaper Main Combo Feature", "Main Combo on 1 button", RPR.JobID, RPR.Slice)]
+        [CustomComboInfo("Reaper Main Combo Feature", "Adds all of the basic single target combos onto one button", RPR.JobID, RPR.Slice)]
         ReaperSliceCombo = 1700,
 
-        [CustomComboInfo("Reaper AOE Combo Feature", "AoE on one button", RPR.JobID, RPR.SpinningScythe)]
+        [CustomComboInfo("Reaper AOE Combo Feature", "Adds all of the basic AoE target combos onto one button", RPR.JobID, RPR.SpinningScythe)]
         ReaperScytheCombo = 1701,
 
         [CustomComboInfo("Reaper Enshroud Feature", "Enshroud feature", RPR.JobID, RPR.Enshroud)]
         ReaperEnshroudCommunioFeature = 1702,
 
         [CustomComboInfo("Soul Reaver Gallows Feature", "Replace Shadow of Death with Gallows while Reaving or Enshrouded (Only Enable Feature or Option not both).", RPR.JobID, RPR.ShadowOfDeath)]
-        ReaperSoulReaverGallowsFeature = 1703,
+        ReaperGibbetGallowsFeature = 1703,
 
         [CustomComboInfo("Soul Reaver Gallows Option", "Replace Shadow of Death with Gibbet instead while Reaving or Enshrouded (Only Enable Feature or Option not both)", RPR.JobID, RPR.ShadowOfDeath)]
-        ReaperSoulReaverGallowsOption = 1704,
+        ReaperGibbetGallowsOption = 1704,
 
         [CustomComboInfo("Regress Feature", "Both Hell's Ingress and Egress turn into Regress when Threshold is active, instead of just the opposite of the one used.", RPR.JobID, RPR.HellsIngress, RPR.Regress)]
         ReaperRegressFeature = 1705,
@@ -519,6 +519,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Whorl Of Death Feature", "Adds Whorl of Death to Main AoE Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.SpinningScythe, RPR.NightmareScythe)]
         ReaperWhorlOfDeathFeature = 1708,
 
+        [CustomComboInfo("Guillotine Feature", "Spinning Scythe's combo gets replaced with Guillotine while Soul Reaver or Shroud is active.", RPR.JobID, RPR.SpinningScythe)]
+        ReaperGuillotineFeature = 1709,
 
         #endregion
         // ====================================================================================

@@ -30,7 +30,11 @@
             ShadowOfDeath = 24378,
             HellsIngress = 24401,
             HellsEgress = 24402,
-            Regress = 24403;
+            Regress = 24403,
+            Harpe = 24386,
+            // Gauge
+            SoulSlice = 24380,
+            SoulScythe = 24381;
 
         public static class Buffs
         {
@@ -41,6 +45,7 @@
                 EnhancedGallows = 2589,
                 EnhancedVoidReaping = 2590,
                 EnhancedCrossReaping = 2591,
+                EnhancedHarpe = 2859,
                 Enshrouded = 2593,
                 Threshold = 2595;
         }
@@ -76,10 +81,19 @@
         {
             if (actionID == RPR.Slice)
             {
+                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                {
+                    if ((HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded) && IsEnabled(CustomComboPreset.ReaperGibbetGallowsOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded)))
+                        return OriginalHook(RPR.Gallows);
+
+                    return OriginalHook(RPR.Gibbet);
+                }
+
                 if (comboTime > 0)
                 {
                     if (lastComboMove == RPR.Slice && level >= RPR.Levels.WaxingSlice)
                         return RPR.WaxingSlice;
+
                     if (lastComboMove == RPR.WaxingSlice && level >= RPR.Levels.InfernalSlice)
                         return RPR.InfernalSlice;
                 }
@@ -108,12 +122,15 @@
         {
             if (actionID == RPR.SpinningScythe)
             {
+                if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                    return OriginalHook(RPR.Guillotine);
+
                 if (comboTime > 0)
                 {
                     if (lastComboMove == RPR.SpinningScythe && level >= RPR.Levels.NightmareScythe)
                         return RPR.NightmareScythe;
                 }
-                if(IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
+                if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
                 {
                     var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
@@ -123,6 +140,7 @@
                         return RPR.WhorlOfDeath;
 
                 }
+
                 return RPR.SpinningScythe;
             }
 
@@ -138,8 +156,7 @@
         {
             if (actionID == RPR.Enshroud)
             {
-                var enshroudBuff = HasEffect((short)RPR.Buffs.Enshrouded);
-                if (level >= RPR.Levels.Communio && enshroudBuff)
+                if (level >= RPR.Levels.Communio && HasEffect(RPR.Buffs.Enshrouded))
                     return RPR.Communio;
 
                 return RPR.Enshroud;
@@ -148,21 +165,17 @@
             return actionID;
         }
     }
-    internal class ReaperSoulReaverGallowsFeature : CustomCombo
+
+    internal class GibbetGallowsFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.ReaperSoulReaverGallowsFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperGibbetGallowsFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == RPR.ShadowOfDeath)
             {
-                if (level >= RPR.Levels.SoulReaver && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                if ((HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded)) && (!IsEnabled(CustomComboPreset.ReaperGibbetGallowsOption) || (!HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.EnhancedGibbet))))
                 {
-                    if (IsEnabled(CustomComboPreset.ReaperSoulReaverGallowsOption))
-                        // Void Reaping
-                        return OriginalHook(RPR.Gibbet);
-
-                    // Cross Reaping
                     return OriginalHook(RPR.Gallows);
                 }
             }
@@ -170,6 +183,7 @@
             return actionID;
         }
     }
+
     internal class ReaperHarvestFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.ReaperHarvestFeature;
@@ -178,41 +192,26 @@
         {
             if (actionID == RPR.ArcaneCircle)
             {
-                if (level >= RPR.Levels.PlentifulHarvest && HasEffect(RPR.Buffs.ImmortalSacrifice))
+                if (HasEffect(RPR.Buffs.ImmortalSacrifice) && level >= RPR.Levels.PlentifulHarvest)
                     return RPR.PlentifulHarvest;
             }
-            return actionID;
-        }
-    }
-    internal class ReaperEnshroudCommunioFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.ReaperEnshroudCommunioFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == RPR.Enshroud)
-            {
-                if (level >= RPR.Levels.Communio && HasEffect(RPR.Buffs.Enshrouded))
-                    return RPR.Communio;
-            }
 
             return actionID;
         }
     }
+
     internal class ReaperRegressFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.ReaperRegressFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == RPR.HellsEgress || actionID == RPR.HellsIngress)
+            if ((actionID == RPR.HellsEgress || actionID == RPR.HellsIngress) && HasEffect(RPR.Buffs.Threshold))
             {
-                if (level >= RPR.Levels.Regress && HasEffect(RPR.Buffs.Threshold))
-                    return RPR.Regress;
+                return RPR.Regress;
             }
 
             return actionID;
         }
     }
-
 }
