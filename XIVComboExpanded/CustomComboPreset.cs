@@ -7,7 +7,6 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-        // Last enum used: 113 is free
 
         // ====================================================================================
         #region ASTROLOGIAN
@@ -57,8 +56,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Fire4)]
         BlackDespairFeature = 108,
 
-        // [CustomComboInfo("All in one AoE Feature", "AoE version of all in one feature", BLM.JobID, BLM.Scathe)]
-        //  BlackAoEComboFeature = 125,
+        [CustomComboInfo("Freeze Flare Feature", "AoE version of all in one feature (Testing)", BLM.JobID, BLM.Blizzard2, BLM.Freeze, BLM.Flare)]
+        BlackAoEComboFeature = 109,
 
 
         #endregion
@@ -158,29 +157,29 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain.", GNB.JobID, GNB.SolidBarrel)]
         GunbreakerSolidBarrelCombo = 600,
 
-        [CustomComboInfo("Wicked Talon Combo", "Replace Wicked Talon with its combo chain.", GNB.JobID, GNB.WickedTalon)]
+        [CustomComboInfo("Gnashing Fang Combo", "Replace Gnashing Fang with its combo chain.", GNB.JobID, GNB.GnashingFang)]
         GunbreakerGnashingFangCombo = 601,
 
-        [CustomComboInfo("Wicked Talon Continuation", "In addition to the Wicked Talon combo chain, put Continuation moves on Wicked Talon when appropriate.", GNB.JobID, GNB.WickedTalon)]
-        GunbreakerGnashingFangCont = 602,
-
         [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, GNB.DemonSlaughter)]
-        GunbreakerDemonSlaughterCombo = 603,
+        GunbreakerDemonSlaughterCombo = 602,
 
         [CustomComboInfo("Fated Circle Feature", "In addition to the Demon Slaughter combo, add Fated Circle when charges are full.", GNB.JobID, GNB.DemonSlaughter)]
-        GunbreakerFatedCircleFeature = 604,
+        GunbreakerFatedCircleFeature = 603,
 
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, GNB.BurstStrike)]
-        GunbreakerBloodfestOvercapFeature = 605,
+        GunbreakerBloodfestOvercapFeature = 604,
 
         [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
-        GunbreakerNoMercyFeature = 606,
+        GunbreakerNoMercyFeature = 605,
 
         [CustomComboInfo("DangerZoneFeature", "Adds DangerZone on main combo.", GNB.JobID, GNB.DangerZone)]
-        GunbreakerDangerZoneFeature = 607,
+        GunbreakerDangerZoneFeature = 606,
 
         [CustomComboInfo("DoubleDownFeature", "Adds DangerZone on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown)]
-        GunbreakerDoubleDownFeature = 608,
+        GunbreakerDoubleDownFeature = 607,
+
+        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        GunbreakerBurstStrikeConFeature = 608,
 
         #endregion
         // ====================================================================================
@@ -255,33 +254,46 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, NIN.AeolianEdge, NIN.ArmorCrush, NIN.HakkeMujinsatsu, NIN.GustSlash, NIN.SpinningEdge)]
         NinjaGCDNinjutsuFeature = 909,
 
+        [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.FleetingRaiju)]
+        NinjaHuraijinRaijuFeature = 910,
+
 
 
         #endregion
         // ====================================================================================
         #region PALADIN
 
-        [CustomComboInfo("Goring Blade Combo", "Replace Goring Blade with its combo chain.", PLD.JobID, PLD.GoringBlade)]
+        [CustomComboInfo("Goring Blade Combo", "Replace Goring Blade with its combo chain.", PLD.JobID, PLD.GoringBlade, PLD.FastBlade, PLD.RiotBlade)]
         PaladinGoringBladeCombo = 1000,
 
-        [CustomComboInfo("Royal Authority Combo", "Replace Royal Authority/Rage of Halone with its combo chain.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone)]
+        [CustomComboInfo("Royal Authority Combo", "Replace Royal Authority/Rage of Halone with its combo chain.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinRoyalAuthorityCombo = 1001,
 
-        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, PLD.RoyalAuthority)]
+        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, PLD.RoyalAuthority, PLD.Confiteor)]
         PaladinAtonementFeature = 1002,
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, PLD.Prominence)]
         PaladinProminenceCombo = 1003,
 
-        [CustomComboInfo("Requiescat Confiteor", "Replace Requiescat with Confiter while under the effect of Requiescat.", PLD.JobID, PLD.Requiescat)]
+        [CustomComboInfo("Requiescat Confiteor", "Replace Requiescat with Confiter while under the effect of Requiescat.", PLD.JobID, PLD.Requiescat, PLD.Confiteor)]
         PaladinRequiescatCombo = 1004,
 
         [CustomComboInfo("Requiescat Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active.\nRequires said combos to be activated to work.", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.Prominence)]
         PaladinRequiescatFeature = 1005,
 
-        [SecretCustomCombo]
-        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor while MP is under 4000 and Requiescat is up.", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle)]
+        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains.", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle)]
         PaladinConfiteorFeature = 1006,
+
+        [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, PLD.CircleOfScorn, PLD.SpiritsWithin, PLD.Expiacion)]
+        PaladinScornfulSpiritsFeature = 1007,
+
+        [CustomComboInfo("Easy Rotation Feature", "Adds Everything on Main Combo", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.HolySpirit, PLD.Confiteor)]
+        PaladingMainComboFeature = 1008,
+
+        [CustomComboInfo("Standalone HolySpirit Confetior Feature", "Replaces Holyspirit into confetior combo", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle, PLD.Confiteor)]
+        PaladinHolySpiritStandaloneFeature = 1009,
+
+
 
         #endregion
         // ====================================================================================
@@ -407,6 +419,17 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Egi Attacks Feature", "Replaces Ruin III and Tri-Disaster with Egi attacks. Requires Single Target or AOE Combo feature.", SMN.JobID, SMN.Fester, SMN.EnergyDrain, SMN.Ruin4)]
         SummonerEgiAttacksFeature = 1411,
 
+        // EXTRA
+
+        [CustomComboInfo("Ruin 4 On Ruin3 Combo Feature", "Adds Ruin4 on main Ruin3 combo feature when there are currently no summons being active.", SMN.JobID, SMN.Ruin, SMN.Ruin2, SMN.Ruin3, SMN.Ruin4)]
+        SummonerRuin4ToRuin3Feature = 1412,
+
+        [CustomComboInfo("Ruin 4 On Tridisaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster)]
+        SummonerRuin4ToTridisasterFeature = 1413,
+
+      // [CustomComboInfo("Summon Carbuncle Feature", "Adds Summon Carbuncle to Main Combo if there is no pet present.", SMN.JobID, SMN.SummonCarbuncle)]
+      //  SummonerCarbuncleFeature = 1414,
+
 
 
         #endregion
@@ -440,6 +463,13 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Upheaval Feature During IR", "Adds upheaval onto main combo during InnerRelease", WAR.JobID, WAR.Upheaval)]
         WarriorUpheavalMainComboFeatureDuringIR = 1508,
 
+        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
+        WarriorPrimalRendFeature = 1509,
+
+        [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
+        WarriorOrogenyFeature = 1510,
+
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
@@ -470,6 +500,24 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Reaper Enshroud Feature", "Enshroud feature", RPR.JobID, RPR.Enshroud)]
         ReaperEnshroudCommunioFeature = 1702,
+
+        [CustomComboInfo("Soul Reaver Gallows Feature", "Replace Shadow of Death with Gallows while Reaving or Enshrouded (Only Enable Feature or Option not both).", RPR.JobID, RPR.ShadowOfDeath)]
+        ReaperSoulReaverGallowsFeature = 1703,
+
+        [CustomComboInfo("Soul Reaver Gallows Option", "Replace Shadow of Death with Gibbet instead while Reaving or Enshrouded (Only Enable Feature or Option not both)", RPR.JobID, RPR.ShadowOfDeath)]
+        ReaperSoulReaverGallowsOption = 1704,
+
+        [CustomComboInfo("Regress Feature", "Both Hell's Ingress and Egress turn into Regress when Threshold is active, instead of just the opposite of the one used.", RPR.JobID, RPR.HellsIngress, RPR.Regress)]
+        ReaperRegressFeature = 1705,
+
+        [CustomComboInfo("Arcane Harvest Feature", "Replace Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID, RPR.ArcaneCircle)]
+        ReaperHarvestFeature = 1706,
+
+        [CustomComboInfo("Shadow Of Death Feature", "Adds Shadow of Death to Main Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.Slice, RPR.WaxingSlice, RPR.WaxingSlice, RPR.ShadowOfDeath)]
+        ReaperShadowOfDeathFeature = 1707,
+
+        [CustomComboInfo("Whorl Of Death Feature", "Adds Whorl of Death to Main AoE Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.SpinningScythe, RPR.NightmareScythe)]
+        ReaperWhorlOfDeathFeature = 1708,
 
 
         #endregion

@@ -26,6 +26,10 @@ namespace XIVComboExpandedPlugin.Combos
             CrownPlay = 25869,
             Astrodyne = 25870,
             FallMalefic = 25871,
+            Malefic1 = 3596,
+            Malefic2 = 3598,
+            Malefic3 = 7442,
+            Combust = 3599,
             Play = 17055;
 
         public static class Buffs
@@ -38,7 +42,11 @@ namespace XIVComboExpandedPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Combust1 = 1881,
+            Combust2 = 843,
+            Combust3 = 838;
+
         }
 
         public static class Levels

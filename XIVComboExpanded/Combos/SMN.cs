@@ -24,9 +24,27 @@ namespace XIVComboExpandedPlugin.Combos
             SummonTitan2 = 25839,
             SummonGaruda2 = 25840,
 
+            SummonCarbuncle = 25798,
+
             // summon abilities
             Gemshine = 25883,
             PreciousBrilliance = 25884,
+
+            // summon ruins
+            RubyRuin1 = 25808,
+            RubyRuin2 = 25811,
+            RubyRuin3 = 25817,
+            TopazRuin1 = 25809,
+            TopazRuin2 = 25812,
+            TopazRuin3 = 25818,
+            EmeralRuin1 = 25810,
+            EmeralRuin2 = 25813,
+            EmeralRuin3 = 25819,
+
+            // summon outbursts
+            RubyOutburst = 25814,
+            TopazOutburst = 25815,
+            EmeraldOutburst = 25816,
 
             // summon single targets
             RubyRite = 25823,
@@ -66,9 +84,16 @@ namespace XIVComboExpandedPlugin.Combos
             AstralFlow = 25822,
 
             // summoner gcds
-            Ruin3 = 172,
+            Ruin = 163,
+            Ruin2 = 172,
+            Ruin3 = 3579,
             Ruin4 = 7426,
-            Tridisaster = 16511,
+            Tridisaster = 25826,
+
+            // summoner AoE
+            RubyDisaster = 25827,
+            TopazDisaster = 25828,
+            EmeraldDisaster = 25829,
 
 
 
@@ -103,8 +128,20 @@ namespace XIVComboExpandedPlugin.Combos
                 EnergyDrain = 10,
                 EnergySyphon = 52,
                 EnhancedFirebirdTrance = 80,
+                OutburstMastery2 = 82,
                 Slipstream = 86,
-                MountainBuster = 86;
+                MountainBuster = 86,
+
+                // summoner ruins lvls
+                RubyRuin1 = 22,
+                RubyRuin2 = 30,
+                RubyRuin3 = 54,
+                TopazRuin1 = 22,
+                TopazRuin2 = 30,
+                TopazRuin3 = 54,
+                EmeralRuin1 = 22,
+                EmeralRuin2 = 30,
+                EmeralRuin3 = 54;
         }
     }
 
@@ -156,7 +193,7 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Ruin3)
+            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || actionID == SMN.Ruin)
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature))
@@ -189,12 +226,41 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature))
                 {
-                    if (gauge.IsGarudaAttuned)
+                    // low level 1-29
+                    if (gauge.IsGarudaAttuned && level <= 29)
+                        return SMN.EmeralRuin1;
+                    else if (gauge.IsTitanAttuned && level <= 29)
+                        return SMN.TopazRuin1;
+                    else if (gauge.IsIfritAttuned  && level <= 29)
+                        return SMN.RubyRuin1;
+
+                    // low level 30-53
+                    if (gauge.IsGarudaAttuned && level >=30 && level <= 53)
+                        return SMN.EmeralRuin2;
+                    else if (gauge.IsTitanAttuned && level >= 30 && level <= 53)
+                        return SMN.TopazRuin2;
+                    else if (gauge.IsIfritAttuned && level >= 30 && level <= 53)
+                        return SMN.RubyRuin2;
+
+                    // low level 54-71
+                    if (gauge.IsGarudaAttuned && level >= 30 && level <= 71)
+                        return SMN.EmeralRuin3;
+                    else if (gauge.IsTitanAttuned && level >= 30 && level <= 71)
+                        return SMN.TopazRuin3;
+                    else if (gauge.IsIfritAttuned && level >= 30 && level <= 71)
+                        return SMN.RubyRuin3;
+
+                    if (gauge.IsGarudaAttuned && level >= 72)
                         return SMN.EmeraldRite;
-                    else if (gauge.IsTitanAttuned)
+                    else if (gauge.IsTitanAttuned && level >= 72)
                         return SMN.TopazRite;
-                    else if (gauge.IsIfritAttuned)
+                    else if (gauge.IsIfritAttuned && level >= 72)
                         return SMN.RubyRite;
+                }
+                if(IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature))
+                {
+                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
+                        return SMN.Ruin4;
                 }
             }
             return actionID;
@@ -240,12 +306,31 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature))
                 {
-                    if (gauge.IsGarudaAttuned)
+                    // low level 1-29
+                    if (gauge.IsGarudaAttuned && level >= 26 && level <= 73)
+                        return SMN.EmeraldOutburst;
+                    else if (gauge.IsTitanAttuned && level >= 26 && level <= 73)
+                        return SMN.TopazOutburst;
+                    else if (gauge.IsIfritAttuned && level >= 26 && level <= 73)
+                        return SMN.RubyOutburst;
+
+                    if (gauge.IsGarudaAttuned && level >= 82)
                         return SMN.EmeraldCata;
-                    else if (gauge.IsTitanAttuned)
+                    else if (gauge.IsGarudaAttuned && level <= 81)
+                        return SMN.EmeraldDisaster;
+                    else if (gauge.IsTitanAttuned && level >= 82)
                         return SMN.TopazCata;
-                    else if (gauge.IsIfritAttuned)
+                    else if (gauge.IsTitanAttuned && level <= 81)
+                        return SMN.TopazDisaster;
+                    else if (gauge.IsIfritAttuned && level >= 82)
                         return SMN.RubyCata;
+                    else if (gauge.IsIfritAttuned && level <= 81)
+                        return SMN.RubyDisaster;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature))
+                {
+                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
+                        return SMN.Ruin4;
                 }
             }
             return actionID;

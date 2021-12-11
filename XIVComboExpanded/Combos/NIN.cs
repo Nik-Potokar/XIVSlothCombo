@@ -25,7 +25,12 @@ namespace XIVComboExpandedPlugin.Combos
             TenChiJin = 7403,
             HakkeMujinsatsu = 16488,
             Meisui = 16489,
-            Jin = 18807;
+            Jin = 18807,
+            Bunshin = 16493,
+            Huraijin = 25876,
+            PhantomKamaitachi = 25774,
+            ForkedRaiju = 25777,
+            FleetingRaiju = 25778;
 
         public static class Buffs
         {
@@ -34,7 +39,9 @@ namespace XIVComboExpandedPlugin.Combos
                 Kassatsu = 497,
                 Suiton = 507,
                 Hidden = 614,
-                AssassinateReady = 1955;
+                AssassinateReady = 1955,
+                ForkedRaijuReady = 2690,
+                FleetingRaijuReady = 2691;
         }
 
         public static class Debuffs
@@ -50,7 +57,10 @@ namespace XIVComboExpandedPlugin.Combos
                 HakkeMujinsatsu = 52,
                 ArmorCrush = 54,
                 Meisui = 72,
-                EnhancedKassatsu = 76;
+                EnhancedKassatsu = 76,
+                Bunshin = 80,
+                PhantomKamaitachi = 82,
+                ForkedRaiju = 90;
         }
     }
 
@@ -219,6 +229,24 @@ namespace XIVComboExpandedPlugin.Combos
                 }
                 return 7403u;
             }
+            return actionID;
+        }
+    }
+    internal class NinjaHuraijinRaijuFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaHuraijinRaijuFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == NIN.Huraijin)
+            {
+                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.FleetingRaijuReady))
+                    return NIN.FleetingRaiju;
+
+                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.ForkedRaijuReady))
+                    return NIN.ForkedRaiju;
+            }
+
             return actionID;
         }
     }

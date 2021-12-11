@@ -241,5 +241,34 @@ namespace XIVComboExpandedPlugin.Combos
         /// <typeparam name="T">Type of job gauge.</typeparam>
         /// <returns>The job gauge.</returns>
         protected static T GetJobGauge<T>() where T : JobGaugeBase => Service.JobGauges.Get<T>();
+        protected static uint CalcBestAction(uint original, params uint[] actions)
+        {
+            static (uint ActionID, IconReplacer.CooldownData Data) Compare(
+                uint original,
+                (uint ActionID, IconReplacer.CooldownData Data) a1,
+                (uint ActionID, IconReplacer.CooldownData Data) a2)
+            {
+                // Neither, return the first parameter
+                if (!a1.Data.IsCooldown && !a2.Data.IsCooldown)
+                    return original == a1.ActionID ? a1 : a2;
+
+                // Both, return soonest available
+                if (a1.Data.IsCooldown && a2.Data.IsCooldown)
+                    return a1.Data.CooldownRemaining < a2.Data.CooldownRemaining ? a1 : a2;
+
+                // One or the other
+                return a1.Data.IsCooldown ? a2 : a1;
+            }
+
+            static (uint ActionID, IconReplacer.CooldownData Data) Selector(uint actionID)
+            {
+                return (actionID, GetCooldown(actionID));
+            }
+
+            return actions
+                .Select(Selector)
+                .Aggregate((a1, a2) => Compare(original, a1, a2))
+                .ActionID;
+        }
     }
 }

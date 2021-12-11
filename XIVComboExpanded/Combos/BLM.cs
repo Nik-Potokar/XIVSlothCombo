@@ -207,4 +207,25 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+    internal class BlackAoEComboFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BlackAoEComboFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BLM.Freeze || actionID == BLM.Flare)
+            {
+                var gauge = GetJobGauge<BLMGauge>();
+
+                if (level >= BLM.Levels.Freeze && gauge.InUmbralIce)
+                    return BLM.Freeze;
+
+                if (level >= BLM.Levels.Flare)
+                    return BLM.Flare;
+            }
+
+            return actionID;
+        }
+    }
+
 }

@@ -131,7 +131,7 @@ namespace XIVComboExpandedPlugin.Combos
                 if (IsEnabled(CustomComboPreset.DRKOvercapFeature))
                 {
                     var gauge = GetJobGauge<DRKGauge>();
-                    if (gauge.Blood >= 90 && HasEffect(DRK.Buffs.BloodWeapon))
+                    if (lastComboMove == DRK.Unleash && gauge.Blood >= 90)
                         return DRK.Quietus;
                 }
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
