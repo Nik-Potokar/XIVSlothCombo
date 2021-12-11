@@ -14,7 +14,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, AST.Play)]
         AstrologianCardsOnDrawFeature = 1,
 
-        [CustomComboInfo("Minor Arcana to Sleeve Draw", "Changes Minor Arcana to Sleeve Draw when a card is not drawn.", AST.JobID, AST.MinorArcana)]
+        [CustomComboInfo("Minor Arcana to Crown Play", "Changes Minor Arcana to Crown Play when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, AST.CrownPlay, AST.LadyOfCrown, AST.LordOfCrowns)]
         AstrologianCrownPlayFeature = 2,
 
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, AST.Benefic2)]
@@ -58,6 +58,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Freeze Flare Feature", "AoE version of all in one feature (Testing)", BLM.JobID, BLM.Blizzard2, BLM.Freeze, BLM.Flare)]
         BlackAoEComboFeature = 109,
+
+        [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
+        BlackBlizzardParadoxFeature = 110,
 
 
         #endregion

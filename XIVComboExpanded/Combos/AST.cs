@@ -30,7 +30,9 @@ namespace XIVComboExpandedPlugin.Combos
             Malefic2 = 3598,
             Malefic3 = 7442,
             Combust = 3599,
-            Play = 17055;
+            Play = 17055,
+            LordOfCrowns = 7444,
+            LadyOfCrown = 7445;
 
         public static class Buffs
         {
@@ -84,12 +86,15 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == AST.MinorArcana)
+            if (actionID == AST.CrownPlay)
             {
-                if (level >= AST.Levels.CrownPlay && (HasEffect(AST.Buffs.LordOfCrownsDrawn) || HasEffect(AST.Buffs.LadyOfCrownsDrawn)))
-                    return AST.CrownPlay;
+                var gauge = GetJobGauge<ASTGauge>();
+                var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
+                var lordofCrown = HasEffect(AST.Buffs.LordOfCrownsDrawn);
+                var minorArcanaCD = GetCooldown(AST.MinorArcana);
+                if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE )
+                    return AST.MinorArcana;
             }
-
             return actionID;
         }
     }

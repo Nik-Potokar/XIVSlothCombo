@@ -145,6 +145,14 @@ namespace XIVComboExpandedPlugin.Combos
                 var thundercloudduration = FindEffectAny(BLM.Buffs.Thundercloud);
                 var thunderdebuffontarget = FindTargetEffect(BLM.Debuffs.Thunder3);
                 var thunderOneDebuff = FindTargetEffect(BLM.Debuffs.Thunder);
+                if(IsEnabled(CustomComboPreset.BlackBlizzardParadoxFeature))
+                {
+                    if(gauge.UmbralHearts == 3 && gauge.InUmbralIce && level >= 90)
+                    {
+                        return BLM.Paradox;
+                    }
+                }
+
                 if (gauge.InUmbralIce && level >= BLM.Levels.Blizzard4)
                 {
                     if (gauge.ElementTimeRemaining >= 5000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
@@ -153,7 +161,6 @@ namespace XIVComboExpandedPlugin.Combos
                         {
                             if ((thundercloudduration.RemainingTime < 4 && thundercloudduration.RemainingTime > 0) || (TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4))
                                 return BLM.Thunder3;
-
                         }
                     }
 
@@ -176,9 +183,9 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         return BLM.Despair;
                     }
-                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && level == 90 ))
+                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && level == 90 && gauge.IsParadoxActive ))
                         return BLM.Paradox;
-                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature)))
+                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && !gauge.IsParadoxActive))
                         return BLM.Fire;
                     return BLM.Fire4;
                 }
@@ -202,6 +209,11 @@ namespace XIVComboExpandedPlugin.Combos
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
                     return BLM.Fire;
+                }
+                if (gauge.InUmbralIce)
+                {
+                    if (gauge.UmbralHearts == 3)
+                        return BLM.Paradox;
                 }
             }
             return actionID;
