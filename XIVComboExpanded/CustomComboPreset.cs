@@ -318,7 +318,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Verproc into Jolt Plus Opener Feature", "Turns Verfire into Verthunder when out of combat.\nRequires Verproc into Jolt Plus.", RDM.JobID, RDM.Verfire)]
         RedMageVerprocOpenerFeature = 1105,
 
-        [CustomComboInfo("Ogcd's all in one button", "Ogcd Combo", RDM.JobID, RDM.ContreSixte, RDM.Engagement, RDM.Fleche)]
+        [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
         RedMageOgcdCombo = 1106,
 
         #endregion

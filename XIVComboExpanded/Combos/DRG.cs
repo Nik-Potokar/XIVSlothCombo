@@ -86,7 +86,7 @@ namespace XIVComboExpandedPlugin.Combos
                 if (level >= DRG.Levels.Stardiver)
                 {
                     var gauge = GetJobGauge<DRGGauge>();
-                    if (gauge.BOTDState == BOTDState.LOTD)
+                    if (gauge.IsLOTDActive)
                         return DRG.Stardiver;
                 }
             }

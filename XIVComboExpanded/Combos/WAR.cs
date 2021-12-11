@@ -161,8 +161,17 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (actionID == WAR.MythrilTempest)
                 {
+                    var orogenyCD = GetCooldown(WAR.Orogeny);
+                    var mythrilCd = GetCooldown(WAR.MythrilTempest);
+                    var decimateCD = GetCooldown(WAR.Decimate);
+
+
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                         return OriginalHook(WAR.Decimate);
+                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && !orogenyCD.IsCooldown && HasEffect(WAR.Buffs.InnerRelease))
+                        return OriginalHook(WAR.Orogeny);
+
+
 
                     if (comboTime > 0)
                     {
@@ -175,10 +184,13 @@ namespace XIVComboExpandedPlugin.Combos
                                 return WAR.MythrilTempest;
                             if (lastComboMove == WAR.Overpower || lastComboMove == WAR.MythrilTempest && gauge >= 90)
                                 return WAR.Decimate;
+
                         }
-                        var orogenyCD = GetCooldown(WAR.Orogeny);
-                        var mythrilCd = GetCooldown(WAR.MythrilTempest);
-                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && level >= 86 ))
+                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && lastComboMove == WAR.Decimate))
+                        {
+                            return WAR.Orogeny;
+                        }
+                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 ))
                         {
                             return WAR.Orogeny;
                         }
