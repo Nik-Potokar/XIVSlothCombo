@@ -166,7 +166,7 @@ namespace XIVComboExpandedPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == WAR.MythrilTempest)
+                if (actionID == WAR.Overpower)
                 {
                     var orogenyCD = GetCooldown(WAR.Orogeny);
                     var mythrilCd = GetCooldown(WAR.MythrilTempest);
@@ -176,6 +176,8 @@ namespace XIVComboExpandedPlugin.Combos
                         return OriginalHook(WAR.Decimate);
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && !orogenyCD.IsCooldown && HasEffect(WAR.Buffs.InnerRelease) && level >= 86)
                         return OriginalHook(WAR.Orogeny);
+                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.NascentChaos) && level >= 72)
+                        return OriginalHook(WAR.ChaoticCyclone);
 
                     if (comboTime > 0)
                     {
