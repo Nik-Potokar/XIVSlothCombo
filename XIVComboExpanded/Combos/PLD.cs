@@ -199,7 +199,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (level >= PLD.Levels.Confiteor)
                     {
                         var requiescat = FindEffect(PLD.Buffs.Requiescat);
-                        if ((requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000)) || requiescat.RemainingTime < 4)
+                        if (requiescat != null)
                             return PLD.Confiteor;
                     }
                 }
