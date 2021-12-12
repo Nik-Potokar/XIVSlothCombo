@@ -150,16 +150,16 @@ namespace XIVComboExpandedPlugin.Combos
                                 }
                             }
                         }
-                    if (IsEnabled(CustomComboPreset.PaladingMainComboFeature))
+                        if (IsEnabled(CustomComboPreset.PaladingMainComboFeature))
                         {
-                        if (lastComboMove == PLD.BladeOfTruth && level >= 90)
-                            return PLD.BladeOfValor;
+                            if (lastComboMove == PLD.BladeOfTruth && level >= 90)
+                                return PLD.BladeOfValor;
 
-                        if (lastComboMove == PLD.BladeOfFaith && level >= 90)
-                            return PLD.BladeOfTruth;
+                            if (lastComboMove == PLD.BladeOfFaith && level >= 90)
+                                return PLD.BladeOfTruth;
 
-                         if (lastComboMove == PLD.Confiteor && level >= 90)
-                            return PLD.BladeOfFaith;
+                            if (lastComboMove == PLD.Confiteor && level >= 90)
+                                return PLD.BladeOfFaith;
 
                             if (level >= PLD.Levels.Confiteor)
                             {
@@ -253,14 +253,14 @@ namespace XIVComboExpandedPlugin.Combos
 
             return actionID;
         }
-     }
+    }
     internal class PaladinHolySpiritStandaloneFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.PaladinHolySpiritStandaloneFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-         if (actionID == PLD.HolySpirit)
+            if (actionID == PLD.HolySpirit)
             {
                 if (HasEffect(PLD.Buffs.Requiescat) && level >= 64)
                 {

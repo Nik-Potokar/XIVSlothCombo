@@ -1,15 +1,8 @@
-using System;
-using System.Linq;
-
-using Dalamud.Data;
-using Dalamud.Game.ClientState;
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.JobGauge;
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.Command;
-using Dalamud.Game.Gui;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
+using System;
+using System.Linq;
 
 namespace XIVComboExpandedPlugin
 {

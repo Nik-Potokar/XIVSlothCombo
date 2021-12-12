@@ -68,7 +68,7 @@ namespace XIVComboExpandedPlugin.Combos
                 Scorch = 80,
                 Veraero3 = 82,
                 Verthunder3 = 82;
-                
+
         }
     }
 

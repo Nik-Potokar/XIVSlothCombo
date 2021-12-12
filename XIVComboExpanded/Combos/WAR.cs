@@ -1,5 +1,4 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Structs;
 
 
 namespace XIVComboExpandedPlugin.Combos
@@ -237,4 +236,4 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
-}   
+}

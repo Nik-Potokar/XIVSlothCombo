@@ -92,7 +92,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
                 var lordofCrown = HasEffect(AST.Buffs.LordOfCrownsDrawn);
                 var minorArcanaCD = GetCooldown(AST.MinorArcana);
-                if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE )
+                if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE)
                     return AST.MinorArcana;
             }
             return actionID;

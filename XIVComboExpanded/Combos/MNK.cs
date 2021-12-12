@@ -77,22 +77,22 @@ namespace XIVComboExpandedPlugin.Combos
 
     internal class MnkBootshineFeature : CustomCombo
     {
-    protected override CustomComboPreset Preset => CustomComboPreset.MnkBootshineFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkBootshineFeature;
 
-    protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-         {
-             if (actionID == MNK.DragonKick)
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == MNK.DragonKick)
             {
-                 if (HasEffect(MNK.Buffs.LeadenFist) && (
-                    HasEffect(MNK.Buffs.FormlessFist) || HasEffect(MNK.Buffs.PerfectBalance) ||
-                     HasEffect(MNK.Buffs.OpoOpoForm) || HasEffect(MNK.Buffs.RaptorForm) || HasEffect(MNK.Buffs.CoerlForm)))
-                     return MNK.Bootshine;
+                if (HasEffect(MNK.Buffs.LeadenFist) && (
+                   HasEffect(MNK.Buffs.FormlessFist) || HasEffect(MNK.Buffs.PerfectBalance) ||
+                    HasEffect(MNK.Buffs.OpoOpoForm) || HasEffect(MNK.Buffs.RaptorForm) || HasEffect(MNK.Buffs.CoerlForm)))
+                    return MNK.Bootshine;
 
-                 if (level < MNK.Levels.DragonKick)
-                     return MNK.Bootshine;
+                if (level < MNK.Levels.DragonKick)
+                    return MNK.Bootshine;
             }
 
-             return actionID;
+            return actionID;
         }
     }
 

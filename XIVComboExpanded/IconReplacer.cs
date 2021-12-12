@@ -1,18 +1,11 @@
+using Dalamud.Hooking;
+using Dalamud.Logging;
+using Dalamud.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Statuses;
-using Dalamud.Hooking;
-using Dalamud.Logging;
-using Dalamud.Utility;
-using Lumina.Excel.GeneratedSheets;
 using XIVComboExpandedPlugin.Combos;
 
 namespace XIVComboExpandedPlugin

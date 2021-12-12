@@ -115,7 +115,7 @@ namespace XIVComboExpandedPlugin.Combos
                 if (!gaussCd.IsCooldown && !ricochetCd.IsCooldown)
                     return actionID;
 
-                if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining )
+                if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining)
                     return MCH.GaussRound;
                 else
                     return MCH.Ricochet;

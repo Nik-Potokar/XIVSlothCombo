@@ -17,7 +17,7 @@ namespace XIVComboExpandedPlugin.Combos
             Raise = 125,
             Swiftcast = 7561,
             AfflatusMisery = 16535;
-            
+
 
         public static class Buffs
         {

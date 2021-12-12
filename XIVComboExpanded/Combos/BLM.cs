@@ -1,5 +1,4 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Statuses;
 
 namespace XIVComboExpandedPlugin.Combos
 {
@@ -167,7 +166,7 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         if (HasEffect(BLM.Buffs.Thundercloud))
                         {
-                            if ((TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(BLM.Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35 ))
+                            if ((TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(BLM.Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35))
                                 return BLM.Thunder3;
                         }
                     }
@@ -177,7 +176,7 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         return BLM.Despair;
                     }
-                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && level == 90 && gauge.IsParadoxActive ))
+                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && level == 90 && gauge.IsParadoxActive))
                         return BLM.Paradox;
                     if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && !gauge.IsParadoxActive))
                         return BLM.Fire;
@@ -198,8 +197,8 @@ namespace XIVComboExpandedPlugin.Combos
                     return BLM.Fire;
                 if (gauge.InAstralFire)
                 {
-                    if(HasEffect(BLM.Buffs.Firestarter) && level == 90)
-                            return BLM.Paradox;
+                    if (HasEffect(BLM.Buffs.Firestarter) && level == 90)
+                        return BLM.Paradox;
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
                     return BLM.Fire;
