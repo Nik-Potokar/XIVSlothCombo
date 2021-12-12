@@ -1,43 +1,57 @@
-# Please forward all issues and suggestions to [Here](https://github.com/Nik-Potokar/MyDalamudPlugins)
+# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/MyDalamudPlugins).
+(Keep in mind we don't play every job, so if you're having an issue please describe your desired fix in detail. Feel free to make a pull request.)
 ### Updated Daily
-# If something dosen't seem to be working please swap class or re-slot the skill
+# If something dosen't seem to be working please swap class or re-slot the skill.
 
-# Has everything that expanded xivcombo has
+# Has everything that expanded xivcombo has and more ;)
 
 ### Repo Link
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
 
 
-Extra stuff: 
-* GNB Overcap feature on main 123 combo
-* BLM Easy Rotation
-* Monk basic combo feature
-* Red Mage 1 Button oCGD (Not perfect needs some fixing)
-* Ninja huton/Armor crush combo on main combo when huton timer is low
-* Paladin DoT on main combo
-* Few more small tweaks 
+
+GNB:
+- Overcap feature on main 123 combo
+BLM:
+- Easy Rotation
+MNK: 
+- Basic combo feature
+RDM:
+- 1 Button oCGD (Not perfect needs some fixing)
+NIN:
+- Huton/Armor crush combo on main combo when huton timer is low
+
+PLD:
+- DoT on main combo
 
 SMN:
-Demisummon combiners for Enkindle/Deathflare/Rekindle
-Individual combiners for every Egi aoe/single target/special attacks.
-Miscallaneous QoL Improvements
+- Demisummon combiners for Enkindle/Deathflare/Rekindle
+- Weaving Optimization for Demisummons.
+- Modular combiners for every Egi aoe/single target/special attacks
+- Support for level syncing
 
 WAR:
-Warrior storm's path/eye on single button depending if you have the buff or not + Fell cleave feature on it.
+
+- Warrior Storm's Path / Storm's Eye buff renewal on main combo
+- Fell cleave feature - never overcap
+- Support for level syncing
 
 DRK:
-Really fixed overcap features for aoe and single target combos.
+
+- Fixed overcap features for aoe and single target combos
+- Living Shadow on main combo
 
 
 In progress :
 
-* Lucid dreaming stuff
-* Improvements to RDM
+* Reaper
+* Sage
+* Summoner
 
-## If you wish for something to be added or have a request please add it into the issues tab and il take a look.
+## If you wish for something to be added or have a request please add it into the issues tab and we will take a look.
 
 # How to install
-
+Recommended:
 * Copy the Custom Repo Link `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
 * Open dalamud settings ingame
 * Paste the link into the Custom Plugin repositories
@@ -51,7 +65,7 @@ Or
 
 
 
-This is only for personal use only but if you want something special added let me know.
+This is for personal use only but if you want something special added let us know.
 
-*** Big Big  Thanks to [attick](https://github.com/attickdoor) && [daemitus](https://github.com/daemitus) For making it even possible, Please show them support for their original work <3 
+### Big Big  Thanks to [attick](https://github.com/attickdoor) & [daemitus](https://github.com/daemitus) For making it even possible, Please show them support for their original work <3 
 
