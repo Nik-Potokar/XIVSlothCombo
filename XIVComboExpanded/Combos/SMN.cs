@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVComboExpandedPlugin.Combos
@@ -125,6 +124,9 @@ namespace XIVComboExpandedPlugin.Combos
                 Slipstream = 86,
                 MountainBuster = 86,
 
+                Bahamut = 70,
+                Phoenix = 80,
+
                 // summoner ruins lvls
                 RubyRuin1 = 22,
                 RubyRuin2 = 30,
@@ -203,17 +205,17 @@ namespace XIVComboExpandedPlugin.Combos
                     var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
                     var rekindle = GetCooldown(SMN.Rekindle);
 
-                    if (lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && astralCD.CooldownRemaining > SMN.CooldownThreshold)
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && astralCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Deathflare;
-                    else if (lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > SMN.CooldownThreshold)
+                    else if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Rekindle;
-                    else if ((lastComboMove == SMN.Ruin4 || lastComboMove == SMN.Ruin3 || lastComboMove == SMN.Ruin2 || lastComboMove == SMN.Tridisaster) && (smnPhoenix.CooldownRemaining > 40 || smnBahamut.CooldownRemaining > 40) && !enkindleBahamut.IsCooldown && IsEnabled(CustomComboPreset.SummonerEnkindleWeave) && astralCD.CooldownRemaining > SMN.CooldownThreshold)
+                    else if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.Ruin4 || lastComboMove == SMN.Ruin3 || lastComboMove == SMN.Ruin2 || lastComboMove == SMN.Tridisaster) && (smnPhoenix.CooldownRemaining > 40 || smnBahamut.CooldownRemaining > 40) && !enkindleBahamut.IsCooldown && IsEnabled(CustomComboPreset.SummonerEnkindleWeave) && astralCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindleBahamut;
-                    else if (
+                    else if (level >= SMN.Levels.Bahamut &&
                         (lastComboMove == SMN.AstralImpulse || lastComboMove == SMN.Deathflare)
                         && !enkindleBahamut.IsCooldown && astralCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindleBahamut;
-                    else if (
+                    else if (level >= SMN.Levels.Phoenix &&
                         (lastComboMove == SMN.FountainOfFire || lastComboMove == SMN.Rekindle)
                         && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindlePhoenix;
@@ -236,11 +238,11 @@ namespace XIVComboExpandedPlugin.Combos
                         return SMN.EmeralRuin1;
                     else if (gauge.IsTitanAttuned && level <= 29)
                         return SMN.TopazRuin1;
-                    else if (gauge.IsIfritAttuned  && level <= 29)
+                    else if (gauge.IsIfritAttuned && level <= 29)
                         return SMN.RubyRuin1;
 
                     // low level 30-53
-                    if (gauge.IsGarudaAttuned && level >=30 && level <= 53)
+                    if (gauge.IsGarudaAttuned && level >= 30 && level <= 53)
                         return SMN.EmeralRuin2;
                     else if (gauge.IsTitanAttuned && level >= 30 && level <= 53)
                         return SMN.TopazRuin2;
@@ -296,17 +298,17 @@ namespace XIVComboExpandedPlugin.Combos
                     var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
                     var rekindle = GetCooldown(SMN.Rekindle);
 
-                    if (lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Deathflare;
-                    else if (lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
+                    else if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Rekindle;
-                    else if ((lastComboMove == SMN.Ruin4 || lastComboMove == SMN.Ruin3 || lastComboMove == SMN.Ruin2 || lastComboMove == SMN.Tridisaster) && (smnPhoenix.CooldownRemaining > 40 || smnBahamut.CooldownRemaining > 40) && !enkindleBahamut.IsCooldown && IsEnabled(CustomComboPreset.SummonerEnkindleWeave) && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
+                    else if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.Ruin4 || lastComboMove == SMN.Ruin3 || lastComboMove == SMN.Ruin2 || lastComboMove == SMN.Tridisaster) && (smnPhoenix.CooldownRemaining > 40 || smnBahamut.CooldownRemaining > 40) && !enkindleBahamut.IsCooldown && IsEnabled(CustomComboPreset.SummonerEnkindleWeave) && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindleBahamut;
-                    else if (
+                    else if (level >= SMN.Levels.Bahamut &&
                         (lastComboMove == SMN.AstralFlare || lastComboMove == SMN.SummonBahamut)
                         && !enkindleBahamut.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindleBahamut;
-                    else if (
+                    else if (level > SMN.Levels.Phoenix &&
                         (lastComboMove == SMN.BrandOfPurgatory || lastComboMove == SMN.SummonPhoenix)
                         && !enkindlePhoenix.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindlePhoenix;
