@@ -139,31 +139,26 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == BLM.Fire4)
+            if (actionID == BLM.Scathe)
             {
                 var gauge = GetJobGauge<BLMGauge>();
                 var thundercloudduration = FindEffectAny(BLM.Buffs.Thundercloud);
                 var thunderdebuffontarget = FindTargetEffect(BLM.Debuffs.Thunder3);
                 var thunderOneDebuff = FindTargetEffect(BLM.Debuffs.Thunder);
-                if(IsEnabled(CustomComboPreset.BlackBlizzardParadoxFeature))
-                {
-                    if(gauge.UmbralHearts == 3 && gauge.InUmbralIce && level >= 90)
-                    {
-                        return BLM.Paradox;
-                    }
-                }
+                var thunder3DebuffOnTarget = TargetHasEffect(BLM.Debuffs.Thunder3);
 
                 if (gauge.InUmbralIce && level >= BLM.Levels.Blizzard4)
                 {
-                    if (gauge.ElementTimeRemaining >= 5000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
+                    if (gauge.ElementTimeRemaining >= 0 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
                     {
                         if (HasEffect(BLM.Buffs.Thundercloud))
                         {
-                            if ((thundercloudduration.RemainingTime < 4 && thundercloudduration.RemainingTime > 0) || (TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4))
+                            if ((TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(BLM.Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35))
                                 return BLM.Thunder3;
                         }
+                        if (gauge.UmbralHearts == 3 && level >= 90)
+                            return BLM.Paradox;
                     }
-
                     return BLM.Blizzard4;
                 }
                 if (level >= BLM.Levels.Fire4)
@@ -172,11 +167,10 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         if (HasEffect(BLM.Buffs.Thundercloud))
                         {
-                            if ((thundercloudduration.RemainingTime < 4 && thundercloudduration.RemainingTime > 0) || (TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4))
+                            if ((TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(BLM.Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35 ))
                                 return BLM.Thunder3;
                         }
                     }
-
                     if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature))
                         return BLM.Fire3;
                     if (LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && CustomCombo.IsEnabled(CustomComboPreset.BlackDespairFeature))
@@ -195,7 +189,7 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (HasEffect(BLM.Buffs.Thundercloud))
                     {
-                        if ((thundercloudduration.RemainingTime < 4 && thundercloudduration.RemainingTime > 0) || (TargetHasEffect(BLM.Debuffs.Thunder) && thunderOneDebuff.RemainingTime < 4))
+                        if ((TargetHasEffect(BLM.Debuffs.Thunder) && thunderOneDebuff.RemainingTime < 4))
                             return BLM.Thunder;
                     }
                 }
@@ -209,11 +203,6 @@ namespace XIVComboExpandedPlugin.Combos
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
                     return BLM.Fire;
-                }
-                if (gauge.InUmbralIce)
-                {
-                    if (gauge.UmbralHearts == 3)
-                        return BLM.Paradox;
                 }
             }
             return actionID;
