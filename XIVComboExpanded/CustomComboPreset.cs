@@ -430,8 +430,11 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Ruin 4 On Tridisaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster)]
         SummonerRuin4ToTridisasterFeature = 1413,
 
-      // [CustomComboInfo("Summon Carbuncle Feature", "Adds Summon Carbuncle to Main Combo if there is no pet present.", SMN.JobID, SMN.SummonCarbuncle)]
-      //  SummonerCarbuncleFeature = 1414,
+        [CustomComboInfo("Earlier Demi Weave Feature", "Adds Enkindle right after summoning Demi. (Looks like Enkindle Bahamut for both Demis)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.Tridisaster)]
+        SummonerEnkindleWeave = 1414,
+
+        // [CustomComboInfo("Summon Carbuncle Feature", "Adds Summon Carbuncle to Main Combo if there is no pet present.", SMN.JobID, SMN.SummonCarbuncle)]
+        //  SummonerCarbuncleFeature = 1415,
 
 
 
