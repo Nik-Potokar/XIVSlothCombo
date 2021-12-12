@@ -29,7 +29,7 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region BLACK MAGE
 
-        [CustomComboInfo("Enochian Stance Switcher", "Change Enochian to Fire 4 or Blizzard 4 depending on stance.", BLM.JobID, BLM.Fire4)]
+        [CustomComboInfo("Enochian Stance Switcher", "Change Scathe to Fire 4 or Blizzard 4 depending on stance.", BLM.JobID, BLM.Scathe)]
         BlackEnochianFeature = 100,
 
         [CustomComboInfo("Umbral Soul/Transpose Switcher", "Change Transpose into Umbral Soul when Umbral Soul is usable.", BLM.JobID, BLM.Transpose)]
