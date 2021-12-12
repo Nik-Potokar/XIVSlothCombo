@@ -24,7 +24,11 @@ namespace XIVComboExpandedPlugin.Combos
             BowShock = 16159,
             BurstStrike = 16162,
             FatedCircle = 16163,
-            Bloodfest = 16164;
+            DoubleDown = 25760,
+            DangerZone = 16144,
+            BlastingZone = 16165,
+            Bloodfest = 16164,
+            Hypervelocity = 25759;
 
         public static class Buffs
         {
@@ -32,7 +36,8 @@ namespace XIVComboExpandedPlugin.Combos
                 NoMercy = 1831,
                 ReadyToRip = 1842,
                 ReadyToTear = 1843,
-                ReadyToGouge = 1844;
+                ReadyToGouge = 1844,
+                ReadyToBlast = 2686;
         }
 
         public static class Debuffs
@@ -51,7 +56,10 @@ namespace XIVComboExpandedPlugin.Combos
                 BowShock = 62,
                 Continuation = 70,
                 FatedCircle = 72,
-                Bloodfest = 76;
+                Bloodfest = 76,
+                EnhancedContinuation = 86,
+                CartridgeCharge3 = 88,
+                DoubleDown = 90;
         }
     }
 
@@ -65,9 +73,47 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (comboTime > 0)
                 {
+                    var maincomboCD1 = GetCooldown(GNB.KeenEdge);
+                    var maincomboCD2 = GetCooldown(GNB.BrutalShell);
+                    var maincomboCD3 = GetCooldown(GNB.SolidBarrel);
+                    var blastingzoneCD = GetCooldown(GNB.BlastingZone);
+                    var doubleDownCD = GetCooldown(GNB.DoubleDown);
+                    var bulletGauge = GetJobGauge<GNBGauge>();
+
+                    if (IsEnabled(CustomComboPreset.GunbreakerDangerZoneFeature))
+                    {
+                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80)
+                            return GNB.BlastingZone;
+                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80)
+                            return GNB.BlastingZone;
+                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80)
+                            return GNB.BlastingZone;
+                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
+                            return GNB.DangerZone;
+                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
+                            return GNB.DangerZone;
+                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
+                            return GNB.DangerZone;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.GunbreakerDoubleDownFeature))
+                    {
+                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level == 90 && HasEffect(GNB.Buffs.NoMercy))
+                            return GNB.DoubleDown;
+                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level == 90 && HasEffect(GNB.Buffs.NoMercy))
+                            return GNB.DoubleDown;
+                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level == 90 && HasEffect(GNB.Buffs.NoMercy))
+                            return GNB.DoubleDown;
+                    }
+
                     if (lastComboMove == GNB.KeenEdge && level >= GNB.Levels.BrutalShell)
                         return GNB.BrutalShell;
-
+                    if (lastComboMove == GNB.BrutalShell && level >= 88 && bulletGauge.Ammo == 3)
+                        return GNB.BurstStrike;
+                    if (lastComboMove == GNB.BrutalShell && level >= 4 && level <= 87 && bulletGauge.Ammo == 2)
+                        return GNB.BurstStrike;
+                    if (lastComboMove == GNB.BrutalShell && level >= GNB.Levels.EnhancedContinuation && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
+                        return GNB.Hypervelocity;
                     if (lastComboMove == GNB.BrutalShell && level >= GNB.Levels.SolidBarrel)
                         return GNB.SolidBarrel;
                 }
@@ -85,30 +131,38 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == GNB.WickedTalon)
+            if (actionID == GNB.GnashingFang)
             {
-                if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangCont))
+                if (level >= GNB.Levels.Continuation)
                 {
-                    if (level >= GNB.Levels.Continuation)
-                    {
-                        if (HasEffect(GNB.Buffs.ReadyToRip))
-                            return GNB.JugularRip;
+                    if (HasEffect(GNB.Buffs.ReadyToGouge))
+                        return GNB.EyeGouge;
 
-                        if (HasEffect(GNB.Buffs.ReadyToTear))
-                            return GNB.AbdomenTear;
+                    if (HasEffect(GNB.Buffs.ReadyToTear))
+                        return GNB.AbdomenTear;
 
-                        if (HasEffect(GNB.Buffs.ReadyToGouge))
-                            return GNB.EyeGouge;
-                    }
+                    if (HasEffect(GNB.Buffs.ReadyToRip))
+                        return GNB.JugularRip;
                 }
 
-                var gauge = GetJobGauge<GNBGauge>();
-                return gauge.AmmoComboStep switch
-                {
-                    1 => GNB.SavageClaw,
-                    2 => GNB.WickedTalon,
-                    _ => GNB.GnashingFang,
-                };
+                // Gnashing Fang > Savage Claw > Wicked Talon
+                return OriginalHook(GNB.GnashingFang);
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class GunbreakerBurstStrikeConFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerBurstStrikeConFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == GNB.BurstStrike)
+            {
+                if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
+                    return GNB.Hypervelocity;
             }
 
             return actionID;
@@ -128,7 +182,12 @@ namespace XIVComboExpandedPlugin.Combos
                     if (IsEnabled(CustomComboPreset.GunbreakerFatedCircleFeature))
                     {
                         var gauge = GetJobGauge<GNBGauge>();
-                        if (gauge.Ammo == 2 && level >= GNB.Levels.FatedCircle)
+                        if (gauge.Ammo == 3 && level >= 88)
+                        {
+                            return GNB.FatedCircle;
+                        }
+
+                        if (gauge.Ammo == 2 && level >= 4 && level <= 87)
                         {
                             return GNB.FatedCircle;
                         }
@@ -144,42 +203,42 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-     internal class GunbreakerBloodfestOvercapFeature : CustomCombo
-     {
-         protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerBloodfestOvercapFeature;
-    
-         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-         {
-             if (actionID == GNB.BurstStrike)
-             {
-                 var gauge = GetJobGauge<GNBGauge>().Ammo;
-                 if (gauge == 0 && level >= GNB.Levels.Bloodfest)
-                     return GNB.Bloodfest;
-            }
-    
-             return actionID;
-         }
-     }
+    internal class GunbreakerBloodfestOvercapFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerBloodfestOvercapFeature;
 
-     internal class GunbreakerNoMercyFeature : CustomCombo
-     {
-         protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerNoMercyFeature;
-    
-         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-         {
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == GNB.BurstStrike)
+            {
+                var gauge = GetJobGauge<GNBGauge>().Ammo;
+                if (gauge == 0 && level >= GNB.Levels.Bloodfest)
+                    return GNB.Bloodfest;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class GunbreakerNoMercyFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerNoMercyFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
             if (actionID == GNB.NoMercy)
-             {
-                 if (HasEffect(GNB.Buffs.NoMercy))
-                 {
-                     if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
-                         return GNB.BowShock;
-    
-                     if (level >= GNB.Levels.SonicBreak)
-                         return GNB.SonicBreak;
-                 }
-             }
-    
-             return actionID;
-         }
-     }
+            {
+                if (HasEffect(GNB.Buffs.NoMercy))
+                {
+                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
+                        return GNB.BowShock;
+
+                    if (level >= GNB.Levels.SonicBreak)
+                        return GNB.SonicBreak;
+                }
+            }
+
+            return actionID;
+        }
+    }
 }

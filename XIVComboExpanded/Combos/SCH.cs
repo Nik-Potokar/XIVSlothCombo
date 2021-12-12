@@ -11,11 +11,15 @@ namespace XIVComboExpandedPlugin.Combos
             FeyBless = 16543,
             Consolation = 16546,
             EnergyDrain = 167,
+            LucidDreaming = 7562,
+            Resurrection = 173,
+            Swiftcast = 7561,
             Aetherflow = 166;
 
         public static class Buffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Swiftcast = 167;
         }
 
         public static class Debuffs
@@ -60,6 +64,19 @@ namespace XIVComboExpandedPlugin.Combos
             }
 
             return actionID;
+        }
+
+        internal class SchRaiseFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.SchRaiseFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == SCH.Resurrection && GetCooldown(SCH.Swiftcast).CooldownRemaining == 0)
+                    return SCH.Swiftcast;
+
+                return actionID;
+            }
         }
     }
 }

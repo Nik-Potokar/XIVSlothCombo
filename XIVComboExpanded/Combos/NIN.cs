@@ -1,3 +1,5 @@
+using Dalamud.Game.ClientState.JobGauge.Types;
+
 namespace XIVComboExpandedPlugin.Combos
 {
     internal static class NIN
@@ -9,7 +11,7 @@ namespace XIVComboExpandedPlugin.Combos
             SpinningEdge = 2240,
             GustSlash = 2242,
             Hide = 2245,
-            Assassinate = 2246,
+            Assassinate = 8814,
             Mug = 2248,
             DeathBlossom = 2254,
             AeolianEdge = 2255,
@@ -23,7 +25,12 @@ namespace XIVComboExpandedPlugin.Combos
             TenChiJin = 7403,
             HakkeMujinsatsu = 16488,
             Meisui = 16489,
-            Jin = 18807;
+            Jin = 18807,
+            Bunshin = 16493,
+            Huraijin = 25876,
+            PhantomKamaitachi = 25774,
+            ForkedRaiju = 25777,
+            FleetingRaiju = 25778;
 
         public static class Buffs
         {
@@ -32,7 +39,9 @@ namespace XIVComboExpandedPlugin.Combos
                 Kassatsu = 497,
                 Suiton = 507,
                 Hidden = 614,
-                AssassinateReady = 1955;
+                AssassinateReady = 1955,
+                ForkedRaijuReady = 2690,
+                FleetingRaijuReady = 2691;
         }
 
         public static class Debuffs
@@ -48,10 +57,12 @@ namespace XIVComboExpandedPlugin.Combos
                 HakkeMujinsatsu = 52,
                 ArmorCrush = 54,
                 Meisui = 72,
-                EnhancedKassatsu = 76;
+                EnhancedKassatsu = 76,
+                Bunshin = 80,
+                PhantomKamaitachi = 82,
+                ForkedRaiju = 90;
         }
     }
-
 
     internal class NinjaAeolianEdgeCombo : CustomCombo
     {
@@ -65,24 +76,33 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(2260u);
                 }
+
                 if (comboTime > 0f)
                 {
                     if (lastComboMove == 2240 && level >= 4)
                     {
                         return 2242u;
                     }
+
+                    var huton = GetJobGauge<NINGauge>();
+                    if (lastComboMove == NIN.GustSlash && level >= 20 && huton.HutonTimer < 30000)
+                    {
+                        return NIN.ArmorCrush;
+                    }
+
                     if (lastComboMove == 2242 && level >= 26)
                     {
                         return 2255u;
                     }
                 }
+
                 return 2240u;
             }
+
             return actionID;
-
-
         }
     }
+
     internal class NinjaArmorCrushCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaArmorCrushCombo;
@@ -95,19 +115,23 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(2260u);
                 }
+
                 if (comboTime > 0f)
                 {
                     if (lastComboMove == 2240 && level >= 4)
                     {
                         return 2242u;
                     }
+
                     if (lastComboMove == 2242 && level >= 54)
                     {
                         return 3563u;
                     }
                 }
+
                 return 2240u;
             }
+
             return actionID;
         }
     }
@@ -122,9 +146,11 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 return 2246u;
             }
+
             return actionID;
         }
     }
+
     internal class NinjaHakkeMujinsatsuCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaHakkeMujinsatsuCombo;
@@ -137,14 +163,18 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(2260u);
                 }
+
                 if (comboTime > 0f && lastComboMove == 2254 && level >= 52)
                 {
                     return 16488u;
                 }
+
                 return 2254u;
             }
+
             return actionID;
         }
+
         internal class NinjaHideMugFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.NinjaHideMugFeature;
@@ -157,15 +187,18 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         return 2258u;
                     }
-                    if (CustomCombo.HasCondition((Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat)))
+
+                    if (CustomCombo.HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                     {
                         return 2248u;
                     }
                 }
+
                 return actionID;
             }
         }
     }
+
     internal class NinjaKassatsuChiJinFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaKassatsuChiJinFeature;
@@ -176,9 +209,11 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 return 18807u;
             }
+
             return actionID;
         }
     }
+
     internal class NinjaKassatsuTrickFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaKassatsuTrickFeature;
@@ -191,11 +226,14 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return 2258u;
                 }
+
                 return 2264u;
             }
+
             return actionID;
         }
     }
+
     internal class NinjaTCJMeisuiFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaTCJMeisuiFeature;
@@ -208,12 +246,30 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return 16489u;
                 }
+
                 return 7403u;
             }
+
             return actionID;
         }
     }
 
+    internal class NinjaHuraijinRaijuFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaHuraijinRaijuFeature;
 
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == NIN.Huraijin)
+            {
+                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.FleetingRaijuReady))
+                    return NIN.FleetingRaiju;
+
+                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.ForkedRaijuReady))
+                    return NIN.ForkedRaiju;
+            }
+
+            return actionID;
+        }
+    }
 }
-

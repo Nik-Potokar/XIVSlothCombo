@@ -17,7 +17,7 @@ namespace XIVComboExpandedPlugin
     internal class ConfigWindow : Window
     {
         private readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets;
-        private readonly Vector4 shadedColor = new(0.68f, 0.68f, 0.68f, 1.0f);
+        private readonly Vector4 shadedColor = new (0.68f, 0.68f, 0.68f, 1.0f);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigWindow"/> class.

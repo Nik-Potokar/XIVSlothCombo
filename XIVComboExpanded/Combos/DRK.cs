@@ -17,6 +17,7 @@ namespace XIVComboExpandedPlugin.Combos
             EdgeOfDarkness = 16467,
             StalwartSoul = 16468,
             FloodOfShadow = 16469,
+            LivingShadow = 16472,
             EdgeOfShadow = 16470;
 
         public static class Buffs
@@ -42,6 +43,7 @@ namespace XIVComboExpandedPlugin.Combos
                 Quietus = 64,
                 Delirium = 68,
                 StalwartSoul = 72,
+                EdgeOfShadow = 74,
                 Shadow = 74;
         }
     }
@@ -62,11 +64,53 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (comboTime > 0)
                 {
+                    var currentMp = LocalPlayer.CurrentMp;
+                    var gcd = GetCooldown(DRK.HardSlash);
+
                     if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
                         return DRK.SyphonStrike;
+                    if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
+                    {
+                        if (currentMp > 8000)
+                        {
+                            if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
+                                return DRK.EdgeOfShadow;
+                            if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                                return DRK.FloodOfDarkness;
+                            if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                                return DRK.EdgeOfDarkness;
+                        }
+                    }
 
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
+                }
+
+                var bloodgauge = GetJobGauge<DRKGauge>().Blood;
+                var shadowCooldown = GetCooldown(DRK.LivingShadow);
+                var gcdCooldown1 = GetCooldown(DRK.HardSlash);
+                var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
+                var gcdCooldown3 = GetCooldown(DRK.Souleater);
+                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
+
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                {
+                    return DRK.LivingShadow;
+                }
+
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown2.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                {
+                    return DRK.LivingShadow;
+                }
+
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown3.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                {
+                    return DRK.LivingShadow;
+                }
+
+                if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                {
+                    return DRK.Bloodspiller;
                 }
 
                 return DRK.HardSlash;
@@ -87,9 +131,10 @@ namespace XIVComboExpandedPlugin.Combos
                 if (IsEnabled(CustomComboPreset.DRKOvercapFeature))
                 {
                     var gauge = GetJobGauge<DRKGauge>();
-                    if (gauge.Blood >= 90 && HasEffect(DRK.Buffs.BloodWeapon))
+                    if (lastComboMove == DRK.Unleash && gauge.Blood >= 90)
                         return DRK.Quietus;
                 }
+
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))

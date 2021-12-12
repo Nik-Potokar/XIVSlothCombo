@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVComboExpandedPlugin.Combos
@@ -86,7 +85,7 @@ namespace XIVComboExpandedPlugin.Combos
                 if (level >= DRG.Levels.Stardiver)
                 {
                     var gauge = GetJobGauge<DRGGauge>();
-                    if (gauge.BOTDState == BOTDState.LOTD)
+                    if (gauge.IsLOTDActive)
                         return DRG.Stardiver;
                 }
             }

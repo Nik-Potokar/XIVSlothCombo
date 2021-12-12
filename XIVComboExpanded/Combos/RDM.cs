@@ -11,7 +11,9 @@ namespace XIVComboExpandedPlugin.Combos
             Verthunder = 7505,
             Veraero = 7507,
             Veraero2 = 16525,
+            Veraero3 = 25856,
             Verthunder2 = 16524,
+            Verthunder3 = 25855,
             Impact = 16526,
             Redoublement = 7516,
             EnchantedRedoublement = 7529,
@@ -29,6 +31,7 @@ namespace XIVComboExpandedPlugin.Combos
             Fleche = 7517,
             ContreSixte = 7519,
             Engagement = 16527,
+            Verraise = 7523,
             Scorch = 16530;
 
         public static class Buffs
@@ -62,7 +65,9 @@ namespace XIVComboExpandedPlugin.Combos
                 Fleche = 45,
                 ContreSixte = 56,
                 Engagement = 72,
-                Scorch = 80;
+                Scorch = 80,
+                Veraero3 = 82,
+                Verthunder3 = 82;
         }
     }
 
@@ -158,13 +163,25 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero3)
+                        return RDM.Veraero3;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerFeature))
+                {
+                    if (!HasEffect(RDM.Buffs.VerstoneReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Veraero3)
+                        return RDM.Veraero3;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
+                {
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero && level < RDM.Levels.Veraero3)
                         return RDM.Veraero;
                 }
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerFeature))
                 {
-                    if (!HasEffect(RDM.Buffs.VerstoneReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Veraero)
+                    if (!HasEffect(RDM.Buffs.VerstoneReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Veraero && level < RDM.Levels.Veraero3)
                         return RDM.Veraero;
                 }
 
@@ -182,15 +199,28 @@ namespace XIVComboExpandedPlugin.Combos
                 if (lastComboMove == RDM.EnchantedRedoublement && level >= RDM.Levels.Verflare)
                     return RDM.Verflare;
 
+                // Thunder 3
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder3)
+                        return RDM.Verthunder3;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerFeature))
+                {
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder3)
+                        return RDM.Verthunder3;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
+                {
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
                         return RDM.Verthunder;
                 }
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerFeature))
                 {
-                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
                         return RDM.Verthunder;
                 }
 
@@ -203,6 +233,7 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+
     internal class RedMageOgcdCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.RedMageOgcdCombo;
@@ -211,16 +242,23 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
             {
-                var flecheCd = GetCooldown(RDM.Fleche);
-                var contresixteCd = GetCooldown(RDM.ContreSixte);
-                var engagementcd = GetCooldown(RDM.Engagement);
+                if (actionID == RDM.ContreSixte || actionID == RDM.Fleche)
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                if ((lastComboMove == RDM.Verthunder || lastComboMove == RDM.Veraero) && !flecheCd.IsCooldown && level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
                     return RDM.Fleche;
+                }
 
-                if ((lastComboMove == RDM.Fleche || lastComboMove == RDM.Verthunder || lastComboMove == RDM.Veraero) && !contresixteCd.IsCooldown && level >= RDM.Levels.ContreSixte)
-                    return RDM.ContreSixte;
+                return actionID;
             }
+
             return actionID;
         }
     }

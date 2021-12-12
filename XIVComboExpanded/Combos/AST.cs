@@ -21,16 +21,33 @@ namespace XIVComboExpandedPlugin.Combos
             SleeveDraw = 7448,
             Malefic4 = 16555,
             LucidDreaming = 7562,
-            Play = 17055;
+            Ascend = 3603,
+            Swiftcast = 7561,
+            CrownPlay = 25869,
+            Astrodyne = 25870,
+            FallMalefic = 25871,
+            Malefic1 = 3596,
+            Malefic2 = 3598,
+            Malefic3 = 7442,
+            Combust = 3599,
+            Play = 17055,
+            LordOfCrowns = 7444,
+            LadyOfCrown = 7445;
 
         public static class Buffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Swiftcast = 167,
+            LordOfCrownsDrawn = 2054,
+            LadyOfCrownsDrawn = 2055;
         }
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Combust1 = 1881,
+            Combust2 = 843,
+            Combust3 = 838;
         }
 
         public static class Levels
@@ -38,7 +55,8 @@ namespace XIVComboExpandedPlugin.Combos
             public const byte
                 Benefic2 = 26,
                 MinorArcana = 50,
-                SleeveDraw = 70;
+                Draw = 30,
+                CrownPlay = 70;
         }
     }
 
@@ -51,7 +69,7 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == AST.Play)
             {
                 var gauge = GetJobGauge<ASTGauge>();
-                if (gauge.DrawnCard == CardType.NONE)
+                if (level >= AST.Levels.Draw && gauge.DrawnCard == CardType.NONE)
                     return AST.Draw;
             }
 
@@ -59,22 +77,25 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-     internal class AstrologianSleeveDrawFeature : CustomCombo
-     {
-         protected override CustomComboPreset Preset => CustomComboPreset.AstrologianSleeveDrawFeature;
-    
-         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-         {
-             if (actionID == AST.MinorArcana)
-             {
-                 var gauge = GetJobGauge<ASTGauge>().DrawnCard;
-                 if (gauge == CardType.NONE && level >= AST.Levels.SleeveDraw)
-                     return AST.SleeveDraw;
-             }
-    
-             return actionID;
-         }
-     }
+    internal class AstrologianCrownPlayFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianCrownPlayFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == AST.CrownPlay)
+            {
+                var gauge = GetJobGauge<ASTGauge>();
+                var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
+                var lordofCrown = HasEffect(AST.Buffs.LordOfCrownsDrawn);
+                var minorArcanaCD = GetCooldown(AST.MinorArcana);
+                if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE)
+                    return AST.MinorArcana;
+            }
+
+            return actionID;
+        }
+    }
 
     internal class AstrologianBeneficFeature : CustomCombo
     {
@@ -89,6 +110,27 @@ namespace XIVComboExpandedPlugin.Combos
             }
 
             return actionID;
+        }
+
+        internal class AstrologianAscendFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAscendFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == AST.Swiftcast)
+                {
+                    if (IsEnabled(CustomComboPreset.AstrologianAscendFeature))
+                    {
+                        if (HasEffect(AST.Buffs.Swiftcast))
+                            return AST.Ascend;
+                    }
+
+                    return OriginalHook(AST.Swiftcast);
+                }
+
+                return actionID;
+            }
         }
     }
 }

@@ -13,11 +13,15 @@ namespace XIVComboExpandedPlugin.Combos
             Cure2 = 135,
             AfflatusSolace = 16531,
             AfflatusRapture = 16534,
+            LucidDreaming = 7562,
+            Raise = 125,
+            Swiftcast = 7561,
             AfflatusMisery = 16535;
 
         public static class Buffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Swiftcast = 167;
         }
 
         public static class Debuffs
@@ -70,8 +74,11 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (level < WHM.Levels.Cure2)
-                return WHM.Cure;
+            if (actionID == WHM.Cure2)
+            {
+                if (level < WHM.Levels.Cure2)
+                    return WHM.Cure;
+            }
 
             return actionID;
         }
@@ -102,6 +109,25 @@ namespace XIVComboExpandedPlugin.Combos
             }
 
             return actionID;
+        }
+
+        internal class WHMRaiseFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.WHMRaiseFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == WHM.Swiftcast)
+                {
+                    if (IsEnabled(CustomComboPreset.WHMRaiseFeature))
+                    {
+                        if (HasEffect(WHM.Buffs.Swiftcast))
+                            return WHM.Raise;
+                    }
+                }
+
+                return actionID;
+            }
         }
     }
 }
