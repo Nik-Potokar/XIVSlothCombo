@@ -113,7 +113,7 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= 64 && !FoF)
                     {
-                        if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.StackCount == 1)
+                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) || requiescat.StackCount == 1)
                             return PLD.Confiteor;
                         return PLD.HolySpirit;
                     }
