@@ -32,7 +32,8 @@ namespace XIVComboExpandedPlugin.Combos
             Combust = 3599,
             Play = 17055,
             LordOfCrowns = 7444,
-            LadyOfCrown = 7445;
+            LadyOfCrown = 7445,
+            Combust3 = 16554;
 
         public static class Buffs
         {
@@ -45,9 +46,10 @@ namespace XIVComboExpandedPlugin.Combos
         public static class Debuffs
         {
             public const short
-            Combust1 = 1881,
+            Combust1 = 838,
             Combust2 = 843,
-            Combust3 = 838;
+            Combust3 = 1881;
+
         }
 
         public static class Levels
@@ -57,6 +59,8 @@ namespace XIVComboExpandedPlugin.Combos
                 MinorArcana = 50,
                 Draw = 30,
                 CrownPlay = 70;
+
+
         }
     }
 
@@ -92,7 +96,6 @@ namespace XIVComboExpandedPlugin.Combos
                 if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE)
                     return AST.MinorArcana;
             }
-
             return actionID;
         }
     }
@@ -107,30 +110,28 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (level < AST.Levels.Benefic2)
                     return AST.Benefic;
-            }
 
+            }
             return actionID;
         }
 
-        internal class AstrologianAscendFeature : CustomCombo
+    }
+    internal class AstrologianAscendFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAscendFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAscendFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.Swiftcast)
             {
-                if (actionID == AST.Swiftcast)
+                if (IsEnabled(CustomComboPreset.AstrologianAscendFeature))
                 {
-                    if (IsEnabled(CustomComboPreset.AstrologianAscendFeature))
-                    {
-                        if (HasEffect(AST.Buffs.Swiftcast))
-                            return AST.Ascend;
-                    }
-
-                    return OriginalHook(AST.Swiftcast);
+                    if (HasEffect(AST.Buffs.Swiftcast))
+                        return AST.Ascend;
                 }
-
-                return actionID;
+                return OriginalHook(AST.Swiftcast);
             }
+            return actionID;
         }
     }
 }

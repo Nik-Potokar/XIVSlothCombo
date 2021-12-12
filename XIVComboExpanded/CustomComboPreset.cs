@@ -7,6 +7,7 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
+
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -58,6 +59,7 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
         BlackBlizzardParadoxFeature = 110,
+
 
         #endregion
         // ====================================================================================
@@ -147,6 +149,7 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
+
 
         #endregion
         // ====================================================================================
@@ -255,6 +258,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.FleetingRaiju)]
         NinjaHuraijinRaijuFeature = 910,
 
+
+
         #endregion
         // ====================================================================================
         #region PALADIN
@@ -271,23 +276,14 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, PLD.Prominence)]
         PaladinProminenceCombo = 1003,
 
-        [CustomComboInfo("Requiescat Confiteor", "Replace Requiescat with Confiter while under the effect of Requiescat.", PLD.JobID, PLD.Requiescat, PLD.Confiteor)]
-        PaladinRequiescatCombo = 1004,
+        [CustomComboInfo("Requiescat Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active \n And when Fight Or Flight is not Active.\nRequires said combos to be activated to work.", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.Prominence)]
+        PaladinRequiescatFeature = 1004,
 
-        [CustomComboInfo("Requiescat Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active.\nRequires said combos to be activated to work.", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.Prominence)]
-        PaladinRequiescatFeature = 1005,
-
-        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains.", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle)]
-        PaladinConfiteorFeature = 1006,
+        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains And Adds Faith/Truth/Valor Combo after Confiteor.", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle)]
+        PaladinConfiteorFeature = 1005,
 
         [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, PLD.CircleOfScorn, PLD.SpiritsWithin, PLD.Expiacion)]
-        PaladinScornfulSpiritsFeature = 1007,
-
-        [CustomComboInfo("GCD's On Main Combo Feature", "Adds every GCD on main combo rotation, Weave oGCD abilities as needed", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.HolySpirit, PLD.Confiteor)]
-        PaladingMainComboFeature = 1008,
-
-        [CustomComboInfo("Standalone HolySpirit Confetior Feature", "Replaces Holyspirit into confetior combo", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle, PLD.Confiteor)]
-        PaladinHolySpiritStandaloneFeature = 1009,
+        PaladinScornfulSpiritsFeature = 1006,
 
         #endregion
         // ====================================================================================
@@ -427,6 +423,8 @@ namespace XIVComboExpandedPlugin
         // [CustomComboInfo("Summon Carbuncle Feature", "Adds Summon Carbuncle to Main Combo if there is no pet present.", SMN.JobID, SMN.SummonCarbuncle)]
         //  SummonerCarbuncleFeature = 1415,
 
+
+
         #endregion
         // ====================================================================================
         #region WARRIOR
@@ -464,6 +462,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
         WarriorOrogenyFeature = 1510,
 
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
@@ -482,6 +481,13 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Swiftcast Into Raise", "Changes Swiftcast into Raise", WHM.JobID, WHM.Raise, WHM.Swiftcast)]
         WHMRaiseFeature = 1604,
+
+        [CustomComboInfo("DoT on Glare1/3 Feature", "Adds DoT on Glare1/3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
+        WHMDotMainComboFeature = 1605,
+
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming onto Glare combo when you are below 8k mana", WHM.JobID, WHM.LucidDreaming)]
+        WHMLucidDreamingFeature = 1606,
+
         #endregion
         // ====================================================================================
         #region REAPER
@@ -520,7 +526,7 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region DISCIPLE OF MAGIC
 
-        // [CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
+        //[CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
         // DoMSwiftcastFeature = 109,
 
         #endregion
