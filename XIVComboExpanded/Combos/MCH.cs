@@ -70,17 +70,18 @@ namespace XIVComboExpandedPlugin.Combos
                 var reassembleCD = GetCooldown(MCH.Reassemble);
                 var gauge = GetJobGauge<MCHGauge>();
                 var drillCD = GetCooldown(MCH.Drill);
-                var AirAnchorCD = GetCooldown(MCH.AirAnchor);
-                var CD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
+                var airAnchorCD = GetCooldown(MCH.AirAnchor);
+                var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
                     if (gauge.IsOverheated)
                         return MCH.HeatBlast;
-                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && CD < 0)
+                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0)
                         return MCH.Drill;
-                    if (reassembleCD.IsCooldown && AirAnchorCD.CooldownRemaining <= 1)
+                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1)
                         return MCH.AirAnchor;
                 }
+
                 if (comboTime > 0)
                 {
                     if (lastComboMove == MCH.SplitShot && level >= MCH.Levels.SlugShot)
@@ -177,6 +178,7 @@ namespace XIVComboExpandedPlugin.Combos
 
             return actionID;
         }
+
         internal class MchDrillAirFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.MchDrillAirFeature;
@@ -188,7 +190,6 @@ namespace XIVComboExpandedPlugin.Combos
                     if (level < MCH.Levels.Drill)
                         return MCH.HotShot;
 
-
                     var anchorHSCD = GetCooldown(MCH.AirAnchor);
                     var drillCD = GetCooldown(MCH.Drill);
 
@@ -198,8 +199,8 @@ namespace XIVComboExpandedPlugin.Combos
                     return drillCD.CooldownRemaining < anchorHSCD.CooldownRemaining
                         ? MCH.Drill
                         : MCH.AirAnchor;
-
                 }
+
                 return actionID;
             }
         }

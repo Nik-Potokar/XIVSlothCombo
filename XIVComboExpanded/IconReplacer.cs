@@ -1,11 +1,12 @@
-using Dalamud.Hooking;
-using Dalamud.Logging;
-using Dalamud.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+
+using Dalamud.Hooking;
+using Dalamud.Logging;
+using Dalamud.Utility;
 using XIVComboExpandedPlugin.Combos;
 
 namespace XIVComboExpandedPlugin
@@ -20,14 +21,14 @@ namespace XIVComboExpandedPlugin
         private readonly Hook<GetIconDelegate> getIconHook;
 
         private IntPtr actionManager = IntPtr.Zero;
-        private HashSet<uint> comboActionIDs = new();
+        private HashSet<uint> comboActionIDs = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IconReplacer"/> class.
         /// </summary>
         public IconReplacer()
         {
-            this.customCombos = Assembly.GetAssembly(typeof(CustomCombo))!.GetTypes()
+            this.customCombos = Assembly.GetAssembly(typeof(CustomCombo)) !.GetTypes()
                 .Where(t => t.BaseType == typeof(CustomCombo))
                 .Select(t => Activator.CreateInstance(t))
                 .Cast<CustomCombo>()
@@ -62,7 +63,7 @@ namespace XIVComboExpandedPlugin
         {
             this.comboActionIDs = Enum
                 .GetValues<CustomComboPreset>()
-                .Select(preset => preset.GetAttribute<CustomComboInfoAttribute>()!)
+                .Select(preset => preset.GetAttribute<CustomComboInfoAttribute>() !)
                 .SelectMany(comboInfo => comboInfo.ActionIDs)
                 .Concat(Service.Configuration.DancerDanceCompatActionIDs)
                 .ToHashSet();
@@ -112,7 +113,7 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     internal sealed partial class IconReplacer
     {
-        private readonly Dictionary<uint, byte> cooldownGroupCache = new();
+        private readonly Dictionary<uint, byte> cooldownGroupCache = new ();
         private readonly GetActionCooldownSlotDelegate getActionCooldownSlot;
 
         private delegate IntPtr GetActionCooldownSlotDelegate(IntPtr actionManager, int cooldownGroup);
@@ -137,7 +138,7 @@ namespace XIVComboExpandedPlugin
             if (this.cooldownGroupCache.TryGetValue(actionID, out var cooldownGroup))
                 return cooldownGroup;
 
-            var sheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!;
+            var sheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>() !;
             var row = sheet.GetRow(actionID);
 
             return this.cooldownGroupCache[actionID] = row!.CooldownGroup;
@@ -177,8 +178,6 @@ namespace XIVComboExpandedPlugin
             /// Gets the cooldown time remaining.
             /// </summary>
             public float CooldownRemaining => this.IsCooldown ? this.CooldownTotal - this.CooldownElapsed : 0;
-
         }
     }
-
 }

@@ -16,8 +16,6 @@ namespace XIVComboExpandedPlugin.Combos
             Swiftcast = 7561,
             Aetherflow = 166;
 
-
-
         public static class Buffs
         {
             public const short
@@ -64,8 +62,10 @@ namespace XIVComboExpandedPlugin.Combos
                 if (gauge.Aetherflow == 0)
                     return SCH.Aetherflow;
             }
+
             return actionID;
         }
+
         internal class SchRaiseFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.SchRaiseFeature;
@@ -78,6 +78,5 @@ namespace XIVComboExpandedPlugin.Combos
                 return actionID;
             }
         }
-
     }
 }

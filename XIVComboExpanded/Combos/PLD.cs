@@ -73,7 +73,6 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == PLD.GoringBlade)
             {
-
                 if (comboTime > 0)
                 {
                     if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
@@ -85,6 +84,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return PLD.FastBlade;
             }
+
             return actionID;
         }
     }
@@ -107,9 +107,9 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     var goringBladeDebuffonTarget = TargetHasEffect(PLD.Debuffs.GoringBlade);
                     var goingBladeDebuffTimer = FindTargetEffect(PLD.Debuffs.GoringBlade);
-                    var FoF = HasEffect(PLD.Buffs.FightOrFlight);
+                    var foF = HasEffect(PLD.Buffs.FightOrFlight);
                     var valorDebuff = TargetHasEffect(PLD.Debuffs.BladeOfValor);
-                    var FoFCD = GetCooldown(PLD.FightOrFlight);
+                    var foFCD = GetCooldown(PLD.FightOrFlight);
                     var fastBladeCD = GetCooldown(PLD.FastBlade);
                     var reqCD = GetCooldown(PLD.Requiescat);
                     var requiescatBuff = HasEffect(PLD.Buffs.Requiescat);
@@ -126,7 +126,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if ((lastComboMove == PLD.RiotBlade && level >= PLD.Levels.GoringBlade && !goringBladeDebuffonTarget && !valorDebuff) || (lastComboMove == PLD.RiotBlade && (goingBladeDebuffTimer.RemainingTime < 4) && !valorDebuff) || (lastComboMove == PLD.RiotBlade && (valorDebuffTimer.RemainingTime < 4) && !goringBladeDebuffonTarget))
                         return PLD.GoringBlade;
 
-                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RageOfHalone && (goringBladeDebuffonTarget))
+                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RageOfHalone && goringBladeDebuffonTarget)
                         return OriginalHook(PLD.RageOfHalone);
 
                     if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
@@ -134,22 +134,24 @@ namespace XIVComboExpandedPlugin.Combos
                         if (HasEffect(PLD.Buffs.SwordOath))
                             return PLD.Atonement;
                     }
+
                     if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
                     {
                         {
-                            if (HasEffect(PLD.Buffs.Requiescat) && !FoF)
+                            if (HasEffect(PLD.Buffs.Requiescat) && !foF)
                             {
                                 if (HasEffect(PLD.Buffs.Requiescat) && level >= 64)
                                 {
                                     var requiescat = FindEffect(PLD.Buffs.Requiescat);
 
-                                    if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && (requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000)))
+                                    if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000))
                                         return PLD.Confiteor;
 
                                     return PLD.HolySpirit;
                                 }
                             }
                         }
+
                         if (IsEnabled(CustomComboPreset.PaladingMainComboFeature))
                         {
                             if (lastComboMove == PLD.BladeOfTruth && level >= 90)
@@ -169,7 +171,6 @@ namespace XIVComboExpandedPlugin.Combos
                             }
                         }
                     }
-
                 }
 
                 return PLD.FastBlade;
@@ -193,7 +194,7 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         var requiescat = FindEffect(PLD.Buffs.Requiescat);
 
-                        if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && (requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000)))
+                        if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000))
                             return PLD.Confiteor;
 
                         return PLD.HolyCircle;
@@ -205,6 +206,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == PLD.TotalEclipse && level >= PLD.Levels.Prominence)
                         return PLD.Prominence;
                 }
+
                 if (IsEnabled(CustomComboPreset.PaladingMainComboFeature))
                 {
                     if (lastComboMove == PLD.BladeOfTruth && level >= 90)
@@ -254,6 +256,7 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+
     internal class PaladinHolySpiritStandaloneFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.PaladinHolySpiritStandaloneFeature;
@@ -266,11 +269,12 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     var requiescat = FindEffect(PLD.Buffs.Requiescat);
 
-                    if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && (requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000)))
+                    if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor && requiescat != null && (requiescat.StackCount == 1 || LocalPlayer?.CurrentMp < 2000))
                         return PLD.Confiteor;
 
                     return PLD.HolySpirit;
                 }
+
                 if (level >= PLD.Levels.Confiteor)
                 {
                     var requiescat = FindEffect(PLD.Buffs.Requiescat);
@@ -278,9 +282,8 @@ namespace XIVComboExpandedPlugin.Combos
                         return PLD.Confiteor;
                 }
             }
-            return actionID;
 
+            return actionID;
         }
     }
 }
-

@@ -1,10 +1,11 @@
-﻿using Dalamud.Game.ClientState.Conditions;
+﻿using System.Linq;
+
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
-using System.Linq;
 
 namespace XIVComboExpandedPlugin.Combos
 {
@@ -161,7 +162,6 @@ namespace XIVComboExpandedPlugin.Combos
         /// <returns>A value indicating if the effect exists.</returns>
         protected static bool TargetHasEffect(short effectID) => FindTargetEffect(effectID) is not null;
 
-
         /// <summary>
         /// Finds an effect on the current target.
         /// The effect must be owned by the player or unowned.
@@ -209,7 +209,6 @@ namespace XIVComboExpandedPlugin.Combos
         /// <param name="obj">Object to look for effects on.</param>
         /// <param name="sourceID">Source object ID.</param>
         /// <returns>Status object or null.</returns>
-
         protected static Status? FindEffect(short effectID, GameObject? obj, uint? sourceID)
         {
             if (obj is null)
@@ -240,6 +239,7 @@ namespace XIVComboExpandedPlugin.Combos
         /// <typeparam name="T">Type of job gauge.</typeparam>
         /// <returns>The job gauge.</returns>
         protected static T GetJobGauge<T>() where T : JobGaugeBase => Service.JobGauges.Get<T>();
+
         protected static uint CalcBestAction(uint original, params uint[] actions)
         {
             static (uint ActionID, IconReplacer.CooldownData Data) Compare(

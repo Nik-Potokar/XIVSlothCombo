@@ -50,7 +50,6 @@ namespace XIVComboExpandedPlugin.Combos
                 RefulgentArrow = 70,
                 Stormbite = 64,
                 BurstShot = 76;
-
         }
     }
 
@@ -164,5 +163,4 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
-
 }

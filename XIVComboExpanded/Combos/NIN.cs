@@ -64,7 +64,6 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-
     internal class NinjaAeolianEdgeCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaAeolianEdgeCombo;
@@ -72,36 +71,38 @@ namespace XIVComboExpandedPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == 2255)
-
             {
                 if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(2263u) == CustomCombo.OriginalHook(18807u))
                 {
                     return CustomCombo.OriginalHook(2260u);
                 }
+
                 if (comboTime > 0f)
                 {
                     if (lastComboMove == 2240 && level >= 4)
                     {
                         return 2242u;
                     }
+
                     var huton = GetJobGauge<NINGauge>();
                     if (lastComboMove == NIN.GustSlash && level >= 20 && huton.HutonTimer < 30000)
                     {
                         return NIN.ArmorCrush;
                     }
+
                     if (lastComboMove == 2242 && level >= 26)
                     {
                         return 2255u;
                     }
-
                 }
+
                 return 2240u;
             }
+
             return actionID;
-
-
         }
     }
+
     internal class NinjaArmorCrushCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaArmorCrushCombo;
@@ -114,19 +115,23 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(2260u);
                 }
+
                 if (comboTime > 0f)
                 {
                     if (lastComboMove == 2240 && level >= 4)
                     {
                         return 2242u;
                     }
+
                     if (lastComboMove == 2242 && level >= 54)
                     {
                         return 3563u;
                     }
                 }
+
                 return 2240u;
             }
+
             return actionID;
         }
     }
@@ -141,9 +146,11 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 return 2246u;
             }
+
             return actionID;
         }
     }
+
     internal class NinjaHakkeMujinsatsuCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaHakkeMujinsatsuCombo;
@@ -156,14 +163,18 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(2260u);
                 }
+
                 if (comboTime > 0f && lastComboMove == 2254 && level >= 52)
                 {
                     return 16488u;
                 }
+
                 return 2254u;
             }
+
             return actionID;
         }
+
         internal class NinjaHideMugFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.NinjaHideMugFeature;
@@ -176,15 +187,18 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         return 2258u;
                     }
-                    if (CustomCombo.HasCondition((Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat)))
+
+                    if (CustomCombo.HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                     {
                         return 2248u;
                     }
                 }
+
                 return actionID;
             }
         }
     }
+
     internal class NinjaKassatsuChiJinFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaKassatsuChiJinFeature;
@@ -195,9 +209,11 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 return 18807u;
             }
+
             return actionID;
         }
     }
+
     internal class NinjaKassatsuTrickFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaKassatsuTrickFeature;
@@ -210,11 +226,14 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return 2258u;
                 }
+
                 return 2264u;
             }
+
             return actionID;
         }
     }
+
     internal class NinjaTCJMeisuiFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaTCJMeisuiFeature;
@@ -227,11 +246,14 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return 16489u;
                 }
+
                 return 7403u;
             }
+
             return actionID;
         }
     }
+
     internal class NinjaHuraijinRaijuFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.NinjaHuraijinRaijuFeature;
@@ -250,7 +272,4 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
-
-
 }
-

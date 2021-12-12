@@ -1,8 +1,9 @@
+using System;
+using System.Linq;
+
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
-using System;
-using System.Linq;
 
 namespace XIVComboExpandedPlugin
 {
@@ -30,8 +31,8 @@ namespace XIVComboExpandedPlugin
 
             Service.IconReplacer = new IconReplacer();
 
-            this.configWindow = new();
-            this.windowSystem = new("XIVComboWayTooAkified");
+            this.configWindow = new ();
+            this.windowSystem = new ("XIVComboWayTooAkified");
             this.windowSystem.AddWindow(this.configWindow);
 
             Service.Interface.UiBuilder.OpenConfigUi += this.OnOpenConfigUi;

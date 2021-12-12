@@ -45,7 +45,6 @@ namespace XIVComboExpandedPlugin.Combos
                 StalwartSoul = 72,
                 EdgeOfShadow = 74,
                 Shadow = 74;
-
         }
     }
 
@@ -80,12 +79,13 @@ namespace XIVComboExpandedPlugin.Combos
                                 return DRK.FloodOfDarkness;
                             if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
                                 return DRK.EdgeOfDarkness;
-
                         }
                     }
+
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
+
                 var bloodgauge = GetJobGauge<DRKGauge>().Blood;
                 var shadowCooldown = GetCooldown(DRK.LivingShadow);
                 var gcdCooldown1 = GetCooldown(DRK.HardSlash);
@@ -97,21 +97,21 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return DRK.LivingShadow;
                 }
+
                 if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown2.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
                 }
+
                 if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown3.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
                 }
+
                 if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
                 {
-
                     return DRK.Bloodspiller;
-
                 }
-
 
                 return DRK.HardSlash;
             }
@@ -134,6 +134,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == DRK.Unleash && gauge.Blood >= 90)
                         return DRK.Quietus;
                 }
+
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))

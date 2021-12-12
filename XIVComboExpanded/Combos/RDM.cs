@@ -68,7 +68,6 @@ namespace XIVComboExpandedPlugin.Combos
                 Scorch = 80,
                 Veraero3 = 82,
                 Verthunder3 = 82;
-
         }
     }
 
@@ -162,7 +161,6 @@ namespace XIVComboExpandedPlugin.Combos
                 if (lastComboMove == RDM.EnchantedRedoublement && level >= RDM.Levels.Verholy)
                     return RDM.Verholy;
 
-
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
                     if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero3)
@@ -174,6 +172,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (!HasEffect(RDM.Buffs.VerstoneReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Veraero3)
                         return RDM.Veraero3;
                 }
+
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
                     if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero && level < RDM.Levels.Veraero3)
@@ -200,8 +199,7 @@ namespace XIVComboExpandedPlugin.Combos
                 if (lastComboMove == RDM.EnchantedRedoublement && level >= RDM.Levels.Verflare)
                     return RDM.Verflare;
 
-
-                //Thunder 3
+                // Thunder 3
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
                     if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder3)
@@ -235,6 +233,7 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+
     internal class RedMageOgcdCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.RedMageOgcdCombo;
@@ -259,6 +258,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return actionID;
             }
+
             return actionID;
         }
     }

@@ -1,12 +1,13 @@
-﻿using Dalamud.Interface;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+
+using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using ImGuiNET;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 
 namespace XIVComboExpandedPlugin
 {
@@ -16,7 +17,7 @@ namespace XIVComboExpandedPlugin
     internal class ConfigWindow : Window
     {
         private readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets;
-        private readonly Vector4 shadedColor = new(0.68f, 0.68f, 0.68f, 1.0f);
+        private readonly Vector4 shadedColor = new (0.68f, 0.68f, 0.68f, 1.0f);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigWindow"/> class.

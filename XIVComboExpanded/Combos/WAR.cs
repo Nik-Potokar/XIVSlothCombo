@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 
-
 namespace XIVComboExpandedPlugin.Combos
 {
     internal static class WAR
@@ -37,7 +36,6 @@ namespace XIVComboExpandedPlugin.Combos
                 SurgingTempest = 2677,
                 NascentChaos = 1897,
                 PrimalRendReady = 2624;
-
         }
 
         public static class Debuffs
@@ -72,23 +70,25 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 var heavyswingCD = GetCooldown(WAR.HeavySwing);
                 var upheavalCD = GetCooldown(WAR.Upheaval);
-                var InnerreleaseCD = GetCooldown(WAR.InnerRelease);
+                var innerreleaseCD = GetCooldown(WAR.InnerRelease);
                 var beserkCD = GetCooldown(WAR.Berserk);
                 var stormseyeBuff = FindEffectAny(WAR.Buffs.SurgingTempest);
                 var innerReleaseBuff = HasEffect(WAR.Buffs.InnerRelease);
-                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeatureDuringIR) && !upheavalCD.IsCooldown && HasEffect(WAR.Buffs.SurgingTempest) && heavyswingCD.CooldownRemaining > 0.7 && level >= 70 && (InnerreleaseCD.CooldownRemaining > 25 || innerReleaseBuff))
+                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeatureDuringIR) && !upheavalCD.IsCooldown && HasEffect(WAR.Buffs.SurgingTempest) && heavyswingCD.CooldownRemaining > 0.7 && level >= 70 && (innerreleaseCD.CooldownRemaining > 25 || innerReleaseBuff))
                 {
                     return WAR.Upheaval;
                 }
 
-                if ((IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && level >= 64))
+                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && level >= 64)
                 {
                     return WAR.Upheaval;
                 }
+
                 if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                 {
                     return WAR.FellCleave;
                 }
+
                 if (comboTime > 0)
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
@@ -100,31 +100,39 @@ namespace XIVComboExpandedPlugin.Combos
                         {
                             return WAR.InnerBeast;
                         }
+
                         if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 54)
                         {
                             return WAR.FellCleave;
                         }
+
                         return WAR.Maim;
                     }
+
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
                     {
                         if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 35 && level <= 53)
                         {
                             return WAR.InnerBeast;
                         }
+
                         if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 54)
                         {
                             return WAR.FellCleave;
                         }
+
                         if (stormseyeBuff.RemainingTime < 15 && IsEnabled(CustomComboPreset.WarriorStormsEyeCombo) && level >= 50)
                             return WAR.StormsEye;
                         return WAR.StormsPath;
                     }
                 }
+
                 return WAR.HeavySwing;
             }
+
             return actionID;
         }
+
         internal class WarriorStormsEyeCombo : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.WarriorStormsEyeCombo;
@@ -164,13 +172,10 @@ namespace XIVComboExpandedPlugin.Combos
                     var mythrilCd = GetCooldown(WAR.MythrilTempest);
                     var decimateCD = GetCooldown(WAR.Decimate);
 
-
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                         return OriginalHook(WAR.Decimate);
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && !orogenyCD.IsCooldown && HasEffect(WAR.Buffs.InnerRelease) && level >= 86)
                         return OriginalHook(WAR.Orogeny);
-
-
 
                     if (comboTime > 0)
                     {
@@ -181,21 +186,24 @@ namespace XIVComboExpandedPlugin.Combos
                                 return WAR.Decimate;
                             if (lastComboMove == WAR.Overpower && level >= 40)
                                 return WAR.MythrilTempest;
-                            if (lastComboMove == WAR.Overpower || lastComboMove == WAR.MythrilTempest && gauge >= 90)
+                            if (lastComboMove == WAR.Overpower || (lastComboMove == WAR.MythrilTempest && gauge >= 90))
                                 return WAR.Decimate;
-
                         }
-                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && lastComboMove == WAR.Decimate) && level >= 86)
+
+                        if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && lastComboMove == WAR.Decimate && level >= 86)
                         {
                             return WAR.Orogeny;
                         }
-                        if ((IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && level >= 86))
+
+                        if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && level >= 86)
                         {
                             return WAR.Orogeny;
                         }
                     }
+
                     return WAR.Overpower;
                 }
+
                 return actionID;
             }
         }
@@ -216,8 +224,8 @@ namespace XIVComboExpandedPlugin.Combos
                 return actionID;
             }
         }
-
     }
+
     internal class WarriorPrimalRendFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.WarriorPrimalRendFeature;

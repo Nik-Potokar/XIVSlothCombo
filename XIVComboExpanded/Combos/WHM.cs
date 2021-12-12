@@ -18,7 +18,6 @@ namespace XIVComboExpandedPlugin.Combos
             Swiftcast = 7561,
             AfflatusMisery = 16535;
 
-
         public static class Buffs
         {
             public const short
@@ -65,7 +64,6 @@ namespace XIVComboExpandedPlugin.Combos
             if (gauge.BloodLily == 3)
                 return WHM.AfflatusMisery;
 
-
             return actionID;
         }
     }
@@ -81,9 +79,9 @@ namespace XIVComboExpandedPlugin.Combos
                 if (level < WHM.Levels.Cure2)
                     return WHM.Cure;
             }
+
             return actionID;
         }
-
     }
 
     internal class WhiteMageAfflatusFeature : CustomCombo
@@ -109,8 +107,10 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return actionID;
             }
+
             return actionID;
         }
+
         internal class WHMRaiseFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.WHMRaiseFeature;
@@ -125,6 +125,7 @@ namespace XIVComboExpandedPlugin.Combos
                             return WHM.Raise;
                     }
                 }
+
                 return actionID;
             }
         }

@@ -95,6 +95,7 @@ namespace XIVComboExpandedPlugin.Combos
                         if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
                             return GNB.DangerZone;
                     }
+
                     if (IsEnabled(CustomComboPreset.GunbreakerDoubleDownFeature))
                     {
                         if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level == 90 && HasEffect(GNB.Buffs.NoMercy))
@@ -163,12 +164,10 @@ namespace XIVComboExpandedPlugin.Combos
                 if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                     return GNB.Hypervelocity;
             }
+
             return actionID;
         }
     }
-
-
-
 
     internal class GunbreakerDemonSlaughterCombo : CustomCombo
     {
@@ -187,6 +186,7 @@ namespace XIVComboExpandedPlugin.Combos
                         {
                             return GNB.FatedCircle;
                         }
+
                         if (gauge.Ammo == 2 && level >= 4 && level <= 87)
                         {
                             return GNB.FatedCircle;

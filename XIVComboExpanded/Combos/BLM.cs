@@ -63,6 +63,7 @@ namespace XIVComboExpandedPlugin.Combos
                 Xenoglossy = 80;
         }
     }
+
     internal class BlackBlizzardFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BlackBlizzardFeature;
@@ -77,13 +78,16 @@ namespace XIVComboExpandedPlugin.Combos
                     return BLM.Blizzard3;
                 }
             }
+
             if (actionID == BLM.Freeze && level < 35)
             {
                 return 146u;
             }
+
             return actionID;
         }
     }
+
     internal class BlackFireFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BlackFire13Feature;
@@ -93,14 +97,16 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == BLM.Fire)
             {
                 var gauge = CustomCombo.GetJobGauge<BLMGauge>();
-                if (level >= 34 && !gauge.InAstralFire || CustomCombo.HasEffect(BLM.Buffs.Firestarter))
+                if ((level >= 34 && !gauge.InAstralFire) || CustomCombo.HasEffect(BLM.Buffs.Firestarter))
                 {
                     return CustomCombo.OriginalHook(BLM.Fire3);
                 }
             }
+
             return actionID;
         }
     }
+
     internal class BlackLeyLinesFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BlackLeyLinesFeature;
@@ -111,6 +117,7 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 return 7419u;
             }
+
             return actionID;
         }
     }
@@ -129,9 +136,11 @@ namespace XIVComboExpandedPlugin.Combos
                     return 16506u;
                 }
             }
+
             return actionID;
         }
     }
+
     internal class BlackEnochianFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BlackEnochianFeature;
@@ -155,11 +164,14 @@ namespace XIVComboExpandedPlugin.Combos
                             if ((TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(BLM.Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35))
                                 return BLM.Thunder3;
                         }
+
                         if (gauge.UmbralHearts == 3 && level >= 90)
                             return BLM.Paradox;
                     }
+
                     return BLM.Blizzard4;
                 }
+
                 if (level >= BLM.Levels.Fire4)
                 {
                     if (gauge.ElementTimeRemaining >= 6000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
@@ -170,25 +182,26 @@ namespace XIVComboExpandedPlugin.Combos
                                 return BLM.Thunder3;
                         }
                     }
+
                     if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature))
                         return BLM.Fire3;
                     if (LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && CustomCombo.IsEnabled(CustomComboPreset.BlackDespairFeature))
                     {
                         return BLM.Despair;
                     }
-                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && level == 90 && gauge.IsParadoxActive))
+
+                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && level == 90 && gauge.IsParadoxActive)
                         return BLM.Paradox;
-                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && (CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && !gauge.IsParadoxActive))
+                    if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature) && !gauge.IsParadoxActive)
                         return BLM.Fire;
                     return BLM.Fire4;
                 }
-
 
                 if (gauge.ElementTimeRemaining >= 5000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature) && level < BLM.Levels.Thunder3)
                 {
                     if (HasEffect(BLM.Buffs.Thundercloud))
                     {
-                        if ((TargetHasEffect(BLM.Debuffs.Thunder) && thunderOneDebuff.RemainingTime < 4))
+                        if (TargetHasEffect(BLM.Debuffs.Thunder) && thunderOneDebuff.RemainingTime < 4)
                             return BLM.Thunder;
                     }
                 }
@@ -204,9 +217,11 @@ namespace XIVComboExpandedPlugin.Combos
                     return BLM.Fire;
                 }
             }
+
             return actionID;
         }
     }
+
     internal class BlackAoEComboFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BlackAoEComboFeature;
@@ -227,5 +242,4 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
-
 }

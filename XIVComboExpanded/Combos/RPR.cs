@@ -97,16 +97,17 @@
                     if (lastComboMove == RPR.WaxingSlice && level >= RPR.Levels.InfernalSlice)
                         return RPR.InfernalSlice;
                 }
+
                 if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
                 {
                     var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
                     var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
 
-                    if ((!deathsDesign && !soulReaverBuff) || deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff)
+                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff))
                         return RPR.ShadowOfDeath;
-
                 }
+
                 return RPR.Slice;
             }
 
@@ -130,15 +131,15 @@
                     if (lastComboMove == RPR.SpinningScythe && level >= RPR.Levels.NightmareScythe)
                         return RPR.NightmareScythe;
                 }
+
                 if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
                 {
                     var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
                     var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
 
-                    if ((!deathsDesign && !soulReaverBuff) || deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff)
+                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff))
                         return RPR.WhorlOfDeath;
-
                 }
 
                 return RPR.SpinningScythe;
@@ -174,7 +175,7 @@
         {
             if (actionID == RPR.ShadowOfDeath)
             {
-                if ((HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded)) && (!IsEnabled(CustomComboPreset.ReaperGibbetGallowsOption) || (!HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.EnhancedGibbet))))
+                if (HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded) && (!IsEnabled(CustomComboPreset.ReaperGibbetGallowsOption) || (!HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.EnhancedGibbet))))
                 {
                     return OriginalHook(RPR.Gallows);
                 }

@@ -24,13 +24,14 @@
                 Raise = 12;
         }
     }
+
     /*    internal class DoMSwiftcastFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.DoMSwiftcastFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-               
+
                 if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
                 {
                     if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SCH.Resurrection || actionID == AST.Ascend || actionID == RDM.Verraise)

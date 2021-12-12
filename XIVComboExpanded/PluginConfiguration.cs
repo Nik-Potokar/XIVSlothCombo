@@ -1,8 +1,9 @@
+using System;
+using System.Collections.Generic;
+
 using Dalamud.Configuration;
 using Dalamud.Utility;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using XIVComboExpandedPlugin.Combos;
 
 namespace XIVComboExpandedPlugin
@@ -22,7 +23,7 @@ namespace XIVComboExpandedPlugin
         /// Gets or sets the collection of enabled combos.
         /// </summary>
         [JsonProperty("EnabledActionsV4")]
-        public HashSet<CustomComboPreset> EnabledActions { get; set; } = new();
+        public HashSet<CustomComboPreset> EnabledActions { get; set; } = new ();
 
         /// <summary>
         /// Gets or sets a value indicating whether to allow and display secret combos.

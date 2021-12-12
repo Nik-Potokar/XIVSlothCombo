@@ -182,7 +182,6 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-
     internal class SummonerMainComboFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SummonerMainComboFeature;
@@ -191,7 +190,6 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || actionID == SMN.Ruin)
             {
-
                 var gauge = GetJobGauge<SMNGauge>();
                 if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature))
                 {
@@ -219,7 +217,6 @@ namespace XIVComboExpandedPlugin.Combos
                         (lastComboMove == SMN.FountainOfFire || lastComboMove == SMN.Rekindle)
                         && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindlePhoenix;
-
                 }
 
                 if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
