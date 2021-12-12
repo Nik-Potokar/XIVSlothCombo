@@ -165,7 +165,7 @@ namespace XIVComboExpandedPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature))
                     {
-                        if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat) || (diaDebuff.RemainingTime <= 3 && inCombat))
+                        if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72))
                             return WHM.Dia;
                         return WHM.Glare3;
                     }
