@@ -69,7 +69,8 @@
                 Regress = 74,
                 Enshroud = 80,
                 PlentifulHarvest = 88,
-                Communio = 90;
+                Communio = 90,
+                WhorlOfDeath = 35;
         }
     }
 
@@ -138,7 +139,7 @@
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
                     var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
 
-                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff))
+                    if (((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff)) && level >= RPR.Levels.WhorlOfDeath)
                         return RPR.WhorlOfDeath;
                 }
 
