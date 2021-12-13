@@ -26,7 +26,8 @@ namespace XIVComboExpandedPlugin.Combos
             RookAutoturret = 2864,
             RookOverdrive = 7415,
             AutomatonQueen = 16501,
-            QueenOverdrive = 16502;
+            QueenOverdrive = 16502,
+            Wildfire = 2878;
 
         public static class Buffs
         {
@@ -106,6 +107,7 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == MCH.HeatBlast)
             {
+                var wildfireCD = GetCooldown(MCH.Wildfire);
                 var heatBlastCD = GetCooldown(MCH.HeatBlast);
                 var gaussCD = GetCooldown(MCH.GaussRound);
                 var ricochetCD = GetCooldown(MCH.Ricochet);
@@ -113,6 +115,8 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<MCHGauge>();
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
+                if (!wildfireCD.IsCooldown)
+                    return MCH.Wildfire;
                 if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                     return MCH.HeatBlast;
                 if (level <= 49)
