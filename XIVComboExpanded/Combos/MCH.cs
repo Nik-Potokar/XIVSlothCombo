@@ -110,11 +110,18 @@ namespace XIVComboExpandedPlugin.Combos
                 var gaussCD = GetCooldown(MCH.GaussRound);
                 var ricochetCD = GetCooldown(MCH.Ricochet);
 
-                if (heatBlastCD.CooldownRemaining > 0.7) // prioritize heatblast
-                    return actionID;
-                if (gaussCD.CooldownRemaining <= ricochetCD.CooldownRemaining)
+                var gauge = GetJobGauge<MCHGauge>();
+                if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
+                    return MCH.Hypercharge;
+                if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+                    return MCH.HeatBlast;
+                if (level <= 49)
                     return MCH.GaussRound;
-                else if (level >= 50)
+                if (!gaussCD.IsCooldown && !ricochetCD.IsCooldown)
+                    return actionID;
+                if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                    return MCH.GaussRound;
+                else
                     return MCH.Ricochet;
             }
 

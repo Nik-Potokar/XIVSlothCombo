@@ -205,7 +205,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Drill/Air Feature On Main Combo", "Drill/Air Feature is added onto main combo (Note: If will add them onto main combo ONLY if you are under Reassemble Buff Or Reassemble is on CD(Will do nothing if Reassemble is OFF CD)) ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 706,
 
-        [CustomComboInfo("Single Button HeatBlast Feature", "Puts Ricochet/Gauss Round on Heatblast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast)]
+        [CustomComboInfo("Single Button HeatBlast Feature", "Puts Ricochet/Gauss Round on Heatblast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Hypercharge)]
         MachinistHeatblastGaussRicochetFeature = 707,
 
         #endregion
