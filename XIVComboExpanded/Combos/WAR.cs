@@ -84,7 +84,7 @@ namespace XIVComboExpandedPlugin.Combos
                     return WAR.Upheaval;
                 }
 
-                if (IsEnabled(CustomComboPreset.WarriorPrimalRendOption) && HasEffect(WAR.Buffs.PrimalRendReady))
+                if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady))
                 {
                     return WAR.PrimalRend;
                 }
@@ -177,7 +177,7 @@ namespace XIVComboExpandedPlugin.Combos
                     var mythrilCd = GetCooldown(WAR.MythrilTempest);
                     var decimateCD = GetCooldown(WAR.Decimate);
 
-                    if (IsEnabled(CustomComboPreset.WarriorPrimalRendOption) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= 90)
+                    if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= 90)
                         return OriginalHook(WAR.PrimalRend);
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                         return OriginalHook(WAR.Decimate);

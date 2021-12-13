@@ -31,12 +31,11 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Astrodyne Feature", "Adds Astrodyne to the DPS feature when ready", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
         AstrologianAstrodyneFeature = 7,
 
-
         #endregion
         // ====================================================================================
         #region BLACK MAGE
 
-        [CustomComboInfo("Enochian Stance Switcher", "Change Scathe to Fire 4 or Blizzard 4 depending on stance.", BLM.JobID, BLM.Scathe)]
+        [CustomComboInfo("Enochian Stance Switcher ++", "Change Scathe to Fire 4 or Blizzard 4 depending on stance. \nScathe becomes all in one rotation. \nIf Thunder Feature is turned on it also adds Thunder3 proces onto all in one combo when DoT is about to expire or dosen't exist", BLM.JobID, BLM.Scathe)]
         BlackEnochianFeature = 100,
 
         [CustomComboInfo("Umbral Soul/Transpose Switcher", "Change Transpose into Umbral Soul when Umbral Soul is usable.", BLM.JobID, BLM.Transpose)]
@@ -63,7 +62,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Fire4)]
         BlackDespairFeature = 108,
 
-        [CustomComboInfo("Freeze Flare Feature", "AoE version of all in one feature (Testing)", BLM.JobID, BLM.Blizzard2, BLM.Freeze, BLM.Flare)]
+        [CustomComboInfo("Freeze Flare Feature", "Switches Freeze to flare depending on the stance", BLM.JobID, BLM.Blizzard2, BLM.Freeze, BLM.Flare)]
         BlackAoEComboFeature = 109,
 
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
@@ -215,8 +214,11 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Drill/Air Feature On Main Combo", "Drill/Air Feature is added onto main combo (Note: If will add them onto main combo ONLY if you are under Reassemble Buff Or Reassemble is on CD(Will do nothing if Reassemble is OFF CD)) ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 706,
 
-        [CustomComboInfo("Single Button HeatBlast Feature", "Puts Ricochet/Gauss Round on Heatblast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Hypercharge)]
+        [CustomComboInfo("Single Button HeatBlast Feature", "Puts Ricochet/Gauss Round on Heatblast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast)]
         MachinistHeatblastGaussRicochetFeature = 707,
+
+        [CustomComboInfo("Heat Blast Feature", "Adds Heat Blast on main combo when overheated.", MCH.JobID, MCH.CleanShot, MCH.HeatedCleanShot, MCH.HeatBlast)]
+        MachinistHeatBlastMainCombo = 708, 
 
         #endregion
         // ====================================================================================
@@ -324,11 +326,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, RDM.Redoublement, RDM.Resolution)]
         RedmageResolutionFinisherMelee = 1108,
-
-
-
-
-
         #endregion
         // ====================================================================================
         #region SAMURAI
@@ -472,14 +469,11 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Upheaval Feature During IR", "Adds upheaval onto main combo during InnerRelease", WAR.JobID, WAR.Upheaval)]
         WarriorUpheavalMainComboFeatureDuringIR = 1508,
 
-        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
+        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
         WarriorPrimalRendFeature = 1509,
 
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
         WarriorOrogenyFeature = 1510,
-
-        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to single target and AoE combo when available", WAR.JobID, WAR.PrimalRend)]
-        WarriorPrimalRendOption = 1511,
 
         #endregion
 // ====================================================================================

@@ -179,15 +179,12 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (comboTime > 0 && lastComboMove == GNB.DemonSlice && level >= GNB.Levels.DemonSlaughter)
                 {
-                    if (IsEnabled(CustomComboPreset.GunbreakerFatedCircleFeature))
+                    if (IsEnabled(CustomComboPreset.GunbreakerFatedCircleFeature) && level >= GNB.Levels.FatedCircle)
                     {
                         var gauge = GetJobGauge<GNBGauge>();
-                        if (gauge.Ammo == 3 && level >= 88)
-                        {
-                            return GNB.FatedCircle;
-                        }
+                        var cartridgeMax = level >= 88 ? 3 : 2;
 
-                        if (gauge.Ammo == 2 && level >= 4 && level <= 87)
+                        if (gauge.Ammo == cartridgeMax)
                         {
                             return GNB.FatedCircle;
                         }
