@@ -72,19 +72,13 @@ namespace XIVComboExpandedPlugin.Combos
                 var drillCD = GetCooldown(MCH.Drill);
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
                 var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
-                var cleanshotCD = GetCooldown(MCH.CleanShot);
-                var gaussCD = GetCooldown(MCH.GaussRound);
-                var ricochetCD = GetCooldown(MCH.Ricochet);
-                if (IsEnabled(CustomComboPreset.MachinistHeatBlastMainCombo))
+                if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
                     if (gauge.IsOverheated)
                         return MCH.HeatBlast;
-                }
-                if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
-                {
-                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0)
+                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0 && level >= MCH.Levels.Drill)
                         return MCH.Drill;
-                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1)
+                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
                 }
 
@@ -96,6 +90,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == MCH.SlugShot && level >= MCH.Levels.CleanShot)
                         return OriginalHook(MCH.CleanShot);
                 }
+
                 return OriginalHook(MCH.SplitShot);
             }
 
