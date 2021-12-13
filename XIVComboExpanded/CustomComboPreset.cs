@@ -7,7 +7,6 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -22,15 +21,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Swiftcast Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
         AstrologianAscendFeature = 4,
-
-        [CustomComboInfo("DPS Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.FallMalefic)]
-        AstrologianDpsFeature = 5,
-
-        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below 8k mana", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
-        AstrologianLucidFeature = 6,
-
-        [CustomComboInfo("Astrodyne Feature", "Adds Astrodyne to the DPS feature when ready", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
-        AstrologianAstrodyneFeature = 7,
 
         #endregion
         // ====================================================================================
@@ -68,7 +58,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
         BlackBlizzardParadoxFeature = 110,
-
 
         #endregion
         // ====================================================================================
@@ -159,7 +148,6 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
 
-
         #endregion
         // ====================================================================================
         #region GUNBREAKER
@@ -217,6 +205,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Drill/Air Feature On Main Combo", "Drill/Air Feature is added onto main combo (Note: If will add them onto main combo ONLY if you are under Reassemble Buff Or Reassemble is on CD(Will do nothing if Reassemble is OFF CD)) ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 706,
 
+        [CustomComboInfo("Single Button HeatBlast Feature", "Puts Ricochet/Gauss Round on Heatblast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast)]
+        MachinistHeatblastGaussRicochetFeature = 707,
+
         #endregion
         // ====================================================================================
         #region MONK
@@ -266,8 +257,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.FleetingRaiju)]
         NinjaHuraijinRaijuFeature = 910,
-
-
 
         #endregion
         // ====================================================================================
@@ -319,13 +308,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
         RedMageOgcdCombo = 1106,
-
-        [CustomComboInfo("Resolution Feature", "Adds Resolution finisher to Verthunder/Verareo Combo ", RDM.JobID, RDM.Verstone, RDM.Verfire, RDM.Resolution)]
-        RedmageResolutionFinisher = 1107,
-
-        [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, RDM.Redoublement, RDM.Resolution)]
-        RedmageResolutionFinisherMelee = 1108,
-
 
         #endregion
         // ====================================================================================
@@ -439,8 +421,6 @@ namespace XIVComboExpandedPlugin
         // [CustomComboInfo("Summon Carbuncle Feature", "Adds Summon Carbuncle to Main Combo if there is no pet present.", SMN.JobID, SMN.SummonCarbuncle)]
         //  SummonerCarbuncleFeature = 1415,
 
-
-
         #endregion
         // ====================================================================================
         #region WARRIOR
@@ -472,14 +452,17 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Upheaval Feature During IR", "Adds upheaval onto main combo during InnerRelease", WAR.JobID, WAR.Upheaval)]
         WarriorUpheavalMainComboFeatureDuringIR = 1508,
 
-        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
+        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
         WarriorPrimalRendFeature = 1509,
 
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
         WarriorOrogenyFeature = 1510,
 
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to single target and AoE combo when available", WAR.JobID, WAR.PrimalRend)]
+        WarriorPrimalRendOption = 1511,
+
         #endregion
-        // ====================================================================================
+// ====================================================================================
         #region WHITE MAGE
 
         [CustomComboInfo("Solace into Misery", "Replaces Afflatus Solace with Afflatus Misery when Misery is ready to be used", WHM.JobID, WHM.AfflatusSolace)]
@@ -507,41 +490,48 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region REAPER
 
-        [CustomComboInfo("Reaper Main Combo Feature", "Adds all of the basic single target combos onto one button", RPR.JobID, RPR.Slice)]
+        [CustomComboInfo("Slice Combo", "Replace Slice with its combo chain.", RPR.JobID, RPR.Slice, RPR.InfernalSlice)]
         ReaperSliceCombo = 1700,
 
-        [CustomComboInfo("Reaper AOE Combo Feature", "Adds all of the basic AoE target combos onto one button", RPR.JobID, RPR.SpinningScythe)]
+        [CustomComboInfo("Scythe Combo", "Replace Spinning Scythe with its combo chain.", RPR.JobID, RPR.SpinningScythe, RPR.NightmareScythe)]
         ReaperScytheCombo = 1701,
 
-        [CustomComboInfo("Reaper Enshroud Feature", "Enshroud feature", RPR.JobID, RPR.Enshroud)]
+        [CustomComboInfo("Enshroud Communio Feature", "Replace Enshroud with Communio when Enshrouded.", RPR.JobID, RPR.Enshroud)]
         ReaperEnshroudCommunioFeature = 1702,
 
-        [CustomComboInfo("Soul Reaver Gallows Feature", "Replace Shadow of Death with Gallows while Reaving or Enshrouded (Only Enable Feature or Option not both).", RPR.JobID, RPR.ShadowOfDeath)]
+        [CustomComboInfo("Gibbets and Gallows Feature", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
         ReaperGibbetGallowsFeature = 1703,
 
-        [CustomComboInfo("Soul Reaver Gallows Option", "Replace Shadow of Death with Gibbet instead while Reaving or Enshrouded (Only Enable Feature or Option not both)", RPR.JobID, RPR.ShadowOfDeath)]
-        ReaperGibbetGallowsOption = 1704,
+        [CustomComboInfo("Guillotine Feature", "Spinning Scythe's combo gets replaced with Guillotine while Soul Reaver or Shroud is active.", RPR.JobID, RPR.SpinningScythe)]
+        ReaperGuillotineFeature = 1704,
 
-        [CustomComboInfo("Regress Feature", "Both Hell's Ingress and Egress turn into Regress when Threshold is active, instead of just the opposite of the one used.", RPR.JobID, RPR.HellsIngress, RPR.Regress)]
-        ReaperRegressFeature = 1705,
+        [CustomComboInfo("GG Gallows Option", "Slice now turns into Gallows when Gallows is Enhanced, and removes it from Shadow of Death.", RPR.JobID, RPR.Slice)]
+        ReaperGibbetGallowsOption = 1705,
 
-        [CustomComboInfo("Arcane Harvest Feature", "Replace Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID, RPR.ArcaneCircle)]
-        ReaperHarvestFeature = 1706,
+        [SecretCustomCombo]
+        [CustomComboInfo("Combo Communio Feature", "When one stack is left of Shroud, Communio replaces Gibbet/Gallows/Guillotine.", RPR.JobID, RPR.Slice, RPR.InfernalSlice, RPR.Gibbet, RPR.Gallows, RPR.Guillotine, RPR.SpinningScythe, RPR.NightmareScythe)]
+        ReaperComboCommunioFeature = 1706,
 
-        [CustomComboInfo("Shadow Of Death Feature", "Adds Shadow of Death to Main Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.Slice, RPR.WaxingSlice, RPR.WaxingSlice, RPR.ShadowOfDeath)]
-        ReaperShadowOfDeathFeature = 1707,
+        [CustomComboInfo("Lemure Feature", "When you have two or more stacks of Void Shroud, Lemure Slice/Scythe replaces Gibbet/Gallows and Guillotine respectively.", RPR.JobID, RPR.Slice, RPR.InfernalSlice, RPR.Gibbet, RPR.Gallows, RPR.Guillotine, RPR.SpinningScythe, RPR.NightmareScythe)]
+        ReaperLemureFeature = 1707,
+
+        [CustomComboInfo("Arcane Circle Harvest Feature", "Replace Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID, RPR.ArcaneCircle)]
+        ReaperHarvestFeature = 1708,
+
+        [CustomComboInfo("Regress Feature", "Both Hell's Ingress and Hell's Egress turn into Regress when Threshold is active, instead of just the opposite of the one you used.", RPR.JobID, RPR.HellsIngress, RPR.HellsEgress)]
+        ReaperRegressFeature = 1709,
+
+        [CustomComboInfo("Shadow Of Death Feature", "Adds Shadow of Death to Main Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.Slice, RPR.WaxingSlice, RPR.ShadowOfDeath)]
+        ReaperShadowOfDeathFeature = 1710,
 
         [CustomComboInfo("Whorl Of Death Feature", "Adds Whorl of Death to Main AoE Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.SpinningScythe, RPR.NightmareScythe)]
-        ReaperWhorlOfDeathFeature = 1708,
-
-        [CustomComboInfo("Guillotine Feature", "Spinning Scythe's combo gets replaced with Guillotine while Soul Reaver or Shroud is active.", RPR.JobID, RPR.SpinningScythe)]
-        ReaperGuillotineFeature = 1709,
+        ReaperWhorlOfDeathFeature = 1711,
 
         #endregion
         // ====================================================================================
         #region DISCIPLE OF MAGIC
 
-        //[CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
+        // [CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
         // DoMSwiftcastFeature = 109,
 
         #endregion
