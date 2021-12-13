@@ -23,6 +23,15 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Swiftcast Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
         AstrologianAscendFeature = 4,
 
+        [CustomComboInfo("DPS Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.FallMalefic)]
+        AstrologianDpsFeature = 5,
+
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below 8k mana", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
+        AstrologianLucidFeature = 6,
+
+        [CustomComboInfo("Astrodyne Feature", "Adds Astrodyne to the DPS feature when ready", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
+        AstrologianAstrodyneFeature = 7,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE

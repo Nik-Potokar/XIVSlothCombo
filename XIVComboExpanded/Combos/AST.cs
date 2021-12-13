@@ -1,5 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.Gauge;
 
 namespace XIVComboExpandedPlugin.Combos
 {
@@ -130,6 +132,43 @@ namespace XIVComboExpandedPlugin.Combos
                         return AST.Ascend;
                 }
                 return OriginalHook(AST.Swiftcast);
+            }
+            return actionID;
+        }
+    }
+    internal class AstrologianDpsFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianDpsFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if(actionID == AST.FallMalefic)
+            {
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var combustDebuff = TargetHasEffect(AST.Debuffs.Combust3);
+                var combustTimer = FindTargetEffect(AST.Debuffs.Combust3);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(AST.LucidDreaming);
+                var fallmalefic = GetCooldown(AST.FallMalefic);
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature))
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining > 0.5)
+                        return AST.Astrodyne;
+                    
+
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.7)
+                        return AST.LucidDreaming;
+
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature))
+                {
+                    if ((!combustDebuff && incombat) || (combustTimer.RemainingTime < 3 && incombat))
+                        return AST.Combust3;
+                }
+
             }
             return actionID;
         }
