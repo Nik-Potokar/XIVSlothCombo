@@ -117,8 +117,6 @@ namespace XIVComboExpandedPlugin.Combos
                     return MCH.HeatBlast;
                 if (level <= 49)
                     return MCH.GaussRound;
-                if (!gaussCD.IsCooldown && !ricochetCD.IsCooldown)
-                    return actionID;
                 if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
                     return MCH.GaussRound;
                 else
