@@ -76,9 +76,9 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (gauge.IsOverheated)
                         return MCH.HeatBlast;
-                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0)
+                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0 && level >= MCH.Levels.Drill)
                         return MCH.Drill;
-                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1)
+                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
                 }
 
