@@ -16,7 +16,20 @@ namespace XIVComboExpandedPlugin.Combos
             LucidDreaming = 7562,
             Raise = 125,
             Swiftcast = 7561,
-            AfflatusMisery = 16535;
+            AfflatusMisery = 16535,
+
+            // dps
+            Glare1 = 16533,
+            Glare3 = 25859,
+            Stone1 = 119,
+            Stone2 = 127,
+            Stone3 = 3568,
+            Stone4 = 7431,
+
+            // DoT
+            Dia = 16532,
+            Aero1 = 121,
+            Aero2 = 132;
 
         public static class Buffs
         {
@@ -26,7 +39,10 @@ namespace XIVComboExpandedPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Dia = 1871,
+            Aero = 143,
+            Aero2 = 144;
         }
 
         public static class Levels
@@ -123,6 +139,36 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         if (HasEffect(WHM.Buffs.Swiftcast))
                             return WHM.Raise;
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class WHMDotMainComboFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.WHMDotMainComboFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == WHM.Glare3 || actionID == WHM.Glare1)
+                {
+                    var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var diaDebuff = FindTargetEffect(WHM.Debuffs.Dia);
+                    var lucidDreaming = GetCooldown(WHM.LucidDreaming);
+                    var glare3 = GetCooldown(WHM.Glare3);
+                    if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature))
+                    {
+                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.7)
+                            return WHM.LucidDreaming;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature))
+                    {
+                        if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72))
+                            return WHM.Dia;
+                        return WHM.Glare3;
                     }
                 }
 

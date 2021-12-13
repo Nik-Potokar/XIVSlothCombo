@@ -98,6 +98,30 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
+    internal class MachinistHeatblastGaussRicochetFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.MachinistHeatblastGaussRicochetFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == MCH.HeatBlast)
+            {
+                var heatBlastCD = GetCooldown(MCH.HeatBlast);
+                var gaussCD = GetCooldown(MCH.GaussRound);
+                var ricochetCD = GetCooldown(MCH.Ricochet);
+
+                if (heatBlastCD.CooldownRemaining > 0.7) // prioritize heatblast
+                    return actionID;
+                if (gaussCD.CooldownRemaining <= ricochetCD.CooldownRemaining)
+                    return MCH.GaussRound;
+                else if (level >= 50)
+                    return MCH.Ricochet;
+            }
+
+            return actionID;
+        }
+    }
+
     internal class MachinistGaussRoundRicochetFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.MachinistGaussRoundRicochetFeature;

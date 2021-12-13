@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>Aki,attick,Kami,Daemitus</Authors>
+    <Authors>Aki,attick,Kami,Daemitus,Grammernatzi,Nik-Potokar,Iaotle,Codemned</Authors>
     <Company>-</Company>
     <Version>1.2.0.0</Version>
     <Description>XIVCombo For lazy players Last Per-EndWalker Update</Description>

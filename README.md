@@ -20,27 +20,22 @@ RDM:
 - 1 Button oCGD (Not perfect needs some fixing)
 NIN:
 - Huton/Armor crush combo on main combo when huton timer is low
-
 PLD:
 - DoT on main combo
-
 SMN:
 - Demisummon combiners for Enkindle/Deathflare/Rekindle
 - Weaving Optimization for Demisummons.
 - Modular combiners for every Egi aoe/single target/special attacks
 - Support for level syncing
-
 WAR:
-
 - Warrior Storm's Path / Storm's Eye buff renewal on main combo
 - Fell cleave feature - never overcap
 - Support for level syncing
-
 DRK:
-
 - Fixed overcap features for aoe and single target combos
 - Living Shadow on main combo
-
+MCH:
+- Single button Heatblast/Gauss Round/Ricochet Feature
 
 In progress :
 
