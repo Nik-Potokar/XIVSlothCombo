@@ -33,6 +33,7 @@ namespace XIVComboExpandedPlugin
         /// </summary>
         public string Description { get; }
 
+
         /// <summary>
         /// Gets the job ID.
         /// </summary>

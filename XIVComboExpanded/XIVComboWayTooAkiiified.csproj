@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Authors>Aki,attick,Kami,Daemitus,Grammernatzi,Nik-Potokar,Iaotle,Codemned</Authors>
     <Company>-</Company>
-    <Version>1.2.0.0</Version>
+    <Version>2.0.0.0</Version>
     <Description>XIVCombo For lazy players Last Per-EndWalker Update</Description>
     <Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
@@ -54,6 +54,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <Reference Include="FFXIVClientStructs">
+      <HintPath>..\..\..\..\..\AppData\Roaming\XIVLauncher\addon\Hooks\dev\FFXIVClientStructs.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>

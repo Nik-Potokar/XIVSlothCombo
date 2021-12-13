@@ -188,6 +188,11 @@ namespace XIVComboExpandedPlugin.Combos
 
                     if (comboTime > 0)
                     {
+                        if(IsEnabled(CustomComboPreset.WarriorPrimalRendFeature))
+                        {
+                            if (level >= WAR.Levels.PrimalRend && HasEffect(WAR.Buffs.PrimalRendReady))
+                                return WAR.PrimalRend;
+                        }
                         if (IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature))
                         {
                             var gauge = GetJobGauge<WARGauge>().BeastGauge;
@@ -198,7 +203,6 @@ namespace XIVComboExpandedPlugin.Combos
                             if (lastComboMove == WAR.Overpower || (lastComboMove == WAR.MythrilTempest && gauge >= 90))
                                 return WAR.Decimate;
                         }
-
                         if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && lastComboMove == WAR.Decimate && level >= 86)
                         {
                             return WAR.Orogeny;
@@ -209,7 +213,6 @@ namespace XIVComboExpandedPlugin.Combos
                             return WAR.Orogeny;
                         }
                     }
-
                     return WAR.Overpower;
                 }
 
