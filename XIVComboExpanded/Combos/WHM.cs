@@ -26,11 +26,10 @@ namespace XIVComboExpandedPlugin.Combos
             Stone3 = 3568,
             Stone4 = 7431,
 
-            //DoT
+            // DoT
             Dia = 16532,
             Aero1 = 121,
             Aero2 = 132;
-
 
         public static class Buffs
         {
@@ -44,7 +43,6 @@ namespace XIVComboExpandedPlugin.Combos
             Dia = 1871,
             Aero = 143,
             Aero2 = 144;
-
         }
 
         public static class Levels
@@ -82,7 +80,6 @@ namespace XIVComboExpandedPlugin.Combos
             if (gauge.BloodLily == 3)
                 return WHM.AfflatusMisery;
 
-
             return actionID;
         }
     }
@@ -98,9 +95,9 @@ namespace XIVComboExpandedPlugin.Combos
                 if (level < WHM.Levels.Cure2)
                     return WHM.Cure;
             }
+
             return actionID;
         }
-
     }
 
     internal class WhiteMageAfflatusFeature : CustomCombo
@@ -126,8 +123,10 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return actionID;
             }
+
             return actionID;
         }
+
         internal class WHMRaiseFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.WHMRaiseFeature;
@@ -142,9 +141,11 @@ namespace XIVComboExpandedPlugin.Combos
                             return WHM.Raise;
                     }
                 }
+
                 return actionID;
             }
         }
+
         internal class WHMDotMainComboFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.WHMDotMainComboFeature;
@@ -161,8 +162,8 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.7)
                             return WHM.LucidDreaming;
-
                     }
+
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature))
                     {
                         if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72))
@@ -170,6 +171,7 @@ namespace XIVComboExpandedPlugin.Combos
                         return WHM.Glare3;
                     }
                 }
+
                 return actionID;
             }
         }

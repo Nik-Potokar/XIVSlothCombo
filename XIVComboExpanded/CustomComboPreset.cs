@@ -7,7 +7,6 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -59,7 +58,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
         BlackBlizzardParadoxFeature = 110,
-
 
         #endregion
         // ====================================================================================
@@ -149,7 +147,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
-
 
         #endregion
         // ====================================================================================
@@ -257,8 +254,6 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.FleetingRaiju)]
         NinjaHuraijinRaijuFeature = 910,
-
-
 
         #endregion
         // ====================================================================================
@@ -423,8 +418,6 @@ namespace XIVComboExpandedPlugin
         // [CustomComboInfo("Summon Carbuncle Feature", "Adds Summon Carbuncle to Main Combo if there is no pet present.", SMN.JobID, SMN.SummonCarbuncle)]
         //  SummonerCarbuncleFeature = 1415,
 
-
-
         #endregion
         // ====================================================================================
         #region WARRIOR
@@ -462,9 +455,11 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
         WarriorOrogenyFeature = 1510,
 
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to single target and AoE combo when available", WAR.JobID, WAR.PrimalRend)]
+        WarriorPrimalRendOption = 1511,
 
         #endregion
-        // ====================================================================================
+// ====================================================================================
         #region WHITE MAGE
 
         [CustomComboInfo("Solace into Misery", "Replaces Afflatus Solace with Afflatus Misery when Misery is ready to be used", WHM.JobID, WHM.AfflatusSolace)]
@@ -526,7 +521,7 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region DISCIPLE OF MAGIC
 
-        //[CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
+        // [CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
         // DoMSwiftcastFeature = 109,
 
         #endregion
