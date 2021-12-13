@@ -320,6 +320,13 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
         RedMageOgcdCombo = 1106,
 
+        [CustomComboInfo("Resolution Feature", "Adds Resolution finisher to Verthunder/Verareo Combo ", RDM.JobID, RDM.Verstone, RDM.Verfire, RDM.Resolution)]
+        RedmageResolutionFinisher = 1107,
+
+        [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, RDM.Redoublement, RDM.Resolution)]
+        RedmageResolutionFinisherMelee = 1108,
+
+
         #endregion
         // ====================================================================================
         #region SAMURAI
@@ -465,12 +472,11 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Upheaval Feature During IR", "Adds upheaval onto main combo during InnerRelease", WAR.JobID, WAR.Upheaval)]
         WarriorUpheavalMainComboFeatureDuringIR = 1508,
 
-        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
+        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
         WarriorPrimalRendFeature = 1509,
 
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
         WarriorOrogenyFeature = 1510,
-
 
         #endregion
         // ====================================================================================

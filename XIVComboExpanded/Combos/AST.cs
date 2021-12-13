@@ -154,8 +154,6 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining > 0.5)
                         return AST.Astrodyne;
-                    
-
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
                 {
@@ -165,7 +163,7 @@ namespace XIVComboExpandedPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianDpsFeature))
                 {
-                    if ((!combustDebuff && incombat) || (combustTimer.RemainingTime < 3 && incombat))
+                    if ((!combustDebuff && incombat && level >= 72) || (combustTimer.RemainingTime < 3 && incombat && level >= 72))
                         return AST.Combust3;
                 }
 
