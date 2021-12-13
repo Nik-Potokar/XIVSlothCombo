@@ -22,6 +22,16 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Swiftcast Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
         AstrologianAscendFeature = 4,
 
+        [CustomComboInfo("DPS Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.FallMalefic)]
+        AstrologianDpsFeature = 5,
+
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below 8k mana", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
+        AstrologianLucidFeature = 6,
+
+        [CustomComboInfo("Astrodyne Feature", "Adds Astrodyne to the DPS feature when ready", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
+        AstrologianAstrodyneFeature = 7,
+
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -308,6 +318,16 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
         RedMageOgcdCombo = 1106,
+
+        [CustomComboInfo("Resolution Feature", "Adds Resolution finisher to Verthunder/Verareo Combo ", RDM.JobID, RDM.Verstone, RDM.Verfire, RDM.Resolution)]
+        RedmageResolutionFinisher = 1107,
+
+        [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, RDM.Redoublement, RDM.Resolution)]
+        RedmageResolutionFinisherMelee = 1108,
+
+
+
+
 
         #endregion
         // ====================================================================================

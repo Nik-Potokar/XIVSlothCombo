@@ -142,7 +142,7 @@ namespace XIVComboExpandedPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.RedmageResolutionFinisherMelee))
                 {
-                    if (lastComboMove == RDM.Scorch)
+                    if (lastComboMove == RDM.Scorch && level >= 90)
                         return RDM.Resolution;
 
                 }
@@ -164,7 +164,7 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (IsEnabled(CustomComboPreset.RedmageResolutionFinisher))
                 {
-                    if (lastComboMove == RDM.Scorch )
+                    if (lastComboMove == RDM.Scorch && level >= 90)
                         return RDM.Resolution;
                 }
                 if (level >= RDM.Levels.Scorch && (lastComboMove == RDM.Verflare || lastComboMove == RDM.Verholy))
@@ -240,7 +240,7 @@ namespace XIVComboExpandedPlugin.Combos
                     return RDM.Verfire;
                 if (IsEnabled(CustomComboPreset.RedmageResolutionFinisher))
                 {
-                    if (lastComboMove == RDM.Scorch )
+                    if (lastComboMove == RDM.Scorch && level >= 90)
                         return RDM.Resolution;
 
                 }
