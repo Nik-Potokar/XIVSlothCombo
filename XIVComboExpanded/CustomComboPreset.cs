@@ -218,6 +218,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Single Button HeatBlast", "Switches Heat Blast to Hypercharge and swaps to Heat Blast when overheated.\nAlso puts Ricochet/Gauss Round/Wildfire on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.AutoCrossbow, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 707,
 
+        [CustomComboInfo("Auto Crossbow Feature", "Replaces Spread Shot when overheated with Auto Crossbow", MCH.JobID, MCH.SpreadShot, MCH.AutoCrossbow)]
+        MachinistAoEFeature = 708,
+
         #endregion
         // ====================================================================================
         #region MONK

@@ -248,5 +248,22 @@ namespace XIVComboExpandedPlugin.Combos
                 return actionID;
             }
         }
+        internal class MachinistAoEFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.MachinistAoEFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if(actionID == MCH.SpreadShot)
+                {
+                    var gauge = GetJobGauge<MCHGauge>();
+                    if (gauge.IsOverheated)
+                        return MCH.AutoCrossbow;
+                }
+                return MCH.SpreadShot;
+            }
+        }
+
     }
+
 }
