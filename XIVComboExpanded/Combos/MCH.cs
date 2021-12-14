@@ -82,6 +82,7 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     return MCH.HeatBlast;
                 }
+
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
                     if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.CooldownRemaining <= 0 && level >= MCH.Levels.AirAnchor)
@@ -94,8 +95,6 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
-                    if (gauge.IsOverheated)
-                        return MCH.HeatBlast;
                     if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0 && level >= MCH.Levels.Drill)
                         return MCH.Drill;
                     if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
