@@ -165,7 +165,7 @@ namespace XIVComboExpandedPlugin.Combos
                                 return BLM.Thunder3;
                         }
 
-                        if (gauge.UmbralHearts == 3 && level >= 90)
+                        if (gauge.IsParadoxActive && level >= 90)
                             return BLM.Paradox;
                     }
 
