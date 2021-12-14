@@ -77,6 +77,10 @@ namespace XIVComboExpandedPlugin.Combos
                 var reassembleCD = GetCooldown(MCH.Reassemble);
                 var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
 
+                if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
+                {
+                    return MCH.HeatBlast;
+                }
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
                     if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.CooldownRemaining <= 0 && level >= MCH.Levels.AirAnchor)
@@ -252,4 +256,5 @@ namespace XIVComboExpandedPlugin.Combos
             }
         }
     }
+
 }

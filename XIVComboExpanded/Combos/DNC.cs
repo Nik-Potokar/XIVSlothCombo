@@ -38,7 +38,9 @@ namespace XIVComboExpandedPlugin.Combos
             SaberDance = 16005,
             EnAvant = 16010,
             Flourish = 16013,
-            Improvisation = 16014;
+            Improvisation = 16014,
+            Devilment = 16011;
+
 
         public static class Buffs
         {
@@ -51,7 +53,8 @@ namespace XIVComboExpandedPlugin.Combos
                 TechnicalStep = 1819,
                 FlourishingSymetry = 2693,
                 FlourishingFlow = 2694,
-                FlourishingFanDance = 1820;
+                FlourishingFanDance = 1820,
+                FlourishingStarfall = 2700;
         }
 
         public static class Debuffs
@@ -233,8 +236,24 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return DNC.Windmill;
             }
-
             return actionID;
+        }
+    }
+    internal class DancerDevilmentFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DancerDevilmentFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == DNC.Devilment)
+            {
+                if (level >= 90 && HasEffect(DNC.Buffs.FlourishingStarfall))
+                    return DNC.StarfallDance;
+
+                return DNC.Devilment;
+            }
+            return actionID;
+
         }
     }
 }

@@ -23,7 +23,11 @@ namespace XIVComboExpandedPlugin.Combos
             FangAndClaw = 3554,
             WheelingThrust = 3556,
             FullThrust = 84,
-            VorpalThrust = 78;
+            VorpalThrust = 78,
+            WyrmwindThrust = 25773,
+            DraconianFury = 25770,
+            ChaoticSpring = 25772;
+
 
         public static class Buffs
         {
@@ -32,6 +36,7 @@ namespace XIVComboExpandedPlugin.Combos
                 EnhancedWheelingThrust = 803,
                 DiveReady = 1243,
                 RaidenThrustReady = 1863;
+
         }
 
         public static class Debuffs
@@ -74,26 +79,6 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-    internal class DragoonBOTDFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.DragoonBOTDFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == DRG.BloodOfTheDragon)
-            {
-                if (level >= DRG.Levels.Stardiver)
-                {
-                    var gauge = GetJobGauge<DRGGauge>();
-                    if (gauge.IsLOTDActive)
-                        return DRG.Stardiver;
-                }
-            }
-
-            return actionID;
-        }
-    }
-
     internal class DragoonCoerthanTormentCombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.DragoonCoerthanTormentCombo;
@@ -104,7 +89,7 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (comboTime > 0)
                 {
-                    if (lastComboMove == DRG.DoomSpike && level >= DRG.Levels.SonicThrust)
+                    if ((lastComboMove == DRG.DoomSpike || lastComboMove == DRG.DraconianFury) && level >= DRG.Levels.SonicThrust)
                         return DRG.SonicThrust;
 
                     if (lastComboMove == DRG.SonicThrust && level >= DRG.Levels.CoerthanTorment)
@@ -124,7 +109,7 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == DRG.ChaosThrust)
+            if (actionID == DRG.ChaosThrust || actionID == DRG.ChaoticSpring)
             {
                 if (comboTime > 0)
                 {
@@ -135,15 +120,17 @@ namespace XIVComboExpandedPlugin.Combos
                         return DRG.ChaosThrust;
                 }
 
+                if (IsEnabled(CustomComboPreset.DragoonFangThrustFeature) && (HasEffect(DRG.Buffs.SharperFangAndClaw) || HasEffect(DRG.Buffs.EnhancedWheelingThrust)))
+                    return DRG.WheelingThrust;
+
                 if (HasEffect(DRG.Buffs.SharperFangAndClaw) && level >= DRG.Levels.FangAndClaw)
                     return DRG.FangAndClaw;
 
                 if (HasEffect(DRG.Buffs.EnhancedWheelingThrust) && level >= DRG.Levels.WheelingThrust)
                     return DRG.WheelingThrust;
 
-                return OriginalHook(DRG.TrueThrust);
+                return DRG.TrueThrust;
             }
-
             return actionID;
         }
     }

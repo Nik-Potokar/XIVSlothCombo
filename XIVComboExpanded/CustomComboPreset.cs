@@ -35,7 +35,7 @@ namespace XIVComboExpandedPlugin
         // ====================================================================================
         #region BLACK MAGE
 
-        [CustomComboInfo("Enochian Stance Switcher ++", "Change Scathe to Fire 4 or Blizzard 4 depending on stance. \nScathe becomes all in one rotation. \nIf Thunder Feature is turned on it also adds Thunder3 proces onto all in one combo when DoT is about to expire or dosen't exist", BLM.JobID, BLM.Scathe)]
+        [CustomComboInfo("Enochian Stance Switcher ++", "Change Scathe to Fire 4 or Blizzard 4 depending on stance. \nScathe becomes all in one rotation. \nIf Thunder Feature is turned on it also adds Thunder3 proces onto all in one combo when DoT is about to expire or dosen't exist \n This REQUIRES other features to be turned on!!!", BLM.JobID, BLM.Scathe)]
         BlackEnochianFeature = 100,
 
         [CustomComboInfo("Umbral Soul/Transpose Switcher", "Change Transpose into Umbral Soul when Umbral Soul is usable.", BLM.JobID, BLM.Transpose)]
@@ -44,29 +44,26 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("(Between the) Ley Lines", "Change Ley Lines into BTL when Ley Lines is active.", BLM.JobID, BLM.LeyLines)]
         BlackLeyLinesFeature = 102,
 
-        [CustomComboInfo("Fire 1/3 Feature", "Fire 1 becomes Fire 3 outside of Astral Fire, and when Firestarter proc is up.", BLM.JobID, BLM.Fire)]
-        BlackFireFeature = 103,
-
         [CustomComboInfo("Blizzard 1/2/3 Feature", "Blizzard 1 becomes Blizzard 3 when out of Umbral Ice. Freeze becomes Blizzard 2 when synced.", BLM.JobID, BLM.Blizzard, BLM.Freeze)]
-        BlackBlizzardFeature = 104,
+        BlackBlizzardFeature = 103,
 
         [CustomComboInfo("Scathe/Xenoglossy Feature", "Scathe becomes Xenoglossy when available.", BLM.JobID, BLM.Scathe)]
-        BlackScatheFeature = 105,
+        BlackScatheFeature = 104,
 
         [CustomComboInfo("Fire 1/3", "Fire 1 becomes Fire 3 outside of Astral Fire, OR when Firestarter proc is up.", BLM.JobID, BLM.Fire3, BLM.Fire)]
-        BlackFire13Feature = 106,
+        BlackFire13Feature = 105,
 
         [CustomComboInfo("Thunder", "Thunder 1/3 replaces Enochian/Fire 4/Blizzard 4 on Enochian switcher.\n Occurs when Thundercloud is up and either\n- Thundercloud buff on you is about to run out, or\n- Thunder debuff on your CURRENT target is about to run out\nassuming it won't interrupt timer upkeep.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Thunder, BLM.Thunder3)]
-        BlackThunderFeature = 107,
+        BlackThunderFeature = 106,
 
         [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Fire4)]
-        BlackDespairFeature = 108,
+        BlackDespairFeature = 107,
 
         [CustomComboInfo("Freeze Flare Feature", "Switches Freeze to flare depending on the stance", BLM.JobID, BLM.Blizzard2, BLM.Freeze, BLM.Flare)]
-        BlackAoEComboFeature = 109,
+        BlackAoEComboFeature = 108,
 
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
-        BlackBlizzardParadoxFeature = 110,
+        BlackBlizzardParadoxFeature = 109,
 
         #endregion
         // ====================================================================================
@@ -116,6 +113,9 @@ namespace XIVComboExpandedPlugin
             DNC.JobID)]
         DancerDanceComboCompatibility = 305,
 
+        [CustomComboInfo("Devilment Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID, DNC.Devilment)]
+        DancerDevilmentFeature = 306,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -134,6 +134,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Full Thrust Combo", "Replace Full Thrust with its combo chain.", DRG.JobID, DRG.FullThrust)]
         DragoonFullThrustCombo = 404,
+
+        [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, DRG.FullThrust, DRG.ChaosThrust)]
+        DragoonFangThrustFeature = 405,
 
         #endregion
         // ====================================================================================
@@ -221,6 +224,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD))", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistAlternateMainCombo = 708,
 
+        [CustomComboInfo("HeatBlast On Main Combo Option", "Adds Heatblast onto main combo when the option is enabeled ", MCH.JobID, MCH.HeatBlast)]
+        MachinistHeatBlastOnMainCombo = 709,
+
         #endregion
         // ====================================================================================
         #region MONK
@@ -233,6 +239,15 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Monk Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, MNK.Bootshine)]
         MnkBasicCombo = 802,
+
+        [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, MNK.PerfectBalance)]
+        MonkPerfectBalanceFeature = 803,
+
+        [CustomComboInfo("Monk Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID, MNK.DragonKick)]
+        MnkBootshineBalanceFeature = 804,
+
+        [CustomComboInfo("Howling Fist / Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, MNK.HowlingFist, MNK.Enlightenment)]
+        MonkHowlingFistMeditationFeature = 805,
 
         #endregion
         // ====================================================================================
@@ -498,7 +513,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("DoT on Glare1/3 Feature", "Adds DoT on Glare1/3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
         WHMDotMainComboFeature = 1605,
 
-        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming onto Glare combo when you are below 8k mana", WHM.JobID, WHM.LucidDreaming)]
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming onto Glare1/3 Feature combo when you are below 8k mana", WHM.JobID, WHM.LucidDreaming)]
         WHMLucidDreamingFeature = 1606,
 
         #endregion
@@ -544,6 +559,18 @@ namespace XIVComboExpandedPlugin
 
         #endregion
         // ====================================================================================
+        #region SAGE
+
+        [CustomComboInfo("Soteria into Kardia", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, SGE.Soteria)]
+        SageKardiaFeature = 1800,
+
+        [CustomComboInfo("Phlegma into Dyskrasia", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, SGE.Phlegma, SGE.Phlegmara, SGE.Phlegmaga)]
+        SagePhlegmaFeature = 1801,
+
+        [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button (Currently only for Dosis1!!!)", SGE.JobID, SGE.Dosis1, SGE.Eukrasia, SGE.EukrasianDosis1)]
+        SageDPSFeature = 1802,
+
+        #endregion
         #region DISCIPLE OF MAGIC
 
         // [CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
