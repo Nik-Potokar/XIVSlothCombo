@@ -74,6 +74,8 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<MCHGauge>();
                 var drillCD = GetCooldown(MCH.Drill);
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
+                var reassembleCD = GetCooldown(MCH.Reassemble);
+                var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
 
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
@@ -81,6 +83,16 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.AirAnchor;
                     if (airAnchorCD.CooldownRemaining > 0 && drillCD.CooldownRemaining <= 0 && level >= MCH.Levels.Drill)
                         return MCH.Drill;
+                }
+
+                if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
+                {
+                    if (gauge.IsOverheated)
+                        return MCH.HeatBlast;
+                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0 && level >= MCH.Levels.Drill)
+                        return MCH.Drill;
+                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
+                        return MCH.AirAnchor;
                 }
 
                 if (comboTime > 0)
