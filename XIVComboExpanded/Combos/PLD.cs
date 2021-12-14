@@ -146,8 +146,8 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (lastComboMove == PLD.FastBlade)
                         return PLD.RiotBlade;
-                    if ((lastComboMove == PLD.RiotBlade && !goringBladeDebuffonTarget && level >= 54 ) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime < 5 && level >= 54) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime < 5 && level >= 54)
-) return PLD.GoringBlade;
+                    if ((lastComboMove == PLD.RiotBlade && !goringBladeDebuffonTarget && level >= 54) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime < 5 && level >= 54) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime < 5 && level >= 54))
+                        return PLD.GoringBlade;
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))

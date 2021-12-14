@@ -136,13 +136,14 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+
     internal class AstrologianDpsFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.AstrologianDpsFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == AST.FallMalefic)
+            if (actionID == AST.FallMalefic)
             {
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var combustDebuff = TargetHasEffect(AST.Debuffs.Combust3);
@@ -155,19 +156,20 @@ namespace XIVComboExpandedPlugin.Combos
                     if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining > 0.5)
                         return AST.Astrodyne;
                 }
+
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
                 {
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.7)
                         return AST.LucidDreaming;
-
                 }
+
                 if (IsEnabled(CustomComboPreset.AstrologianDpsFeature))
                 {
                     if ((!combustDebuff && incombat && level >= 72) || (combustTimer.RemainingTime < 3 && incombat && level >= 72))
                         return AST.Combust3;
                 }
-
             }
+
             return actionID;
         }
     }
