@@ -199,20 +199,11 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == MCH.AutoCrossbow)
             {
-                var autocrossbowCD = GetCooldown(MCH.AutoCrossbow);
-                var gaussCD = GetCooldown(MCH.GaussRound);
-                var ricochetCD = GetCooldown(MCH.Ricochet);
                 var gauge = GetJobGauge<MCHGauge>();
-
                 if (!gauge.IsOverheated)
                     return MCH.SpreadShot;
-                if (gauge.IsOverheated && autocrossbowCD.CooldownRemaining < 0.7 && level >= MCH.AutoCrossbow)
+                if (gauge.IsOverheated && level >= MCH.AutoCrossbow)
                     return MCH.AutoCrossbow;
-                if (gauge.IsOverheated && gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
-                    return MCH.GaussRound;
-                else
-                    if (gauge.IsOverheated)
-                    return MCH.Ricochet;
             }
 
             return actionID;
@@ -260,22 +251,5 @@ namespace XIVComboExpandedPlugin.Combos
                 return actionID;
             }
         }
-        internal class MachinistAoEFeature : CustomCombo
-        {
-            protected override CustomComboPreset Preset => CustomComboPreset.MachinistAoEFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if(actionID == MCH.SpreadShot)
-                {
-                    var gauge = GetJobGauge<MCHGauge>();
-                    if (gauge.IsOverheated)
-                        return MCH.AutoCrossbow;
-                }
-                return MCH.SpreadShot;
-            }
-        }
-
     }
-
 }

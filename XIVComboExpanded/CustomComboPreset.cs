@@ -195,7 +195,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("(Heated) Shot Combo", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, MCH.CleanShot, MCH.HeatedCleanShot)]
         MachinistMainCombo = 700,
 
-        [CustomComboInfo("Spread Shot Heat", "Switches Auto Crossbow to Spread Shot and swaps to Auto Crossbow when overheated. \nAlso puts Ricochet/Gauss Round where necessary.", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot, MCH.Ricochet, MCH.GaussRound)]
+        [CustomComboInfo("Spread Shot Heat", "Switches Auto Crossbow to Spread Shot and swaps to Auto Crossbow when overheated.", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot)]
         MachinistSpreadShotFeature = 701,
 
         [CustomComboInfo("Hypercharge Feature", "Replace Heat Blast and Auto Crossbow with Hypercharge when not overheated.", MCH.JobID, MCH.HeatBlast, MCH.AutoCrossbow)]
