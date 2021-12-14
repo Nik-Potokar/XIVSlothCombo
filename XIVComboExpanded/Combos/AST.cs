@@ -33,7 +33,9 @@ namespace XIVComboExpandedPlugin.Combos
             Play = 17055,
             LordOfCrowns = 7444,
             LadyOfCrown = 7445,
-            Combust3 = 16554;
+            Combust3 = 16554,
+            Combust2 = 3608,
+            Combust1 = 3599;
 
         public static class Buffs
         {
@@ -141,11 +143,15 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == AST.FallMalefic)
+            if (actionID == AST.FallMalefic || actionID == AST.Malefic4 || actionID == AST.Malefic3 || actionID == AST.Malefic2 || actionID == AST.Malefic1)
             {
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var combustDebuff = TargetHasEffect(AST.Debuffs.Combust3);
-                var combustTimer = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust3Debuff = TargetHasEffect(AST.Debuffs.Combust3);
+                var combust2Debuff = TargetHasEffect(AST.Debuffs.Combust2);
+                var combust1Debuff = TargetHasEffect(AST.Debuffs.Combust1);
+                var combust3Timer = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust2Timer = FindTargetEffect(AST.Debuffs.Combust2);
+                var combust1Timer = FindTargetEffect(AST.Debuffs.Combust1);
                 var gauge = GetJobGauge<ASTGauge>();
                 var lucidDreaming = GetCooldown(AST.LucidDreaming);
                 var fallmalefic = GetCooldown(AST.FallMalefic);
@@ -163,8 +169,13 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.AstrologianDpsFeature))
                 {
-                    if ((!combustDebuff && incombat && level >= 72) || (combustTimer.RemainingTime < 3 && incombat && level >= 72))
+                    if ((!combust3Debuff && incombat && level >= 72) || (combust3Timer.RemainingTime < 3 && incombat && level >= 72))
                         return AST.Combust3;
+                    if ((!combust2Debuff && incombat && level >= 46 && level >= 71) || (combust2Timer.RemainingTime < 3 && incombat && level >= 46 && level >= 71))
+                        return AST.Combust2;
+                    if ((!combust1Debuff && incombat && level >= 4 && level >= 45) || (combust1Timer.RemainingTime < 3 && incombat && level >= 4 && level >= 45))
+                        return AST.Combust1;
+
                 }
             }
 

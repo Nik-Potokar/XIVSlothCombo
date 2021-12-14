@@ -26,16 +26,16 @@ namespace XIVComboExpandedPlugin.Combos
             Dosis3 = 24312,
             EukrasianDosis1 = 24293,
             EukrasianDosis2 = 24308,
-            EukrasianDosis3 = 24314;
-
-
-
+            EukrasianDosis3 = 24314,
+            //Other
+            Swiftcast = 7561;
 
         public static class Buffs
         {
             public const short
                 Kardia = 2604,
-                Eukrasia = 2606;
+                Eukrasia = 2606,
+                Swiftcast = 167;
         }
 
         public static class Debuffs
@@ -119,7 +119,26 @@ namespace XIVComboExpandedPlugin.Combos
                     return SGE.Eukrasia;
             }
             return actionID;
+        } 
+    }
+    internal class SageEgeiroFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SageEgeiroFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SGE.Egeiro)
+            {
+                if (IsEnabled(CustomComboPreset.SageEgeiroFeature))
+                {
+                    if (HasEffect(SGE.Buffs.Swiftcast))
+                        return SGE.Egeiro;
+                }
+
+                return OriginalHook(SGE.Swiftcast);
+            }
+
+            return actionID;
         }
-       
     }
 }

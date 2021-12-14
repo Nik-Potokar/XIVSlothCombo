@@ -22,7 +22,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Swiftcast Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
         AstrologianAscendFeature = 4,
 
-        [CustomComboInfo("DPS Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.FallMalefic)]
+        [CustomComboInfo("DPS Feature", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1 )]
         AstrologianDpsFeature = 5,
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below 8k mana", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
@@ -569,6 +569,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button (Currently only for Dosis1!!!)", SGE.JobID, SGE.Dosis1, SGE.Eukrasia, SGE.EukrasianDosis1)]
         SageDPSFeature = 1802,
+
+        [CustomComboInfo("Swiftcast Rez Feature", "Replaces Swiftcast with Egiero when under Swiftcast buff", SGE.JobID, SGE.Egeiro, SGE.Swiftcast)]
+        SageEgeiroFeature = 1803,
 
         #endregion
         #region DISCIPLE OF MAGIC
