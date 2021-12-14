@@ -31,7 +31,8 @@ namespace XIVComboExpandedPlugin.Combos
 
         public static class Buffs
         {
-            // public const short placeholder = 0;
+            public const short
+                Reassembled = 851;
         }
 
         public static class Debuffs
@@ -69,27 +70,17 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == MCH.CleanShot || actionID == MCH.HeatedCleanShot)
             {
-                var reassembleCD = GetCooldown(MCH.Reassemble);
+                var reassembled = FindEffect(MCH.Buffs.Reassembled);
                 var gauge = GetJobGauge<MCHGauge>();
                 var drillCD = GetCooldown(MCH.Drill);
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
-                var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
 
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
-                    if (gauge.IsOverheated)
-                        return MCH.HeatBlast;
-                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0 && level >= MCH.Levels.Drill)
-                        return MCH.Drill;
-                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
+                    if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.CooldownRemaining <= 0 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                }
-
-                var hotshotCD = GetCooldown(MCH.HotShot);
-                if (IsEnabled(CustomComboPreset.MachinistHotShotOption))
-                {
-                    if (gauge.Battery <= 85 && hotshotCD.CooldownRemaining <= 0 && level >= MCH.Levels.Hotshot)
-                        return MCH.HotShot;
+                    if (airAnchorCD.CooldownRemaining > 0 && drillCD.CooldownRemaining <= 0 && level >= MCH.Levels.Drill)
+                        return MCH.Drill;
                 }
 
                 if (comboTime > 0)
