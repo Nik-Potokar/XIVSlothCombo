@@ -74,6 +74,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<MCHGauge>();
                 var drillCD = GetCooldown(MCH.Drill);
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
+                var hotshotCD = GetCooldown(MCH.HotShot);
                 var reassembleCD = GetCooldown(MCH.Reassemble);
                 var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
 
@@ -85,6 +86,8 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.CooldownRemaining <= 0 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
+                    if (HasEffect(MCH.Buffs.Reassembled) && hotshotCD.CooldownRemaining <= 0 && level <= MCH.Levels.AirAnchor)
+                        return MCH.HotShot;
                     if (airAnchorCD.CooldownRemaining > 0 && drillCD.CooldownRemaining <= 0 && level >= MCH.Levels.Drill)
                         return MCH.Drill;
                 }
