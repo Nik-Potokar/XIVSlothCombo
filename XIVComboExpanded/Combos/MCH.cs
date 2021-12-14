@@ -194,7 +194,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (!gauge.IsOverheated)
                     return MCH.SpreadShot;
-                if (gauge.IsOverheated && autocrossbowCD.CooldownRemaining < 0.7)
+                if (gauge.IsOverheated && autocrossbowCD.CooldownRemaining < 0.7 && level >= MCH.AutoCrossbow)
                     return MCH.AutoCrossbow;
                 if (gauge.IsOverheated && gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
                     return MCH.GaussRound;
