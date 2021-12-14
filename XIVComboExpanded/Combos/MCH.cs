@@ -43,6 +43,7 @@ namespace XIVComboExpandedPlugin.Combos
         {
             public const byte
                 SlugShot = 2,
+                Hotshot = 4,
                 GaussRound = 15,
                 CleanShot = 26,
                 Hypercharge = 30,
@@ -73,6 +74,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var drillCD = GetCooldown(MCH.Drill);
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
                 var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
+
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
                     if (gauge.IsOverheated)
@@ -81,6 +83,13 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.Drill;
                     if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
+                }
+
+                var hotshotCD = GetCooldown(MCH.HotShot);
+                if (IsEnabled(CustomComboPreset.MachinistHotShotOption))
+                {
+                    if (gauge.Battery <= 85 && hotshotCD.CooldownRemaining <= 0 && level >= MCH.Levels.Hotshot)
+                        return MCH.HotShot;
                 }
 
                 if (comboTime > 0)
@@ -185,11 +194,22 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MCH.SpreadShot)
+            if (actionID == MCH.AutoCrossbow)
             {
+                var autocrossbowCD = GetCooldown(MCH.AutoCrossbow);
+                var gaussCD = GetCooldown(MCH.GaussRound);
+                var ricochetCD = GetCooldown(MCH.Ricochet);
                 var gauge = GetJobGauge<MCHGauge>();
-                if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
+
+                if (!gauge.IsOverheated)
+                    return MCH.SpreadShot;
+                if (gauge.IsOverheated && autocrossbowCD.CooldownRemaining < 0.7)
                     return MCH.AutoCrossbow;
+                if (gauge.IsOverheated && gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                    return MCH.GaussRound;
+                else
+                    if (gauge.IsOverheated)
+                    return MCH.Ricochet;
             }
 
             return actionID;

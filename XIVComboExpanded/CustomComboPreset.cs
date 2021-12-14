@@ -195,7 +195,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("(Heated) Shot Combo", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, MCH.CleanShot, MCH.HeatedCleanShot)]
         MachinistMainCombo = 700,
 
-        [CustomComboInfo("Spread Shot Heat", "Replace Spread Shot with Auto Crossbow when overheated.", MCH.JobID, MCH.SpreadShot)]
+        [CustomComboInfo("Spread Shot Heat", "Switches Auto Crossbow to Spread Shot and swaps to Auto Crossbow when overheated. \nAlso puts Ricochet/Gauss Round where necessary.", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot, MCH.Ricochet, MCH.GaussRound)]
         MachinistSpreadShotFeature = 701,
 
         [CustomComboInfo("Hypercharge Feature", "Replace Heat Blast and Auto Crossbow with Hypercharge when not overheated.", MCH.JobID, MCH.HeatBlast, MCH.AutoCrossbow)]
@@ -211,14 +211,19 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Drill/Air Feature", "Combines Drill/Air Anchor on one Button  ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
         MchDrillAirFeature = 705,
 
-        [CustomComboInfo("Drill/Air Feature On Main Combo", "Drill/Air Feature is added onto main combo (Note: If will add them onto main combo ONLY if you are under Reassemble Buff Or Reassemble is on CD(Will do nothing if Reassemble is OFF CD)) ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        [CustomComboInfo("Drill/Air Feature On Main Combo", "Drill/Air Feature is added onto main combo (Note: If will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reassemble is on CD(Will do nothing if Reassemble is OFF CD)) ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 706,
 
-        [CustomComboInfo("Single Button HeatBlast Feature", "Puts Ricochet/Gauss Round on Heatblast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Single Button HeatBlast", "Switches Heat Blast to Hypercharge and swaps to Heat Blast when overheated.\nAlso puts Ricochet/Gauss Round/Wildfire on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.AutoCrossbow, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 707,
 
         [CustomComboInfo("Heat Blast Feature", "Adds Heat Blast on main combo when overheated.", MCH.JobID, MCH.CleanShot, MCH.HeatedCleanShot, MCH.HeatBlast)]
-        MachinistHeatBlastMainCombo = 708, 
+        MachinistHeatBlastMainCombo = 708,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Hot Shot on main combo", "Adds Hot shot to main combo when it's off cooldown", MCH.JobID, MCH.SplitShot, MCH.SlugShot, MCH.CleanShot, MCH.HotShot)]
+        MachinistHotShotOption = 709,
 
         #endregion
         // ====================================================================================
