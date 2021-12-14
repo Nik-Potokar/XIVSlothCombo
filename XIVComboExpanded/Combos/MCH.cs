@@ -100,6 +100,9 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.Drill;
                     if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
+                    if (reassembleCD.IsCooldown && hotshotCD.CooldownRemaining <= 1 && level <= MCH.Levels.AirAnchor)
+                        return MCH.HotShot;
+
                 }
 
                 if (comboTime > 0)
