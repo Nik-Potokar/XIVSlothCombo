@@ -31,6 +31,10 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Astrodyne Feature", "Adds Astrodyne to the DPS feature when ready", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
         AstrologianAstrodyneFeature = 7,
 
+        [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, AST.AspectedHelios, AST.Helios)]
+        AstrologianHeliosFeature = 8,
+
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -516,6 +520,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming onto Glare1/3 Feature combo when you are below 8k mana", WHM.JobID, WHM.LucidDreaming)]
         WHMLucidDreamingFeature = 1606,
+
+        [CustomComboInfo("Medica Feature", "Replaces Medica2 whenever you are under Medica2 regen with Medica1", WHM.JobID, WHM.Medica1, WHM.Medica2)]
+        WHMMedicaFeature = 1607,
 
         #endregion
         // ====================================================================================

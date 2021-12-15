@@ -171,19 +171,37 @@ namespace XIVComboExpandedPlugin.Combos
                         return AST.LucidDreaming;
                 }
 
-                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature))
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 72)
                 {
-                    if ((!combust1Debuff && incombat && level >= 4 && level <= 45) || (combust1Timer.RemainingTime < 3 && incombat && level >= 4 && level <= 45))
-                        return AST.Combust1;
-                    else
-                    if ((!combust2Debuff && incombat && level >= 46 && level <= 71) || (combust2Timer.RemainingTime < 3 && incombat && level >= 46 && level <= 71))
-                        return AST.Combust2;
-                    else
                     if ((!combust3Debuff && incombat && level >= 72) || (combust3Timer.RemainingTime < 3 && incombat && level >= 72))
                         return AST.Combust3;
                 }
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 46 && level <= 71)
+                {
+                    if ((!combust2Debuff && incombat && level >= 46 && level <= 71) || (combust2Timer.RemainingTime < 3 && incombat && level >= 46 && level <= 71))
+                        return AST.Combust2;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 4 && level <= 45)
+                {
+                    if ((!combust1Debuff && incombat && level >= 4 && level <= 45) || (combust1Timer.RemainingTime < 3 && incombat && level >= 4 && level <= 45))
+                        return AST.Combust1;
+                }
             }
 
+            return actionID;
+        }
+    }
+    internal class AstrologianHeliosFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianHeliosFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if(actionID == AST.AspectedHelios)
+            {
+                if (HasEffect(AST.Buffs.AspectedHelios))
+                    return AST.Helios;
+            }
             return actionID;
         }
     }

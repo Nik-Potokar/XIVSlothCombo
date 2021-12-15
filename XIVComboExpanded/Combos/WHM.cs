@@ -155,34 +155,59 @@ namespace XIVComboExpandedPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == WHM.Glare3 || actionID == WHM.Glare1)
+                if (actionID == WHM.Glare3 || actionID == WHM.Glare1 || actionID == WHM.Stone1 || actionID == WHM.Stone2 || actionID == WHM.Stone3 || actionID == WHM.Stone4)
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var diaDebuff = FindTargetEffect(WHM.Debuffs.Dia);
+                    var aero1Debuff = FindTargetEffect(WHM.Debuffs.Aero);
+                    var aero2Debuff = FindTargetEffect(WHM.Debuffs.Aero2);
                     var lucidDreaming = GetCooldown(WHM.LucidDreaming);
                     var glare3 = GetCooldown(WHM.Glare3);
+
                     if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature))
                     {
                         if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.7)
                             return WHM.LucidDreaming;
                     }
-
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature))
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 4 && level <= 45)
                     {
-                        if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72 && level <= 81) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72 && level <= 81))
+                        if ((!TargetHasEffect(WHM.Debuffs.Aero) && inCombat && level >= 4 && level <= 45) || (aero1Debuff.RemainingTime <= 3 && inCombat && level >= 4 && level <= 45))
                         {
-                            return WHM.Dia;
+                            return WHM.Aero1;
                         }
-                        else
-                        if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 82) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 82))
+
+                    }
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 46 && level <= 81)
+                    {
+                        if ((!TargetHasEffect(WHM.Debuffs.Aero2) && inCombat && level >= 46 && level <= 81) || (aero2Debuff.RemainingTime <= 3 && inCombat && level >= 46 && level <= 81))
+                        {
+                            return WHM.Aero2;
+                        }
+
+                    }
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 72)
+                    {
+                        if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72))
                         {
                             return WHM.Dia;
                         }
 
-                        return WHM.Glare3;
                     }
                 }
+                return actionID;
+            }
+        }
+        internal class WHMMedicaFeature : CustomCombo
+        {
+            protected override CustomComboPreset Preset => CustomComboPreset.WHMMedicaFeature;
 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == WHM.Medica2)
+                {
+                    if (HasEffect(WHM.Buffs.Medica2))
+                        return WHM.Medica1;
+                }
                 return actionID;
             }
         }
