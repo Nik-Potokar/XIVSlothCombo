@@ -50,6 +50,7 @@ namespace XIVComboExpandedPlugin.Combos
                 Hypercharge = 30,
                 HeatBlast = 35,
                 RookOverdrive = 40,
+                Wildfire = 45,
                 Ricochet = 50,
                 Drill = 58,
                 AirAnchor = 76,
@@ -101,7 +102,6 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.AirAnchor;
                     if (reassembleCD.IsCooldown && hotshotCD.CooldownRemaining <= 1 && level <= MCH.Levels.AirAnchor)
                         return MCH.HotShot;
-
                 }
 
                 if (comboTime > 0)
@@ -136,7 +136,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<MCHGauge>();
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
-                if (!wildfireCD.IsCooldown)
+                if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire)
                     return MCH.Wildfire;
                 if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                     return MCH.HeatBlast;
@@ -211,7 +211,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<MCHGauge>();
                 if (!gauge.IsOverheated)
                     return MCH.SpreadShot;
-                if (gauge.IsOverheated && level >= MCH.AutoCrossbow)
+                if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
             }
 
@@ -261,5 +261,4 @@ namespace XIVComboExpandedPlugin.Combos
             }
         }
     }
-
 }
