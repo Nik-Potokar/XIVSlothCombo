@@ -63,7 +63,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Fire4)]
         BlackDespairFeature = 107,
 
-        [CustomComboInfo("Freeze Flare Feature", "One Button AoE Feature that adds whole AoE rotation onto HighBlizzard2 (TESTING ONLY!!!)", BLM.JobID, BLM.Blizzard2, BLM.Freeze, BLM.Flare, BLM.Thunder4)]
+        [CustomComboInfo("Freeze Flare Feature", "One Button AoE Feature that adds whole AoE rotation onto HighBlizzard2 (TESTING ONLY!!!)", BLM.JobID, BLM.Flare, BLM.HighBlizzardII, BLM.Freeze, BLM.Thunder4, BLM.HighFireII)]
         BlackAoEComboFeature = 108,
 
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]

@@ -177,9 +177,9 @@ namespace XIVComboExpandedPlugin.Combos
                         }
 
                     }
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 46 && level <= 81)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 46 && level <= 71)
                     {
-                        if ((!TargetHasEffect(WHM.Debuffs.Aero2) && inCombat && level >= 46 && level <= 81) || (aero2Debuff.RemainingTime <= 3 && inCombat && level >= 46 && level <= 81))
+                        if ((!TargetHasEffect(WHM.Debuffs.Aero2) && inCombat && level >= 46 && level <= 71) || (aero2Debuff.RemainingTime <= 3 && inCombat && level >= 46 && level <= 71))
                         {
                             return WHM.Aero2;
                         }

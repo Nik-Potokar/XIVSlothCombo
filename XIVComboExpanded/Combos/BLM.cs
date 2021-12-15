@@ -229,33 +229,41 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == BLM.HighBlizzardII)
+            if (actionID == BLM.Flare)
             {
                 var gauge = GetJobGauge<BLMGauge>();
                 var thunder4Debuff = TargetHasEffect(BLM.Debuffs.Thunder4);
-                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && !gauge.InUmbralIce && !gauge.InAstralFire)
+
+
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    return BLM.HighBlizzardII;
+                    if (!gauge.InUmbralIce && !gauge.InAstralFire)
+                        return BLM.HighBlizzardII;
                 }
-                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InUmbralIce)
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    return BLM.Freeze;
+                    if (gauge.InUmbralIce)
+                        return BLM.Freeze;
                 }
-                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff)
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    return BLM.Thunder4;
+                    if(gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff)
+                        return BLM.Thunder4;
                 }
-                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff)
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    return BLM.HighFireII;
+                    if(gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff)
+                        return BLM.HighFireII;
                 }
-                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InAstralFire && LocalPlayer.CurrentMp >= 7000 && thunder4Debuff )
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    return BLM.HighFireII;
+                    if(gauge.InAstralFire && LocalPlayer.CurrentMp >= 7000 && thunder4Debuff)
+                        return BLM.HighFireII;
                 }
-                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder4Debuff)
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    return BLM.Flare;
+                    if(gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder4Debuff)
+                        return BLM.Flare;
                 }
             }
 
