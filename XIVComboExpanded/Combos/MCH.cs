@@ -86,21 +86,19 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
-                    if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.CooldownRemaining <= 0 && level >= MCH.Levels.AirAnchor)
+                    if (HasEffect(MCH.Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (HasEffect(MCH.Buffs.Reassembled) && hotshotCD.CooldownRemaining <= 0 && level <= MCH.Levels.Hotshot)
-                        return MCH.HotShot;
-                    if (airAnchorCD.CooldownRemaining > 0 && drillCD.CooldownRemaining <= 0 && level >= MCH.Levels.Drill)
+                    if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
                         return MCH.Drill;
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
-                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0 && level >= MCH.Levels.Drill)
-                        return MCH.Drill;
-                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
+                    if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (reassembleCD.IsCooldown && hotshotCD.CooldownRemaining <= 1 && level <= MCH.Levels.Hotshot)
+                    if (reassembleCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
+                        return MCH.Drill;
+                    if (reassembleCD.IsCooldown && !hotshotCD.IsCooldown && level <= 75)
                         return MCH.HotShot;
                 }
 
