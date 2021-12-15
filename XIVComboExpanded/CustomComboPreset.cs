@@ -305,11 +305,15 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Requiescat Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active \n And when Fight Or Flight is not Active.\nRequires said combos to be activated to work.", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade, PLD.Prominence)]
         PaladinRequiescatFeature = 1004,
 
-        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains And Adds Faith/Truth/Valor Combo after Confiteor.", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle)]
+        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains \nand adds Faith/Truth/Valor Combo after Confiteor.", PLD.JobID, PLD.HolySpirit, PLD.HolyCircle)]
         PaladinConfiteorFeature = 1005,
 
         [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, PLD.CircleOfScorn, PLD.SpiritsWithin, PLD.Expiacion)]
         PaladinScornfulSpiritsFeature = 1006,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Royal Goring Option", "Insert Goring Blade into the main combo when appropriate.\nRequires Royal Authority Combo", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade)]
+        PaladinRoyalGoringOption = 1007,
 
         #endregion
         // ====================================================================================

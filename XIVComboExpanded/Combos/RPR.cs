@@ -164,7 +164,7 @@ namespace XIVComboExpandedPlugin.Combos
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
                     var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
 
-                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff))
+                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 10 && !soulReaverBuff))
                         return RPR.ShadowOfDeath;
                 }
 
@@ -214,7 +214,7 @@ namespace XIVComboExpandedPlugin.Combos
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
                     var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
 
-                    if (((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 15 && !soulReaverBuff)) && level >= RPR.Levels.WhorlOfDeath)
+                    if (((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 10 && !soulReaverBuff)) && level >= RPR.Levels.WhorlOfDeath)
                         return RPR.WhorlOfDeath;
                 }
 
