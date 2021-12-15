@@ -17,6 +17,8 @@ namespace XIVComboExpandedPlugin.Combos
             Raise = 125,
             Swiftcast = 7561,
             AfflatusMisery = 16535,
+            Medica1 = 124,
+            Medica2 = 133,
 
             // dps
             Glare1 = 16533,
@@ -34,7 +36,8 @@ namespace XIVComboExpandedPlugin.Combos
         public static class Buffs
         {
             public const short
-            Swiftcast = 167;
+            Swiftcast = 167,
+            Medica2 = 150;
         }
 
         public static class Debuffs
