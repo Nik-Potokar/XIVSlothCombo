@@ -88,7 +88,7 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.CooldownRemaining <= 0 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (HasEffect(MCH.Buffs.Reassembled) && hotshotCD.CooldownRemaining <= 0 && level <= MCH.Levels.AirAnchor)
+                    if (HasEffect(MCH.Buffs.Reassembled) && hotshotCD.CooldownRemaining <= 0 && level <= MCH.Levels.Hotshot)
                         return MCH.HotShot;
                     if (airAnchorCD.CooldownRemaining > 0 && drillCD.CooldownRemaining <= 0 && level >= MCH.Levels.Drill)
                         return MCH.Drill;
@@ -100,7 +100,7 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.Drill;
                     if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (reassembleCD.IsCooldown && hotshotCD.CooldownRemaining <= 1 && level <= MCH.Levels.AirAnchor)
+                    if (reassembleCD.IsCooldown && hotshotCD.CooldownRemaining <= 1 && level <= MCH.Levels.Hotshot)
                         return MCH.HotShot;
                 }
 
