@@ -312,7 +312,7 @@ namespace XIVComboExpandedPlugin
         PaladinScornfulSpiritsFeature = 1006,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Royal Goring Option", "Insert Going Blade into the main combo when appropriate.\nRequires Royal Authority Combo", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade)]
+        [CustomComboInfo("Royal Goring Option", "Insert Goring Blade into the main combo when appropriate.\nRequires Royal Authority Combo", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade)]
         PaladinRoyalGoringOption = 1007,
 
         #endregion
