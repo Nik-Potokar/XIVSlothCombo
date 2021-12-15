@@ -233,31 +233,32 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 var gauge = GetJobGauge<BLMGauge>();
                 var thunder4Debuff = TargetHasEffect(BLM.Debuffs.Thunder4);
-
+                var thunder4Timer = FindTargetEffect(BLM.Debuffs.Thunder4);
+                var currentMP = LocalPlayer.CurrentMp;
 
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if (!gauge.InUmbralIce && !gauge.InAstralFire)
+                    if ((!gauge.InUmbralIce && !gauge.InAstralFire) || (gauge.InAstralFire && currentMP <= 100))
                         return BLM.HighBlizzardII;
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if (gauge.InUmbralIce)
+                    if (gauge.InUmbralIce && gauge.UmbralHearts == 0)
                         return BLM.Freeze;
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if(gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff)
+                    if((gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Timer.RemainingTime <= 3))
                         return BLM.Thunder4;
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if(gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff)
+                    if(gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff && thunder4Timer.RemainingTime >= 3)
                         return BLM.HighFireII;
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if(gauge.InAstralFire && LocalPlayer.CurrentMp >= 7000 && thunder4Debuff)
+                    if(gauge.InAstralFire && LocalPlayer.CurrentMp > 7000 && thunder4Debuff)
                         return BLM.HighFireII;
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
@@ -265,6 +266,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if(gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder4Debuff)
                         return BLM.Flare;
                 }
+                return BLM.HighBlizzardII;
             }
 
             return actionID;
