@@ -44,7 +44,8 @@ namespace XIVComboExpandedPlugin.Combos
         {
             public const short
                 Thunder = 161,
-                Thunder3 = 163;
+                Thunder3 = 163,
+                Thunder4 = 1210;
         }
 
         public static class Levels
@@ -228,15 +229,34 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == BLM.Freeze || actionID == BLM.Flare)
+            if (actionID == BLM.HighBlizzardII)
             {
                 var gauge = GetJobGauge<BLMGauge>();
-
-                if (level >= BLM.Levels.Freeze && gauge.InUmbralIce)
+                var thunder4Debuff = TargetHasEffect(BLM.Debuffs.Thunder4);
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && !gauge.InUmbralIce && !gauge.InAstralFire)
+                {
+                    return BLM.HighBlizzardII;
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InUmbralIce)
+                {
                     return BLM.Freeze;
-
-                if (level >= BLM.Levels.Flare)
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff)
+                {
+                    return BLM.Thunder4;
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff)
+                {
+                    return BLM.HighFireII;
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InAstralFire && LocalPlayer.CurrentMp >= 7000 && thunder4Debuff )
+                {
+                    return BLM.HighFireII;
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder4Debuff)
+                {
                     return BLM.Flare;
+                }
             }
 
             return actionID;
