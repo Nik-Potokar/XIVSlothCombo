@@ -483,20 +483,17 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Fellcleave/IB Feature", "Replaces Main Combo With Fellcleave/IB When you are about to overcap ", WAR.JobID, WAR.FellCleave, WAR.InnerBeast)]
         WarriorFellCleaveOvercapFeature = 1506,
 
-        [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if Beserk/IR buff is present or Beserk/IR is ON CD", WAR.JobID, WAR.Upheaval)]
+        [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest and if you're synced below 70 while Beserk buff is ON CD", WAR.JobID, WAR.Upheaval)]
         WarriorUpheavalMainComboFeature = 1507,
 
-        [CustomComboInfo("Upheaval Feature During IR", "Adds upheaval onto main combo during InnerRelease", WAR.JobID, WAR.Upheaval)]
-        WarriorUpheavalMainComboFeatureDuringIR = 1508,
-
         [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
-        WarriorPrimalRendFeature = 1509,
+        WarriorPrimalRendFeature = 1508,
 
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
-        WarriorOrogenyFeature = 1510,
+        WarriorOrogenyFeature = 1509,
 
         #endregion
-// ====================================================================================
+        // ====================================================================================
         #region WHITE MAGE
 
         [CustomComboInfo("Solace into Misery", "Replaces Afflatus Solace with Afflatus Misery when Misery is ready to be used", WHM.JobID, WHM.AfflatusSolace)]

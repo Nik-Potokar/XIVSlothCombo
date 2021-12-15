@@ -35,7 +35,8 @@ namespace XIVComboExpandedPlugin.Combos
                 InnerRelease = 1177,
                 SurgingTempest = 2677,
                 NascentChaos = 1897,
-                PrimalRendReady = 2624;
+                PrimalRendReady = 2624,
+                Berserk = 86;
         }
 
         public static class Debuffs
@@ -74,15 +75,12 @@ namespace XIVComboExpandedPlugin.Combos
                 var beserkCD = GetCooldown(WAR.Berserk);
                 var stormseyeBuff = FindEffectAny(WAR.Buffs.SurgingTempest);
                 var innerReleaseBuff = HasEffect(WAR.Buffs.InnerRelease);
-                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeatureDuringIR) && !upheavalCD.IsCooldown && HasEffect(WAR.Buffs.SurgingTempest) && heavyswingCD.CooldownRemaining > 0.7 && level >= 70 && (innerreleaseCD.CooldownRemaining > 25 || innerReleaseBuff))
-                {
-                    return WAR.Upheaval;
-                }
 
-                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && level >= 64)
-                {
+                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && beserkCD.IsCooldown && level >= 64 && level <= 69)
                     return WAR.Upheaval;
-                }
+                    else
+                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 70)
+                    return WAR.Upheaval;
 
                 if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady))
                 {

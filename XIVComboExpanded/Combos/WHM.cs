@@ -169,6 +169,7 @@ namespace XIVComboExpandedPlugin.Combos
                         if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72 && level <= 81) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72 && level <= 81))
                             return WHM.Dia;
                         return WHM.Glare1;
+                        else
                         if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 82) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 82))
                             return WHM.Dia;
                         return WHM.Glare3;
