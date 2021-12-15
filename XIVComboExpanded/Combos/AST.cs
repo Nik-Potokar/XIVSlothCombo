@@ -35,14 +35,18 @@ namespace XIVComboExpandedPlugin.Combos
             LadyOfCrown = 7445,
             Combust3 = 16554,
             Combust2 = 3608,
-            Combust1 = 3599;
+            Combust1 = 3599,
+
+            Helios = 3600,
+            AspectedHelios = 3601;
 
         public static class Buffs
         {
             public const short
             Swiftcast = 167,
             LordOfCrownsDrawn = 2054,
-            LadyOfCrownsDrawn = 2055;
+            LadyOfCrownsDrawn = 2055,
+            AspectedHelios = 836;
         }
 
         public static class Debuffs
