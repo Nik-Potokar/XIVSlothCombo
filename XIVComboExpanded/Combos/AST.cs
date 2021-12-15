@@ -181,7 +181,6 @@ namespace XIVComboExpandedPlugin.Combos
                     else
                     if ((!combust3Debuff && incombat && level >= 72) || (combust3Timer.RemainingTime < 3 && incombat && level >= 72))
                         return AST.Combust3;
-
                 }
             }
 
