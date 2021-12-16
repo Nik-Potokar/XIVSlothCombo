@@ -161,13 +161,13 @@ namespace XIVComboExpandedPlugin.Combos
                 var fallmalefic = GetCooldown(AST.FallMalefic);
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature))
                 {
-                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining > 0.5)
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining > 0.2)
                         return AST.Astrodyne;
                 }
 
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.7)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2)
                         return AST.LucidDreaming;
                 }
 

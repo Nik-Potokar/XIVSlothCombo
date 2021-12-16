@@ -166,7 +166,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature))
                     {
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.7)
+                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.2)
                             return WHM.LucidDreaming;
                     }
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 4 && level <= 45)
