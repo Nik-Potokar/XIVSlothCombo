@@ -458,8 +458,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Earlier Demi Weave Feature", "Adds Enkindle right after summoning Demi. (Looks like Enkindle Bahamut for both Demis)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.Tridisaster)]
         SummonerEnkindleWeave = 1414,
 
-        // [CustomComboInfo("Summon Carbuncle Feature", "Adds Summon Carbuncle to Main Combo if there is no pet present.", SMN.JobID, SMN.SummonCarbuncle)]
-        //  SummonerCarbuncleFeature = 1415,
+        [CustomComboInfo("Carbuncle Summon Feature", "Reminds you allways to summon Carbuncle by replacing Ruin (Carbuncle Summon Reminder Feature).", SMN.JobID, SMN.SummonCarbuncle, SMN.Ruin, SMN.Ruin2, SMN.Ruin3)]
+        SummonerCarbuncleSummonFeature = 1415,
 
         #endregion
         // ====================================================================================
