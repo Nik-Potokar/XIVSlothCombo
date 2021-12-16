@@ -231,9 +231,10 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var enshroudCD = GetCooldown(RPR.Enshroud);
             if (actionID == RPR.Enshroud)
             {
-                if (level >= RPR.Levels.Communio && HasEffect(RPR.Buffs.Enshrouded))
+                if (level >= RPR.Levels.Communio && HasEffect(RPR.Buffs.Enshrouded) && enshroudCD.CooldownRemaining < 12)
                     return RPR.Communio;
 
                 return RPR.Enshroud;
