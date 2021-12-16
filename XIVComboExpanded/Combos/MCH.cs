@@ -50,6 +50,7 @@ namespace XIVComboExpandedPlugin.Combos
                 Hypercharge = 30,
                 HeatBlast = 35,
                 RookOverdrive = 40,
+                Wildfire = 45,
                 Ricochet = 50,
                 Drill = 58,
                 AirAnchor = 76,
@@ -85,23 +86,20 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
-                    if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.CooldownRemaining <= 0 && level >= MCH.Levels.AirAnchor)
+                    if (HasEffect(MCH.Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (HasEffect(MCH.Buffs.Reassembled) && hotshotCD.CooldownRemaining <= 0 && level <= MCH.Levels.AirAnchor)
-                        return MCH.HotShot;
-                    if (airAnchorCD.CooldownRemaining > 0 && drillCD.CooldownRemaining <= 0 && level >= MCH.Levels.Drill)
+                    if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
                         return MCH.Drill;
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
-                    if (reassembleCD.IsCooldown && drillCD.CooldownRemaining <= 1 && cD < 0 && level >= MCH.Levels.Drill)
-                        return MCH.Drill;
-                    if (reassembleCD.IsCooldown && airAnchorCD.CooldownRemaining <= 1 && level >= MCH.Levels.AirAnchor)
+                    if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (reassembleCD.IsCooldown && hotshotCD.CooldownRemaining <= 1 && level <= MCH.Levels.AirAnchor)
+                    if (reassembleCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
+                        return MCH.Drill;
+                    if (reassembleCD.IsCooldown && !hotshotCD.IsCooldown && level <= 75)
                         return MCH.HotShot;
-
                 }
 
                 if (comboTime > 0)
@@ -136,7 +134,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<MCHGauge>();
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
-                if (!wildfireCD.IsCooldown)
+                if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire)
                     return MCH.Wildfire;
                 if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                     return MCH.HeatBlast;
@@ -211,7 +209,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var gauge = GetJobGauge<MCHGauge>();
                 if (!gauge.IsOverheated)
                     return MCH.SpreadShot;
-                if (gauge.IsOverheated && level >= MCH.AutoCrossbow)
+                if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
             }
 
@@ -261,5 +259,4 @@ namespace XIVComboExpandedPlugin.Combos
             }
         }
     }
-
 }

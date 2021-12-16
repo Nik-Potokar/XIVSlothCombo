@@ -9,93 +9,93 @@
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
 
 _________________________________________________________________________________________________________________________________________________________________________________
-### Features
+# Features
 
-# Astrologian
+#### #Astrologian
 * Draw on play 
 * Minor arcana to crown play (On one button)
 * Benefic level sync feature
 * One button DPS feature (Malefic/Combust/Lucid dreaming)
 
-#Bard
+#### #Bard
 * Wanderer's into Pitch Perfect Feature
 * Heavy Shot into Straight Shot Feature
 * Iron Jaws Feature
 * Burst Shot/Quick Nock into Apex Arrow
 
-#Black Mage
+#### #Black Mage
 * One button Rotation Feature that changes skills depending on a stance with auto DoT included
 * Leylines feature
 * AoE Feature (Soon to be 1 button aswell)
 
-#Dancer
+#### #Dancer
 * Auto dance steps feature
 * Single procs on single button
 
-#Dragoon
+#### #Dragoon
 * Single and AoE target combos
 
-#Dark Knight
+#### #Dark Knight
 * Auto Living Shadow Feature
 * Overcap Feature
 * Single and AoE target combos
 
-#GunBreaker
+#### #GunBreaker
 * 1 Button Continuation Feature
 * Overcap features
 * Single target oGCDs combos on Main Combo
 * Single and AoE target combos
 
-#Machinist
+#### #Machinist
 * One Button rotation features
 * HeatBlast feature
 * Single and AoE target combos
 
-#Monk
+#### #Monk
 * Basic rotation feature
 * Single and AoE target combos
 
-#Ninja
+#### #Ninja
 * One button rotation features
 * Mudra features
 * Single and AoE target combos
 
-#Paladin
+#### #Paladin
 * One button rotation features
 * Single and AoE target combos
 * Singe button oGCD feature
 
-#Red Mage
+#### #Red Mage
 * 2 Button rotation feature (to balance manas)
 * Melee combo and finisher feature
 * Singe button oGCD feature
 
-#Samurai
+#### #Samurai
 * Single and AoE target combos
 
-#Scholar
+#### #Scholar
 * QoL Features
 
-#Summoner
+#### #Summoner
 * One button rotation for all the demi-summons (Single and AoE features)
 * One button egi rotation (Single and AoE features)
 * Never forget to ruin4 feature
 
-#Warrior
+#### #Warrior
 * One button rotation(Storm's Eye/Path)
 * oGCDs added on main combo feature
 * Single and AoE target combos
 
-#White Mage
+#### #White Mage
 * Lilly Features
 * Cure feature
 * One button DPS feature (Glare/Dia/Lucid dreaming)
 
-#Reaper
+#### #Reaper
 * Debuff features
 * Single and AoE target combos
 
-#Sage
+#### #Sage
 * QoL Features
 * One button DPS feature (Dosis/EurekanDosis/Eukrasia)
 _________________________________________________________________________________________________________________________________________________________________________________
