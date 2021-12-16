@@ -34,7 +34,6 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, AST.AspectedHelios, AST.Helios)]
         AstrologianHeliosFeature = 8,
 
-
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -495,6 +494,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
         WarriorOrogenyFeature = 1509,
+
+        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo if you are buffed with Nascent Chaos and Surging Tempest.\nRequires Storms Path Combo", WAR.JobID, WAR.InnerChaos, WAR.StormsPath)]
+        WarriorInnerChaosOption = 1510,
 
         #endregion
         // ====================================================================================
