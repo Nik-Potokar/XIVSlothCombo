@@ -22,11 +22,14 @@ namespace XIVComboExpandedPlugin.Combos
             Hypercharge = 17209,
             HeatBlast = 7410,
             SpreadShot = 2870,
+            Scattergun = 25786,
             AutoCrossbow = 16497,
             RookAutoturret = 2864,
             RookOverdrive = 7415,
             AutomatonQueen = 16501,
             QueenOverdrive = 16502,
+            ChainSaw = 25788,
+            BioBlaster = 16499,
             Wildfire = 2878;
 
         public static class Buffs
@@ -101,6 +104,8 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.AirAnchor;
                     if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
                         return MCH.Drill;
+                    if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.IsCooldown && level >= 90)
+                        return MCH.ChainSaw;
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
@@ -111,6 +116,15 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.Drill;
                     if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
                         return MCH.HotShot;
+                }
+
+                var battery = GetJobGauge<MCHGauge>().Battery;
+                if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
+                {
+                    if (battery == 100 && level >= 40 && level <= 79)
+                        return MCH.RookAutoturret;
+                    if (battery == 100 && level >= 80)
+                        return MCH.AutomatonQueen;
                 }
 
                 if (comboTime > 0)
@@ -218,8 +232,10 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == MCH.AutoCrossbow)
             {
                 var gauge = GetJobGauge<MCHGauge>();
-                if (!gauge.IsOverheated)
+                if (!gauge.IsOverheated && level <= 81)
                     return MCH.SpreadShot;
+                if (!gauge.IsOverheated && level >= 82)
+                    return MCH.Scattergun;
                 if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
             }

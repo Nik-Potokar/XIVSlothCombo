@@ -201,7 +201,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("(Heated) Shot Combo", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, MCH.CleanShot, MCH.HeatedCleanShot)]
         MachinistMainCombo = 700,
 
-        [CustomComboInfo("Spread Shot Heat", "Switches Auto Crossbow to Spread Shot and swaps to Auto Crossbow when overheated.", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot)]
+        [CustomComboInfo("Spread Shot/Scattergun Heat", "Switches Auto Crossbow to Spread Shot or Scattergun while NOT over heated and then swaps back to Auto Crossbow when overheated.", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot)]
         MachinistSpreadShotFeature = 701,
 
         [CustomComboInfo("Hypercharge Feature", "Replace Heat Blast and Auto Crossbow with Hypercharge when not overheated.", MCH.JobID, MCH.HeatBlast, MCH.AutoCrossbow)]
@@ -217,7 +217,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Drill/Air Feature", "Combines Drill/Air Anchor on one Button  ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
         MchDrillAirFeature = 705,
 
-        [CustomComboInfo("Drill/Air Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 706,
 
         [SecretCustomCombo]
@@ -229,6 +229,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Single Button HeatBlast On Main Combo Option", "Adds Single Button Heatblast onto the main combo when the option is enabled.\n Requires (Heated) Shot Combo.", MCH.JobID, MCH.HeatBlast)]
         MachinistHeatBlastOnMainCombo = 709,
+
+        [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge rook/queen will be added to your (Heated) Shot Combo.\nRequires (Heated) Shot Combo", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
+        MachinistOverChargeOption = 710,
 
         #endregion
         // ====================================================================================
