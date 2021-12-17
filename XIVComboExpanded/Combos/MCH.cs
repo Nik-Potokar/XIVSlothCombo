@@ -260,30 +260,29 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
 
-        internal class MchDrillAirFeature : CustomCombo
+        internal class MachinistDrillAirAnchorFeature : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.MchDrillAirFeature;
+            protected override CustomComboPreset Preset => CustomComboPreset.MachinistHotShotDrillChainsawFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == MCH.Drill || actionID == MCH.HotShot || actionID == MCH.AirAnchor)
                 {
-                    if (level < MCH.Levels.Drill)
-                        return MCH.HotShot;
+                    if (level >= MCH.Levels.Chainsaw)
+                        return CalcBestAction(actionID, MCH.ChainSaw, MCH.AirAnchor, MCH.Drill);
 
-                    var anchorHSCD = GetCooldown(MCH.AirAnchor);
-                    var drillCD = GetCooldown(MCH.Drill);
+                    if (level >= MCH.Levels.AirAnchor)
+                        return CalcBestAction(actionID, MCH.AirAnchor, MCH.Drill);
 
-                    if (!drillCD.IsCooldown && !anchorHSCD.IsCooldown)
-                        return actionID;
+                    if (level >= MCH.Levels.Drill)
+                        return CalcBestAction(actionID, MCH.Drill, MCH.HotShot);
 
-                    return drillCD.CooldownRemaining < anchorHSCD.CooldownRemaining
-                        ? MCH.Drill
-                        : MCH.AirAnchor;
+                    return MCH.HotShot;
                 }
 
                 return actionID;
             }
         }
+    }
     }
 }

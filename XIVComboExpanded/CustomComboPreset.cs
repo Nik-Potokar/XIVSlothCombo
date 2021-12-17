@@ -214,8 +214,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Gauss Round / Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
         MachinistGaussRoundRicochetFeature = 704,
 
-        [CustomComboInfo("Drill/Air Feature", "Combines Drill/Air Anchor on one Button  ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
-        MchDrillAirFeature = 705,
+        [CustomComboInfo("Drill / Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chainsaw) depending on which is on cooldown.", MCH.JobID, MCH.Drill, MCH.HotShot, MCH.AirAnchor)]
+        MachinistHotShotDrillChainsawFeature = 705,
 
         [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 706,
