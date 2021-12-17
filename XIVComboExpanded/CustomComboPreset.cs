@@ -221,7 +221,7 @@ namespace XIVComboExpandedPlugin
         MachinistDrillAirOnMainCombo = 706,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Single Button HeatBlast", "Switches Heat Blast to Hypercharge and swaps to Heat Blast when overheated.\nAlso puts Ricochet/Gauss Round/Wildfire on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
+        [CustomComboInfo("Single Button HeatBlast", "Switches Wildfire to Hypercharge and swaps to Heat Blast when overheated if Wildfire is off CD.\nAlso puts Ricochet/Gauss Round/Wildfire on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 707,
 
         [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD)\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]

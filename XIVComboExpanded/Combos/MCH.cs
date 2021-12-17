@@ -112,12 +112,25 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
-                    if (reassembleCD.CooldownRemaining >= 50 && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
-                        return MCH.AirAnchor;
-                    if (reassembleCD.CooldownRemaining >= 50 && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
-                        return MCH.Drill;
-                    if (reassembleCD.CooldownRemaining >= 50 && !hotshotCD.IsCooldown && level <= 75)
-                        return MCH.HotShot;
+                    if (level <= 75)
+                    {
+                        if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level <= 76)
+                            return MCH.AirAnchor;
+                        if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level <= 58)
+                            return MCH.Drill;
+                        if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
+                            return MCH.HotShot;
+                    }
+                    else
+                    if (level >= 76)
+                    {
+                        if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown)
+                            return MCH.AirAnchor;
+                        if (reassembleCD.IsCooldown && !drillCD.IsCooldown)
+                            return MCH.Drill;
+                        if (reassembleCD.IsCooldown && !hotshotCD.IsCooldown)
+                            return MCH.HotShot;
+                    }
                 }
 
                 var battery = GetJobGauge<MCHGauge>().Battery;
@@ -151,7 +164,7 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MCH.HeatBlast)
+            if (actionID == MCH.Wildfire)
             {
                 var wildfireCD = GetCooldown(MCH.Wildfire);
                 var heatBlastCD = GetCooldown(MCH.HeatBlast);
