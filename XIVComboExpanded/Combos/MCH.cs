@@ -62,7 +62,8 @@ namespace XIVComboExpandedPlugin.Combos
                 HeatedSlugshot = 60,
                 HeatedCleanShot = 64,
                 ChargedActionMastery = 74,
-                QueenOverdrive = 80;
+                QueenOverdrive = 80,
+                ChainSaw = 90;
         }
     }
 
@@ -268,7 +269,7 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (actionID == MCH.Drill || actionID == MCH.HotShot || actionID == MCH.AirAnchor)
                 {
-                    if (level >= MCH.Levels.Chainsaw)
+                    if (level >= MCH.Levels.ChainSaw)
                         return CalcBestAction(actionID, MCH.ChainSaw, MCH.AirAnchor, MCH.Drill);
 
                     if (level >= MCH.Levels.AirAnchor)
@@ -285,4 +286,3 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
     }
-}
