@@ -570,6 +570,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Whorl Of Death Feature", "Adds Whorl of Death to Main AoE Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.SpinningScythe, RPR.NightmareScythe)]
         ReaperWhorlOfDeathFeature = 1711,
 
+        [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID, RPR.BloodStalk, RPR.GrimSwathe)]
+        ReaperBloodSwatheFeature = 1712,
+
         #endregion
         // ====================================================================================
         #region SAGE

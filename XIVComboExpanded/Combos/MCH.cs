@@ -81,15 +81,12 @@ namespace XIVComboExpandedPlugin.Combos
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
                 var hotshotCD = GetCooldown(MCH.HotShot);
                 var reassembleCD = GetCooldown(MCH.Reassemble);
-                var wildfireCD = GetCooldown(MCH.Wildfire);
                 var heatBlastCD = GetCooldown(MCH.HeatBlast);
                 var gaussCD = GetCooldown(MCH.GaussRound);
                 var ricochetCD = GetCooldown(MCH.Ricochet);
 
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
-                    if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire)
-                        return MCH.Wildfire;
                     if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                         return MCH.HeatBlast;
                     if (level <= 49)
