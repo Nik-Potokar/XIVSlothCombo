@@ -71,17 +71,28 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == MCH.CleanShot || actionID == MCH.HeatedCleanShot)
             {
-                var reassembled = FindEffect(MCH.Buffs.Reassembled);
                 var gauge = GetJobGauge<MCHGauge>();
                 var drillCD = GetCooldown(MCH.Drill);
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
                 var hotshotCD = GetCooldown(MCH.HotShot);
                 var reassembleCD = GetCooldown(MCH.Reassemble);
-                var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
+                var wildfireCD = GetCooldown(MCH.Wildfire);
+                var heatBlastCD = GetCooldown(MCH.HeatBlast);
+                var gaussCD = GetCooldown(MCH.GaussRound);
+                var ricochetCD = GetCooldown(MCH.Ricochet);
 
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
-                    return MCH.HeatBlast;
+                    if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire)
+                        return MCH.Wildfire;
+                    if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+                        return MCH.HeatBlast;
+                    if (level <= 49)
+                        return MCH.GaussRound;
+                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                        return MCH.GaussRound;
+                    else
+                        return MCH.Ricochet;
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
