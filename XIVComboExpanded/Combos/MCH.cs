@@ -94,11 +94,11 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
-                    if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
+                    if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (reassembleCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
+                    if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
                         return MCH.Drill;
-                    if (reassembleCD.IsCooldown && !hotshotCD.IsCooldown && level <= 75)
+                    if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
                         return MCH.HotShot;
                 }
 
