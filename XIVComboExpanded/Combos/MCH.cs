@@ -61,6 +61,7 @@ namespace XIVComboExpandedPlugin.Combos
                 HeatedSplitShot = 54,
                 HeatedSlugshot = 60,
                 HeatedCleanShot = 64,
+                BioBlaster = 72,
                 ChargedActionMastery = 74,
                 QueenOverdrive = 80,
                 ChainSaw = 90;
@@ -233,6 +234,9 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == MCH.AutoCrossbow)
             {
                 var gauge = GetJobGauge<MCHGauge>();
+                var bioblaster = GetCooldown(MCH.BioBlaster);
+                if (!bioblaster.IsCooldown && level >= 72)
+                    return MCH.BioBlaster;
                 if (!gauge.IsOverheated && level <= 81)
                     return MCH.SpreadShot;
                 if (!gauge.IsOverheated && level >= 82)
