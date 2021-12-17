@@ -164,7 +164,7 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MCH.Wildfire)
+            if (actionID == MCH.HeatBlast)
             {
                 var wildfireCD = GetCooldown(MCH.Wildfire);
                 var heatBlastCD = GetCooldown(MCH.HeatBlast);
@@ -172,10 +172,10 @@ namespace XIVComboExpandedPlugin.Combos
                 var ricochetCD = GetCooldown(MCH.Ricochet);
 
                 var gauge = GetJobGauge<MCHGauge>();
-                if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
-                    return MCH.Hypercharge;
                 if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire)
                     return MCH.Wildfire;
+                if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
+                    return MCH.Hypercharge;
                 if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                     return MCH.HeatBlast;
                 if (level <= 49)
