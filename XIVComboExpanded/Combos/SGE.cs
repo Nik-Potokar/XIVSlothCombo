@@ -20,14 +20,14 @@ namespace XIVComboExpandedPlugin.Combos
             Dyskrasia = 24297,
             Eukrasia = 24290,
 
-            //dps
+            // dps
             Dosis1 = 24283,
             Dosis2 = 24306,
             Dosis3 = 24312,
             EukrasianDosis1 = 24293,
             EukrasianDosis2 = 24308,
             EukrasianDosis3 = 24314,
-            //Other
+            // Other
             Swiftcast = 7561;
 
         public static class Buffs
@@ -61,6 +61,7 @@ namespace XIVComboExpandedPlugin.Combos
                 Dosis3 = 82;
         }
     }
+
     internal class SageKardiaFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SageKardiaFeature;
@@ -74,9 +75,11 @@ namespace XIVComboExpandedPlugin.Combos
                     return SGE.Soteria;
                 return SGE.Kardia;
             }
+
             return actionID;
         }
     }
+
     internal class SagePhlegmaFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SagePhlegmaFeature;
@@ -101,26 +104,29 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+
     internal class SageDPSFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SageDPSFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == SGE.Dosis1 || actionID == SGE.Dosis2 || actionID == SGE.Dosis3)
+            if (actionID == SGE.Dosis1 || actionID == SGE.Dosis2 || actionID == SGE.Dosis3)
             {
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var dosis1CD = GetCooldown(SGE.Dosis1);
                 var dosis1Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
 
-                if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && HasEffect(SGE.Buffs.Eukrasia) && incombat && level >= 30))
+                if (!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && HasEffect(SGE.Buffs.Eukrasia) && incombat && level >= 30)
                     return SGE.EukrasianDosis1;
-                if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && incombat))
+                if (!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && incombat)
                     return SGE.Eukrasia;
             }
+
             return actionID;
-        } 
+        }
     }
+
     internal class SageEgeiroFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SageEgeiroFeature;

@@ -241,31 +241,37 @@ namespace XIVComboExpandedPlugin.Combos
                     if ((!gauge.InUmbralIce && !gauge.InAstralFire) || (gauge.InAstralFire && currentMP <= 100))
                         return BLM.HighBlizzardII;
                 }
+
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
                     if (gauge.InUmbralIce && gauge.UmbralHearts == 0)
                         return BLM.Freeze;
                 }
+
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if((gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Timer.RemainingTime <= 3))
+                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Timer.RemainingTime <= 3))
                         return BLM.Thunder4;
                 }
+
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if(gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff && thunder4Timer.RemainingTime >= 3)
+                    if (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff && thunder4Timer.RemainingTime >= 3)
                         return BLM.HighFireII;
                 }
+
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if(gauge.InAstralFire && LocalPlayer.CurrentMp > 7000 && thunder4Debuff)
+                    if (gauge.InAstralFire && LocalPlayer.CurrentMp > 7000 && thunder4Debuff)
                         return BLM.HighFireII;
                 }
+
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
-                    if(gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder4Debuff)
+                    if (gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder4Debuff)
                         return BLM.Flare;
                 }
+
                 return BLM.HighBlizzardII;
             }
 

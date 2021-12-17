@@ -28,7 +28,6 @@ namespace XIVComboExpandedPlugin.Combos
             DraconianFury = 25770,
             ChaoticSpring = 25772;
 
-
         public static class Buffs
         {
             public const short
@@ -36,7 +35,6 @@ namespace XIVComboExpandedPlugin.Combos
                 EnhancedWheelingThrust = 803,
                 DiveReady = 1243,
                 RaidenThrustReady = 1863;
-
         }
 
         public static class Debuffs
@@ -131,6 +129,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return DRG.TrueThrust;
             }
+
             return actionID;
         }
     }

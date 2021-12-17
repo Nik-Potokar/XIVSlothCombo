@@ -267,13 +267,13 @@ namespace XIVComboExpandedPlugin.Combos
                     if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
                         return SMN.Ruin4;
                 }
+
                 if (IsEnabled(CustomComboPreset.SummonerCarbuncleSummonFeature))
                 {
                     var carbyPresent = Service.BuddyList.PetBuddyPresent;
                     if (!carbyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && gauge.AttunmentTimerRemaining == 0)
                             return SMN.SummonCarbuncle;
                 }
-
             }
 
             return actionID;

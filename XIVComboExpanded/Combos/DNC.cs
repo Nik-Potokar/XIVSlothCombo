@@ -41,7 +41,6 @@ namespace XIVComboExpandedPlugin.Combos
             Improvisation = 16014,
             Devilment = 16011;
 
-
         public static class Buffs
         {
             public const short
@@ -236,9 +235,11 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return DNC.Windmill;
             }
+
             return actionID;
         }
     }
+
     internal class DancerDevilmentFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.DancerDevilmentFeature;
@@ -252,8 +253,8 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return DNC.Devilment;
             }
-            return actionID;
 
+            return actionID;
         }
     }
 }
