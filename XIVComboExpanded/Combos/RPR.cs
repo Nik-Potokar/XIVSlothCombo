@@ -159,18 +159,6 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == RPR.WaxingSlice && level >= RPR.Levels.InfernalSlice)
                         return RPR.InfernalSlice;
                 }
-
-                if (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
-                {
-                    var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
-                    var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
-                    var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
-
-                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 10 && !soulReaverBuff))
-                        return RPR.ShadowOfDeath;
-                }
-
-                return RPR.Slice;
             }
 
             return actionID;
@@ -306,6 +294,25 @@ namespace XIVComboExpandedPlugin.Combos
                 return RPR.Gluttony;
 
             return actionID;
+        }
+    }
+
+    internal class ReaperShadowOfDeathFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperShadowOfDeathFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+                var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
+                var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
+
+                if (actionID != RPR.ShadowOfDeath)
+                {
+                    if (!deathsDesign || deathsDesignTimer.RemainingTime <= 5)
+                    return RPR.ShadowOfDeath;
+                }
+
+                return actionID;
         }
     }
 }
