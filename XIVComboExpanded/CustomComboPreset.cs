@@ -62,7 +62,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, BLM.Fire4)]
         BlackDespairFeature = 107,
 
-        [CustomComboInfo("AoE Combo Feature", "One Button AoE Feature that adds whole AoE rotation onto HighBlizzard2 (TESTING ONLY!!!)", BLM.JobID, BLM.Flare, BLM.HighBlizzardII, BLM.Freeze, BLM.Thunder4, BLM.HighFireII)]
+        [CustomComboInfo("AoE Combo Feature", "One Button AoE Feature that adds whole AoE rotation onto HighBlizzard2 (TESTING ONLY!!!)", BLM.JobID, BLM.Flare, BLM.HighBlizzardII, BLM.Freeze, BLM.Thunder4, BLM.HighFireII, BLM.Fire2, BLM.Thunder2)]
         BlackAoEComboFeature = 108,
 
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
@@ -460,6 +460,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Carbuncle Summon Feature", "Reminds you allways to summon Carbuncle by replacing Ruin (Carbuncle Summon Reminder Feature).", SMN.JobID, SMN.SummonCarbuncle, SMN.Ruin, SMN.Ruin2, SMN.Ruin3)]
         SummonerCarbuncleSummonFeature = 1415,
+
+        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
+        SummonerLazyFesterFeature = 1416,
 
         #endregion
         // ====================================================================================
