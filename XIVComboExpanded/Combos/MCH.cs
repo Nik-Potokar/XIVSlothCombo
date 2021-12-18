@@ -84,6 +84,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var heatBlastCD = GetCooldown(MCH.HeatBlast);
                 var gaussCD = GetCooldown(MCH.GaussRound);
                 var ricochetCD = GetCooldown(MCH.Ricochet);
+                var chainsawCD = GetCooldown(MCH.ChainSaw);
 
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
@@ -105,6 +106,8 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.Drill;
                     if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.IsCooldown && level >= 90)
                         return MCH.ChainSaw;
+                    if (HasEffect(MCH.Buffs.Reassembled) && drillCD.IsCooldown && airAnchorCD.IsCooldown && chainsawCD.IsCooldown)
+                        return OriginalHook(MCH.CleanShot);
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
@@ -118,10 +121,10 @@ namespace XIVComboExpandedPlugin.Combos
                     {
                         if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown)
                             return MCH.AirAnchor;
+                        if (reassembleCD.IsCooldown && !chainsawCD.IsCooldown && level >= 90)
+                            return MCH.ChainSaw;
                         if (reassembleCD.IsCooldown && !drillCD.IsCooldown)
                             return MCH.Drill;
-                        if (reassembleCD.IsCooldown && !hotshotCD.IsCooldown)
-                            return MCH.HotShot;
                     }
                 }
 
