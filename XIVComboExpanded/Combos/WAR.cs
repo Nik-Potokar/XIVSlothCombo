@@ -76,7 +76,7 @@ namespace XIVComboExpandedPlugin.Combos
                 var stormseyeBuff = FindEffectAny(WAR.Buffs.SurgingTempest);
                 var innerReleaseBuff = HasEffect(WAR.Buffs.InnerRelease);
 
-                if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest))
+                if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && level >= 80)
                     return WAR.InnerChaos;
 
                 if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && beserkCD.IsCooldown && level >= 64 && level <= 69)
