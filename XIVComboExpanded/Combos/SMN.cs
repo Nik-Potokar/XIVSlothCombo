@@ -267,12 +267,20 @@ namespace XIVComboExpandedPlugin.Combos
                     if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
                         return SMN.Ruin4;
                 }
-
                 if (IsEnabled(CustomComboPreset.SummonerCarbuncleSummonFeature))
                 {
                     var carbyPresent = Service.BuddyList.PetBuddyPresent;
                     if (!carbyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && gauge.AttunmentTimerRemaining == 0)
                             return SMN.SummonCarbuncle;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
+                {
+                    var ruin3cd = GetCooldown(SMN.Ruin3);
+                    var ruin4cd = GetCooldown(SMN.Ruin4);
+                    var astralcd = GetCooldown(SMN.AstralImpulse);
+                    var fofcd = GetCooldown(SMN.FountainOfFire);
+                    if ((gauge.HasAetherflowStacks && ruin3cd.CooldownRemaining >= 0.4) || (gauge.HasAetherflowStacks && ruin4cd.CooldownRemaining >= 0.4) || (gauge.HasAetherflowStacks && fofcd.CooldownRemaining >= 0.4))
+                        return SMN.Fester;
                 }
             }
 
