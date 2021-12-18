@@ -164,7 +164,8 @@ namespace XIVComboExpandedPlugin.Combos
                 var ricochetCD = GetCooldown(MCH.Ricochet);
 
                 var gauge = GetJobGauge<MCHGauge>();
-                if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire)
+                var heat = GetJobGauge<MCHGauge>().Heat;
+                if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire && heat >= 50)
                     return MCH.Wildfire;
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
@@ -204,26 +205,6 @@ namespace XIVComboExpandedPlugin.Combos
                     return MCH.GaussRound;
                 else
                     return MCH.Ricochet;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class MachinistOverheatFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.MachinistOverheatFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == MCH.HeatBlast || actionID == MCH.AutoCrossbow)
-            {
-                var gauge = GetJobGauge<MCHGauge>();
-                if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
-                    return MCH.Hypercharge;
-
-                if (level < MCH.Levels.AutoCrossbow)
-                    return MCH.HeatBlast;
             }
 
             return actionID;
