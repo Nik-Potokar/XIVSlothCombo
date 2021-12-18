@@ -217,14 +217,12 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MCH.AutoCrossbow)
+            if (actionID == MCH.SpreadShot)
             {
                 var gauge = GetJobGauge<MCHGauge>();
                 var bioblaster = GetCooldown(MCH.BioBlaster);
                 if (!bioblaster.IsCooldown && level >= 72)
                     return MCH.BioBlaster;
-                if (!gauge.IsOverheated && level <= 81)
-                    return MCH.SpreadShot;
                 if (!gauge.IsOverheated && level >= 82)
                     return MCH.Scattergun;
                 if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
