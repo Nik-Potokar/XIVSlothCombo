@@ -107,7 +107,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.IsCooldown && level >= 90)
                         return MCH.ChainSaw;
                     if (HasEffect(MCH.Buffs.Reassembled) && drillCD.IsCooldown && airAnchorCD.IsCooldown && chainsawCD.IsCooldown)
-                        return OriginalHook(MCH.CleanShot);
+                        return OriginalHook(actionID);
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
