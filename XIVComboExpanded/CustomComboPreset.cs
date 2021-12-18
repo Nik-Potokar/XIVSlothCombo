@@ -201,7 +201,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("(Heated) Shot Combo", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, MCH.CleanShot, MCH.HeatedCleanShot)]
         MachinistMainCombo = 700,
 
-        [CustomComboInfo("Spread Shot Heat", "Switches Auto Crossbow to Spread Shot and swaps to Auto Crossbow when overheated.", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot)]
+        [CustomComboInfo("Spread Shot/Scattergun Heat, +BioBlaster", "Switches Auto Crossbow to Spread Shot or Scattergun while NOT over heated and then swaps back to Auto Crossbow when overheated\nand Bioblaster is used first whenever it is off cooldown.", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot)]
         MachinistSpreadShotFeature = 701,
 
         [CustomComboInfo("Hypercharge Feature", "Replace Heat Blast and Auto Crossbow with Hypercharge when not overheated.", MCH.JobID, MCH.HeatBlast, MCH.AutoCrossbow)]
@@ -214,21 +214,24 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Gauss Round / Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
         MachinistGaussRoundRicochetFeature = 704,
 
-        [CustomComboInfo("Drill/Air Feature", "Combines Drill/Air Anchor on one Button  ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
-        MchDrillAirFeature = 705,
+        [CustomComboInfo("Drill / Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chainsaw) depending on which is on cooldown.", MCH.JobID, MCH.Drill, MCH.HotShot, MCH.AirAnchor)]
+        MachinistHotShotDrillChainsawFeature = 705,
 
-        [CustomComboInfo("Drill/Air Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble) ", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 706,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Single Button HeatBlast", "Switches Heat Blast to Hypercharge and swaps to Heat Blast when overheated.\nAlso puts Ricochet/Gauss Round/Wildfire on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.AutoCrossbow, MCH.Wildfire)]
+        [CustomComboInfo("Single Button HeatBlast", "Switches Heat Blast to Wildfire and swaps to Hypercharge when Wildfire is ON CD, When overheated Hypercharge will be replaced with Heat blast.\nAlso puts Ricochet/Gauss Round/Wildfire on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 707,
 
-        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD))", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD)\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistAlternateMainCombo = 708,
 
-        [CustomComboInfo("HeatBlast On Main Combo Option", "Adds Heatblast onto main combo when the option is enabeled ", MCH.JobID, MCH.HeatBlast)]
+        [CustomComboInfo("Single Button HeatBlast On Main Combo Option", "Adds Single Button Heatblast onto the main combo when the option is enabled.\n Requires (Heated) Shot Combo.", MCH.JobID, MCH.HeatBlast)]
         MachinistHeatBlastOnMainCombo = 709,
+
+        [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge rook/queen will be added to your (Heated) Shot Combo.\nRequires (Heated) Shot Combo", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
+        MachinistOverChargeOption = 710,
 
         #endregion
         // ====================================================================================
@@ -569,6 +572,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Whorl Of Death Feature", "Adds Whorl of Death to Main AoE Combo if the debuff is not present or is about to expire", RPR.JobID, RPR.SpinningScythe, RPR.NightmareScythe)]
         ReaperWhorlOfDeathFeature = 1711,
+
+        [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID, RPR.BloodStalk, RPR.GrimSwathe)]
+        ReaperBloodSwatheFeature = 1712,
 
         #endregion
         // ====================================================================================

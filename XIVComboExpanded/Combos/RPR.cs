@@ -11,6 +11,7 @@ namespace XIVComboExpandedPlugin.Combos
             Slice = 24373,
             WaxingSlice = 24374,
             InfernalSlice = 24375,
+            Gluttony = 24393,
             // AoE
             SpinningScythe = 24376,
             NightmareScythe = 24377,
@@ -70,6 +71,7 @@ namespace XIVComboExpandedPlugin.Combos
                 NightmareScythe = 45,
                 SoulReaver = 70,
                 Regress = 74,
+                Gluttony = 76,
                 Enshroud = 80,
                 PlentifulHarvest = 88,
                 Communio = 90,
@@ -288,6 +290,20 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 return RPR.Regress;
             }
+
+            return actionID;
+        }
+    }
+
+    internal class ReaperBloodSwatheFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperBloodSwatheFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var gluttonyCD = GetCooldown(RPR.Gluttony);
+            if ((actionID == RPR.GrimSwathe || actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
+                return RPR.Gluttony;
 
             return actionID;
         }

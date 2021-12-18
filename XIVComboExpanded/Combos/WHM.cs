@@ -169,34 +169,36 @@ namespace XIVComboExpandedPlugin.Combos
                         if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.2)
                             return WHM.LucidDreaming;
                     }
+
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 4 && level <= 45)
                     {
                         if ((!TargetHasEffect(WHM.Debuffs.Aero) && inCombat && level >= 4 && level <= 45) || (aero1Debuff.RemainingTime <= 3 && inCombat && level >= 4 && level <= 45))
                         {
                             return WHM.Aero1;
                         }
-
                     }
+
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 46 && level <= 71)
                     {
                         if ((!TargetHasEffect(WHM.Debuffs.Aero2) && inCombat && level >= 46 && level <= 71) || (aero2Debuff.RemainingTime <= 3 && inCombat && level >= 46 && level <= 71))
                         {
                             return WHM.Aero2;
                         }
-
                     }
+
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 72)
                     {
                         if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72))
                         {
                             return WHM.Dia;
                         }
-
                     }
                 }
+
                 return actionID;
             }
         }
+
         internal class WHMMedicaFeature : CustomCombo
         {
             protected override CustomComboPreset Preset => CustomComboPreset.WHMMedicaFeature;
@@ -208,6 +210,7 @@ namespace XIVComboExpandedPlugin.Combos
                     if (HasEffect(WHM.Buffs.Medica2))
                         return WHM.Medica1;
                 }
+
                 return actionID;
             }
         }

@@ -133,6 +133,7 @@ namespace XIVComboExpandedPlugin.Combos
             return MNK.Bootshine;
         }
     }
+
     internal class MonkPerfectBalanceFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.MonkPerfectBalanceFeature;
@@ -144,8 +145,8 @@ namespace XIVComboExpandedPlugin.Combos
                 if (OriginalHook(MNK.MasterfulBlitz) != MNK.MasterfulBlitz)
                     return OriginalHook(MNK.MasterfulBlitz);
             }
+
             return actionID;
         }
     }
-
 }

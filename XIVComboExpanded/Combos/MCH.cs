@@ -22,11 +22,14 @@ namespace XIVComboExpandedPlugin.Combos
             Hypercharge = 17209,
             HeatBlast = 7410,
             SpreadShot = 2870,
+            Scattergun = 25786,
             AutoCrossbow = 16497,
             RookAutoturret = 2864,
             RookOverdrive = 7415,
             AutomatonQueen = 16501,
             QueenOverdrive = 16502,
+            ChainSaw = 25788,
+            BioBlaster = 16499,
             Wildfire = 2878;
 
         public static class Buffs
@@ -58,8 +61,10 @@ namespace XIVComboExpandedPlugin.Combos
                 HeatedSplitShot = 54,
                 HeatedSlugshot = 60,
                 HeatedCleanShot = 64,
+                BioBlaster = 72,
                 ChargedActionMastery = 74,
-                QueenOverdrive = 80;
+                QueenOverdrive = 80,
+                ChainSaw = 90;
         }
     }
 
@@ -71,17 +76,25 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == MCH.CleanShot || actionID == MCH.HeatedCleanShot)
             {
-                var reassembled = FindEffect(MCH.Buffs.Reassembled);
                 var gauge = GetJobGauge<MCHGauge>();
                 var drillCD = GetCooldown(MCH.Drill);
                 var airAnchorCD = GetCooldown(MCH.AirAnchor);
                 var hotshotCD = GetCooldown(MCH.HotShot);
                 var reassembleCD = GetCooldown(MCH.Reassemble);
-                var cD = drillCD.CooldownRemaining - reassembleCD.CooldownRemaining;
+                var heatBlastCD = GetCooldown(MCH.HeatBlast);
+                var gaussCD = GetCooldown(MCH.GaussRound);
+                var ricochetCD = GetCooldown(MCH.Ricochet);
 
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
-                    return MCH.HeatBlast;
+                    if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+                        return MCH.HeatBlast;
+                    if (level <= 49)
+                        return MCH.GaussRound;
+                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                        return MCH.GaussRound;
+                    else
+                        return MCH.Ricochet;
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
@@ -90,16 +103,35 @@ namespace XIVComboExpandedPlugin.Combos
                         return MCH.AirAnchor;
                     if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
                         return MCH.Drill;
+                    if (HasEffect(MCH.Buffs.Reassembled) && airAnchorCD.IsCooldown && level >= 90)
+                        return MCH.ChainSaw;
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
-                    if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
-                        return MCH.AirAnchor;
-                    if (reassembleCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
+                    if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= 58)
                         return MCH.Drill;
-                    if (reassembleCD.IsCooldown && !hotshotCD.IsCooldown && level <= 75)
+                    if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
                         return MCH.HotShot;
+                    else
+                    if (level >= 76)
+                    {
+                        if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown)
+                            return MCH.AirAnchor;
+                        if (reassembleCD.IsCooldown && !drillCD.IsCooldown)
+                            return MCH.Drill;
+                        if (reassembleCD.IsCooldown && !hotshotCD.IsCooldown)
+                            return MCH.HotShot;
+                    }
+                }
+
+                var battery = GetJobGauge<MCHGauge>().Battery;
+                if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
+                {
+                    if (battery == 100 && level >= 40 && level <= 79)
+                        return MCH.RookAutoturret;
+                    if (battery == 100 && level >= 80)
+                        return MCH.AutomatonQueen;
                 }
 
                 if (comboTime > 0)
@@ -132,10 +164,10 @@ namespace XIVComboExpandedPlugin.Combos
                 var ricochetCD = GetCooldown(MCH.Ricochet);
 
                 var gauge = GetJobGauge<MCHGauge>();
-                if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
-                    return MCH.Hypercharge;
                 if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire)
                     return MCH.Wildfire;
+                if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
+                    return MCH.Hypercharge;
                 if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                     return MCH.HeatBlast;
                 if (level <= 49)
@@ -207,8 +239,13 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == MCH.AutoCrossbow)
             {
                 var gauge = GetJobGauge<MCHGauge>();
-                if (!gauge.IsOverheated)
+                var bioblaster = GetCooldown(MCH.BioBlaster);
+                if (!bioblaster.IsCooldown && level >= 72)
+                    return MCH.BioBlaster;
+                if (!gauge.IsOverheated && level <= 81)
                     return MCH.SpreadShot;
+                if (!gauge.IsOverheated && level >= 82)
+                    return MCH.Scattergun;
                 if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
             }
@@ -233,26 +270,24 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
 
-        internal class MchDrillAirFeature : CustomCombo
+        internal class MachinistDrillAirAnchorFeature : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.MchDrillAirFeature;
+            protected override CustomComboPreset Preset => CustomComboPreset.MachinistHotShotDrillChainsawFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == MCH.Drill || actionID == MCH.HotShot || actionID == MCH.AirAnchor)
                 {
-                    if (level < MCH.Levels.Drill)
-                        return MCH.HotShot;
+                    if (level >= MCH.Levels.ChainSaw)
+                        return CalcBestAction(actionID, MCH.ChainSaw, MCH.AirAnchor, MCH.Drill);
 
-                    var anchorHSCD = GetCooldown(MCH.AirAnchor);
-                    var drillCD = GetCooldown(MCH.Drill);
+                    if (level >= MCH.Levels.AirAnchor)
+                        return CalcBestAction(actionID, MCH.AirAnchor, MCH.Drill);
 
-                    if (!drillCD.IsCooldown && !anchorHSCD.IsCooldown)
-                        return actionID;
+                    if (level >= MCH.Levels.Drill)
+                        return CalcBestAction(actionID, MCH.Drill, MCH.HotShot);
 
-                    return drillCD.CooldownRemaining < anchorHSCD.CooldownRemaining
-                        ? MCH.Drill
-                        : MCH.AirAnchor;
+                    return MCH.HotShot;
                 }
 
                 return actionID;
