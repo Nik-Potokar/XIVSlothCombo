@@ -114,13 +114,34 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == SGE.Dosis1 || actionID == SGE.Dosis2 || actionID == SGE.Dosis3)
             {
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var dosis1CD = GetCooldown(SGE.Dosis1);
+                var dosis3CD = GetCooldown(SGE.Dosis3);
                 var dosis1Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
+                var dosis2Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
+                var dosis3Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
 
-                if (!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && HasEffect(SGE.Buffs.Eukrasia) && incombat && level >= 30)
-                    return SGE.EukrasianDosis1;
-                if (!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && incombat)
-                    return SGE.Eukrasia;
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 82)
+                {
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianDosis3;
+                    if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis3) && incombat && level >= 82) || (dosis3Debuff.RemainingTime < 4 && incombat && level >= 82))
+                        return SGE.Eukrasia;
+                }
+
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 72 && level <= 81)
+                {
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianDosis2;
+                    if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis2) && incombat && level >= 72 && level <= 81) || (dosis2Debuff.RemainingTime < 4 && incombat && level >= 72 && level <= 81))
+                        return SGE.Eukrasia;
+                }
+
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 30 && level <= 71)
+                {
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianDosis1;
+                    if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && incombat && level >= 30 && level <= 71) || (dosis1Debuff.RemainingTime < 4 && incombat && level >= 30 && level <= 71))
+                        return SGE.Eukrasia;
+                }
             }
 
             return actionID;
