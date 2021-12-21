@@ -198,11 +198,11 @@ namespace XIVComboExpandedPlugin.Combos
                         if (IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature))
                         {
                             var gauge = GetJobGauge<WARGauge>().BeastGauge;
-                            if (lastComboMove == WAR.Infuriate)
+                            if (lastComboMove == WAR.Infuriate && level >= 60)
                                 return WAR.Decimate;
                             if (lastComboMove == WAR.Overpower && level >= 40)
                                 return WAR.MythrilTempest;
-                            if (lastComboMove == WAR.Overpower || (lastComboMove == WAR.MythrilTempest && gauge >= 90))
+                            if (lastComboMove == WAR.Overpower && level >= 60 || (lastComboMove == WAR.MythrilTempest && gauge >= 90 && level >= 60))
                                 return WAR.Decimate;
                         }
 

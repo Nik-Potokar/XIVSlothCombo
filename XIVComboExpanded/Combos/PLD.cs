@@ -145,7 +145,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
                 {
-                    if (lastComboMove == PLD.RiotBlade)
+                    if (lastComboMove == PLD.RiotBlade && level >= 60)
                     {
                         return PLD.RoyalAuthority;
                     }
