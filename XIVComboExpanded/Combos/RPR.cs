@@ -128,6 +128,7 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == RPR.Slice)
             {
                 var gauge = GetJobGauge<RPRGauge>();
+                var stcombo = 0;
 
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature))
                 {
@@ -151,7 +152,53 @@ namespace XIVComboExpandedPlugin.Combos
                     return OriginalHook(RPR.Gibbet);
                 }
 
-                if (comboTime > 0)
+                if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
+                {
+                    var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
+                    var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
+
+                    if (lastComboMove == RPR.Slice && (!deathsDesign || deathsDesignTimer.RemainingTime <= 3))
+                    {
+                        stcombo = 1;
+                        return RPR.ShadowOfDeath;
+                    }
+
+                    if (((stcombo == 1) || (lastComboMove == RPR.Slice && deathsDesignTimer.RemainingTime >= 4)) && level >= RPR.Levels.WaxingSlice)
+                    {
+                        if (!deathsDesign || deathsDesignTimer.RemainingTime <= 3)
+                        {
+                            stcombo = 1;
+                            return RPR.ShadowOfDeath;
+                        }
+
+                        if (stcombo == 1 && (deathsDesignTimer.RemainingTime >= 4))
+                        {
+                            stcombo = 2;
+                            return RPR.WaxingSlice;
+                        }
+
+                        return RPR.WaxingSlice;
+                    }
+
+                    if (((stcombo == 2) || (lastComboMove == RPR.WaxingSlice && deathsDesignTimer.RemainingTime >= 4)) && level >= RPR.Levels.InfernalSlice)
+                    {
+                        if (!deathsDesign || deathsDesignTimer.RemainingTime <= 3)
+                        {
+                            stcombo = 2;
+                            return RPR.ShadowOfDeath;
+                        }
+
+                        if (stcombo == 2 && (deathsDesignTimer.RemainingTime >= 4))
+                        {
+                            stcombo = 0;
+                            return RPR.InfernalSlice;
+                        }
+
+                        return RPR.InfernalSlice;
+                    }
+                }
+
+                if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
                 {
                     if (lastComboMove == RPR.Slice && level >= RPR.Levels.WaxingSlice)
                         return RPR.WaxingSlice;
@@ -159,6 +206,18 @@ namespace XIVComboExpandedPlugin.Combos
                     if (lastComboMove == RPR.WaxingSlice && level >= RPR.Levels.InfernalSlice)
                         return RPR.InfernalSlice;
                 }
+
+                if (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
+                {
+                    var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
+                    var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
+                    var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
+
+                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 7 && !soulReaverBuff))
+                        return RPR.ShadowOfDeath;
+                }
+
+                return RPR.Slice;
             }
 
             return actionID;
@@ -174,6 +233,7 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == RPR.SpinningScythe)
             {
                 var gauge = GetJobGauge<RPRGauge>();
+                var aoecombo = 0;
 
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature))
                 {
@@ -192,7 +252,33 @@ namespace XIVComboExpandedPlugin.Combos
                 if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
                     return OriginalHook(RPR.Guillotine);
 
-                if (comboTime > 0)
+                if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
+                {
+                    var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
+                    var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
+
+                    if ((lastComboMove == RPR.SpinningScythe) && ((!deathsDesign || deathsDesignTimer.RemainingTime <= 3) && level >= RPR.Levels.WhorlOfDeath))
+                    {
+                        if (level >= RPR.Levels.NightmareScythe)
+                        {
+                            aoecombo = 1;
+                        }
+
+                        return RPR.WhorlOfDeath;
+                    }
+
+                    if ((aoecombo == 1) || ((lastComboMove == RPR.SpinningScythe && deathsDesignTimer.RemainingTime >= 4) && level >= RPR.Levels.NightmareScythe))
+                    {
+                        if (aoecombo == 1)
+                        {
+                            aoecombo = 0;
+                        }
+
+                        return RPR.NightmareScythe;
+                    }
+                }
+
+                if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
                 {
                     if (lastComboMove == RPR.SpinningScythe && level >= RPR.Levels.NightmareScythe)
                         return RPR.NightmareScythe;
@@ -204,7 +290,7 @@ namespace XIVComboExpandedPlugin.Combos
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
                     var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
 
-                    if (((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 10 && !soulReaverBuff)) && level >= RPR.Levels.WhorlOfDeath)
+                    if (((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 4 && !soulReaverBuff)) && level >= RPR.Levels.WhorlOfDeath)
                         return RPR.WhorlOfDeath;
                 }
 
@@ -295,24 +381,5 @@ namespace XIVComboExpandedPlugin.Combos
 
             return actionID;
         }
-    }
-
-    internal class ReaperShadowOfDeathFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.ReaperShadowOfDeathFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-        {
-                var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
-                var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
-
-                if (actionID != RPR.ShadowOfDeath)
-                {
-                    if (!deathsDesign || deathsDesignTimer.RemainingTime <= 5)
-                    return RPR.ShadowOfDeath;
-                }
-
-                return actionID;
-        }
-    }
+    }        
 }
