@@ -113,7 +113,7 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= 64 && !foF)
                     {
-                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) || requiescat.StackCount == 1)
+                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || requiescat.StackCount == 1 && level >= 80)
                             return PLD.Confiteor;
                         return PLD.HolySpirit;
                     }
@@ -134,9 +134,18 @@ namespace XIVComboExpandedPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+                if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption))
                 {
                     if ((lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime > 10) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime > 10))
+                        return PLD.RoyalAuthority;
+                    else
+                    if ((lastComboMove == PLD.RiotBlade && !goringBladeDebuffonTarget && level >= 54) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime < 5 && level >= 54) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime < 5 && level >= 54))
+                        return PLD.GoringBlade;
+                }
+
+                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+                {
+                    if (lastComboMove == PLD.RiotBlade && level >= 60)
                     {
                         return PLD.RoyalAuthority;
                     }
@@ -146,8 +155,6 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (lastComboMove == PLD.FastBlade)
                         return PLD.RiotBlade;
-                    if ((lastComboMove == PLD.RiotBlade && !goringBladeDebuffonTarget) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime < 5) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime < 5))
-                        return PLD.GoringBlade;
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))

@@ -13,8 +13,10 @@ namespace XIVComboExpandedPlugin.Combos
             Thunder = 144,
             Blizzard2 = 25793,
             Transpose = 149,
+            Fire2 = 147,
             Fire3 = 152,
             Thunder3 = 153,
+            Thunder2 = 7447,
             Thunder4 = 7420,
             Blizzard3 = 154,
             Scathe = 156,
@@ -44,7 +46,9 @@ namespace XIVComboExpandedPlugin.Combos
         {
             public const short
                 Thunder = 161,
-                Thunder3 = 163;
+                Thunder2 = 162,
+                Thunder3 = 163,
+                Thunder4 = 1210;
         }
 
         public static class Levels
@@ -165,7 +169,7 @@ namespace XIVComboExpandedPlugin.Combos
                                 return BLM.Thunder3;
                         }
 
-                        if (gauge.UmbralHearts == 3 && level >= 90)
+                        if (gauge.IsParadoxActive && level >= 90)
                             return BLM.Paradox;
                     }
 
@@ -228,15 +232,112 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == BLM.Freeze || actionID == BLM.Flare)
+            if (actionID == BLM.Flare)
             {
                 var gauge = GetJobGauge<BLMGauge>();
+                var thunder4Debuff = TargetHasEffect(BLM.Debuffs.Thunder4);
+                var thunder4Timer = FindTargetEffect(BLM.Debuffs.Thunder4);
+                var thunder2Debuff = TargetHasEffect(BLM.Debuffs.Thunder2);
+                var thunder2Timer = FindTargetEffect(BLM.Debuffs.Thunder2);
+                var currentMP = LocalPlayer.CurrentMp;
 
-                if (level >= BLM.Levels.Freeze && gauge.InUmbralIce)
-                    return BLM.Freeze;
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
+                {
+                    if ((!gauge.InUmbralIce && !gauge.InAstralFire) || (gauge.InAstralFire && currentMP <= 100))
+                    {
+                        if (level <= 81)
+                            return BLM.Blizzard2;
+                        if (level >= 82)
+                            return BLM.HighBlizzardII;
+                    }
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
+                {
+                    if (gauge.InUmbralIce && gauge.UmbralHearts <= 2)
+                        return BLM.Freeze;
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
+                {
+                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder2Debuff) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder2Timer.RemainingTime <= 3 && level >= 26 && level <= 63) || (gauge.InAstralFire && !thunder2Debuff && level >= 26 && level <= 63))
+                    {
+                        if (lastComboMove == BLM.Thunder2)
+                        {
 
-                if (level >= BLM.Levels.Flare)
-                    return BLM.Flare;
+                        }
+                        else
+                        {
+                            return BLM.Thunder2;
+                        }
+                    }
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 64)
+                {
+                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder4Debuff) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Timer.RemainingTime <= 3) || (gauge.InAstralFire && !thunder4Debuff))
+                    {
+                        if (lastComboMove == BLM.Thunder4)
+                        {
+
+                        }
+                        else
+                        {
+                            return BLM.Thunder4;
+                        }
+                    }
+                }
+                // low level
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
+                {
+                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder2Debuff && thunder2Timer.RemainingTime >= 3) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && lastComboMove == BLM.Thunder2))
+                    {
+                        if (level <= 81)
+                            return BLM.Fire2;
+                    }
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
+                {
+                    if ((gauge.InAstralFire && LocalPlayer.CurrentMp > 7000 && thunder2Debuff) || (gauge.InAstralFire && LocalPlayer.CurrentMp > 7000 && lastComboMove == BLM.Thunder2))
+                    {
+                        if (level <= 81)
+                            return BLM.Fire2;;
+                    }
+                }
+                //highlevel
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
+                {
+                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder4Debuff && thunder4Timer.RemainingTime >= 3) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && lastComboMove == BLM.Thunder4))
+                    {
+                        if (level <= 81)
+                            return BLM.Fire2;
+                        if (level >= 82)
+                            return BLM.HighFireII;
+                    }
+                }
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
+                {
+                    if ((gauge.InAstralFire && LocalPlayer.CurrentMp > 7000 && thunder4Debuff) || (gauge.InAstralFire && LocalPlayer.CurrentMp > 7000 && lastComboMove == BLM.Thunder4))
+                    {
+                        if (level <= 81)
+                            return BLM.Fire2;
+                        if (level >= 82)
+                            return BLM.HighFireII;
+                    }
+                }
+                // lowlevel
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 50 && level <=63)
+                {
+                    if ((gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder2Debuff) || (gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && lastComboMove == BLM.Thunder2))
+                        return BLM.Flare;
+                }
+                // highlevel
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 64)
+                {
+                    if ((gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && thunder4Debuff) || (gauge.InAstralFire && LocalPlayer.CurrentMp <= 7000 && lastComboMove == BLM.Thunder4))
+                        return BLM.Flare;
+                }
+                if (level <= 81)
+                    return BLM.Blizzard2;
+                if (level >= 82)
+                    return BLM.HighBlizzardII;
             }
 
             return actionID;

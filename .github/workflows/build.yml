@@ -1,24 +1,63 @@
-name: Regenerate PluginMaster
+name: Build
+
+# Put your personal access token in a repository secret named PAT for cross-repository access
+
 on: 
   workflow_dispatch:
   push:
     branches:
     - master
-    - api4
-concurrency: regenerate
+
+env:
+  PUBLIC_NAME: XIVComboExpanded
+  SOLUTION_NAME: XIVComboExpanded
+  INTERNAL_NAME: XIVComboExpanded
+  RELEASE_DIR: XIVComboExpanded\bin\Release\XIVComboExpanded
+  PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
+  PR_PLUGIN_REPO: Nik-Potokar/DalamudPlugins
+
 jobs:
-  generate:
-    name: Regenerate PluginMaster
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Download Dalamud
+      run: |
+        Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/stg/latest.zip -OutFile latest.zip
+        Expand-Archive -Force latest.zip "$env:AppData\XIVLauncher\addon\Hooks\dev\"   
+    - name: Build
+      run: |
+        dotnet restore -r win ${{ env.SOLUTION_NAME }}.sln
+        dotnet build --configuration Release
+      env: 
+        DOTNET_CLI_TELEMETRY_OPTOUT: true
+    - uses: actions/upload-artifact@v2
+      with:
+        name: PluginRepoZip
+        path: ${{ env.RELEASE_DIR }}
+        if-no-files-found: error
+
+  deploy:
+    needs: build
+    if: "contains(toJSON(github.event.commits.*.message), '[PUSH]')"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v2
-        with:
-            python-version: '3.8'
-      - uses: actions/checkout@v2
-      - name: Generate PluginMaster
-        run: python generate_pluginmaster.py
-      - uses: EndBug/add-and-commit@v7
-        with:
-          author_name: GitHub Action
-          author_email: github-actions[bot]@users.noreply.github.com
-          message: Regenerate PluginMaster
+    - uses: actions/checkout@v2
+      with:
+        repository: ${{ env.PERSONAL_PLUGIN_REPO }}
+        token: ${{ secrets.PAT }}
+    - uses: actions/download-artifact@v2
+      with:
+        name: PluginRepoZip
+        path: plugins/${{ env.INTERNAL_NAME }}
+    - uses: EndBug/add-and-commit@v7
+      with:
+        add: --all
+        author_name: GitHub Action
+        author_email: github-actions[bot]@users.noreply.github.com
+        message: Update ${{ env.INTERNAL_NAME }}

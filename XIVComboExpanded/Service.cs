@@ -1,5 +1,6 @@
 using Dalamud.Data;
 using Dalamud.Game.ClientState;
+using Dalamud.Game.ClientState.Buddy;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge;
 using Dalamud.Game.ClientState.Objects;
@@ -77,5 +78,11 @@ namespace XIVComboExpandedPlugin
         /// </summary>
         [PluginService]
         internal static TargetManager TargetManager { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets the Dalamud Buddy List.
+        /// </summary>
+        [PluginService]
+        internal static BuddyList BuddyList { get; private set; } = null!;
     }
 }

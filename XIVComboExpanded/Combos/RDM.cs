@@ -32,7 +32,8 @@ namespace XIVComboExpandedPlugin.Combos
             ContreSixte = 7519,
             Engagement = 16527,
             Verraise = 7523,
-            Scorch = 16530;
+            Scorch = 16530,
+            Resolution = 25858;
 
         public static class Buffs
         {
@@ -140,6 +141,12 @@ namespace XIVComboExpandedPlugin.Combos
                         return RDM.Scorch;
                 }
 
+                if (IsEnabled(CustomComboPreset.RedmageResolutionFinisherMelee))
+                {
+                    if (lastComboMove == RDM.Scorch && level >= 90)
+                        return RDM.Resolution;
+                }
+
                 return OriginalHook(RDM.Riposte);
             }
 
@@ -155,6 +162,12 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == RDM.Verstone)
             {
+                if (IsEnabled(CustomComboPreset.RedmageResolutionFinisher))
+                {
+                    if (lastComboMove == RDM.Scorch && level >= 90)
+                        return RDM.Resolution;
+                }
+
                 if (level >= RDM.Levels.Scorch && (lastComboMove == RDM.Verflare || lastComboMove == RDM.Verholy))
                     return RDM.Scorch;
 
@@ -226,6 +239,11 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (HasEffect(RDM.Buffs.VerfireReady))
                     return RDM.Verfire;
+                if (IsEnabled(CustomComboPreset.RedmageResolutionFinisher))
+                {
+                    if (lastComboMove == RDM.Scorch && level >= 90)
+                        return RDM.Resolution;
+                }
 
                 return OriginalHook(RDM.Jolt2);
             }

@@ -8,40 +8,100 @@
 ### Repo Link
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
 
+_________________________________________________________________________________________________________________________________________________________________________________
+# Features
 
+#### Disciples of Magic
+* Global Raise feature - Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.
 
-GNB:
-- Overcap feature on main 123 combo
-BLM:
-- Easy Rotation
-MNK: 
-- Basic combo feature
-RDM:
-- 1 Button oCGD (Not perfect needs some fixing)
-NIN:
-- Huton/Armor crush combo on main combo when huton timer is low
-PLD:
-- DoT on main combo
-SMN:
-- Demisummon combiners for Enkindle/Deathflare/Rekindle
-- Weaving Optimization for Demisummons.
-- Modular combiners for every Egi aoe/single target/special attacks
-- Support for level syncing
-WAR:
-- Warrior Storm's Path / Storm's Eye buff renewal on main combo
-- Fell cleave feature - never overcap
-- Support for level syncing
-DRK:
-- Fixed overcap features for aoe and single target combos
-- Living Shadow on main combo
-MCH:
-- Single button Heatblast/Gauss Round/Ricochet Feature
+#### Astrologian
+* Draw on play 
+* Minor arcana to crown play (On one button)
+* Benefic level sync feature
+* One button DPS feature (Malefic/Combust/Lucid dreaming)
 
-In progress :
+#### Bard
+* Wanderer's into Pitch Perfect Feature
+* Heavy Shot into Straight Shot Feature
+* Iron Jaws Feature
+* Burst Shot/Quick Nock into Apex Arrow
 
-* Reaper
-* Sage
-* Summoner
+#### Black Mage
+* One button Rotation Feature that changes skills depending on a stance with auto DoT included
+* Leylines feature
+* AoE Feature (Soon to be 1 button aswell)
+
+#### Dancer
+* Auto dance steps feature
+* Single procs on single button
+
+#### Dragoon
+* Single and AoE target combos
+
+#### Dark Knight
+* Auto Living Shadow Feature
+* Overcap Feature
+* Single and AoE target combos
+
+#### GunBreaker
+* 1 Button Continuation Feature
+* Overcap features
+* Single target oGCDs combos on Main Combo
+* Single and AoE target combos
+
+#### Machinist
+* One Button rotation features
+* HeatBlast feature
+* Single and AoE target combos
+
+#### Monk
+* Basic rotation feature
+* Single and AoE target combos
+
+#### Ninja
+* One button rotation features
+* Mudra features
+* Single and AoE target combos
+
+#### Paladin
+* One button rotation features
+* Single and AoE target combos
+* Singe button oGCD feature
+
+#### Red Mage
+* 2 Button rotation feature (to balance manas)
+* Melee combo and finisher feature
+* Singe button oGCD feature
+
+#### Samurai
+* Single and AoE target combos
+
+#### Scholar
+* QoL Features
+
+#### Summoner
+* One button rotation for all the demi-summons (Single and AoE features)
+* One button egi rotation (Single and AoE features)
+* Never forget to ruin4 feature
+
+#### Warrior
+* One button rotation(Storm's Eye/Path)
+* oGCDs added on main combo feature
+* Single and AoE target combos
+
+#### White Mage
+* Lilly Features
+* Cure feature
+* One button DPS feature (Glare/Dia/Lucid dreaming)
+
+#### Reaper
+* Debuff features
+* Single and AoE target combos
+
+#### Sage
+* QoL Features
+* One button DPS feature (Dosis/EurekanDosis/Eukrasia)
+_________________________________________________________________________________________________________________________________________________________________________________
 
 ## If you wish for something to be added or have a request please add it into the issues tab and we will take a look.
 
@@ -57,8 +117,6 @@ Or
 * Navigate to your XIVLauncher folder inside AppData/Roaming
 * Extract all the contents of the ZIP file inside the devPlugins folder
 * The addon will show up in-game under Dev Tools > Installed Dev Plugins
-
-
 
 This is for personal use only but if you want something special added let us know.
 

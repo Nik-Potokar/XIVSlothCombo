@@ -15,7 +15,10 @@ namespace XIVComboExpandedPlugin.Combos
             Rockbreaker = 70,
             FourPointFury = 16473,
             PerfectBalance = 69,
-            TrueStrike = 54;
+            TrueStrike = 54,
+            HowlingFist = 25763,
+            Enlightenment = 16474,
+            MasterfulBlitz = 25764;
 
         public static class Buffs
         {
@@ -26,7 +29,8 @@ namespace XIVComboExpandedPlugin.Combos
                 CoerlForm = 109,
                 PerfectBalance = 110,
                 LeadenFist = 1861,
-                FormlessFist = 2513;
+                FormlessFist = 2513,
+                DisciplinedFist = 3001;
         }
 
         public static class Debuffs
@@ -83,8 +87,11 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == MNK.DragonKick)
             {
+                if (IsEnabled(CustomComboPreset.MnkBootshineBalanceFeature) && OriginalHook(MNK.MasterfulBlitz) != MNK.MasterfulBlitz)
+                    return OriginalHook(MNK.MasterfulBlitz);
+
                 if (HasEffect(MNK.Buffs.LeadenFist) && (
-                   HasEffect(MNK.Buffs.FormlessFist) || HasEffect(MNK.Buffs.PerfectBalance) ||
+                    HasEffect(MNK.Buffs.FormlessFist) || HasEffect(MNK.Buffs.PerfectBalance) ||
                     HasEffect(MNK.Buffs.OpoOpoForm) || HasEffect(MNK.Buffs.RaptorForm) || HasEffect(MNK.Buffs.CoerlForm)))
                     return MNK.Bootshine;
 
@@ -106,7 +113,7 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 if (HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.TrueStrike)
                 {
-                    if (!HasEffect(MNK.Buffs.TwinSnakes) && level >= MNK.Levels.TwinSnakes)
+                    if (!HasEffect(MNK.Buffs.DisciplinedFist) && level >= MNK.Levels.TwinSnakes)
                         return MNK.TwinSnakes;
                     return MNK.TrueStrike;
                 }
@@ -124,6 +131,22 @@ namespace XIVComboExpandedPlugin.Combos
             }
 
             return MNK.Bootshine;
+        }
+    }
+
+    internal class MonkPerfectBalanceFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.MonkPerfectBalanceFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == MNK.PerfectBalance)
+            {
+                if (OriginalHook(MNK.MasterfulBlitz) != MNK.MasterfulBlitz)
+                    return OriginalHook(MNK.MasterfulBlitz);
+            }
+
+            return actionID;
         }
     }
 }
