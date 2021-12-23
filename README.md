@@ -2,11 +2,13 @@
 (Keep in mind we don't play every job, so if you're having an issue please describe your desired fix in detail. Feel free to make a pull request.)
 ### Updated Daily
 # If something dosen't seem to be working please swap class or re-slot the skill.
-
+lol whatever
 # Has everything that expanded xivcombo has and more ;)
 
 ### Repo Link
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
+
+[![Build](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml/badge.svg)](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml)
 
 _________________________________________________________________________________________________________________________________________________________________________________
 # Features
