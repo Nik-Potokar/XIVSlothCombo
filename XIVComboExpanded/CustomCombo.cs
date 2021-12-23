@@ -78,7 +78,6 @@ namespace XIVComboExpandedPlugin.Combos
 
             var classJobID = LocalPlayer?.ClassJob.Id;
 
-
             if (this.JobID != classJobID && this.ClassID != classJobID && this.JobID != 99)
                 return false;
 

@@ -8,8 +8,6 @@
 ### Repo Link
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
 
-[![Build](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml/badge.svg)](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml)
-
 _________________________________________________________________________________________________________________________________________________________________________________
 # Features
 
