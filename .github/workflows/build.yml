@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - main
+    - master
 
 env:
   PUBLIC_NAME: XIVComboExpanded
