@@ -596,7 +596,7 @@ namespace XIVComboExpandedPlugin
         #endregion
         #region DISCIPLE OF MAGIC
         [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
-        [CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]
+        [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]
         DoMSwiftcastFeature = 1900,
 
         #endregion
