@@ -72,8 +72,16 @@ namespace XIVComboExpandedPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SCH.Resurrection && GetCooldown(SCH.Swiftcast).CooldownRemaining == 0)
-                    return SCH.Swiftcast;
+                if (actionID == SCH.Swiftcast)
+                {
+                    if (IsEnabled(CustomComboPreset.SchRaiseFeature))
+                    {
+                        if (HasEffect(SCH.Buffs.Swiftcast))
+                            return SCH.Resurrection;
+                    }
+
+                    return OriginalHook(SCH.Swiftcast);
+                }
 
                 return actionID;
             }

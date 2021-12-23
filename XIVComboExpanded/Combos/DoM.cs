@@ -25,26 +25,25 @@
         }
     }
 
-    /*    internal class DoMSwiftcastFeature : CustomCombo
+    internal class DoMSwiftcastFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DoMSwiftcastFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.DoMSwiftcastFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
             {
-
-                if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
+                if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SGE.Egeiro || actionID == AST.Ascend || actionID == RDM.Verraise)
                 {
-                    if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SCH.Resurrection || actionID == AST.Ascend || actionID == RDM.Verraise)
-                    {
-                        var swiftCD = GetCooldown(DoM.Swiftcast);
-                        if ((swiftCD.CooldownRemaining == 0 && !HasEffect(RDM.Buffs.Dualcast))
-                            || level <= DoM.Levels.Raise
-                            || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
-                            return DoM.Swiftcast;
-                    }
+                    var swiftCD = GetCooldown(DoM.Swiftcast);
+                    if ((swiftCD.CooldownRemaining == 0 && !HasEffect(RDM.Buffs.Dualcast))
+                        || level <= DoM.Levels.Raise
+                        || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
+                        return DoM.Swiftcast;
                 }
-                return actionID;
             }
+
+            return actionID;
         }
-    */
+    }
 }
