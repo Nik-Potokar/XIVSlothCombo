@@ -11,7 +11,7 @@ on:
 env:
   PUBLIC_NAME: XIVComboExpanded
   SOLUTION_NAME: XIVComboExpanded
-  INTERNAL_NAME: XIVComboExpanded
+  INTERNAL_NAME: XIVComboWayTooAkiiified
   RELEASE_DIR: XIVComboExpanded\bin\Release\XIVComboWayTooAkiiified
   PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
   PR_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
