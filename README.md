@@ -116,13 +116,13 @@ Recommended:
 Or
 
 * Download the latest zip file under releases [Here](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/releases)
-* Navigate to your XIVLauncher folder inside AppData/Roaming
-* Extract all the contents of the ZIP file inside the devPlugins folder
+* Extract all the contents of the ZIP file inside the %appdata%/XIVLauncher/devPlugins folder
 * The addon will show up in-game under Dev Tools > Installed Dev Plugins
 
 KEEP IN MIND RELEASES MIGHT BE OUTDATED!!!
 
-This is for personal use only but if you want something special added let us know.
+We're building this as a side project but if you want something special added let us know.
 
 ### Big Big  Thanks to [attick](https://github.com/attickdoor), [daemitus](https://github.com/daemitus) for creating most of the original code, as well as [Grammernatzi](https://github.com/Grammernatzi) for providing us with a lot of extra tweaks. Please show them support for their original work <3 
 
+Brought to you by Aki, Iaotle, Codemned, rushtothesun, damolitionn
