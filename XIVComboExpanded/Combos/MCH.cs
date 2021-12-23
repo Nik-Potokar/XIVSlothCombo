@@ -113,7 +113,9 @@ namespace XIVComboExpandedPlugin.Combos
                     if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= 58)
                         return MCH.Drill;
                     if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
+                    {
                         return MCH.HotShot;
+                    }
                     else
                     if (level >= 76)
                     {
