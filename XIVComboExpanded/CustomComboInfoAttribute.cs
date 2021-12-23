@@ -92,6 +92,7 @@ namespace XIVComboExpandedPlugin
                 38 => "Dancer",
                 39 => "Reaper",
                 40 => "Sage",
+                99 => "Disciple of Magic",
                 _ => "Unknown",
             };
         }

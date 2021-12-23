@@ -19,7 +19,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, AST.Benefic2)]
         AstrologianBeneficFeature = 3,
 
-        [CustomComboInfo("Swiftcast Feature", "Changes Swiftcast To Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
+        [ConflictingCombos(DoMSwiftcastFeature)]
+        [CustomComboInfo("AST Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
         AstrologianAscendFeature = 4,
 
         [CustomComboInfo("DPS Feature", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
@@ -400,7 +401,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("ED Aetherflow", "Change Energy Drain into Aetherflow when you have no more Aetherflow stacks.", SCH.JobID, SCH.EnergyDrain)]
         ScholarEnergyDrainFeature = 1301,
 
-        [CustomComboInfo("Sch Raise Feature", "Replaces Rez with swiftcast when available.", SCH.JobID, SCH.Resurrection)]
+        [ConflictingCombos(DoMSwiftcastFeature)]
+        [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, SCH.Swiftcast, SCH.Resurrection)]
         SchRaiseFeature = 1302,
 
         #endregion
@@ -517,7 +519,8 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, WHM.Cure2, WHM.Medica)]
         WhiteMageAfflatusFeature = 1603,
 
-        [CustomComboInfo("Swiftcast Into Raise", "Changes Swiftcast into Raise", WHM.JobID, WHM.Raise, WHM.Swiftcast)]
+        [ConflictingCombos(DoMSwiftcastFeature)]
+        [CustomComboInfo("WHM Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, WHM.Swiftcast, WHM.Raise)]
         WHMRaiseFeature = 1604,
 
         [CustomComboInfo("DoT on Glare1/3 Feature", "Adds DoT on Glare1/3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
@@ -586,14 +589,15 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button (Currently only for Dosis1!!!)", SGE.JobID, SGE.Dosis1, SGE.Eukrasia, SGE.EukrasianDosis1)]
         SageDPSFeature = 1802,
 
-        [CustomComboInfo("Swiftcast Rez Feature", "Replaces Swiftcast with Egiero when under Swiftcast buff", SGE.JobID, SGE.Egeiro, SGE.Swiftcast)]
+        [ConflictingCombos(DoMSwiftcastFeature)]
+        [CustomComboInfo("SGE Raise Feature", "Changes Swiftcast to Egeiro", SGE.JobID, SGE.Swiftcast, SGE.Egeiro)]
         SageEgeiroFeature = 1803,
 
         #endregion
         #region DISCIPLE OF MAGIC
-
-        // [CustomComboInfo("SwiftcastToRes", "Replaces Swiftcast with ressurection", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise)]
-        // DoMSwiftcastFeature = 109,
+        [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
+        [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]
+        DoMSwiftcastFeature = 1900,
 
         #endregion
     }
