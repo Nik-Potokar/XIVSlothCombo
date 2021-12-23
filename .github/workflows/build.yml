@@ -13,8 +13,8 @@ env:
   SOLUTION_NAME: XIVComboExpanded
   INTERNAL_NAME: XIVComboExpanded
   RELEASE_DIR: XIVComboExpanded\bin\Release\XIVComboExpanded
-  PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
-  PR_PLUGIN_REPO: Nik-Potokar/DalamudPlugins
+  PERSONAL_PLUGIN_REPO: Iaotle/MyDalamudPlugins
+  PR_PLUGIN_REPO: Iaotle/DalamudPlugins
 
 jobs:
   build:
