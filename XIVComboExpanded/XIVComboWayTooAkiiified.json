@@ -5,8 +5,5 @@
   "Description": "This plugin condenses combos and mutually exclusive abilities onto a single button. For example, a 1-2-3 combo would become 1-1-1.",
   "RepoUrl": "https://github.com/Nik-Potokar/XIVComboWayTooAkiiified",
   "IconUrl": "https://cdn.discordapp.com/attachments/594230324209123330/905362481671720970/akified.png",
-  "ImageUrls": [
-    "https",
-    : //cdn.discordapp.com/attachments/594230324209123330/905362481671720970/akified.png
-  ]
+  "ImageUrls": ["https://cdn.discordapp.com/attachments/594230324209123330/905362481671720970/akified.png"]
 }
