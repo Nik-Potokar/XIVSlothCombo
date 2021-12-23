@@ -2,7 +2,7 @@
 (Keep in mind we don't play every job, so if you're having an issue please describe your desired fix in detail. Feel free to make a pull request.)
 ### Updated Daily
 # If something dosen't seem to be working please swap class or re-slot the skill.
-
+lol whatever
 # Has everything that expanded xivcombo has and more ;)
 
 ### Repo Link
