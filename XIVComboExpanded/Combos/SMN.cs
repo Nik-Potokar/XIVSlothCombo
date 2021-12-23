@@ -195,7 +195,6 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     var smnBahamut = GetCooldown(SMN.SummonBahamut);
                     var smnPhoenix = GetCooldown(SMN.SummonPhoenix);
-
                     var astralCD = GetCooldown(SMN.AstralImpulse);
                     var deathflare = GetCooldown(SMN.Deathflare);
                     var fountainfireCD = GetCooldown(SMN.FountainOfFire);
@@ -218,7 +217,18 @@ namespace XIVComboExpandedPlugin.Combos
                         && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindlePhoenix;
                 }
-
+                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
+                {
+                    var energyDrainCD = GetCooldown(SMN.EnergyDrain);
+                    var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
+                    var fofCD = GetCooldown(SMN.FountainOfFire);
+                    if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.99)
+                        return SMN.Fester;
+                    if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.2)
+                        return SMN.Fester;
+                    if ((lastComboMove == SMN.AstralImpulse && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.FountainOfFire && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95))
+                        return SMN.EnergyDrain;
+                }
                 if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
                     return SMN.Slipstream;
                 else if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
@@ -273,15 +283,6 @@ namespace XIVComboExpandedPlugin.Combos
                     if (!carbyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && gauge.AttunmentTimerRemaining == 0)
                             return SMN.SummonCarbuncle;
                 }
-                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
-                {
-                    var ruin3cd = GetCooldown(SMN.Ruin3);
-                    var ruin4cd = GetCooldown(SMN.Ruin4);
-                    var astralcd = GetCooldown(SMN.AstralImpulse);
-                    var fofcd = GetCooldown(SMN.FountainOfFire);
-                    if ((gauge.HasAetherflowStacks && ruin3cd.CooldownRemaining >= 0.4) || (gauge.HasAetherflowStacks && ruin4cd.CooldownRemaining >= 0.4) || (gauge.HasAetherflowStacks && fofcd.CooldownRemaining >= 0.4))
-                        return SMN.Fester;
-                }
             }
 
             return actionID;
@@ -310,7 +311,7 @@ namespace XIVComboExpandedPlugin.Combos
                     var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
                     var rekindle = GetCooldown(SMN.Rekindle);
 
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlow && !deathflare.IsCooldown && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > 0.7)
                         return SMN.Deathflare;
                     else if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Rekindle;
