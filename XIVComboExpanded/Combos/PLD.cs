@@ -113,7 +113,7 @@ namespace XIVComboExpandedPlugin.Combos
                 {
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= 64 && !foF)
                     {
-                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || requiescat.StackCount == 1 && level >= 80)
+                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80))
                             return PLD.Confiteor;
                         return PLD.HolySpirit;
                     }
@@ -163,6 +163,11 @@ namespace XIVComboExpandedPlugin.Combos
                         return PLD.Atonement;
                 }
 
+                if (comboTime > 0)
+                {
+                    if (lastComboMove == PLD.RiotBlade)
+                        return PLD.RoyalAuthority;
+                }
                 return PLD.FastBlade;
             }
 

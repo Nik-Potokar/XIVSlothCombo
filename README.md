@@ -1,4 +1,4 @@
-# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/MyDalamudPlugins).
+# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/issues).
 (Keep in mind we don't play every job, so if you're having an issue please describe your desired fix in detail. Feel free to make a pull request.)
 ### Updated Daily
 # If something dosen't seem to be working please swap class or re-slot the skill.
@@ -7,6 +7,8 @@
 
 ### Repo Link
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
+[![Build](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml/badge.svg)](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml)
+
 
 _________________________________________________________________________________________________________________________________________________________________________________
 # Features
@@ -114,11 +116,13 @@ Recommended:
 Or
 
 * Download the latest zip file under releases [Here](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/releases)
-* Navigate to your XIVLauncher folder inside AppData/Roaming
-* Extract all the contents of the ZIP file inside the devPlugins folder
+* Extract all the contents of the ZIP file inside the %appdata%/XIVLauncher/devPlugins folder
 * The addon will show up in-game under Dev Tools > Installed Dev Plugins
 
-This is for personal use only but if you want something special added let us know.
+KEEP IN MIND RELEASES MIGHT BE OUTDATED!!!
 
-### Big Big  Thanks to [attick](https://github.com/attickdoor) & [daemitus](https://github.com/daemitus) For making it even possible, Please show them support for their original work <3 
+We're building this as a side project but if you want something special added let us know.
 
+### Big Big  Thanks to [attick](https://github.com/attickdoor), [daemitus](https://github.com/daemitus) for creating most of the original code, as well as [Grammernatzi](https://github.com/Grammernatzi) for providing us with a lot of extra tweaks. Please show them support for their original work <3 
+
+Brought to you by Aki, Iaotle, Codemned, rushtothesun, damolitionn
