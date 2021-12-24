@@ -408,7 +408,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, SCH.Swiftcast, SCH.Resurrection)]
         SchRaiseFeature = 1302,
 
-        [CustomComboInfo("SCH DPS Feature", "Adds Biolysis on Ruin II. Adds Bio and Bio II to Ruin I when under level 38.", SCH.JobID, SCH.Ruin2)]
+        [CustomComboInfo("SCH DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID, SCH.Ruin2)]
         SCHDPSFeature = 1303,
 
         #endregion
