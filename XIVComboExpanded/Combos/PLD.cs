@@ -163,6 +163,11 @@ namespace XIVComboExpandedPlugin.Combos
                         return PLD.Atonement;
                 }
 
+                if (comboTime > 0)
+                {
+                    if (lastComboMove == PLD.RiotBlade)
+                        return PLD.RoyalAuthority;
+                }
                 return PLD.FastBlade;
             }
 
