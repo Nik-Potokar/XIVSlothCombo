@@ -408,6 +408,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, SCH.Swiftcast, SCH.Resurrection)]
         SchRaiseFeature = 1302,
 
+        [CustomComboInfo("SCH DPS Feature", "Adds Biolysis on Ruin II. Adds Bio and Bio II to Ruin I when under level 38.", SCH.JobID, SCH.Ruin2)]
+        SCHDPSFeature = 1303,
+
         #endregion
         // ====================================================================================
         #region SUMMONER
@@ -589,7 +592,7 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Phlegma into Dyskrasia", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, SGE.Phlegma, SGE.Phlegmara, SGE.Phlegmaga)]
         SagePhlegmaFeature = 1801,
 
-        [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button (Currently only for Dosis1!!!)", SGE.JobID, SGE.Dosis1, SGE.Eukrasia, SGE.EukrasianDosis1)]
+        [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button", SGE.JobID, SGE.Dosis1, SGE.Eukrasia, SGE.EukrasianDosis1)]
         SageDPSFeature = 1802,
 
         [ConflictingCombos(DoMSwiftcastFeature)]

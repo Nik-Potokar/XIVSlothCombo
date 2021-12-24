@@ -14,7 +14,12 @@ namespace XIVComboExpandedPlugin.Combos
             LucidDreaming = 7562,
             Resurrection = 173,
             Swiftcast = 7561,
-            Aetherflow = 166;
+            Aetherflow = 166,
+            Bio1 = 17864,
+            Bio2 = 17865,
+            Biolysis = 16540,
+            Ruin1 = 163,
+            Ruin2 = 17870;
 
         public static class Buffs
         {
@@ -24,7 +29,10 @@ namespace XIVComboExpandedPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+            Bio1 = 179,
+            Bio2 = 189,
+            Biolysis = 1895;
         }
 
         public static class Levels
@@ -85,6 +93,42 @@ namespace XIVComboExpandedPlugin.Combos
 
                 return actionID;
             }
+        }
+    }
+
+    internal class SCHDPSFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SCHDPSFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SCH.Ruin2)
+            {
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var biolysisDebuff = FindTargetEffect(SCH.Debuffs.Biolysis);
+                var bio2Debuff = FindTargetEffect(SCH.Debuffs.Bio2);
+                var bio1Debuff = FindTargetEffect(SCH.Debuffs.Bio1);
+
+                if (IsEnabled(CustomComboPreset.SCHDPSFeature) && level >= 72)
+                {
+                    if ((!TargetHasEffect(SCH.Debuffs.Biolysis) && incombat && level >= 72) || (biolysisDebuff.RemainingTime < 5 && incombat && level >= 72))
+                        return SCH.Biolysis;
+                }
+
+                if (IsEnabled(CustomComboPreset.SCHDPSFeature) && level >= 26 && level <= 71)
+                {
+                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level <= 71) || (bio2Debuff.RemainingTime < 5 && incombat && level >= 26 && level <= 71))
+                        return SCH.Bio2;
+                }
+
+                if (IsEnabled(CustomComboPreset.SCHDPSFeature) && level >= 2 && level <= 25)
+                {
+                    if ((!TargetHasEffect(SCH.Debuffs.Bio1) && level >= 2 && level <= 25) || (bio1Debuff.RemainingTime < 5 && incombat && level >= 2 && level <= 25))
+                        return SCH.Bio1;
+                }
+            }
+
+            return actionID;
         }
     }
 }
