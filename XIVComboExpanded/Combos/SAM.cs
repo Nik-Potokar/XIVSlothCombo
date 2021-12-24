@@ -17,13 +17,22 @@ namespace XIVComboExpandedPlugin.Combos
             Mangetsu = 7484,
             Fuga = 7483,
             Oka = 7485,
+            Shinten = 7490,
+            Kyuten = 7491,
+            Guren = 7496,
+            Senei = 16481,
             MeikyoShisui = 7499,
             Seigan = 7501,
             ThirdEye = 7498,
             Iaijutsu = 7867,
             TsubameGaeshi = 16483,
             KaeshiHiganbana = 16484,
-            Shoha = 16487;
+            Shoha = 16487,
+            Shoha2 = 25779,
+            Ikishoten = 16482,
+            Fuko = 25780,
+            OgiNamikiri = 25781,
+            KaeshiNamikiri = 25782;
 
         public static class Buffs
         {
@@ -31,7 +40,8 @@ namespace XIVComboExpandedPlugin.Combos
                 MeikyoShisui = 1233,
                 EyesOpen = 1252,
                 Jinpu = 1298,
-                Shifu = 1299;
+                Shifu = 1299,
+                OgiNamikiriReady = 2959;
         }
 
         public static class Debuffs
@@ -171,24 +181,6 @@ namespace XIVComboExpandedPlugin.Combos
         }
     }
 
-    internal class SamuraiThirdEyeFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiThirdEyeFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SAM.Seigan)
-            {
-                if (HasEffect(SAM.Buffs.EyesOpen))
-                    return SAM.Seigan;
-
-                return SAM.ThirdEye;
-            }
-
-            return actionID;
-        }
-    }
-
     // internal class SamuraiJinpuShifuFeature : CustomCombo
     // {
     //     protected override CustomComboPreset Preset => CustomComboPreset.SamuraiJinpuShifuFeature;
@@ -282,4 +274,93 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+    internal class SamuraiSeneiFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiSeneiFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Shinten)
+            {
+                var seneiCD = GetCooldown(SAM.Senei);
+                if (!seneiCD.IsCooldown && level >= 72)
+                    return SAM.Senei;
+            }
+            return actionID;
+        }
+    }
+    internal class SamuraiShohaFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiShohaFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Shinten)
+            {
+                var gauge = GetJobGauge<SAMGauge>();
+                if (gauge.MeditationStacks >= 3)
+                    return SAM.Shoha;
+            }
+            return actionID;
+        }
+    }
+    internal class SamuraiGurenFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiGurenFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Kyuten)
+            {
+                var gurenCD = GetCooldown(SAM.Guren);
+                if (!gurenCD.IsCooldown && level >= 70)
+                    return SAM.Guren;
+            }
+            return actionID;
+        }
+    }
+    internal class SamuraiIkishotenNamikiriFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiIkishotenNamikiriFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Ikishoten)
+            {
+                if (level >= 90)
+                {
+                    if (HasEffect(SAM.Buffs.OgiNamikiriReady))
+                    {
+                        var gauge = GetJobGauge<SAMGauge>();
+                        if (gauge.MeditationStacks >= 3)
+                            return SAM.Shoha;
+                        return SAM.OgiNamikiri;
+                    }
+
+                    if (OriginalHook(SAM.OgiNamikiri) == SAM.KaeshiNamikiri)
+                        return SAM.KaeshiNamikiri;
+                }
+
+                return SAM.Ikishoten;
+            }
+            return actionID;
+        }
+    }
+    internal class SamuraiShoha2Feature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiShoha2Feature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Kyuten)
+            {
+                var gauge = GetJobGauge<SAMGauge>();
+                if (level >= 82 && gauge.MeditationStacks >= 3)
+                    return SAM.Shoha2;
+            }
+
+            return actionID;
+        }
+    }
 }
+

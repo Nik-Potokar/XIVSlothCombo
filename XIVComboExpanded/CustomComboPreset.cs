@@ -394,6 +394,21 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Iaijutsu to Shoha", "Replace Iaijutsu with Shoha when meditation is 3.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiIaijutsuShohaFeature = 1210,
 
+        [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID, SAM.Shinten)]
+        SamuraiSeneiFeature = 1211,
+
+        [CustomComboInfo("Shinten to Shoha", "Replace Hissatsu: Shinten with Shoha when Meditation is full.", SAM.JobID, SAM.Shinten)]
+        SamuraiShohaFeature = 1212,
+
+        [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID, SAM.Kyuten)]
+        SamuraiGurenFeature = 1213,
+
+        [CustomComboInfo("Kyuten to Shoha II", "Replace Hissatsu: Kyuten with Shoha II when Meditation is full.", SAM.JobID, SAM.Kyuten)]
+        SamuraiShoha2Feature = 1214,
+
+        [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, SAM.Ikishoten)]
+        SamuraiIkishotenNamikiriFeature = 1215,
+
         #endregion
         // ====================================================================================
         #region SCHOLAR
