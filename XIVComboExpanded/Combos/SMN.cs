@@ -299,6 +299,20 @@ namespace XIVComboExpandedPlugin.Combos
             {
                 var gauge = GetJobGauge<SMNGauge>();
 
+                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
+                {
+                    var energyDrainCD = GetCooldown(SMN.EnergyDrain);
+                    var energySiphonCD = GetCooldown(SMN.EnergySiphon);
+                    var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
+                    var astralflareCD = GetCooldown(SMN.AstralFlare);
+                    var fofCD = GetCooldown(SMN.FountainOfFire);
+                    if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.99)
+                        return SMN.Painflare;
+                    if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.2)
+                        return SMN.Painflare;
+                    if ((lastComboMove == SMN.AstralFlare && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.BrandOfPurgatory && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95))
+                        return SMN.EnergySiphon;
+                }
                 if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature))
                 {
                     var smnBahamut = GetCooldown(SMN.SummonBahamut);
@@ -311,7 +325,7 @@ namespace XIVComboExpandedPlugin.Combos
                     var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
                     var rekindle = GetCooldown(SMN.Rekindle);
 
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlow && !deathflare.IsCooldown && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > 0.7)
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > 0.7)
                         return SMN.Deathflare;
                     else if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Rekindle;
