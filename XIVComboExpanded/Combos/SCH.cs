@@ -117,7 +117,7 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SCHDPSFeature) && level >= 26 && level <= 71)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level <= 71) || (bio2Debuff.RemainingTime < 5 && incombat && level >= 26 && level <= 71))
+                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level <= 71 && level >= 26) || (bio2Debuff.RemainingTime < 5 && incombat && level >= 26 && level <= 71))
                         return SCH.Bio2;
                 }
 
