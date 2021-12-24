@@ -365,6 +365,7 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+    // testing
     internal class SamuraiSimpleSamuraiFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SamuraiSimpleSamuraiFeature;
@@ -372,7 +373,7 @@ namespace XIVComboExpandedPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == SAM.Hakaze)
-            {
+            {   
                 if(IsEnabled(CustomComboPreset.SamuraiSimpleSamuraiFeature))
                 {
                     var gauge = GetJobGauge<SAMGauge>();
