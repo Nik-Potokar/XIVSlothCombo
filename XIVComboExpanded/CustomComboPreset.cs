@@ -290,6 +290,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.FleetingRaiju)]
         NinjaHuraijinRaijuFeature = 910,
 
+        [CustomComboInfo("Armor Crush Main Comb Combo", "Adds Armor Crush onto main combo.", NIN.JobID, NIN.ArmorCrush)]
+        NinjaArmorCrushOnMainCombo = 911,
+
         #endregion
         // ====================================================================================
         #region PALADIN

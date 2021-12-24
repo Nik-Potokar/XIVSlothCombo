@@ -70,33 +70,33 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == 2255)
+            if (actionID == NIN.AeolianEdge)
             {
-                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(2263u) == CustomCombo.OriginalHook(18807u))
+                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.JinNormal) == CustomCombo.OriginalHook(NIN.Jin))
                 {
-                    return CustomCombo.OriginalHook(2260u);
+                    return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
 
                 if (comboTime > 0f)
                 {
-                    if (lastComboMove == 2240 && level >= 4)
+                    if (lastComboMove == NIN.SpinningEdge && level >= 4)
                     {
-                        return 2242u;
+                        return NIN.GustSlash;
                     }
 
                     var huton = GetJobGauge<NINGauge>();
-                    if (lastComboMove == NIN.GustSlash && level >= 20 && huton.HutonTimer < 30000)
+                    if (lastComboMove == NIN.GustSlash && level >= 20 && huton.HutonTimer < 15000 && IsEnabled(CustomComboPreset.NinjaArmorCrushOnMainCombo) && level >= 54)
                     {
                         return NIN.ArmorCrush;
                     }
 
-                    if (lastComboMove == 2242 && level >= 26)
+                    if (lastComboMove == NIN.GustSlash && level >= 26)
                     {
-                        return 2255u;
+                        return NIN.AeolianEdge;
                     }
                 }
 
-                return 2240u;
+                return NIN.SpinningEdge;
             }
 
             return actionID;
@@ -109,27 +109,27 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == 3563)
+            if (actionID == NIN.ArmorCrush)
             {
-                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(2263u) == CustomCombo.OriginalHook(18807u))
+                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.JinNormal) == CustomCombo.OriginalHook(NIN.Jin))
                 {
-                    return CustomCombo.OriginalHook(2260u);
+                    return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
 
                 if (comboTime > 0f)
                 {
-                    if (lastComboMove == 2240 && level >= 4)
+                    if (lastComboMove == NIN.SpinningEdge && level >= 4)
                     {
-                        return 2242u;
+                        return NIN.GustSlash;
                     }
 
-                    if (lastComboMove == 2242 && level >= 54)
+                    if (lastComboMove == NIN.GustSlash && level >= 54)
                     {
-                        return 3563u;
+                        return NIN.ArmorCrush;
                     }
                 }
 
-                return 2240u;
+                return NIN.SpinningEdge;
             }
 
             return actionID;
@@ -142,7 +142,7 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == 3566 && level >= 60 && CustomCombo.HasEffect(1955))
+            if (actionID == NIN.DreamWithinADream && level >= 60 && CustomCombo.HasEffect(NIN.Buffs.AssassinateReady))
             {
                 return 2246u;
             }
@@ -157,19 +157,19 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == 16488)
+            if (actionID == NIN.HakkeMujinsatsu)
             {
-                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(2263u) == CustomCombo.OriginalHook(18807u))
+                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.JinNormal) == CustomCombo.OriginalHook(NIN.Jin))
                 {
-                    return CustomCombo.OriginalHook(2260u);
+                    return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
 
-                if (comboTime > 0f && lastComboMove == 2254 && level >= 52)
+                if (comboTime > 0f && lastComboMove == NIN.DeathBlossom && level >= 52)
                 {
-                    return 16488u;
+                    return NIN.HakkeMujinsatsu;
                 }
 
-                return 2254u;
+                return NIN.DeathBlossom;
             }
 
             return actionID;
@@ -181,16 +181,16 @@ namespace XIVComboExpandedPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == 2245)
+                if (actionID == NIN.Hide)
                 {
-                    if (CustomCombo.HasEffect(507) || CustomCombo.HasEffect(614))
+                    if (CustomCombo.HasEffect(NIN.Buffs.Suiton) || CustomCombo.HasEffect(NIN.Buffs.Hidden))
                     {
-                        return 2258u;
+                        return NIN.TrickAttack;
                     }
 
                     if (CustomCombo.HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                     {
-                        return 2248u;
+                        return NIN.Mug;
                     }
                 }
 
@@ -205,9 +205,9 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == 2261 && level >= 76 && CustomCombo.HasEffect(497))
+            if (actionID == NIN.Chi && level >= 76 && CustomCombo.HasEffect(NIN.Buffs.Kassatsu))
             {
-                return 18807u;
+                return NIN.Jin;
             }
 
             return actionID;
@@ -220,14 +220,14 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == 2264)
+            if (actionID == NIN.Kassatsu)
             {
-                if (CustomCombo.HasEffect(507) || CustomCombo.HasEffect(614))
+                if (CustomCombo.HasEffect(NIN.Buffs.Suiton) || CustomCombo.HasEffect(NIN.Buffs.Hidden))
                 {
-                    return 2258u;
+                    return NIN.TrickAttack;
                 }
 
-                return 2264u;
+                return NIN.Kassatsu;
             }
 
             return actionID;
@@ -240,14 +240,14 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == 7403)
+            if (actionID == NIN.TenChiJin)
             {
-                if (CustomCombo.HasEffect(507))
+                if (CustomCombo.HasEffect(NIN.Buffs.Suiton))
                 {
-                    return 16489u;
+                    return NIN.Meisui;
                 }
 
-                return 7403u;
+                return NIN.TenChiJin;
             }
 
             return actionID;
