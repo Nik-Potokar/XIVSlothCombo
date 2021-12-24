@@ -19,7 +19,19 @@ namespace XIVComboExpandedPlugin.Combos
             Bio2 = 17865,
             Biolysis = 16540,
             Ruin1 = 163,
-            Ruin2 = 17870;
+            Ruin2 = 17870,
+            SummonSeraph = 16545,
+            SummonEos = 17215,
+            SummonSelene = 17216,
+            Broil1 = 3584,
+            Broil2 = 7435,
+            Broil3 = 16541,
+            Broil4 = 25865,
+            Indomitability = 3583,
+            WhisperingDawn = 16537,
+            FeyIllumination = 16538,
+            Dissipation = 3587,
+            Aetherpact = 7437;
 
         public static class Buffs
         {
@@ -102,8 +114,9 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.Ruin2)
+            if (actionID == SCH.Broil4 || actionID == SCH.Ruin2)
             {
+                var gauge = GetJobGauge<SCHGauge>();
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var biolysisDebuff = FindTargetEffect(SCH.Debuffs.Biolysis);
                 var bio2Debuff = FindTargetEffect(SCH.Debuffs.Bio2);
@@ -127,6 +140,18 @@ namespace XIVComboExpandedPlugin.Combos
                         return SCH.Bio1;
                 }
             }
+            return actionID;
+        }
+    }
+    internal class ScholarFairyFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.ScholarFairyFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var gauge = GetJobGauge<SCHGauge>();
+            if (!Service.BuddyList.PetBuddyPresent && gauge.SeraphTimer == 0)
+                return SCH.SummonSelene;
 
             return actionID;
         }

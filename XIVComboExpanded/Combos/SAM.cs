@@ -41,14 +41,17 @@ namespace XIVComboExpandedPlugin.Combos
                 EyesOpen = 1252,
                 Jinpu = 1298,
                 Shifu = 1299,
-                OgiNamikiriReady = 2959;
+                OgiNamikiriReady = 2959,
+                Fuka = 1299,
+                Fugetsu = 1298;
         }
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+                Higenbana = 1228;
         }
-
+        
         public static class Levels
         {
             public const byte
@@ -359,6 +362,62 @@ namespace XIVComboExpandedPlugin.Combos
                     return SAM.Shoha2;
             }
 
+            return actionID;
+        }
+    }
+    internal class SamuraiSimpleSamuraiFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiSimpleSamuraiFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Hakaze)
+            {
+                if(IsEnabled(CustomComboPreset.SamuraiSimpleSamuraiFeature))
+                {
+                    var gauge = GetJobGauge<SAMGauge>();
+                    var meikyo = HasEffect(SAM.Buffs.MeikyoShisui);
+                    var meikyoStacks = FindEffect(SAM.Buffs.MeikyoShisui);
+                    var fuka = HasEffect(SAM.Buffs.Fuka);
+                    var fugetsu = HasEffect(SAM.Buffs.Fugetsu);
+                    var higebana = TargetHasEffect(SAM.Debuffs.Higenbana);
+
+                    if (fuka && fugetsu && !gauge.HasSetsu && gauge.HasKa && gauge.HasGetsu)
+                    {
+                        if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Shifu)
+                            return SAM.Yukikaze;
+
+                    }
+                    if (!gauge.HasKa || !fuka)
+                    {
+                        if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Shifu)
+                            return SAM.Shifu;
+
+                        if (lastComboMove == SAM.Shifu && level >= SAM.Levels.Kasha)
+                            return SAM.Kasha;
+
+                    }
+                    if ((fuka && !gauge.HasGetsu && higebana) || (fuka && gauge.HasKa) || (fuka && !fugetsu))
+                    {
+                        if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Shifu)
+                            return SAM.Jinpu;
+
+                        if (lastComboMove == SAM.Jinpu && level >= SAM.Levels.Kasha)
+                            return SAM.Gekko;
+                    }
+                    if(meikyo)
+                    {
+                        if (meikyoStacks.StackCount == 3)
+                            return SAM.Kasha;
+                        if (meikyoStacks.StackCount == 2)
+                            return SAM.Gekko;
+                        if (meikyoStacks.StackCount == 1)
+                            return SAM.Yukikaze;
+                    }
+                    return actionID;
+
+                }
+            }
             return actionID;
         }
     }

@@ -409,6 +409,9 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, SAM.Ikishoten)]
         SamuraiIkishotenNamikiriFeature = 1215,
 
+        [CustomComboInfo("SimpleSamurai", "ONLY FOR TESTING!!! Everything in one feature( On HAKAZE)  Testing/Feedback", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        SamuraiSimpleSamuraiFeature = 1216,
+
         #endregion
         // ====================================================================================
         #region SCHOLAR
@@ -425,6 +428,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("SCH DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID, SCH.Ruin2)]
         SCHDPSFeature = 1303,
+
+        [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID, SCH.WhisperingDawn, SCH.FeyIllumination, SCH.FeyBless, SCH.Aetherpact, SCH.Dissipation, SCH.SummonSeraph, SCH.Consolation)]
+        ScholarFairyFeature = 1304,
 
         #endregion
         // ====================================================================================
