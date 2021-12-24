@@ -388,7 +388,15 @@ namespace XIVComboExpandedPlugin.Combos
                             return SAM.Yukikaze;
 
                     }
-                    if (!gauge.HasKa || !fuka)
+                    if ((fuka && !gauge.HasGetsu && higebana) || (fuka && gauge.HasKa) || (fuka && !fugetsu) || (fuka && higebana && lastComboMove == SAM.KaeshiHiganbana) || (fuka && higebana && !fugetsu))
+                    {
+                        if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Shifu)
+                            return SAM.Jinpu;
+
+                        if (lastComboMove == SAM.Jinpu && level >= SAM.Levels.Kasha)
+                            return SAM.Gekko;
+                    }
+                    if ((!gauge.HasKa && fugetsu) || !fuka || (fuka && fugetsu && !gauge.HasKa) || (!gauge.HasKa && fuka))
                     {
                         if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Shifu)
                             return SAM.Shifu;
@@ -396,14 +404,6 @@ namespace XIVComboExpandedPlugin.Combos
                         if (lastComboMove == SAM.Shifu && level >= SAM.Levels.Kasha)
                             return SAM.Kasha;
 
-                    }
-                    if ((fuka && !gauge.HasGetsu && higebana) || (fuka && gauge.HasKa) || (fuka && !fugetsu))
-                    {
-                        if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Shifu)
-                            return SAM.Jinpu;
-
-                        if (lastComboMove == SAM.Jinpu && level >= SAM.Levels.Kasha)
-                            return SAM.Gekko;
                     }
                     if(meikyo)
                     {
