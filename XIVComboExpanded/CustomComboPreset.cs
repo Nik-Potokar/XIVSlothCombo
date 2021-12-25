@@ -603,6 +603,12 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID, RPR.BloodStalk, RPR.GrimSwathe)]
         ReaperBloodSwatheFeature = 1712,
 
+        [CustomComboInfo("Blood Stalk Combo Option", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. \n Conflicts with Blood Stalk / Grim Swathe Feature.", RPR.JobID, RPR.BloodStalk)]
+        ReaperBloodSwatheComboFeature = 1713,
+
+        [CustomComboInfo("Grim Swathe Combo Option", "Turns Grim Swathe into Gluttony when off-cooldown and puts Guillotine on the same button as Grim Swathe. \n Conflicts with Blood Stalk / Grim Swathe Feature.", RPR.JobID, RPR.GrimSwathe)]
+        ReaperGrimSwatheComboOption = 1714,
+
         #endregion
         // ====================================================================================
         #region SAGE
