@@ -85,6 +85,15 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
         BardApexFeature = 203,
 
+        [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
+        BardoGCDSingleTargetFeature = 204,
+
+        [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on RainOfDeath depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.RainOfDeath)]
+        BardoGCDAoEFeature = 205,
+
+        [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
+        BardAoEComboFeature = 206,
+
         #endregion
         // ====================================================================================
         #region DANCER
@@ -163,6 +172,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
+
+        [CustomComboInfo("oGCD Feature", "All oGCD's(Shadowbringer/SaltedEarth) On one button (Crave&Spit/AbysallDrain) depending on their CD", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
+        DarkoGCDFeature = 506,
 
         #endregion
         // ====================================================================================
@@ -351,14 +363,23 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Verproc into Jolt Plus Opener Feature", "Turns Verfire into Verthunder when out of combat.\nRequires Verproc into Jolt Plus.", RDM.JobID, RDM.Verfire)]
         RedMageVerprocOpenerFeature = 1105,
 
-        [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
-        RedMageOgcdCombo = 1106,
-
         [CustomComboInfo("Resolution Feature", "Adds Resolution finisher to Verthunder/Verareo Combo ", RDM.JobID, RDM.Verstone, RDM.Verfire, RDM.Resolution)]
-        RedmageResolutionFinisher = 1107,
+        RedmageResolutionFinisher = 1106,
 
         [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, RDM.Redoublement, RDM.Resolution)]
-        RedmageResolutionFinisherMelee = 1108,
+        RedmageResolutionFinisherMelee = 1107,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Smart AoE Feature", "Replaces Verthunder II With Veraero II and impact depending on mana", RDM.JobID, RDM.Veraero2, RDM.Verthunder2)]
+        RedMageSmartcastAoECombo = 1108,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Smart Single Target Feature", "Smart Single target feature Credit: PrincessRTFM", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
+        RedMageSmartSingleTargetCombo = 1109,
+
+        [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
+        RedMageOgcdCombo = 1110,
+
         #endregion
         // ====================================================================================
         #region SAMURAI

@@ -13,23 +13,29 @@ namespace XIVComboExpandedPlugin.Combos
             StraightShot = 98,
             VenomousBite = 100,
             QuickNock = 106,
+            Bloodletter = 110,
             Windbite = 113,
+            RainOfDeath = 117,
+            EmpyrealArrow = 3558,
             WanderersMinuet = 3559,
             IronJaws = 3560,
+            Sidewinder = 3562,
             PitchPerfect = 7404,
             CausticBite = 7406,
             Stormbite = 7407,
             RefulgentArrow = 7409,
             BurstShot = 16495,
+            ApexArrow = 16496,
+            Shadowbite = 16494,
             Ladonsbite = 25783,
-            BlastArrow = 25784,
-            RadiantFinale = 25785,
-            ApexArrow = 16496;
+            BlastArrow = 25784;
 
         public static class Buffs
         {
             public const short
-                StraightShotReady = 122;
+                StraightShotReady = 122,
+                BlastShotReady = 2692,
+                ShadowbiteReady = 3002;
         }
 
         public static class Debuffs
@@ -44,12 +50,22 @@ namespace XIVComboExpandedPlugin.Combos
         public static class Levels
         {
             public const byte
+                StraightShot = 2,
+                VenomousBite = 6,
+                Bloodletter = 12,
                 Windbite = 30,
+                RainOfDeath = 45,
+                PitchPerfect = 52,
+                EmpyrealArrow = 54,
                 IronJaws = 56,
+                Sidewinder = 60,
                 BiteUpgrade = 64,
                 RefulgentArrow = 70,
-                Stormbite = 64,
-                BurstShot = 76;
+                Shadowbite = 72,
+                BurstShot = 76,
+                ApexArrow = 80,
+                Ladonsbite = 82,
+                BlastShot = 86;
         }
     }
 
@@ -163,4 +179,74 @@ namespace XIVComboExpandedPlugin.Combos
             return actionID;
         }
     }
+    internal class BardoGCDAoEFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardoGCDAoEFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.RainOfDeath)
+            {
+
+                if (level >= BRD.Levels.Sidewinder)
+                    return CalcBestAction(actionID, BRD.RainOfDeath, BRD.EmpyrealArrow, BRD.Sidewinder);
+
+                if (level >= BRD.Levels.EmpyrealArrow)
+                    return CalcBestAction(actionID, BRD.RainOfDeath, BRD.EmpyrealArrow);
+
+            }
+
+            return actionID;
+        }
+    }
+    internal class BardoGCDSingleTargetFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardoGCDSingleTargetFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.Bloodletter)
+            {
+
+                if (level >= BRD.Levels.Sidewinder)
+                    return CalcBestAction(actionID, BRD.Bloodletter, BRD.EmpyrealArrow, BRD.Sidewinder);
+
+                if (level >= BRD.Levels.EmpyrealArrow)
+                    return CalcBestAction(actionID, BRD.Bloodletter, BRD.EmpyrealArrow);
+
+            }
+            return actionID;
+        }
+    }
+    internal class BardAoEComboFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardAoEComboFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.QuickNock || actionID == BRD.Ladonsbite)
+            {
+
+                if (IsEnabled(CustomComboPreset.BardApexFeature))
+                {
+
+                    if (level >= BRD.Levels.ApexArrow && GetJobGauge<BRDGauge>().SoulVoice == 100)
+                        return BRD.ApexArrow;
+
+                    if (level >= BRD.Levels.BlastShot && HasEffect(BRD.Buffs.BlastShotReady))
+                        return BRD.BlastArrow;
+
+                }
+
+                if (IsEnabled(CustomComboPreset.BardAoEComboFeature) && level >= BRD.Levels.Shadowbite && HasEffectAny(BRD.Buffs.ShadowbiteReady))
+                    return BRD.Shadowbite;
+
+            }
+
+            return actionID;
+        }
+    }
+    
 }
+
+

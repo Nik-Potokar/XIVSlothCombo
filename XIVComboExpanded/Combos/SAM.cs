@@ -462,7 +462,6 @@ namespace XIVComboExpandedPlugin.Combos
                 if (gauge.Kenki >= 20 && iaijutsuCD.CooldownRemaining > 0.9)
                     return SAM.Kaiten;
 
-
             }
             return actionID;
 

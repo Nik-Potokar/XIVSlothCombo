@@ -11,14 +11,19 @@ namespace XIVComboExpandedPlugin.Combos
             Unleash = 3621,
             SyphonStrike = 3623,
             Souleater = 3632,
+            SaltedEarth = 3639,
+            AbyssalDrain = 3641,
+            CarveAndSpit = 3643,
             Quietus = 7391,
             Bloodspiller = 7392,
             FloodOfDarkness = 16466,
             EdgeOfDarkness = 16467,
             StalwartSoul = 16468,
             FloodOfShadow = 16469,
+            EdgeOfShadow = 16470,
             LivingShadow = 16472,
-            EdgeOfShadow = 16470;
+            SaltAndDarkness = 25755,
+            Shadowbringer = 25757;
 
         public static class Buffs
         {
@@ -39,12 +44,17 @@ namespace XIVComboExpandedPlugin.Combos
                 Souleater = 26,
                 FloodOfDarkness = 30,
                 EdgeOfDarkness = 40,
+                SaltedEarth = 52,
+                AbyssalDrain = 56,
+                CarveAndSpit = 60,
                 Bloodpiller = 62,
                 Quietus = 64,
                 Delirium = 68,
                 StalwartSoul = 72,
+                Shadow = 74,
                 EdgeOfShadow = 74,
-                Shadow = 74;
+                SaltAndDarkness = 86,
+                Shadowbringer = 90;
         }
     }
 
@@ -148,6 +158,31 @@ namespace XIVComboExpandedPlugin.Combos
             }
 
             return actionID;
+        }
+    }
+    internal class DarkoGCDFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DarkoGCDFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == DRK.CarveAndSpit || actionID == DRK.AbyssalDrain)
+            {
+
+                if (level >= 90)
+                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth, DRK.SaltAndDarkness, DRK.Shadowbringer);
+
+                if (level >= 86)
+                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth, DRK.SaltAndDarkness);
+
+                if (level >= (actionID is DRK.CarveAndSpit ? DRK.Levels.CarveAndSpit : DRK.Levels.AbyssalDrain))
+                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth);
+
+                return DRK.SaltedEarth;
+            }
+
+            return actionID;
+
         }
     }
 }
