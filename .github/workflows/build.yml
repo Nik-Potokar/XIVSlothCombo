@@ -10,7 +10,7 @@ on:
 
 env:
   PUBLIC_NAME: XIVSlothCombo
-  SOLUTION_NAME: XIVSlothCombo
+  SOLUTION_NAME: XIVComboExpanded
   INTERNAL_NAME: XIVSlothCombo
   RELEASE_DIR: XIVSlothCombo\bin\Release\XIVSlothCombo
   PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
