@@ -33,10 +33,10 @@
 
   <PropertyGroup>
     <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-    <AssemblyName>XIVComboWayTooAkiiified</AssemblyName>
-    <RootNamespace>XIVComboWayTooAkiiified</RootNamespace>
-    <PackageId>XIVComboWayTooAkiiified</PackageId>
-    <Product>XIVComboWayTooAkiiified</Product>
+    <AssemblyName>XIVSlothCombo</AssemblyName>
+    <RootNamespace>XIVSlothCombo</RootNamespace>
+    <PackageId>XIVSlothCombo</PackageId>
+    <Product>XIVSlothCombo</Product>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,8 @@
 {
   "Author": "attick, daemitus , Kami, Aki, Iaotle, Codemned, rushtothesun, damolitionn",
-  "Name": "XIVComboWayTooAkiiified",
-  "InternalName": "XIVComboWayTooAkiiified",
-  "AssemblyVersion": "1.7.16",
+  "Name": "XIVSlothCombo",
+  "InternalName": "XIVSlothCombo",
+  "AssemblyVersion": "1.8.0",
   "DalamudApiLevel": 5,
   "Punchline": "Condenses combos and mutually exclusive abilities onto a single button.",
   "Description": "This plugin condenses combos and mutually exclusive abilities onto a single button. For example, a 1-2-3 combo would become 1-1-1.",
