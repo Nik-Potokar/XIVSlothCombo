@@ -253,6 +253,12 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Howling Fist / Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, MNK.HowlingFist, MNK.Enlightenment)]
         MonkHowlingFistMeditationFeature = 805,
 
+        [CustomComboInfo("Monk Basic Rotation Plus", "Basic Monk Combo on one button Plus (Only for Testing)", MNK.JobID, MNK.Bootshine)]
+        MnkBasicComboPlus = 806,
+
+        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterfull Bliz when Perfect Balance Is Active", MNK.JobID, MNK.PerfectBalance, MNK.MasterfulBlitz, MNK.ElixirField)]
+        MnkPerfectBalancePlus = 807,
+
         #endregion
         // ====================================================================================
         #region NINJA
@@ -409,8 +415,14 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, SAM.Ikishoten)]
         SamuraiIkishotenNamikiriFeature = 1215,
 
-        [CustomComboInfo("SimpleSamurai", "ONLY FOR TESTING!!! Everything in one feature( On HAKAZE)  Testing/Feedback", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        [CustomComboInfo("SimpleSamuraiSingleTarget", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
         SamuraiSimpleSamuraiFeature = 1216,
+
+        [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, SAM.Mangetsu, SAM.Oka)]
+        SamuraiSimpleSamuraiAoECombo = 1217,
+
+        [CustomComboInfo("KaitenFeature", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when Iaijutsu is on GCD", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature = 1218,
 
         #endregion
         // ====================================================================================
