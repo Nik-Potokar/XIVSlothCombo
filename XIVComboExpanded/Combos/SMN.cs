@@ -202,7 +202,7 @@ namespace XIVComboExpandedPlugin.Combos
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var buffCD = GetCooldown(SMN.SearingLight);
 
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown)
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat)
                         return SMN.SearingLight;
 
                     // Egis
