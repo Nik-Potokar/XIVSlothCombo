@@ -442,8 +442,17 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, SAM.Mangetsu, SAM.Oka)]
         SamuraiSimpleSamuraiAoECombo = 1217,
 
-        [CustomComboInfo("KaitenFeature", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when Iaijutsu is on GCD", SAM.JobID, SAM.Iaijutsu)]
+        [CustomComboInfo("KaitenFeature Feature", "ENABLE THIS IF YOU ARE GOING TO USE ANY OF THE KaitenFeature Options!!!  ", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature = 1218,
+
+        [CustomComboInfo("KaitenFeature Option 1", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 1 Sen(Sticker) is available", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature1 = 1219,
+
+        [CustomComboInfo("KaitenFeature Option 2", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 2 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature2 = 1220,
+
+        [CustomComboInfo("KaitenFeature Option 3", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 3 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature3 = 1221,
 
         #endregion
         // ====================================================================================
