@@ -28,6 +28,7 @@ namespace XIVComboExpandedPlugin.Combos
             // summon abilities
             Gemshine = 25883,
             PreciousBrilliance = 25884,
+            DreadwyrmTrance = 3581,
 
             // summon ruins
             RubyRuin1 = 25808,
@@ -98,7 +99,10 @@ namespace XIVComboExpandedPlugin.Combos
             Painflare = 3578,
 
             // revive
-            Resurrection = 173;
+            Resurrection = 173,
+
+            // buff 
+            SearingLight = 25801;
 
         public static class Buffs
         {
@@ -191,6 +195,32 @@ namespace XIVComboExpandedPlugin.Combos
             if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || actionID == SMN.Ruin)
             {
                 var gauge = GetJobGauge<SMNGauge>();
+                if (IsEnabled(CustomComboPreset.SimpleSummoner))
+                {
+                    var bahaCD = GetCooldown(SMN.SummonBahamut);
+                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var buffCD = GetCooldown(SMN.SearingLight);
+
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown)
+                        return SMN.SearingLight;
+
+                    // Egis
+                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                        return SMN.SummonTitan;
+                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                        return SMN.SummonGaruda;
+                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                        return SMN.SummonIfrit;
+
+                    // Demi
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown )
+                        return SMN.SummonBahamut;
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return SMN.SummonPhoenix;
+
+
+                }
                 if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
                 {
                     var energyDrainCD = GetCooldown(SMN.EnergyDrain);
@@ -214,20 +244,22 @@ namespace XIVComboExpandedPlugin.Combos
                     var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
                     var rekindle = GetCooldown(SMN.Rekindle);
 
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && astralCD.CooldownRemaining > SMN.CooldownThreshold)
+                    // Bahamut
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.99)
                         return SMN.Deathflare;
-                    else if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > SMN.CooldownThreshold)
-                        return SMN.Rekindle;
-                    else if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.Ruin4 || lastComboMove == SMN.Ruin3 || lastComboMove == SMN.Ruin2 || lastComboMove == SMN.Tridisaster) && (smnPhoenix.CooldownRemaining > 40 || smnBahamut.CooldownRemaining > 40) && !enkindleBahamut.IsCooldown && IsEnabled(CustomComboPreset.SummonerEnkindleWeave) && astralCD.CooldownRemaining > SMN.CooldownThreshold)
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.3)
+                        return SMN.Deathflare;
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && deathflare.IsCooldown && !enkindleBahamut.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.99)
                         return SMN.EnkindleBahamut;
-                    else if (level >= SMN.Levels.Bahamut &&
-                        (lastComboMove == SMN.AstralImpulse || lastComboMove == SMN.Deathflare)
-                        && !enkindleBahamut.IsCooldown && astralCD.CooldownRemaining > SMN.CooldownThreshold)
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && deathflare.IsCooldown && !enkindleBahamut.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.3)
                         return SMN.EnkindleBahamut;
-                    else if (level >= SMN.Levels.Phoenix &&
-                        (lastComboMove == SMN.FountainOfFire || lastComboMove == SMN.Rekindle)
-                        && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > SMN.CooldownThreshold)
+                    // Phoenix
+                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.99)
                         return SMN.EnkindlePhoenix;
+                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
+                        return SMN.EnkindlePhoenix;
+                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
+                        return SMN.Rekindle;
                 }
                 if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
                     return SMN.Slipstream;
@@ -285,7 +317,7 @@ namespace XIVComboExpandedPlugin.Combos
                 }
             }
 
-            return actionID;
+            return OriginalHook(actionID);
         }
     }
 

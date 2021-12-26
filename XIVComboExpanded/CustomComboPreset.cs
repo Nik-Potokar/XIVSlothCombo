@@ -535,6 +535,14 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1416,
 
+        [CustomComboInfo("SimpleSummoner :)", "Life is simple for a summoner (Single Target) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        SimpleSummoner = 1417,
+
+        [CustomComboInfo("SimpleSummoner Option 1", "Adds Buff to Simple Summoner ", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
+        BuffOnSimpleSummoner = 1418,
+
+
+
         #endregion
         // ====================================================================================
         #region WARRIOR
