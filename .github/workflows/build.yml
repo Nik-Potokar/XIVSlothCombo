@@ -9,10 +9,10 @@ on:
     - main
 
 env:
-  PUBLIC_NAME: XIVComboExpanded
+  PUBLIC_NAME: XIVSlothCombo
   SOLUTION_NAME: XIVComboExpanded
-  INTERNAL_NAME: XIVComboWayTooAkiiified
-  RELEASE_DIR: XIVComboExpanded\bin\Release\XIVComboWayTooAkiiified
+  INTERNAL_NAME: XIVSlothCombo
+  RELEASE_DIR: XIVSlothCombo\bin\Release\XIVSlothCombo
   PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
   PR_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
 

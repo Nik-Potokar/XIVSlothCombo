@@ -112,7 +112,7 @@ namespace XIVComboExpandedPlugin.Combos
                         return GNB.BurstStrike;
                     if (lastComboMove == GNB.BrutalShell && level >= 4 && level <= 87 && bulletGauge.Ammo == 2)
                         return GNB.BurstStrike;
-                    if (lastComboMove == GNB.BrutalShell && level >= GNB.Levels.EnhancedContinuation && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
+                    if (lastComboMove == GNB.BrutalShell && level >= GNB.Levels.EnhancedContinuation && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && HasEffect(GNB.Buffs.ReadyToBlast))
                         return GNB.Hypervelocity;
                     if (lastComboMove == GNB.BrutalShell && level >= GNB.Levels.SolidBarrel)
                         return GNB.SolidBarrel;

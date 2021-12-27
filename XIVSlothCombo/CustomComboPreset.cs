@@ -85,6 +85,15 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
         BardApexFeature = 203,
 
+        [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
+        BardoGCDSingleTargetFeature = 204,
+
+        [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on RainOfDeath depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.RainOfDeath)]
+        BardoGCDAoEFeature = 205,
+
+        [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
+        BardAoEComboFeature = 206,
+
         #endregion
         // ====================================================================================
         #region DANCER
@@ -163,6 +172,9 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
+
+        [CustomComboInfo("oGCD Feature", "All oGCD's(Shadowbringer/SaltedEarth) On one button (Crave&Spit/AbysallDrain) depending on their CD", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
+        DarkoGCDFeature = 506,
 
         #endregion
         // ====================================================================================
@@ -252,6 +264,12 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Howling Fist / Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, MNK.HowlingFist, MNK.Enlightenment)]
         MonkHowlingFistMeditationFeature = 805,
+
+        [CustomComboInfo("Monk Basic Rotation Plus", "Basic Monk Combo on one button Plus (Only for Testing)", MNK.JobID, MNK.Bootshine)]
+        MnkBasicComboPlus = 806,
+
+        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterfull Bliz when Perfect Balance Is Active", MNK.JobID, MNK.PerfectBalance, MNK.MasterfulBlitz, MNK.ElixirField)]
+        MnkPerfectBalancePlus = 807,
 
         #endregion
         // ====================================================================================
@@ -345,14 +363,23 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Verproc into Jolt Plus Opener Feature", "Turns Verfire into Verthunder when out of combat.\nRequires Verproc into Jolt Plus.", RDM.JobID, RDM.Verfire)]
         RedMageVerprocOpenerFeature = 1105,
 
-        [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
-        RedMageOgcdCombo = 1106,
-
         [CustomComboInfo("Resolution Feature", "Adds Resolution finisher to Verthunder/Verareo Combo ", RDM.JobID, RDM.Verstone, RDM.Verfire, RDM.Resolution)]
-        RedmageResolutionFinisher = 1107,
+        RedmageResolutionFinisher = 1106,
 
         [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, RDM.Redoublement, RDM.Resolution)]
-        RedmageResolutionFinisherMelee = 1108,
+        RedmageResolutionFinisherMelee = 1107,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Smart AoE Feature", "Replaces Verthunder II With Veraero II and impact depending on mana", RDM.JobID, RDM.Veraero2, RDM.Verthunder2)]
+        RedMageSmartcastAoECombo = 1108,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Smart Single Target Feature", "Smart Single target feature Credit: PrincessRTFM", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
+        RedMageSmartSingleTargetCombo = 1109,
+
+        [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
+        RedMageOgcdCombo = 1110,
+
         #endregion
         // ====================================================================================
         #region SAMURAI
@@ -409,8 +436,23 @@ namespace XIVComboExpandedPlugin
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, SAM.Ikishoten)]
         SamuraiIkishotenNamikiriFeature = 1215,
 
-        [CustomComboInfo("SimpleSamurai", "ONLY FOR TESTING!!! Everything in one feature( On HAKAZE)  Testing/Feedback", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        [CustomComboInfo("SimpleSamuraiSingleTarget", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
         SamuraiSimpleSamuraiFeature = 1216,
+
+        [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, SAM.Mangetsu, SAM.Oka)]
+        SamuraiSimpleSamuraiAoECombo = 1217,
+
+        [CustomComboInfo("KaitenFeature Feature", "ENABLE THIS IF YOU ARE GOING TO USE ANY OF THE KaitenFeature Options!!!  ", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature = 1218,
+
+        [CustomComboInfo("KaitenFeature Option 1", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 1 Sen(Sticker) is available", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature1 = 1219,
+
+        [CustomComboInfo("KaitenFeature Option 2", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 2 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature2 = 1220,
+
+        [CustomComboInfo("KaitenFeature Option 3", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 3 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        SamuraiKaitenFeature3 = 1221,
 
         #endregion
         // ====================================================================================
@@ -492,6 +534,14 @@ namespace XIVComboExpandedPlugin
 
         [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1416,
+
+        [CustomComboInfo("SimpleSummoner :)", "Life is simple for a summoner (Single Target) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        SimpleSummoner = 1417,
+
+        [CustomComboInfo("SimpleSummoner Option 1", "Adds Buff to Simple Summoner ", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
+        BuffOnSimpleSummoner = 1418,
+
+
 
         #endregion
         // ====================================================================================
