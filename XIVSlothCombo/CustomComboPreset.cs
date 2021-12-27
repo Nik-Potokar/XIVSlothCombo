@@ -35,6 +35,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, AST.AspectedHelios, AST.Helios)]
         AstrologianHeliosFeature = 8,
 
+        [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature (Malefic Icon Will Bug Out)", AST.JobID, AST.FallMalefic)]
+        AstrologianAutoDrawFeature = 9,
+
+        [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature (Malefic Icon Will Bug Out)", AST.JobID, AST.FallMalefic)]
+        AstrologianAutoCrownDrawFeature = 10,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -646,6 +652,13 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID, RPR.BloodStalk, RPR.GrimSwathe)]
         ReaperBloodSwatheFeature = 1712,
+
+        [CustomComboInfo("Blood Stalk Combo Option", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. \n Conflicts with Blood Stalk / Grim Swathe Feature.", RPR.JobID, RPR.BloodStalk)]
+        ReaperBloodSwatheComboFeature = 1713,
+
+        [CustomComboInfo("Grim Swathe Combo Option", "Turns Grim Swathe into Gluttony when off-cooldown and puts Guillotine on the same button as Grim Swathe. \n Conflicts with Blood Stalk / Grim Swathe Feature.", RPR.JobID, RPR.GrimSwathe)]
+        ReaperGrimSwatheComboOption = 1714,
+
 
         #endregion
         // ====================================================================================

@@ -189,7 +189,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         var requiescat = FindEffect(PLD.Buffs.Requiescat);
 
-                        if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.StackCount == 1)
+                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80))
                             return PLD.Confiteor;
                         return PLD.HolyCircle;
                     }

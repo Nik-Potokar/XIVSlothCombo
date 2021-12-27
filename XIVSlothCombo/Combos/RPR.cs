@@ -382,4 +382,56 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class ReaperBloodStalkComboOption : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperBloodSwatheComboFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var gluttonyCD = GetCooldown(RPR.Gluttony);
+            if (actionID == RPR.BloodStalk)
+            {
+                if (!HasEffect(RPR.Buffs.SoulReaver))
+                {
+                    if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
+                        return RPR.Gluttony;
+                    return RPR.BloodStalk;
+                }
+
+                if (HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.BloodStalk || actionID == RPR.Gluttony))
+                {
+                    if (HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded))
+                        return RPR.Gallows;
+
+                    return RPR.Gibbet;
+                }
+            }
+            return actionID;
+        }
+    }
+
+    internal class ReaperGrimSwatheComboOption : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperGrimSwatheComboOption;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var gluttonyCD = GetCooldown(RPR.Gluttony);
+            if (actionID == RPR.GrimSwathe)
+            {
+                if (!HasEffect(RPR.Buffs.SoulReaver))
+                {
+                    if ((actionID == RPR.GrimSwathe) && !gluttonyCD.IsCooldown && level >= 76)
+                        return RPR.Gluttony;
+                    return RPR.GrimSwathe;
+                }
+
+                if (HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.GrimSwathe || actionID == RPR.Gluttony))
+                {
+                    return RPR.Guillotine;
+                }
+            }
+            return actionID;
+        }
+    }
 }

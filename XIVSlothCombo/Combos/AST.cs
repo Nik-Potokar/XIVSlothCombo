@@ -161,10 +161,19 @@ namespace XIVSlothComboPlugin.Combos
                 var fallmalefic = GetCooldown(AST.FallMalefic);
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature))
                 {
-                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining > 0.2)
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4)
                         return AST.Astrodyne;
                 }
-
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature))
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4)
+                        return AST.Draw;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature))
+                {
+                    if (gauge.DrawnCrownCard.Equals(CardType.NONE) && incombat && fallmalefic.IsCooldown)
+                        return AST.MinorArcana;
+                }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
                 {
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2)
