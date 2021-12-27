@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>Aki,attick,Kami,Daemitus,Grammernatzi,Nik-Potokar,Iaotle,Codemned</Authors>
+    <Authors>attick,Kami,Daemitus,Grammernatzi,Nik-Potokar,Iaotle,Codemned</Authors>
     <Company>-</Company>
     <Version>2.0.0.0</Version>
     <Description>XIVCombo for lazy players</Description>
@@ -33,10 +33,10 @@
 
   <PropertyGroup>
     <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-    <AssemblyName>XIVComboWayTooAkiiified</AssemblyName>
-    <RootNamespace>XIVComboWayTooAkiiified</RootNamespace>
-    <PackageId>XIVComboWayTooAkiiified</PackageId>
-    <Product>XIVComboWayTooAkiiified</Product>
+    <AssemblyName>XIVSlothCombo</AssemblyName>
+    <RootNamespace>XIVSlothCombo</RootNamespace>
+    <PackageId>XIVSlothCombo</PackageId>
+    <Product>XIVSlothCombo</Product>
   </PropertyGroup>
 
   <ItemGroup>
