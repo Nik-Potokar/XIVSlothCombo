@@ -478,70 +478,64 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SUMMONER
 
-        // FESTER
-        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when our of Aetherflow stacks.", SMN.JobID, SMN.Fester)]
-        SummonerEDFesterCombo = 1400,
+        [CustomComboInfo("Enable Single Target", "Enables changing Single-Target Combo (Ruin III).", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        SummonerMainComboFeature = 1400,
 
-        [CustomComboInfo("ES Painflare", "Change Painflare into Energy Siphon when out of Aetherflow stacks.", SMN.JobID, SMN.Painflare)]
-        SummonerESPainflareCombo = 1401,
+        [CustomComboInfo("Enable AOE", "Enables changing AOE Combo (Tri-Disaster)", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
+        SummonerAOEComboFeature = 1401,
 
-        [CustomComboInfo("Ruin IV Fester Feature", "Change Fester into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, SMN.Painflare)]
-        SummonerFesterPainflareRuinFeature = 1402,
+        [DependentCombos(SummonerMainComboFeature)]
+        [CustomComboInfo("Single Target Demi Feature", "Replaces Astral Impulse/Fountain of Fire with Enkindle/Deathflare/Rekindle when appropriate.", SMN.JobID, SMN.Ruin3)]
+        SummonerSingleTargetDemiFeature = 1402,
 
-        // SINGLE TARGET
-        [CustomComboInfo("Single Target Combo", "Enables changing Single-Target Combo (Ruin III).", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
-        SummonerMainComboFeature = 1403,
+        [DependentCombos(SummonerAOEComboFeature)]
+        [CustomComboInfo("AOE Demi Feature", "Replaces Astral Flare/Brand of Purgatory with Enkindle/Deathflare/Rekindle when appropriate.", SMN.JobID, SMN.Ruin3)]
+        SummonerAOEDemiFeature = 1403,
+        
+        [CustomComboInfo("Egi Attacks Feature", "Replaces Ruin III and Tri-Disaster with Egi attacks. Will not work without enabling Single Target and/or AOE.", SMN.JobID, SMN.Fester, SMN.EnergyDrain, SMN.Ruin4)]
+        SummonerEgiAttacksFeature = 1404,
 
-        [CustomComboInfo("Single Target Demi Feature", "Replaces Astral Impulse/Fountain of Fire with Enkindle/Deathflare/Rekindle when appropriate. Requires Single Target Combo Feature.", SMN.JobID, SMN.Ruin3)]
-        SummonerSingleTargetDemiFeature = 1404,
-
-        [CustomComboInfo("Garuda Unique Feature", "Adds Slipstream on Ruin III. Requires Single Target Combo Feature.", SMN.JobID, SMN.Ruin3)]
+        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
         SummonerGarudaUniqueFeature = 1405,
 
-        [CustomComboInfo("Ifrit Unique Feature", "Adds Crimson Cyclone/Crimson Strike on Ruin III. Requires Single Target Combo Feature.", SMN.JobID, SMN.Ruin3)]
+        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
         SummonerIfritUniqueFeature = 1406,
 
-        [CustomComboInfo("Titan Unique Feature", "Adds Mountain Buster on Ruin III. Requires Single Target Combo Feature.", SMN.JobID, SMN.Ruin3)]
+        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
         SummonerTitanUniqueFeature = 1407,
 
-        // AOE
-        [CustomComboInfo("AOE Combo", "Enables changing AOE Combo (Tri-Disaster)", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
-        SummonerAOEComboFeature = 1408,
+        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when our of Aetherflow stacks.", SMN.JobID, SMN.Fester)]
+        SummonerEDFesterCombo = 1408,
 
-        [CustomComboInfo("AOE Demi Feature", "Replaces Astral Flare/Brand of Purgatory with Enkindle/Deathflare/Rekindle when appropriate. Requires AOE Combo Feature.", SMN.JobID, SMN.Ruin3)]
-        SummonerAOEDemiFeature = 1409,
+        [CustomComboInfo("ES Painflare", "Change Painflare into Energy Siphon when out of Aetherflow stacks.", SMN.JobID, SMN.Painflare)]
+        SummonerESPainflareCombo = 1409,
 
-        [CustomComboInfo("Egi AOE Combo Feature", "Adds Requires Single Target Combo Feature.", SMN.JobID, SMN.Tridisaster)]
-        SummonerEgiAoeComboFeature = 1410,
-
-        // BOTH
-        [CustomComboInfo("Egi Attacks Feature", "Replaces Ruin III and Tri-Disaster with Egi attacks. Requires Single Target or AOE Combo feature.", SMN.JobID, SMN.Fester, SMN.EnergyDrain, SMN.Ruin4)]
-        SummonerEgiAttacksFeature = 1411,
-
-        // EXTRA
+        // BONUS TWEAKS
+        [DependentCombos(SummonerMainComboFeature)]
+        [CustomComboInfo("Carbuncle Reminder Feature", "Reminds you always to summon Carbuncle by replacing Ruin (Carbuncle Summon Reminder Feature).", SMN.JobID, SMN.SummonCarbuncle, SMN.Ruin, SMN.Ruin2, SMN.Ruin3)]
+        SummonerCarbuncleSummonFeature = 1410,
 
         [CustomComboInfo("Ruin 4 On Ruin3 Combo Feature", "Adds Ruin4 on main Ruin3 combo feature when there are currently no summons being active.", SMN.JobID, SMN.Ruin, SMN.Ruin2, SMN.Ruin3, SMN.Ruin4)]
-        SummonerRuin4ToRuin3Feature = 1412,
+        SummonerRuin4ToRuin3Feature = 1411,
 
-        [CustomComboInfo("Ruin 4 On Tridisaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster)]
-        SummonerRuin4ToTridisasterFeature = 1413,
+        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster)]
+        SummonerRuin4ToTridisasterFeature = 1412,
 
-        [CustomComboInfo("Earlier Demi Weave Feature", "Adds Enkindle right after summoning Demi. (Looks like Enkindle Bahamut for both Demis)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.Tridisaster)]
-        SummonerEnkindleWeave = 1414,
+        [CustomComboInfo("Earlier Demi Weave Feature", "Allows to weave Enkindle right after summoning Demi. (Looks like Enkindle Bahamut for both Demis)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.Tridisaster)]
+        SummonerEnkindleWeave = 1413,
 
-        [CustomComboInfo("Carbuncle Summon Feature", "Reminds you allways to summon Carbuncle by replacing Ruin (Carbuncle Summon Reminder Feature).", SMN.JobID, SMN.SummonCarbuncle, SMN.Ruin, SMN.Ruin2, SMN.Ruin3)]
-        SummonerCarbuncleSummonFeature = 1415,
+        [CustomComboInfo("Ruin IV Fester Feature", "Change Fester into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, SMN.Painflare)]
+        SummonerFesterPainflareRuinFeature = 1414,
 
-        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
-        SummonerLazyFesterFeature = 1416,
+        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire). Keep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
+        SummonerLazyFesterFeature = 1415,
 
-        [CustomComboInfo("SimpleSummoner :)", "Life is simple for a summoner (Single Target) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
-        SimpleSummoner = 1417,
+        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        SimpleSummoner = 1416,
 
-        [CustomComboInfo("SimpleSummoner Option 1", "Adds Buff to Simple Summoner ", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
-        BuffOnSimpleSummoner = 1418,
-
-
+        [DependentCombos(SimpleSummoner)]
+        [CustomComboInfo("One Button Rotation Option", "Adds Searing Light to Simple Summoner Rotation", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
+        BuffOnSimpleSummoner = 1417,
 
         #endregion
         // ====================================================================================
@@ -671,6 +665,7 @@ namespace XIVSlothComboPlugin
         SageEgeiroFeature = 1803,
 
         #endregion
+        // ====================================================================================
         #region DISCIPLE OF MAGIC
         [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
         [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]

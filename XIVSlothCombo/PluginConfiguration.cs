@@ -71,5 +71,13 @@ namespace XIVSlothComboPlugin
         /// <returns>The conflicting presets.</returns>
         public CustomComboPreset[] GetConflicts(CustomComboPreset preset)
             => preset.GetAttribute<ConflictingCombosAttribute>()?.ConflictingPresets ?? Array.Empty<CustomComboPreset>();
+
+        /// <summary>
+        /// Gets an array of dependencies.
+        /// </summary>
+        /// <param name="preset">Preset to check.</param>
+        /// <returns>The dependencies of preset.</returns>
+        public CustomComboPreset[] GetDependencies(CustomComboPreset preset)
+            => preset.GetAttribute<DependentCombosAttribute>()?.DependentPresets ?? Array.Empty<CustomComboPreset>();
     }
 }

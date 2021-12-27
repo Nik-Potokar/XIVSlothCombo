@@ -75,6 +75,7 @@ namespace XIVSlothComboPlugin
                         var enabled = Service.Configuration.IsEnabled(preset);
                         var secret = Service.Configuration.IsSecret(preset);
                         var conflicts = Service.Configuration.GetConflicts(preset);
+                        var dependencies = Service.Configuration.GetDependencies(preset);
 
                         if (secret && !showSecrets)
                             continue;
@@ -86,6 +87,10 @@ namespace XIVSlothComboPlugin
                             if (enabled)
                             {
                                 Service.Configuration.EnabledActions.Add(preset);
+                                foreach (var dependency in dependencies)
+                                {
+                                    Service.Configuration.EnabledActions.Add(dependency);
+                                }
                                 foreach (var conflict in conflicts)
                                 {
                                     Service.Configuration.EnabledActions.Remove(conflict);
@@ -133,6 +138,17 @@ namespace XIVSlothComboPlugin
                             }).Aggregate((t1, t2) => $"{t1}{t2}");
 
                             ImGui.TextColored(this.shadedColor, $"Conflicts with: {conflictText}");
+                            ImGui.Spacing();
+                        }
+                        if (dependencies.Length > 0)
+                        {
+                            var dependText = dependencies.Select(preset =>
+                            {
+                                var info = preset.GetAttribute<CustomComboInfoAttribute>();
+                                return $"\n - {info.FancyName}";
+                            }).Aggregate((t1, t2) => $"{t1}{t2}");
+
+                            ImGui.TextColored(this.shadedColor, $"Depends on: {dependText}");
                             ImGui.Spacing();
                         }
 
