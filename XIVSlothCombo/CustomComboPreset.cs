@@ -405,60 +405,57 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, SAM.Oka)]
         SamuraiOkaCombo = 1204,
 
-        [CustomComboInfo("Seigan to Third Eye", "Replace Seigan with Third Eye when not procced.", SAM.JobID, SAM.Seigan)]
-        SamuraiThirdEyeFeature = 1205,
-
         [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu or Shifu depending on what is needed.", SAM.JobID, SAM.MeikyoShisui)]
-        SamuraiJinpuShifuFeature = 1206,
+        SamuraiJinpuShifuFeature = 1205,
 
         [ConflictingCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
         [CustomComboInfo("Tsubame-gaeshi to Iaijutsu", "Replace Tsubame-gaeshi with Iaijutsu when Sen is empty.", SAM.JobID, SAM.TsubameGaeshi)]
-        SamuraiTsubameGaeshiIaijutsuFeature = 1207,
+        SamuraiTsubameGaeshiIaijutsuFeature = 1206,
 
         [ConflictingCombos(SamuraiIaijutsuShohaFeature)]
         [CustomComboInfo("Tsubame-gaeshi to Shoha", "Replace Tsubame-gaeshi with Shoha when meditation is 3.", SAM.JobID, SAM.TsubameGaeshi)]
-        SamuraiTsubameGaeshiShohaFeature = 1208,
+        SamuraiTsubameGaeshiShohaFeature = 1207,
 
         [ConflictingCombos(SamuraiTsubameGaeshiIaijutsuFeature)]
         [CustomComboInfo("Iaijutsu to Tsubame-gaeshi", "Replace Iaijutsu with Tsubame-gaeshi when Sen is not empty.", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiIaijutsuTsubameGaeshiFeature = 1209,
+        SamuraiIaijutsuTsubameGaeshiFeature = 1208,
 
         [ConflictingCombos(SamuraiTsubameGaeshiShohaFeature)]
         [CustomComboInfo("Iaijutsu to Shoha", "Replace Iaijutsu with Shoha when meditation is 3.", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiIaijutsuShohaFeature = 1210,
+        SamuraiIaijutsuShohaFeature = 1209,
 
         [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID, SAM.Shinten)]
-        SamuraiSeneiFeature = 1211,
+        SamuraiSeneiFeature = 1210,
 
         [CustomComboInfo("Shinten to Shoha", "Replace Hissatsu: Shinten with Shoha when Meditation is full.", SAM.JobID, SAM.Shinten)]
-        SamuraiShohaFeature = 1212,
+        SamuraiShohaFeature = 1211,
 
         [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID, SAM.Kyuten)]
-        SamuraiGurenFeature = 1213,
+        SamuraiGurenFeature = 1212,
 
         [CustomComboInfo("Kyuten to Shoha II", "Replace Hissatsu: Kyuten with Shoha II when Meditation is full.", SAM.JobID, SAM.Kyuten)]
-        SamuraiShoha2Feature = 1214,
+        SamuraiShoha2Feature = 1213,
 
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, SAM.Ikishoten)]
-        SamuraiIkishotenNamikiriFeature = 1215,
+        SamuraiIkishotenNamikiriFeature = 1214,
 
         [CustomComboInfo("SimpleSamuraiSingleTarget", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
-        SamuraiSimpleSamuraiFeature = 1216,
+        SamuraiSimpleSamuraiFeature = 1215,
 
         [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, SAM.Mangetsu, SAM.Oka)]
-        SamuraiSimpleSamuraiAoECombo = 1217,
+        SamuraiSimpleSamuraiAoECombo = 1216,
 
         [CustomComboInfo("KaitenFeature Feature", "ENABLE THIS IF YOU ARE GOING TO USE ANY OF THE KaitenFeature Options!!!  ", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiKaitenFeature = 1218,
+        SamuraiKaitenFeature = 1217,
 
         [CustomComboInfo("KaitenFeature Option 1", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 1 Sen(Sticker) is available", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiKaitenFeature1 = 1219,
+        SamuraiKaitenFeature1 = 1218,
 
         [CustomComboInfo("KaitenFeature Option 2", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 2 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiKaitenFeature2 = 1220,
+        SamuraiKaitenFeature2 = 1219,
 
         [CustomComboInfo("KaitenFeature Option 3", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 3 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiKaitenFeature3 = 1221,
+        SamuraiKaitenFeature3 = 1220,
 
         #endregion
         // ====================================================================================
