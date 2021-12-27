@@ -110,14 +110,14 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
+                    if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= 76)
+                        return MCH.AirAnchor;
                     if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= 58)
                         return MCH.Drill;
                     if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
-                    {
                         return MCH.HotShot;
-                    }
                     else
-                    if (level >= 76)
+                    if (level >= 84)
                     {
                         if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown)
                             return MCH.AirAnchor;
