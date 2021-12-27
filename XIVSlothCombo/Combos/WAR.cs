@@ -195,14 +195,14 @@ namespace XIVComboExpandedPlugin.Combos
                                 return WAR.PrimalRend;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature))
+                        if (IsEnabled(CustomComboPreset.WarriorMythrilTempestCombo))
                         {
                             var gauge = GetJobGauge<WARGauge>().BeastGauge;
                             if (lastComboMove == WAR.Infuriate && level >= 60)
                                 return WAR.Decimate;
                             if (lastComboMove == WAR.Overpower && level >= 40)
                                 return WAR.MythrilTempest;
-                            if ((lastComboMove == WAR.Overpower && level >= 60) || (lastComboMove == WAR.MythrilTempest && gauge >= 90 && level >= 60))
+                            if ((lastComboMove == WAR.Overpower && level >= 60) || (lastComboMove == WAR.MythrilTempest && gauge >= 90 && level >= 60 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature)))
                                 return WAR.Decimate;
                         }
 
