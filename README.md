@@ -42,7 +42,7 @@
 * Overcap Feature
 * Single and AoE target combos
 
-#### GunBreaker
+#### Gunbreaker
 * 1 Button Continuation Feature
 * Overcap features
 * Single target oGCDs combos on Main Combo
@@ -83,6 +83,7 @@
 * One button rotation for all the demi-summons (Single and AoE features)
 * One button egi rotation features for each egi (Single and AoE features)
 * Never forget to ruin4 feature
+* So much other stuff - SMN currently has over 18 tweaks.
 
 #### Warrior
 * One button rotation(Storm's Eye/Path)
