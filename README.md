@@ -1,17 +1,14 @@
-# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/XIVSlothCombo/issues).
-(Keep in mind we don't play every job, so if you're having an issue please describe your desired fix in detail. Feel free to make a pull request.)
-### Updated Daily
-# If something dosen't seem to be working please swap class or re-slot the skill.
+# XIVSlothCombo - The Super Expanded XIVCombo
 
-# Has everything that expanded xivcombo has and more ;)
-
-### Repo Link
-`https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
 [![Build](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml/badge.svg)](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml)
+# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/XIVSlothCombo/issues). If something dosen't seem to be working please swap class or re-slot the skill.
 
-
-_________________________________________________________________________________________________________________________________________________________________________________
-# Features
+## How to install
+* Copy the Custom Repo Link `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
+* Open dalamud settings ingame
+* Paste the link into the Custom Plugin repositories
+* Install as normal from Dalamud Plugins window.
+## Our Features
 
 #### Disciples of Magic
 * Global Raise feature - Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.
@@ -80,10 +77,11 @@ ________________________________________________________________________________
 
 #### Scholar
 * QoL Features
+* Fairy Feature (never forget Eos)
 
 #### Summoner
 * One button rotation for all the demi-summons (Single and AoE features)
-* One button egi rotation (Single and AoE features)
+* One button egi rotation features for each egi (Single and AoE features)
 * Never forget to ruin4 feature
 
 #### Warrior
@@ -92,7 +90,7 @@ ________________________________________________________________________________
 * Single and AoE target combos
 
 #### White Mage
-* Lilly Features
+* Lily Features
 * Cure feature
 * One button DPS feature (Glare/Dia/Lucid dreaming)
 
@@ -105,24 +103,8 @@ ________________________________________________________________________________
 * One button DPS feature (Dosis/EurekanDosis/Eukrasia)
 _________________________________________________________________________________________________________________________________________________________________________________
 
-## If you wish for something to be added or have a request please add it into the issues tab and we will take a look.
-
-# How to install
-Recommended:
-* Copy the Custom Repo Link `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
-* Open dalamud settings ingame
-* Paste the link into the Custom Plugin repositories
-
-Or
-
-* Download the latest zip file under releases [Here](https://github.com/Nik-Potokar/XIVSlothCombo/releases)
-* Extract all the contents of the ZIP file inside the %appdata%/XIVLauncher/devPlugins folder
-* The addon will show up in-game under Dev Tools > Installed Dev Plugins
-
-KEEP IN MIND RELEASES MIGHT BE OUTDATED!!!
-
 We're building this as a side project but if you want something special added let us know.
 
-### Big Big  Thanks to [attick](https://github.com/attickdoor), [daemitus](https://github.com/daemitus) for creating most of the original code, as well as [Grammernatzi](https://github.com/Grammernatzi) for providing us with a lot of extra tweaks. Please show them support for their original work <3 
+### Big Thanks to [attick](https://github.com/attickdoor), [daemitus](https://github.com/daemitus) for creating most of the original code, as well as [Grammernatzi](https://github.com/Grammernatzi) for providing us with a lot of extra tweaks. Please show them support for their original work <3 
 
 Brought to you by attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM
