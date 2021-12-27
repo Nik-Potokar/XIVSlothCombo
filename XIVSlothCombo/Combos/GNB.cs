@@ -43,7 +43,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Debuffs
         {
             public const short
-                BowShock = 1838;
+                BowShock = 1838,
+                SonicBreak = 1837;
         }
 
         public static class Levels
@@ -227,7 +228,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasEffect(GNB.Buffs.NoMercy))
                 {
-                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
+                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock) && lastComboMove == GNB.SonicBreak)
                         return GNB.BowShock;
 
                     if (level >= GNB.Levels.SonicBreak)

@@ -113,7 +113,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= 64 && !foF)
                     {
-                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80))
+                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80) || LocalPlayer.CurrentMp <= 2000)
                             return PLD.Confiteor;
                         return PLD.HolySpirit;
                     }
@@ -189,7 +189,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         var requiescat = FindEffect(PLD.Buffs.Requiescat);
 
-                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80))
+                        if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80) || LocalPlayer.CurrentMp <= 2000)
                             return PLD.Confiteor;
                         return PLD.HolyCircle;
                     }
