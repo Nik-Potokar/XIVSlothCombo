@@ -52,7 +52,6 @@ namespace XIVSlothComboPlugin
         {
             return key switch
             {
-                0 => "All",
                 1 => "Gladiator",
                 2 => "Pugilist",
                 3 => "Marauder",
@@ -93,7 +92,7 @@ namespace XIVSlothComboPlugin
                 38 => "Dancer",
                 39 => "Reaper",
                 40 => "Sage",
-                99 => "Disciple of Magic",
+                99 => "All Global Features",
                 _ => "Unknown",
             };
         }

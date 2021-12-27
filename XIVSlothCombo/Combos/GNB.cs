@@ -228,11 +228,19 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasEffect(GNB.Buffs.NoMercy))
                 {
-                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock) && lastComboMove == GNB.SonicBreak)
+                    var sonicbreakcd = GetCooldown(GNB.SonicBreak);
+                    var doubledownCD = GetCooldown(GNB.DoubleDown);
+                    if (!doubledownCD.IsCooldown && level >= GNB.Levels.DoubleDown && IsEnabled(CustomComboPreset.DoubleDownNoMercyFeature))
+                        return GNB.DoubleDown;
+
+                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock) && sonicbreakcd.IsCooldown)
                         return GNB.BowShock;
 
                     if (level >= GNB.Levels.SonicBreak)
                         return GNB.SonicBreak;
+
+
+
                 }
             }
 

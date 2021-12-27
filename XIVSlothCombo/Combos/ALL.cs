@@ -1,14 +1,10 @@
-﻿using System.Linq;
-using Dalamud.Game.ClientState.JobGauge.Enums;
+﻿using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using XIVSlothComboPlugin;
-using XIVSlothComboPlugin.Combos;
-
-namespace XIVSlothCombo.Combos
+namespace XIVSlothComboPlugin.Combos
 {
     internal static class All
     {
-        public const byte JobID = 0;
+        public const byte JobID = 99;
 
         public const uint
             Swiftcast = 7561,
@@ -26,9 +22,13 @@ namespace XIVSlothCombo.Combos
 
         public static class Buffs
         {
-            public const ushort
-                Swiftcast = 167,
-                EurekaMoment = 2765;
+            public const short
+                Swiftcast = 167;
+        }
+
+        public static class Debuffs
+        {
+            // public const short placeholder = 0;
         }
 
         public static class Levels
@@ -48,6 +48,28 @@ namespace XIVSlothCombo.Combos
                 var interjectCD = GetCooldown(All.Interject);
                 if (CanInterruptEnemy() && !interjectCD.IsCooldown)
                     return All.Interject;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class DoMSwiftcastFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DoMSwiftcastFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
+            {
+                if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SGE.Egeiro || actionID == AST.Ascend || actionID == RDM.Verraise)
+                {
+                    var swiftCD = GetCooldown(All.Swiftcast);
+                    if ((swiftCD.CooldownRemaining == 0 && !HasEffect(RDM.Buffs.Dualcast))
+                        || level <= All.Levels.Raise
+                        || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
+                        return All.Swiftcast;
+                }
             }
 
             return actionID;

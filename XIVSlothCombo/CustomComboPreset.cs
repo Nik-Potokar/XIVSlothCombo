@@ -1,4 +1,3 @@
-using XIVSlothCombo.Combos;
 using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
@@ -12,6 +11,9 @@ namespace XIVSlothComboPlugin
         #region GLOBAL FEATURES
         [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
         InterruptFeature = 9000,
+        [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
+        [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", All.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]
+        DoMSwiftcastFeature = 9001,
 
         #endregion
         // ====================================================================================
@@ -217,8 +219,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DoubleDownFeature", "Adds DangerZone on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown)]
         GunbreakerDoubleDownFeature = 607,
 
+        [CustomComboInfo("DoubleDownNoMercyFeature", "Adds DoubleDown to NoMercy Feature, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
+        DoubleDownNoMercyFeature = 608,
+
         [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
-        GunbreakerBurstStrikeConFeature = 608,
+        GunbreakerBurstStrikeConFeature = 609,
 
         #endregion
         // ====================================================================================
@@ -686,12 +691,6 @@ namespace XIVSlothComboPlugin
 
         #endregion
         // ====================================================================================
-        #region DISCIPLE OF MAGIC
-        [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
-        [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", DoM.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]
-        DoMSwiftcastFeature = 1900,
-
-        #endregion
 
     }
 }
