@@ -270,5 +270,19 @@ namespace XIVSlothComboPlugin.Combos
                 .Aggregate((a1, a2) => Compare(original, a1, a2))
                 .ActionID;
         }
+        /// <summary>
+        /// Determines if the enemy can be interrupted if they are currently casting.
+        /// </summary>
+        /// <returns>Bool indicating whether they can be interrupted or not.</returns>
+        protected static bool CanInterruptEnemy()
+        {
+            if (CurrentTarget is null)
+                return false;
+            if (CurrentTarget is not BattleChara chara)
+                return false;
+            if (chara.IsCasting)
+                return chara.IsCastInterruptible;
+            return false;
+        }
     }
 }

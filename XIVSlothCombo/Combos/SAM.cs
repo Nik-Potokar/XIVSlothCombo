@@ -159,7 +159,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Mangetsu)
                     return SAM.Mangetsu;
 
-                return SAM.Fuga;
+                return OriginalHook(SAM.Fuga);
             }
 
             return actionID;
@@ -180,7 +180,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Oka)
                     return SAM.Oka;
 
-                return SAM.Fuga;
+                return OriginalHook(SAM.Fuga);
             }
 
             return actionID;
@@ -472,7 +472,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SAM.Oka;
                 }
 
-                return SAM.Fuga;
+                return OriginalHook(SAM.Fuga);
             }
 
             return actionID;
@@ -519,5 +519,6 @@ namespace XIVSlothComboPlugin.Combos
 
         }
     }
+
 }
 

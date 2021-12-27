@@ -52,6 +52,7 @@ namespace XIVSlothComboPlugin
         {
             return key switch
             {
+                0 => "All",
                 1 => "Gladiator",
                 2 => "Pugilist",
                 3 => "Marauder",

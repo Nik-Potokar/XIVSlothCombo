@@ -1,3 +1,4 @@
+using XIVSlothCombo.Combos;
 using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
@@ -7,6 +8,12 @@ namespace XIVSlothComboPlugin
     /// </summary>
     public enum CustomComboPreset
     {
+        // ====================================================================================
+        #region GLOBAL FEATURES
+        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
+        InterruptFeature = 9000,
+
+        #endregion
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -685,5 +692,6 @@ namespace XIVSlothComboPlugin
         DoMSwiftcastFeature = 1900,
 
         #endregion
+
     }
 }
