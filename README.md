@@ -1,4 +1,4 @@
-# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/issues).
+# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/XIVSlothCombo/issues).
 (Keep in mind we don't play every job, so if you're having an issue please describe your desired fix in detail. Feel free to make a pull request.)
 ### Updated Daily
 # If something dosen't seem to be working please swap class or re-slot the skill.
@@ -7,7 +7,7 @@
 
 ### Repo Link
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
-[![Build](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml/badge.svg)](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/actions/workflows/build.yml)
+[![Build](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml/badge.svg)](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml)
 
 
 _________________________________________________________________________________________________________________________________________________________________________________
@@ -115,7 +115,7 @@ Recommended:
 
 Or
 
-* Download the latest zip file under releases [Here](https://github.com/Nik-Potokar/XIVComboWayTooAkiiified/releases)
+* Download the latest zip file under releases [Here](https://github.com/Nik-Potokar/XIVSlothCombo/releases)
 * Extract all the contents of the ZIP file inside the %appdata%/XIVLauncher/devPlugins folder
 * The addon will show up in-game under Dev Tools > Installed Dev Plugins
 
