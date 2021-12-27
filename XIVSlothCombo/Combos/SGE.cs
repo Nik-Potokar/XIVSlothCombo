@@ -18,7 +18,7 @@ namespace XIVSlothComboPlugin.Combos
             Phlegmara = 24307,
             Phlegmaga = 24313,
             Dyskrasia = 24297,
-            Dyskrasia2 = 24297
+            Dyskrasia2 = 24297,
             Eukrasia = 24290,
 
             // dps
