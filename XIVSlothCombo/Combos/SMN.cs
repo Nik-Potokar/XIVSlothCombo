@@ -208,7 +208,7 @@ namespace XIVSlothComboPlugin.Combos
                     // Egis
                     if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
                         return SMN.SummonTitan;
-                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
                         return SMN.SummonGaruda;
                     if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
                         return SMN.SummonIfrit;
