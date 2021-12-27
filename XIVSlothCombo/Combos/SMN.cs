@@ -221,6 +221,16 @@ namespace XIVSlothComboPlugin.Combos
 
 
                 }
+                if (IsEnabled(CustomComboPreset.SummonerDemiSummonsFeature))
+                {
+                    var bahaCD = GetCooldown(SMN.SummonBahamut);
+                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
+                        return SMN.SummonBahamut;
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return SMN.SummonPhoenix;
+                }
                 if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
                 {
                     var energyDrainCD = GetCooldown(SMN.EnergyDrain);

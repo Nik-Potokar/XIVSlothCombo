@@ -540,6 +540,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("One Button Rotation Option", "Adds Searing Light to Simple Summoner Rotation", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
         BuffOnSimpleSummoner = 1417,
 
+        [CustomComboInfo("DemiReminderFeature", "Adds Only Demi Summons on RuinIII (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        SummonerDemiSummonsFeature = 1418,
+
         #endregion
         // ====================================================================================
         #region WARRIOR
