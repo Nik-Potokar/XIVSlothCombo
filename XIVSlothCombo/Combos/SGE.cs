@@ -1,4 +1,4 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVSlothComboPlugin.Combos
@@ -18,6 +18,7 @@ namespace XIVSlothComboPlugin.Combos
             Phlegmara = 24307,
             Phlegmaga = 24313,
             Dyskrasia = 24297,
+            Dyskrasia2 = 24315,
             Eukrasia = 24290,
 
             // dps
@@ -89,7 +90,7 @@ namespace XIVSlothComboPlugin.Combos
             if (level >= SGE.Levels.Dosis3)
             {
                 if (GetCooldown(SGE.Phlegmaga).CooldownRemaining > 45)
-                    return SGE.Dyskrasia;
+                    return SGE.Dyskrasia2;
             }
 
             if (level >= SGE.Levels.Dosis2)
