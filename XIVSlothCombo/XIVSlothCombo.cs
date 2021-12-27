@@ -5,7 +5,7 @@ using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Main plugin implementation.

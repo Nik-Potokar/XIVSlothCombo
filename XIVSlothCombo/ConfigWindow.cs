@@ -9,7 +9,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using ImGuiNET;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Plugin configuration window.

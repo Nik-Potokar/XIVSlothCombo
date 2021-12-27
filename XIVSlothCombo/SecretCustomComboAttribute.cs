@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Attribute designating secret combos.

@@ -1,7 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
-namespace XIVComboExpandedPlugin.Combos
+namespace XIVSlothComboPlugin.Combos
 {
     internal static class BRD
     {

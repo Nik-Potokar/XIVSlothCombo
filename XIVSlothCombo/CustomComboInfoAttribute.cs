@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Attribute documenting additional information for each combo.

@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 using Dalamud.Hooking;
 using Dalamud.Logging;
 using Dalamud.Utility;
-using XIVComboExpandedPlugin.Combos;
+using XIVSlothComboPlugin.Combos;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// This class facilitates the icon replacing.

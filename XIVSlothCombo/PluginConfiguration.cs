@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Dalamud.Configuration;
 using Dalamud.Utility;
 using Newtonsoft.Json;
-using XIVComboExpandedPlugin.Combos;
+using XIVSlothComboPlugin.Combos;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Plugin configuration.

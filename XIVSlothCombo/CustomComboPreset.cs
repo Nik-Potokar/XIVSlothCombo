@@ -1,6 +1,6 @@
-using XIVComboExpandedPlugin.Combos;
+using XIVSlothComboPlugin.Combos;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Combo presets.

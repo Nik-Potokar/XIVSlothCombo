@@ -9,7 +9,7 @@ using Dalamud.Game.Gui;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Dalamud and plugin services.

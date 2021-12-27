@@ -3,7 +3,7 @@ using System;
 using Dalamud.Game;
 using Dalamud.Logging;
 
-namespace XIVComboExpandedPlugin
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Plugin address resolver.

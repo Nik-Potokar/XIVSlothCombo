@@ -7,7 +7,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
 
-namespace XIVComboExpandedPlugin.Combos
+namespace XIVSlothComboPlugin.Combos
 {
     /// <summary>
     /// Base class for each combo.
