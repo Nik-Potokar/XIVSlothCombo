@@ -204,8 +204,8 @@ namespace XIVComboExpandedPlugin.Combos
                 if (!HasEffect(MNK.Buffs.LeadenFist) && HasEffect(MNK.Buffs.OpoOpoForm) && level >= MNK.Levels.DragonKick)
                     return MNK.DragonKick;
                 return MNK.Bootshine;
-                if (HasEffect(MNK.Buffs.FormlessFist))
-                    return MNK.DragonKick;
+                //if (HasEffect(MNK.Buffs.FormlessFist)) //TODO: someone needs to take a look at this.
+                //    return MNK.DragonKick;
 
             }
             return MNK.Bootshine;
