@@ -256,4 +256,71 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class PaladinStandaloneHolySpiritFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinStandaloneHolySpiritFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if(actionID == PLD.HolySpirit)
+            {
+                if (HasEffect(PLD.Buffs.Requiescat) && level >= 64 )
+                {
+                    var requiescat = FindEffect(PLD.Buffs.Requiescat);
+                    if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80) || LocalPlayer.CurrentMp <= 2000)
+                        return PLD.Confiteor;
+                    return PLD.HolySpirit;
+                }
+                if (lastComboMove == PLD.Confiteor && level >= 90)
+                {
+                    return PLD.BladeOfFaith;
+                }
+
+                if (lastComboMove == PLD.BladeOfFaith && level >= 90)
+                {
+                    return PLD.BladeOfTruth;
+                }
+
+                if (lastComboMove == PLD.BladeOfTruth && level >= 90)
+                {
+                    return PLD.BladeOfValor;
+                }
+            }
+            return OriginalHook(actionID);
+        }
+    }
+    internal class PaladinStandaloneHolyCircleFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinStandaloneHolyCircleFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == PLD.HolyCircle)
+            {
+                if (HasEffect(PLD.Buffs.Requiescat) && level >= 64)
+                {
+                    var requiescat = FindEffect(PLD.Buffs.Requiescat);
+                    if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80) || LocalPlayer.CurrentMp <= 2000)
+                        return PLD.Confiteor;
+                    return PLD.HolyCircle;
+                }
+            
+                if (lastComboMove == PLD.Confiteor && level >= 90)
+                {
+                    return PLD.BladeOfFaith;
+                }
+
+                if (lastComboMove == PLD.BladeOfFaith && level >= 90)
+                {
+                    return PLD.BladeOfTruth;
+                }
+
+                if (lastComboMove == PLD.BladeOfTruth && level >= 90)
+                {
+                    return PLD.BladeOfValor;
+                }
+            }
+            return OriginalHook(actionID);
+        }
+    }
 }

@@ -210,20 +210,28 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, GNB.BurstStrike)]
         GunbreakerBloodfestOvercapFeature = 604,
 
+        [ConflictingCombos(GunbreakerNoMercyoGCDFeature)]
         [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyFeature = 605,
 
         [CustomComboInfo("DangerZoneFeature", "Adds DangerZone on main combo.", GNB.JobID, GNB.DangerZone)]
         GunbreakerDangerZoneFeature = 606,
 
-        [CustomComboInfo("DoubleDownFeature", "Adds DangerZone on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown)]
-        GunbreakerDoubleDownFeature = 607,
+        [CustomComboInfo("DoubleDownFeature", "Adds DoubleDown on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
+        GunbreakerDoubleDownOnMainComboFeature = 607,
 
         [CustomComboInfo("DoubleDownNoMercyFeature", "Adds DoubleDown to NoMercy Feature, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         DoubleDownNoMercyFeature = 608,
 
+        [ConflictingCombos(GunbreakerNoMercyFeature)]
+        [CustomComboInfo("oGCD NoMercy Feature", "Changes NoMercy into BowShock when you are under NoMercy buff", GNB.JobID, GNB.NoMercy)]
+        GunbreakerNoMercyoGCDFeature = 609,
+
+        [CustomComboInfo("SonicBreakMainComboFeature", "Adds SonicBreak on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
+        GunbreakerSonicBreakOnMainComboFeature = 610,
+
         [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
-        GunbreakerBurstStrikeConFeature = 609,
+        GunbreakerBurstStrikeConFeature = 611,
 
         #endregion
         // ====================================================================================
@@ -358,10 +366,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Royal Goring Option", "Insert Goring Blade into the main combo when appropriate.\nRequires Royal Authority Combo", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade)]
         PaladinRoyalGoringOption = 1007,
 
+        [CustomComboInfo("Standalone Holy Spirit Feature", "Replaces Holy Spirit with Confiteor and Confiteor combo", PLD.JobID, PLD.HolySpirit)]
+        PaladinStandaloneHolySpiritFeature = 1008,
+
+        [CustomComboInfo("Standalone Holy Circle Feature", "Replaces Holy Circle with Confiteor and Confiteor combo", PLD.JobID, PLD.HolyCircle)]
+        PaladinStandaloneHolyCircleFeature = 1009,
+
         #endregion
         // ====================================================================================
         #region RED MAGE
 
+        [ConflictingCombos(RedMageSmartcastAoECombo)]
         [CustomComboInfo("Red Mage AoE Combo", "Replaces Veraero/Verthunder 2 with Impact when Dualcast or Swiftcast are active.", RDM.JobID, RDM.Veraero2, RDM.Verthunder2)]
         RedMageAoECombo = 1100,
 
@@ -372,12 +387,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Redoublement Combo Plus", "Replaces Redoublement with Verflare/Verholy after Enchanted Redoublement, whichever is more appropriate.\nRequires Redoublement Combo.", RDM.JobID, RDM.Redoublement)]
         RedMageMeleeComboPlus = 1102,
 
+        [ConflictingCombos(RedMageSmartSingleTargetCombo)]
         [CustomComboInfo("Verproc into Jolt", "Replaces Verstone/Verfire with Jolt/Scorch when no proc is available.", RDM.JobID, RDM.Verstone, RDM.Verfire)]
         RedMageVerprocCombo = 1103,
 
+        [ConflictingCombos(RedMageSmartSingleTargetCombo)]
         [CustomComboInfo("Verproc into Jolt Plus", "Additionally replaces Verstone/Verfire with Veraero/Verthunder if dualcast/swiftcast are up.\nRequires Verproc into Jolt.", RDM.JobID, RDM.Verstone, RDM.Verfire)]
         RedMageVerprocComboPlus = 1104,
 
+        [ConflictingCombos(RedMageSmartSingleTargetCombo)]
         [CustomComboInfo("Verproc into Jolt Plus Opener Feature", "Turns Verfire into Verthunder when out of combat.\nRequires Verproc into Jolt Plus.", RDM.JobID, RDM.Verfire)]
         RedMageVerprocOpenerFeature = 1105,
 
@@ -388,10 +406,12 @@ namespace XIVSlothComboPlugin
         RedmageResolutionFinisherMelee = 1107,
 
         [SecretCustomCombo]
+        [ConflictingCombos(RedMageAoECombo)]
         [CustomComboInfo("Smart AoE Feature", "Replaces Verthunder II With Veraero II and impact depending on mana", RDM.JobID, RDM.Veraero2, RDM.Verthunder2)]
         RedMageSmartcastAoECombo = 1108,
 
         [SecretCustomCombo]
+        [ConflictingCombos(RedMageVerprocComboPlus, RedMageVerprocOpenerFeature, RedMageVerprocCombo)]
         [CustomComboInfo("Smart Single Target Feature", "Smart Single target feature Credit: PrincessRTFM", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
         RedMageSmartSingleTargetCombo = 1109,
 
@@ -665,9 +685,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID, RPR.BloodStalk, RPR.GrimSwathe)]
         ReaperBloodSwatheFeature = 1712,
 
+        [ConflictingCombos(ReaperBloodSwatheFeature)]
         [CustomComboInfo("Blood Stalk Combo Option", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. \n Conflicts with Blood Stalk / Grim Swathe Feature.", RPR.JobID, RPR.BloodStalk)]
         ReaperBloodSwatheComboFeature = 1713,
 
+        [ConflictingCombos(ReaperBloodSwatheFeature)]
         [CustomComboInfo("Grim Swathe Combo Option", "Turns Grim Swathe into Gluttony when off-cooldown and puts Guillotine on the same button as Grim Swathe. \n Conflicts with Blood Stalk / Grim Swathe Feature.", RPR.JobID, RPR.GrimSwathe)]
         ReaperGrimSwatheComboOption = 1714,
 

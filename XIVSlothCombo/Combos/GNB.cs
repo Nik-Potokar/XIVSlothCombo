@@ -80,6 +80,8 @@ namespace XIVSlothComboPlugin.Combos
                     var blastingzoneCD = GetCooldown(GNB.BlastingZone);
                     var doubleDownCD = GetCooldown(GNB.DoubleDown);
                     var bulletGauge = GetJobGauge<GNBGauge>();
+                    var sonicbreakCD = GetCooldown(GNB.SonicBreak);
+             
 
                     if (IsEnabled(CustomComboPreset.GunbreakerDangerZoneFeature))
                     {
@@ -96,16 +98,25 @@ namespace XIVSlothComboPlugin.Combos
                         if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
                             return GNB.DangerZone;
                     }
-
-                    if (IsEnabled(CustomComboPreset.GunbreakerDoubleDownFeature))
+                    if (IsEnabled(CustomComboPreset.GunbreakerDoubleDownOnMainComboFeature))
                     {
-                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level == 90 && HasEffect(GNB.Buffs.NoMercy))
+                        if (lastComboMove == GNB.KeenEdge && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy))
                             return GNB.DoubleDown;
-                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level == 90 && HasEffect(GNB.Buffs.NoMercy))
+                        if (lastComboMove == GNB.BrutalShell && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy))
                             return GNB.DoubleDown;
-                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level == 90 && HasEffect(GNB.Buffs.NoMercy))
+                        if (lastComboMove == GNB.SolidBarrel && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy))
                             return GNB.DoubleDown;
                     }
+                    if (IsEnabled(CustomComboPreset.GunbreakerSonicBreakOnMainComboFeature))
+                    {
+                        if (lastComboMove == GNB.KeenEdge && !sonicbreakCD.IsCooldown  && level >= GNB.Levels.SonicBreak && HasEffect(GNB.Buffs.NoMercy))
+                            return GNB.SonicBreak;
+                        if (lastComboMove == GNB.BrutalShell && !sonicbreakCD.IsCooldown  && level >= GNB.Levels.SonicBreak && HasEffect(GNB.Buffs.NoMercy))
+                            return GNB.SonicBreak;
+                        if (lastComboMove == GNB.SolidBarrel && !sonicbreakCD.IsCooldown  && level >= GNB.Levels.SonicBreak && HasEffect(GNB.Buffs.NoMercy))
+                            return GNB.SonicBreak;
+                    }
+
 
                     if (lastComboMove == GNB.KeenEdge && level >= GNB.Levels.BrutalShell)
                         return GNB.BrutalShell;
@@ -238,9 +249,24 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level >= GNB.Levels.SonicBreak)
                         return GNB.SonicBreak;
+                }
+            }
 
+            return actionID;
+        }
+    }
+    internal class GunbreakerNoMercyoGCDFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerNoMercyoGCDFeature;
 
-
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == GNB.NoMercy)
+            {
+                if (HasEffect(GNB.Buffs.NoMercy))
+                {
+                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
+                        return GNB.BowShock;
                 }
             }
 
