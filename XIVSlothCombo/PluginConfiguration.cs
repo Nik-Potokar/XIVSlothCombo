@@ -80,4 +80,5 @@ namespace XIVSlothComboPlugin
         public CustomComboPreset[] GetDependencies(CustomComboPreset preset)
             => preset.GetAttribute<DependentCombosAttribute>()?.DependentPresets ?? Array.Empty<CustomComboPreset>();
     }
+
 }

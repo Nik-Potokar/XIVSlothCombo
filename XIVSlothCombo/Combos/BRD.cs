@@ -15,6 +15,8 @@ namespace XIVSlothComboPlugin.Combos
             QuickNock = 106,
             Bloodletter = 110,
             Windbite = 113,
+            MagesBallad = 114,
+            ArmysPaeon = 116,
             RainOfDeath = 117,
             EmpyrealArrow = 3558,
             WanderersMinuet = 3559,
@@ -54,10 +56,13 @@ namespace XIVSlothComboPlugin.Combos
                 VenomousBite = 6,
                 Bloodletter = 12,
                 Windbite = 30,
+                MagesBallad = 30,
+                ArmysPaeon = 40,
                 RainOfDeath = 45,
                 PitchPerfect = 52,
                 EmpyrealArrow = 54,
                 IronJaws = 56,
+                WanderersMinuet = 52,
                 Sidewinder = 60,
                 BiteUpgrade = 64,
                 RefulgentArrow = 70,
@@ -137,8 +142,10 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var venomous = TargetHasEffect(BRD.Debuffs.VenomousBite);
                     var windbite = TargetHasEffect(BRD.Debuffs.Windbite);
+                    var venomousDuration = FindTargetEffect(BRD.Debuffs.VenomousBite);
+                    var windbiteDuration = FindTargetEffect(BRD.Debuffs.Windbite);
 
-                    if (venomous && windbite)
+                    if (venomous && windbite && venomousDuration.RemainingTime < 5 && windbiteDuration.RemainingTime < 5)
                         return BRD.IronJaws;
 
                     if (windbite)
@@ -149,8 +156,10 @@ namespace XIVSlothComboPlugin.Combos
 
                 var caustic = TargetHasEffect(BRD.Debuffs.CausticBite);
                 var stormbite = TargetHasEffect(BRD.Debuffs.Stormbite);
+                var causticDuration = FindTargetEffect(BRD.Debuffs.CausticBite);
+                var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
 
-                if (caustic && stormbite)
+                if (caustic && stormbite && causticDuration.RemainingTime < 5 && stormbiteDuration.RemainingTime < 5)
                     return BRD.IronJaws;
 
                 if (stormbite)
@@ -187,16 +196,19 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BRD.RainOfDeath)
             {
-
-                if (level >= BRD.Levels.Sidewinder)
-                    return CalcBestAction(actionID, BRD.RainOfDeath, BRD.EmpyrealArrow, BRD.Sidewinder);
-
-                if (level >= BRD.Levels.EmpyrealArrow)
-                    return CalcBestAction(actionID, BRD.RainOfDeath, BRD.EmpyrealArrow);
+                var gauge = GetJobGauge<BRDGauge>();
+                if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                    return BRD.PitchPerfect;
+                if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow))
+                    return BRD.EmpyrealArrow;
+                if (!GetCooldown(BRD.Bloodletter).IsCooldown)
+                    return BRD.RainOfDeath;
+                if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder))
+                    return BRD.Sidewinder;
 
             }
 
-            return actionID;
+            return OriginalHook(actionID);
         }
     }
     internal class BardoGCDSingleTargetFeature : CustomCombo
@@ -207,13 +219,25 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BRD.Bloodletter)
             {
+                var gauge = GetJobGauge<BRDGauge>();
+                if (gauge.SongTimer < 1 || gauge.Song == Song.ARMY)
+                {
+                    if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet))
+                        return BRD.WanderersMinuet;
+                    if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad))
+                        return BRD.MagesBallad;
+                    if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon))
+                        return BRD.ArmysPaeon;
+                }
 
-                if (level >= BRD.Levels.Sidewinder)
-                    return CalcBestAction(actionID, BRD.Bloodletter, BRD.EmpyrealArrow, BRD.Sidewinder);
-
-                if (level >= BRD.Levels.EmpyrealArrow)
-                    return CalcBestAction(actionID, BRD.Bloodletter, BRD.EmpyrealArrow);
-
+                if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                    return BRD.PitchPerfect;
+                if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow))
+                    return BRD.EmpyrealArrow;
+                if (!GetCooldown(BRD.Bloodletter).IsCooldown)
+                    return BRD.Bloodletter;
+                if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder))
+                    return BRD.Sidewinder;
             }
             return actionID;
         }
@@ -246,7 +270,6 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    
 }
 
 

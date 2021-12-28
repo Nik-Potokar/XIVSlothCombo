@@ -149,6 +149,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == AST.FallMalefic || actionID == AST.Malefic4 || actionID == AST.Malefic3 || actionID == AST.Malefic2 || actionID == AST.Malefic1)
             {
+
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var combust3Debuff = TargetHasEffect(AST.Debuffs.Combust3);
                 var combust2Debuff = TargetHasEffect(AST.Debuffs.Combust2);
@@ -159,6 +160,9 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<ASTGauge>();
                 var lucidDreaming = GetCooldown(AST.LucidDreaming);
                 var fallmalefic = GetCooldown(AST.FallMalefic);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature))
                 {
                     if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4)
@@ -166,12 +170,13 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature))
                 {
-                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4)
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4)
                         return AST.Draw;
+                     
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature))
                 {
-                    if (gauge.DrawnCrownCard.Equals(CardType.NONE) && incombat && fallmalefic.IsCooldown)
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && !minorarcanaCD.IsCooldown)
                         return AST.MinorArcana;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
@@ -202,7 +207,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-
+   
     internal class AstrologianHeliosFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.AstrologianHeliosFeature;

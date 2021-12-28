@@ -100,7 +100,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
         BardApexFeature = 203,
 
-        [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
+        [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
         BardoGCDSingleTargetFeature = 204,
 
         [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on RainOfDeath depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.RainOfDeath)]
