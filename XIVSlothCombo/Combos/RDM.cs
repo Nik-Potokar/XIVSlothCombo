@@ -291,7 +291,8 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var accelBuff = HasEffect(RDM.Buffs.Acceleration);
                 var dualcastBuff = HasEffect(RDM.Buffs.Dualcast);
-                if (dualcastBuff || accelBuff || level <= 18)
+                var swiftcastBuff = HasEffect(RDM.Buffs.Swiftcast);
+                if (dualcastBuff || accelBuff || swiftcastBuff || level <= 18)
                     return OriginalHook(RDM.Impact);
 
                 if (level <= 18)
