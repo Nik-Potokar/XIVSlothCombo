@@ -102,6 +102,7 @@ namespace XIVSlothComboPlugin.Combos
             Resurrection = 173,
 
             // buff 
+            Aethercharge = 25800,
             SearingLight = 25801;
 
         public static class Buffs
@@ -228,9 +229,9 @@ namespace XIVSlothComboPlugin.Combos
                     var phoenixCD = GetCooldown(SMN.SummonPhoenix);
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
-                        return SMN.SummonBahamut;
+                        return OriginalHook(SMN.Aethercharge);
                     if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
-                        return SMN.SummonPhoenix;
+                        return OriginalHook(SMN.Aethercharge);
                 }
                 if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
                 {
