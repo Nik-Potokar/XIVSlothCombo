@@ -458,15 +458,18 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == SAM.Oka)
             {
-                if (HasEffect(SAM.Buffs.MeikyoShisui))
-                    return SAM.Oka;
+                var gauge = GetJobGauge<SAMGauge>();
+
+                if (HasEffect(SAM.Buffs.MeikyoShisui) && gauge.Sen.HasFlag(Sen.KA) == false)
+                    return OriginalHook(SAM.Oka);
+                if (HasEffect(SAM.Buffs.MeikyoShisui) && gauge.Sen.HasFlag(Sen.GETSU) == false)
+                    return OriginalHook(SAM.Mangetsu);
 
                 if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Mangetsu)
                 {
-                    var gauge = GetJobGauge<SAMGauge>();
                     if (level >= SAM.Levels.Oka && gauge.Sen.HasFlag(Sen.KA) == false && FindEffect(SAM.Buffs.Shifu)?.RemainingTime < 10)
                         return SAM.Oka;
-                    if (level < SAM.Levels.Oka || gauge.Sen.HasFlag(Sen.GETSU) == false || FindEffect(SAM.Buffs.Jinpu)?.RemainingTime < FindEffect(SAM.Buffs.Shifu)?.RemainingTime)
+                    if (level < SAM.Levels.Oka || gauge.Sen.HasFlag(Sen.GETSU) == false || FindEffect(SAM.Buffs.Jinpu)?.RemainingTime < FindEffect(SAM.Buffs.Shifu)?.RemainingTime || !HasEffect(SAM.Buffs.Fugetsu))
                         return SAM.Mangetsu;
                     if (level >= SAM.Levels.Oka)
                         return SAM.Oka;

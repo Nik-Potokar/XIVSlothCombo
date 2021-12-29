@@ -145,7 +145,7 @@ namespace XIVSlothComboPlugin.Combos
                     var venomousDuration = FindTargetEffect(BRD.Debuffs.VenomousBite);
                     var windbiteDuration = FindTargetEffect(BRD.Debuffs.Windbite);
 
-                    if (venomous && windbite && venomousDuration.RemainingTime < 5 && windbiteDuration.RemainingTime < 5)
+                    if (venomous && windbite && venomousDuration.RemainingTime < 4 && windbiteDuration.RemainingTime < 4)
                         return BRD.IronJaws;
 
                     if (windbite)
@@ -159,7 +159,7 @@ namespace XIVSlothComboPlugin.Combos
                 var causticDuration = FindTargetEffect(BRD.Debuffs.CausticBite);
                 var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
 
-                if (caustic && stormbite && causticDuration.RemainingTime < 5 && stormbiteDuration.RemainingTime < 5)
+                if (caustic && stormbite && causticDuration.RemainingTime < 4 && stormbiteDuration.RemainingTime < 4)
                     return BRD.IronJaws;
 
                 if (stormbite)
