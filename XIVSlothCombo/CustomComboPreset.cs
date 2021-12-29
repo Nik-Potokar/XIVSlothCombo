@@ -214,7 +214,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyFeature = 605,
 
-        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone on main combo.", GNB.JobID, GNB.DangerZone)]
+        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone/BlastingZone on main combo when NoMercy buff is present or NoMercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
         GunbreakerDangerZoneFeature = 606,
 
         [CustomComboInfo("DoubleDownFeature", "Adds DoubleDown on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]

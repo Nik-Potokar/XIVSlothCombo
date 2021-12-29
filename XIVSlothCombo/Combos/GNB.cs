@@ -81,21 +81,21 @@ namespace XIVSlothComboPlugin.Combos
                     var doubleDownCD = GetCooldown(GNB.DoubleDown);
                     var bulletGauge = GetJobGauge<GNBGauge>();
                     var sonicbreakCD = GetCooldown(GNB.SonicBreak);
-             
+                    var noMercyCD = GetCooldown(GNB.NoMercy);
 
                     if (IsEnabled(CustomComboPreset.GunbreakerDangerZoneFeature))
                     {
-                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80)
+                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && !HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)
                             return GNB.BlastingZone;
-                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80)
+                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && !HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)
                             return GNB.BlastingZone;
-                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80)
+                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && !HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)
                             return GNB.BlastingZone;
-                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
+                        if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79 && !HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)
                             return GNB.DangerZone;
-                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
+                        if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79 && HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)
                             return GNB.DangerZone;
-                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79)
+                        if (lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.SolidBarrel && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level <= 79 && HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)
                             return GNB.DangerZone;
                     }
                     if (IsEnabled(CustomComboPreset.GunbreakerDoubleDownOnMainComboFeature))
