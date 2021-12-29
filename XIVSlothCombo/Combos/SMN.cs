@@ -127,6 +127,7 @@ namespace XIVSlothComboPlugin.Combos
                 OutburstMastery2 = 82,
                 Slipstream = 86,
                 MountainBuster = 86,
+                SearingLight = 66,
 
                 Bahamut = 70,
                 Phoenix = 80,
@@ -202,16 +203,16 @@ namespace XIVSlothComboPlugin.Combos
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var buffCD = GetCooldown(SMN.SearingLight);
 
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat)
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
                         return SMN.SearingLight;
 
                     // Egis
                     if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
-                        return SMN.SummonTitan;
+                        return OriginalHook(SMN.SummonTopaz);
                     if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
-                        return SMN.SummonGaruda;
+                        return OriginalHook(SMN.SummonEmerald);
                     if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
-                        return SMN.SummonIfrit;
+                        return OriginalHook(SMN.SummonRuby);
 
                     // Demi
                     if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown )
