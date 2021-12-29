@@ -156,10 +156,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Mangetsu;
 
+                if (comboTime > 0 && lastComboMove == SAM.Fuko && level >= SAM.Levels.Mangetsu)
+                    return SAM.Mangetsu;
                 if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Mangetsu)
                     return SAM.Mangetsu;
 
-                return OriginalHook(SAM.Fuga);
+                return OriginalHook(SAM.Fuko);
             }
 
             return actionID;
@@ -177,10 +179,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Oka;
 
+                if (comboTime > 0 && lastComboMove == SAM.Fuko && level >= SAM.Levels.Oka)
+                    return SAM.Oka;
                 if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Oka)
                     return SAM.Oka;
 
-                return OriginalHook(SAM.Fuga);
+                return OriginalHook(SAM.Fuko);
             }
 
             return actionID;
@@ -465,6 +469,15 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasEffect(SAM.Buffs.MeikyoShisui) && gauge.Sen.HasFlag(Sen.GETSU) == false)
                     return OriginalHook(SAM.Mangetsu);
 
+                if (comboTime > 0 && lastComboMove == SAM.Fuko && level >= SAM.Levels.Mangetsu)
+                {
+                    if (level >= SAM.Levels.Oka && gauge.Sen.HasFlag(Sen.KA) == false && FindEffect(SAM.Buffs.Shifu)?.RemainingTime < 10)
+                        return SAM.Oka;
+                    if (level < SAM.Levels.Oka || gauge.Sen.HasFlag(Sen.GETSU) == false || FindEffect(SAM.Buffs.Jinpu)?.RemainingTime < FindEffect(SAM.Buffs.Shifu)?.RemainingTime || !HasEffect(SAM.Buffs.Fugetsu))
+                        return SAM.Mangetsu;
+                    if (level >= SAM.Levels.Oka)
+                        return SAM.Oka;
+                }
                 if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Mangetsu)
                 {
                     if (level >= SAM.Levels.Oka && gauge.Sen.HasFlag(Sen.KA) == false && FindEffect(SAM.Buffs.Shifu)?.RemainingTime < 10)
@@ -474,8 +487,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= SAM.Levels.Oka)
                         return SAM.Oka;
                 }
-
-                return OriginalHook(SAM.Fuga);
+                return OriginalHook(SAM.Fuko);
             }
 
             return actionID;
