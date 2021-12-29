@@ -216,9 +216,9 @@ namespace XIVSlothComboPlugin.Combos
 
                     // Demi
                     if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown )
-                        return SMN.SummonBahamut;
+                        return OriginalHook(SMN.Aethercharge);
                     if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
-                        return SMN.SummonPhoenix;
+                        return OriginalHook(SMN.Aethercharge);
 
 
                 }
