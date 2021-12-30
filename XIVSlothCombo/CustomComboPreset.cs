@@ -44,10 +44,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, AST.AspectedHelios, AST.Helios)]
         AstrologianHeliosFeature = 8,
 
-        [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature (Malefic Icon Will Bug Out)", AST.JobID, AST.FallMalefic)]
+        [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature", AST.JobID, AST.FallMalefic)]
         AstrologianAutoDrawFeature = 9,
 
-        [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature (Malefic Icon Will Bug Out)", AST.JobID, AST.FallMalefic)]
+        [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, AST.FallMalefic)]
         AstrologianAutoCrownDrawFeature = 10,
 
         #endregion
