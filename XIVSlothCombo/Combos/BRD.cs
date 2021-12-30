@@ -355,7 +355,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BRD.PitchPerfect;
                     if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow))
                         return BRD.EmpyrealArrow;
-                    if (!GetCooldown(BRD.Bloodletter).IsCooldown)
+                    if (GetCooldown(BRD.Bloodletter).CooldownRemaining < 30)
                         return BRD.Bloodletter;
                     if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder))
                         return BRD.Sidewinder;
