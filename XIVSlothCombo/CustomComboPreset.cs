@@ -601,7 +601,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Mythril Tempest Combo", "Replace Overpower with its combo chain", WAR.JobID, WAR.MythrilTempest, WAR.Overpower)]
         WarriorMythrilTempestCombo = 1502,
 
-        [ConflictingCombos(WarriorInstantFellCleaveFeature)]
+        [ConflictingCombos(WarriorInstantFellCleaveFeature, WarriorInstantDecimateFeature)]
         [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single-target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, WAR.MythrilTempest, WAR.StormsEye, WAR.StormsPath)]
         WarriorGaugeOvercapFeature = 1503,
 
@@ -629,6 +629,10 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(WarriorGaugeOvercapFeature)]
         [CustomComboInfo("Instant FellCleave Feature", "Will use Fellcleave as soon as you have 50 gauge", WAR.JobID, WAR.StormsEye, WAR.StormsPath)]
         WarriorInstantFellCleaveFeature = 1511,
+
+        [ConflictingCombos(WarriorGaugeOvercapFeature)]
+        [CustomComboInfo("Instant Decimate Feature", "Replaces Overpower AoE Combo with Decimate when you have at least 50 gauge", WAR.JobID, WAR.Overpower, WAR.MythrilTempest)]
+        WarriorInstantDecimateFeature = 1512,
 
         #endregion
         // ====================================================================================

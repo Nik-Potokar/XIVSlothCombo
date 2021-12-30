@@ -214,15 +214,19 @@ namespace XIVSlothComboPlugin.Combos
                             if ((lastComboMove == WAR.Overpower && level >= 60) || (lastComboMove == WAR.MythrilTempest && gauge >= 90 && level >= 60 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature)))
                                 return WAR.Decimate;
                         }
-
                         if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && lastComboMove == WAR.Decimate && level >= 86)
                         {
                             return WAR.Orogeny;
                         }
-
                         if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 86)
                         {
                             return WAR.Orogeny;
+                        }
+                        if (IsEnabled(CustomComboPreset.WarriorInstantDecimateFeature) && level >= WAR.Levels.Decimate)
+                        {
+                            var gauge = GetJobGauge<WARGauge>();
+                            if(gauge.BeastGauge >= 50)
+                            return WAR.Decimate;
                         }
                     }
 
@@ -259,11 +263,14 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == WAR.InnerBeast || actionID == WAR.SteelCyclone)
             {
+
                 if (level >= WAR.Levels.PrimalRend && HasEffect(WAR.Buffs.PrimalRendReady))
                     return WAR.PrimalRend;
 
                 // Fell Cleave or Decimate
                 return OriginalHook(actionID);
+
+
             }
 
             return actionID;
