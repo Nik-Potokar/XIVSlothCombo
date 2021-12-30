@@ -188,14 +188,10 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= 90)
                         return OriginalHook(WAR.PrimalRend);
-                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && !orogenyCD.IsCooldown && HasEffect(WAR.Buffs.InnerRelease) && HasEffect(WAR.Buffs.SurgingTempest) && level >= 86)
-                        return OriginalHook(WAR.Orogeny);
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                         return OriginalHook(WAR.Decimate);
-                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.NascentChaos) && level >= 72)
-                        return OriginalHook(WAR.ChaoticCyclone);
                     if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && level >= 72)
-                        return WAR.ChaoticCyclone;
+                        return OriginalHook(WAR.ChaoticCyclone);
 
                     if (comboTime > 0)
                     {
