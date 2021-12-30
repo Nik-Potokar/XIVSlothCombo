@@ -389,8 +389,23 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var gluttonyCD = GetCooldown(RPR.Gluttony);
+            var gauge = GetJobGauge<RPRGauge>();
+
             if (actionID == RPR.BloodStalk)
             {
+                if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
+                {
+                    if (gauge.VoidShroud >= 2)
+                    {
+                        return OriginalHook(RPR.BloodStalk);
+                    }
+                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= 90)
+                    {
+                        return OriginalHook(RPR.Communio);
+                    }
+                    return OriginalHook(RPR.Gallows);
+                }
+
                 if (!HasEffect(RPR.Buffs.SoulReaver))
                 {
                     if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
@@ -417,8 +432,22 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var gluttonyCD = GetCooldown(RPR.Gluttony);
+            var gauge = GetJobGauge<RPRGauge>();
             if (actionID == RPR.GrimSwathe)
             {
+                if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
+                {
+                    if (gauge.VoidShroud >= 2)
+                    {
+                        return OriginalHook(RPR.GrimSwathe);
+                    }
+                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= 90)
+                    {
+                        return OriginalHook(RPR.Communio);
+                    }
+                    return OriginalHook(RPR.Guillotine);
+                }
+
                 if (!HasEffect(RPR.Buffs.SoulReaver))
                 {
                     if ((actionID == RPR.GrimSwathe) && !gluttonyCD.IsCooldown && level >= 76)
