@@ -374,10 +374,13 @@ namespace XIVSlothComboPlugin.Combos
                     if ((venomous && windbite) && (venomousDuration.RemainingTime < 4 || windbiteDuration.RemainingTime < 4))
                         return BRD.IronJaws;
 
-                    if (!windbite)
-                        return BRD.Windbite;
-                    if (!venomous)
-                        return BRD.VenomousBite;
+                        if (IsEnabled(CustomComboPreset.SimpleDoTOption))
+                        {
+                            if (!windbite)
+                            return BRD.Windbite;
+                            if (!venomous)
+                            return BRD.VenomousBite;
+                        }
                     else if (HasEffect(BRD.Buffs.StraightShotReady))
                         return OriginalHook(BRD.RefulgentArrow);
                     return OriginalHook(BRD.BurstShot);
@@ -385,10 +388,13 @@ namespace XIVSlothComboPlugin.Combos
 
                 if ((caustic && stormbite) && (causticDuration.RemainingTime < 4 || stormbiteDuration.RemainingTime < 4))
                     return BRD.IronJaws;
-                if (!caustic)
-                    return BRD.CausticBite;
-                if (!stormbite)
-                    return BRD.Stormbite;
+                if (IsEnabled(CustomComboPreset.SimpleDoTOption))
+                {
+                    if (!caustic)
+                        return BRD.CausticBite;
+                    if (!stormbite)
+                        return BRD.Stormbite;
+                }
                 else if (gauge.SoulVoice == 100)
                     return BRD.ApexArrow;
 

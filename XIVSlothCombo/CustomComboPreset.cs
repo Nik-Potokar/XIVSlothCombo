@@ -114,11 +114,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
         BardAoEComboFeature = 207,
 
-        [CustomComboInfo("SimpleBard", "Testing Only! One button bard semi-bugged until i add stack checking feature!.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("SimpleBard", "TESTING ONLY! Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will maintain their uptime with Iron Jaws.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         SimpleBardFeature = 208,
 
+        [CustomComboInfo("SimpleBard DoT Option", "Testing Only! This option will make SimpleBard apply DoTs if none are present on the target.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        SimpleDoTOption = 209,
+
         [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
-        BardSongsFeature = 209,
+        BardSongsFeature = 210,
         #endregion
         // ====================================================================================
         #region DANCER
@@ -598,6 +601,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Mythril Tempest Combo", "Replace Overpower with its combo chain", WAR.JobID, WAR.MythrilTempest, WAR.Overpower)]
         WarriorMythrilTempestCombo = 1502,
 
+        [ConflictingCombos(WarriorInstantFellCleaveFeature, WarriorInstantDecimateFeature)]
         [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single-target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, WAR.MythrilTempest, WAR.StormsEye, WAR.StormsPath)]
         WarriorGaugeOvercapFeature = 1503,
 
