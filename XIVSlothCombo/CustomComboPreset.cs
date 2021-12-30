@@ -94,21 +94,31 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Heavy Shot into Straight Shot", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardStraightShotUpgradeFeature = 201,
 
+        [ConflictingCombos(BardIronJawsAlternateFeature)]
         [CustomComboInfo("Iron Jaws Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nAlternates between the two if Iron Jaws isn't available.", BRD.JobID, BRD.IronJaws)]
         BardIronJawsFeature = 202,
 
+        [ConflictingCombos(BardIronJawsFeature)]
+        [CustomComboInfo("Iron Jaws Alternate Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nIron Jaws will only show up when debuffs are about to expire.", BRD.JobID, BRD.IronJaws)]
+        BardIronJawsAlternateFeature = 203,
+
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
-        BardApexFeature = 203,
+        BardApexFeature = 204,
 
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
-        BardoGCDSingleTargetFeature = 204,
+        BardoGCDSingleTargetFeature = 205,
 
         [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on RainOfDeath depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.RainOfDeath)]
-        BardoGCDAoEFeature = 205,
+        BardoGCDAoEFeature = 206,
 
         [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
-        BardAoEComboFeature = 206,
+        BardAoEComboFeature = 207,
 
+        [CustomComboInfo("SimpleBard", "Testing Only! One button bard semi-bugged until i add stack checking feature!.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        SimpleBardFeature = 208,
+
+        [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
+        BardSongsFeature = 209,
         #endregion
         // ====================================================================================
         #region DANCER
@@ -214,7 +224,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyFeature = 605,
 
-        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone/BlastingZone on main combo when NoMercy buff is present or NoMercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
+        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone/BlastingZone on main combo and NoMercyoGCD Feature when NoMercy buff is present or NoMercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
         GunbreakerDangerZoneFeature = 606,
 
         [CustomComboInfo("DoubleDownFeature", "Adds DoubleDown on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
@@ -692,6 +702,9 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(ReaperBloodSwatheFeature)]
         [CustomComboInfo("Grim Swathe Combo Option", "Turns Grim Swathe into Gluttony when off-cooldown and puts Guillotine on the same button as Grim Swathe. \n Conflicts with Blood Stalk / Grim Swathe Feature.", RPR.JobID, RPR.GrimSwathe)]
         ReaperGrimSwatheComboOption = 1714,
+
+        [CustomComboInfo("Cross/Void Reaping Feature", "Turns Enshroud into Cross/Void reaping with Lemure Slice as oGCD after Cross Reaping.", RPR.JobID, RPR.Enshroud)]
+        ReaperVoidCrossReapingComboOption = 1715,
 
 
         #endregion

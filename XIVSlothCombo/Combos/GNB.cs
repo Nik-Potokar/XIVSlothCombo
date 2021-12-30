@@ -265,8 +265,18 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasEffect(GNB.Buffs.NoMercy))
                 {
+                    var dangerzoneCD = GetCooldown(OriginalHook(GNB.DangerZone));
                     if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
                         return GNB.BowShock;
+                    if (IsEnabled(CustomComboPreset.GunbreakerDangerZoneFeature) && !dangerzoneCD.IsCooldown)
+                        return OriginalHook(GNB.DangerZone);
+                }
+                if (!HasEffect(GNB.Buffs.NoMercy))
+                {
+                    var dangerzoneCD = GetCooldown(OriginalHook(GNB.DangerZone));
+                    var noMercyCD = GetCooldown(GNB.NoMercy);
+                    if (IsEnabled(CustomComboPreset.GunbreakerDangerZoneFeature) && !dangerzoneCD.IsCooldown && noMercyCD.IsCooldown)
+                        return OriginalHook(GNB.DangerZone);
                 }
             }
 
