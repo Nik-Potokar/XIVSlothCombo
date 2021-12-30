@@ -100,11 +100,12 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.GunbreakerDoubleDownOnMainComboFeature))
                     {
-                        if (lastComboMove == GNB.KeenEdge && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy))
+                        var gauge = GetJobGauge<GNBGauge>();
+                        if (lastComboMove == GNB.KeenEdge && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy) && gauge.Ammo >= 2)
                             return GNB.DoubleDown;
-                        if (lastComboMove == GNB.BrutalShell && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy))
+                        if (lastComboMove == GNB.BrutalShell && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy) && gauge.Ammo >= 2)
                             return GNB.DoubleDown;
-                        if (lastComboMove == GNB.SolidBarrel && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy))
+                        if (lastComboMove == GNB.SolidBarrel && !doubleDownCD.IsCooldown && level >= GNB.Levels.DoubleDown && HasEffect(GNB.Buffs.NoMercy) && gauge.Ammo >= 2)
                             return GNB.DoubleDown;
                     }
                     if (IsEnabled(CustomComboPreset.GunbreakerSonicBreakOnMainComboFeature))
@@ -241,7 +242,8 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var sonicbreakcd = GetCooldown(GNB.SonicBreak);
                     var doubledownCD = GetCooldown(GNB.DoubleDown);
-                    if (!doubledownCD.IsCooldown && level >= GNB.Levels.DoubleDown && IsEnabled(CustomComboPreset.DoubleDownNoMercyFeature))
+                    var gauge = GetJobGauge<GNBGauge>();
+                    if (!doubledownCD.IsCooldown && level >= GNB.Levels.DoubleDown && IsEnabled(CustomComboPreset.DoubleDownNoMercyFeature) && gauge.Ammo >= 2)
                         return GNB.DoubleDown;
 
                     if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock) && sonicbreakcd.IsCooldown)
