@@ -230,6 +230,16 @@ namespace XIVSlothComboPlugin.Combos
                     return MCH.Scattergun;
                 if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
+
+                var battery = GetJobGauge<MCHGauge>().Battery;
+                if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption))
+                {
+                    if (battery == 100 && level >= 40 && level <= 79)
+                        return MCH.RookAutoturret;
+                    if (battery == 100 && level >= 80)
+                        return MCH.AutomatonQueen;
+                }
+
             }
 
             return actionID;

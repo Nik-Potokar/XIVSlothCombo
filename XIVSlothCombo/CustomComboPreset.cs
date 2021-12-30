@@ -282,6 +282,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge rook/queen will be added to your (Heated) Shot Combo.\nRequires (Heated) Shot Combo", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistOverChargeOption = 709,
 
+        [CustomComboInfo("Battery AOE Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.\nRequires Spread Shot/Scattergun Heat, +BioBlaster", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
+        MachinistAoEOverChargeOption = 710,
         #endregion
         // ====================================================================================
         #region MONK
