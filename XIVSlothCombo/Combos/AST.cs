@@ -176,7 +176,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature))
                 {
-                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 )
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4)
                         return AST.MinorArcana;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
