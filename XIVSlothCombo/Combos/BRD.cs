@@ -349,7 +349,7 @@ namespace XIVSlothComboPlugin.Combos
                 var causticDuration = FindTargetEffect(BRD.Debuffs.CausticBite);
                 var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
                 var heavyshotCD = GetCooldown(actionID);
-                if (IsEnabled(CustomComboPreset.SimpleBardFeature))
+                if (IsEnabled(CustomComboPreset.SimpleBardFeature) && incombat)
                 {
                     if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
                         return BRD.PitchPerfect;
@@ -395,7 +395,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (!stormbite)
                         return BRD.Stormbite;
                 }
-                else if (gauge.SoulVoice == 100)
+                if (gauge.SoulVoice == 100)
                     return BRD.ApexArrow;
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
