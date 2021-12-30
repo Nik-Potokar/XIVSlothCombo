@@ -109,10 +109,6 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.StormsEye;
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                     {
-                        if (gauge >= 50 && IsEnabled(CustomComboPreset.WarriorInstantFellCleaveFeature))
-                        {
-                            return OriginalHook(WAR.FellCleave);
-                        }
                         if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 35 && level <= 53)
                         {
                             return WAR.InnerBeast;
@@ -128,10 +124,6 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
                     {
-                        if(gauge >= 50 && IsEnabled(CustomComboPreset.WarriorInstantFellCleaveFeature))
-                        {
-                            return OriginalHook(WAR.FellCleave);
-                        }
                         if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 35 && level <= 53)
                         {
                             return OriginalHook(WAR.InnerBeast);
@@ -234,12 +226,6 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 86)
                         {
                             return WAR.Orogeny;
-                        }
-                        if (IsEnabled(CustomComboPreset.WarriorInstantDecimateFeature) && level >= WAR.Levels.Decimate)
-                        {
-                            var gauge = GetJobGauge<WARGauge>();
-                            if(gauge.BeastGauge >= 50)
-                            return WAR.Decimate;
                         }
                     }
 

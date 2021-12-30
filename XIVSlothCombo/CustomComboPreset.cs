@@ -601,7 +601,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Mythril Tempest Combo", "Replace Overpower with its combo chain", WAR.JobID, WAR.MythrilTempest, WAR.Overpower)]
         WarriorMythrilTempestCombo = 1502,
 
-        [ConflictingCombos(WarriorInstantFellCleaveFeature, WarriorInstantDecimateFeature)]
         [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single-target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, WAR.MythrilTempest, WAR.StormsEye, WAR.StormsPath)]
         WarriorGaugeOvercapFeature = 1503,
 
