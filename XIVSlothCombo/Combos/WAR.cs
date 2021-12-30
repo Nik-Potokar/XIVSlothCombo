@@ -102,6 +102,10 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.StormsEye;
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                     {
+                        if (gauge >= 50 && IsEnabled(CustomComboPreset.WarriorInstantFellCleaveFeature))
+                        {
+                            return OriginalHook(WAR.FellCleave);
+                        }
                         if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 35 && level <= 53)
                         {
                             return WAR.InnerBeast;
@@ -117,15 +121,20 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
                     {
+                        if(gauge >= 50 && IsEnabled(CustomComboPreset.WarriorInstantFellCleaveFeature))
+                        {
+                            return OriginalHook(WAR.FellCleave);
+                        }
                         if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 35 && level <= 53)
                         {
-                            return WAR.InnerBeast;
+                            return OriginalHook(WAR.InnerBeast);
                         }
 
                         if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 54)
                         {
-                            return WAR.FellCleave;
+                            return OriginalHook(WAR.FellCleave);
                         }
+                        
 
                         if (stormseyeBuff.RemainingTime < 15 && IsEnabled(CustomComboPreset.WarriorStormsEyeCombo) && level >= 50)
                             return WAR.StormsEye;
