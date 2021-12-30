@@ -395,6 +395,10 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
                 {
+                    if (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded))
+                    {
+                        return OriginalHook(RPR.Gallows);
+                    }
                     if (gauge.VoidShroud >= 2)
                     {
                         return OriginalHook(RPR.BloodStalk);
@@ -403,7 +407,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return OriginalHook(RPR.Communio);
                     }
-                    return OriginalHook(RPR.Gallows);
+                    return OriginalHook(RPR.Gibbet);
                 }
 
                 if (!HasEffect(RPR.Buffs.SoulReaver))
