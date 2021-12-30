@@ -95,9 +95,16 @@ namespace XIVSlothComboPlugin.Combos
                     return WAR.FellCleave;
                 }
 
+
+
                 if (comboTime > 0)
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
+
+                    if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 54)
+                        return WAR.FellCleave;
+                    if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 35 && level <= 53)
+                        return WAR.InnerBeast;
                     if (lastComboMove == WAR.Maim && level >= 50 && !HasEffectAny(WAR.Buffs.SurgingTempest))
                         return WAR.StormsEye;
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
@@ -195,6 +202,8 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(WAR.Decimate);
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.NascentChaos) && level >= 72)
                         return OriginalHook(WAR.ChaoticCyclone);
+                    if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && level >= 72)
+                        return WAR.ChaoticCyclone;
 
                     if (comboTime > 0)
                     {
@@ -207,6 +216,10 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.WarriorMythrilTempestCombo))
                         {
                             var gauge = GetJobGauge<WARGauge>().BeastGauge;
+                            if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 60)
+                                return WAR.Decimate;
+                            if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 45 && level <= 59)
+                                return WAR.SteelCyclone;
                             if (lastComboMove == WAR.Infuriate && level >= 60)
                                 return WAR.Decimate;
                             if (lastComboMove == WAR.Overpower && level >= 40)

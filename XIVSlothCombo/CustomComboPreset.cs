@@ -623,16 +623,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
         WarriorOrogenyFeature = 1509,
 
-        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo if you are buffed with Nascent Chaos and Surging Tempest.\nRequires Storms Path Combo", WAR.JobID, WAR.InnerChaos, WAR.StormsPath)]
+        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo if you are buffed with Nascent Chaos and Surging Tempest. Does the same with Chaotic Cyclone on the AoE Combo. \nRequires Storms Path Combo", WAR.JobID, WAR.InnerChaos, WAR.StormsPath)]
         WarriorInnerChaosOption = 1510,
 
-        [ConflictingCombos(WarriorGaugeOvercapFeature)]
-        [CustomComboInfo("Instant FellCleave Feature", "Will use Fellcleave as soon as you have 50 gauge", WAR.JobID, WAR.StormsEye, WAR.StormsPath)]
-        WarriorInstantFellCleaveFeature = 1511,
-
-        [ConflictingCombos(WarriorGaugeOvercapFeature)]
-        [CustomComboInfo("Instant Decimate Feature", "Replaces Overpower AoE Combo with Decimate when you have at least 50 gauge", WAR.JobID, WAR.Overpower, WAR.MythrilTempest)]
-        WarriorInstantDecimateFeature = 1512,
+        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo", WAR.JobID, WAR.StormsPath)]
+        WarriorSpenderOption = 1511,
 
         #endregion
         // ====================================================================================
