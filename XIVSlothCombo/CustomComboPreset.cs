@@ -114,17 +114,24 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
         BardAoEComboFeature = 207,
 
-        [CustomComboInfo("SimpleBard", "TESTING ONLY! Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will maintain their uptime with Iron Jaws.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("SimpleBard", "Testing Only! Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will try to maintain their uptime.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         SimpleBardFeature = 208,
 
         [CustomComboInfo("SimpleBard DoT Option", "Testing Only! This option will make SimpleBard apply DoTs if none are present on the target.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         SimpleDoTOption = 209,
 
-        [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
-        BardSongsFeature = 210,
+        [CustomComboInfo("SimpleBard Song Option", "Testing Only! This option adds the bards songs to the SimpleBard feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        SimpleSongOption = 210,
 
-        [CustomComboInfo("Bard Buffs Feature", "Adds BattleVoice, RagingStrikes, Barrage onto Barrage.", BRD.JobID, BRD.Barrage)]
-        BardBuffsFeature = 211,
+        [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
+        BardSongsFeature = 211,
+
+        [CustomComboInfo("Bard Buffs Feature", "Adds RagingStrikes and BattleVoice onto Barrage.", BRD.JobID, BRD.Barrage)]
+        BardBuffsFeature = 212,
+
+        [CustomComboInfo("One Button Songs", "Add Mage's Ballade and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, BRD.WanderersMinuet)]
+        BardOneButtonSongs = 213,
+
         #endregion
         // ====================================================================================
         #region DANCER
