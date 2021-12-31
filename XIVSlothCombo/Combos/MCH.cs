@@ -112,7 +112,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= 76)
                         return MCH.AirAnchor;
-                    if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= 58)
+                    if (reassembleCD.CooldownRemaining >= 69 && !drillCD.IsCooldown && level >= 58)
                         return MCH.Drill;
                     if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
                         return MCH.HotShot;
