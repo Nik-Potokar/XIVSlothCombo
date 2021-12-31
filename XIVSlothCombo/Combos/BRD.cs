@@ -367,15 +367,20 @@ namespace XIVSlothComboPlugin.Combos
                     if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder))
                         return BRD.Sidewinder;
                 }
-                if (gauge.SongTimer < 1 && heavyshotCD.IsCooldown || gauge.Song == Song.ARMY && heavyshotCD.IsCooldown)
+
+                if (IsEnabled(CustomComboPreset.SimpleSongOption))
                 {
-                    if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet))
-                        return BRD.WanderersMinuet;
-                    if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad))
-                        return BRD.MagesBallad;
-                    if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon))
-                        return BRD.ArmysPaeon;
+                    if (gauge.SongTimer < 1 && heavyshotCD.IsCooldown || gauge.Song == Song.ARMY && heavyshotCD.IsCooldown)
+                    {
+                        if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet))
+                            return BRD.WanderersMinuet;
+                        if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad))
+                            return BRD.MagesBallad;
+                        if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon))
+                            return BRD.ArmysPaeon;
+                    }
                 }
+
                 if (level < BRD.Levels.BiteUpgrade)
                 {
                     if ((venomous && windbite && level >= BRD.Levels.IronJaws && incombat) && (venomousDuration.RemainingTime < 4 || windbiteDuration.RemainingTime < 4 && level >= BRD.Levels.IronJaws && incombat))
@@ -425,6 +430,24 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.RagingStrikes;
                 if (!GetCooldown(BRD.BattleVoice).IsCooldown && (level >= BRD.Levels.BattleVoice))
                     return BRD.BattleVoice;
+            }
+            return OriginalHook(actionID);
+        }
+    }
+    internal class BardOneButtonSongs : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardOneButtonSongs;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.WanderersMinuet)  // Doesn't display the lowest cooldown song if they have been used out of order and are all on cooldown.
+            {
+                if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet))
+                    return BRD.WanderersMinuet;
+                if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad))
+                    return BRD.MagesBallad;
+                if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon))
+                    return BRD.ArmysPaeon;
             }
             return OriginalHook(actionID);
         }
