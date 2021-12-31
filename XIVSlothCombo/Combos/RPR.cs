@@ -395,10 +395,6 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
                 {
-                    if (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded))
-                    {
-                        return OriginalHook(RPR.Gallows);
-                    }
                     if (gauge.VoidShroud >= 2)
                     {
                         return OriginalHook(RPR.BloodStalk);
@@ -407,17 +403,25 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return OriginalHook(RPR.Communio);
                     }
+                    if (HasEffect(RPR.Buffs.EnhancedCrossReaping))
+                    {
+                        return OriginalHook(RPR.Gallows);
+                    }
+                    if (HasEffect(RPR.Buffs.EnhancedVoidReaping))
+                    {
+                        return OriginalHook(RPR.Gibbet);
+                    }
                     return OriginalHook(RPR.Gibbet);
                 }
 
-                if (!HasEffect(RPR.Buffs.SoulReaver))
+                if (!HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded))
                 {
                     if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
                         return RPR.Gluttony;
                     return RPR.BloodStalk;
                 }
 
-                if (HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.BloodStalk || actionID == RPR.Gluttony))
+                if (!HasEffect(RPR.Buffs.Enshrouded) && HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.BloodStalk || actionID == RPR.Gluttony))
                 {
                     if (HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded))
                         return RPR.Gallows;
@@ -452,14 +456,14 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(RPR.Guillotine);
                 }
 
-                if (!HasEffect(RPR.Buffs.SoulReaver))
+                if (!HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded))
                 {
                     if ((actionID == RPR.GrimSwathe) && !gluttonyCD.IsCooldown && level >= 76)
                         return RPR.Gluttony;
                     return RPR.GrimSwathe;
                 }
 
-                if (HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.GrimSwathe || actionID == RPR.Gluttony))
+                if (!HasEffect(RPR.Buffs.Enshrouded) && HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.GrimSwathe || actionID == RPR.Gluttony))
                 {
                     return RPR.Guillotine;
                 }
