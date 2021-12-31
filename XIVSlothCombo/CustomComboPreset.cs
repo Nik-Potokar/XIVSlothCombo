@@ -315,6 +315,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterfull Bliz when Perfect Balance Is Active", MNK.JobID, MNK.PerfectBalance, MNK.MasterfulBlitz, MNK.ElixirField)]
         MnkPerfectBalancePlus = 807,
 
+        [CustomComboInfo("Perfect Balance AoE Feature Plus Testing", "All of the (Optimal?) Blitz combos on LEG SWEEP!!! when Perfect Balance Is Active (Also changes icon to PB, Testing Only!!)", MNK.JobID, MNK.LegSweep)]
+        MnkPerfectBalanceAoEPlus = 808,
+
         #endregion
         // ====================================================================================
         #region NINJA

@@ -20,6 +20,7 @@ namespace XIVSlothComboPlugin.Combos
             FourPointFury = 16473,
             PerfectBalance = 69,
             TrueStrike = 54,
+            LegSweep = 7863,
             HowlingFist = 25763,
             Enlightenment = 16474,
             MasterfulBlitz = 25764,
@@ -90,7 +91,6 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(MNK.ArmOfTheDestroyer);
                 }
             }
-
             return actionID;
         }
     }
@@ -254,6 +254,61 @@ namespace XIVSlothComboPlugin.Combos
 
             }
             return actionID;
+        }
+    }
+    internal class MnkPerfectBalanceAoEPlus : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkPerfectBalanceAoEPlus;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == MNK.LegSweep)
+
+            {
+                var gauge = GetJobGauge<MNKGauge>();
+                var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
+                var pbCD = GetCooldown(MNK.PerfectBalance);
+                var lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                var solarNadi = gauge.Nadi == Nadi.SOLAR;
+                var nadiNONE = gauge.Nadi == Nadi.NONE;
+                if(!HasEffect(MNK.Buffs.PerfectBalance) && pbCD.CooldownRemaining < 40)
+                {
+                    return MNK.PerfectBalance;
+                }
+                if (!nadiNONE && !lunarNadi && HasEffect(MNK.Buffs.PerfectBalance))
+                {
+                    if (pbStacks.StackCount == 3)
+                        return OriginalHook(MNK.ArmOfTheDestroyer);
+                    if (pbStacks.StackCount == 2)
+                        return OriginalHook(MNK.ArmOfTheDestroyer);
+                    if (pbStacks.StackCount == 1)
+                        return OriginalHook(MNK.ArmOfTheDestroyer);
+
+                }
+                if (nadiNONE && HasEffect(MNK.Buffs.PerfectBalance))
+                {
+                    if (pbStacks.StackCount == 3)
+                        return OriginalHook(MNK.ArmOfTheDestroyer);
+                    if (pbStacks.StackCount == 2)
+                        return OriginalHook(MNK.ArmOfTheDestroyer);
+                    if (pbStacks.StackCount == 1)
+                        return OriginalHook(MNK.ArmOfTheDestroyer);
+                }
+                if (lunarNadi && HasEffect(MNK.Buffs.PerfectBalance))
+                {
+                    if (pbStacks.StackCount == 3)
+                        return MNK.Rockbreaker;
+                    if (pbStacks.StackCount == 2)
+                        return MNK.FourPointFury;
+                    if (pbStacks.StackCount == 1)
+                        return MNK.Rockbreaker;
+
+
+                }
+                return OriginalHook(MNK.MasterfulBlitz);
+
+            }
+            return OriginalHook(MNK.MasterfulBlitz);
         }
     }
 }
