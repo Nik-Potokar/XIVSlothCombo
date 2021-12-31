@@ -114,7 +114,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
         BardAoEComboFeature = 207,
 
-        [CustomComboInfo("SimpleBard", "TESTING ONLY! Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will maintain their uptime with Iron Jaws.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("SimpleBard", "Testing Only! Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will try to maintain their uptime.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         SimpleBardFeature = 208,
 
         [CustomComboInfo("SimpleBard DoT Option", "Testing Only! This option will make SimpleBard apply DoTs if none are present on the target.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
@@ -123,7 +123,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
         BardSongsFeature = 210,
 
-        [CustomComboInfo("Bard Buffs Feature", "Adds BattleVoice, RagingStrikes, Barrage onto Barrage.", BRD.JobID, BRD.Barrage)]
+        [CustomComboInfo("Bard Buffs Feature", "Adds RagingStrikes and BattleVoice onto Barrage.", BRD.JobID, BRD.Barrage)]
         BardBuffsFeature = 211,
         #endregion
         // ====================================================================================

@@ -421,10 +421,10 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == BRD.Barrage)
             {
                 var gauge = GetJobGauge<BRDGauge>();
-                if (!GetCooldown(BRD.BattleVoice).IsCooldown && (level >= BRD.Levels.BattleVoice))
-                    return BRD.BattleVoice;
                 if (!GetCooldown(BRD.RagingStrikes).IsCooldown && (level >= BRD.Levels.RagingStrikes))
                     return BRD.RagingStrikes;
+                if (!GetCooldown(BRD.BattleVoice).IsCooldown && (level >= BRD.Levels.BattleVoice))
+                    return BRD.BattleVoice;
             }
             return OriginalHook(actionID);
         }
