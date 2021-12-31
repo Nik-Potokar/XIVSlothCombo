@@ -300,9 +300,8 @@ namespace XIVSlothComboPlugin.Combos
                         return MNK.Rockbreaker;
                     if (pbStacks.StackCount == 2)
                         return MNK.FourPointFury;
-                    if (pbStacks.StackCount == 1)
-                        return MNK.Rockbreaker;
-
+                    if (pbStacks.StackCount == 1 && lastComboMove == MNK.FourPointFury)
+                        return OriginalHook(MNK.ArmOfTheDestroyer); ;
 
                 }
                 return OriginalHook(MNK.MasterfulBlitz);

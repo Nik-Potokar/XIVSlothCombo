@@ -593,15 +593,25 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire). Keep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1415,
 
-        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin3 ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SimpleSummoner = 1416,
 
+        [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
+        SimpleAoESummoner = 1417,
+
         [DependentCombos(SimpleSummoner)]
-        [CustomComboInfo("One Button Rotation Option", "Adds Searing Light to Simple Summoner Rotation", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
-        BuffOnSimpleSummoner = 1417,
+        [CustomComboInfo("Searing Light Rotation Option", "Adds Searing Light to Simple Summoner Rotation, Single Target", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
+        BuffOnSimpleSummoner = 1418,
+
+        [DependentCombos(SimpleAoESummoner)]
+        [CustomComboInfo("Searing Light  AoE Option", "Adds Searing Light to Simple Summoner Rotation, AoE", SMN.JobID, SMN.Tridisaster, SMN.SearingLight)]
+        BuffOnSimpleAoESummoner = 1419,
 
         [CustomComboInfo("DemiReminderFeature", "Adds Only Demi Summons on RuinIII (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
-        SummonerDemiSummonsFeature = 1418,
+        SummonerDemiSummonsFeature = 1420,
+
+        [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        SummonerDemiAoESummonsFeature = 1421,
 
         #endregion
         // ====================================================================================

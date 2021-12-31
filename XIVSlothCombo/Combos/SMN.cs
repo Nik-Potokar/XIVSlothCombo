@@ -342,7 +342,42 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == SMN.Tridisaster)
             {
                 var gauge = GetJobGauge<SMNGauge>();
+                if (IsEnabled(CustomComboPreset.SimpleAoESummoner))
+                {
+                    var bahaCD = GetCooldown(SMN.SummonBahamut);
+                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var buffCD = GetCooldown(SMN.SearingLight);
 
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                        return SMN.SearingLight;
+
+                    // Egis
+                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                        return OriginalHook(SMN.SummonTopaz);
+                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonEmerald);
+                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonRuby);
+
+                    // Demi
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown || gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+
+
+                }
+                if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
+                {
+                    var bahaCD = GetCooldown(SMN.SummonBahamut);
+                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                }
                 if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
                 {
                     var energyDrainCD = GetCooldown(SMN.EnergyDrain);
