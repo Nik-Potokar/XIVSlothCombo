@@ -12,12 +12,15 @@ namespace XIVSlothComboPlugin.Combos
             HeavyShot = 97,
             StraightShot = 98,
             VenomousBite = 100,
+            RagingStrikes = 101,
             QuickNock = 106,
+            Barrage = 107,
             Bloodletter = 110,
             Windbite = 113,
             MagesBallad = 114,
             ArmysPaeon = 116,
             RainOfDeath = 117,
+            BattleVoice = 118,
             EmpyrealArrow = 3558,
             WanderersMinuet = 3559,
             IronJaws = 3560,
@@ -53,17 +56,21 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 StraightShot = 2,
+                RagingStrikes = 4,
                 VenomousBite = 6,
                 Bloodletter = 12,
                 Windbite = 30,
                 MagesBallad = 30,
                 ArmysPaeon = 40,
                 RainOfDeath = 45,
+                BattleVoice = 50,
                 PitchPerfect = 52,
                 EmpyrealArrow = 54,
                 IronJaws = 56,
                 WanderersMinuet = 52,
                 Sidewinder = 60,
+                CausticBite = 64,
+                StormBite = 64,
                 BiteUpgrade = 64,
                 RefulgentArrow = 70,
                 Shadowbite = 72,
@@ -351,11 +358,11 @@ namespace XIVSlothComboPlugin.Combos
                 var heavyshotCD = GetCooldown(actionID);
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && incombat)
                 {
-                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && level >= BRD.Levels.PitchPerfect)
                         return BRD.PitchPerfect;
                     if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow))
                         return BRD.EmpyrealArrow;
-                    if (GetCooldown(BRD.Bloodletter).CooldownRemaining < 30)
+                    if (GetCooldown(BRD.Bloodletter).CooldownRemaining < 30 && level >= BRD.Levels.Bloodletter)
                         return BRD.Bloodletter;
                     if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder))
                         return BRD.Sidewinder;
@@ -371,31 +378,31 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (level < BRD.Levels.BiteUpgrade)
                 {
-                    if ((venomous && windbite) && (venomousDuration.RemainingTime < 4 || windbiteDuration.RemainingTime < 4))
+                    if ((venomous && windbite && level >= BRD.Levels.IronJaws && incombat) && (venomousDuration.RemainingTime < 4 || windbiteDuration.RemainingTime < 4 && level >= BRD.Levels.IronJaws && incombat))
                         return BRD.IronJaws;
 
-                        if (IsEnabled(CustomComboPreset.SimpleDoTOption))
+                        if (IsEnabled(CustomComboPreset.SimpleDoTOption) && incombat)
                         {
-                            if (!windbite)
-                            return BRD.Windbite;
-                            if (!venomous)
-                            return BRD.VenomousBite;
+                            if (!windbite && level >= BRD.Levels.Windbite)
+                            return OriginalHook(BRD.Windbite);
+                            if (!venomous && level >= BRD.Levels.VenomousBite)
+                            return OriginalHook(BRD.VenomousBite);
                         }
                     else if (HasEffect(BRD.Buffs.StraightShotReady))
                         return OriginalHook(BRD.RefulgentArrow);
                     return OriginalHook(BRD.BurstShot);
                 }
 
-                if ((caustic && stormbite) && (causticDuration.RemainingTime < 4 || stormbiteDuration.RemainingTime < 4))
+                if ((caustic && stormbite && level >= BRD.Levels.IronJaws && incombat) && (causticDuration.RemainingTime < 4 || stormbiteDuration.RemainingTime < 4 && level >= BRD.Levels.IronJaws && incombat))
                     return BRD.IronJaws;
                 if (IsEnabled(CustomComboPreset.SimpleDoTOption))
                 {
-                    if (!caustic)
+                    if (!caustic && level >= BRD.Levels.CausticBite && incombat)
                         return BRD.CausticBite;
-                    if (!stormbite)
+                    if (!stormbite && level >= BRD.Levels.StormBite && incombat)
                         return BRD.Stormbite;
                 }
-                if (gauge.SoulVoice == 100)
+                if (gauge.SoulVoice == 100 && level >= BRD.Levels.ApexArrow)
                     return BRD.ApexArrow;
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
@@ -403,6 +410,23 @@ namespace XIVSlothComboPlugin.Combos
                 return OriginalHook(BRD.BurstShot);
             }
             return actionID;
+        }
+    }
+    internal class BardBuffsFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardBuffsFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.Barrage)
+            {
+                var gauge = GetJobGauge<BRDGauge>();
+                if (!GetCooldown(BRD.BattleVoice).IsCooldown && (level >= BRD.Levels.BattleVoice))
+                    return BRD.BattleVoice;
+                if (!GetCooldown(BRD.RagingStrikes).IsCooldown && (level >= BRD.Levels.RagingStrikes))
+                    return BRD.RagingStrikes;
+            }
+            return OriginalHook(actionID);
         }
     }
 }

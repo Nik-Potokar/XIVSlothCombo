@@ -122,6 +122,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
         BardSongsFeature = 210,
+
+        [CustomComboInfo("Bard Buffs Feature", "Adds BattleVoice, RagingStrikes, Barrage onto Barrage.", BRD.JobID, BRD.Barrage)]
+        BardBuffsFeature = 211,
         #endregion
         // ====================================================================================
         #region DANCER
