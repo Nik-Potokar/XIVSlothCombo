@@ -114,13 +114,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
         BardAoEComboFeature = 207,
 
-        [CustomComboInfo("SimpleBard", "Testing Only! Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will try to maintain their uptime.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("SimpleBard", "Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will try to maintain their uptime.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         SimpleBardFeature = 208,
 
-        [CustomComboInfo("SimpleBard DoT Option", "Testing Only! This option will make SimpleBard apply DoTs if none are present on the target.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("SimpleBard DoT Option", "This option will make SimpleBard apply DoTs if none are present on the target.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         SimpleDoTOption = 209,
 
-        [CustomComboInfo("SimpleBard Song Option", "Testing Only! This option adds the bards songs to the SimpleBard feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("SimpleBard Song Option", "This option adds the bards songs to the SimpleBard feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         SimpleSongOption = 210,
 
         [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
