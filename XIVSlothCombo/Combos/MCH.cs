@@ -131,9 +131,9 @@ namespace XIVSlothComboPlugin.Combos
                 var battery = GetJobGauge<MCHGauge>().Battery;
                 if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
                 {
-                    if (battery == 100 && level >= 40 && level <= 79)
+                    if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.RookAutoturret;
-                    if (battery == 100 && level >= 80)
+                    if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.AutomatonQueen;
                 }
 
@@ -234,9 +234,9 @@ namespace XIVSlothComboPlugin.Combos
                 var battery = GetJobGauge<MCHGauge>().Battery;
                 if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption))
                 {
-                    if (battery == 100 && level >= 40 && level <= 79)
+                    if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.RookAutoturret;
-                    if (battery == 100 && level >= 80)
+                    if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.AutomatonQueen;
                 }
 
