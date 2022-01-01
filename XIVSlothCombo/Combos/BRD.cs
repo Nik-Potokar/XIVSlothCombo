@@ -358,13 +358,13 @@ namespace XIVSlothComboPlugin.Combos
                 var heavyshotCD = GetCooldown(actionID);
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && incombat)
                 {
-                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && level >= BRD.Levels.PitchPerfect)
+                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && level >= BRD.Levels.PitchPerfect && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                         return BRD.PitchPerfect;
-                    if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow))
+                    if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                         return BRD.EmpyrealArrow;
-                    if (GetCooldown(BRD.Bloodletter).CooldownRemaining < 30 && level >= BRD.Levels.Bloodletter)
+                    if (GetCooldown(BRD.Bloodletter).CooldownRemaining < 30 && level >= BRD.Levels.Bloodletter && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                         return BRD.Bloodletter;
-                    if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder))
+                    if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                         return BRD.Sidewinder;
                 }
 
@@ -372,11 +372,11 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.SongTimer < 1 && heavyshotCD.IsCooldown || gauge.Song == Song.ARMY && heavyshotCD.IsCooldown)
                     {
-                        if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet))
+                        if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                             return BRD.WanderersMinuet;
-                        if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad))
+                        if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                             return BRD.MagesBallad;
-                        if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon))
+                        if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                             return BRD.ArmysPaeon;
                     }
                 }
@@ -391,12 +391,12 @@ namespace XIVSlothComboPlugin.Combos
                         return BRD.Windbite;
 
                     if (IsEnabled(CustomComboPreset.SimpleDoTOption) && incombat)
-                        {
+                    {
                             if (!windbite && level >= BRD.Levels.Windbite)
                             return OriginalHook(BRD.Windbite);
                             if (!venomous && level >= BRD.Levels.VenomousBite)
                             return OriginalHook(BRD.VenomousBite);
-                        }
+                    }
                     else if (HasEffect(BRD.Buffs.StraightShotReady))
                         return OriginalHook(BRD.RefulgentArrow);
                     return OriginalHook(BRD.BurstShot);
