@@ -254,6 +254,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
     internal class BardoGCDAoEFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BardoGCDAoEFeature;
@@ -277,6 +278,44 @@ namespace XIVSlothComboPlugin.Combos
             return OriginalHook(actionID);
         }
     }
+
+    internal class BardSimpleAoEFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardSimpleAoEFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.Ladonsbite || actionID == BRD.QuickNock)
+            {
+                var gauge = GetJobGauge<BRDGauge>();
+                if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                    return BRD.PitchPerfect;
+                if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                    return BRD.EmpyrealArrow;
+                if (GetCooldown(BRD.RainOfDeath).CooldownRemaining < 30 && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                    return BRD.RainOfDeath;
+                if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                    return BRD.Sidewinder;
+                if (IsEnabled(CustomComboPreset.SimpleAoESongOption))
+                {
+                    if (gauge.SongTimer < 1 && GetCooldown(actionID).IsCooldown || gauge.Song == Song.ARMY && GetCooldown(actionID).IsCooldown)
+                    {
+                        if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                            return BRD.WanderersMinuet;
+                        if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                            return BRD.MagesBallad;
+                        if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                            return BRD.ArmysPaeon;
+                    }
+                }
+
+
+            }
+
+            return OriginalHook(actionID);
+        }
+    }
+
     internal class BardoGCDSingleTargetFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BardoGCDSingleTargetFeature;
@@ -372,10 +411,10 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.SongTimer < 1 && heavyshotCD.IsCooldown || gauge.Song == Song.ARMY && heavyshotCD.IsCooldown)
                     {
-                        if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
-                            return BRD.WanderersMinuet;
                         if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                             return BRD.MagesBallad;
+                        if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                            return BRD.WanderersMinuet;
                         if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                             return BRD.ArmysPaeon;
                     }

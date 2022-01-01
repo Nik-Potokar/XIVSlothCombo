@@ -132,6 +132,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("One Button Songs", "Add Mage's Ballade and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, BRD.WanderersMinuet)]
         BardOneButtonSongs = 213,
 
+        [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
+        BardSimpleAoEFeature = 214,
+
+        [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
+        SimpleAoESongOption = 215,
+
         #endregion
         // ====================================================================================
         #region DANCER
