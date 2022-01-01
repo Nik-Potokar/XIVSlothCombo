@@ -39,7 +39,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const short
                 StraightShotReady = 122,
-                BlastShotReady = 2692,
+                BlastArrowReady = 2692,
                 ShadowbiteReady = 3002;
         }
 
@@ -77,7 +77,7 @@ namespace XIVSlothComboPlugin.Combos
                 BurstShot = 76,
                 ApexArrow = 80,
                 Ladonsbite = 82,
-                BlastShot = 86;
+                BlastArrow = 86;
         }
     }
 
@@ -296,6 +296,9 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.RainOfDeath;
                 if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                     return BRD.Sidewinder;
+                if (HasEffect(BRD.Buffs.ShadowbiteReady) && level >= BRD.Levels.Shadowbite)
+                    return BRD.Shadowbite;
+
                 if (IsEnabled(CustomComboPreset.SimpleAoESongOption))
                 {
                     if (gauge.SongTimer < 1 && GetCooldown(actionID).IsCooldown || gauge.Song == Song.ARMY && GetCooldown(actionID).IsCooldown)
@@ -362,7 +365,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= BRD.Levels.ApexArrow && GetJobGauge<BRDGauge>().SoulVoice == 100)
                         return BRD.ApexArrow;
 
-                    if (level >= BRD.Levels.BlastShot && HasEffect(BRD.Buffs.BlastShotReady))
+                    if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                         return BRD.BlastArrow;
 
                 }
@@ -395,6 +398,7 @@ namespace XIVSlothComboPlugin.Combos
                 var causticDuration = FindTargetEffect(BRD.Debuffs.CausticBite);
                 var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
                 var heavyshotCD = GetCooldown(actionID);
+                var soulvoice = GetJobGauge<BRDGauge>().SoulVoice;
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && incombat)
                 {
                     if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && level >= BRD.Levels.PitchPerfect && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
@@ -405,6 +409,10 @@ namespace XIVSlothComboPlugin.Combos
                         return BRD.Bloodletter;
                     if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
                         return BRD.Sidewinder;
+                    if (soulvoice >= 100 && level >= BRD.Levels.ApexArrow)
+                        return BRD.ApexArrow;
+                    if (HasEffect(BRD.Buffs.BlastArrowReady) && level >= BRD.Levels.BlastArrow)
+                        return BRD.BlastArrow;
                 }
 
                 if (IsEnabled(CustomComboPreset.SimpleSongOption))
