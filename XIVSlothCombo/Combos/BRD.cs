@@ -385,8 +385,12 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if ((venomous && windbite && level >= BRD.Levels.IronJaws && incombat) && (venomousDuration.RemainingTime < 4 || windbiteDuration.RemainingTime < 4 && level >= BRD.Levels.IronJaws && incombat))
                         return BRD.IronJaws;
+                    if (venomous && level < BRD.Levels.IronJaws && incombat && (venomousDuration.RemainingTime < 4))
+                        return BRD.VenomousBite;
+                    if (windbite && level < BRD.Levels.IronJaws && incombat && (windbiteDuration.RemainingTime < 4))
+                        return BRD.Windbite;
 
-                        if (IsEnabled(CustomComboPreset.SimpleDoTOption) && incombat)
+                    if (IsEnabled(CustomComboPreset.SimpleDoTOption) && incombat)
                         {
                             if (!windbite && level >= BRD.Levels.Windbite)
                             return OriginalHook(BRD.Windbite);
