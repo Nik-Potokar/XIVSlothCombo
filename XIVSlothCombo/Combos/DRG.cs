@@ -36,7 +36,7 @@ namespace XIVSlothComboPlugin.Combos
                 EnhancedWheelingThrust = 803,
                 DiveReady = 1243,
                 RaidenThrustReady = 1863,
-                PowerSurge = 120,
+                PowerSurge = 2720,
                 LifeSurge = 116;
         }
 
