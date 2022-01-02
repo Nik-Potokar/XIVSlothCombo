@@ -290,6 +290,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Drill / Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chainsaw) depending on which is on cooldown.", MCH.JobID, MCH.Drill, MCH.HotShot, MCH.AirAnchor)]
         MachinistHotShotDrillChainsawFeature = 704,
 
+        [DependentCombos(MachinistMainCombo)]
         [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 705,
 
@@ -297,12 +298,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge, If Wildfire is off cooldown and you have enough heat for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 706,
 
-        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD)\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        [DependentCombos(MachinistMainCombo)]
+        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot/Chainsaw is added onto main combo.\n Drill/Chainsaw only added with Reassemble. \nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistAlternateMainCombo = 707,
 
+        [DependentCombos(MachinistMainCombo)]
         [CustomComboInfo("Single Button HeatBlast On Main Combo Option", "Adds Single Button Heatblast onto the main combo when the option is enabled.\n Requires (Heated) Shot Combo.", MCH.JobID, MCH.HeatBlast)]
         MachinistHeatBlastOnMainCombo = 708,
 
+        [DependentCombos(MachinistMainCombo)]
         [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge rook/queen will be added to your (Heated) Shot Combo.\nRequires (Heated) Shot Combo", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistOverChargeOption = 709,
 
