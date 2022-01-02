@@ -9,6 +9,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public const uint
             Jump = 92,
+            LifeSurge = 83,
             HighJump = 16478,
             MirageDive = 7399,
             BloodOfTheDragon = 3553,
@@ -34,7 +35,9 @@ namespace XIVSlothComboPlugin.Combos
                 SharperFangAndClaw = 802,
                 EnhancedWheelingThrust = 803,
                 DiveReady = 1243,
-                RaidenThrustReady = 1863;
+                RaidenThrustReady = 1863,
+                PowerSurge = 120,
+                LifeSurge = 116;
         }
 
         public static class Debuffs
@@ -163,4 +166,44 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class DragoonFullThrustComboPlus : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DragoonFullThrustComboPlus;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == DRG.FullThrust)
+            {
+                var Disembowel = FindEffectAny(DRG.Buffs.PowerSurge);
+                if (comboTime > 0)
+                {
+                    if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.Disembowel && (Disembowel == null || (Disembowel.RemainingTime < 10)))
+                        return DRG.Disembowel;
+
+                    if (lastComboMove == DRG.Disembowel && level >= DRG.Levels.ChaosThrust)
+                        return DRG.ChaosThrust;
+
+                    if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.VorpalThrust)
+                        return DRG.VorpalThrust;
+
+                    if (lastComboMove == DRG.VorpalThrust && !HasEffect(DRG.Buffs.LifeSurge) && !GetCooldown(DRG.LifeSurge).IsCooldown)
+                        return DRG.LifeSurge;
+
+                    if (lastComboMove == DRG.VorpalThrust && level >= DRG.Levels.FullThrust)
+                        return DRG.FullThrust;
+                }
+
+                if (HasEffect(DRG.Buffs.SharperFangAndClaw) && level >= DRG.Levels.FangAndClaw)
+                    return DRG.FangAndClaw;
+
+                if (HasEffect(DRG.Buffs.EnhancedWheelingThrust) && level >= DRG.Levels.WheelingThrust)
+                    return DRG.WheelingThrust;
+
+                return OriginalHook(DRG.TrueThrust);
+            }
+
+            return actionID;
+        }
+    }
+
 }

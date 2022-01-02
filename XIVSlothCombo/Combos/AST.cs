@@ -33,10 +33,18 @@ namespace XIVSlothComboPlugin.Combos
             Play = 17055,
             LordOfCrowns = 7444,
             LadyOfCrown = 7445,
+
+            // aoes
+            Gravity = 3615,
+            Gravity2 = 25872,
+
+            // dots
             Combust3 = 16554,
             Combust2 = 3608,
             Combust1 = 3599,
 
+
+            // heals
             Helios = 3600,
             AspectedHelios = 3601;
 
@@ -218,6 +226,48 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasEffect(AST.Buffs.AspectedHelios))
                     return AST.Helios;
+            }
+
+            return actionID;
+        }
+    }
+    internal class AstrologianDpsAoEFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianDpsAoEFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == AST.Gravity || actionID == AST.Gravity2)
+            {
+
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(AST.LucidDreaming);
+                var gravityCD = GetCooldown(AST.Gravity);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature))
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4)
+                        return AST.Astrodyne;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature))
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30)
+                        return AST.Draw;
+
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature))
+                {
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4)
+                        return AST.MinorArcana;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature))
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
+                        return AST.LucidDreaming;
+                }
             }
 
             return actionID;

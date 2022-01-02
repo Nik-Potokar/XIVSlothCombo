@@ -50,6 +50,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, AST.FallMalefic)]
         AstrologianAutoCrownDrawFeature = 10,
 
+        [CustomComboInfo("AoE DPS Feature", "Adds AutoDraws/Astrodyne to the AoE Gravity combo", AST.JobID, AST.Gravity, AST.Gravity2)]
+        AstrologianDpsAoEFeature = 11,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -189,11 +192,16 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Chaos Thrust Combo", "Replace Chaos Thrust with its combo chain.", DRG.JobID, DRG.ChaosThrust)]
         DragoonChaosThrustCombo = 403,
 
+        [ConflictingCombos(DragoonFullThrustComboPlus)]
         [CustomComboInfo("Full Thrust Combo", "Replace Full Thrust with its combo chain.", DRG.JobID, DRG.FullThrust)]
         DragoonFullThrustCombo = 404,
 
+        [ConflictingCombos(DragoonFullThrustCombo)]
+        [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, DRG.FullThrust)]
+        DragoonFullThrustComboPlus = 405,
+
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, DRG.FullThrust, DRG.ChaosThrust)]
-        DragoonFangThrustFeature = 405,
+        DragoonFangThrustFeature = 406,
 
         #endregion
         // ====================================================================================
@@ -537,11 +545,20 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, SCH.Swiftcast, SCH.Resurrection)]
         SchRaiseFeature = 1302,
 
-        [CustomComboInfo("SCH DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID, SCH.Ruin2)]
-        SCHDPSFeature = 1303,
+        [CustomComboInfo("SCH Alternate DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID, SCH.Ruin2)]
+        SCHDPSAlternateFeature = 1303,
 
         [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID, SCH.WhisperingDawn, SCH.FeyIllumination, SCH.FeyBless, SCH.Aetherpact, SCH.Dissipation, SCH.SummonSeraph, SCH.Consolation)]
         ScholarFairyFeature = 1304,
+
+        [CustomComboInfo("DPS Feature", "Adds Bio1/Bio2/Biosys to Broil/Ruin whenever the debuff is not present or about to expire.", SCH.JobID, SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin2, SCH.Ruin1)]
+        ScholarDPSFeature = 1305,
+
+        [CustomComboInfo("DPS Feature Buff Option", "Adds Chainstratagem to the DPS Feature.", SCH.JobID, SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin2, SCH.Ruin1)]
+        ScholarDPSFeatureBuffOption = 1306,
+
+        [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below 8k mana.", SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin2, SCH.Ruin1)]
+        ScholarLucidDPSFeature = 1307,
 
         #endregion
         // ====================================================================================
