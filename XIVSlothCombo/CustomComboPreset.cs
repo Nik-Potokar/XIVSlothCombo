@@ -771,7 +771,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Phlegma into Dyskrasia", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, SGE.Phlegma, SGE.Phlegmara, SGE.Phlegmaga)]
         SagePhlegmaFeature = 1801,
 
-        [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button", SGE.JobID, SGE.Dosis1, SGE.Eukrasia, SGE.EukrasianDosis1)]
+        [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button", SGE.JobID, SGE.Dosis1, SGE.Dosis2, SGE.Dosis3, SGE.Eukrasia, SGE.EukrasianDosis1)]
         SageDPSFeature = 1802,
 
         [ConflictingCombos(DoMSwiftcastFeature)]
