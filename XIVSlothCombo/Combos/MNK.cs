@@ -75,21 +75,16 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MNK.Rockbreaker)
+            if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
                 if (IsEnabled(CustomComboPreset.MnkAoECombo))
                 {
-                    if (level >= MNK.Levels.FourPointFury && HasEffect(MNK.Buffs.RaptorForm))
+                    if (lastComboMove == MNK.ArmOfTheDestroyer && HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.FourPointFury)
                         return MNK.FourPointFury;
-
-                    if (level >= MNK.Levels.ArmOfTheDestroyer && HasEffect(MNK.Buffs.OpoOpoForm))
-                        return OriginalHook(MNK.ArmOfTheDestroyer);
-
-                    if (level >= MNK.Levels.Rockbreaker && HasEffect(MNK.Buffs.CoerlForm))
+                    if (lastComboMove == MNK.FourPointFury && HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
                         return MNK.Rockbreaker;
-
-                    return OriginalHook(MNK.ArmOfTheDestroyer);
                 }
+                return OriginalHook(actionID);
             }
             return actionID;
         }
@@ -275,33 +270,54 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return MNK.PerfectBalance;
                 }
-                if (!nadiNONE && !lunarNadi && HasEffect(MNK.Buffs.PerfectBalance))
+                // low level
+                if (!nadiNONE && !lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level <= 81)
                 {
-                    if (pbStacks.StackCount == 3)
+                    if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
+                        return MNK.Rockbreaker;
+                    if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
+                        return MNK.Rockbreaker;
+                    if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
+                        return MNK.Rockbreaker;
+
+                }
+                if (nadiNONE && HasEffect(MNK.Buffs.PerfectBalance) && level <= 81)
+                {
+                    if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
+                        return MNK.Rockbreaker;
+                    if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
+                        return MNK.Rockbreaker;
+                    if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
+                        return MNK.Rockbreaker;
+                }
+                // highlevel
+                if (!nadiNONE && !lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level >= 82)
+                {
+                    if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
-                    if (pbStacks.StackCount == 2)
+                    if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
-                    if (pbStacks.StackCount == 1)
+                    if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
 
                 }
-                if (nadiNONE && HasEffect(MNK.Buffs.PerfectBalance))
+                if (nadiNONE && HasEffect(MNK.Buffs.PerfectBalance) && level >= 82)
                 {
-                    if (pbStacks.StackCount == 3)
+                    if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
-                    if (pbStacks.StackCount == 2)
+                    if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
-                    if (pbStacks.StackCount == 1)
+                    if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
                 }
                 if (lunarNadi && HasEffect(MNK.Buffs.PerfectBalance))
                 {
-                    if (pbStacks.StackCount == 3)
-                        return MNK.Rockbreaker;
-                    if (pbStacks.StackCount == 2)
-                        return MNK.FourPointFury;
-                    if (pbStacks.StackCount == 1 )
+                    if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
+                    if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == OriginalHook(MNK.ArmOfTheDestroyer))
+                        return MNK.FourPointFury;
+                    if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == MNK.FourPointFury)
+                        return MNK.Rockbreaker;
 
                 }
                 return OriginalHook(MNK.MasterfulBlitz);
