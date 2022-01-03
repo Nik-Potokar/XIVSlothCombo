@@ -159,12 +159,9 @@ namespace XIVSlothComboPlugin.Combos
             {
 
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var combust3Debuff = TargetHasEffect(AST.Debuffs.Combust3);
-                var combust2Debuff = TargetHasEffect(AST.Debuffs.Combust2);
-                var combust1Debuff = TargetHasEffect(AST.Debuffs.Combust1);
-                var combust3Timer = FindTargetEffect(AST.Debuffs.Combust3);
-                var combust2Timer = FindTargetEffect(AST.Debuffs.Combust2);
-                var combust1Timer = FindTargetEffect(AST.Debuffs.Combust1);
+                var combust3Debuff = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust2Debuff = FindTargetEffect(AST.Debuffs.Combust2);
+                var combust1Debuff = FindTargetEffect(AST.Debuffs.Combust1);
                 var gauge = GetJobGauge<ASTGauge>();
                 var lucidDreaming = GetCooldown(AST.LucidDreaming);
                 var fallmalefic = GetCooldown(AST.FallMalefic);
@@ -193,21 +190,21 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.LucidDreaming;
                 }
 
-                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 72)
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 72 && incombat)
                 {
-                    if ((!combust3Debuff && incombat && level >= 72) || (combust3Timer.RemainingTime < 3 && incombat && level >= 72))
+                    if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
                         return AST.Combust3;
                 }
 
-                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 46 && level <= 71)
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 46 && level <= 71 && incombat)
                 {
-                    if ((!combust2Debuff && incombat && level >= 46 && level <= 71) || (combust2Timer.RemainingTime < 3 && incombat && level >= 46 && level <= 71))
+                    if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
                         return AST.Combust2;
                 }
 
-                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 4 && level <= 45)
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 4 && level <= 45 && incombat)
                 {
-                    if ((!combust1Debuff && incombat && level >= 4 && level <= 45) || (combust1Timer.RemainingTime < 3 && incombat && level >= 4 && level <= 45))
+                    if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
                         return AST.Combust1;
                 }
             }

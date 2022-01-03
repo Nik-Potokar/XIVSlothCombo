@@ -171,14 +171,11 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SCHGauge>();
                 var lucidDreaming = GetCooldown(SCH.LucidDreaming);
                 // biosys
-                var biosys = TargetHasEffect(SCH.Debuffs.Biolysis);
-                var biosysDuration = FindTargetEffect(SCH.Debuffs.Biolysis);
+                var biosys = FindTargetEffect(SCH.Debuffs.Biolysis);
                 // bio 1
-                var bio1 = TargetHasEffect(SCH.Debuffs.Bio1);
-                var bio1Duration = FindTargetEffect(SCH.Debuffs.Bio1);
+                var bio1 = FindTargetEffect(SCH.Debuffs.Bio1);
                 // bio 2
-                var bio2 = TargetHasEffect(SCH.Debuffs.Bio2);
-                var bio2Duration = FindTargetEffect(SCH.Debuffs.Bio2);
+                var bio2 = FindTargetEffect(SCH.Debuffs.Bio2);
                 // buff
                 var chainBuff = GetCooldown(SCH.ChainStratagem);
                 var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
@@ -190,19 +187,19 @@ namespace XIVSlothComboPlugin.Combos
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
                         return SCH.LucidDreaming;
                 }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 72)
+                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 72 && incombat)
                 {
-                    if ((!biosys && incombat && level >= 72) || (biosysDuration.RemainingTime < 3 && incombat && level >= 72))
+                    if ((biosys is null) || (biosys.RemainingTime <= 3))
                         return SCH.Biolysis;
                 }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 26 && level <= 71)
+                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 26 && level <= 71 && incombat)
                 {
-                    if ((!bio2 && incombat && level >= 26 && level <= 71) || (bio2Duration.RemainingTime < 3 && incombat && level >= 26 && level <= 71))
+                    if ((bio2 is null) || (bio2.RemainingTime <= 3))
                         return SCH.Bio2;
                 }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 4 && level <= 25)
+                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 4 && level <= 25 && incombat)
                 {
-                    if ((!bio1 && incombat && level >= 4 && level <= 25) || (bio1Duration.RemainingTime < 3 && incombat && level >= 4 && level <= 25))
+                    if ((bio1 is null) || (bio1.RemainingTime <= 3))
                         return SCH.Bio1;
                 }
                 if (IsEnabled(CustomComboPreset.ScholarDPSFeatureBuffOption) && level >= 66)

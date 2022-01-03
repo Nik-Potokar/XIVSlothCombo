@@ -170,25 +170,25 @@ namespace XIVSlothComboPlugin.Combos
                             return WHM.LucidDreaming;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 4 && level <= 45)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 4 && level <= 45 && inCombat)
                     {
-                        if ((!TargetHasEffect(WHM.Debuffs.Aero) && inCombat && level >= 4 && level <= 45) || (aero1Debuff.RemainingTime <= 3 && inCombat && level >= 4 && level <= 45))
+                        if ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3))
                         {
                             return WHM.Aero1;
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 46 && level <= 71)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 46 && level <= 71 && inCombat)
                     {
-                        if ((!TargetHasEffect(WHM.Debuffs.Aero2) && inCombat && level >= 46 && level <= 71) || (aero2Debuff.RemainingTime <= 3 && inCombat && level >= 46 && level <= 71))
+                        if ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3))
                         {
                             return WHM.Aero2;
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 72)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 72 && inCombat)
                     {
-                        if ((!TargetHasEffect(WHM.Debuffs.Dia) && inCombat && level >= 72) || (diaDebuff.RemainingTime <= 3 && inCombat && level >= 72))
+                        if ((diaDebuff is null) || (diaDebuff.RemainingTime <= 3))
                         {
                             return WHM.Dia;
                         }
