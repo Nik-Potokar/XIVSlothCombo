@@ -120,27 +120,27 @@ namespace XIVSlothComboPlugin.Combos
                 var dosis2Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
                 var dosis3Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 82)
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 82 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis3;
-                    if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis3) && incombat && level >= 82) || (dosis3Debuff.RemainingTime < 4 && incombat && level >= 82))
+                    if ((dosis3Debuff is null) || (dosis3Debuff.RemainingTime <= 4))
                         return SGE.Eukrasia;
                 }
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 72 && level <= 81)
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 72 && level <= 81 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis2;
-                    if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis2) && incombat && level >= 72 && level <= 81) || (dosis2Debuff.RemainingTime < 4 && incombat && level >= 72 && level <= 81))
+                    if ((dosis2Debuff is null) || (dosis2Debuff.RemainingTime <= 4))
                         return SGE.Eukrasia;
                 }
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 30 && level <= 71)
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 30 && level <= 71 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis1;
-                    if ((!TargetHasEffect(SGE.Debuffs.EukrasianDosis1) && incombat && level >= 30 && level <= 71) || (dosis1Debuff.RemainingTime < 4 && incombat && level >= 30 && level <= 71))
+                    if ((dosis1Debuff is null) || (dosis1Debuff.RemainingTime <= 4))
                         return SGE.Eukrasia;
                 }
             }
