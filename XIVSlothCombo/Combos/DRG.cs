@@ -51,6 +51,7 @@ namespace XIVSlothComboPlugin.Combos
                 VorpalThrust = 4,
                 Disembowel = 18,
                 FullThrust = 26,
+                Jump = 30,
                 ChaosThrust = 50,
                 FangAndClaw = 56,
                 WheelingThrust = 58,
@@ -186,11 +187,14 @@ namespace XIVSlothComboPlugin.Combos
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.VorpalThrust)
                         return DRG.VorpalThrust;
 
-                    if (lastComboMove == DRG.VorpalThrust && !HasEffect(DRG.Buffs.LifeSurge) && !GetCooldown(DRG.LifeSurge).IsCooldown)
+                    if (lastComboMove == DRG.VorpalThrust && !HasEffect(DRG.Buffs.LifeSurge) && GetCooldown(DRG.LifeSurge).CooldownRemaining < 45)
                         return DRG.LifeSurge;
 
                     if (lastComboMove == DRG.VorpalThrust && level >= DRG.Levels.FullThrust)
                         return DRG.FullThrust;
+
+                    if (lastComboMove == DRG.FullThrust && !GetCooldown(DRG.Jump).IsCooldown && level >= DRG.Levels.Jump)
+                        return DRG.Jump;
                 }
 
                 if (HasEffect(DRG.Buffs.SharperFangAndClaw) && level >= DRG.Levels.FangAndClaw)
