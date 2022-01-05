@@ -463,4 +463,21 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
+    internal class SummonerRuinIVMobilityFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerRuinIVMobilityFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Ruin4)
+            {
+                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
+                if (!furtherRuin)
+                    return SMN.Ruin3;
+            }
+
+            return actionID;
+        }
+    }
 }
