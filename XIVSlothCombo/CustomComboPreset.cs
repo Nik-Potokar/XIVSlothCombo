@@ -654,6 +654,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SummonerDemiAoESummonsFeature = 1421,
 
+        [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons.", SMN.JobID, SMN.Ruin4, SMN.Ruin3)]
+        SummonerRuinIVMobilityFeature = 1422,
+
         #endregion
         // ====================================================================================
         #region WARRIOR

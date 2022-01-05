@@ -82,6 +82,7 @@
 #### Summoner
 * One button rotation for all the demi-summons (Single and AoE features)
 * One button egi rotation features for each egi (Single and AoE features)
+* Ruin III on Ruin IV when you don't have Further Ruin - never lose mobility even with combos enabled.
 * Never forget to ruin4 feature
 * So much other stuff - SMN currently has over 18 tweaks.
 
