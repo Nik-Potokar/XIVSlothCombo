@@ -94,52 +94,63 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Wanderer's into Pitch Perfect", "Replaces Wanderer's Minuet with Pitch Perfect while in WM.", BRD.JobID, BRD.WanderersMinuet)]
         BardWanderersPitchPerfectFeature = 200,
 
+        [ConflictingCombos(SimpleBardFeature)]
         [CustomComboInfo("Heavy Shot into Straight Shot", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardStraightShotUpgradeFeature = 201,
 
+        [DependentCombos(BardStraightShotUpgradeFeature)]
+        [CustomComboInfo("Dot Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your dots on target when needed if there are any dots present.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardDoTMaintain = 202,
+
         [ConflictingCombos(BardIronJawsAlternateFeature)]
         [CustomComboInfo("Iron Jaws Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nAlternates between the two if Iron Jaws isn't available.", BRD.JobID, BRD.IronJaws)]
-        BardIronJawsFeature = 202,
+        BardIronJawsFeature = 203,
 
         [ConflictingCombos(BardIronJawsFeature)]
         [CustomComboInfo("Iron Jaws Alternate Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nIron Jaws will only show up when debuffs are about to expire.", BRD.JobID, BRD.IronJaws)]
-        BardIronJawsAlternateFeature = 203,
+        BardIronJawsAlternateFeature = 204,
 
+        [ConflictingCombos(SimpleBardFeature)]
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
-        BardApexFeature = 204,
+        BardApexFeature = 205,
 
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
-        BardoGCDSingleTargetFeature = 205,
+        BardoGCDSingleTargetFeature = 206,
 
         [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on RainOfDeath depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.RainOfDeath)]
-        BardoGCDAoEFeature = 206,
+        BardoGCDAoEFeature = 207,
 
+        [ConflictingCombos(BardSimpleAoEFeature)]
         [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
-        BardAoEComboFeature = 207,
+        BardAoEComboFeature = 208,
 
         [CustomComboInfo("SimpleBard", "Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will try to maintain their uptime.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
-        SimpleBardFeature = 208,
+        SimpleBardFeature = 209,
 
+        [DependentCombos(SimpleBardFeature)]
         [CustomComboInfo("SimpleBard DoT Option", "This option will make SimpleBard apply DoTs if none are present on the target.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
-        SimpleDoTOption = 209,
+        SimpleDoTOption = 210,
 
+        [DependentCombos(SimpleBardFeature)]
         [CustomComboInfo("SimpleBard Song Option", "This option adds the bards songs to the SimpleBard feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
-        SimpleSongOption = 210,
+        SimpleSongOption = 211,
 
+        [DependentCombos(BardoGCDAoEFeature)]
         [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
-        BardSongsFeature = 211,
+        BardSongsFeature = 212,
 
         [CustomComboInfo("Bard Buffs Feature", "Adds RagingStrikes and BattleVoice onto Barrage.", BRD.JobID, BRD.Barrage)]
-        BardBuffsFeature = 212,
+        BardBuffsFeature = 213,
 
         [CustomComboInfo("One Button Songs", "Add Mage's Ballade and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, BRD.WanderersMinuet)]
-        BardOneButtonSongs = 213,
+        BardOneButtonSongs = 214,
 
         [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
-        BardSimpleAoEFeature = 214,
+        BardSimpleAoEFeature = 215,
 
+        [DependentCombos(BardSimpleAoEFeature)]
         [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
-        SimpleAoESongOption = 215,
+        SimpleAoESongOption = 216,
 
         #endregion
         // ====================================================================================
@@ -290,23 +301,30 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Drill / Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chainsaw) depending on which is on cooldown.", MCH.JobID, MCH.Drill, MCH.HotShot, MCH.AirAnchor)]
         MachinistHotShotDrillChainsawFeature = 704,
 
-        [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        [DependentCombos(MachinistMainCombo)]
+        [ConflictingCombos(MachinistAlternateMainCombo)]
+        [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 705,
 
         [SecretCustomCombo]
         [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge, If Wildfire is off cooldown and you have enough heat for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 706,
 
-        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD)\nRequires (Heated) Shot Combo.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
+        [DependentCombos(MachinistMainCombo)]
+        [ConflictingCombos(MachinistDrillAirOnMainCombo)]
+        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD)", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistAlternateMainCombo = 707,
 
-        [CustomComboInfo("Single Button HeatBlast On Main Combo Option", "Adds Single Button Heatblast onto the main combo when the option is enabled.\n Requires (Heated) Shot Combo.", MCH.JobID, MCH.HeatBlast)]
+        [DependentCombos(MachinistMainCombo)]
+        [CustomComboInfo("Single Button HeatBlast On Main Combo Option", "Adds Single Button Heatblast onto the main combo when the option is enabled.", MCH.JobID, MCH.HeatBlast)]
         MachinistHeatBlastOnMainCombo = 708,
 
-        [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge rook/queen will be added to your (Heated) Shot Combo.\nRequires (Heated) Shot Combo", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
+        [DependentCombos(MachinistMainCombo)]
+        [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge rook/queen will be added to your (Heated) Shot Combo.", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistOverChargeOption = 709,
 
-        [CustomComboInfo("Battery AOE Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.\nRequires Spread Shot/Scattergun Heat, +BioBlaster", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
+        [DependentCombos(MachinistSpreadShotFeature)]
+        [CustomComboInfo("Battery AOE Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistAoEOverChargeOption = 710,
         #endregion
         // ====================================================================================

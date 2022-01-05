@@ -111,7 +111,29 @@ namespace XIVSlothComboPlugin.Combos
                 if (gauge == 100 && IsEnabled(CustomComboPreset.BardApexFeature))
                     return BRD.ApexArrow;
 
-                if (HasEffect(BRD.Buffs.StraightShotReady))
+                if (IsEnabled(CustomComboPreset.BardDoTMaintain))
+                {
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var venomous = TargetHasEffect(BRD.Debuffs.VenomousBite);
+                    var windbite = TargetHasEffect(BRD.Debuffs.Windbite);
+                    var venomousDuration = FindTargetEffect(BRD.Debuffs.VenomousBite);
+                    var windbiteDuration = FindTargetEffect(BRD.Debuffs.Windbite);
+                    var caustic = TargetHasEffect(BRD.Debuffs.CausticBite);
+                    var stormbite = TargetHasEffect(BRD.Debuffs.Stormbite);
+                    var causticDuration = FindTargetEffect(BRD.Debuffs.CausticBite);
+                    var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
+                    {
+                        if ((venomous && windbite && level >= BRD.Levels.IronJaws && incombat) && (venomousDuration.RemainingTime < 4 || windbiteDuration.RemainingTime < 4 && level >= BRD.Levels.IronJaws && incombat))
+                            return BRD.IronJaws;
+                        if ((caustic && stormbite && level >= BRD.Levels.IronJaws && incombat) && (causticDuration.RemainingTime < 4 || stormbiteDuration.RemainingTime < 4 && level >= BRD.Levels.IronJaws && incombat))
+                            return BRD.IronJaws;
+                        if (venomous && level < BRD.Levels.IronJaws && incombat && (venomousDuration.RemainingTime < 4))
+                            return BRD.VenomousBite;
+                        if (windbite && level < BRD.Levels.IronJaws && incombat && (windbiteDuration.RemainingTime < 4))
+                            return BRD.Windbite;
+                    }
+                }
+                    if (HasEffect(BRD.Buffs.StraightShotReady))
                     return OriginalHook(BRD.RefulgentArrow);
             }
 
