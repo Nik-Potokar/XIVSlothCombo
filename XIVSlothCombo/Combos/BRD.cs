@@ -107,9 +107,14 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BRD.HeavyShot || actionID == BRD.BurstShot)
             {
-                var gauge = GetJobGauge<BRDGauge>().SoulVoice;
-                if (gauge == 100 && IsEnabled(CustomComboPreset.BardApexFeature))
-                    return BRD.ApexArrow;
+                if IsEnabled(CustomComboPreset.BardApexFeature) 
+                {       
+                    var gauge = GetJobGauge<BRDGauge>().SoulVoice;
+                    if (gauge == 100)
+                        return BRD.ApexArrow;
+                    if (HasEffect(BRD.Buffs.BlastArrowReady) && level >= BRD.Levels.BlastArrow)
+                        return BRD.BlastArrow;
+                }
 
                 if (IsEnabled(CustomComboPreset.BardDoTMaintain))
                 {
