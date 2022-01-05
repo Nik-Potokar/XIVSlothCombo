@@ -111,7 +111,7 @@ namespace XIVSlothComboPlugin
         BardIronJawsAlternateFeature = 204,
 
         [ConflictingCombos(SimpleBardFeature)]
-        [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
+        [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
         BardApexFeature = 205,
 
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
