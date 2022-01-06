@@ -196,6 +196,8 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == DNC.Cascade)
             {
                 var gauge = GetJobGauge<DNCGauge>();
+                if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
+                    return DNC.SaberDance;
                 // From Fountain
                 if (HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Fountainfall;
@@ -207,9 +209,6 @@ namespace XIVSlothComboPlugin.Combos
                 // Cascade Combo
                 if (lastComboMove == DNC.Cascade && level >= DNC.Levels.Fountain)
                     return DNC.Fountain;
-
-                if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
-                    return DNC.SaberDance;
 
                 return DNC.Cascade;
             }
@@ -227,6 +226,8 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == DNC.Windmill)
             {
                 var gauge = GetJobGauge<DNCGauge>();
+                if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
+                    return DNC.SaberDance;
                 // From Bladeshower
                 if (HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Bloodshower;
@@ -238,10 +239,6 @@ namespace XIVSlothComboPlugin.Combos
                 // Windmill Combo
                 if (lastComboMove == DNC.Windmill && level >= DNC.Levels.Bladeshower)
                     return DNC.Bladeshower;
-
-                if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
-                    return DNC.SaberDance;
-
 
                 return DNC.Windmill;
             }
