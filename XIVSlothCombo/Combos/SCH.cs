@@ -164,7 +164,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == SCH.Broil4 || actionID == SCH.Broil3 || actionID == SCH.Broil2 || actionID == SCH.Broil1 || actionID == SCH.Ruin1 || actionID == SCH.Ruin2)
+            if(actionID == SCH.Broil4 || actionID == SCH.Broil3 || actionID == SCH.Broil2 || actionID == SCH.Broil1 || actionID == SCH.Ruin1)
             {
                 var actionIDCD = GetCooldown(actionID);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);

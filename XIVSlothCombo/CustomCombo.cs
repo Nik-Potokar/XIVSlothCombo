@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
@@ -283,6 +284,40 @@ namespace XIVSlothComboPlugin.Combos
             if (chara.IsCasting)
                 return chara.IsCastInterruptible;
             return false;
+        }
+        /// <summary>
+        /// Gets the distance from the target.
+        /// </summary>
+        /// <returns>Double representing the distance from the target.</returns>
+        protected static double GetTargetDistance()
+        {
+            if (CurrentTarget is null)
+                return 0;
+
+            if (CurrentTarget is not BattleChara chara)
+                return 0;
+
+            double distanceX = chara.YalmDistanceX;
+            double distanceY = chara.YalmDistanceZ;
+
+            return Math.Sqrt(Math.Pow(distanceX, 2) + Math.Pow(distanceY, 2));
+        }
+
+        /// <summary>
+        /// Determines if you are in melee range from the current target.
+        /// </summary>
+        /// <returns>Bool indicating whether you are in melee range.</returns>
+        protected static bool InMeleeRange(bool v)
+        {
+            var distance = GetTargetDistance();
+
+            if (distance == 0)
+                return true;
+
+            if (distance > 3)
+                return false;
+
+            return true;
         }
     }
 }

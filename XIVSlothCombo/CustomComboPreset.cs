@@ -187,6 +187,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Devilment Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID, DNC.Devilment)]
         DancerDevilmentFeature = 306,
 
+        [CustomComboInfo("Overcap Feature", "Adds SaberBlade to Cascade/Windmil combo if you are about to overcap on esprit.", DNC.JobID, DNC.Cascade, DNC.Windmill)]
+        DancerOvercapFeature = 307,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -575,7 +578,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DPS Feature Buff Option", "Adds Chainstratagem to the DPS Feature.", SCH.JobID, SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin2, SCH.Ruin1)]
         ScholarDPSFeatureBuffOption = 1306,
 
-        [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below 8k mana.", SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin2, SCH.Ruin1)]
+        [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below 8k mana.", SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin1)]
         ScholarLucidDPSFeature = 1307,
 
         #endregion
