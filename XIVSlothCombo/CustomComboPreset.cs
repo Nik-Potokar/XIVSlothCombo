@@ -572,10 +572,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID, SCH.WhisperingDawn, SCH.FeyIllumination, SCH.FeyBless, SCH.Aetherpact, SCH.Dissipation, SCH.SummonSeraph, SCH.Consolation)]
         ScholarFairyFeature = 1304,
 
-        [CustomComboInfo("DPS Feature", "Adds Bio1/Bio2/Biosys to Broil/Ruin whenever the debuff is not present or about to expire.", SCH.JobID, SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin2, SCH.Ruin1)]
+        [CustomComboInfo("DPS Feature", "Adds Bio1/Bio2/Biosys to Broil/Ruin whenever the debuff is not present or about to expire.", SCH.JobID, SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin1)]
         ScholarDPSFeature = 1305,
 
-        [CustomComboInfo("DPS Feature Buff Option", "Adds Chainstratagem to the DPS Feature.", SCH.JobID, SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin2, SCH.Ruin1)]
+        [CustomComboInfo("DPS Feature Buff Option", "Adds Chainstratagem to the DPS Feature.", SCH.JobID, SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin1)]
         ScholarDPSFeatureBuffOption = 1306,
 
         [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below 8k mana.", SCH.JobID, SCH.Broil4, SCH.Broil3, SCH.Broil2, SCH.Broil1, SCH.Ruin1)]
