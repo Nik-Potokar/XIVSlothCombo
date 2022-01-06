@@ -555,6 +555,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("KaitenFeature Option 3", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 3 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature3 = 1220,
 
+        [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
+        SamuraiYatenFeature = 1221,
+
         #endregion
         // ====================================================================================
         #region SCHOLAR

@@ -33,7 +33,9 @@ namespace XIVSlothComboPlugin.Combos
             Fuko = 25780,
             OgiNamikiri = 25781,
             KaeshiNamikiri = 25782,
-            Kaiten = 7494;
+            Kaiten = 7494,
+            Yaten = 7493,
+            Gyoten = 7492;
 
         public static class Buffs
         {
@@ -532,6 +534,23 @@ namespace XIVSlothComboPlugin.Combos
             }
             return actionID;
 
+        }
+    }
+    internal class SamuraiYatenFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiYatenFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Gyoten)
+            {
+                var gauge = GetJobGauge<SAMGauge>();
+                if (InMeleeRange(true) && gauge.Kenki >= 10)
+                    return SAM.Yaten;
+                if (InMeleeRange(false) && gauge.Kenki >= 10)
+                    return SAM.Gyoten;
+            }
+            return actionID;
         }
     }
 
