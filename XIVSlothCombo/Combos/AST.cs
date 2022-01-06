@@ -189,7 +189,11 @@ namespace XIVSlothComboPlugin.Combos
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2)
                         return AST.LucidDreaming;
                 }
-
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature))
+                {
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4)
+                        return AST.LordOfCrowns;
+                }
                 if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 72 && incombat)
                 {
                     if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
@@ -256,6 +260,11 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.Draw;
 
                 }
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature))
+                {
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4)
+                        return AST.LordOfCrowns;
+                }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature))
                 {
                     if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4)
@@ -267,7 +276,7 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.LucidDreaming;
                 }
             }
-
+            <
             return actionID;
         }
     }

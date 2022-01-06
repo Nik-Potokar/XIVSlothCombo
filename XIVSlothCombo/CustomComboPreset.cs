@@ -44,14 +44,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, AST.AspectedHelios, AST.Helios)]
         AstrologianHeliosFeature = 8,
 
-        [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature", AST.JobID, AST.FallMalefic)]
+        [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
         AstrologianAutoDrawFeature = 9,
 
-        [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, AST.FallMalefic)]
+        [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
         AstrologianAutoCrownDrawFeature = 10,
 
         [CustomComboInfo("AoE DPS Feature", "Adds AutoDraws/Astrodyne to the AoE Gravity combo", AST.JobID, AST.Gravity, AST.Gravity2)]
         AstrologianDpsAoEFeature = 11,
+
+        [CustomComboInfo("LazyLordFeature", "Adds LordOfCrowns Onto Main DPS/AoE Feature", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1, AST.Gravity, AST.Gravity2)]
+        AstrologianLazyLordFeature = 12,
 
         #endregion
         // ====================================================================================
