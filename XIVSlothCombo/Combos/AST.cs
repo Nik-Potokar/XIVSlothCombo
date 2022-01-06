@@ -276,7 +276,6 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.LucidDreaming;
                 }
             }
-            <
             return actionID;
         }
     }
