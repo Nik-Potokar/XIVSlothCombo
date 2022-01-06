@@ -221,7 +221,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == AST.AspectedHelios)
             {
-                if (HasEffect(AST.Buffs.AspectedHelios))
+                var heliosBuff = FindEffect(AST.Buffs.AspectedHelios);
+                if (HasEffect(AST.Buffs.AspectedHelios) && heliosBuff.RemainingTime > 2)
                     return AST.Helios;
             }
 
