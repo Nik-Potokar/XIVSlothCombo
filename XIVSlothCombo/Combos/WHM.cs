@@ -207,7 +207,9 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == WHM.Medica2)
                 {
-                    if (HasEffect(WHM.Buffs.Medica2))
+                    var medica2Buff = FindEffect(WHM.Buffs.Medica2);
+                    if (HasEffect(WHM.Buffs.Medica2) && medica2Buff.RemainingTime > 2)
+
                         return WHM.Medica1;
                 }
 
