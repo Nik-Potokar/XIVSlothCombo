@@ -29,7 +29,8 @@ namespace XIVSlothComboPlugin.Combos
             EukrasianDosis2 = 24308,
             EukrasianDosis3 = 24314,
             // Other
-            Swiftcast = 7561;
+            Swiftcast = 7561,
+            LucidDreaming = 7562;
 
         public static class Buffs
         {
@@ -142,6 +143,13 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.EukrasianDosis1;
                     if ((dosis1Debuff is null) || (dosis1Debuff.RemainingTime <= 4))
                         return SGE.Eukrasia;
+                }
+                if (IsEnabled(CustomComboPreset.SageLucidFeature))
+                {
+                    var lucidDreaming = GetCooldown(SGE.LucidDreaming);
+                    var actionIDCD = GetCooldown(actionID);
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
+                        return AST.LucidDreaming;
                 }
             }
 

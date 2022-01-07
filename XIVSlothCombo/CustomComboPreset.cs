@@ -808,6 +808,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SGE Raise Feature", "Changes Swiftcast to Egeiro", SGE.JobID, SGE.Swiftcast, SGE.Egeiro)]
         SageEgeiroFeature = 1803,
 
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds LucidDreaming onto Dosis DPS Feature when you have 8k mana or less", SGE.JobID, SGE.Dosis1, SGE.Dosis2, SGE.Dosis3, SGE.Eukrasia, SGE.EukrasianDosis1)]
+        SageLucidFeature = 1804,
+
         #endregion
         // ====================================================================================
 
