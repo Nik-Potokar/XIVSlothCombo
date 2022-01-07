@@ -421,6 +421,16 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (comboTime > 0 && level >= SAM.Levels.Shifu)
                     {
+                        if(HasEffect(SAM.Buffs.MeikyoShisui))
+                        {
+                            if (gauge.Sen.HasFlag(Sen.KA) == false)
+                                return OriginalHook(SAM.Kasha);
+                            if (gauge.Sen.HasFlag(Sen.GETSU) == false)
+                                return OriginalHook(SAM.Gekko);
+                            if (gauge.Sen.HasFlag(Sen.SETSU) == false)
+                                return OriginalHook(SAM.Yukikaze);
+
+                        }
                         if (lastComboMove == SAM.Hakaze)
                         {
                             if ((level >= SAM.Levels.Shifu && gauge.Sen.HasFlag(Sen.KA) == false && FindEffect(SAM.Buffs.Shifu)?.RemainingTime < 10) || (!fuka && level >= SAM.Levels.Shifu))
