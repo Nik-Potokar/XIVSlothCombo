@@ -119,7 +119,7 @@ namespace XIVSlothComboPlugin.Combos
                         return DRG.Disembowel;
 
                     if (lastComboMove == DRG.Disembowel && level >= DRG.Levels.ChaosThrust)
-                        return DRG.ChaosThrust;
+                        return OriginalHook(DRG.ChaosThrust);
                 }
 
                 if (IsEnabled(CustomComboPreset.DragoonFangThrustFeature) && (HasEffect(DRG.Buffs.SharperFangAndClaw) || HasEffect(DRG.Buffs.EnhancedWheelingThrust)))
