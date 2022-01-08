@@ -336,10 +336,7 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.BlastArrow;
 
                 if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && heavyShotOnCooldown) {
-                    if (
-                        (gauge.SongTimer < 1 && GetCooldown(actionID).IsCooldown) ||
-                        (gauge.Song == Song.ARMY && GetCooldown(actionID).IsCooldown)
-                    ) {
+                    if ((gauge.SongTimer < 1 || gauge.Song == Song.ARMY) && GetCooldown(actionID).IsCooldown) {
                         if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
                             return BRD.WanderersMinuet;
                         if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
