@@ -27,7 +27,8 @@ namespace XIVSlothComboPlugin.Combos
             NascentFlash = 16464,
             InnerChaos = 16465,
             Orogeny = 25752,
-            PrimalRend = 25753;
+            PrimalRend = 25753,
+            Onslaught = 7386;
 
         public static class Buffs
         {
@@ -95,6 +96,25 @@ namespace XIVSlothComboPlugin.Combos
                     return WAR.FellCleave;
                 }
 
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 64 && level <= 87)
+                {
+                    var onslaughtCD = GetCooldown(WAR.Onslaught);
+                    var actionIDCD = GetCooldown(actionID);
+                    var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
+
+                    if (onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && level >= 64 && level <= 87 && surgingtempestBuff)
+                        return WAR.Onslaught;
+                }
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 88)
+                {
+                    var onslaughtCD = GetCooldown(WAR.Onslaught);
+                    var actionIDCD = GetCooldown(actionID);
+                    var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
+
+                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff || onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff)
+                        return WAR.Onslaught;
+                }
+
 
 
                 if (comboTime > 0)
@@ -133,9 +153,9 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return OriginalHook(WAR.FellCleave);
                         }
-                        
 
-                        if (stormseyeBuff.RemainingTime < 15 && IsEnabled(CustomComboPreset.WarriorStormsEyeCombo) && level >= 50)
+
+                        if (stormseyeBuff.RemainingTime < 15 && IsEnabled(CustomComboPreset.WarriorStormsEyeCombo) && level > 50)
                             return WAR.StormsEye;
                         return WAR.StormsPath;
                     }

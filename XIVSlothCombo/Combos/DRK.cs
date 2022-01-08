@@ -23,7 +23,8 @@ namespace XIVSlothComboPlugin.Combos
             EdgeOfShadow = 16470,
             LivingShadow = 16472,
             SaltAndDarkness = 25755,
-            Shadowbringer = 25757;
+            Shadowbringer = 25757,
+            Plunge = 3640;
 
         public static class Buffs
         {
@@ -71,7 +72,6 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
                         return DRK.Bloodspiller;
                 }
-
                 if (comboTime > 0)
                 {
                     var currentMp = LocalPlayer.CurrentMp;
@@ -121,6 +121,14 @@ namespace XIVSlothComboPlugin.Combos
                 if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
                 {
                     return DRK.Bloodspiller;
+                }
+                if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= 54)
+                {
+                    var plungeCD = GetCooldown(DRK.Plunge);
+                    var actionIDCD = GetCooldown(actionID);
+
+                    if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 54)
+                        return DRK.Plunge;
                 }
 
                 return DRK.HardSlash;

@@ -28,7 +28,8 @@ namespace XIVSlothComboPlugin.Combos
             BladeOfTruth = 25749,
             BladeOfValor = 25750,
             FightOrFlight = 20,
-            Atonement = 16460;
+            Atonement = 16460,
+            Intervene = 16461;
 
         public static class Buffs
         {
@@ -167,6 +168,14 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (lastComboMove == PLD.RiotBlade)
                         return actionID;
+                }
+                if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= 74)
+                {
+                    var interveneCD = GetCooldown(PLD.Intervene);
+                    var actionIDCD = GetCooldown(actionID);
+
+                    if (interveneCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 74)
+                        return PLD.Intervene;
                 }
                 return PLD.FastBlade;
             }

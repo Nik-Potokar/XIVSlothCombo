@@ -28,7 +28,8 @@ namespace XIVSlothComboPlugin.Combos
             DangerZone = 16144,
             BlastingZone = 16165,
             Bloodfest = 16164,
-            Hypervelocity = 25759;
+            Hypervelocity = 25759,
+            RoughDivide = 16154;
 
         public static class Buffs
         {
@@ -117,6 +118,15 @@ namespace XIVSlothComboPlugin.Combos
                         if (lastComboMove == GNB.SolidBarrel && !sonicbreakCD.IsCooldown  && level >= GNB.Levels.SonicBreak && HasEffect(GNB.Buffs.NoMercy))
                             return GNB.SonicBreak;
                     }
+                    if (IsEnabled(CustomComboPreset.GunbreakerRoughDivideFeature) && level >= 56)
+                    {
+                        var roughdivideCD = GetCooldown(GNB.RoughDivide);
+                        var actionIDCD = GetCooldown(actionID);
+
+                        if (roughdivideCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 56)
+                            return GNB.RoughDivide;
+                    }
+
 
 
                     if (lastComboMove == GNB.KeenEdge && level >= GNB.Levels.BrutalShell)

@@ -245,6 +245,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("oGCD Feature", "All oGCD's(Shadowbringer/SaltedEarth) On one button (Crave&Spit/AbysallDrain) depending on their CD", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
         DarkoGCDFeature = 506,
 
+        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available.", DRK.JobID, DRK.Souleater)]
+        DarkPlungeFeature = 507,
+
         #endregion
         // ====================================================================================
         #region GUNBREAKER
@@ -286,6 +289,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
         GunbreakerBurstStrikeConFeature = 611,
+
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever its available.", GNB.JobID, GNB.SolidBarrel)]
+        GunbreakerRoughDivideFeature = 612,
 
         #endregion
         // ====================================================================================
@@ -437,6 +443,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Standalone Holy Circle Feature", "Replaces Holy Circle with Confiteor and Confiteor combo", PLD.JobID, PLD.HolyCircle)]
         PaladinStandaloneHolyCircleFeature = 1009,
+
+        [CustomComboInfo("Intervene Option", "Adds intervene onto main combo whenever its available.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        PaladinInterveneFeature = 1010,
 
         #endregion
         // ====================================================================================
@@ -705,6 +714,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo", WAR.JobID, WAR.StormsPath)]
         WarriorSpenderOption = 1511,
+
+        [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Testing Only!)", WAR.JobID, WAR.StormsPath)]
+        WarriorOnslaughtFeature = 1512,
 
         #endregion
         // ====================================================================================
