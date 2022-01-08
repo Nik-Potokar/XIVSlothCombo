@@ -1,6 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System;
 namespace XIVSlothComboPlugin.Combos
 {
     internal static class BRD
@@ -312,39 +312,42 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == BRD.Ladonsbite || actionID == BRD.QuickNock)
-            {
+            if (actionID == BRD.Ladonsbite || actionID == BRD.QuickNock) {
                 var gauge = GetJobGauge<BRDGauge>();
-                var soulvoice = GetJobGauge<BRDGauge>().SoulVoice;
-                if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
-                    return BRD.PitchPerfect;
-                if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown && (level >= BRD.Levels.EmpyrealArrow) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
-                    return BRD.EmpyrealArrow;
-                if (GetCooldown(BRD.RainOfDeath).CooldownRemaining < 30 && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
-                    return BRD.RainOfDeath;
-                if (!GetCooldown(BRD.Sidewinder).IsCooldown && (level >= BRD.Levels.Sidewinder) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
-                    return BRD.Sidewinder;
-                if (HasEffect(BRD.Buffs.ShadowbiteReady) && level >= BRD.Levels.Shadowbite)
+                var soulVoice = gauge.SoulVoice;
+                var heavyShotOnCooldown = GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7;
+                
+                if (heavyShotOnCooldown) {
+                    if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                        return BRD.PitchPerfect;
+                    if (level >= BRD.Levels.EmpyrealArrow && !GetCooldown(BRD.EmpyrealArrow).IsCooldown)
+                        return BRD.EmpyrealArrow;
+                    if (level >= BRD.Levels.RainOfDeath && GetCooldown(BRD.RainOfDeath).CooldownRemaining < 30)
+                        return BRD.RainOfDeath;
+                    if (level >= BRD.Levels.Sidewinder && !GetCooldown(BRD.Sidewinder).IsCooldown)
+                        return BRD.Sidewinder;
+                }
+
+                if (level >= BRD.Levels.Shadowbite && HasEffect(BRD.Buffs.ShadowbiteReady))
                     return BRD.Shadowbite;
-                if (soulvoice == 100 && level >= BRD.Levels.ApexArrow)
+                if (level >= BRD.Levels.ApexArrow && soulVoice == 100)
                     return BRD.ApexArrow;
-                if (HasEffect(BRD.Buffs.BlastArrowReady) && level >= BRD.Levels.BlastArrow)
+                if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                     return BRD.BlastArrow;
 
-                if (IsEnabled(CustomComboPreset.SimpleAoESongOption))
-                {
-                    if (gauge.SongTimer < 1 && GetCooldown(actionID).IsCooldown || gauge.Song == Song.ARMY && GetCooldown(actionID).IsCooldown)
-                    {
-                        if (!GetCooldown(BRD.WanderersMinuet).IsCooldown && (level >= BRD.Levels.WanderersMinuet) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && heavyShotOnCooldown) {
+                    if (
+                        (gauge.SongTimer < 1 && GetCooldown(actionID).IsCooldown) ||
+                        (gauge.Song == Song.ARMY && GetCooldown(actionID).IsCooldown)
+                    ) {
+                        if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
                             return BRD.WanderersMinuet;
-                        if (!GetCooldown(BRD.MagesBallad).IsCooldown && (level >= BRD.Levels.MagesBallad) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                        if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
                             return BRD.MagesBallad;
-                        if (!GetCooldown(BRD.ArmysPaeon).IsCooldown && (level >= BRD.Levels.ArmysPaeon) && GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7)
+                        if (level >= BRD.Levels.ArmysPaeon && !GetCooldown(BRD.ArmysPaeon).IsCooldown)
                             return BRD.ArmysPaeon;
                     }
                 }
-
-
             }
 
             return OriginalHook(actionID);
@@ -536,5 +539,3 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 }
-
-
