@@ -76,6 +76,9 @@ namespace XIVSlothComboPlugin.Combos
                 var beserkCD = GetCooldown(WAR.Berserk);
                 var stormseyeBuff = FindEffectAny(WAR.Buffs.SurgingTempest);
                 var innerReleaseBuff = HasEffect(WAR.Buffs.InnerRelease);
+                var onslaughtCD = GetCooldown(WAR.Onslaught);
+                var actionIDCD = GetCooldown(actionID);
+                var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
 
                 if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && level >= 80)
                     return WAR.InnerChaos;
@@ -95,28 +98,28 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return WAR.FellCleave;
                 }
-
+                // uses all stacks
                 if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 64 && level <= 87)
                 {
-                    var onslaughtCD = GetCooldown(WAR.Onslaught);
-                    var actionIDCD = GetCooldown(actionID);
-                    var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
-
                     if (onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && level >= 64 && level <= 87 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
                 if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 88)
                 {
-                    var onslaughtCD = GetCooldown(WAR.Onslaught);
-                    var actionIDCD = GetCooldown(actionID);
-                    var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
-
                     if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff || onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
-
-
-
+                // leaves 1 stack
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 64 && level <= 87)
+                {
+                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 64 && level <= 87 && surgingtempestBuff)
+                        return WAR.Onslaught;
+                }
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 88)
+                {
+                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff || onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff)
+                        return WAR.Onslaught;
+                }
                 if (comboTime > 0)
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;

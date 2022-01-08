@@ -102,6 +102,8 @@ namespace XIVSlothComboPlugin.Combos
                 var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
                 var gcdCooldown3 = GetCooldown(DRK.Souleater);
                 var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
+                var plungeCD = GetCooldown(DRK.Plunge);
+                var actionIDCD = GetCooldown(actionID);
 
                 if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
@@ -124,10 +126,13 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= 54)
                 {
-                    var plungeCD = GetCooldown(DRK.Plunge);
-                    var actionIDCD = GetCooldown(actionID);
-
                     if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 54)
+                        return DRK.Plunge;
+                }
+                // leaves 1 stack
+                if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= 54)
+                {
+                    if (!plungeCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 54 && plungeCD.CooldownRemaining < 60)
                         return DRK.Plunge;
                 }
 

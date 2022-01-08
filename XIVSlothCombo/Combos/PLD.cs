@@ -109,7 +109,18 @@ namespace XIVSlothComboPlugin.Combos
                 var requiescat = FindEffect(PLD.Buffs.Requiescat);
                 var valorDebuffTimer = FindTargetEffect(PLD.Debuffs.BladeOfValor);
                 var valorDebuffonTarget = TargetHasEffect(PLD.Debuffs.BladeOfValor);
-
+                var interveneCD = GetCooldown(PLD.Intervene);
+                var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= 74)
+                {
+                    if (interveneCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 74)
+                        return PLD.Intervene;
+                }
+                if (IsEnabled(CustomComboPreset.PaladinInterveneFeatureOption) && level >= 74)
+                {
+                    if (!interveneCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 74)
+                        return PLD.Intervene;
+                }
                 if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
                 {
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= 64 && !foF)
@@ -168,14 +179,6 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (lastComboMove == PLD.RiotBlade)
                         return actionID;
-                }
-                if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= 74)
-                {
-                    var interveneCD = GetCooldown(PLD.Intervene);
-                    var actionIDCD = GetCooldown(actionID);
-
-                    if (interveneCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 74)
-                        return PLD.Intervene;
                 }
                 return PLD.FastBlade;
             }

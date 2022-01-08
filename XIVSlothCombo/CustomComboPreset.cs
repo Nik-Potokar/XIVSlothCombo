@@ -200,25 +200,22 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Jump + Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, DRG.Jump, DRG.HighJump)]
         DragoonJumpFeature = 400,
 
-        [CustomComboInfo("BOTD Into Stardiver", "Replace Blood of the Dragon with Stardiver when in Life of the Dragon.", DRG.JobID, DRG.BloodOfTheDragon)]
-        DragoonBOTDFeature = 401,
-
         [CustomComboInfo("Coerthan Torment Combo", "Replace Coerthan Torment with its combo chain.", DRG.JobID, DRG.CoerthanTorment)]
-        DragoonCoerthanTormentCombo = 402,
+        DragoonCoerthanTormentCombo = 401,
 
         [CustomComboInfo("Chaos Thrust Combo", "Replace Chaos Thrust with its combo chain.", DRG.JobID, DRG.ChaosThrust)]
-        DragoonChaosThrustCombo = 403,
+        DragoonChaosThrustCombo = 402,
 
         [ConflictingCombos(DragoonFullThrustComboPlus)]
         [CustomComboInfo("Full Thrust Combo", "Replace Full Thrust with its combo chain.", DRG.JobID, DRG.FullThrust)]
-        DragoonFullThrustCombo = 404,
+        DragoonFullThrustCombo = 403,
 
         [ConflictingCombos(DragoonFullThrustCombo)]
         [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, DRG.FullThrust)]
-        DragoonFullThrustComboPlus = 405,
+        DragoonFullThrustComboPlus = 404,
 
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, DRG.FullThrust, DRG.ChaosThrust)]
-        DragoonFangThrustFeature = 406,
+        DragoonFangThrustFeature = 405,
 
         #endregion
         // ====================================================================================
@@ -245,8 +242,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("oGCD Feature", "All oGCD's(Shadowbringer/SaltedEarth) On one button (Crave&Spit/AbysallDrain) depending on their CD", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
         DarkoGCDFeature = 506,
 
-        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available.", DRK.JobID, DRK.Souleater)]
+        [ConflictingCombos(DarkPlungeFeatureOption)]
+        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available (Uses all stacks).", DRK.JobID, DRK.Souleater)]
         DarkPlungeFeature = 507,
+
+        [ConflictingCombos(DarkPlungeFeature)]
+        [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, DRK.Souleater)]
+        DarkPlungeFeatureOption = 508,
 
         #endregion
         // ====================================================================================
@@ -290,8 +292,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
         GunbreakerBurstStrikeConFeature = 611,
 
-        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever its available.", GNB.JobID, GNB.SolidBarrel)]
+        [ConflictingCombos(GunbreakerRoughDivideFeatureOption)]
+        [CustomComboInfo("Rough Divide Feature", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID, GNB.SolidBarrel)]
         GunbreakerRoughDivideFeature = 612,
+
+        [ConflictingCombos(GunbreakerRoughDivideFeature)]
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever its available (Leaves 1 stack).", GNB.JobID, GNB.SolidBarrel)]
+        GunbreakerRoughDivideFeatureOption = 613,
 
         #endregion
         // ====================================================================================
@@ -444,8 +451,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Standalone Holy Circle Feature", "Replaces Holy Circle with Confiteor and Confiteor combo", PLD.JobID, PLD.HolyCircle)]
         PaladinStandaloneHolyCircleFeature = 1009,
 
-        [CustomComboInfo("Intervene Option", "Adds intervene onto main combo whenever its available.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        [ConflictingCombos(PaladinInterveneFeatureOption)]
+        [CustomComboInfo("Intervene Feature", "Adds intervene onto main combo whenever its available (Uses all stacks).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinInterveneFeature = 1010,
+
+        [ConflictingCombos(PaladinInterveneFeature)]
+        [CustomComboInfo("Intervene Option", "Adds intervene onto main combo whenever its available (Leaves 1 stack).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        PaladinInterveneFeatureOption = 1011,
 
         #endregion
         // ====================================================================================
@@ -715,8 +727,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo", WAR.JobID, WAR.StormsPath)]
         WarriorSpenderOption = 1511,
 
-        [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Testing Only!)", WAR.JobID, WAR.StormsPath)]
+        [ConflictingCombos(WarriorOnslaughtFeatureOption)]
+        [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Uses all stacks)", WAR.JobID, WAR.StormsPath)]
         WarriorOnslaughtFeature = 1512,
+
+        [ConflictingCombos(WarriorOnslaughtFeature)]
+        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1/2 stacks depending on level)", WAR.JobID, WAR.StormsPath)]
+        WarriorOnslaughtFeatureOption = 1513,
 
         #endregion
         // ====================================================================================

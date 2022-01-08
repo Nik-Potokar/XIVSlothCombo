@@ -126,6 +126,15 @@ namespace XIVSlothComboPlugin.Combos
                         if (roughdivideCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 56)
                             return GNB.RoughDivide;
                     }
+                    // leaves 1 stack
+                    if (IsEnabled(CustomComboPreset.GunbreakerRoughDivideFeatureOption) && level >= 56)
+                    {
+                        var roughdivideCD = GetCooldown(GNB.RoughDivide);
+                        var actionIDCD = GetCooldown(actionID);
+
+                        if (roughdivideCD.CooldownRemaining < 60 && !roughdivideCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 56)
+                            return GNB.RoughDivide;
+                    }
 
 
 
