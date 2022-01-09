@@ -85,36 +85,13 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && beserkCD.IsCooldown && level >= 64 && level <= 69)
                     return WAR.Upheaval;
-                    else
+                else
                 if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 70)
                     return WAR.Upheaval;
-
-                if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady))
-                {
-                    return WAR.PrimalRend;
-                }
 
                 if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                 {
                     return WAR.FellCleave;
-                }
-                // uses all stacks
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 62)
-                {
-                    if (onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
-                        return WAR.Onslaught;
-                }
-                // leaves 1 stack
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 62)
-                {
-                    if (onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
-                        return WAR.Onslaught;
-                }
-                // leaves 2 stacks
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && level >= 62)
-                {
-                    if (onslaughtCD.CooldownRemaining < 1 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
-                        return WAR.Onslaught;
                 }
                 if (comboTime > 0)
                 {
@@ -205,8 +182,6 @@ namespace XIVSlothComboPlugin.Combos
                     var mythrilCd = GetCooldown(WAR.MythrilTempest);
                     var decimateCD = GetCooldown(WAR.Decimate);
 
-                    if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= 90)
-                        return OriginalHook(WAR.PrimalRend);
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                         return OriginalHook(WAR.Decimate);
                     if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && level >= 72)
@@ -214,12 +189,6 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (comboTime > 0)
                     {
-                        if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature))
-                        {
-                            if (level >= WAR.Levels.PrimalRend && HasEffect(WAR.Buffs.PrimalRendReady))
-                                return WAR.PrimalRend;
-                        }
-
                         if (IsEnabled(CustomComboPreset.WarriorMythrilTempestCombo))
                         {
                             var gauge = GetJobGauge<WARGauge>().BeastGauge;
@@ -250,44 +219,6 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-
-        internal class WarriorNascentFlashFeature : CustomCombo
-        {
-            protected override CustomComboPreset Preset => CustomComboPreset.WarriorNascentFlashFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == WAR.NascentFlash)
-                {
-                    if (level >= WAR.Levels.NascentFlash)
-                        return WAR.NascentFlash;
-                    return WAR.RawIntuition;
-                }
-
-                return actionID;
-            }
-        }
-    }
-
-    internal class WarriorPrimalRendFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.WarriorPrimalRendFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WAR.InnerBeast || actionID == WAR.SteelCyclone)
-            {
-
-                if (level >= WAR.Levels.PrimalRend && HasEffect(WAR.Buffs.PrimalRendReady))
-                    return WAR.PrimalRend;
-
-                // Fell Cleave or Decimate
-                return OriginalHook(actionID);
-
-
-            }
-
-            return actionID;
-        }
     }
 }
+

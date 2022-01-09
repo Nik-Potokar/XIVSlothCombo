@@ -675,26 +675,20 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Inner Release Feature", "Replace Single-target and AoE combo with Fell Cleave/Decimate during Inner Release", WAR.JobID, WAR.MythrilTempest, WAR.StormsPath)]
         WarriorInnerReleaseFeature = 1504,
 
-        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, WAR.NascentFlash)]
-        WarriorNascentFlashFeature = 1505,
-
         [CustomComboInfo("Fellcleave/IB Feature", "Replaces Main Combo With Fellcleave/IB When you are about to overcap ", WAR.JobID, WAR.FellCleave, WAR.InnerBeast)]
-        WarriorFellCleaveOvercapFeature = 1506,
+        WarriorFellCleaveOvercapFeature = 1505,
 
         [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest and if you're synced below 70 while Beserk buff is ON CD", WAR.JobID, WAR.Upheaval)]
-        WarriorUpheavalMainComboFeature = 1507,
-
-        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
-        WarriorPrimalRendFeature = 1508,
+        WarriorUpheavalMainComboFeature = 1506,
 
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
-        WarriorOrogenyFeature = 1509,
+        WarriorOrogenyFeature = 1507,
 
         [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos and Surging Tempest.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, WAR.InnerChaos, WAR.StormsPath)]
-        WarriorInnerChaosOption = 1510,
+        WarriorInnerChaosOption = 1508,
 
         [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo", WAR.JobID, WAR.StormsPath)]
-        WarriorSpenderOption = 1511,
+        WarriorSpenderOption = 1509,
 
         #endregion
         // ====================================================================================
