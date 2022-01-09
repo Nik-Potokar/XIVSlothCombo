@@ -336,13 +336,13 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.BlastArrow;
 
                 if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && heavyShotOnCooldown) {
-                    if ((gauge.SongTimer < 1 || gauge.Song == Song.ARMY) && GetCooldown(actionID).IsCooldown) {
-                        if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
-                            return BRD.WanderersMinuet;
+                    if ((gauge.SongTimer < 3) && GetCooldown(actionID).IsCooldown) {
                         if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
                             return BRD.MagesBallad;
                         if (level >= BRD.Levels.ArmysPaeon && !GetCooldown(BRD.ArmysPaeon).IsCooldown)
                             return BRD.ArmysPaeon;
+                        if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
+                            return BRD.WanderersMinuet;
                     }
                 }
             }
@@ -441,11 +441,11 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if (IsEnabled(CustomComboPreset.SimpleSongOption)) {
-                    if (heavyShot.IsCooldown && (gauge.SongTimer < 1 || gauge.Song == Song.ARMY)) {
-                        if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
-                            return BRD.MagesBallad;
+                    if (heavyShot.IsCooldown && (gauge.SongTimer < 3 || gauge.Song == Song.MAGE && gauge.SongTimer < 11)) {
                         if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
                             return BRD.WanderersMinuet;
+                        if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
+                            return BRD.MagesBallad;
                         if (level >= BRD.Levels.ArmysPaeon && !GetCooldown(BRD.ArmysPaeon).IsCooldown)
                             return BRD.ArmysPaeon;
                     }
