@@ -119,7 +119,6 @@ namespace XIVSlothComboPlugin.Combos
                     else
                     if (level >= 84)
                     {
-
                         if (HasEffect(MCH.Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 55 && !airAnchorCD.IsCooldown)
                             return MCH.AirAnchor;
                         if (reassembleCD.CooldownRemaining >= 55 && !chainsawCD.IsCooldown && level >= 90)
