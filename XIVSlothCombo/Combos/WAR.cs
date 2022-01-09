@@ -99,13 +99,13 @@ namespace XIVSlothComboPlugin.Combos
                     return WAR.FellCleave;
                 }
                 // uses all stacks
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 64)
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 62)
                 {
                     if (onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
                 // leaves 1 stack
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 64)
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 62)
                 {
                     if (onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
                         return WAR.Onslaught;
