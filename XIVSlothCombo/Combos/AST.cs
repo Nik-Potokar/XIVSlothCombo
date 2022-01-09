@@ -54,7 +54,13 @@ namespace XIVSlothComboPlugin.Combos
             Swiftcast = 167,
             LordOfCrownsDrawn = 2054,
             LadyOfCrownsDrawn = 2055,
-            AspectedHelios = 836;
+            AspectedHelios = 836,
+            Balance = 913,
+            Bole = 914,
+            Arrow = 915,
+            Spear = 916,
+            Ewer = 917,
+            Spire = 918;
         }
 
         public static class Debuffs
@@ -84,8 +90,13 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == AST.Play)
             {
                 var gauge = GetJobGauge<ASTGauge>();
-                if (level >= AST.Levels.Draw && gauge.DrawnCard == CardType.NONE)
-                    return AST.Draw;
+                if (!gauge.ContainsSeal(SealType.NONE) && IsEnabled(CustomComboPreset.AstrologianAstrodyneOnPlayFeature) && (gauge.DrawnCard != CardType.NONE || GetCooldown(AST.Draw).CooldownRemaining > 30))
+                    return AST.Astrodyne;
+
+                if (HasEffect(AST.Buffs.Balance) || HasEffect(AST.Buffs.Bole) || HasEffect(AST.Buffs.Arrow) || HasEffect(AST.Buffs.Spear) || HasEffect(AST.Buffs.Ewer) || HasEffect(AST.Buffs.Spire))
+                    return OriginalHook(AST.Play);
+
+                return AST.Draw;
             }
 
             return actionID;
