@@ -8,11 +8,11 @@
         "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 4,
-        "DownloadLinkInstall": "https://github.com/Nik-Potokar/MyDalamudPlugins/raw/main/plugins/XIVSlothCombo/latest.zip",
+        "DownloadLinkInstall": "https://github.com/Codemned/MyDalamudPlugins/raw/main/plugins/XIVSlothCombo/latest.zip",
         "IsHide": false,
         "IsTestingExclusive": false,
-        "DownloadLinkTesting": "https://github.com/Nik-Potokar/MyDalamudPlugins/raw/main/plugins/XIVSlothCombo/latest.zip",
-        "DownloadLinkUpdate": "https://github.com/Nik-Potokar/MyDalamudPlugins/raw/main/plugins/XIVSlothCombo/latest.zip",
+        "DownloadLinkTesting": "https://github.com/Codemned/MyDalamudPlugins/raw/main/plugins/XIVSlothCombo/latest.zip",
+        "DownloadLinkUpdate": "https://github.com/Codemned/MyDalamudPlugins/raw/main/plugins/XIVSlothCombo/latest.zip",
         "DownloadCount": 0,
         "LastUpdated": "0"
     }
