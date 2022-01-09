@@ -248,11 +248,10 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == BRD.IronJaws)
             {
                 var gauge = GetJobGauge<BRDGauge>();
-                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var heavyShot = GetCooldown(actionID);
                 var heavyShotOnCooldown = heavyShot.CooldownRemaining > 0.7;
 
-                if (IsEnabled(CustomComboPreset.BardApplyDots) && inCombat)
+                if (IsEnabled(CustomComboPreset.BardApplyDots))
                 {
                     if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
                         return BRD.ApexArrow;
@@ -304,28 +303,25 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (level < BRD.Levels.BiteUpgrade)
                 {
-                    if (inCombat)
+                    if (useIronJaws)
                     {
-                        if (useIronJaws)
-                        {
-                            return BRD.IronJaws;
-                        }
+                        return BRD.IronJaws;
+                    }
 
-                        if (level < BRD.Levels.IronJaws)
-                        {
-                            if (venomous && venomousDuration.RemainingTime < 6)
-                                return BRD.VenomousBite;
-                            if (windbite && windbiteDuration.RemainingTime < 6)
-                                return BRD.Windbite;
-                        }
+                    if (level < BRD.Levels.IronJaws)
+                    {
+                        if (venomous && venomousDuration.RemainingTime < 6)
+                            return BRD.VenomousBite;
+                        if (windbite && windbiteDuration.RemainingTime < 6)
+                            return BRD.Windbite;
+                    }
 
-                        if (IsEnabled(CustomComboPreset.BardApplyDots))
-                        {
-                            if (level >= BRD.Levels.Windbite && !windbite)
-                                return OriginalHook(BRD.Windbite);
-                            if (level >= BRD.Levels.VenomousBite && !venomous)
-                                return OriginalHook(BRD.VenomousBite);
-                        }
+                    if (IsEnabled(CustomComboPreset.BardApplyDots))
+                    {
+                        if (level >= BRD.Levels.Windbite && !windbite)
+                            return OriginalHook(BRD.Windbite);
+                        if (level >= BRD.Levels.VenomousBite && !venomous)
+                            return OriginalHook(BRD.VenomousBite);
                     }
 
                     if (HasEffect(BRD.Buffs.StraightShotReady))
@@ -336,25 +332,22 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(BRD.BurstShot);
                 }
 
-                if (inCombat)
+                if (useIronJaws)
                 {
-                    if (useIronJaws)
-                    {
-                        return BRD.IronJaws;
-                    }
+                    return BRD.IronJaws;
+                }
 
-                    if (IsEnabled(CustomComboPreset.BardApplyDots))
-                    {
-                        if (level >= BRD.Levels.CausticBite && !caustic)
-                            return BRD.CausticBite;
-                        if (level >= BRD.Levels.StormBite && !stormbite)
-                            return BRD.Stormbite;
-                    }
+                if (IsEnabled(CustomComboPreset.BardApplyDots))
+                {
+                    if (level >= BRD.Levels.CausticBite && !caustic)
+                        return BRD.CausticBite;
+                    if (level >= BRD.Levels.StormBite && !stormbite)
+                        return BRD.Stormbite;
+                }
 
-                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
-                    {
-                        return BRD.ApexArrow;
-                    }
+                if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
+                {
+                    return BRD.ApexArrow;
                 }
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
