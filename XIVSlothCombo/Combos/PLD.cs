@@ -113,12 +113,12 @@ namespace XIVSlothComboPlugin.Combos
                 var actionIDCD = GetCooldown(actionID);
                 if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= 74)
                 {
-                    if (interveneCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 74)
+                    if (interveneCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
                         return PLD.Intervene;
                 }
                 if (IsEnabled(CustomComboPreset.PaladinInterveneFeatureOption) && level >= 74)
                 {
-                    if (!interveneCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 74)
+                    if (!interveneCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7)
                         return PLD.Intervene;
                 }
                 if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
