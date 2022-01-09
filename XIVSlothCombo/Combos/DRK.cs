@@ -126,13 +126,13 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= 54)
                 {
-                    if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 54)
+                    if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
                         return DRK.Plunge;
                 }
                 // leaves 1 stack
                 if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= 54)
                 {
-                    if (!plungeCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 54 && plungeCD.CooldownRemaining < 60)
+                    if (!plungeCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && plungeCD.CooldownRemaining < 60)
                         return DRK.Plunge;
                 }
 
