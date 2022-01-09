@@ -487,8 +487,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 var useIronJaws = (
                     level >= BRD.Levels.IronJaws &&
-                    ((venomous && venomousDuration.RemainingTime < 4) || (caustic && causticDuration.RemainingTime < 4)) ||
-                    ((windbite && windbiteDuration.RemainingTime < 4) || (stormbite && stormbiteDuration.RemainingTime < 4))
+                    ((venomous && venomousDuration.RemainingTime < 6) || (caustic && causticDuration.RemainingTime < 6)) ||
+                    ((windbite && windbiteDuration.RemainingTime < 6) || (stormbite && stormbiteDuration.RemainingTime < 6))
                 );
 
                 if (level < BRD.Levels.BiteUpgrade) {
@@ -498,9 +498,9 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         if (level < BRD.Levels.IronJaws) {
-                            if (venomous && venomousDuration.RemainingTime < 4)
+                            if (venomous && venomousDuration.RemainingTime < 6)
                                 return BRD.VenomousBite;
-                            if (windbite && windbiteDuration.RemainingTime < 4)
+                            if (windbite && windbiteDuration.RemainingTime < 6)
                                 return BRD.Windbite;
                         }
 
@@ -605,8 +605,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 var useIronJaws = (
                     level >= BRD.Levels.IronJaws &&
-                    ((venomous && venomousDuration.RemainingTime < 4) || (caustic && causticDuration.RemainingTime < 4)) ||
-                    ((windbite && windbiteDuration.RemainingTime < 4) || (stormbite && stormbiteDuration.RemainingTime < 4))
+                    ((venomous && venomousDuration.RemainingTime < 6) || (caustic && causticDuration.RemainingTime < 6)) ||
+                    ((windbite && windbiteDuration.RemainingTime < 6) || (stormbite && stormbiteDuration.RemainingTime < 6))
                 );
 
                 if (level < BRD.Levels.BiteUpgrade)
@@ -620,9 +620,9 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (level < BRD.Levels.IronJaws)
                         {
-                            if (venomous && venomousDuration.RemainingTime < 4)
+                            if (venomous && venomousDuration.RemainingTime < 6)
                                 return BRD.VenomousBite;
-                            if (windbite && windbiteDuration.RemainingTime < 4)
+                            if (windbite && windbiteDuration.RemainingTime < 6)
                                 return BRD.Windbite;
                         }
 
