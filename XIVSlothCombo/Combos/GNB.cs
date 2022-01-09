@@ -123,7 +123,7 @@ namespace XIVSlothComboPlugin.Combos
                         var roughdivideCD = GetCooldown(GNB.RoughDivide);
                         var actionIDCD = GetCooldown(actionID);
 
-                        if (roughdivideCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 56)
+                        if (roughdivideCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
                             return GNB.RoughDivide;
                     }
                     // leaves 1 stack
@@ -132,7 +132,7 @@ namespace XIVSlothComboPlugin.Combos
                         var roughdivideCD = GetCooldown(GNB.RoughDivide);
                         var actionIDCD = GetCooldown(actionID);
 
-                        if (roughdivideCD.CooldownRemaining < 60 && !roughdivideCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 56)
+                        if (roughdivideCD.CooldownRemaining < 60 && !roughdivideCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7)
                             return GNB.RoughDivide;
                     }
 

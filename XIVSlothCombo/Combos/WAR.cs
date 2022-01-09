@@ -99,25 +99,21 @@ namespace XIVSlothComboPlugin.Combos
                     return WAR.FellCleave;
                 }
                 // uses all stacks
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 64 && level <= 87)
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 62)
                 {
-                    if (onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && level >= 64 && level <= 87 && surgingtempestBuff)
-                        return WAR.Onslaught;
-                }
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 88)
-                {
-                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff || onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff)
+                    if (onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
                 // leaves 1 stack
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 64 && level <= 87)
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 62)
                 {
-                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 64 && level <= 87 && surgingtempestBuff)
+                    if (onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 88)
+                // leaves 2 stacks
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && level >= 62)
                 {
-                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff || onslaughtCD.CooldownRemaining < 90 && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff)
+                    if (onslaughtCD.CooldownRemaining < 1 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
                 if (comboTime > 0)

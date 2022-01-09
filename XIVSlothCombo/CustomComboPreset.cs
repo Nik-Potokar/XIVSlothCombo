@@ -733,13 +733,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo", WAR.JobID, WAR.StormsPath)]
         WarriorSpenderOption = 1511,
 
-        [ConflictingCombos(WarriorOnslaughtFeatureOption)]
+        [ConflictingCombos(WarriorOnslaughtFeatureOption, WarriorOnslaughtFeatureOptionTwo)]
         [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Uses all stacks)", WAR.JobID, WAR.StormsPath)]
         WarriorOnslaughtFeature = 1512,
 
-        [ConflictingCombos(WarriorOnslaughtFeature)]
-        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1/2 stacks depending on level)", WAR.JobID, WAR.StormsPath)]
+        [ConflictingCombos(WarriorOnslaughtFeature, WarriorOnslaughtFeatureOptionTwo)]
+        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1 stack)", WAR.JobID, WAR.StormsPath)]
         WarriorOnslaughtFeatureOption = 1513,
+
+        [ConflictingCombos(WarriorOnslaughtFeature, WarriorOnslaughtFeatureOption)]
+        [CustomComboInfo("Onslaught Option Two", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 2 stacks)", WAR.JobID, WAR.StormsPath)]
+        WarriorOnslaughtFeatureOptionTwo = 1514,
 
         #endregion
         // ====================================================================================

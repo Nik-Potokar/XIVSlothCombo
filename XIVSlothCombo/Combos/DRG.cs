@@ -37,7 +37,8 @@ namespace XIVSlothComboPlugin.Combos
                 DiveReady = 1243,
                 RaidenThrustReady = 1863,
                 PowerSurge = 2720,
-                LifeSurge = 116;
+                LifeSurge = 116,
+                DraconianFire = 1863;
         }
 
         public static class Debuffs
@@ -59,7 +60,9 @@ namespace XIVSlothComboPlugin.Combos
                 CoerthanTorment = 72,
                 HighJump = 74,
                 RaidenThrust = 76,
-                Stardiver = 80;
+                Stardiver = 80,
+                DraconianFury = 82,
+                ChaoticSpring = 86;
         }
     }
 
@@ -91,6 +94,9 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (comboTime > 0)
                 {
+                    if (HasEffect(DRG.Buffs.DraconianFire) && level >= DRG.Levels.DraconianFury)
+                        return DRG.DraconianFury;
+
                     if ((lastComboMove == DRG.DoomSpike || lastComboMove == DRG.DraconianFury) && level >= DRG.Levels.SonicThrust)
                         return DRG.SonicThrust;
 
@@ -180,6 +186,9 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.Disembowel && (Disembowel == null || (Disembowel.RemainingTime < 10)))
                         return DRG.Disembowel;
+
+                    if (lastComboMove == DRG.Disembowel && level >= DRG.Levels.ChaoticSpring)
+                        return DRG.ChaoticSpring;
 
                     if (lastComboMove == DRG.Disembowel && level >= DRG.Levels.ChaosThrust)
                         return DRG.ChaosThrust;
