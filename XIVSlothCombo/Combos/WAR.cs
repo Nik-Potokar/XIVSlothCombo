@@ -110,6 +110,12 @@ namespace XIVSlothComboPlugin.Combos
                     if (onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
+                // leaves 2 stacks
+                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && level >= 62)
+                {
+                    if (onslaughtCD.CooldownRemaining < 1 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
+                        return WAR.Onslaught;
+                }
                 if (comboTime > 0)
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
