@@ -423,18 +423,21 @@ namespace XIVSlothComboPlugin.Combos
                 var heavyShotOnCooldown = heavyShot.CooldownRemaining > 0.7;
 
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && inCombat) {
-                    if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
-                        return BRD.PitchPerfect;
-                    if (level >= BRD.Levels.EmpyrealArrow && !GetCooldown(BRD.EmpyrealArrow).IsCooldown)
-                        return BRD.EmpyrealArrow;
-                    if (level >= BRD.Levels.Bloodletter && GetCooldown(BRD.Bloodletter).CooldownRemaining < 30)
-                        return BRD.Bloodletter;
-                    if (level >= BRD.Levels.Sidewinder && !GetCooldown(BRD.Sidewinder).IsCooldown)
-                        return BRD.Sidewinder;
                     if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
                         return BRD.ApexArrow;
                     if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                         return BRD.BlastArrow;
+
+                    if (heavyShotOnCooldown) {
+                        if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                            return BRD.PitchPerfect;
+                        if (level >= BRD.Levels.EmpyrealArrow && !GetCooldown(BRD.EmpyrealArrow).IsCooldown)
+                            return BRD.EmpyrealArrow;
+                        if (level >= BRD.Levels.Bloodletter && GetCooldown(BRD.Bloodletter).CooldownRemaining < 30)
+                            return BRD.Bloodletter;
+                        if (level >= BRD.Levels.Sidewinder && !GetCooldown(BRD.Sidewinder).IsCooldown)
+                            return BRD.Sidewinder;
+                    }
                 }
 
                 if (IsEnabled(CustomComboPreset.SimpleSongOption)) {
