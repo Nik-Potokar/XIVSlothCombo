@@ -158,6 +158,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
         SimpleAoESongOption = 216,
 
+        [CustomComboInfo("BardApplyDots", "SimpleBard But will apply dots on a seperate hotkey, use at start of boss fight then switch to SimpleBard.", BRD.JobID, BRD.IronJaws)]
+        BardApplyDots = 217,
+
         #endregion
         // ====================================================================================
         #region DANCER
