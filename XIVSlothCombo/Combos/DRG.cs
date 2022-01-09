@@ -61,7 +61,8 @@ namespace XIVSlothComboPlugin.Combos
                 HighJump = 74,
                 RaidenThrust = 76,
                 Stardiver = 80,
-                DraconianFury = 82;
+                DraconianFury = 82,
+                ChaoticSpring = 86;
         }
     }
 
@@ -185,6 +186,9 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.Disembowel && (Disembowel == null || (Disembowel.RemainingTime < 10)))
                         return DRG.Disembowel;
+
+                    if (lastComboMove == DRG.Disembowel && level >= DRG.Levels.ChaoticSpring)
+                        return DRG.ChaoticSpring;
 
                     if (lastComboMove == DRG.Disembowel && level >= DRG.Levels.ChaosThrust)
                         return DRG.ChaosThrust;
