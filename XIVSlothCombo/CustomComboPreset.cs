@@ -19,6 +19,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ASTROLOGIAN
 
+        [ConflictingCombos(AstrologianAstrodyneOnPlayFeature)]
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, AST.Play)]
         AstrologianCardsOnDrawFeature = 1,
 
@@ -55,6 +56,10 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("LazyLordFeature", "Adds LordOfCrowns Onto Main DPS/AoE Feature", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1, AST.Gravity, AST.Gravity2)]
         AstrologianLazyLordFeature = 12,
+
+        [ConflictingCombos(AstrologianCardsOnDrawFeature)]
+        [CustomComboInfo("Astrodyne On Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, AST.Play)]
+        AstrologianAstrodyneOnPlayFeature = 13,
 
         #endregion
         // ====================================================================================

@@ -117,7 +117,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 88)
                 {
-                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff || onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff)
+                    if (!onslaughtCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff || onslaughtCD.CooldownRemaining < 90 && actionIDCD.CooldownRemaining > 0.7 && level >= 88 && surgingtempestBuff)
                         return WAR.Onslaught;
                 }
                 if (comboTime > 0)

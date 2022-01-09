@@ -279,4 +279,20 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class AstrologianAstrodyneOnPlayFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAstrodyneOnPlayFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == AST.Play && !IsEnabled(CustomComboPreset.AstrologianCardsOnDrawFeature))
+            {
+                var gauge = GetJobGauge<ASTGauge>();
+                if (!gauge.ContainsSeal(SealType.NONE))
+                    return AST.Astrodyne;
+            }
+            return actionID;
+
+        }
+    }
 }
