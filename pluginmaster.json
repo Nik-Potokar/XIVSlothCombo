@@ -5,7 +5,7 @@
         "Description": "XIVCombo But For Lazy Gamers, Should Have Everything That Original XIVCombo Has And More +++",
         "InternalName": "XIVSlothCombo",
         "AssemblyVersion": "1.0.0.0",
-        "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
+        "RepoUrl": "https://github.com/Codemned/XIVSlothCombo",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 4,
         "DownloadLinkInstall": "https://github.com/Codemned/MyDalamudPlugins/raw/main/plugins/XIVSlothCombo/latest.zip",
