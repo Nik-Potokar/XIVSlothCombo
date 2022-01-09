@@ -1,1 +1,1 @@
-Personal use. no support will be given.
+Personal use, no support will be given.
