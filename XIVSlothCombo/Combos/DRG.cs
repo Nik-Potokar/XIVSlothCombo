@@ -37,7 +37,8 @@ namespace XIVSlothComboPlugin.Combos
                 DiveReady = 1243,
                 RaidenThrustReady = 1863,
                 PowerSurge = 2720,
-                LifeSurge = 116;
+                LifeSurge = 116,
+                DraconianFire = 1863;
         }
 
         public static class Debuffs
@@ -59,7 +60,8 @@ namespace XIVSlothComboPlugin.Combos
                 CoerthanTorment = 72,
                 HighJump = 74,
                 RaidenThrust = 76,
-                Stardiver = 80;
+                Stardiver = 80,
+                DraconianFury = 82;
         }
     }
 
@@ -91,6 +93,9 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (comboTime > 0)
                 {
+                    if (HasEffect(DRG.Buffs.DraconianFire) && level >= DRG.Levels.DraconianFury)
+                        return DRG.DraconianFury;
+
                     if ((lastComboMove == DRG.DoomSpike || lastComboMove == DRG.DraconianFury) && level >= DRG.Levels.SonicThrust)
                         return DRG.SonicThrust;
 
