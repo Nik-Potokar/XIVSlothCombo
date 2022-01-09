@@ -441,7 +441,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if (IsEnabled(CustomComboPreset.SimpleSongOption)) {
-                    if (heavyShot.IsCooldown && (gauge.SongTimer < 3 || gauge.Song == Song.MAGE && gauge.SongTimer < 11)) {
+                    if (heavyShot.IsCooldown && (gauge.SongTimer < 3)) {
                         if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
                             return BRD.WanderersMinuet;
                         if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
@@ -523,6 +523,136 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class BardApplyDots : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardApplyDots;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BRD.IronJaws)
+            {
+                var gauge = GetJobGauge<BRDGauge>();
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var heavyShot = GetCooldown(actionID);
+                var heavyShotOnCooldown = heavyShot.CooldownRemaining > 0.7;
+
+                if (IsEnabled(CustomComboPreset.BardApplyDots) && inCombat)
+                {
+                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
+                        return BRD.ApexArrow;
+                    if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
+                        return BRD.BlastArrow;
+
+                    if (heavyShotOnCooldown)
+                    {
+                        if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                            return BRD.PitchPerfect;
+                        if (level >= BRD.Levels.EmpyrealArrow && !GetCooldown(BRD.EmpyrealArrow).IsCooldown)
+                            return BRD.EmpyrealArrow;
+                        if (level >= BRD.Levels.Bloodletter && GetCooldown(BRD.Bloodletter).CooldownRemaining < 30)
+                            return BRD.Bloodletter;
+                        if (level >= BRD.Levels.Sidewinder && !GetCooldown(BRD.Sidewinder).IsCooldown)
+                            return BRD.Sidewinder;
+                    }
+                }
+
+                if (IsEnabled(CustomComboPreset.BardApplyDots))
+                {
+                    if (heavyShot.IsCooldown && (gauge.SongTimer < 3))
+                    {
+                        if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
+                            return BRD.WanderersMinuet;
+                        if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
+                            return BRD.MagesBallad;
+                        if (level >= BRD.Levels.ArmysPaeon && !GetCooldown(BRD.ArmysPaeon).IsCooldown)
+                            return BRD.ArmysPaeon;
+                    }
+                }
+
+
+                var venomous = TargetHasEffect(BRD.Debuffs.VenomousBite);
+                var windbite = TargetHasEffect(BRD.Debuffs.Windbite);
+                var caustic = TargetHasEffect(BRD.Debuffs.CausticBite);
+                var stormbite = TargetHasEffect(BRD.Debuffs.Stormbite);
+
+                var venomousDuration = FindTargetEffect(BRD.Debuffs.VenomousBite);
+                var windbiteDuration = FindTargetEffect(BRD.Debuffs.Windbite);
+                var causticDuration = FindTargetEffect(BRD.Debuffs.CausticBite);
+                var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
+
+                var useIronJaws = (
+                    level >= BRD.Levels.IronJaws &&
+                    ((venomous && venomousDuration.RemainingTime < 4) || (caustic && causticDuration.RemainingTime < 4)) ||
+                    ((windbite && windbiteDuration.RemainingTime < 4) || (stormbite && stormbiteDuration.RemainingTime < 4))
+                );
+
+                if (level < BRD.Levels.BiteUpgrade)
+                {
+                    if (inCombat)
+                    {
+                        if (useIronJaws)
+                        {
+                            return BRD.IronJaws;
+                        }
+
+                        if (level < BRD.Levels.IronJaws)
+                        {
+                            if (venomous && venomousDuration.RemainingTime < 4)
+                                return BRD.VenomousBite;
+                            if (windbite && windbiteDuration.RemainingTime < 4)
+                                return BRD.Windbite;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.BardApplyDots))
+                        {
+                            if (level >= BRD.Levels.Windbite && !windbite)
+                                return OriginalHook(BRD.Windbite);
+                            if (level >= BRD.Levels.VenomousBite && !venomous)
+                                return OriginalHook(BRD.VenomousBite);
+                        }
+                    }
+
+                    if (HasEffect(BRD.Buffs.StraightShotReady))
+                    {
+                        return OriginalHook(BRD.RefulgentArrow);
+                    }
+
+                    return OriginalHook(BRD.BurstShot);
+                }
+
+                if (inCombat)
+                {
+                    if (useIronJaws)
+                    {
+                        return BRD.IronJaws;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BardApplyDots))
+                    {
+                        if (level >= BRD.Levels.CausticBite && !caustic)
+                            return BRD.CausticBite;
+                        if (level >= BRD.Levels.StormBite && !stormbite)
+                            return BRD.Stormbite;
+                    }
+
+                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
+                    {
+                        return BRD.ApexArrow;
+                    }
+                }
+
+                if (HasEffect(BRD.Buffs.StraightShotReady))
+                {
+                    return OriginalHook(BRD.RefulgentArrow);
+                }
+
+                return OriginalHook(BRD.BurstShot);
+            }
+
+            return actionID;
+        }
+    }
+
     internal class BardBuffsFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.BardBuffsFeature;
