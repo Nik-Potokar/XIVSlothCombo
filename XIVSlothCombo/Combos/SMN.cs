@@ -242,10 +242,15 @@ namespace XIVSlothComboPlugin.Combos
                     var fofCD = GetCooldown(SMN.FountainOfFire);
                     if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.99)
                         return SMN.Fester;
+                    if (lastComboMove == SMN.FountainOfFire && gauge.HasAetherflowStacks && fofCD.CooldownRemaining > 0.99)
+                        return SMN.Fester;
                     if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.2)
+                        return SMN.Fester;
+                    if (lastComboMove == SMN.FountainOfFire && gauge.HasAetherflowStacks && fofCD.CooldownRemaining > 0.2)
                         return SMN.Fester;
                     if ((lastComboMove == SMN.AstralImpulse && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.FountainOfFire && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95))
                         return SMN.EnergyDrain;
+
                 }
 
                 if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature))
@@ -393,7 +398,11 @@ namespace XIVSlothComboPlugin.Combos
                     var fofCD = GetCooldown(SMN.FountainOfFire);
                     if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.99)
                         return SMN.Painflare;
+                    if (lastComboMove == SMN.FountainOfFire && gauge.HasAetherflowStacks && fofCD.CooldownRemaining > 0.99)
+                        return SMN.Painflare;
                     if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.2)
+                        return SMN.Painflare;
+                    if (lastComboMove == SMN.FountainOfFire && gauge.HasAetherflowStacks && fofCD.CooldownRemaining > 0.2)
                         return SMN.Painflare;
                     if ((lastComboMove == SMN.AstralFlare && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.BrandOfPurgatory && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95))
                         return SMN.EnergySiphon;
