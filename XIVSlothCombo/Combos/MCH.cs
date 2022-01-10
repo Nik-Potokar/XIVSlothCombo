@@ -100,39 +100,40 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
-                    if (level >= MCH.Levels.AirAnchor && HasEffect(MCH.Buffs.Reassembled) && !airAnchorCD.IsCooldown)
+                    if (HasEffect(MCH.Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
                         return MCH.AirAnchor;
-                    if (level >= MCH.Levels.Drill && airAnchorCD.IsCooldown && !drillCD.IsCooldown)
+                    if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= MCH.Levels.Drill)
                         return MCH.Drill;
-                    if (level >= 90 && HasEffect(MCH.Buffs.Reassembled) && !chainsawCD.IsCooldown)
+                    if (HasEffect(MCH.Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= 90)
                         return MCH.ChainSaw;
                 }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
+                    if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= 76)
+                        return MCH.AirAnchor;
+                    if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= 58)
+                        return MCH.Drill;
+                    if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
+                        return MCH.HotShot;
+                    else
                     if (level >= 84)
                     {
-                        if (reassembleCD.IsCooldown && !airAnchorCD.IsCooldown)
+                        if (HasEffect(MCH.Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 55 && !airAnchorCD.IsCooldown)
                             return MCH.AirAnchor;
-                        if (level >= 90 && reassembleCD.IsCooldown && !chainsawCD.IsCooldown)
+                        if (reassembleCD.CooldownRemaining >= 55 && !chainsawCD.IsCooldown && level >= 90)
                             return MCH.ChainSaw;
-                        if (reassembleCD.IsCooldown && !drillCD.IsCooldown)
+                        if (HasEffect(MCH.Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 55 && !drillCD.IsCooldown)
                             return MCH.Drill;
                     }
-                    if (level >= 76 && reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown)
-                        return MCH.AirAnchor;
-                    if (level >= 58 && reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown)
-                        return MCH.Drill;
-                    if (level <= 75 && reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown)
-                        return MCH.HotShot;
                 }
 
                 var battery = GetJobGauge<MCHGauge>().Battery;
                 if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
                 {
-                    if (level >= 40 && level <= 79 && battery == 100 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
+                    if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.RookAutoturret;
-                    if (level >= 80 && battery == 100 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
+                    if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.AutomatonQueen;
                 }
 
@@ -229,6 +230,16 @@ namespace XIVSlothComboPlugin.Combos
                     return MCH.Scattergun;
                 if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
+
+                var battery = GetJobGauge<MCHGauge>().Battery;
+                if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption))
+                {
+                    if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
+                        return MCH.RookAutoturret;
+                    if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
+                        return MCH.AutomatonQueen;
+                }
+
             }
 
             return actionID;

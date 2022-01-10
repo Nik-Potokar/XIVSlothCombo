@@ -102,32 +102,66 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region BARD
 
+        [CustomComboInfo("Wanderer's into Pitch Perfect", "Replaces Wanderer's Minuet with Pitch Perfect while in WM.", BRD.JobID, BRD.WanderersMinuet)]
+        BardWanderersPitchPerfectFeature = 200,
+
+        [ConflictingCombos(SimpleBardFeature)]
+        [CustomComboInfo("Heavy Shot into Straight Shot", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardStraightShotUpgradeFeature = 201,
+
+        [DependentCombos(BardStraightShotUpgradeFeature)]
+        [CustomComboInfo("Dot Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your dots on target when needed if there are any dots present.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardDoTMaintain = 202,
+
+        [ConflictingCombos(BardIronJawsAlternateFeature)]
+        [CustomComboInfo("Iron Jaws Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nAlternates between the two if Iron Jaws isn't available.", BRD.JobID, BRD.IronJaws)]
+        BardIronJawsFeature = 203,
+
+        [ConflictingCombos(BardIronJawsFeature)]
+        [CustomComboInfo("Iron Jaws Alternate Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nIron Jaws will only show up when debuffs are about to expire.", BRD.JobID, BRD.IronJaws)]
+        BardIronJawsAlternateFeature = 204,
+
+        [ConflictingCombos(SimpleBardFeature)]
+        [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, BRD.BurstShot, BRD.QuickNock)]
+        BardApexFeature = 205,
+
+        [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
+        BardoGCDSingleTargetFeature = 206,
+
+        [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on RainOfDeath depending on their CD.", BRD.JobID, BRD.BurstShot, BRD.RainOfDeath)]
+        BardoGCDAoEFeature = 207,
+
+        [ConflictingCombos(BardSimpleAoEFeature)]
+        [CustomComboInfo("AoE Combo Feature", "Replaces QuickNock/Ladonsbite with Shadowbite when ready", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
+        BardAoEComboFeature = 208,
+
         [CustomComboInfo("SimpleBard", "Adds every single target ability except DoTs to one button,\nIf there are DoTs on target SimpleBard will try to maintain their uptime.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
-        SimpleBardFeature = 200,
+        SimpleBardFeature = 209,
 
         [DependentCombos(SimpleBardFeature)]
         [CustomComboInfo("SimpleBard DoT Option", "This option will make SimpleBard apply DoTs if none are present on the target.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
-        SimpleDoTOption = 201,
+        SimpleDoTOption = 210,
 
         [DependentCombos(SimpleBardFeature)]
         [CustomComboInfo("SimpleBard Song Option", "This option adds the bards songs to the SimpleBard feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
-        SimpleSongOption = 202,
+        SimpleSongOption = 211,
+
+        [DependentCombos(BardoGCDAoEFeature)]
+        [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, BRD.BurstShot, BRD.Bloodletter)]
+        BardSongsFeature = 212,
 
         [CustomComboInfo("Bard Buffs Feature", "Adds RagingStrikes and BattleVoice onto Barrage.", BRD.JobID, BRD.Barrage)]
-        BardBuffsFeature = 203,
+        BardBuffsFeature = 213,
 
         [CustomComboInfo("One Button Songs", "Add Mage's Ballade and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, BRD.WanderersMinuet)]
-        BardOneButtonSongs = 204,
+        BardOneButtonSongs = 214,
 
         [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
-        BardSimpleAoEFeature = 205,
+        BardSimpleAoEFeature = 215,
 
         [DependentCombos(BardSimpleAoEFeature)]
         [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
-        SimpleAoESongOption = 206,
-
-        [CustomComboInfo("BardApplyDots", "SimpleBard But will apply dots on a seperate hotkey, use at start of boss fight then switch to SimpleBard.", BRD.JobID, BRD.IronJaws)]
-        BardApplyDots = 207,
+        SimpleAoESongOption = 216,
 
         #endregion
         // ====================================================================================
@@ -316,6 +350,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge rook/queen will be added to your (Heated) Shot Combo.", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistOverChargeOption = 709,
 
+        [DependentCombos(MachinistSpreadShotFeature)]
+        [CustomComboInfo("Battery AOE Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
+        MachinistAoEOverChargeOption = 710,
         #endregion
         // ====================================================================================
         #region MONK
@@ -677,20 +714,38 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Inner Release Feature", "Replace Single-target and AoE combo with Fell Cleave/Decimate during Inner Release", WAR.JobID, WAR.MythrilTempest, WAR.StormsPath)]
         WarriorInnerReleaseFeature = 1504,
 
+        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, WAR.NascentFlash)]
+        WarriorNascentFlashFeature = 1505,
+
         [CustomComboInfo("Fellcleave/IB Feature", "Replaces Main Combo With Fellcleave/IB When you are about to overcap ", WAR.JobID, WAR.FellCleave, WAR.InnerBeast)]
-        WarriorFellCleaveOvercapFeature = 1505,
+        WarriorFellCleaveOvercapFeature = 1506,
 
         [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest and if you're synced below 70 while Beserk buff is ON CD", WAR.JobID, WAR.Upheaval)]
-        WarriorUpheavalMainComboFeature = 1506,
+        WarriorUpheavalMainComboFeature = 1507,
+
+        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, WAR.PrimalRend, WAR.InnerBeast, WAR.SteelCyclone)]
+        WarriorPrimalRendFeature = 1508,
 
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, WAR.Orogeny, WAR.MythrilTempest)]
-        WarriorOrogenyFeature = 1507,
+        WarriorOrogenyFeature = 1509,
 
         [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos and Surging Tempest.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, WAR.InnerChaos, WAR.StormsPath)]
-        WarriorInnerChaosOption = 1508,
+        WarriorInnerChaosOption = 1510,
 
         [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo", WAR.JobID, WAR.StormsPath)]
-        WarriorSpenderOption = 1509,
+        WarriorSpenderOption = 1511,
+
+        [ConflictingCombos(WarriorOnslaughtFeatureOption, WarriorOnslaughtFeatureOptionTwo)]
+        [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Uses all stacks)", WAR.JobID, WAR.StormsPath)]
+        WarriorOnslaughtFeature = 1512,
+
+        [ConflictingCombos(WarriorOnslaughtFeature, WarriorOnslaughtFeatureOptionTwo)]
+        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1 stack)", WAR.JobID, WAR.StormsPath)]
+        WarriorOnslaughtFeatureOption = 1513,
+
+        [ConflictingCombos(WarriorOnslaughtFeature, WarriorOnslaughtFeatureOption)]
+        [CustomComboInfo("Onslaught Option Two", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 2 stacks)", WAR.JobID, WAR.StormsPath)]
+        WarriorOnslaughtFeatureOptionTwo = 1514,
 
         #endregion
         // ====================================================================================
