@@ -500,9 +500,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return BRD.MagesBallad;
                             }
                         }
-                    }
-
-                    if (gauge.SongTimer < 1 || gauge.Song == Song.ARMY) {
+                    } else if (gauge.SongTimer < 1 || gauge.Song == Song.ARMY) {
                         if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
                             return BRD.MagesBallad;
                         if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
