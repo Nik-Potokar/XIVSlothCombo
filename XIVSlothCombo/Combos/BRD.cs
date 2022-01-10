@@ -488,6 +488,7 @@ namespace XIVSlothComboPlugin.Combos
                 var useIronJaws = (
                     level >= BRD.Levels.IronJaws &&
                     ((venomous && venomousDuration.RemainingTime < 4) || (caustic && causticDuration.RemainingTime < 4)) ||
+                    level >= BRD.Levels.IronJaws &&
                     ((windbite && windbiteDuration.RemainingTime < 4) || (stormbite && stormbiteDuration.RemainingTime < 4))
                 );
 
