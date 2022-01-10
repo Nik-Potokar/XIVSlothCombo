@@ -678,7 +678,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
         SimpleAoESummoner = 1417,
 
-        [DependentCombos(SimpleSummoner)]
+        [ConflictingCombos(BuffOnSimpleSummoner246gcd)]
+        [DependentCombos(SimpleSummoner)] 
         [CustomComboInfo("Searing Light Rotation Option", "Adds Searing Light to Simple Summoner Rotation, Single Target", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
         BuffOnSimpleSummoner = 1418,
 
@@ -694,6 +695,10 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I. Will break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
         SummonerRuinIVMobilityFeature = 1422,
+
+        [ConflictingCombos(BuffOnSimpleSummoner)]
+        [CustomComboInfo("2.46gcd Buff lineup option", "Adds searing light to ruin3 combo, Uses searing light before bahamut.", SMN.JobID, SMN.Ruin3)]
+        BuffOnSimpleSummoner246gcd = 1423,
 
         #endregion
         // ====================================================================================
