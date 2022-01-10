@@ -79,7 +79,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (IsEnabled(CustomComboPreset.MnkAoECombo))
                 {
-                    if (lastComboMove == MNK.ArmOfTheDestroyer && HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.FourPointFury || lastComboMove == MNK.ShadowOfTheDestroyer && HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.FourPointFury)
+                    if ((lastComboMove == MNK.ArmOfTheDestroyer || lastComboMove == MNK.ShadowOfTheDestroyer) && HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.FourPointFury)
                         return MNK.FourPointFury;
                     if (lastComboMove == MNK.FourPointFury && HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
                         return MNK.Rockbreaker;
