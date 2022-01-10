@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Interface;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -306,4 +307,71 @@ namespace XIVSlothComboPlugin.Combos
 
         }
     }
+    internal class AstrologianAlternateDpsFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAlternateDpsFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == AST.Combust1 || actionID == AST.Combust2 || actionID == AST.Combust3)
+            {
+
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var combust3Debuff = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust2Debuff = FindTargetEffect(AST.Debuffs.Combust2);
+                var combust1Debuff = FindTargetEffect(AST.Debuffs.Combust1);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(AST.LucidDreaming);
+                var fallmalefic = GetCooldown(AST.FallMalefic);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
+                        return AST.Astrodyne;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        return AST.Draw;
+
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                        return AST.MinorArcana;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
+                        return AST.LucidDreaming;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                        return AST.LordOfCrowns;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 72 && incombat)
+                {
+                    if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
+                        return AST.Combust3;
+                }
+
+                if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 46 && level <= 71 && incombat)
+                {
+                    if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
+                        return AST.Combust2;
+                }
+
+                if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 4 && level <= 45 && incombat)
+                {
+                    if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
+                        return AST.Combust1;
+                }
+            }
+            return OriginalHook(AST.Malefic1);
+        }
+    }
+
 }

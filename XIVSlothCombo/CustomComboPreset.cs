@@ -32,7 +32,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AST Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
         AstrologianAscendFeature = 4,
 
-        [CustomComboInfo("DPS Feature", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
+        [ConflictingCombos(AstrologianAlternateDpsFeature)]
+        [CustomComboInfo("DPS Feature(On Malefic)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
         AstrologianDpsFeature = 5,
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below 8k mana", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
@@ -58,6 +59,10 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Astrodyne On Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, AST.Play)]
         AstrologianAstrodyneOnPlayFeature = 13,
+
+        [ConflictingCombos(AstrologianDpsFeature)]
+        [CustomComboInfo("Alternate DPS Feature(On Combust)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.Combust1, AST.Combust2, AST.Combust3)]
+        AstrologianAlternateDpsFeature = 14,
 
         #endregion
         // ====================================================================================
