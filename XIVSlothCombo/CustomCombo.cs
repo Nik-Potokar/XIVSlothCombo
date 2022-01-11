@@ -319,5 +319,17 @@ namespace XIVSlothComboPlugin.Combos
 
             return true;
         }
+        /*
+         * #ToDo implement
+         * Track targets current hp (In some cases you want to use a certain skill instead of another one depenidng on targets hp aka dots)
+            if (Service.TargetManager.Target is Character chara)
+            {
+                var currentHp = chara.CurrentHp;
+                var maxHp = chara.maxHp;
+
+                if (currentHp > amount)
+                    return class.skillname;
+            }
+        */
     }
 }
