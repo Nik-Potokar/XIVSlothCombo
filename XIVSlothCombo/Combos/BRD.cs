@@ -445,6 +445,58 @@ namespace XIVSlothComboPlugin.Combos
                 var heavyShot = GetCooldown(actionID);
                 var heavyShotOnCooldown = heavyShot.CooldownRemaining > 0.7;
 
+                if (IsEnabled(CustomComboPreset.SimpleSongOption) && heavyShot.IsCooldown) {
+                    // Limit optimisation to only when you are high enough to benefit from it.
+                    if (level >= BRD.Levels.WanderersMinuet) {
+                        // 43s of Wanderer's Minute, ~36s of Mage's Ballad, and ~43s of Army Peon
+                        var songTimerInSeconds = gauge.SongTimer / 1000;
+                        var minuetCooldown = GetCooldown(BRD.WanderersMinuet).IsCooldown;
+                        var balladCooldown = GetCooldown(BRD.MagesBallad).IsCooldown;
+                        var paeonCooldown = GetCooldown(BRD.ArmysPaeon).IsCooldown;
+
+                        if (gauge.SongTimer == 0) {
+                            // Do logic to determine first song
+
+                            if (!minuetCooldown) return BRD.WanderersMinuet;
+                            if (!balladCooldown) return BRD.MagesBallad;
+                            if (!paeonCooldown) return BRD.ArmysPaeon;
+                        }
+
+                        var pitch = GetJobGauge<BRDGauge>();
+                        if (gauge.Song == Song.WANDERER) {
+                            // Spend any repertoire before switching to next song
+                            if (songTimerInSeconds < 3 && pitch.Repertoire > 0) {
+                                return BRD.PitchPerfect;
+                            }
+                            // Move to Mage's Ballad if < 3 seconds left on song
+                            if (songTimerInSeconds < 3 && !balladCooldown) {
+                                return BRD.MagesBallad;
+                            }
+                        }
+
+                        if (gauge.Song == Song.MAGE) {
+                            // Move to Army's Paeon if < 9 seconds left on song
+                            if (songTimerInSeconds < 9 && !paeonCooldown) {
+                                return BRD.ArmysPaeon;
+                            }
+                        }
+
+                        if (gauge.Song == Song.ARMY) {
+                            // Move to Wanderer's Minuet if < 3 seconds left on song
+                            if (songTimerInSeconds < 3 && !minuetCooldown) {
+                                return BRD.WanderersMinuet;
+                            }
+                        }
+                    } else if (gauge.SongTimer < 1 || gauge.Song == Song.ARMY) {
+                        if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
+                            return BRD.MagesBallad;
+                        if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
+                            return BRD.WanderersMinuet;
+                        if (level >= BRD.Levels.ArmysPaeon && !GetCooldown(BRD.ArmysPaeon).IsCooldown)
+                            return BRD.ArmysPaeon;
+                    }
+                }
+
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && inCombat) {
                     if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
                         return BRD.ApexArrow;
@@ -460,53 +512,6 @@ namespace XIVSlothComboPlugin.Combos
                             return BRD.Bloodletter;
                         if (level >= BRD.Levels.Sidewinder && !GetCooldown(BRD.Sidewinder).IsCooldown)
                             return BRD.Sidewinder;
-                    }
-                }
-
-                if (IsEnabled(CustomComboPreset.SimpleSongOption) && heavyShot.IsCooldown) {
-                    // Limit optimisation to only when you are high enough to benefit from it.
-                    if (level >= BRD.Levels.WanderersMinuet) {
-                        // 43s of Wanderer's Minute, ~34s of Mage's Ballad, and ~43s of Army Peon
-                        var songTimerInSeconds = gauge.SongTimer / 1000;
-                        var minuetCooldown = GetCooldown(BRD.WanderersMinuet).IsCooldown;
-                        var balladCooldown = GetCooldown(BRD.MagesBallad).IsCooldown;
-                        var paeonCooldown = GetCooldown(BRD.ArmysPaeon).IsCooldown;
-
-                        if (gauge.SongTimer == 0) {
-                            // Do logic to determine first song
-
-                            if (!minuetCooldown) return BRD.WanderersMinuet;
-                            if (!balladCooldown) return BRD.MagesBallad;
-                            if (!paeonCooldown) return BRD.ArmysPaeon;
-                        }
-
-                        if (gauge.Song == Song.WANDERER) {
-                            // Move to Mage's Ballad if <=3 seconds left on song
-                            if (songTimerInSeconds <= 2 && !balladCooldown) {
-                                return BRD.MagesBallad;
-                            }
-                        }
-
-                        if (gauge.Song == Song.MAGE) {
-                            // Move to Army's Paeon if <=12 seconds left on song
-                            if (songTimerInSeconds <= 10 && !paeonCooldown) {
-                                return BRD.ArmysPaeon;
-                            }
-                        }
-
-                        if (gauge.Song == Song.ARMY) {
-                            // Move to Army's Paeon if <= 3 seconds left on song
-                            if (songTimerInSeconds <= 2 && !balladCooldown) {
-                                return BRD.MagesBallad;
-                            }
-                        }
-                    } else if (gauge.SongTimer < 1 || gauge.Song == Song.ARMY) {
-                        if (level >= BRD.Levels.MagesBallad && !GetCooldown(BRD.MagesBallad).IsCooldown)
-                            return BRD.MagesBallad;
-                        if (level >= BRD.Levels.WanderersMinuet && !GetCooldown(BRD.WanderersMinuet).IsCooldown)
-                            return BRD.WanderersMinuet;
-                        if (level >= BRD.Levels.ArmysPaeon && !GetCooldown(BRD.ArmysPaeon).IsCooldown)
-                            return BRD.ArmysPaeon;
                     }
                 }
 
