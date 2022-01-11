@@ -357,7 +357,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region MONK
 
-        [CustomComboInfo("Monk AoE Combo", "Replaces ArmOfTheDestroyer/ShadowOfTheDestroyer with the AoE combo chain.", MNK.JobID, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer)]
+        [CustomComboInfo("Monk AoE Combo", "Replaces ArmOfTheDestroyer/ShadowOfTheDestroyer with the AoE combo chain.", MNK.JobID, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer, MNK.FourPointFury)]
         MnkAoECombo = 800,
 
         [CustomComboInfo("Monk Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, MNK.DragonKick)]
@@ -381,8 +381,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterfull Bliz when Perfect Balance Is Active", MNK.JobID, MNK.PerfectBalance, MNK.MasterfulBlitz, MNK.ElixirField)]
         MnkPerfectBalancePlus = 807,
 
-        [CustomComboInfo("Perfect Balance AoE Feature Plus Testing", "All of the (Optimal?) Blitz combos on LEG SWEEP!!! when Perfect Balance Is Active (Also changes icon to PB, Testing Only!!)", MNK.JobID, MNK.LegSweep)]
-        MnkPerfectBalanceAoEPlus = 808,
+        [CustomComboInfo("MasterfullBliz To Main Combo", "Adds all of (Optimal?) Bliz combos and Masterfull Bliz on Main Combo", MNK.JobID, MNK.Bootshine)]
+        MonkMasterfullBlizOnMainCombo = 808,
+
+        [CustomComboInfo("MasterfullBliz To AoE Combo", "Adds all of (Optimal?) Bliz combos and Masterfull Bliz on AoE Combo.", MNK.JobID, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer, MNK.FourPointFury)]
+        MonkMasterfullBlizOnAoECombo = 809,
+
+        [CustomComboInfo("Forbidden Chakra Feature", "Adds Forbidden Chakra/Enlightement to the Main/AoE feature combo. Testing Only for now!", MNK.JobID, MNK.Bootshine, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer)]
+        MonkForbiddenChakraFeature = 810,
+
 
         #endregion
         // ====================================================================================
