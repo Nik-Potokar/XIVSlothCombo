@@ -9,7 +9,7 @@ namespace XIVSlothComboPlugin
     {
         // ====================================================================================
         #region GLOBAL FEATURES
-        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
+        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID, All.LowBlow , All.Interject)]
         InterruptFeature = 9000,
         [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
         [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", All.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]
@@ -679,7 +679,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire). Keep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1415,
 
-        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin3 ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        [ConflictingCombos(SimpleSummonerOption2)]
+        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin3.(Titan>Garuda>Ifrit) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SimpleSummoner = 1416,
 
         [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
@@ -706,6 +707,16 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(BuffOnSimpleSummoner)]
         [CustomComboInfo("2.46gcd Buff lineup option", "Adds searing light to ruin3 combo, Uses searing light before bahamut.", SMN.JobID, SMN.Ruin3)]
         BuffOnSimpleSummoner246gcd = 1423,
+
+        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, SMN.Ruin3)]
+        SummonerSwiftcastFeatureGaruda = 1424,
+
+        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, SMN.Ruin3)]
+        SummonerSwiftcastFeatureIfrit = 1425,
+
+        [ConflictingCombos(SimpleSummoner)]
+        [CustomComboInfo("One Button Rotation Feature Option2 ", "Same feature as One Button Rotation Feature but Garua>Titan>Ifrit .", SMN.JobID, SMN.Ruin3)]
+        SimpleSummonerOption2 = 1426,
 
         #endregion
         // ====================================================================================
