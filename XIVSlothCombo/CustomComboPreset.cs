@@ -163,6 +163,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
         SimpleAoESongOption = 216,
 
+        [DependentCombos(SimpleBardFeature)]
+        [CustomComboInfo("Simple Buffs Feature", "Adds buffs onto the SimpleBard feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimpleBuffsFeature = 217,
+
+        [DependentCombos(SimpleBardFeature, BardSimpleBuffsFeature)]
+        [CustomComboInfo("Simple Buffs - Radiant", "Adds Radiant Finale to the Simple Buffs feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimpleBuffsRadiantFeature = 218,
+
         #endregion
         // ====================================================================================
         #region DANCER
