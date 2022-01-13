@@ -30,7 +30,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const short
                 BloodWeapon = 742,
-                Delirium = 1972;
+                Delirium = 1972,
+                SaltedEarth = 749;
         }
 
         public static class Debuffs
@@ -187,20 +188,21 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRK.CarveAndSpit || actionID == DRK.AbyssalDrain)
             {
-
-                if (level >= 90)
-                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth, DRK.SaltAndDarkness, DRK.Shadowbringer);
-
-                if (level >= 86)
-                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth, DRK.SaltAndDarkness);
-
-                if (level >= (actionID is DRK.CarveAndSpit ? DRK.Levels.CarveAndSpit : DRK.Levels.AbyssalDrain))
-                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth);
-
-                return DRK.SaltedEarth;
+                var gauge = GetJobGauge<DRKGauge>();
+                var livingshadowCD = GetCooldown(DRK.LivingShadow);
+                var saltedCD = GetCooldown(DRK.SaltedEarth);
+                var carveCD = GetCooldown(DRK.CarveAndSpit);
+                if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= 80 )
+                    return DRK.LivingShadow;
+                if (!saltedCD.IsCooldown && level >= DRK.Levels.SaltedEarth)
+                    return DRK.SaltedEarth;
+                if (!carveCD.IsCooldown &&  level >= DRK.Levels.CarveAndSpit)
+                    return DRK.CarveAndSpit;
+                if (HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
+                    return DRK.SaltAndDarkness;
             }
 
-            return actionID;
+            return OriginalHook(actionID);
 
         }
     }

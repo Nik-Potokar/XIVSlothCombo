@@ -238,6 +238,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, DRK.StalwartSoul)]
         DarkStalwartSoulCombo = 501,
 
+        [ConflictingCombos(DeliriumFeatureOption)]
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, DRK.Souleater, DRK.StalwartSoul)]
         DeliriumFeature = 502,
 
@@ -250,7 +251,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or DarkSide is about to expire(10sec or less)", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
 
-        [CustomComboInfo("oGCD Feature", "All oGCD's(Shadowbringer/SaltedEarth) On one button (Crave&Spit/AbysallDrain) depending on their CD", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
+        [CustomComboInfo("oGCD Feature", "Adds Living Shadow>Salted Earth>CarveAndSpit>SaltAndDarkness", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
         DarkoGCDFeature = 506,
 
         [ConflictingCombos(DarkPlungeFeatureOption)]
@@ -261,6 +262,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, DRK.Souleater)]
         DarkPlungeFeatureOption = 508,
 
+        [ConflictingCombos(DeliriumFeature)]
         [CustomComboInfo("Delirium Feature Option", "Replaces Souleather with Bloodspiller when Delirium has 10sec or less remaining.", DRK.JobID, DRK.Souleater)]
         DeliriumFeatureOption = 509,
 
