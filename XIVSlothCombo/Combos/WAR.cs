@@ -226,6 +226,15 @@ namespace XIVSlothComboPlugin.Combos
                                 return WAR.PrimalRend;
                         }
 
+                        if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && lastComboMove == WAR.Decimate && level >= 86)
+                        {
+                            return WAR.Orogeny;
+                        }
+                        if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 86)
+                        {
+                            return WAR.Orogeny;
+                        }
+
                         if (IsEnabled(CustomComboPreset.WarriorMythrilTempestCombo))
                         {
                             var gauge = GetJobGauge<WARGauge>().BeastGauge;
@@ -240,14 +249,7 @@ namespace XIVSlothComboPlugin.Combos
                             if ((lastComboMove == WAR.Overpower && level >= 60) || (lastComboMove == WAR.MythrilTempest && gauge >= 90 && level >= 60 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature)))
                                 return WAR.Decimate;
                         }
-                        if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && decimateCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && lastComboMove == WAR.Decimate && level >= 86)
-                        {
-                            return WAR.Orogeny;
-                        }
-                        if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 86)
-                        {
-                            return WAR.Orogeny;
-                        }
+                       
                     }
 
                     return WAR.Overpower;
