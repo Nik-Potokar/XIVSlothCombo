@@ -251,7 +251,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or DarkSide is about to expire(10sec or less)", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
 
-        [CustomComboInfo("oGCD Feature", "Adds Living Shadow>Salted Earth>CarveAndSpit>SaltAndDarkness", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
+        [CustomComboInfo("oGCD Feature", "Adds Living Shadow>Salted Earth>CarveAndSpit>SaltAndDarkness to CarveAndSpit and AbysalDrain", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
         DarkoGCDFeature = 506,
 
         [ConflictingCombos(DarkPlungeFeatureOption)]
