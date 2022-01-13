@@ -64,6 +64,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Alternate DPS Feature(On Combust)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.Combust1, AST.Combust2, AST.Combust3)]
         AstrologianAlternateDpsFeature = 14,
 
+        [CustomComboInfo("test", "DPS Feature but with HP check", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
+        test = 15,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -244,7 +247,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, DRK.LivingShadow)]
         DRKLivingShadowFeature = 504,
 
-        [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
+        [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or DarkSide is about to expire(10sec or less)", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
 
         [CustomComboInfo("oGCD Feature", "All oGCD's(Shadowbringer/SaltedEarth) On one button (Crave&Spit/AbysallDrain) depending on their CD", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
@@ -257,6 +260,9 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(DarkPlungeFeature)]
         [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, DRK.Souleater)]
         DarkPlungeFeatureOption = 508,
+
+        [CustomComboInfo("Delirium Feature Option", "Replaces Souleather with Bloodspiller when Delirium has 10sec or less remaining.", DRK.JobID, DRK.Souleater)]
+        DeliriumFeatureOption = 509,
 
         #endregion
         // ====================================================================================

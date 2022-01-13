@@ -67,30 +67,36 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRK.Souleater)
             {
+                var currentMp = LocalPlayer.CurrentMp;
+                var gcd = GetCooldown(DRK.HardSlash);
+                var gauge = GetJobGauge<DRKGauge>();
+                var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
                         return DRK.Bloodspiller;
                 }
+                if (HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10 && deliriumTime.RemainingTime > 0 && IsEnabled(CustomComboPreset.DeliriumFeatureOption))
+                {
+                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium)
+                        return DRK.Bloodspiller;
+                }
+                if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
+                {
+                    if (currentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                    {
+                        if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
+                            return DRK.EdgeOfShadow;
+                        if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                            return DRK.FloodOfDarkness;
+                        if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                            return DRK.EdgeOfDarkness;
+                    }
+                }
                 if (comboTime > 0)
                 {
-                    var currentMp = LocalPlayer.CurrentMp;
-                    var gcd = GetCooldown(DRK.HardSlash);
-
                     if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
                         return DRK.SyphonStrike;
-                    if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
-                    {
-                        if (currentMp > 8000)
-                        {
-                            if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
-                                return DRK.EdgeOfShadow;
-                            if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
-                                return DRK.FloodOfDarkness;
-                            if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
-                                return DRK.EdgeOfDarkness;
-                        }
-                    }
 
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;

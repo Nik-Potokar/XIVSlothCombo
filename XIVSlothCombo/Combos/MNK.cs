@@ -250,7 +250,7 @@ namespace XIVSlothComboPlugin.Combos
                 var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                 var solarNadi = gauge.Nadi == Nadi.SOLAR;
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
-                if (gauge.BlitzTimeRemaining > 0)
+                if (gauge.BlitzTimeRemaining > 0 && level >= 60)
                 {
                     return OriginalHook(MNK.MasterfulBlitz);
                 }

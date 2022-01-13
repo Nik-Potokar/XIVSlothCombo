@@ -326,6 +326,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var currentHp = chara.CurrentHp;
                 var maxHp = chara.maxHp;
+                var percentageMaxHp = (chara.CurrentHp / maxHp) * 100;
 
                 if (currentHp > amount)
                     return class.skillname;
