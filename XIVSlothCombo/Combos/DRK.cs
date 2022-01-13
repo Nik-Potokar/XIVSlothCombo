@@ -158,9 +158,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRK.StalwartSoul)
             {
+                var gauge = GetJobGauge<DRKGauge>();
+                var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 if (IsEnabled(CustomComboPreset.DRKOvercapFeature))
                 {
-                    var gauge = GetJobGauge<DRKGauge>();
                     if (lastComboMove == DRK.Unleash && gauge.Blood >= 90)
                         return DRK.Quietus;
                 }
@@ -168,6 +169,11 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
+                        return DRK.Quietus;
+                }
+                if (HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10 && deliriumTime.RemainingTime > 0 && IsEnabled(CustomComboPreset.DeliriumFeatureOption))
+                {
+                    if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium)
                         return DRK.Quietus;
                 }
 
