@@ -366,6 +366,15 @@ namespace XIVSlothComboPlugin
         [DependentCombos(MachinistSpreadShotFeature)]
         [CustomComboInfo("Battery AOE Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistAoEOverChargeOption = 710,
+
+        [DependentCombos(MachinistSpreadShotFeature)]
+        [CustomComboInfo("Gauss Round Ricochet on AOE Feature", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
+        MachinistAoEGaussRicochetFeature = 711,
+
+        [DependentCombos(MachinistSpreadShotFeature)]
+        [CustomComboInfo("Always Gauss Round/Ricochet on AoE Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
+        MachinistAoEGaussOption = 712,
+
         #endregion
         // ====================================================================================
         #region MONK

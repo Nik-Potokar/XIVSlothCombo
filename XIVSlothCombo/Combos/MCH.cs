@@ -222,7 +222,32 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == MCH.SpreadShot)
             {
+                var battery = GetJobGauge<MCHGauge>().Battery;
+                if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption) && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
+                {
+                    if (battery == 100 && level >= 40 && level <= 79)
+                        return MCH.RookAutoturret;
+                    if (battery == 100 && level >= 80)
+                        return MCH.AutomatonQueen;
+                }
                 var gauge = GetJobGauge<MCHGauge>();
+
+
+                if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7 && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated))
+                {
+                    var gaussCd = GetCooldown(MCH.GaussRound);
+                    var ricochetCd = GetCooldown(MCH.Ricochet);
+
+                    // Prioritize the original if both are off cooldown
+                    if (level <= 49)
+                        return MCH.GaussRound;
+
+                    if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining)
+                        return MCH.GaussRound;
+
+                    return MCH.Ricochet;
+                }
+
                 var bioblaster = GetCooldown(MCH.BioBlaster);
                 if (!bioblaster.IsCooldown && level >= 72)
                     return MCH.BioBlaster;
@@ -231,14 +256,6 @@ namespace XIVSlothComboPlugin.Combos
                 if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
 
-                var battery = GetJobGauge<MCHGauge>().Battery;
-                if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption))
-                {
-                    if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
-                        return MCH.RookAutoturret;
-                    if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
-                        return MCH.AutomatonQueen;
-                }
 
             }
 
