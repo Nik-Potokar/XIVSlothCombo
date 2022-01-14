@@ -30,7 +30,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const short
                 BloodWeapon = 742,
-                Delirium = 1972;
+                Delirium = 1972,
+                SaltedEarth = 749;
         }
 
         public static class Debuffs
@@ -67,35 +68,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRK.Souleater)
             {
-                if (IsEnabled(CustomComboPreset.DeliriumFeature))
-                {
-                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
-                        return DRK.Bloodspiller;
-                }
-                if (comboTime > 0)
-                {
-                    var currentMp = LocalPlayer.CurrentMp;
-                    var gcd = GetCooldown(DRK.HardSlash);
-
-                    if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
-                        return DRK.SyphonStrike;
-                    if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
-                    {
-                        if (currentMp > 8000)
-                        {
-                            if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
-                                return DRK.EdgeOfShadow;
-                            if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
-                                return DRK.FloodOfDarkness;
-                            if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
-                                return DRK.EdgeOfDarkness;
-                        }
-                    }
-
-                    if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
-                        return DRK.Souleater;
-                }
-
+                var currentMp = LocalPlayer.CurrentMp;
+                var gcd = GetCooldown(DRK.HardSlash);
+                var gauge = GetJobGauge<DRKGauge>();
+                var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 var bloodgauge = GetJobGauge<DRKGauge>().Blood;
                 var shadowCooldown = GetCooldown(DRK.LivingShadow);
                 var gcdCooldown1 = GetCooldown(DRK.HardSlash);
@@ -104,7 +80,39 @@ namespace XIVSlothComboPlugin.Combos
                 var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
                 var plungeCD = GetCooldown(DRK.Plunge);
                 var actionIDCD = GetCooldown(actionID);
+                var livingshadowCD = GetCooldown(DRK.LivingShadow);
+                var saltedCD = GetCooldown(DRK.SaltedEarth);
+                var carveCD = GetCooldown(DRK.CarveAndSpit);
+                if (IsEnabled(CustomComboPreset.DeliriumFeature))
+                {
+                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
+                        return DRK.Bloodspiller;
+                }
+                if (HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10 && deliriumTime.RemainingTime > 0 && IsEnabled(CustomComboPreset.DeliriumFeatureOption))
+                {
+                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium)
+                        return DRK.Bloodspiller;
+                }
+                if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
+                {
+                    if (currentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                    {
+                        if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
+                            return DRK.EdgeOfShadow;
+                        if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                            return DRK.FloodOfDarkness;
+                        if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                            return DRK.EdgeOfDarkness;
+                    }
+                }
+                if (comboTime > 0)
+                {
+                    if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
+                        return DRK.SyphonStrike;
 
+                    if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
+                        return DRK.Souleater;
+                }
                 if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
@@ -151,9 +159,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRK.StalwartSoul)
             {
+                var gauge = GetJobGauge<DRKGauge>();
+                var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 if (IsEnabled(CustomComboPreset.DRKOvercapFeature))
                 {
-                    var gauge = GetJobGauge<DRKGauge>();
                     if (lastComboMove == DRK.Unleash && gauge.Blood >= 90)
                         return DRK.Quietus;
                 }
@@ -161,6 +170,11 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
+                        return DRK.Quietus;
+                }
+                if (HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10 && deliriumTime.RemainingTime > 0 && IsEnabled(CustomComboPreset.DeliriumFeatureOption))
+                {
+                    if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium)
                         return DRK.Quietus;
                 }
 
@@ -181,20 +195,21 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRK.CarveAndSpit || actionID == DRK.AbyssalDrain)
             {
-
-                if (level >= 90)
-                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth, DRK.SaltAndDarkness, DRK.Shadowbringer);
-
-                if (level >= 86)
-                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth, DRK.SaltAndDarkness);
-
-                if (level >= (actionID is DRK.CarveAndSpit ? DRK.Levels.CarveAndSpit : DRK.Levels.AbyssalDrain))
-                    return CalcBestAction(actionID, actionID, DRK.SaltedEarth);
-
-                return DRK.SaltedEarth;
+                var gauge = GetJobGauge<DRKGauge>();
+                var livingshadowCD = GetCooldown(DRK.LivingShadow);
+                var saltedCD = GetCooldown(DRK.SaltedEarth);
+                var actionIDCD = GetCooldown(actionID);
+                if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= 80 )
+                    return DRK.LivingShadow;
+                if (!saltedCD.IsCooldown && level >= DRK.Levels.SaltedEarth)
+                    return DRK.SaltedEarth;
+                if (!actionIDCD.IsCooldown &&  level >= DRK.Levels.CarveAndSpit)
+                    return actionID;
+                if (HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
+                    return DRK.SaltAndDarkness;
             }
 
-            return actionID;
+            return OriginalHook(actionID);
 
         }
     }

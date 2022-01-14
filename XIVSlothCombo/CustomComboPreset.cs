@@ -9,7 +9,7 @@ namespace XIVSlothComboPlugin
     {
         // ====================================================================================
         #region GLOBAL FEATURES
-        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
+        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID, All.LowBlow , All.Interject)]
         InterruptFeature = 9000,
         [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
         [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", All.JobID, WHM.Raise, SMN.Resurrection, SCH.Resurrection, AST.Ascend, RDM.Verraise, SGE.Egeiro)]
@@ -32,7 +32,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AST Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, AST.Swiftcast, AST.Ascend)]
         AstrologianAscendFeature = 4,
 
-        [CustomComboInfo("DPS Feature", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
+        [ConflictingCombos(AstrologianAlternateDpsFeature)]
+        [CustomComboInfo("DPS Feature(On Malefic)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
         AstrologianDpsFeature = 5,
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below 8k mana", AST.JobID, AST.FallMalefic, AST.LucidDreaming)]
@@ -58,6 +59,10 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Astrodyne On Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, AST.Play)]
         AstrologianAstrodyneOnPlayFeature = 13,
+
+        [ConflictingCombos(AstrologianDpsFeature)]
+        [CustomComboInfo("Alternate DPS Feature(On Combust)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.Combust1, AST.Combust2, AST.Combust3)]
+        AstrologianAlternateDpsFeature = 14,
 
         #endregion
         // ====================================================================================
@@ -158,6 +163,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, BRD.QuickNock, BRD.Ladonsbite)]
         SimpleAoESongOption = 216,
 
+        [DependentCombos(SimpleBardFeature)]
+        [CustomComboInfo("Simple Buffs Feature", "Adds buffs onto the SimpleBard feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimpleBuffsFeature = 217,
+
+        [DependentCombos(SimpleBardFeature, BardSimpleBuffsFeature)]
+        [CustomComboInfo("Simple Buffs - Radiant", "Adds Radiant Finale to the Simple Buffs feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimpleBuffsRadiantFeature = 218,
+
         #endregion
         // ====================================================================================
         #region DANCER
@@ -230,6 +243,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, DRK.StalwartSoul)]
         DarkStalwartSoulCombo = 501,
 
+        [ConflictingCombos(DeliriumFeatureOption)]
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, DRK.Souleater, DRK.StalwartSoul)]
         DeliriumFeature = 502,
 
@@ -239,10 +253,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, DRK.LivingShadow)]
         DRKLivingShadowFeature = 504,
 
-        [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8k mana and DarkSide is about to expire", DRK.JobID, DRK.EdgeOfShadow)]
+        [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or DarkSide is about to expire(10sec or less)", DRK.JobID, DRK.EdgeOfShadow)]
         DarkManaOvercapFeature = 505,
 
-        [CustomComboInfo("oGCD Feature", "All oGCD's(Shadowbringer/SaltedEarth) On one button (Crave&Spit/AbysallDrain) depending on their CD", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
+        [CustomComboInfo("oGCD Feature", "Adds Living Shadow>Salted Earth>CarveAndSpit>SaltAndDarkness to CarveAndSpit and AbysalDrain", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
         DarkoGCDFeature = 506,
 
         [ConflictingCombos(DarkPlungeFeatureOption)]
@@ -252,6 +266,10 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(DarkPlungeFeature)]
         [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, DRK.Souleater)]
         DarkPlungeFeatureOption = 508,
+
+        [ConflictingCombos(DeliriumFeature)]
+        [CustomComboInfo("Delirium Feature Option", "Replaces Souleather with Bloodspiller when Delirium has 10sec or less remaining.", DRK.JobID, DRK.Souleater)]
+        DeliriumFeatureOption = 509,
 
         #endregion
         // ====================================================================================
@@ -348,11 +366,20 @@ namespace XIVSlothComboPlugin
         [DependentCombos(MachinistSpreadShotFeature)]
         [CustomComboInfo("Battery AOE Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistAoEOverChargeOption = 710,
+
+        [DependentCombos(MachinistSpreadShotFeature)]
+        [CustomComboInfo("Gauss Round Ricochet on AOE Feature", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
+        MachinistAoEGaussRicochetFeature = 711,
+
+        [DependentCombos(MachinistSpreadShotFeature)]
+        [CustomComboInfo("Always Gauss Round/Ricochet on AoE Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
+        MachinistAoEGaussOption = 712,
+
         #endregion
         // ====================================================================================
         #region MONK
 
-        [CustomComboInfo("Monk AoE Combo", "Replaces ArmOfTheDestroyer/ShadowOfTheDestroyer with the AoE combo chain.", MNK.JobID, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer)]
+        [CustomComboInfo("Monk AoE Combo", "Replaces ArmOfTheDestroyer/ShadowOfTheDestroyer with the AoE combo chain.", MNK.JobID, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer, MNK.FourPointFury)]
         MnkAoECombo = 800,
 
         [CustomComboInfo("Monk Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, MNK.DragonKick)]
@@ -376,8 +403,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterfull Bliz when Perfect Balance Is Active", MNK.JobID, MNK.PerfectBalance, MNK.MasterfulBlitz, MNK.ElixirField)]
         MnkPerfectBalancePlus = 807,
 
-        [CustomComboInfo("Perfect Balance AoE Feature Plus Testing", "All of the (Optimal?) Blitz combos on LEG SWEEP!!! when Perfect Balance Is Active (Also changes icon to PB, Testing Only!!)", MNK.JobID, MNK.LegSweep)]
-        MnkPerfectBalanceAoEPlus = 808,
+        [CustomComboInfo("MasterfullBliz To Main Combo", "Adds all of (Optimal?) Bliz combos and Masterfull Bliz on Main Combo", MNK.JobID, MNK.Bootshine)]
+        MonkMasterfullBlizOnMainCombo = 808,
+
+        [CustomComboInfo("MasterfullBliz To AoE Combo", "Adds all of (Optimal?) Bliz combos and Masterfull Bliz on AoE Combo.", MNK.JobID, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer, MNK.FourPointFury)]
+        MonkMasterfullBlizOnAoECombo = 809,
+
+        [CustomComboInfo("Forbidden Chakra Feature", "Adds Forbidden Chakra/Enlightement to the Main/AoE feature combo. Testing Only for now!", MNK.JobID, MNK.Bootshine, MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer)]
+        MonkForbiddenChakraFeature = 810,
+
 
         #endregion
         // ====================================================================================
@@ -667,13 +701,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire). Keep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1415,
 
-        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin3 ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        [ConflictingCombos(SimpleSummonerOption2)]
+        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin3.(Titan>Garuda>Ifrit) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SimpleSummoner = 1416,
 
         [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
         SimpleAoESummoner = 1417,
 
-        [DependentCombos(SimpleSummoner)]
+        [ConflictingCombos(BuffOnSimpleSummoner246gcd)]
+        [DependentCombos(SimpleSummoner)] 
         [CustomComboInfo("Searing Light Rotation Option", "Adds Searing Light to Simple Summoner Rotation, Single Target", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
         BuffOnSimpleSummoner = 1418,
 
@@ -689,6 +725,20 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I. Will break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
         SummonerRuinIVMobilityFeature = 1422,
+
+        [ConflictingCombos(BuffOnSimpleSummoner)]
+        [CustomComboInfo("2.46gcd Buff lineup option", "Adds searing light to ruin3 combo, Uses searing light before bahamut.", SMN.JobID, SMN.Ruin3)]
+        BuffOnSimpleSummoner246gcd = 1423,
+
+        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, SMN.Ruin3)]
+        SummonerSwiftcastFeatureGaruda = 1424,
+
+        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, SMN.Ruin3)]
+        SummonerSwiftcastFeatureIfrit = 1425,
+
+        [ConflictingCombos(SimpleSummoner)]
+        [CustomComboInfo("One Button Rotation Feature Option2 ", "Same feature as One Button Rotation Feature but Garua>Titan>Ifrit .", SMN.JobID, SMN.Ruin3)]
+        SimpleSummonerOption2 = 1426,
 
         #endregion
         // ====================================================================================
