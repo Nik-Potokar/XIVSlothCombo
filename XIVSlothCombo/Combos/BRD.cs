@@ -1,6 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System;
 namespace XIVSlothComboPlugin.Combos
 {
     internal static class BRD
@@ -33,14 +33,18 @@ namespace XIVSlothComboPlugin.Combos
             ApexArrow = 16496,
             Shadowbite = 16494,
             Ladonsbite = 25783,
-            BlastArrow = 25784;
+            BlastArrow = 25784,
+            RadiantFinale = 25785;
 
         public static class Buffs
         {
             public const short
                 StraightShotReady = 122,
                 BlastArrowReady = 2692,
-                ShadowbiteReady = 3002;
+                ShadowbiteReady = 3002,
+                WanderersMinuet = 865,
+                MagesBallad = 135,
+                ArmysPaeon = 137;
         }
 
         public static class Debuffs
@@ -63,6 +67,7 @@ namespace XIVSlothComboPlugin.Combos
                 MagesBallad = 30,
                 ArmysPaeon = 40,
                 RainOfDeath = 45,
+                Barrage = 38,
                 BattleVoice = 50,
                 PitchPerfect = 52,
                 EmpyrealArrow = 54,
@@ -77,7 +82,12 @@ namespace XIVSlothComboPlugin.Combos
                 BurstShot = 76,
                 ApexArrow = 80,
                 Ladonsbite = 82,
-                BlastArrow = 86;
+                BlastArrow = 86,
+                RadiantFinale = 90;
+        }
+
+        internal static bool SongIsNotNone(Song value) {
+            return value != Song.NONE;
         }
     }
 
@@ -454,7 +464,7 @@ namespace XIVSlothComboPlugin.Combos
                         var balladCooldown = GetCooldown(BRD.MagesBallad).IsCooldown;
                         var paeonCooldown = GetCooldown(BRD.ArmysPaeon).IsCooldown;
 
-                        if (gauge.SongTimer == 0) {
+                        if (gauge.Song == Song.NONE) {
                             // Do logic to determine first song
 
                             if (!minuetCooldown) return BRD.WanderersMinuet;
@@ -462,10 +472,9 @@ namespace XIVSlothComboPlugin.Combos
                             if (!paeonCooldown) return BRD.ArmysPaeon;
                         }
 
-                        var pitch = GetJobGauge<BRDGauge>();
                         if (gauge.Song == Song.WANDERER) {
                             // Spend any repertoire before switching to next song
-                            if (songTimerInSeconds < 3 && pitch.Repertoire > 0) {
+                            if (songTimerInSeconds < 3 && gauge.Repertoire > 0) {
                                 return BRD.PitchPerfect;
                             }
                             // Move to Mage's Ballad if < 3 seconds left on song
@@ -494,6 +503,21 @@ namespace XIVSlothComboPlugin.Combos
                             return BRD.WanderersMinuet;
                         if (level >= BRD.Levels.ArmysPaeon && !GetCooldown(BRD.ArmysPaeon).IsCooldown)
                             return BRD.ArmysPaeon;
+                    }
+                }
+
+                if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature) && inCombat && heavyShotOnCooldown && gauge.Song != Song.NONE) {
+                    if (level >= BRD.Levels.RagingStrikes && !GetCooldown(BRD.RagingStrikes).IsCooldown)
+                        return BRD.RagingStrikes;
+                    if (level >= BRD.Levels.BattleVoice && !GetCooldown(BRD.BattleVoice).IsCooldown)
+                        return BRD.BattleVoice;
+                    if (level >= BRD.Levels.Barrage && !GetCooldown(BRD.Barrage).IsCooldown)
+                        return BRD.Barrage;
+                    
+                    if (IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && Array.TrueForAll(gauge.Coda, BRD.SongIsNotNone)) {
+                        if (level >= BRD.Levels.RadiantFinale && !GetCooldown(BRD.RadiantFinale).IsCooldown) {
+                            return BRD.RadiantFinale;
+                        }
                     }
                 }
 
