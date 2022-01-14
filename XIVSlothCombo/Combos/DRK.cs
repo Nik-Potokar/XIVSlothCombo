@@ -197,13 +197,13 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<DRKGauge>();
                 var livingshadowCD = GetCooldown(DRK.LivingShadow);
                 var saltedCD = GetCooldown(DRK.SaltedEarth);
-                var carveCD = GetCooldown(DRK.CarveAndSpit);
+                var actionIDCD = GetCooldown(actionID);
                 if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= 80 )
                     return DRK.LivingShadow;
                 if (!saltedCD.IsCooldown && level >= DRK.Levels.SaltedEarth)
                     return DRK.SaltedEarth;
-                if (!carveCD.IsCooldown &&  level >= DRK.Levels.CarveAndSpit)
-                    return DRK.CarveAndSpit;
+                if (!actionIDCD.IsCooldown &&  level >= DRK.Levels.CarveAndSpit)
+                    return actionID;
                 if (HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
                     return DRK.SaltAndDarkness;
             }
