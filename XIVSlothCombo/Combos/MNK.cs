@@ -89,12 +89,12 @@ namespace XIVSlothComboPlugin.Combos
                     return MNK.Rockbreaker;
             }
             var gauge = GetJobGauge<MNKGauge>();
-            if (gauge.BlitzTimeRemaining > 0)
+            if (gauge.BlitzTimeRemaining > 0 && level >= 60)
             {
                 return OriginalHook(MNK.MasterfulBlitz);
             }
             var actionIDCD = GetCooldown(OriginalHook(actionID));
-            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && level >= 74)
+            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature)  && level >= 74)
             {
                 if(gauge.Chakra == 5)
                 return OriginalHook(MNK.Enlightenment);
@@ -145,7 +145,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
                 }
-                if (lunarNadi && HasEffect(MNK.Buffs.PerfectBalance))
+                if (lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level >= 82)
                 {
                     if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
@@ -224,7 +224,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == MNK.PerfectBalance)
             {
-                if (OriginalHook(MNK.MasterfulBlitz) != MNK.MasterfulBlitz)
+                if (OriginalHook(MNK.MasterfulBlitz) != MNK.MasterfulBlitz && level >= 60)
                     return OriginalHook(MNK.MasterfulBlitz);
             }
 
@@ -327,7 +327,7 @@ namespace XIVSlothComboPlugin.Combos
                 var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                 var solarNadi = gauge.Nadi == Nadi.SOLAR;
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
-                if (!nadiNONE && !lunarNadi)
+                if (!nadiNONE && !lunarNadi )
                 {
                     if (pbStacks.StackCount == 3)
                         return MNK.DragonKick;

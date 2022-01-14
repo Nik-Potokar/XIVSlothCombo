@@ -12,7 +12,7 @@ namespace XIVSlothComboPlugin
     /// </summary>
     public sealed partial class XIVSlothCombo : IDalamudPlugin
     {
-        private const string Command = "/SlothCombo";
+        private const string Command = "/scombo";
 
         private readonly WindowSystem windowSystem;
         private readonly ConfigWindow configWindow;

@@ -72,6 +72,17 @@ namespace XIVSlothComboPlugin.Combos
                 var gcd = GetCooldown(DRK.HardSlash);
                 var gauge = GetJobGauge<DRKGauge>();
                 var deliriumTime = FindEffect(DRK.Buffs.Delirium);
+                var bloodgauge = GetJobGauge<DRKGauge>().Blood;
+                var shadowCooldown = GetCooldown(DRK.LivingShadow);
+                var gcdCooldown1 = GetCooldown(DRK.HardSlash);
+                var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
+                var gcdCooldown3 = GetCooldown(DRK.Souleater);
+                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
+                var plungeCD = GetCooldown(DRK.Plunge);
+                var actionIDCD = GetCooldown(actionID);
+                var livingshadowCD = GetCooldown(DRK.LivingShadow);
+                var saltedCD = GetCooldown(DRK.SaltedEarth);
+                var carveCD = GetCooldown(DRK.CarveAndSpit);
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
@@ -102,16 +113,6 @@ namespace XIVSlothComboPlugin.Combos
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
-
-                var bloodgauge = GetJobGauge<DRKGauge>().Blood;
-                var shadowCooldown = GetCooldown(DRK.LivingShadow);
-                var gcdCooldown1 = GetCooldown(DRK.HardSlash);
-                var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
-                var gcdCooldown3 = GetCooldown(DRK.Souleater);
-                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
-                var plungeCD = GetCooldown(DRK.Plunge);
-                var actionIDCD = GetCooldown(actionID);
-
                 if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
