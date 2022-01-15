@@ -708,7 +708,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
         SimpleAoESummoner = 1417,
 
-        [ConflictingCombos(BuffOnSimpleSummoner246gcd)]
         [DependentCombos(SimpleSummoner)] 
         [CustomComboInfo("Searing Light Rotation Option", "Adds Searing Light to Simple Summoner Rotation, Single Target", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
         BuffOnSimpleSummoner = 1418,
@@ -726,19 +725,18 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I. Will break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
         SummonerRuinIVMobilityFeature = 1422,
 
-        [ConflictingCombos(BuffOnSimpleSummoner)]
-        [CustomComboInfo("2.46gcd Buff lineup option", "Adds searing light to ruin3 combo, Uses searing light before bahamut.", SMN.JobID, SMN.Ruin3)]
-        BuffOnSimpleSummoner246gcd = 1423,
-
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, SMN.Ruin3)]
-        SummonerSwiftcastFeatureGaruda = 1424,
+        SummonerSwiftcastFeatureGaruda = 1423,
 
         [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, SMN.Ruin3)]
-        SummonerSwiftcastFeatureIfrit = 1425,
+        SummonerSwiftcastFeatureIfrit = 1424,
 
         [ConflictingCombos(SimpleSummoner)]
         [CustomComboInfo("One Button Rotation Feature Option2 ", "Same feature as One Button Rotation Feature but Garua>Titan>Ifrit .", SMN.JobID, SMN.Ruin3)]
-        SimpleSummonerOption2 = 1426,
+        SimpleSummonerOption2 = 1425,
+
+        [CustomComboInfo("Prevent Ruin4 Waste Feature", "Puts Ruin4 Above anything if FurtherRuin about to expire.", SMN.JobID, SMN.Ruin3)]
+        SummonerRuin4WastePrevention = 1426,
 
         #endregion
         // ====================================================================================
