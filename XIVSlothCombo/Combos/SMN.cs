@@ -220,7 +220,7 @@ namespace XIVSlothComboPlugin.Combos
                 var enkindleBahamut = GetCooldown(SMN.EnkindleBahamut);
                 var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
                 var rekindle = GetCooldown(SMN.Rekindle);
-                if (IsEnabled(CustomComboPreset.SummonerRuin4WastePrevention))
+                if (IsEnabled(CustomComboPreset.SummonerRuin4WastePrevention) && incombat)
                 {
                     if (HasEffect(SMN.Buffs.FurtherRuin) && furtheRuin.RemainingTime > 0 && furtheRuin.RemainingTime <= 5)
                     {
@@ -360,7 +360,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.IsIfritAttuned)
                         return SMN.RubyRuin1;
                 }
-                if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature))
+                if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature) && incombat)
                 {
                     if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
                         return SMN.Ruin4;
@@ -492,10 +492,10 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.IsIfritAttuned && level <= 81)
                         return SMN.RubyDisaster;
                 }
-
-                if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature))
+                if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature)) 
                 {
-                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin) && incombat)
                         return SMN.Ruin4;
                 }
             }
