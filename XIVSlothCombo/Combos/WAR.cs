@@ -79,8 +79,9 @@ namespace XIVSlothComboPlugin.Combos
                 var onslaughtCD = GetCooldown(WAR.Onslaught);
                 var actionIDCD = GetCooldown(actionID);
                 var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
+                var gauge = GetJobGauge<WARGauge>().BeastGauge;
 
-                if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && level >= 80)
+                if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && gauge >= 50 && level >= 80)
                     return WAR.InnerChaos;
 
                 if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && beserkCD.IsCooldown && level >= 64 && level <= 69)
@@ -124,7 +125,6 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (comboTime > 0)
                 {
-                    var gauge = GetJobGauge<WARGauge>().BeastGauge;
 
                     if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 54)
                         return WAR.FellCleave;
