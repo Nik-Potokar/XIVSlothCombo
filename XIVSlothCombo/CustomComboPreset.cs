@@ -789,7 +789,7 @@ namespace XIVSlothComboPlugin
         WarriorOnslaughtFeatureOption = 1513,
 
         [ConflictingCombos(WarriorOnslaughtFeature, WarriorOnslaughtFeatureOption)]
-        [CustomComboInfo("Onslaught Option Two", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 2 stacks)", WAR.JobID, WAR.StormsPath)]
+        [CustomComboInfo("Onslaught Option Two", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1/2 stacks depending on lvl)", WAR.JobID, WAR.StormsPath)]
         WarriorOnslaughtFeatureOptionTwo = 1514,
 
         #endregion
