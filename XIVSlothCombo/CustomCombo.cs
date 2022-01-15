@@ -319,6 +319,21 @@ namespace XIVSlothComboPlugin.Combos
 
             return true;
         }
+        
+        
+        
+        protected static double EnemyHealthPercentage()
+        {
+            if (CurrentTarget is null)
+                return 0;
+            if (CurrentTarget is not BattleChara chara)
+                return 0;
+             
+            double health = chara.CurrentHp;
+            double maxHealth = chara.MaxHp; 
+             
+            return health / maxHealth * 100;
+        }
         /*
          * #ToDo implement
          * Track targets current hp (In some cases you want to use a certain skill instead of another one depenidng on targets hp aka dots)
