@@ -174,6 +174,9 @@ namespace XIVSlothComboPlugin
         [DependentCombos(SimpleBardFeature)]
         [CustomComboInfo("Simple Raid Mode", "Removes enemy health checking on mobs for buffs, dots and songs.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardSimpleRaidMode = 219,
+        [DependentCombos(SimpleBardFeature)]
+        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimpleInterrupt = 220,
 
         #endregion
         // ====================================================================================
