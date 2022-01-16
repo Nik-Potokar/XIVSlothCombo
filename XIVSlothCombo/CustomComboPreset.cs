@@ -470,6 +470,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, NIN.AeolianEdge)]
         NinjaHuraijinFeature = 915,
 
+        [CustomComboInfo("BunshinOnMainCombo", "Adds Bunshin whenever its off cd and you have gauge for it on main combo.", NIN.JobID, NIN.AeolianEdge)]
+        NinjaBunshinFeature = 916,
+
+        [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, NIN.AeolianEdge)]
+        NinjaBavacakraFeature = 917,
+
 
         #endregion
         // ====================================================================================
@@ -959,6 +965,26 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID, MCHPVP.Wildfire)]
         WildfireBlankFeature = 3511,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID, RPRPVP.Slice, RPRPVP.WaxingSlice, RPRPVP.InfernalSlice)]
+        InfernalSliceComboFeature = 3512,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("NightmareScytheComboFeature", "Adds Gluttony/GrimSwathe/Smite/EnshroudComboRotation on InfernalScytheCombo", RPRPVP.JobID, RPRPVP.SpinningScythe, RPRPVP.NightmareScythe, RPRPVP.GrimReaping)]
+        NightmareScytheComboFeature = 3513,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("NinjaAeolianEdgePvpCombo", "Adds Cha/Assassinate/Smite on AeolianEdge combo", NINPVP.JobID, NINPVP.SpinningEdge, NINPVP.GustSlash, NINPVP.AeolianEdge)]
+        NinjaAeolianEdgePvpCombo = 3514,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("MnkBootshinePvPFeature", "Adds Axekick/Smite/TornadoKick on main combo", MNKPVP.JobID, MNKPVP.Bootshine, MNKPVP.TrueStrike, MNKPVP.SnapPunch)]
+        MnkBootshinePvPFeature = 3515,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID, BLMPVP.Enochian)]
+        BlackEnochianPVPFeature = 3516,
         #endregion
     }
 }
