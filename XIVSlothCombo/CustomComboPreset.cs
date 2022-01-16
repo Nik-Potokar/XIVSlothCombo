@@ -171,6 +171,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Buffs - Radiant", "Adds Radiant Finale to the Simple Buffs feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardSimpleBuffsRadiantFeature = 218,
 
+        [DependentCombos(SimpleBardFeature)]
+        [CustomComboInfo("Simple Raid Mode", "Removes enemy health checking on mobs for buffs, dots and songs.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimpleRaidMode = 219,
+
         #endregion
         // ====================================================================================
         #region DANCER
