@@ -451,16 +451,25 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.FleetingRaiju)]
         NinjaHuraijinRaijuFeature = 910,
 
+        [DependentCombos(NinjaHuraijinRaijuFeature)]
+        [CustomComboInfo("Huraijin / Raiju Feature Option1", "Replaces Huraijin with Fleeting Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.FleetingRaiju)]
+        NinjaHuraijinRaijuFeature1 = 911,
+
+        [DependentCombos(NinjaHuraijinRaijuFeature)]
+        [CustomComboInfo("Huraijin / Raiju Feature Option2", "Replaces Huraijin with Forked Raiju when available.", NIN.JobID, NIN.Huraijin, NIN.ForkedRaiju)]
+        NinjaHuraijinRaijuFeature2 = 912,
+
         [CustomComboInfo("Armor Crush Main Comb Combo", "Adds Armor Crush onto main combo.", NIN.JobID, NIN.ArmorCrush)]
-        NinjaArmorCrushOnMainCombo = 911,
+        NinjaArmorCrushOnMainCombo = 913,
 
         [DependentCombos(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("RaijuToMainComboFeature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID, NIN.AeolianEdge)]
-        NinjaFleetingRaijuFeature = 912,
+        NinjaFleetingRaijuFeature = 914,
 
         [DependentCombos(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, NIN.AeolianEdge)]
-        NinjaHuraijinFeature = 913,
+        NinjaHuraijinFeature = 915,
+
 
         #endregion
         // ====================================================================================

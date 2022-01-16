@@ -75,16 +75,16 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
+                if (IsEnabled(CustomComboPreset.NinjaFleetingRaijuFeature))
+                {
+                    if (HasEffect(NIN.Buffs.RaijuReady))
+                        return NIN.FleetingRaiju;
+                }
                 if (IsEnabled(CustomComboPreset.NinjaHuraijinFeature) && level >= 60)
                 {
                     var gauge = GetJobGauge<NINGauge>();
                     if (gauge.HutonTimer == 0)
                         return NIN.Huraijin;
-                }
-                if (IsEnabled(CustomComboPreset.NinjaFleetingRaijuFeature))
-                {
-                    if (HasEffect(NIN.Buffs.RaijuReady))
-                        return NIN.FleetingRaiju;
                 }
                 if (comboTime > 0f)
                 {
@@ -271,10 +271,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.Huraijin)
             {
-                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.RaijuReady))
+                if (IsEnabled(CustomComboPreset.NinjaHuraijinRaijuFeature1) && level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.RaijuReady))
                     return NIN.FleetingRaiju;
 
-                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.RaijuReady))
+                if (IsEnabled(CustomComboPreset.NinjaHuraijinRaijuFeature2) && level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.RaijuReady))
                     return NIN.ForkedRaiju;
             }
 
