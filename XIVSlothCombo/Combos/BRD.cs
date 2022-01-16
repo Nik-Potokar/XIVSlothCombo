@@ -450,6 +450,10 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == BRD.HeavyShot || actionID == BRD.BurstShot) {
+                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(All.Interject).IsCooldown) {
+                    return All.Interject;
+                }
+
                 var gauge = GetJobGauge<BRDGauge>();
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var heavyShot = GetCooldown(actionID);
