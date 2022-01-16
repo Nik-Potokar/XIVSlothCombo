@@ -40,8 +40,7 @@ namespace XIVSlothComboPlugin.Combos
                 Suiton = 507,
                 Hidden = 614,
                 AssassinateReady = 1955,
-                ForkedRaijuReady = 2690,
-                FleetingRaijuReady = 2691;
+                RaijuReady = 2690;
         }
 
         public static class Debuffs
@@ -76,7 +75,17 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
-
+                if (IsEnabled(CustomComboPreset.NinjaHuraijinFeature) && level >= 60)
+                {
+                    var gauge = GetJobGauge<NINGauge>();
+                    if (gauge.HutonTimer == 0)
+                        return NIN.Huraijin;
+                }
+                if (IsEnabled(CustomComboPreset.NinjaFleetingRaijuFeature))
+                {
+                    if (HasEffect(NIN.Buffs.RaijuReady))
+                        return NIN.FleetingRaiju;
+                }
                 if (comboTime > 0f)
                 {
                     if (lastComboMove == NIN.SpinningEdge && level >= 4)
@@ -262,10 +271,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.Huraijin)
             {
-                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.FleetingRaijuReady))
+                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.RaijuReady))
                     return NIN.FleetingRaiju;
 
-                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.ForkedRaijuReady))
+                if (level >= NIN.Levels.ForkedRaiju && HasEffect(NIN.Buffs.RaijuReady))
                     return NIN.ForkedRaiju;
             }
 

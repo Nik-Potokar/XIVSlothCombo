@@ -47,19 +47,17 @@ namespace XIVSlothComboPlugin
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
-            if (ImGui.Checkbox("Enable secret forbidden knowledge", ref showSecrets))
+            if (ImGui.Checkbox("Enable PvP Combos", ref showSecrets))
             {
                 Service.Configuration.EnableSecretCombos = showSecrets;
                 Service.Configuration.Save();
             }
-
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
                 ImGui.TextUnformatted("Combos too dangerous for the common folk");
                 ImGui.EndTooltip();
             }
-
             ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
@@ -171,7 +169,6 @@ namespace XIVSlothComboPlugin
 
                             ImGui.Spacing();
                         }
-
                         i++;
                     }
                 }

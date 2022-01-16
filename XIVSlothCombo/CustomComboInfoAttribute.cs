@@ -92,6 +92,7 @@ namespace XIVSlothComboPlugin
                 38 => "Dancer",
                 39 => "Reaper",
                 40 => "Sage",
+                41 => "PvP",
                 99 => "All Global Features",
                 _ => "Unknown",
             };

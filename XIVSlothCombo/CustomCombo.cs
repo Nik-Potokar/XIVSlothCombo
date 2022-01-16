@@ -319,9 +319,6 @@ namespace XIVSlothComboPlugin.Combos
 
             return true;
         }
-        
-        
-        
         protected static double EnemyHealthPercentage()
         {
             if (CurrentTarget is null)
@@ -334,18 +331,5 @@ namespace XIVSlothComboPlugin.Combos
              
             return health / maxHealth * 100;
         }
-        /*
-         * #ToDo implement
-         * Track targets current hp (In some cases you want to use a certain skill instead of another one depenidng on targets hp aka dots)
-            if (Service.TargetManager.Target is Character chara)
-            {
-                var currentHp = chara.CurrentHp;
-                var maxHp = chara.maxHp;
-                var percentageMaxHp = (chara.CurrentHp / maxHp) * 100;
-
-                if (currentHp > amount)
-                    return class.skillname;
-            }
-        */
     }
 }

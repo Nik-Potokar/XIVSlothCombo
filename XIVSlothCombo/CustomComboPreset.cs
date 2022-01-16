@@ -178,7 +178,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fan Dance Combos", "Change Fan Dance and Fan Dance 2 into Fan Dance 3 while flourishing.", DNC.JobID, DNC.FanDance1, DNC.FanDance2)]
         DancerFanDanceCombo = 300,
 
-        [SecretCustomCombo]
         [ConflictingCombos(DancerDanceComboCompatibility)]
         [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
         DancerDanceStepCombo = 301,
@@ -334,7 +333,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Overdrive Feature", "Replace Rook Autoturret and Automaton Queen with Overdrive while active.", MCH.JobID, MCH.RookAutoturret, MCH.AutomatonQueen)]
         MachinistOverdriveFeature = 702,
 
-        [SecretCustomCombo]
         [CustomComboInfo("Gauss Round / Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
         MachinistGaussRoundRicochetFeature = 703,
 
@@ -346,7 +344,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 705,
 
-        [SecretCustomCombo]
         [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge, If Wildfire is off cooldown and you have enough heat for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 706,
 
@@ -453,6 +450,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Armor Crush Main Comb Combo", "Adds Armor Crush onto main combo.", NIN.JobID, NIN.ArmorCrush)]
         NinjaArmorCrushOnMainCombo = 911,
 
+        [DependentCombos(NinjaAeolianEdgeCombo)]
+        [CustomComboInfo("RaijuToMainComboFeature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID, NIN.AeolianEdge)]
+        NinjaFleetingRaijuFeature = 912,
+
+        [DependentCombos(NinjaAeolianEdgeCombo)]
+        [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, NIN.AeolianEdge)]
+        NinjaHuraijinFeature = 913,
+
         #endregion
         // ====================================================================================
         #region PALADIN
@@ -478,7 +483,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, PLD.CircleOfScorn, PLD.SpiritsWithin, PLD.Expiacion)]
         PaladinScornfulSpiritsFeature = 1006,
 
-        [SecretCustomCombo]
         [CustomComboInfo("Royal Goring Option", "Insert Goring Blade into the main combo when appropriate.\nRequires Royal Authority Combo", PLD.JobID, PLD.RoyalAuthority, PLD.GoringBlade)]
         PaladinRoyalGoringOption = 1007,
 
@@ -507,7 +511,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Redoublement combo", "Replaces Redoublement with its combo chain, following enchantment rules.", RDM.JobID, RDM.Redoublement)]
         RedMageMeleeCombo = 1101,
 
-        [SecretCustomCombo]
         [CustomComboInfo("Redoublement Combo Plus", "Replaces Redoublement with Verflare/Verholy after Enchanted Redoublement, whichever is more appropriate.\nRequires Redoublement Combo.", RDM.JobID, RDM.Redoublement)]
         RedMageMeleeComboPlus = 1102,
 
@@ -529,12 +532,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, RDM.Redoublement, RDM.Resolution)]
         RedmageResolutionFinisherMelee = 1107,
 
-        [SecretCustomCombo]
         [ConflictingCombos(RedMageAoECombo)]
         [CustomComboInfo("Smart AoE Feature", "Replaces Verthunder II With Veraero II and impact depending on mana", RDM.JobID, RDM.Veraero2, RDM.Verthunder2)]
         RedMageSmartcastAoECombo = 1108,
 
-        [SecretCustomCombo]
         [ConflictingCombos(RedMageVerprocComboPlus, RedMageVerprocOpenerFeature, RedMageVerprocCombo)]
         [CustomComboInfo("Smart Single Target Feature", "Smart Single target feature Credit: PrincessRTFM", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
         RedMageSmartSingleTargetCombo = 1109,
@@ -841,7 +842,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("GG Gallows Option", "Slice now turns into Gallows when Gallows is Enhanced, and removes it from Shadow of Death.", RPR.JobID, RPR.Slice)]
         ReaperGibbetGallowsOption = 1705,
 
-        [SecretCustomCombo]
         [CustomComboInfo("Combo Communio Feature", "When one stack is left of Shroud, Communio replaces Gibbet/Gallows/Guillotine.", RPR.JobID, RPR.Slice, RPR.InfernalSlice, RPR.Gibbet, RPR.Gallows, RPR.Guillotine, RPR.SpinningScythe, RPR.NightmareScythe)]
         ReaperComboCommunioFeature = 1706,
 
@@ -897,6 +897,55 @@ namespace XIVSlothComboPlugin
 
         #endregion
         // ====================================================================================
+        #region PvP Combos
 
+        [SecretCustomCombo]
+        [CustomComboInfo("BurstShotFeature", "Adds Shadowbite/EmpyArrow/PitchPerfect(3stacks)/SideWinder(When Target is low hp)/ApexArrow when gauge is 100 all on one button combo.", BRDPvP.JobID, BRDPvP.BurstShot)]
+        BurstShotFeaturePVP = 3500,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("SongsFeature", "Replaces WanderersMinnuet and Peons song all on one button in an optimal order", BRDPvP.JobID, BRDPvP.TheWanderersMinuet)]
+        SongsFeaturePVP = 3501,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("SouleaterComboFeature", "Adds EoS as oGCD onto main combo and Bloodspiller when at 50 gauge or under delirium buff.", DRKPVP.JobID, DRKPVP.EdgeOfShadow, DRKPVP.SoulEaterCombo, DRKPVP.HardSlash, DRKPVP.SyphonStrike, DRKPVP.SoulEater)]
+        SouleaterComboFeature = 3502,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("StalwartSoulComboFeature", "Adds FoS as oGCD onto main combo and Quietus when at 50 gauge or under delirium buff.", DRKPVP.JobID, DRKPVP.Unleash, DRKPVP.StalwartSoul)]
+        StalwartSoulComboFeature = 3503,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("StormsPathComboFeature", "Replaces Storm's Path Combo with FellCleave/IC when at 50 gauge or under IR", WARPVP.JobID, WARPVP.HeavySwing, WARPVP.Maim, WARPVP.StormsPath)]
+        StormsPathComboFeature = 3504,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("SteelCycloneFeature", "Replaces Steel Cyclone Combo with Decimate/CC when at 50 gauge or under IR", WARPVP.JobID, WARPVP.SteelCyclone, WARPVP.MythrilTempest)]
+        SteelCycloneFeature = 3505,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("RoyalAuthorityComboFeature", "Adds HolySpirit To the main combo", PLDPVP.JobID, PLDPVP.FastBlade, PLDPVP.RiotBlade, PLDPVP.RoyalAuthority )]
+        RoyalAuthorityComboFeature = 3506,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("ProminenceComboFeature", "Adds HolyCircle to the main AoE Combo", PLDPVP.JobID, PLDPVP.Prominence, PLDPVP.TotalEclipse)]
+        ProminenceComboFeature = 3507,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("GnashingFangComboFeature", "Adds BowShock(When target is meleeRange) and Burststrike at 2 ammo gauge to the main combo", GNBPVP.JobID, GNBPVP.KeenEdge, GNBPVP.BrutalShell, GNBPVP.SolidBarrel)]
+        SolidBarrelComboFeature = 3508,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("DemonSlaughterComboFeature", "Adds BowShock(When target is meleeRange) and Fated Circle at 2 ammo gauge to the main AoE combo", GNBPVP.JobID, GNBPVP.DemonSlaughter, GNBPVP.DemonSlice)]
+        DemonSlaughterComboFeature = 3509,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("HeatedCleanShotFeature", "Adds Gauss/Rico weave to maincombo", MCHPVP.JobID, MCHPVP.SplitShot, MCHPVP.SlugShot, MCHPVP.CleanShot)]
+        HeatedCleanShotFeature = 3510,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID, MCHPVP.Wildfire)]
+        WildfireBlankFeature = 3511,
+        #endregion
     }
 }
