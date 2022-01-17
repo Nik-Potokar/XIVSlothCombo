@@ -465,11 +465,11 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (HasEffect(RPR.Buffs.EnhancedCrossReaping))
                     {
-                        return OriginalHook(RPR.Gibbet);
+                        return OriginalHook(RPR.Gallows);
                     }
                     if (HasEffect(RPR.Buffs.EnhancedVoidReaping))
                     {
-                        return OriginalHook(RPR.Gallows);
+                        return OriginalHook(RPR.Gibbet);
                     }
                     return OriginalHook(RPR.Gallows);
                 }
