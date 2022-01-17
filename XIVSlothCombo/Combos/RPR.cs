@@ -486,7 +486,10 @@ namespace XIVSlothComboPlugin.Combos
                     if (HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded))
                         return RPR.Gallows;
 
-                    return RPR.Gibbet;
+                    if (HasEffect(RPR.Buffs.EnhancedGibbet) && !HasEffect(RPR.Buffs.Enshrouded))
+                        return RPR.Gibbet;
+
+                    return RPR.Gallows;
                 }
             }
             return actionID;
