@@ -484,9 +484,9 @@ namespace XIVSlothComboPlugin.Combos
                 if (!HasEffect(RPR.Buffs.Enshrouded) && HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.BloodStalk || actionID == RPR.Gluttony))
                 {
                     if (HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded))
-                        return RPR.Gibbet;
+                        return RPR.Gallows;
 
-                    return RPR.Gallows;
+                    return RPR.Gibbet;
                 }
             }
             return actionID;
