@@ -855,7 +855,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Enshroud Communio Feature", "Replace Enshroud with Communio when Enshrouded.", RPR.JobID, RPR.Enshroud)]
         ReaperEnshroudCommunioFeature = 1702,
 
-        [CustomComboInfo("Gibbets and Gallows Feature", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
+        [ConflictingCombos(ReaperGibbetGallowsFeatureOption)]
+        [CustomComboInfo("Gallows And Gibbet Option", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.(Swapped positional skills from ReaperGibbetGallowsFeatureOption)", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
         ReaperGibbetGallowsFeature = 1703,
 
         [CustomComboInfo("Guillotine Feature", "Spinning Scythe's combo gets replaced with Guillotine while Soul Reaver or Shroud is active.", RPR.JobID, RPR.SpinningScythe)]
@@ -895,6 +896,11 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Cross/Void Reaping Feature", "Turns Enshroud into Cross/Void reaping with Lemure Slice as oGCD after Cross Reaping.", RPR.JobID, RPR.Enshroud)]
         ReaperVoidCrossReapingComboOption = 1715,
+
+        [ConflictingCombos(ReaperGibbetGallowsFeature)]
+        [CustomComboInfo("Gibbets and Gallows Feature Option", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
+        ReaperGibbetGallowsFeatureOption = 1716,
+        
 
 
         #endregion

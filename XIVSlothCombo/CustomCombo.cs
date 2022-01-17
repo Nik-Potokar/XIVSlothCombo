@@ -342,5 +342,16 @@ namespace XIVSlothComboPlugin.Combos
 
             return maxHealth;
         }
+        protected static double EnemyHealthCurrentHp()
+        {
+            if (CurrentTarget is null)
+                return 0;
+            if (CurrentTarget is not BattleChara chara)
+                return 0;
+
+            double currentHp = chara.CurrentHp;
+
+            return currentHp;
+        }
     }
 }

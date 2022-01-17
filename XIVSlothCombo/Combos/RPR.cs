@@ -152,6 +152,16 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(RPR.Gibbet);
                 }
 
+                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                {
+                    if ((HasEffect(RPR.Buffs.EnhancedGibbet) && !HasEffect(RPR.Buffs.Enshrouded) && IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded)))
+                        return OriginalHook(RPR.Gibbet);
+                    if ((HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded) && IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded)))
+                        return OriginalHook(RPR.Gallows);
+
+                    return OriginalHook(RPR.Gallows);
+                }
+
                 if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
                 {
                     var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
@@ -432,6 +442,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
 
     internal class ReaperGrimSwatheComboOption : CustomCombo
     {
