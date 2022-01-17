@@ -442,6 +442,56 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class ReaperBloodStalkAlternateComboOption : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperBloodStalkAlternateComboOption;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var gluttonyCD = GetCooldown(RPR.Gluttony);
+            var gauge = GetJobGauge<RPRGauge>();
+
+            if (actionID == RPR.BloodStalk)
+            {
+                if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
+                {
+                    if (gauge.VoidShroud >= 2)
+                    {
+                        return OriginalHook(RPR.BloodStalk);
+                    }
+                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= 90)
+                    {
+                        return OriginalHook(RPR.Communio);
+                    }
+                    if (HasEffect(RPR.Buffs.EnhancedCrossReaping))
+                    {
+                        return OriginalHook(RPR.Gibbet);
+                    }
+                    if (HasEffect(RPR.Buffs.EnhancedVoidReaping))
+                    {
+                        return OriginalHook(RPR.Gallows);
+                    }
+                    return OriginalHook(RPR.Gallows);
+                }
+
+                if (!HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded))
+                {
+                    if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
+                        return RPR.Gluttony;
+                    return RPR.BloodStalk;
+                }
+
+                if (!HasEffect(RPR.Buffs.Enshrouded) && HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.BloodStalk || actionID == RPR.Gluttony))
+                {
+                    if (HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded))
+                        return RPR.Gibbet;
+
+                    return RPR.Gallows;
+                }
+            }
+            return actionID;
+        }
+    }
 
 
     internal class ReaperGrimSwatheComboOption : CustomCombo

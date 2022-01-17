@@ -886,7 +886,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID, RPR.BloodStalk, RPR.GrimSwathe)]
         ReaperBloodSwatheFeature = 1712,
 
-        [ConflictingCombos(ReaperBloodSwatheFeature)]
+        [ConflictingCombos(ReaperBloodSwatheFeature, ReaperBloodStalkAlternateComboOption)]
         [CustomComboInfo("Blood Stalk Combo Option", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. Adds Enshrouded Combo to button as well", RPR.JobID, RPR.BloodStalk)]
         ReaperBloodSwatheComboFeature = 1713,
 
@@ -900,7 +900,11 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(ReaperGibbetGallowsFeature)]
         [CustomComboInfo("Gibbets and Gallows Feature Option", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
         ReaperGibbetGallowsFeatureOption = 1716,
-        
+
+        [ConflictingCombos(ReaperBloodSwatheComboFeature)]
+        [CustomComboInfo("Blood Stalk Combo Option Alternative", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. Adds Enshrouded Combo to button as well", RPR.JobID, RPR.BloodStalk)]
+        ReaperBloodStalkAlternateComboOption = 1717,
+
 
 
         #endregion
