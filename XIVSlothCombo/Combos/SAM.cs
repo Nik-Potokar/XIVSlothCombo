@@ -423,10 +423,10 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if(HasEffect(SAM.Buffs.MeikyoShisui))
                         {
-                            if (gauge.Sen.HasFlag(Sen.KA) == false)
-                                return OriginalHook(SAM.Kasha);
                             if (gauge.Sen.HasFlag(Sen.GETSU) == false)
                                 return OriginalHook(SAM.Gekko);
+                            if (gauge.Sen.HasFlag(Sen.KA) == false)
+                                return OriginalHook(SAM.Kasha);
                             if (gauge.Sen.HasFlag(Sen.SETSU) == false)
                                 return OriginalHook(SAM.Yukikaze);
 
@@ -445,17 +445,17 @@ namespace XIVSlothComboPlugin.Combos
                                 return SAM.Jinpu;
                         }
 
-                        if (lastComboMove == SAM.Shifu && level >= SAM.Levels.Kasha)
-                            return SAM.Kasha;
                         if (lastComboMove == SAM.Jinpu && level >= SAM.Levels.Gekko)
                             return SAM.Gekko;
+                        if (lastComboMove == SAM.Shifu && level >= SAM.Levels.Kasha)
+                            return SAM.Kasha;
                     }
                     if (meikyo)
                     {
-                        if (level >= SAM.Levels.Kasha && gauge.Sen.HasFlag(Sen.KA) == false)
-                            return SAM.Kasha;
                         if (level >= SAM.Levels.Gekko && gauge.Sen.HasFlag(Sen.GETSU) == false)
                             return SAM.Gekko;
+                        if (level >= SAM.Levels.Kasha && gauge.Sen.HasFlag(Sen.KA) == false)
+                            return SAM.Kasha;
                         if (level >= SAM.Levels.Yukikaze && gauge.Sen.HasFlag(Sen.SETSU) == false)
                             return SAM.Yukikaze;
                     return actionID;
