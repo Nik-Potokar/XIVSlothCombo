@@ -300,23 +300,23 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyFeature = 605,
 
-        [CustomComboInfo("DangerZoneFeature", "Adds Danger Zone/Blasting Zone on main combo and No Mercy oGCD Feature when No Mercy buff is present\nor No Mercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
+        [CustomComboInfo("Danger Zone Feature", "Adds Danger Zone/Blasting Zone on main combo and No Mercy oGCD Feature when No Mercy buff is present\nor No Mercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
         GunbreakerDangerZoneFeature = 606,
 
-        [CustomComboInfo("DoubleDownFeature", "Adds DoubleDown on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
+        [CustomComboInfo("Double Down Feature", "Adds DoubleDown on main combo when under No Mercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
         GunbreakerDoubleDownOnMainComboFeature = 607,
 
-        [CustomComboInfo("DoubleDownNoMercyFeature", "Adds DoubleDown to NoMercy Feature, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
+        [CustomComboInfo("Double Down No Mercy Feature", "Adds DoubleDown to No Mercy Feature, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         DoubleDownNoMercyFeature = 608,
 
         [ConflictingCombos(GunbreakerNoMercyFeature)]
-        [CustomComboInfo("oGCD NoMercy Feature", "Changes NoMercy into BowShock when you are under NoMercy buff", GNB.JobID, GNB.NoMercy)]
+        [CustomComboInfo("oGCD No Mercy Feature", "Changes No Mercy into BowShock when you are under No Mercy buff", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyoGCDFeature = 609,
 
-        [CustomComboInfo("SonicBreakMainComboFeature", "Adds SonicBreak on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
+        [CustomComboInfo("Sonic Break Main Combo Feature", "Adds SonicBreak on main combo when under No Mercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
         GunbreakerSonicBreakOnMainComboFeature = 610,
 
-        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
         GunbreakerBurstStrikeConFeature = 611,
 
         [ConflictingCombos(GunbreakerRoughDivideFeatureOption)]
@@ -624,19 +624,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, SAM.Mangetsu, SAM.Oka)]
         SamuraiSimpleSamuraiAoECombo = 1216,
 
-        [CustomComboInfo("KaitenFeature Feature", "ENABLE THIS IF YOU ARE GOING TO USE ANY OF THE KaitenFeature Options!!!  ", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiKaitenFeature = 1217,
-
-        [CustomComboInfo("KaitenFeature Option 1", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 1 Sen(Sticker) is available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature1 = 1218,
 
-        [CustomComboInfo("KaitenFeature Option 2", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 2 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature2 = 1219,
 
-        [CustomComboInfo("KaitenFeature Option 3", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 3 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature3 = 1220,
 
-        [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
+        [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
         SamuraiYatenFeature = 1221,
 
         #endregion
