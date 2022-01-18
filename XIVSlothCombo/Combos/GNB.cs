@@ -265,7 +265,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (!doubledownCD.IsCooldown && level >= GNB.Levels.DoubleDown && IsEnabled(CustomComboPreset.DoubleDownNoMercyFeature) && gauge.Ammo >= 2)
                         return GNB.DoubleDown;
 
-                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock) && sonicbreakcd.IsCooldown)
+                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
                         return GNB.BowShock;
 
                     if (level >= GNB.Levels.SonicBreak)
