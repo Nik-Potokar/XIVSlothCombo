@@ -100,6 +100,19 @@ namespace XIVSlothComboPlugin
 
         #endregion
         // ====================================================================================
+        #region BLUE MAGE
+
+        [CustomComboInfo("Buffed Song of Torment", "Turns Song of Torment into Bristle so SoT is buffed.", BLU.JobID, BLU.SongOfTorment)]
+        BluBuffedSoT = 1901,
+
+        [CustomComboInfo("Moon Flute Opener", "Puts the Full Moon Flute Opener on Moon Flute or Whistle. \nSpells required: Whistle, Tingle, Moon Flute, J Kick, Triple Trident, Nightbloom, Rose of Destruction, Feather Rain, BRistle, Glass Dance, Surpanakha, Matra Magic, Shock Strike, Phantom Flurry.", BLU.JobID, BLU.MoonFlute, BLU.Whistle)]
+        BluOpener = 1902,
+
+        [CustomComboInfo("Final Sting Combo", "Turns Final Sting into the buff combo of: Moon Flute, Tingle, Whistle, Final Sting. Will use any primals off CD before casting Final Sting. \n Primals used: Feather Rain, Shock Strike, Glass Dance, J Kick, Rose of Destruction.", BLU.JobID, BLU.FinalSting)]
+        BluFinalSting = 1903,
+
+        #endregion
+        // ====================================================================================
         #region BARD
 
         [CustomComboInfo("Wanderer's into Pitch Perfect", "Replaces Wanderer's Minuet with Pitch Perfect while in WM.", BRD.JobID, BRD.WanderersMinuet)]
@@ -300,23 +313,23 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyFeature = 605,
 
-        [CustomComboInfo("DangerZoneFeature", "Adds DangerZone/BlastingZone on main combo and NoMercyoGCD Feature when NoMercy buff is present or NoMercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
+        [CustomComboInfo("Danger Zone Feature", "Adds Danger Zone/Blasting Zone on main combo and No Mercy oGCD Feature when No Mercy buff is present\nor No Mercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
         GunbreakerDangerZoneFeature = 606,
 
-        [CustomComboInfo("DoubleDownFeature", "Adds DoubleDown on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
+        [CustomComboInfo("Double Down Feature", "Adds DoubleDown on main combo when under No Mercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
         GunbreakerDoubleDownOnMainComboFeature = 607,
 
-        [CustomComboInfo("DoubleDownNoMercyFeature", "Adds DoubleDown to NoMercy Feature, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
+        [CustomComboInfo("Double Down No Mercy Feature", "Adds DoubleDown to No Mercy Feature, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
         DoubleDownNoMercyFeature = 608,
 
         [ConflictingCombos(GunbreakerNoMercyFeature)]
-        [CustomComboInfo("oGCD NoMercy Feature", "Changes NoMercy into BowShock when you are under NoMercy buff", GNB.JobID, GNB.NoMercy)]
+        [CustomComboInfo("oGCD No Mercy Feature", "Changes No Mercy into BowShock when you are under No Mercy buff", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyoGCDFeature = 609,
 
-        [CustomComboInfo("SonicBreakMainComboFeature", "Adds SonicBreak on main combo when under NoMercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
+        [CustomComboInfo("Sonic Break Main Combo Feature", "Adds SonicBreak on main combo when under No Mercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
         GunbreakerSonicBreakOnMainComboFeature = 610,
 
-        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
         GunbreakerBurstStrikeConFeature = 611,
 
         [ConflictingCombos(GunbreakerRoughDivideFeatureOption)]
@@ -326,6 +339,10 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(GunbreakerRoughDivideFeature)]
         [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever its available (Leaves 1 stack).", GNB.JobID, GNB.SolidBarrel)]
         GunbreakerRoughDivideFeatureOption = 613,
+
+        [DependentCombos(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("Bow Shock On Main Combo Feature", "Puts Bow Shock on your main combo when it's up during No Mercy.", Combos.GNB.JobID, GNB.BowShock, GNB.SolidBarrel)]
+        GunbreakerBowShockFeature = 614,
 
         #endregion
         // ====================================================================================
@@ -624,19 +641,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, SAM.Mangetsu, SAM.Oka)]
         SamuraiSimpleSamuraiAoECombo = 1216,
 
-        [CustomComboInfo("KaitenFeature Feature", "ENABLE THIS IF YOU ARE GOING TO USE ANY OF THE KaitenFeature Options!!!  ", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiKaitenFeature = 1217,
-
-        [CustomComboInfo("KaitenFeature Option 1", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 1 Sen(Sticker) is available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature1 = 1218,
 
-        [CustomComboInfo("KaitenFeature Option 2", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 2 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature2 = 1219,
 
-        [CustomComboInfo("KaitenFeature Option 3", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 3 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature3 = 1220,
 
-        [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
+        [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
         SamuraiYatenFeature = 1221,
 
         #endregion
@@ -721,7 +738,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ruin IV Fester Feature", "Change Fester into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, SMN.Painflare)]
         SummonerFesterPainflareRuinFeature = 1414,
 
-        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire). Keep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
+        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire).\nKeep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1415,
 
         [ConflictingCombos(SimpleSummonerOption2)]
@@ -745,7 +762,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SummonerDemiAoESummonsFeature = 1421,
 
-        [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I. Will break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
+        [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I.\nWill break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
         SummonerRuinIVMobilityFeature = 1422,
 
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, SMN.Ruin3)]
