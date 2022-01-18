@@ -34,7 +34,8 @@ namespace XIVSlothComboPlugin.Combos
             Shadowbite = 16494,
             Ladonsbite = 25783,
             BlastArrow = 25784,
-            RadiantFinale = 25785;
+            RadiantFinale = 25785,
+            HeadGaze = 7751;
 
         public static class Buffs
         {
@@ -450,8 +451,8 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == BRD.HeavyShot || actionID == BRD.BurstShot) {
-                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(All.Interject).IsCooldown) {
-                    return All.Interject;
+                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(BRD.HeadGaze).IsCooldown) {
+                    return BRD.HeadGaze;
                 }
 
                 var gauge = GetJobGauge<BRDGauge>();
