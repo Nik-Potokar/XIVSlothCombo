@@ -82,10 +82,20 @@ namespace XIVSlothComboPlugin.Combos
                     var doubleDownCD = GetCooldown(GNB.DoubleDown);
                     var bulletGauge = GetJobGauge<GNBGauge>();
                     var sonicbreakCD = GetCooldown(GNB.SonicBreak);
+                    var bowShockCD = GetCooldown(GNB.BowShock);
                     var noMercyCD = GetCooldown(GNB.NoMercy);
+
+                    if (IsEnabled(CustomComboPreset.GunbreakerBowShockFeature))
+                    {
+                        if (level >= GNB.Levels.BowShock && HasEffect(GNB.Buffs.NoMercy) && maincomboCD1.CooldownRemaining > 0.7 && !bowShockCD.IsCooldown)
+                        {
+                            return GNB.BowShock;
+                        }
+                    }
 
                     if (IsEnabled(CustomComboPreset.GunbreakerDangerZoneFeature))
                     {
+                        // oh my god can someone fix this logic properly...
                         if (lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.KeenEdge && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && !HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)
                             return GNB.BlastingZone;
                         if (lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && HasEffect(GNB.Buffs.NoMercy) || lastComboMove == GNB.BrutalShell && !blastingzoneCD.IsCooldown && maincomboCD1.CooldownRemaining > 0.7 && level >= 80 && !HasEffect(GNB.Buffs.NoMercy) && noMercyCD.IsCooldown)

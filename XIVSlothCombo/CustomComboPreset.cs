@@ -327,6 +327,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever its available (Leaves 1 stack).", GNB.JobID, GNB.SolidBarrel)]
         GunbreakerRoughDivideFeatureOption = 613,
 
+        [DependentCombos(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("Bow Shock On Main Combo Feature", "Puts Bow Shock on your main combo when it's up during No Mercy.", Combos.GNB.JobID, GNB.BowShock, GNB.SolidBarrel)]
+        GunbreakerBowShockFeature = 614,
+
         #endregion
         // ====================================================================================
         #region MACHINIST
