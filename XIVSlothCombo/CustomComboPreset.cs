@@ -100,6 +100,19 @@ namespace XIVSlothComboPlugin
 
         #endregion
         // ====================================================================================
+        #region BLUE MAGE
+
+        [CustomComboInfo("Buffed Song of Torment", "Turns Song of Torment into Bristle so SoT is buffed.", BLU.JobID, BLU.SongOfTorment)]
+        BluBuffedSoT = 1901,
+
+        [CustomComboInfo("Moon Flute Opener", "Puts the Full Moon Flute Opener on Moon Flute or Whistle. \nSpells required: Whistle, Tingle, Moon Flute, J Kick, Triple Trident, Nightbloom, Rose of Destruction, Feather Rain, BRistle, Glass Dance, Surpanakha, Matra Magic, Shock Strike, Phantom Flurry.", BLU.JobID, BLU.MoonFlute, BLU.Whistle)]
+        BluOpener = 1902,
+
+        [CustomComboInfo("Final Sting Combo", "Turns Final Sting into the buff combo of: Moon Flute, Tingle, Whistle, Final Sting. Will use any primals off CD before casting Final Sting. \n Primals used: Feather Rain, Shock Strike, Glass Dance, J Kick, Rose of Destruction.", BLU.JobID, BLU.FinalSting)]
+        BluFinalSting = 1903,
+
+        #endregion
+        // ====================================================================================
         #region BARD
 
         [CustomComboInfo("Wanderer's into Pitch Perfect", "Replaces Wanderer's Minuet with Pitch Perfect while in WM.", BRD.JobID, BRD.WanderersMinuet)]
