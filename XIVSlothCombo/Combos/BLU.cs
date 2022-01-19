@@ -130,20 +130,27 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (!HasEffect(BLU.Buffs.MoonFlute))
                     return BLU.MoonFlute;
-                if (!GetCooldown(BLU.RoseOfDestruction).IsCooldown)
-                    return BLU.RoseOfDestruction;
-                if (!GetCooldown(BLU.FeatherRain).IsCooldown)
-                    return BLU.FeatherRain;
-                if (!GetCooldown(BLU.GlassDance).IsCooldown)
-                    return BLU.GlassDance;
-                if (!GetCooldown(BLU.JKick).IsCooldown)
-                    return BLU.JKick;
+                if (IsEnabled(CustomComboPreset.BluPrimals))
+                {
+
+                    if (!GetCooldown(BLU.RoseOfDestruction).IsCooldown)
+                        return BLU.RoseOfDestruction;
+                    if (!GetCooldown(BLU.FeatherRain).IsCooldown)
+                        return BLU.FeatherRain;
+                    if (!GetCooldown(BLU.GlassDance).IsCooldown)
+                        return BLU.GlassDance;
+                    if (!GetCooldown(BLU.JKick).IsCooldown)
+                        return BLU.JKick;
+                }
+
                 if (!HasEffect(BLU.Buffs.Tingle))
                     return BLU.Tingle;
-                if (!GetCooldown(BLU.ShockStrike).IsCooldown)
+                if (!GetCooldown(BLU.ShockStrike).IsCooldown && IsEnabled(CustomComboPreset.BluPrimals))
                     return BLU.ShockStrike;
                 if (!HasEffect(BLU.Buffs.Whistle))
                     return BLU.Whistle;
+                if (!GetCooldown(BLU.Swiftcast).IsCooldown)
+                    return BLU.Swiftcast;
                 return BLU.FinalSting;
             }
 
