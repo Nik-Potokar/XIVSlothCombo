@@ -111,6 +111,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Final Sting Combo", "Turns Final Sting into the buff combo of: Moon Flute, Tingle, Whistle, Final Sting. Will use any primals off CD before casting Final Sting. \n Primals used: Feather Rain, Shock Strike, Glass Dance, J Kick, Rose of Destruction.", BLU.JobID, BLU.FinalSting)]
         BluFinalSting = 1903,
 
+        [DependentCombos(BluFinalSting)]
+        [CustomComboInfo("Off CD Primal Additions", "Adds any Primals that are off CD to the Final Sting Combo. ", BLU.JobID, BLU.FinalSting)]
+        BluPrimals = 1904,
+
         #endregion
         // ====================================================================================
         #region BARD
