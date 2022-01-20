@@ -47,7 +47,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var interjectCD = GetCooldown(All.Interject);
                 var lowBlowCD = GetCooldown(All.LowBlow);
-                if (CanInterruptEnemy() && !interjectCD.IsCooldown || lowBlowCD.IsCooldown)
+                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
                     return All.Interject;
             }
 
