@@ -401,14 +401,12 @@ namespace XIVSlothComboPlugin
         MachinistAoEGaussOption = 712,
 
         [DependentCombos(MachinistMainCombo)]
-        [CustomComboInfo("Ricochet & Gauss overcap protection", "Adds Ricochet and Gauss Round to main combo. Will leave 1 charge of each.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
+        [CustomComboInfo("Ricochet & Gauss Round overcap protection", "Adds Ricochet and Gauss Round to main combo. Will leave 1 charge of each.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
         MachinistRicochetGaussMainCombo = 713,
 
         [DependentCombos(MachinistMainCombo)]
-        [CustomComboInfo("Adds Barrel Stabilizer on main", "Adds Barrel Stabilizer onto the main combo to prevent drift when the option is enabled.", MCH.JobID, MCH.BarrelStabilizer)]
+        [CustomComboInfo("Barrel Stabilizer drift protection", "Adds Barrel Stabilizer onto the main combo if heat is between 5-20.", MCH.JobID, MCH.BarrelStabilizer)]
         BarrelStabilizerDrift = 714,
-
-        
 
         #endregion
         // ====================================================================================
