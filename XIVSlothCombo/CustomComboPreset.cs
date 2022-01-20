@@ -400,6 +400,16 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Always Gauss Round/Ricochet on AoE Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
         MachinistAoEGaussOption = 712,
 
+        [DependentCombos(MachinistMainCombo)]
+        [CustomComboInfo("Ricochet & Gauss overcap protection", "Adds Ricochet and Gauss Round to main combo. Will leave 1 charge of each.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
+        MachinistRicochetGaussMainCombo = 713,
+
+        [DependentCombos(MachinistMainCombo)]
+        [CustomComboInfo("Adds Barrel Stabilizer on main", "Adds Barrel Stabilizer onto the main combo to prevent drift when the option is enabled.", MCH.JobID, MCH.BarrelStabilizer)]
+        BarrelStabilizerDrift = 714,
+
+        
+
         #endregion
         // ====================================================================================
         #region MONK
