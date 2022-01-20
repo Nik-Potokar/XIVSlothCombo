@@ -110,6 +110,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (HasEffect(MCH.Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= 90)
                         return MCH.ChainSaw;
                 }
+                if (IsEnabled(CustomComboPreset.MachinistRicochetGaussMainCombo))
+                {
+                    if (level >= MCH.Levels.Ricochet && ricochetCD.CooldownRemaining <= 30 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
+                        return MCH.Ricochet;
+                    if (level >= MCH.Levels.GaussRound && gaussCD.CooldownRemaining <= 30 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.6)
+                        return MCH.GaussRound;
+
+                }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
@@ -142,15 +150,6 @@ namespace XIVSlothComboPlugin.Combos
                             return MCH.RookAutoturret;
                     if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.AutomatonQueen;
-
-                    if (IsEnabled(CustomComboPreset.MachinistRicochetGaussMainCombo))
-                    {
-                        if (level >= MCH.Levels.Ricochet && ricochetCD.CooldownRemaining <= 30 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
-                            return MCH.Ricochet;
-                        if (level >= MCH.Levels.GaussRound && gaussCD.CooldownRemaining <= 30 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.6)
-                            return MCH.GaussRound;
-
-                    }
 
                     if (comboTime > 0)
                     {
