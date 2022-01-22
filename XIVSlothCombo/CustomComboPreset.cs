@@ -764,51 +764,49 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster)]
         SummonerRuin4ToTridisasterFeature = 1412,
 
-        [CustomComboInfo("Earlier Demi Weave Feature", "Allows to weave Enkindle right after summoning Demi. (Looks like Enkindle Bahamut for both Demis)", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.Tridisaster)]
-        SummonerEnkindleWeave = 1413,
-
-        [CustomComboInfo("Ruin IV Fester Feature", "Change Fester into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, SMN.Painflare)]
-        SummonerFesterPainflareRuinFeature = 1414,
+        [DependentCombos(SummonerEDFesterCombo, SummonerESPainflareCombo)]
+        [CustomComboInfo("Ruin IV Fester/PainFlare Feature", "Change Fester/PainFlare into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, SMN.Painflare, SMN.Fester)]
+        SummonerFesterPainflareRuinFeature = 1413,
 
         [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire).\nKeep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
-        SummonerLazyFesterFeature = 1415,
+        SummonerLazyFesterFeature = 1414,
 
         [ConflictingCombos(SimpleSummonerOption2)]
         [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin3.(Titan>Garuda>Ifrit) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
-        SimpleSummoner = 1416,
+        SimpleSummoner = 1415,
 
         [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
-        SimpleAoESummoner = 1417,
+        SimpleAoESummoner = 1416,
 
         [DependentCombos(SimpleSummoner)] 
         [CustomComboInfo("Searing Light Rotation Option", "Adds Searing Light to Simple Summoner Rotation, Single Target", SMN.JobID, SMN.Ruin3, SMN.SearingLight)]
-        BuffOnSimpleSummoner = 1418,
+        BuffOnSimpleSummoner = 1417,
 
         [DependentCombos(SimpleAoESummoner)]
         [CustomComboInfo("Searing Light  AoE Option", "Adds Searing Light to Simple Summoner Rotation, AoE", SMN.JobID, SMN.Tridisaster, SMN.SearingLight)]
-        BuffOnSimpleAoESummoner = 1419,
+        BuffOnSimpleAoESummoner = 1418,
 
         [CustomComboInfo("DemiReminderFeature", "Adds Only Demi Summons on RuinIII (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
-        SummonerDemiSummonsFeature = 1420,
+        SummonerDemiSummonsFeature = 1419,
 
         [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
-        SummonerDemiAoESummonsFeature = 1421,
+        SummonerDemiAoESummonsFeature = 1420,
 
         [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I.\nWill break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
-        SummonerRuinIVMobilityFeature = 1422,
+        SummonerRuinIVMobilityFeature = 1421,
 
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, SMN.Ruin3)]
-        SummonerSwiftcastFeatureGaruda = 1423,
+        SummonerSwiftcastFeatureGaruda = 1422,
 
         [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, SMN.Ruin3)]
-        SummonerSwiftcastFeatureIfrit = 1424,
+        SummonerSwiftcastFeatureIfrit = 1423,
 
         [ConflictingCombos(SimpleSummoner)]
         [CustomComboInfo("One Button Rotation Feature Option2 ", "Same feature as One Button Rotation Feature but Garua>Titan>Ifrit .", SMN.JobID, SMN.Ruin3)]
-        SimpleSummonerOption2 = 1425,
+        SimpleSummonerOption2 = 1424,
 
-        [CustomComboInfo("Prevent Ruin4 Waste Feature", "Puts Ruin4 Above anything if FurtherRuin about to expire.", SMN.JobID, SMN.Ruin3)]
-        SummonerRuin4WastePrevention = 1426,
+        [CustomComboInfo("Prevent Ruin4 Waste Feature", "Puts Ruin4 Above anything if FurtherRuin about to expire and there is no Demi present.", SMN.JobID, SMN.Ruin3)]
+        SummonerRuin4WastePrevention = 1425,
 
         #endregion
         // ====================================================================================

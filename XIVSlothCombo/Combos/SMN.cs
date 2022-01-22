@@ -161,10 +161,10 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
                 var edrainCD = GetCooldown(SMN.EnergyDrain);
-                if (level >= SMN.Levels.EnergyDrain && !gauge.HasAetherflowStacks)
-                    return SMN.EnergyDrain;
                 if (furtherRuin && edrainCD.IsCooldown && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SummonerFesterPainflareRuinFeature))
                     return SMN.Ruin4;
+                if (level >= SMN.Levels.EnergyDrain && !gauge.HasAetherflowStacks)
+                    return SMN.EnergyDrain;
             }
 
             return actionID;
@@ -182,10 +182,11 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
                 var energysyphonCD = GetCooldown(SMN.EnergySiphon);
-                if (level >= SMN.Levels.EnergySyphon && !gauge.HasAetherflowStacks)
-                    return SMN.EnergySiphon;
                 if (furtherRuin && energysyphonCD.IsCooldown && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SummonerFesterPainflareRuinFeature))
                     return SMN.Ruin4;
+                if (level >= SMN.Levels.EnergySyphon && !gauge.HasAetherflowStacks)
+                    return SMN.EnergySiphon;
+
             }
 
             return actionID;
@@ -222,7 +223,7 @@ namespace XIVSlothComboPlugin.Combos
                 var rekindle = GetCooldown(SMN.Rekindle);
                 if (IsEnabled(CustomComboPreset.SummonerRuin4WastePrevention) && incombat)
                 {
-                    if (HasEffect(SMN.Buffs.FurtherRuin) && furtheRuin.RemainingTime > 0 && furtheRuin.RemainingTime <= 5)
+                    if (HasEffect(SMN.Buffs.FurtherRuin) && furtheRuin.RemainingTime > 0 && furtheRuin.RemainingTime <= 5 && gauge.SummonTimerRemaining == 0)
                     {
                         return SMN.Ruin4;
                     }
@@ -448,12 +449,11 @@ namespace XIVSlothComboPlugin.Combos
                     var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
                     var rekindle = GetCooldown(SMN.Rekindle);
 
+
                     if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > 0.7)
                         return SMN.Deathflare;
                     if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Rekindle;
-                    if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.Ruin4 || lastComboMove == SMN.Ruin3 || lastComboMove == SMN.Ruin2 || lastComboMove == SMN.Tridisaster) && (smnPhoenix.CooldownRemaining > 40 || smnBahamut.CooldownRemaining > 40) && !enkindleBahamut.IsCooldown && IsEnabled(CustomComboPreset.SummonerEnkindleWeave) && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
-                        return SMN.EnkindleBahamut;
                     if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.AstralFlare || lastComboMove == SMN.SummonBahamut) && !enkindleBahamut.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindleBahamut;
                     if (level > SMN.Levels.Phoenix && (lastComboMove == SMN.BrandOfPurgatory || lastComboMove == SMN.SummonPhoenix) && !enkindlePhoenix.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
