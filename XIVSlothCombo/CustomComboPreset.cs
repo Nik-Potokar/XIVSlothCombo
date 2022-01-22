@@ -348,7 +348,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, GNB.DemonSlaughter)]
         GunbreakerAmmoOvercapFeature = 607,
 
-        [CustomComboInfo("Gnashing Fang Combo", "Replace Gnashing Fang with its combo chain.", GNB.JobID, GNB.GnashingFang)]
+        [CustomComboInfo("Gnashing Fang Combo", "Replace Gnashing Fang with its combo chain. Includes DD and other oGCDs.", GNB.JobID, GNB.GnashingFang)]
         GunbreakerGnashingFangCombo = 608,
 
         [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
