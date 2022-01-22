@@ -180,7 +180,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 var gauge = GetJobGauge<MCHGauge>();
                 var heat = GetJobGauge<MCHGauge>().Heat;
-                if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire && heat >= 50)
+                if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire && heat >= 50 && IsEnabled(CustomComboPreset.MachinistWildfireFeature))
                     return MCH.Wildfire;
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
@@ -261,7 +261,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 var bioblaster = GetCooldown(MCH.BioBlaster);
-                if (!bioblaster.IsCooldown && level >= 72)
+                if (!bioblaster.IsCooldown && level >= 72 && IsEnabled(CustomComboPreset.MachinistBioblasterFeature))
                     return MCH.BioBlaster;
                 if (!gauge.IsOverheated && level >= 82)
                     return MCH.Scattergun;
