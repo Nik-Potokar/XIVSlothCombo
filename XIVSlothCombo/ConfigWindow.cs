@@ -169,6 +169,29 @@ namespace XIVSlothComboPlugin
 
                             ImGui.Spacing();
                         }
+                        if (preset == CustomComboPreset.CustomValuesTest && enabled)
+                        {
+                            var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
+                            var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
+                            var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+
+                            var inputChanged = false;
+                            inputChanged |= ImGui.InputFloat("Input Enemy Max HP (If Above this number it wont use combust on that target)", ref MaxHpValue);
+                            inputChanged |= ImGui.InputFloat("Input Current Enemy Hp ", ref CurrentHpValue);
+                            inputChanged |= ImGui.InputFloat("Input Current Enemy % Hp (If below this value it wont refresh the dot", ref PercentageHpValue);
+
+
+                            if (inputChanged)
+                            {
+                                Service.Configuration.EnemyHealthMaxHp = MaxHpValue;
+                                Service.Configuration.EnemyHealthPercentage = PercentageHpValue;
+                                Service.Configuration.EnemyCurrentHp = CurrentHpValue;
+
+                                Service.Configuration.Save();
+                            }
+
+                            ImGui.Spacing();
+                        }
                         i++;
                     }
                 }

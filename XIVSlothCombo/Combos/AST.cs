@@ -373,5 +373,76 @@ namespace XIVSlothComboPlugin.Combos
             return OriginalHook(AST.Malefic1);
         }
     }
+    internal class AstrologianTestingFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.CustomValuesTest;
 
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == AST.FallMalefic || actionID == AST.Malefic4 || actionID == AST.Malefic3 || actionID == AST.Malefic2 || actionID == AST.Malefic1)
+            {
+
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var combust3Debuff = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust2Debuff = FindTargetEffect(AST.Debuffs.Combust2);
+                var combust1Debuff = FindTargetEffect(AST.Debuffs.Combust1);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(AST.LucidDreaming);
+                var fallmalefic = GetCooldown(AST.FallMalefic);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
+                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
+                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
+                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+
+
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 50)
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
+                        return AST.Astrodyne;
+                }
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 30)
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        return AST.Draw;
+
+                }
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                        return AST.MinorArcana;
+                }
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 24)
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
+                        return AST.LucidDreaming;
+                }
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                        return AST.LordOfCrowns;
+                }
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 72 && incombat)
+                {
+                    if ((combust3Debuff is null) && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue  || (combust3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue )
+                        return AST.Combust3;
+                }
+
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 46 && level <= 71 && incombat)
+                {
+                    if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
+                        return AST.Combust2;
+                }
+
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 4 && level <= 45 && incombat)
+                {
+                    if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
+                        return AST.Combust1;
+                }
+            }
+            return OriginalHook(AST.Malefic1);
+        }
+
+    }
 }

@@ -64,6 +64,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Alternate DPS Feature(On Combust)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, AST.Combust1, AST.Combust2, AST.Combust3)]
         AstrologianAlternateDpsFeature = 14,
 
+        [ConflictingCombos(AstrologianDpsFeature, AstrologianAlternateDpsFeature)]
+        [CustomComboInfo("DPS Feature Custom Values Testing", "Same as DPSFeature(OnMalefic).Allows you to customize target MaxHp & CurrentPercentageHp & CurrentHp checks. Testing Only! ", AST.JobID, AST.FallMalefic, AST.Malefic4, AST.Malefic3, AST.Malefic2, AST.Malefic1)]
+        CustomValuesTest = 15,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE

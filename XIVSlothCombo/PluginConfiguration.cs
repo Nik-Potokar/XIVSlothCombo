@@ -79,6 +79,12 @@ namespace XIVSlothComboPlugin
         /// <returns>The dependencies of preset.</returns>
         public CustomComboPreset[] GetDependencies(CustomComboPreset preset)
             => preset.GetAttribute<DependentCombosAttribute>()?.DependentPresets ?? Array.Empty<CustomComboPreset>();
+
+        public float EnemyHealthPercentage { get; set; } = 0;
+
+        public float EnemyHealthMaxHp { get; set; } = 0;
+
+        public float EnemyCurrentHp { get; set; } = 0;
     }
 
 }
