@@ -34,7 +34,6 @@ namespace XIVSlothComboPlugin.Combos
             Shadowbite = 16494,
             Ladonsbite = 25783,
             BlastArrow = 25784,
-            HeadGraze = 7551,
             RadiantFinale = 25785;
         
 
@@ -453,8 +452,8 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == BRD.HeavyShot || actionID == BRD.BurstShot) {
-                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(BRD.HeadGraze).IsCooldown) {
-                    return BRD.HeadGraze;
+                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(All.Interject).IsCooldown) {
+                    return All.Interject;
                 }
 
                 var gauge = GetJobGauge<BRDGauge>();
