@@ -301,48 +301,44 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain.", GNB.JobID, GNB.SolidBarrel)]
         GunbreakerSolidBarrelCombo = 600,
 
-        [CustomComboInfo("Gnashing Fang Combo", "Replace Gnashing Fang with its combo chain.", GNB.JobID, GNB.GnashingFang)]
-        GunbreakerGnashingFangCombo = 601,
+        [DependentCombos(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
+        GunbreakerGnashingFangOnMain = 601,
+
+        [DependentCombos(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("Sonic Break/Bow Shock/Blasting Zone on Main Combo", "Adds Sonic Break/Bow Shock/Blasting Zone on main combo when under No Mercy buff", GNB.JobID, GNB.SolidBarrel)]
+        GunbreakerCDsOnMainComboFeature = 602,
+
+        [DependentCombos(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, GNB.SolidBarrel)]
+        GunbreakerDDonMain = 603,
+        
+        [DependentCombos(GunbreakerSolidBarrelCombo)]
+        [ConflictingCombos(GunbreakerRoughDivide2StackOption)]
+        [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID, GNB.SolidBarrel)]
+        GunbreakerRoughDivide1StackOption = 604,
+
+        [ConflictingCombos(GunbreakerRoughDivide1StackOption)]
+        [CustomComboInfo("Rough Divide Option (Uses all stacks)", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID, GNB.SolidBarrel)]
+        GunbreakerRoughDivide2StackOption = 605,
 
         [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, GNB.DemonSlaughter)]
-        GunbreakerDemonSlaughterCombo = 602,
+        GunbreakerDemonSlaughterCombo = 606,
 
-        [CustomComboInfo("Fated Circle Feature", "In addition to the Demon Slaughter combo, add Fated Circle when charges are full.", GNB.JobID, GNB.DemonSlaughter)]
-        GunbreakerFatedCircleFeature = 603,
+        [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, GNB.DemonSlaughter)]
+        GunbreakerAmmoOvercapFeature = 607,
+
+        [CustomComboInfo("Gnashing Fang Combo", "Replace Gnashing Fang with its combo chain.", GNB.JobID, GNB.GnashingFang)]
+        GunbreakerGnashingFangCombo = 608,
+
+        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        GunbreakerBurstStrikeConFeature = 609,
 
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, GNB.BurstStrike)]
-        GunbreakerBloodfestOvercapFeature = 604,
+        GunbreakerBloodfestOvercapFeature = 610,
 
-        [ConflictingCombos(GunbreakerNoMercyoGCDFeature)]
-        [CustomComboInfo("No Mercy Feature", "Replace No Mercy with Bow Shock, and then Sonic Break, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
-        GunbreakerNoMercyFeature = 605,
-
-        [CustomComboInfo("Danger Zone Feature", "Adds Danger Zone/Blasting Zone on main combo and No Mercy oGCD Feature when No Mercy buff is present\nor No Mercy is on cooldown.", GNB.JobID, GNB.DangerZone)]
-        GunbreakerDangerZoneFeature = 606,
-
-        [CustomComboInfo("Double Down Feature", "Adds DoubleDown on main combo when under No Mercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
-        GunbreakerDoubleDownOnMainComboFeature = 607,
-
-        [CustomComboInfo("Double Down No Mercy Feature", "Adds DoubleDown to No Mercy Feature, while No Mercy is active.", GNB.JobID, GNB.NoMercy)]
-        DoubleDownNoMercyFeature = 608,
-
-        [ConflictingCombos(GunbreakerNoMercyFeature)]
-        [CustomComboInfo("oGCD No Mercy Feature", "Changes No Mercy into BowShock when you are under No Mercy buff", GNB.JobID, GNB.NoMercy)]
-        GunbreakerNoMercyoGCDFeature = 609,
-
-        [CustomComboInfo("Sonic Break Main Combo Feature", "Adds SonicBreak on main combo when under No Mercy buff", GNB.JobID, GNB.DoubleDown, GNB.SolidBarrel)]
-        GunbreakerSonicBreakOnMainComboFeature = 610,
-
-        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike Continuation combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
-        GunbreakerBurstStrikeConFeature = 611,
-
-        [ConflictingCombos(GunbreakerRoughDivideFeatureOption)]
-        [CustomComboInfo("Rough Divide Feature", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID, GNB.SolidBarrel)]
-        GunbreakerRoughDivideFeature = 612,
-
-        [ConflictingCombos(GunbreakerRoughDivideFeature)]
-        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever its available (Leaves 1 stack).", GNB.JobID, GNB.SolidBarrel)]
-        GunbreakerRoughDivideFeatureOption = 613,
+        [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used. \nCurrently coded for the level 90 burst window.", GNB.JobID, GNB.NoMercy)]
+        GunbreakerNoMercyRotationFeature = 611,
 
         [DependentCombos(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Bow Shock On Main Combo Feature", "Puts Bow Shock on your main combo when it's up during No Mercy.", Combos.GNB.JobID, GNB.BowShock, GNB.SolidBarrel)]
