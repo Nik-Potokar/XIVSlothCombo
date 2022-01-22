@@ -296,4 +296,21 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class WarriorInfuriateFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.WarriorInfuriateFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == WAR.Infuriate)
+            {
+                if (HasEffect(WAR.Buffs.InnerRelease))
+                    return WAR.FellCleave;
+                if (HasEffect(WAR.Buffs.NascentChaos))
+                    return WAR.InnerChaos;
+            }
+
+            return actionID;
+        }
+    }
 }

@@ -868,6 +868,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Onslaught Option Two", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1/2 stacks depending on lvl)", WAR.JobID, WAR.StormsPath)]
         WarriorOnslaughtFeatureOptionTwo = 1514,
 
+        [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with FellCleave when under InnerRelease buff. Replaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, WAR.Infuriate)]
+        WarriorInfuriateFeature = 1515,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
