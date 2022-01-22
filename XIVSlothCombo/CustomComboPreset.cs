@@ -228,6 +228,18 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Overcap Feature", "Adds SaberBlade to Cascade/Windmil combo if you are about to overcap on esprit.", DNC.JobID, DNC.Cascade, DNC.Windmill)]
         DancerOvercapFeature = 307,
 
+        [CustomComboInfo("Overcap Feature Option", "Adds SaberBlade to Cascade if you have at least 50 esprit.", DNC.JobID, DNC.Cascade)]
+        DancerSaberDanceOnMainComboFeature = 308,
+
+        [CustomComboInfo("CombinedDanceFeature", "Standard And Technical Dance on one button(StandardStep) Standard>Technical.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
+        DancerDanceStepComboTest = 309,
+
+        [CustomComboInfo("FanSaberDanceFeature", "Adds SaberDance onto all FanDance Skills when no feathers are available and you have 50+ gauge", DNC.JobID, DNC.FanDance1, DNC.FanDance2, DNC.FanDance3, DNC.FanDance4)]
+        DancerSaberFanDanceFeature = 310,
+
+        [CustomComboInfo("FanDance On Cascade Feature", "Adds FanDance1/3/4 Onto Cascade When available", DNC.JobID, DNC.Cascade, DNC.FanDance1, DNC.FanDance2, DNC.FanDance3, DNC.FanDance4)]
+        DancerFanDanceOnMainComboFeature = 311,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -586,12 +598,15 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SAMURAI
 
+        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID, SAM.Yukikaze)]
         SamuraiYukikazeCombo = 1200,
 
+        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID, SAM.Gekko)]
         SamuraiGekkoCombo = 1201,
 
+        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID, SAM.Kasha)]
         SamuraiKashaCombo = 1202,
 
@@ -635,6 +650,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, SAM.Ikishoten)]
         SamuraiIkishotenNamikiriFeature = 1214,
 
+        [ConflictingCombos(SamuraiYukikazeCombo, SamuraiGekkoCombo, SamuraiKashaCombo)]
         [CustomComboInfo("SimpleSamuraiSingleTarget", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
         SamuraiSimpleSamuraiFeature = 1215,
 

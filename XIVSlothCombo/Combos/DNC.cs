@@ -53,7 +53,9 @@ namespace XIVSlothComboPlugin.Combos
                 FlourishingSymetry = 2693,
                 FlourishingFlow = 2694,
                 FlourishingFanDance = 1820,
-                FlourishingStarfall = 2700;
+                FlourishingStarfall = 2700,
+                ThreeFoldFanDance = 1820,
+                FourFoldFanDance = 2699;
         }
 
         public static class Debuffs
@@ -106,6 +108,12 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var gauge = GetJobGauge<DNCGauge>();
+            if (gauge.Feathers == 0)
+            {
+                if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
+                    return DNC.SaberDance;
+            }
             if (actionID == DNC.FanDance1)
             {
                 if (HasEffect(DNC.Buffs.FlourishingFanDance))
@@ -196,8 +204,19 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == DNC.Cascade)
             {
                 var gauge = GetJobGauge<DNCGauge>();
+                var actionIDCD = GetCooldown(actionID);
+                // Espirit Overcap Options
+                if (gauge.Esprit >= 50 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerSaberDanceOnMainComboFeature))
+                    return DNC.SaberDance;
                 if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
                     return DNC.SaberDance;
+                // FanDances
+                if (gauge.Feathers > 0 && actionIDCD.IsCooldown && level >= 30 && IsEnabled(CustomComboPreset.DancerFanDanceOnMainComboFeature))
+                    return DNC.FanDance1;
+                if (HasEffect(DNC.Buffs.ThreeFoldFanDance) && actionIDCD.IsCooldown && level >= 66 && IsEnabled(CustomComboPreset.DancerFanDanceOnMainComboFeature))
+                    return DNC.FanDance3;
+                if (HasEffect(DNC.Buffs.FourFoldFanDance) && actionIDCD.IsCooldown && level >= 86 && IsEnabled(CustomComboPreset.DancerFanDanceOnMainComboFeature))
+                    return DNC.FanDance4;
                 // From Fountain
                 if (HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Fountainfall;
@@ -259,6 +278,56 @@ namespace XIVSlothComboPlugin.Combos
                     return DNC.StarfallDance;
 
                 return DNC.Devilment;
+            }
+
+            return actionID;
+        }
+    }
+    internal class DancerDanceStepComboTest : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DancerDanceStepComboTest;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == DNC.StandardStep)
+            {
+                var gauge = GetJobGauge<DNCGauge>();
+                var standardCD = GetCooldown(DNC.StandardStep);
+                var techstepCD = GetCooldown(DNC.TechnicalStep);
+                if (standardCD.IsCooldown && !techstepCD.IsCooldown && !gauge.IsDancing && !HasEffect(DNC.Buffs.StandardStep))
+                {
+                    return DNC.TechnicalStep;
+                }
+                if (gauge.IsDancing && HasEffect(DNC.Buffs.StandardStep))
+                {
+                    if (gauge.CompletedSteps < 2)
+                        return (uint)gauge.NextStep;
+
+                    return DNC.StandardFinish2;
+                }
+                if (gauge.IsDancing && HasEffect(DNC.Buffs.TechnicalStep) && standardCD.IsCooldown)
+                {
+                    if (gauge.CompletedSteps < 4)
+                        return (uint)gauge.NextStep;
+
+                    return DNC.TechnicalFinish4;
+                }
+                
+            }
+            return actionID;
+        }
+    }
+    internal class DancerSaberFanDanceFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DancerSaberFanDanceFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if(actionID == DNC.FanDance1 || actionID == DNC.FanDance2 || actionID == DNC.FanDance3 || actionID == DNC.FanDance4)
+            {
+                var gauge = GetJobGauge<DNCGauge>();
+                if (gauge.Feathers == 0 && gauge.Esprit >= 50)
+                    return DNC.SaberDance;
             }
 
             return actionID;
