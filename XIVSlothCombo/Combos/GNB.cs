@@ -278,6 +278,8 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(GNB.DangerZone);
                     if (level >= GNB.Levels.BowShock && !bowshockCD.IsCooldown)
                         return GNB.BowShock;
+                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
+                        return GNB.BowShock;
                     if (level >= GNB.Levels.SonicBreak && !sonicbreakCD.IsCooldown)
                         return GNB.SonicBreak;
                     if (gauge.AmmoComboStep == 1)

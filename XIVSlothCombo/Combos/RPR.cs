@@ -152,6 +152,16 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(RPR.Gibbet);
                 }
 
+                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                {
+                    if ((HasEffect(RPR.Buffs.EnhancedGibbet) && !HasEffect(RPR.Buffs.Enshrouded) && IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded)))
+                        return OriginalHook(RPR.Gibbet);
+                    if ((HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded) && IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded)))
+                        return OriginalHook(RPR.Gallows);
+
+                    return OriginalHook(RPR.Gallows);
+                }
+
                 if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
                 {
                     var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
@@ -432,6 +442,60 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class ReaperBloodStalkAlternateComboOption : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperBloodStalkAlternateComboOption;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var gluttonyCD = GetCooldown(RPR.Gluttony);
+            var gauge = GetJobGauge<RPRGauge>();
+
+            if (actionID == RPR.BloodStalk)
+            {
+                if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
+                {
+                    if (gauge.VoidShroud >= 2)
+                    {
+                        return OriginalHook(RPR.BloodStalk);
+                    }
+                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= 90)
+                    {
+                        return OriginalHook(RPR.Communio);
+                    }
+                    if (HasEffect(RPR.Buffs.EnhancedCrossReaping))
+                    {
+                        return OriginalHook(RPR.Gallows);
+                    }
+                    if (HasEffect(RPR.Buffs.EnhancedVoidReaping))
+                    {
+                        return OriginalHook(RPR.Gibbet);
+                    }
+                    return OriginalHook(RPR.Gallows);
+                }
+
+                if (!HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded))
+                {
+                    if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
+                        return RPR.Gluttony;
+                    return RPR.BloodStalk;
+                }
+
+                if (!HasEffect(RPR.Buffs.Enshrouded) && HasEffect(RPR.Buffs.SoulReaver) && (actionID == RPR.BloodStalk || actionID == RPR.Gluttony))
+                {
+                    if (HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded))
+                        return RPR.Gallows;
+
+                    if (HasEffect(RPR.Buffs.EnhancedGibbet) && !HasEffect(RPR.Buffs.Enshrouded))
+                        return RPR.Gibbet;
+
+                    return RPR.Gallows;
+                }
+            }
+            return actionID;
+        }
+    }
+
 
     internal class ReaperGrimSwatheComboOption : CustomCombo
     {

@@ -23,6 +23,7 @@ namespace XIVSlothComboPlugin.Combos
             ArmorCrush = 3563,
             DreamWithinADream = 3566,
             TenChiJin = 7403,
+            Bavacakra = 7402,
             HakkeMujinsatsu = 16488,
             Meisui = 16489,
             Jin = 18807,
@@ -85,6 +86,22 @@ namespace XIVSlothComboPlugin.Combos
                     var gauge = GetJobGauge<NINGauge>();
                     if (gauge.HutonTimer == 0)
                         return NIN.Huraijin;
+                }
+                if (IsEnabled(CustomComboPreset.NinjaBunshinFeature) && level >= 80)
+                {
+                    var actionIDCD = GetCooldown(actionID);
+                    var gauge = GetJobGauge<NINGauge>();
+                    var bunshinCD = GetCooldown(NIN.Bunshin);
+                    if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown)
+                        return NIN.Bunshin;
+                }
+                if (IsEnabled(CustomComboPreset.NinjaBavacakraFeature) && level >= 80)
+                {
+                    var actionIDCD = GetCooldown(actionID);
+                    var gauge = GetJobGauge<NINGauge>();
+                    var bunshinCD = GetCooldown(NIN.Bunshin);
+                    if (gauge.Ninki >= 50 && actionIDCD.IsCooldown)
+                        return NIN.Bavacakra;
                 }
                 if (comboTime > 0f)
                 {

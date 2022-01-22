@@ -53,7 +53,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Debuffs
         {
             public const short
-                Higenbana = 1228;
+                Higanbana = 1228;
         }
         
         public static class Levels
@@ -275,33 +275,42 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var iaijutsuCD = GetCooldown(SAM.Iaijutsu);
+
+
+            //var iaijutsuCD = GetCooldown(SAM.Iaijutsu);
             var gauge = GetJobGauge<SAMGauge>();
             var kaiten = HasEffect(SAM.Buffs.Kaiten);
-            var ka = gauge.Sen.HasFlag(Sen.KA) == true;
-            var getsu = gauge.Sen.HasFlag(Sen.GETSU) == true;
-            var setsu = gauge.Sen.HasFlag(Sen.SETSU) == true;
-            if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature1))
+            var ka = gauge.Sen.HasFlag(Sen.KA);
+            var getsu = gauge.Sen.HasFlag(Sen.GETSU);
+            var setsu = gauge.Sen.HasFlag(Sen.SETSU);
+            var hasBanana = TargetHasEffect(SAM.Debuffs.Higanbana);
+            var banana = FindTargetEffect(SAM.Debuffs.Higanbana);
+
+
+            if (!kaiten && level >= SAM.Levels.Iaijutsu)
             {
-                if ((level >= SAM.Levels.Iaijutsu && ka && gauge.Kenki >= 20 && !kaiten) || (level >= SAM.Levels.Iaijutsu && getsu && gauge.Kenki >= 20 && !kaiten) || (level >= SAM.Levels.Iaijutsu && setsu && gauge.Kenki >= 20 && !kaiten))
-                    return SAM.Kaiten;
-                if ((level >= SAM.Levels.Iaijutsu && ka) || (level >= SAM.Levels.Iaijutsu && getsu) || (level >= SAM.Levels.Iaijutsu && setsu))
+                int numSen = (ka ? 1 : 0) + (getsu ? 1 : 0) + (setsu ? 1 : 0);
+                if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature1) && numSen == 1)
+                {
+                    if ((!hasBanana || banana.RemainingTime < 5) && gauge.Kenki >= 20)
+                        return SAM.Kaiten;
                     return OriginalHook(SAM.Iaijutsu);
-            }
-            if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature2))
-            {
-                if ((level >= SAM.Levels.Iaijutsu && ka && setsu && gauge.Kenki >= 20 && !kaiten) || ((level >= SAM.Levels.Iaijutsu && getsu && setsu && gauge.Kenki >= 20 && !kaiten) || (level >= SAM.Levels.Iaijutsu && ka && getsu && gauge.Kenki >= 20 && !kaiten)))
-                    return SAM.Kaiten;
-                if ((level >= SAM.Levels.Iaijutsu && ka && getsu) || (level >= SAM.Levels.Iaijutsu && ka && setsu) || (level >= SAM.Levels.Iaijutsu && getsu && setsu))
+                }
+                if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature2) && numSen == 2)
+                {
+                    if (gauge.Kenki >= 20)
+                        return SAM.Kaiten;
                     return OriginalHook(SAM.Iaijutsu);
-            }
-            if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature3))
-            {
-                if (level >= SAM.Levels.Iaijutsu && ka && getsu && setsu && gauge.Kenki >= 20 && !kaiten)
-                    return SAM.Kaiten;
-                if (level >= SAM.Levels.Iaijutsu && ka && getsu && setsu)
+                }
+                if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature3) && numSen == 3)
+                {
+                    if (gauge.Kenki >= 20)
+                        return SAM.Kaiten;
                     return OriginalHook(SAM.Iaijutsu);
+                }
+
             }
+
             if (actionID == SAM.Iaijutsu)
             {
                 if (level >= SAM.Levels.TsubameGaeshi && gauge.Sen == Sen.NONE)
@@ -417,48 +426,46 @@ namespace XIVSlothComboPlugin.Combos
                     var meikyoStacks = FindEffect(SAM.Buffs.MeikyoShisui);
                     var fuka = HasEffect(SAM.Buffs.Fuka);
                     var fugetsu = HasEffect(SAM.Buffs.Fugetsu);
-                    var higebana = TargetHasEffect(SAM.Debuffs.Higenbana);
+                    var higanbana = TargetHasEffect(SAM.Debuffs.Higanbana);
 
                     if (comboTime > 0 && level >= SAM.Levels.Shifu)
                     {
                         if(HasEffect(SAM.Buffs.MeikyoShisui))
                         {
-                            if (gauge.Sen.HasFlag(Sen.KA) == false)
-                                return OriginalHook(SAM.Kasha);
                             if (gauge.Sen.HasFlag(Sen.GETSU) == false)
                                 return OriginalHook(SAM.Gekko);
+                            if (gauge.Sen.HasFlag(Sen.KA) == false)
+                                return OriginalHook(SAM.Kasha);
                             if (gauge.Sen.HasFlag(Sen.SETSU) == false)
                                 return OriginalHook(SAM.Yukikaze);
 
                         }
                         if (lastComboMove == SAM.Hakaze)
                         {
-                            if ((level >= SAM.Levels.Shifu && gauge.Sen.HasFlag(Sen.KA) == false && FindEffect(SAM.Buffs.Shifu)?.RemainingTime < 10) || (!fuka && level >= SAM.Levels.Shifu))
-                                return SAM.Shifu;
-                            if ((level >= SAM.Levels.Jinpu && gauge.Sen.HasFlag(Sen.GETSU) == false && FindEffect(SAM.Buffs.Jinpu)?.RemainingTime < 10) || (!fugetsu && level >= SAM.Levels.Jinpu))
-                                return SAM.Jinpu;
-                            if (level >= SAM.Levels.Yukikaze && gauge.Sen.HasFlag(Sen.SETSU) == false)
+                            if (gauge.Sen.HasFlag(Sen.SETSU) == false && level >= SAM.Levels.Yukikaze)
                                 return SAM.Yukikaze;
-                            if ((level >= SAM.Levels.Shifu && FindEffect(SAM.Buffs.Shifu)?.RemainingTime < 10) || gauge.Sen.HasFlag(Sen.KA) == false)
-                                return SAM.Shifu;
-                            if (level >= SAM.Levels.Jinpu)
+                            if (gauge.Sen.HasFlag(Sen.GETSU) == false)
                                 return SAM.Jinpu;
+                            if (gauge.Sen.HasFlag(Sen.KA) == false)
+                                return SAM.Shifu;
+                            return SAM.Jinpu;
                         }
 
-                        if (lastComboMove == SAM.Shifu && level >= SAM.Levels.Kasha)
-                            return SAM.Kasha;
                         if (lastComboMove == SAM.Jinpu && level >= SAM.Levels.Gekko)
                             return SAM.Gekko;
+                        if (lastComboMove == SAM.Shifu && level >= SAM.Levels.Kasha)
+                            return SAM.Kasha;
                     }
                     if (meikyo)
                     {
-                        if (level >= SAM.Levels.Kasha && gauge.Sen.HasFlag(Sen.KA) == false)
-                            return SAM.Kasha;
                         if (level >= SAM.Levels.Gekko && gauge.Sen.HasFlag(Sen.GETSU) == false)
                             return SAM.Gekko;
+                        if (level >= SAM.Levels.Kasha && gauge.Sen.HasFlag(Sen.KA) == false)
+                            return SAM.Kasha;
                         if (level >= SAM.Levels.Yukikaze && gauge.Sen.HasFlag(Sen.SETSU) == false)
                             return SAM.Yukikaze;
-                    return actionID;
+
+                        return actionID;
                     }
 
                 }
@@ -503,47 +510,6 @@ namespace XIVSlothComboPlugin.Combos
             }
 
             return actionID;
-        }
-    }
-    internal class SamuraiKaitenFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiKaitenFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            var iaijutsuCD = GetCooldown(SAM.Iaijutsu);
-            var gauge = GetJobGauge<SAMGauge>();
-            var kaiten = HasEffect(SAM.Buffs.Kaiten);
-            var ka = gauge.Sen.HasFlag(Sen.KA) == true;
-            var getsu = gauge.Sen.HasFlag(Sen.GETSU) == true;
-            var setsu = gauge.Sen.HasFlag(Sen.SETSU) == true;
-            if (actionID == SAM.Iaijutsu)
-            {
-
-                if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature1))
-                {
-                    if ((level >= SAM.Levels.Iaijutsu && ka && gauge.Kenki >= 20 && !kaiten) || (level >= SAM.Levels.Iaijutsu && getsu && gauge.Kenki >= 20 && !kaiten) || (level >= SAM.Levels.Iaijutsu && setsu && gauge.Kenki >= 20 && !kaiten))
-                        return SAM.Kaiten;
-                    if ((level >= SAM.Levels.Iaijutsu && ka) || (level >= SAM.Levels.Iaijutsu && getsu) || (level >= SAM.Levels.Iaijutsu && setsu))
-                        return OriginalHook(SAM.Iaijutsu);
-                }
-                if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature2))
-                {
-                    if ((level >= SAM.Levels.Iaijutsu && ka && setsu && gauge.Kenki >= 20 && !kaiten) || ((level >= SAM.Levels.Iaijutsu && getsu && setsu && gauge.Kenki >= 20 && !kaiten) || (level >= SAM.Levels.Iaijutsu && ka && getsu && gauge.Kenki >= 20 && !kaiten)))
-                        return SAM.Kaiten;
-                    if ((level >= SAM.Levels.Iaijutsu && ka && getsu) || (level >= SAM.Levels.Iaijutsu && ka && setsu) || (level >= SAM.Levels.Iaijutsu && getsu && setsu))
-                        return OriginalHook(SAM.Iaijutsu);
-                }
-                if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature3))
-                {
-                    if (level >= SAM.Levels.Iaijutsu && ka && getsu && setsu && gauge.Kenki >= 20 && !kaiten)
-                        return SAM.Kaiten;
-                    if (level >= SAM.Levels.Iaijutsu && ka && getsu && setsu)
-                        return OriginalHook(SAM.Iaijutsu);
-                }
-            }
-            return actionID;
-
         }
     }
     internal class SamuraiYatenFeature : CustomCombo

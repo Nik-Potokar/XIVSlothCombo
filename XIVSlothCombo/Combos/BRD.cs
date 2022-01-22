@@ -34,7 +34,9 @@ namespace XIVSlothComboPlugin.Combos
             Shadowbite = 16494,
             Ladonsbite = 25783,
             BlastArrow = 25784,
+            HeadGraze = 7551,
             RadiantFinale = 25785;
+        
 
         public static class Buffs
         {
@@ -83,7 +85,8 @@ namespace XIVSlothComboPlugin.Combos
                 ApexArrow = 80,
                 Ladonsbite = 82,
                 BlastArrow = 86,
-                RadiantFinale = 90;
+                RadiantFinale = 90,
+                HeadGraze = 24;
         }
 
         internal static bool SongIsNotNone(Song value) {
@@ -450,8 +453,8 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == BRD.HeavyShot || actionID == BRD.BurstShot) {
-                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(All.Interject).IsCooldown) {
-                    return All.Interject;
+                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(BRD.HeadGraze).IsCooldown) {
+                    return BRD.HeadGraze;
                 }
 
                 var gauge = GetJobGauge<BRDGauge>();

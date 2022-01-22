@@ -30,6 +30,7 @@ namespace XIVSlothComboPlugin.Combos
             QueenOverdrive = 16502,
             ChainSaw = 25788,
             BioBlaster = 16499,
+            BarrelStabilizer = 7414,
             Wildfire = 2878;
 
         public static class Buffs
@@ -64,6 +65,7 @@ namespace XIVSlothComboPlugin.Combos
                 BioBlaster = 72,
                 ChargedActionMastery = 74,
                 QueenOverdrive = 80,
+                BarrelStabilizer = 66,
                 ChainSaw = 90;
         }
     }
@@ -85,6 +87,7 @@ namespace XIVSlothComboPlugin.Combos
                 var gaussCD = GetCooldown(MCH.GaussRound);
                 var ricochetCD = GetCooldown(MCH.Ricochet);
                 var chainsawCD = GetCooldown(MCH.ChainSaw);
+                var barrelCD = GetCooldown(MCH.BarrelStabilizer);
 
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
@@ -107,6 +110,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (HasEffect(MCH.Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= 90)
                         return MCH.ChainSaw;
                 }
+                if (IsEnabled(CustomComboPreset.MachinistRicochetGaussMainCombo))
+                {
+                    if (level >= MCH.Levels.Ricochet && ricochetCD.CooldownRemaining <= 30 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
+                        return MCH.Ricochet;
+                    if (level >= MCH.Levels.GaussRound && gaussCD.CooldownRemaining <= 30 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.6)
+                        return MCH.GaussRound;
+
+                }
 
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
@@ -123,36 +134,41 @@ namespace XIVSlothComboPlugin.Combos
                             return MCH.AirAnchor;
                         if (reassembleCD.CooldownRemaining >= 55 && !chainsawCD.IsCooldown && level >= 90)
                             return MCH.ChainSaw;
-                        if (HasEffect(MCH.Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 55 && !drillCD.IsCooldown)
+                        if (HasEffect(MCH.Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 110 && !drillCD.IsCooldown)
                             return MCH.Drill;
                     }
-                }
 
-                var battery = GetJobGauge<MCHGauge>().Battery;
-                if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
-                {
-                    if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
-                        return MCH.RookAutoturret;
+                    var battery = GetJobGauge<MCHGauge>().Battery;
+                    var heat = GetJobGauge<MCHGauge>().Heat;
+                    if (IsEnabled(CustomComboPreset.BarrelStabilizerDrift))
+                    {
+                        if (level >= MCH.Levels.BarrelStabilizer && heat >= 5 && heat <= 20 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7 && !barrelCD.IsCooldown)
+                            return MCH.BarrelStabilizer;
+                    }
+                    if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
+                        if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
+                            return MCH.RookAutoturret;
                     if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.AutomatonQueen;
+
+                    if (comboTime > 0)
+                    {
+                        if (lastComboMove == MCH.SplitShot && level >= MCH.Levels.SlugShot)
+                            return OriginalHook(MCH.SlugShot);
+
+                        if (lastComboMove == MCH.SlugShot && level >= MCH.Levels.CleanShot)
+                            return OriginalHook(MCH.CleanShot);
+                    }
+
+                    return OriginalHook(MCH.SplitShot);
+
                 }
-
-                if (comboTime > 0)
-                {
-                    if (lastComboMove == MCH.SplitShot && level >= MCH.Levels.SlugShot)
-                        return OriginalHook(MCH.SlugShot);
-
-                    if (lastComboMove == MCH.SlugShot && level >= MCH.Levels.CleanShot)
-                        return OriginalHook(MCH.CleanShot);
-                }
-
-                return OriginalHook(MCH.SplitShot);
             }
 
             return actionID;
+            
         }
     }
-
     internal class MachinistHeatblastGaussRicochetFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.MachinistHeatblastGaussRicochetFeature;

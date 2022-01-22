@@ -312,7 +312,7 @@ namespace XIVSlothComboPlugin
         [DependentCombos(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, GNB.SolidBarrel)]
         GunbreakerDDonMain = 603,
-
+        
         [DependentCombos(GunbreakerSolidBarrelCombo)]
         [ConflictingCombos(GunbreakerRoughDivide2StackOption)]
         [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID, GNB.SolidBarrel)]
@@ -339,6 +339,10 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used. \nCurrently coded for the level 90 burst window.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyRotationFeature = 611,
+
+        [DependentCombos(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("Bow Shock On Main Combo Feature", "Puts Bow Shock on your main combo when it's up during No Mercy.", Combos.GNB.JobID, GNB.BowShock, GNB.SolidBarrel)]
+        GunbreakerBowShockFeature = 614,
 
         #endregion
         // ====================================================================================
@@ -391,6 +395,14 @@ namespace XIVSlothComboPlugin
         [DependentCombos(MachinistSpreadShotFeature)]
         [CustomComboInfo("Always Gauss Round/Ricochet on AoE Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
         MachinistAoEGaussOption = 712,
+
+        [DependentCombos(MachinistMainCombo)]
+        [CustomComboInfo("Ricochet & Gauss Round overcap protection option", "Adds Ricochet and Gauss Round to main combo. Will leave 1 charge of each.", MCH.JobID, MCH.GaussRound, MCH.Ricochet)]
+        MachinistRicochetGaussMainCombo = 713,
+
+        [DependentCombos(MachinistMainCombo)]
+        [CustomComboInfo("Barrel Stabilizer drift protection feature", "Adds Barrel Stabilizer onto the main combo if heat is between 5-20.", MCH.JobID, MCH.BarrelStabilizer)]
+        BarrelStabilizerDrift = 714,
 
         #endregion
         // ====================================================================================
@@ -485,6 +497,12 @@ namespace XIVSlothComboPlugin
         [DependentCombos(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, NIN.AeolianEdge)]
         NinjaHuraijinFeature = 915,
+
+        [CustomComboInfo("BunshinOnMainCombo", "Adds Bunshin whenever its off cd and you have gauge for it on main combo.", NIN.JobID, NIN.AeolianEdge)]
+        NinjaBunshinFeature = 916,
+
+        [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, NIN.AeolianEdge)]
+        NinjaBavacakraFeature = 917,
 
 
         #endregion
@@ -631,19 +649,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, SAM.Mangetsu, SAM.Oka)]
         SamuraiSimpleSamuraiAoECombo = 1216,
 
-        [CustomComboInfo("KaitenFeature Feature", "ENABLE THIS IF YOU ARE GOING TO USE ANY OF THE KaitenFeature Options!!!  ", SAM.JobID, SAM.Iaijutsu)]
-        SamuraiKaitenFeature = 1217,
-
-        [CustomComboInfo("KaitenFeature Option 1", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 1 Sen(Sticker) is available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature1 = 1218,
 
-        [CustomComboInfo("KaitenFeature Option 2", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 2 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature2 = 1219,
 
-        [CustomComboInfo("KaitenFeature Option 3", "Never Forget To Empover your big Skills, Adds Kaiten to Iaijutstu when 3 Sen(Stickers) are available", SAM.JobID, SAM.Iaijutsu)]
+        [DependentCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
+        [CustomComboInfo("KaitenFeature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID, SAM.Iaijutsu)]
         SamuraiKaitenFeature3 = 1220,
 
-        [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
+        [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
         SamuraiYatenFeature = 1221,
 
         #endregion
@@ -728,7 +746,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ruin IV Fester Feature", "Change Fester into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, SMN.Painflare)]
         SummonerFesterPainflareRuinFeature = 1414,
 
-        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire). Keep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
+        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire).\nKeep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1415,
 
         [ConflictingCombos(SimpleSummonerOption2)]
@@ -752,7 +770,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SummonerDemiAoESummonsFeature = 1421,
 
-        [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I. Will break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
+        [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I.\nWill break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
         SummonerRuinIVMobilityFeature = 1422,
 
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, SMN.Ruin3)]
@@ -862,7 +880,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Enshroud Communio Feature", "Replace Enshroud with Communio when Enshrouded.", RPR.JobID, RPR.Enshroud)]
         ReaperEnshroudCommunioFeature = 1702,
 
-        [CustomComboInfo("Gibbets and Gallows Feature", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
+        [ConflictingCombos(ReaperGibbetGallowsFeatureOption)]
+        [CustomComboInfo("Gallows And Gibbet Option", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.(Swapped positional skills from ReaperGibbetGallowsFeatureOption)", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
         ReaperGibbetGallowsFeature = 1703,
 
         [CustomComboInfo("Guillotine Feature", "Spinning Scythe's combo gets replaced with Guillotine while Soul Reaver or Shroud is active.", RPR.JobID, RPR.SpinningScythe)]
@@ -892,7 +911,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID, RPR.BloodStalk, RPR.GrimSwathe)]
         ReaperBloodSwatheFeature = 1712,
 
-        [ConflictingCombos(ReaperBloodSwatheFeature)]
+        [ConflictingCombos(ReaperBloodSwatheFeature, ReaperBloodStalkAlternateComboOption)]
         [CustomComboInfo("Blood Stalk Combo Option", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. Adds Enshrouded Combo to button as well", RPR.JobID, RPR.BloodStalk)]
         ReaperBloodSwatheComboFeature = 1713,
 
@@ -902,6 +921,15 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Cross/Void Reaping Feature", "Turns Enshroud into Cross/Void reaping with Lemure Slice as oGCD after Cross Reaping.", RPR.JobID, RPR.Enshroud)]
         ReaperVoidCrossReapingComboOption = 1715,
+
+        [ConflictingCombos(ReaperGibbetGallowsFeature)]
+        [CustomComboInfo("Gibbets and Gallows Feature Option", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID, RPR.Slice, RPR.ShadowOfDeath)]
+        ReaperGibbetGallowsFeatureOption = 1716,
+
+        [ConflictingCombos(ReaperBloodSwatheComboFeature)]
+        [CustomComboInfo("Blood Stalk Combo Option Alternative", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. Adds Enshrouded Combo to button as well", RPR.JobID, RPR.BloodStalk)]
+        ReaperBloodStalkAlternateComboOption = 1717,
+
 
 
         #endregion
@@ -975,6 +1003,26 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID, MCHPVP.Wildfire)]
         WildfireBlankFeature = 3511,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID, RPRPVP.Slice, RPRPVP.WaxingSlice, RPRPVP.InfernalSlice)]
+        InfernalSliceComboFeature = 3512,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("NightmareScytheComboFeature", "Adds Gluttony/GrimSwathe/Smite/EnshroudComboRotation on InfernalScytheCombo", RPRPVP.JobID, RPRPVP.SpinningScythe, RPRPVP.NightmareScythe, RPRPVP.GrimReaping)]
+        NightmareScytheComboFeature = 3513,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("NinjaAeolianEdgePvpCombo", "Adds Cha/Assassinate/Smite on AeolianEdge combo", NINPVP.JobID, NINPVP.SpinningEdge, NINPVP.GustSlash, NINPVP.AeolianEdge)]
+        NinjaAeolianEdgePvpCombo = 3514,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("MnkBootshinePvPFeature", "Adds Axekick/Smite/TornadoKick on main combo", MNKPVP.JobID, MNKPVP.Bootshine, MNKPVP.TrueStrike, MNKPVP.SnapPunch)]
+        MnkBootshinePvPFeature = 3515,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID, BLMPVP.Enochian)]
+        BlackEnochianPVPFeature = 3516,
         #endregion
     }
 }
