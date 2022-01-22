@@ -315,7 +315,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == BRD.QuickNock) {
                 var gauge = GetJobGauge<BRDGauge>();
 
-                if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
+                if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
                     return BRD.ApexArrow;
             }
 

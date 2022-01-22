@@ -200,7 +200,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardSimpleInterrupt = 220,
 
-        [CustomComboInfo("Disable ApexArrow From SimpleBard", "Removes Apex Arrow from SimpleBard Feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("Disable ApexArrow From SimpleBard", "Removes Apex Arrow from SimpleBard and AoE Feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardRemoveApexArrowFeature = 221,
 
         #endregion
