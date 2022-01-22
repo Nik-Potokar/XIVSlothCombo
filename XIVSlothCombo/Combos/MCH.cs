@@ -76,7 +76,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MCH.CleanShot || actionID == MCH.HeatedCleanShot)
+            if (actionID == MCH.CleanShot || actionID == MCH.HeatedCleanShot || actionID == MCH.SplitShot || actionID == MCH.HeatedSplitShot)
             {
                 var gauge = GetJobGauge<MCHGauge>();
                 var drillCD = GetCooldown(MCH.Drill);
@@ -150,21 +150,17 @@ namespace XIVSlothComboPlugin.Combos
                             return MCH.RookAutoturret;
                     if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.AutomatonQueen;
-
-                    if (comboTime > 0)
-                    {
-                        if (lastComboMove == MCH.SplitShot && level >= MCH.Levels.SlugShot)
-                            return OriginalHook(MCH.SlugShot);
-
-                        if (lastComboMove == MCH.SlugShot && level >= MCH.Levels.CleanShot)
-                            return OriginalHook(MCH.CleanShot);
-                    }
-
-                    return OriginalHook(MCH.SplitShot);
-
                 }
-            }
+                if (comboTime > 0)
+                {
+                    if (lastComboMove == MCH.SplitShot && level >= MCH.Levels.SlugShot)
+                        return OriginalHook(MCH.SlugShot);
 
+                    if (lastComboMove == MCH.SlugShot && level >= MCH.Levels.CleanShot)
+                        return OriginalHook(MCH.CleanShot);
+                }
+                return OriginalHook(MCH.SplitShot);
+            }
             return actionID;
             
         }
