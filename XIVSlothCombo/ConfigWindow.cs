@@ -55,7 +55,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Combos too dangerous for the common folk");
+                ImGui.TextUnformatted("Adds PVP Combos Options");
                 ImGui.EndTooltip();
             }
             ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
@@ -117,7 +117,7 @@ namespace XIVSlothComboPlugin
                             if (ImGui.IsItemHovered())
                             {
                                 ImGui.BeginTooltip();
-                                ImGui.TextUnformatted("Secret");
+                                ImGui.TextUnformatted("This Is a PVP Combo");
                                 ImGui.EndTooltip();
                             }
                         }
@@ -135,7 +135,7 @@ namespace XIVSlothComboPlugin
                                 return $"\n - {info.FancyName}";
                             }).Aggregate((t1, t2) => $"{t1}{t2}");
 
-                            ImGui.TextColored(this.shadedColor, $"Conflicts with: {conflictText}");
+                            ImGui.TextColored(ImGuiColors.DPSRed, $"Conflicts with: {conflictText}");
                             ImGui.Spacing();
                         }
                         if (dependencies.Length > 0)
@@ -146,7 +146,7 @@ namespace XIVSlothComboPlugin
                                 return $"\n - {info.FancyName}";
                             }).Aggregate((t1, t2) => $"{t1}{t2}");
 
-                            ImGui.TextColored(this.shadedColor, $"Depends on: {dependText}");
+                            ImGui.TextColored(ImGuiColors.TankBlue, $"Depends on: {dependText}");
                             ImGui.Spacing();
                         }
 
