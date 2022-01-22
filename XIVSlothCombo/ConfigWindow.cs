@@ -180,7 +180,7 @@ namespace XIVSlothComboPlugin
                             inputChanged |= ImGui.InputFloat("Input Current Enemy Hp ", ref CurrentHpValue);
                             inputChanged |= ImGui.InputFloat("Input Current Enemy % Hp (If below this value it wont refresh the dot", ref PercentageHpValue);
 
-
+   
                             if (inputChanged)
                             {
                                 Service.Configuration.EnemyHealthMaxHp = MaxHpValue;
