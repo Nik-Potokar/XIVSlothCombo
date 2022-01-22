@@ -122,7 +122,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.BardApexFeature)) {
                     var gauge = GetJobGauge<BRDGauge>();
 
-                    if (gauge.SoulVoice == 100)
+                    if (gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
                         return BRD.ApexArrow;
                     if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                         return BRD.BlastArrow;
@@ -371,7 +371,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (level >= BRD.Levels.Shadowbite && HasEffect(BRD.Buffs.ShadowbiteReady))
                     return BRD.Shadowbite;
-                if (level >= BRD.Levels.ApexArrow && soulVoice == 100)
+                if (level >= BRD.Levels.ApexArrow && soulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
                     return BRD.ApexArrow;
                 if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                     return BRD.BlastArrow;
@@ -431,7 +431,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BRD.QuickNock || actionID == BRD.Ladonsbite) {
                 if (IsEnabled(CustomComboPreset.BardApexFeature)) {
-                    if (level >= BRD.Levels.ApexArrow && GetJobGauge<BRDGauge>().SoulVoice == 100)
+                    if (level >= BRD.Levels.ApexArrow && GetJobGauge<BRDGauge>().SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
                         return BRD.ApexArrow;
 
                     if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
@@ -530,7 +530,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && inCombat) {
-                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100)
+                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
                         return BRD.ApexArrow;
                     if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                         return BRD.BlastArrow;
@@ -606,7 +606,8 @@ namespace XIVSlothComboPlugin.Combos
                                 return BRD.Stormbite;
                         }
 
-                        if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100) {
+                        if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature)) 
+                        {
                             return BRD.ApexArrow;
                         }
                     }
