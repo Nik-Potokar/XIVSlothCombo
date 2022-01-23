@@ -24,7 +24,7 @@ namespace XIVSlothComboPlugin.Combos
             LivingShadow = 16472,
             SaltAndDarkness = 25755,
             Shadowbringer = 25757,
-            Plunge = 3640,
+            Plunge = 3640;
 
         public static class Buffs
         {
