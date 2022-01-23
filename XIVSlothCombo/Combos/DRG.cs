@@ -94,19 +94,13 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (comboTime > 0)
                 {
-                    if (HasEffect(DRG.Buffs.DraconianFire) && level >= DRG.Levels.DraconianFury)
-                        return DRG.DraconianFury;
-
                     if ((lastComboMove == DRG.DoomSpike || lastComboMove == DRG.DraconianFury) && level >= DRG.Levels.SonicThrust)
                         return DRG.SonicThrust;
-
                     if (lastComboMove == DRG.SonicThrust && level >= DRG.Levels.CoerthanTorment)
                         return DRG.CoerthanTorment;
                 }
-
-                return DRG.DoomSpike;
+                return OriginalHook(DRG.DoomSpike);
             }
-
             return actionID;
         }
     }
