@@ -310,17 +310,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("oGCD Feature", "Adds Living Shadow>Salted Earth>CarveAndSpit>SaltAndDarkness to CarveAndSpit and AbysalDrain", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
         DarkoGCDFeature = 506,
 
+        [DependentCombos(DarkoGCDFeature)]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer to oGCD Feature ", DRK.JobID, DRK.CarveAndSpit, DRK.AbyssalDrain)]
+        DarkShadowbringeroGCDFeature = 507,
+
         [ConflictingCombos(DarkPlungeFeatureOption)]
         [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available (Uses all stacks).", DRK.JobID, DRK.Souleater)]
-        DarkPlungeFeature = 507,
+        DarkPlungeFeature = 508,
 
         [ConflictingCombos(DarkPlungeFeature)]
         [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, DRK.Souleater)]
-        DarkPlungeFeatureOption = 508,
+        DarkPlungeFeatureOption = 509,
 
         [ConflictingCombos(DeliriumFeature)]
         [CustomComboInfo("Delirium Feature Option", "Replaces Souleather with Bloodspiller when Delirium has 10sec or less remaining.", DRK.JobID, DRK.Souleater)]
-        DeliriumFeatureOption = 509,
+        DeliriumFeatureOption = 510,
 
         #endregion
         // ====================================================================================
