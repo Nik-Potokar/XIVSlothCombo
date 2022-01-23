@@ -353,5 +353,12 @@ namespace XIVSlothComboPlugin.Combos
 
             return currentHp;
         }
+        protected static double PlayerHealthPercentageHp()
+        {
+            double maxHealth = LocalPlayer.MaxHp;
+            double currentHealth = LocalPlayer.CurrentHp;
+
+            return currentHealth / maxHealth * 100;
+        }
     }
 }

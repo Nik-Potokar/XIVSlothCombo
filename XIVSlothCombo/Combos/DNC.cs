@@ -153,13 +153,6 @@ namespace XIVSlothComboPlugin.Combos
                     return DNC.StandardFinish2;
                 }
             }
-            var devilmentCD = GetCooldown(DNC.Devilment);
-            var stepcd = GetCooldown(DNC.StandardStep);
-            if (stepcd.IsCooldown && !devilmentCD.IsCooldown)
-            {
-                return DNC.Devilment;
-            }
-
             if (actionID == DNC.TechnicalStep)
             {
                 var gauge = GetJobGauge<DNCGauge>();
