@@ -86,11 +86,12 @@ namespace XIVSlothComboPlugin.Combos
                     var doubledownCD = GetCooldown(GNB.DoubleDown);
                     var sonicbreakCD = GetCooldown(GNB.SonicBreak);
                     var bowshockCD = GetCooldown(GNB.BowShock);
+                    var gnashingfangCD = GetCooldown(GNB.GnashingFang);
                     var roughdivideCD = GetCooldown(GNB.RoughDivide);
 
                     // Gnashing Fang combo + Continuation, Gnashing Fang needs to be used manually in order for users to control for any delay based on fight times
                     if (level >= GNB.Levels.GnashingFang && IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain))
-                        if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation)
+                        if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                             return GNB.JugularRip;
                         if (HasEffect(GNB.Buffs.NoMercy))
                         {
@@ -98,33 +99,34 @@ namespace XIVSlothComboPlugin.Combos
                                 return GNB.DoubleDown;
                             if (IsEnabled(CustomComboPreset.GunbreakerCDsOnMainComboFeature))
                             {
-                                if (level >= GNB.Levels.DangerZone && !blastingzoneCD.IsCooldown)
+                                if (level >= GNB.Levels.DangerZone && !blastingzoneCD.IsCooldown && GCD.CooldownRemaining > 0.7 && doubledownCD.IsCooldown)
                                     return OriginalHook(GNB.DangerZone);
-                                if (level >= GNB.Levels.BowShock && !bowshockCD.IsCooldown)
+                                if (level >= GNB.Levels.BowShock && !bowshockCD.IsCooldown && doubledownCD.IsCooldown)
                                     return GNB.BowShock;
-                                if (level >= GNB.Levels.SonicBreak && !sonicbreakCD.IsCooldown)
+                                if (level >= GNB.Levels.SonicBreak && !sonicbreakCD.IsCooldown && doubledownCD.IsCooldown)
                                     return GNB.SonicBreak;
                             }
                         }
 
                         if (gauge.AmmoComboStep == 1)
                             return OriginalHook(GNB.GnashingFang);
-                        if (HasEffect(GNB.Buffs.ReadyToTear) && level >= GNB.Levels.Continuation)
+                        if (HasEffect(GNB.Buffs.ReadyToTear) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                             return GNB.AbdomenTear;
-                        if (!HasEffect(GNB.Buffs.NoMercy) && !blastingzoneCD.IsCooldown && level >= GNB.Levels.DangerZone && gauge.AmmoComboStep == 2 && IsEnabled(CustomComboPreset.GunbreakerCDsOnMainComboFeature))
+                        if (!HasEffect(GNB.Buffs.NoMercy) && !blastingzoneCD.IsCooldown && level >= GNB.Levels.DangerZone && gauge.AmmoComboStep == 2 && IsEnabled(CustomComboPreset.GunbreakerCDsOnMainComboFeature) && GCD.CooldownRemaining > 0.7)
                             return OriginalHook(GNB.DangerZone); //aligns it with 2nd GCD in NM.
                         if (gauge.AmmoComboStep == 2)
                            return OriginalHook(GNB.GnashingFang);
-                        if (HasEffect(GNB.Buffs.ReadyToGouge) && level >= GNB.Levels.Continuation)
+                        if (HasEffect(GNB.Buffs.ReadyToGouge) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                            return GNB.EyeGouge;
-                        if (HasEffect(GNB.Buffs.NoMercy))
+                        if (HasEffect(GNB.Buffs.NoMercy) && gnashingfangCD.IsCooldown && gauge.AmmoComboStep == 0)
                         {
-                            if ((gauge.Ammo == 1 || gauge.Ammo == 2) && level >= GNB.Levels.BurstStrike)
+                        if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && GCD.CooldownRemaining > 0.7)
+                            return GNB.Hypervelocity;
+                        if ((gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
                                 return GNB.BurstStrike;
-                            if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
-                                return GNB.Hypervelocity;
                         }
-
+                        if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && GCD.CooldownRemaining > 0.7) //final check if Burst Strike is used right before No Mercy ends
+                            return GNB.Hypervelocity;
                     // uses all stacks
                     if (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && level >= 56)
                     {
@@ -175,13 +177,17 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == GNB.GnashingFang)
             {
                 var gauge = GetJobGauge<GNBGauge>();
+                var GCD = GetCooldown(actionID);
+                var gnashingfangCD = GetCooldown(GNB.GnashingFang);
                 var blastingzoneCD = GetCooldown(GNB.BlastingZone);
                 var doubledownCD = GetCooldown(GNB.DoubleDown);
                 var sonicbreakCD = GetCooldown(GNB.SonicBreak);
                 var bowshockCD = GetCooldown(GNB.BowShock);
 
                 if (level >= GNB.Levels.GnashingFang)
-                    if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation)
+                    if (gauge.AmmoComboStep == 0 && !gnashingfangCD.IsCooldown)
+                        return OriginalHook(GNB.GnashingFang);
+                if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                         return GNB.JugularRip;
                 if (HasEffect(GNB.Buffs.NoMercy))
                 {
@@ -189,32 +195,35 @@ namespace XIVSlothComboPlugin.Combos
                         return GNB.DoubleDown;
                     if (IsEnabled(CustomComboPreset.GunbreakerCDsOnMainComboFeature))
                     {
-                        if (level >= GNB.Levels.DangerZone && !blastingzoneCD.IsCooldown)
+                        if (level >= GNB.Levels.DangerZone && !blastingzoneCD.IsCooldown && GCD.CooldownRemaining > 0.7 && doubledownCD.IsCooldown)
                             return OriginalHook(GNB.DangerZone);
-                        if (level >= GNB.Levels.BowShock && !bowshockCD.IsCooldown)
+                        if (level >= GNB.Levels.BowShock && !bowshockCD.IsCooldown && doubledownCD.IsCooldown)
                             return GNB.BowShock;
-                        if (level >= GNB.Levels.SonicBreak && !sonicbreakCD.IsCooldown)
+                        if (level >= GNB.Levels.SonicBreak && !sonicbreakCD.IsCooldown && doubledownCD.IsCooldown)
                             return GNB.SonicBreak;
                     }
                 }
 
                 if (gauge.AmmoComboStep == 1)
                     return OriginalHook(GNB.GnashingFang);
-                if (HasEffect(GNB.Buffs.ReadyToTear) && level >= GNB.Levels.Continuation)
+                if (HasEffect(GNB.Buffs.ReadyToTear) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                     return GNB.AbdomenTear;
-                if (!HasEffect(GNB.Buffs.NoMercy) && !blastingzoneCD.IsCooldown && level >= GNB.Levels.DangerZone && gauge.AmmoComboStep == 2)
+                if (!HasEffect(GNB.Buffs.NoMercy) && !blastingzoneCD.IsCooldown && level >= GNB.Levels.DangerZone && gauge.AmmoComboStep == 2 && GCD.CooldownRemaining > 0.7)
                     return OriginalHook(GNB.DangerZone); //aligns it with 2nd GCD in NM.
                 if (gauge.AmmoComboStep == 2)
                     return OriginalHook(GNB.GnashingFang);
-                if (HasEffect(GNB.Buffs.ReadyToGouge) && level >= GNB.Levels.Continuation)
+                if (HasEffect(GNB.Buffs.ReadyToGouge) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                     return GNB.EyeGouge;
                 if (HasEffect(GNB.Buffs.NoMercy))
                 {
-                    if ((gauge.Ammo == 1 || gauge.Ammo == 2) && level >= GNB.Levels.BurstStrike)
-                        return GNB.BurstStrike;
-                    if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
+                    if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && GCD.CooldownRemaining > 0.7)
                         return GNB.Hypervelocity;
+                    if ((gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
+                        return GNB.BurstStrike;
                 }
+
+                if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && GCD.CooldownRemaining > 0.7) //final check if Burst Strike is used right before No Mercy ends
+                    return GNB.Hypervelocity;
             }
 
             return actionID;
@@ -294,6 +303,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == GNB.NoMercy)
             {
                 var gauge = GetJobGauge<GNBGauge>();
+                var GCD = GetCooldown(actionID);
                 var gnashingfangCD = GetCooldown(GNB.GnashingFang);
                 var blastingzoneCD = GetCooldown(GNB.BlastingZone);
                 var doubledownCD = GetCooldown(GNB.DoubleDown);
@@ -304,31 +314,31 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.AmmoComboStep == 0 && !gnashingfangCD.IsCooldown)
                         return OriginalHook(GNB.GnashingFang);
-                    if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation)
+                    if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                         return OriginalHook(GNB.Continuation);
                     if (!doubledownCD.IsCooldown && level >= GNB.Levels.DoubleDown && (gauge.Ammo == 2 || gauge.Ammo ==3))
                         return GNB.DoubleDown;
-                    if (level >= GNB.Levels.DangerZone && !blastingzoneCD.IsCooldown)
+                    if (level >= GNB.Levels.DangerZone && !blastingzoneCD.IsCooldown && GCD.CooldownRemaining > 0.7 && doubledownCD.IsCooldown)
                         return OriginalHook(GNB.DangerZone);
-                    if (level >= GNB.Levels.BowShock && !bowshockCD.IsCooldown)
+                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock) && doubledownCD.IsCooldown)
                         return GNB.BowShock;
-                    if (level >= GNB.Levels.BowShock && !TargetHasEffect(GNB.Debuffs.BowShock))
-                        return GNB.BowShock;
-                    if (level >= GNB.Levels.SonicBreak && !sonicbreakCD.IsCooldown)
+                    if (level >= GNB.Levels.SonicBreak && !sonicbreakCD.IsCooldown && doubledownCD.IsCooldown)
                         return GNB.SonicBreak;
                     if (gauge.AmmoComboStep == 1)
                         return OriginalHook(GNB.GnashingFang);
-                    if (HasEffect(GNB.Buffs.ReadyToTear) && level >= GNB.Levels.Continuation)
+                    if (HasEffect(GNB.Buffs.ReadyToTear) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                         return OriginalHook(GNB.Continuation);
                     if (gauge.AmmoComboStep == 2)
                         return OriginalHook(GNB.GnashingFang);
-                    if (HasEffect(GNB.Buffs.ReadyToGouge))
+                    if (HasEffect(GNB.Buffs.ReadyToGouge) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
                         return OriginalHook(GNB.Continuation);
-                    if ((gauge.Ammo == 1 || gauge.Ammo == 2) && level >= GNB.Levels.BurstStrike)
-                        return GNB.BurstStrike;
-                    if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
+                    if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && GCD.CooldownRemaining > 0.7)
                         return GNB.Hypervelocity;
+                    if ((gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
+                        return GNB.BurstStrike;
                 }
+                if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && GCD.CooldownRemaining > 0.7) //final check if Burst Strike is used right before No Mercy ends
+                    return GNB.Hypervelocity;
                 return GNB.NoMercy;
             }
 
