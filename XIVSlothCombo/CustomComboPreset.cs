@@ -252,6 +252,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("FanDance On Cascade Feature", "Adds FanDance1/3/4 Onto Cascade When available", DNC.JobID, DNC.Cascade, DNC.FanDance1, DNC.FanDance2, DNC.FanDance3, DNC.FanDance4)]
         DancerFanDanceOnMainComboFeature = 311,
 
+        [CustomComboInfo("Devilment On Combined Dance Feature", "Adds Devilment right after standard finish.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
+        DancerDevilmentOnCombinedDanceFeature = 312,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
