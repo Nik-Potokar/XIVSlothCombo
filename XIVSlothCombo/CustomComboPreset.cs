@@ -891,7 +891,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("WHM Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, WHM.Swiftcast, WHM.Raise)]
         WHMRaiseFeature = 1604,
 
-        [CustomComboInfo("DoT on Glare1/3 Feature", "Adds DoT on Glare1/3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
+        [CustomComboInfo("DoT on Glare3 Feature", "Adds DoT on Glare3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
         WHMDotMainComboFeature = 1605,
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming onto Glare1/3 Feature combo when you are below 8k mana", WHM.JobID, WHM.LucidDreaming)]
@@ -899,6 +899,12 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Medica Feature", "Replaces Medica2 whenever you are under Medica2 regen with Medica1", WHM.JobID, WHM.Medica1, WHM.Medica2)]
         WHMMedicaFeature = 1607,
+
+        [CustomComboInfo("Presence Of Mind Feature", "Adds Presence of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, WHM.Glare3)]
+        WHMPresenceOfMindFeature = 1608,
+
+        [CustomComboInfo("Assize Feature", "Adds Assize of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, WHM.Glare3)]
+        WHMAssizeFeature = 1609,
 
         #endregion
         // ====================================================================================
