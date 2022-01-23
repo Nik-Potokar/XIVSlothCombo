@@ -314,6 +314,8 @@ namespace XIVSlothComboPlugin.Combos
                 var standardCD = GetCooldown(DNC.StandardStep);
                 var techstepCD = GetCooldown(DNC.TechnicalStep);
                 var devilmentCD = GetCooldown(DNC.Devilment);
+                var flourishCD = GetCooldown(DNC.Flourish);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 if (IsEnabled(CustomComboPreset.DancerDevilmentOnCombinedDanceFeature))
                 {
@@ -321,6 +323,10 @@ namespace XIVSlothComboPlugin.Combos
                         return DNC.Devilment;
                     if (level >= 70 && standardCD.IsCooldown && techstepCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                         return DNC.Devilment;
+                }
+                if(IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown && incombat && level >= 72)
+                {
+                    return DNC.Flourish;
                 }
                 if (HasEffect(DNC.Buffs.FlourishingStarfall))
                 {

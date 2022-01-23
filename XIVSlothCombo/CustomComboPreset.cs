@@ -256,8 +256,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("FanDance On Windmill Feature", "Adds FanDance 2/3/4 Onto Windmill When available", DNC.JobID, DNC.Windmill)]
         DancerFanDanceOnAoEComboFeature = 312,
 
+        [DependentCombos(DancerDanceStepComboTest)]
         [CustomComboInfo("Devilment On Combined Dance Feature", "Adds Devilment right after Technical finish.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
         DancerDevilmentOnCombinedDanceFeature = 313,
+
+        [DependentCombos(DancerDanceStepComboTest)]
+        [CustomComboInfo("Flourish On Combined Dance Feature", "Adds Flourish to the CombinedStepCombo.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
+        DancerFlourishOnCombinedDanceFeature = 314,
 
 
 
