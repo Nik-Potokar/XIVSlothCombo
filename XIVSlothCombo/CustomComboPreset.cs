@@ -548,7 +548,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, NIN.AeolianEdge)]
         NinjaBavacakraFeature = 917,
 
-
         #endregion
         // ====================================================================================
         #region PALADIN
@@ -910,17 +909,28 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DoT on Glare3 Feature", "Adds DoT on Glare3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
         WHMDotMainComboFeature = 1605,
 
+        [DependentCombos(WHMDotMainComboFeature)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming onto Glare1/3 Feature combo when you are below 8k mana", WHM.JobID, WHM.LucidDreaming)]
         WHMLucidDreamingFeature = 1606,
 
         [CustomComboInfo("Medica Feature", "Replaces Medica2 whenever you are under Medica2 regen with Medica1", WHM.JobID, WHM.Medica1, WHM.Medica2)]
         WHMMedicaFeature = 1607,
 
+        [DependentCombos(WHMDotMainComboFeature)]
         [CustomComboInfo("Presence Of Mind Feature", "Adds Presence of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, WHM.Glare3)]
         WHMPresenceOfMindFeature = 1608,
 
-        [CustomComboInfo("Assize Feature", "Adds Assize of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, WHM.Glare3)]
+        [DependentCombos(WHMDotMainComboFeature)]
+        [CustomComboInfo("Assize Feature", "Adds Assize as oGCD onto main DPS Feature(Glare3)", WHM.JobID, WHM.Glare3)]
         WHMAssizeFeature = 1609,
+
+        [DependentCombos(WHMMedicaFeature)]
+        [CustomComboInfo("Afflatus Misery On Medica Feature", "Adds Afflatus Misery onto the Medica Feature", WHM.JobID, WHM.Medica1, WHM.Medica2)]
+        WhiteMageAfflatusMiseryMedicaFeature = 1610,
+
+        [DependentCombos(WHMMedicaFeature)]
+        [CustomComboInfo("Afflatus Rapture On Medica Feature", "Adds Afflatus Rapture onto the Medica Feature", WHM.JobID, WHM.Medica1, WHM.Medica2)]
+        WhiteMageAfflatusRaptureMedicaFeature = 1611,
 
         #endregion
         // ====================================================================================
