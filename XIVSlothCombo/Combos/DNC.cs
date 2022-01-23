@@ -151,6 +151,12 @@ namespace XIVSlothComboPlugin.Combos
                     return DNC.StandardFinish2;
                 }
             }
+            var devilmentCD = GetCooldown(DNC.Devilment);
+            var stepcd = GetCooldown(DNC.StandardStep);
+            if (stepcd.IsCooldown && !devilmentCD.IsCooldown)
+            {
+                return DNC.Devilment;
+            }
 
             if (actionID == DNC.TechnicalStep)
             {
@@ -211,7 +217,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
                     return DNC.SaberDance;
                 // FanDances
-                if (gauge.Feathers > 0 && actionIDCD.IsCooldown && level >= 30 && IsEnabled(CustomComboPreset.DancerFanDanceOnMainComboFeature))
+                if (gauge.Feathers == 4 && actionIDCD.IsCooldown && level >= 30 && IsEnabled(CustomComboPreset.DancerFanDanceOnMainComboFeature))
                     return DNC.FanDance1;
                 if (HasEffect(DNC.Buffs.ThreeFoldFanDance) && actionIDCD.IsCooldown && level >= 66 && IsEnabled(CustomComboPreset.DancerFanDanceOnMainComboFeature))
                     return DNC.FanDance3;
@@ -294,10 +300,16 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<DNCGauge>();
                 var standardCD = GetCooldown(DNC.StandardStep);
                 var techstepCD = GetCooldown(DNC.TechnicalStep);
+                var devilmentCD = GetCooldown(DNC.Devilment);
+                var stepcd = GetCooldown(DNC.StandardStep);
+                if (IsEnabled(CustomComboPreset.DancerDevilmentOnCombinedDanceFeature) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
+                {
+                    return DNC.Devilment;
+                }
                 if (standardCD.IsCooldown && !techstepCD.IsCooldown && !gauge.IsDancing && !HasEffect(DNC.Buffs.StandardStep))
                 {
                     return DNC.TechnicalStep;
-                }
+                }                
                 if (gauge.IsDancing && HasEffect(DNC.Buffs.StandardStep))
                 {
                     if (gauge.CompletedSteps < 2)

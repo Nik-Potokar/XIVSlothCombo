@@ -252,6 +252,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("FanDance On Cascade Feature", "Adds FanDance1/3/4 Onto Cascade When available", DNC.JobID, DNC.Cascade, DNC.FanDance1, DNC.FanDance2, DNC.FanDance3, DNC.FanDance4)]
         DancerFanDanceOnMainComboFeature = 311,
 
+        [CustomComboInfo("Devilment On Combined Dance Feature", "Adds Devilment right after standard finish.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
+        DancerDevilmentOnCombinedDanceFeature = 312,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -386,7 +389,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf AirAnchor is on cooldown and you use Reassemble Chain Saw will be added to main combo instead.", MCH.JobID, MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.Reassemble)]
         MachinistDrillAirOnMainCombo = 705,
 
-        [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge, If Wildfire is off cooldown and you have enough heat for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
+        [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
         MachinistHeatblastGaussRicochetFeature = 706,
 
         [DependentCombos(MachinistMainCombo)]
@@ -421,6 +424,14 @@ namespace XIVSlothComboPlugin
         [DependentCombos(MachinistMainCombo)]
         [CustomComboInfo("Barrel Stabilizer drift protection feature", "Adds Barrel Stabilizer onto the main combo if heat is between 5-20.", MCH.JobID, MCH.BarrelStabilizer)]
         BarrelStabilizerDrift = 714,
+
+        [DependentCombos(MachinistHeatblastGaussRicochetFeature)]
+        [CustomComboInfo("WildFire Feature", "Adds WildFire to the Single Button Heat Blast Feature If Wildfire is off cooldown and you have enough heat for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, MCH.GaussRound, MCH.Ricochet, MCH.HeatBlast, MCH.Wildfire)]
+        MachinistWildfireFeature = 715,
+
+        [DependentCombos(MachinistSpreadShotFeature)]
+        [CustomComboInfo("BioBlaster Feature", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, MCH.AutoCrossbow, MCH.SpreadShot)]
+        MachinistBioblasterFeature = 716,
 
         #endregion
         // ====================================================================================
@@ -858,6 +869,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Onslaught Option Two", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1/2 stacks depending on lvl)", WAR.JobID, WAR.StormsPath)]
         WarriorOnslaughtFeatureOptionTwo = 1514,
 
+        [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with FellCleave when under InnerRelease buff. Replaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, WAR.Infuriate)]
+        WarriorInfuriateFeature = 1515,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
@@ -878,7 +892,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("WHM Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, WHM.Swiftcast, WHM.Raise)]
         WHMRaiseFeature = 1604,
 
-        [CustomComboInfo("DoT on Glare1/3 Feature", "Adds DoT on Glare1/3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
+        [CustomComboInfo("DoT on Glare3 Feature", "Adds DoT on Glare3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, WHM.Glare3, WHM.Dia)]
         WHMDotMainComboFeature = 1605,
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming onto Glare1/3 Feature combo when you are below 8k mana", WHM.JobID, WHM.LucidDreaming)]
@@ -886,6 +900,12 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Medica Feature", "Replaces Medica2 whenever you are under Medica2 regen with Medica1", WHM.JobID, WHM.Medica1, WHM.Medica2)]
         WHMMedicaFeature = 1607,
+
+        [CustomComboInfo("Presence Of Mind Feature", "Adds Presence of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, WHM.Glare3)]
+        WHMPresenceOfMindFeature = 1608,
+
+        [CustomComboInfo("Assize Feature", "Adds Assize of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, WHM.Glare3)]
+        WHMAssizeFeature = 1609,
 
         #endregion
         // ====================================================================================

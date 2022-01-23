@@ -27,17 +27,23 @@ namespace XIVSlothComboPlugin.Combos
             Stone2 = 127,
             Stone3 = 3568,
             Stone4 = 7431,
+            Assize = 3571,
 
             // DoT
             Dia = 16532,
             Aero1 = 121,
-            Aero2 = 132;
+            Aero2 = 132,
+
+            // buff
+            PresenceOfMind = 136;
+
 
         public static class Buffs
         {
             public const short
             Swiftcast = 167,
-            Medica2 = 150;
+            Medica2 = 150,
+            PresenceOfMind = 157;
         }
 
         public static class Debuffs
@@ -46,6 +52,7 @@ namespace XIVSlothComboPlugin.Combos
             Dia = 1871,
             Aero = 143,
             Aero2 = 144;
+            
         }
 
         public static class Levels
@@ -162,8 +169,20 @@ namespace XIVSlothComboPlugin.Combos
                     var aero1Debuff = FindTargetEffect(WHM.Debuffs.Aero);
                     var aero2Debuff = FindTargetEffect(WHM.Debuffs.Aero2);
                     var lucidDreaming = GetCooldown(WHM.LucidDreaming);
+                    var presenceofmindCD = GetCooldown(WHM.PresenceOfMind);
+                    var assizeCD = GetCooldown(WHM.Assize);
                     var glare3 = GetCooldown(WHM.Glare3);
 
+                    if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature))
+                    {
+                        if (!presenceofmindCD.IsCooldown && glare3.CooldownRemaining > 0.2)
+                            return WHM.PresenceOfMind;
+                    }
+                    if (IsEnabled(CustomComboPreset.WHMAssizeFeature))
+                    {
+                        if (!assizeCD.IsCooldown && glare3.CooldownRemaining > 0.2)
+                            return WHM.Assize;
+                    }
                     if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature))
                     {
                         if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.2)
