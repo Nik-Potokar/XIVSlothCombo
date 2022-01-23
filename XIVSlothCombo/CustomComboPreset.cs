@@ -348,6 +348,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, GNB.DemonSlaughter)]
         GunbreakerAmmoOvercapFeature = 607,
 
+        [ConflictingCombos(GunbreakerNoMercyRotationFeature)]
         [CustomComboInfo("Gnashing Fang Combo", "Replace Gnashing Fang with its combo chain. Includes DD and other oGCDs.", GNB.JobID, GNB.GnashingFang)]
         GunbreakerGnashingFangCombo = 608,
 
@@ -357,12 +358,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, GNB.BurstStrike)]
         GunbreakerBloodfestOvercapFeature = 610,
 
+        [ConflictingCombos(GunbreakerGnashingFangCombo)]
         [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used. \nCurrently coded for the level 90 burst window.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyRotationFeature = 611,
-
-        [DependentCombos(GunbreakerSolidBarrelCombo)]
-        [CustomComboInfo("Bow Shock On Main Combo Feature", "Puts Bow Shock on your main combo when it's up during No Mercy.", Combos.GNB.JobID, GNB.BowShock, GNB.SolidBarrel)]
-        GunbreakerBowShockFeature = 614,
 
         #endregion
         // ====================================================================================
