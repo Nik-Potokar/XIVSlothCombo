@@ -210,7 +210,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fan Dance Combos", "Change Fan Dance and Fan Dance 2 into Fan Dance 3 while flourishing.", DNC.JobID, DNC.FanDance1, DNC.FanDance2)]
         DancerFanDanceCombo = 300,
 
-        [ConflictingCombos(DancerDanceComboCompatibility)]
+        [ConflictingCombos(DancerDanceComboCompatibility, DancerDanceStepComboTest)]
         [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
         DancerDanceStepCombo = 301,
 
@@ -243,6 +243,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Overcap Feature Option", "Adds SaberBlade to Cascade/Windmill if you have at least 50 esprit.", DNC.JobID, DNC.Cascade, DNC.Windmill)]
         DancerSaberDanceInstantSaberDanceComboFeature = 308,
 
+        [ConflictingCombos(DancerDanceComboCompatibility, DancerDanceStepCombo)]
         [CustomComboInfo("CombinedDanceFeature", "Standard And Technical Dance on one button(StandardStep) Standard>Technical This is combo out into Tilana and StarfallDance.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
         DancerDanceStepComboTest = 309,
 
