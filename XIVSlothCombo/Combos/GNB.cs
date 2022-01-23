@@ -194,6 +194,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == GNB.GnashingFang)
             {
                 var gauge = GetJobGauge<GNBGauge>();
+                var GCD = GetCooldown(actionID);
                 var gnashingfangCD = GetCooldown(GNB.GnashingFang);
                 var blastingzoneCD = GetCooldown(GNB.BlastingZone);
                 var doubledownCD = GetCooldown(GNB.DoubleDown);
