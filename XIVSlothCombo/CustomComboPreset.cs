@@ -240,20 +240,25 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Overcap Feature", "Adds SaberBlade to Cascade/Windmil combo if you are about to overcap on esprit.", DNC.JobID, DNC.Cascade, DNC.Windmill)]
         DancerOvercapFeature = 307,
 
-        [CustomComboInfo("Overcap Feature Option", "Adds SaberBlade to Cascade if you have at least 50 esprit.", DNC.JobID, DNC.Cascade)]
-        DancerSaberDanceOnMainComboFeature = 308,
+        [CustomComboInfo("Overcap Feature Option", "Adds SaberBlade to Cascade/Windmill if you have at least 50 esprit.", DNC.JobID, DNC.Cascade, DNC.Windmill)]
+        DancerSaberDanceInstantSaberDanceComboFeature = 308,
 
-        [CustomComboInfo("CombinedDanceFeature", "Standard And Technical Dance on one button(StandardStep) Standard>Technical.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
+        [CustomComboInfo("CombinedDanceFeature", "Standard And Technical Dance on one button(StandardStep) Standard>Technical This is combo out into Tilana and StarfallDance.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
         DancerDanceStepComboTest = 309,
 
         [CustomComboInfo("FanSaberDanceFeature", "Adds SaberDance onto all FanDance Skills when no feathers are available and you have 50+ gauge", DNC.JobID, DNC.FanDance1, DNC.FanDance2, DNC.FanDance3, DNC.FanDance4)]
         DancerSaberFanDanceFeature = 310,
 
-        [CustomComboInfo("FanDance On Cascade Feature", "Adds FanDance1/3/4 Onto Cascade When available", DNC.JobID, DNC.Cascade, DNC.FanDance1, DNC.FanDance2, DNC.FanDance3, DNC.FanDance4)]
+        [CustomComboInfo("FanDance On Cascade Feature", "Adds FanDance 1/3/4 Onto Cascade When available", DNC.JobID, DNC.Cascade, DNC.FanDance1, DNC.FanDance2, DNC.FanDance3, DNC.FanDance4)]
         DancerFanDanceOnMainComboFeature = 311,
 
-        [CustomComboInfo("Devilment On Combined Dance Feature", "Adds Devilment right after standard finish.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
-        DancerDevilmentOnCombinedDanceFeature = 312,
+        [CustomComboInfo("FanDance On Windmill Feature", "Adds FanDance 2/3/4 Onto Windmill When available", DNC.JobID, DNC.Windmill)]
+        DancerFanDanceOnAoEComboFeature = 312,
+
+        [CustomComboInfo("Devilment On Combined Dance Feature", "Adds Devilment right after Technical finish.", DNC.JobID, DNC.StandardStep, DNC.TechnicalStep)]
+        DancerDevilmentOnCombinedDanceFeature = 313,
+
+
 
         #endregion
         // ====================================================================================
