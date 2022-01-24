@@ -48,7 +48,8 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short
+            TrickAttack = 1054;
         }
 
         public static class Levels
@@ -288,10 +289,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.TenChiJin)
             {
-                if(HasEffect(NIN.Buffs.TenChiJin))
-                {
-                    return  18873u;
-                }
                 if (CustomCombo.HasEffect(NIN.Buffs.Suiton))
                 {
                     return NIN.Meisui;
