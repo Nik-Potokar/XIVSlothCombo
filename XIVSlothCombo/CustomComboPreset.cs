@@ -557,6 +557,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID, NIN.AeolianEdge)]
         NinjaRangedUptimeFeature = 918,
 
+        [CustomComboInfo("DreamWithinADream Feature", "Adds Assassinate/DwD onto main combo (Not optimal prob).", NIN.JobID, NIN.AeolianEdge)]
+        NinjaDreamWithinADream = 919,
+
         #endregion
         // ====================================================================================
         #region PALADIN
@@ -759,7 +762,8 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SUMMONER
 
-        [CustomComboInfo("Enable Single Target", "Enables changing Single-Target Combo (Ruin III).", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        [ConflictingCombos(SummonerMainComboFeatureRuin1)]
+        [CustomComboInfo("Enable Single Target (RuinIII)", "Enables changing Single-Target Combo (Ruin III).", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SummonerMainComboFeature = 1400,
 
         [CustomComboInfo("Enable AOE", "Enables changing AOE Combo (Tri-Disaster)", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
@@ -773,16 +777,16 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Demi Feature", "Replaces Astral Flare/Brand of Purgatory with Enkindle/Deathflare/Rekindle when appropriate.", SMN.JobID, SMN.Ruin3)]
         SummonerAOEDemiFeature = 1403,
         
-        [CustomComboInfo("Egi Attacks Feature", "Replaces Ruin III and Tri-Disaster with Egi attacks. Will not work without enabling Single Target and/or AOE.", SMN.JobID, SMN.Fester, SMN.EnergyDrain, SMN.Ruin4)]
+        [CustomComboInfo("Egi Attacks Feature", "Replaces RuinI/Ruin III (Depending On Enabeled Combo) and Tri-Disaster with Egi attacks. Will not work without enabling Single Target and/or AOE.", SMN.JobID, SMN.Fester, SMN.EnergyDrain, SMN.Ruin4)]
         SummonerEgiAttacksFeature = 1404,
 
-        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
+        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
         SummonerGarudaUniqueFeature = 1405,
 
-        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
+        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
         SummonerIfritUniqueFeature = 1406,
 
-        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
+        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin III/Tri-disaster.", SMN.JobID, SMN.Ruin3)]
         SummonerTitanUniqueFeature = 1407,
 
         [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when our of Aetherflow stacks.", SMN.JobID, SMN.Fester)]
@@ -796,7 +800,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Carbuncle Reminder Feature", "Reminds you always to summon Carbuncle by replacing Ruin (Carbuncle Summon Reminder Feature).", SMN.JobID, SMN.SummonCarbuncle, SMN.Ruin, SMN.Ruin2, SMN.Ruin3)]
         SummonerCarbuncleSummonFeature = 1410,
 
-        [CustomComboInfo("Ruin 4 On Ruin3 Combo Feature", "Adds Ruin4 on main Ruin3 combo feature when there are currently no summons being active.", SMN.JobID, SMN.Ruin, SMN.Ruin2, SMN.Ruin3, SMN.Ruin4)]
+        [CustomComboInfo("Ruin 4 On Ruin3 Combo Feature", "Adds Ruin4 on main RuinI/RuinIII combo feature when there are currently no summons being active.", SMN.JobID, SMN.Ruin, SMN.Ruin2, SMN.Ruin3, SMN.Ruin4)]
         SummonerRuin4ToRuin3Feature = 1411,
 
         [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster)]
@@ -810,7 +814,7 @@ namespace XIVSlothComboPlugin
         SummonerLazyFesterFeature = 1414,
 
         [ConflictingCombos(SimpleSummonerOption2)]
-        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin3.(Titan>Garuda>Ifrit) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
+        [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin1/Ruin3.(Titan>Garuda>Ifrit) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SimpleSummoner = 1415,
 
         [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
@@ -845,6 +849,10 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Prevent Ruin4 Waste Feature", "Puts Ruin4 Above anything if FurtherRuin about to expire and there is no Demi present.", SMN.JobID, SMN.Ruin3)]
         SummonerRuin4WastePrevention = 1425,
+
+        [ConflictingCombos(SummonerMainComboFeature)]
+        [CustomComboInfo("Enable Single Target (Ruin1)", "Enables changing Single-Target Combo (Ruin I).", SMN.JobID, SMN.Ruin)]
+        SummonerMainComboFeatureRuin1 = 1426,
 
         #endregion
         // ====================================================================================
@@ -1116,6 +1124,8 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID, BLMPVP.Enochian)]
         BlackEnochianPVPFeature = 3516,
+
+
         #endregion
     }
 }

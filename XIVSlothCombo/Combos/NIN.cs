@@ -41,6 +41,7 @@ namespace XIVSlothComboPlugin.Combos
                 Kassatsu = 497,
                 Suiton = 507,
                 Hidden = 614,
+                TenChiJin = 1186,
                 AssassinateReady = 1955,
                 RaijuReady = 2690;
         }
@@ -108,6 +109,19 @@ namespace XIVSlothComboPlugin.Combos
                     var bunshinCD = GetCooldown(NIN.Bunshin);
                     if (gauge.Ninki >= 50 && actionIDCD.IsCooldown)
                         return NIN.Bavacakra;
+                }
+                // Probably better to use with trick
+                if(IsEnabled(CustomComboPreset.NinjaDreamWithinADream) && level >= 40)
+                {
+                    var actionIDCD = GetCooldown(actionID);
+                    var gauge = GetJobGauge<NINGauge>();
+                    var assasinateCD = GetCooldown(NIN.Assassinate);
+                    var dreamCD = GetCooldown(NIN.DreamWithinADream);
+                    if (actionIDCD.IsCooldown && !dreamCD.IsCooldown && level >= 56)
+                        return OriginalHook(NIN.DreamWithinADream);
+                    if (actionIDCD.IsCooldown && !assasinateCD.IsCooldown && level >= 40 && level <= 55)
+                        return OriginalHook(NIN.Assassinate);
+
                 }
                 if (comboTime > 0f)
                 {
@@ -274,6 +288,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.TenChiJin)
             {
+                if(HasEffect(NIN.Buffs.TenChiJin))
+                {
+                    return  18873u;
+                }
                 if (CustomCombo.HasEffect(NIN.Buffs.Suiton))
                 {
                     return NIN.Meisui;
