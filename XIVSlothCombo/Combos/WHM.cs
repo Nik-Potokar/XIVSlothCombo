@@ -189,7 +189,7 @@ namespace XIVSlothComboPlugin.Combos
                             return WHM.LucidDreaming;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 4 && level <= 45 && inCombat)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && !IsEnabled(CustomComboPreset.WHMRemoveDotFromDPSFeature) && level >= 4 && level <= 45 && inCombat)
                     {
                         if ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3))
                         {
@@ -197,7 +197,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 46 && level <= 71 && inCombat)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && !IsEnabled(CustomComboPreset.WHMRemoveDotFromDPSFeature) && level >= 46 && level <= 71 && inCombat)
                     {
                         if ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3))
                         {
@@ -205,7 +205,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= 72 && inCombat)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && !IsEnabled(CustomComboPreset.WHMRemoveDotFromDPSFeature) && level >= 72 && inCombat)
                     {
                         if ((diaDebuff is null) || (diaDebuff.RemainingTime <= 3))
                         {

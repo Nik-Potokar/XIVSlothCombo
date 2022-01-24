@@ -932,6 +932,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Rapture On Medica Feature", "Adds Afflatus Rapture onto the Medica Feature", WHM.JobID, WHM.Medica1, WHM.Medica2)]
         WhiteMageAfflatusRaptureMedicaFeature = 1611,
 
+        [CustomComboInfo("Remove DoT From Glare3 Feature", "Removes DoT from DPS feature", WHM.JobID, WHM.Glare3, WHM.Dia)]
+        WHMRemoveDotFromDPSFeature = 1612,
+
         #endregion
         // ====================================================================================
         #region REAPER
