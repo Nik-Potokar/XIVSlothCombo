@@ -14,6 +14,7 @@ namespace XIVSlothComboPlugin.Combos
             Overpower = 41,
             StormsPath = 42,
             StormsEye = 45,
+            Tomahawk = 46,
             InnerBeast = 49,
             SteelCyclone = 51,
             Infuriate = 52,
@@ -81,6 +82,11 @@ namespace XIVSlothComboPlugin.Combos
                 var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
                 var gauge = GetJobGauge<WARGauge>().BeastGauge;
 
+                if (IsEnabled(CustomComboPreset.WARRangedUptimeFeature) && level >= 15)
+                {
+                    if (!InMeleeRange(true))
+                        return WAR.Tomahawk;
+                }
                 if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && gauge >= 50 && level >= 80)
                     return WAR.InnerChaos;
 

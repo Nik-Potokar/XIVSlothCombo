@@ -13,6 +13,7 @@ namespace XIVSlothComboPlugin.Combos
             ShieldBash = 16,
             RageOfHalone = 21,
             CircleOfScorn = 23,
+            ShieldLob = 24,
             SpiritsWithin = 29,
             GoringBlade = 3538,
             RoyalAuthority = 3539,
@@ -111,6 +112,11 @@ namespace XIVSlothComboPlugin.Combos
                 var valorDebuffonTarget = TargetHasEffect(PLD.Debuffs.BladeOfValor);
                 var interveneCD = GetCooldown(PLD.Intervene);
                 var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature))
+                {
+                    if (!InMeleeRange(true))
+                        return PLD.ShieldLob;
+                }
                 if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= 74)
                 {
                     if (interveneCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)

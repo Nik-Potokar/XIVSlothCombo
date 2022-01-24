@@ -24,7 +24,8 @@ namespace XIVSlothComboPlugin.Combos
             LivingShadow = 16472,
             SaltAndDarkness = 25755,
             Shadowbringer = 25757,
-            Plunge = 3640;
+            Plunge = 3640,
+            Unmend = 3624;
 
         public static class Buffs
         {
@@ -83,6 +84,11 @@ namespace XIVSlothComboPlugin.Combos
                 var livingshadowCD = GetCooldown(DRK.LivingShadow);
                 var saltedCD = GetCooldown(DRK.SaltedEarth);
                 var carveCD = GetCooldown(DRK.CarveAndSpit);
+                if(IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= 15)
+                {
+                    if(!InMeleeRange(true))
+                    return DRK.Unmend;
+                }
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))

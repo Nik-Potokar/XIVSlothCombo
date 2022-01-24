@@ -12,6 +12,7 @@ namespace XIVSlothComboPlugin.Combos
             GustSlash = 2242,
             Hide = 2245,
             Assassinate = 8814,
+            ThrowingDaggers = 2247,
             Mug = 2248,
             DeathBlossom = 2254,
             AeolianEdge = 2255,
@@ -72,6 +73,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.AeolianEdge)
             {
+                if (IsEnabled(CustomComboPreset.NinjaRangedUptimeFeature))
+                {
+                    if (!InMeleeRange(true))
+                        return NIN.ThrowingDaggers;
+                }
                 if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.JinNormal) == CustomCombo.OriginalHook(NIN.Jin))
                 {
                     return CustomCombo.OriginalHook(NIN.Ninjutsu);

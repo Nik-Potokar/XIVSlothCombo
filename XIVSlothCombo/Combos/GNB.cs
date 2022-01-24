@@ -34,7 +34,8 @@ namespace XIVSlothComboPlugin.Combos
             BlastingZone = 16165,
             Bloodfest = 16164,
             Hypervelocity = 25759,
-            RoughDivide = 16154;
+            RoughDivide = 16154,
+            LightningShot = 16143;
 
         public static class Buffs
         {
@@ -82,6 +83,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == GNB.SolidBarrel)
             {
+                if (IsEnabled(CustomComboPreset.GunbreakerRangedUptimeFeature))
+                {
+                    if(!InMeleeRange(true))
+                    return GNB.LightningShot;
+                }
                 if (comboTime > 0)
                 {
                     var gauge = GetJobGauge<GNBGauge>();

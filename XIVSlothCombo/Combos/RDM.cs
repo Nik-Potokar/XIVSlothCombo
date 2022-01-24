@@ -331,7 +331,11 @@ namespace XIVSlothComboPlugin.Combos
                 RDMGauge gauge = GetJobGauge<RDMGauge>();
                 int black = gauge.BlackMana;
                 int white = gauge.WhiteMana;
-
+                if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerSmartCastFeature))
+                {
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
+                        return OriginalHook(RDM.Verthunder);
+                }
                 if (actionID is RDM.Veraero or RDM.Verthunder)
                 {
 

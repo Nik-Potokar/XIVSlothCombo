@@ -332,6 +332,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Delirium Feature Option", "Replaces Souleather with Bloodspiller when Delirium has 10sec or less remaining.", DRK.JobID, DRK.Souleater)]
         DeliriumFeatureOption = 510,
 
+        [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID, DRK.Souleater)]
+        DarkRangedUptimeFeature = 511,
+
         #endregion
         // ====================================================================================
         #region GUNBREAKER
@@ -379,6 +382,9 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(GunbreakerGnashingFangCombo)]
         [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used. \nCurrently coded for the level 90 burst window.", GNB.JobID, GNB.NoMercy)]
         GunbreakerNoMercyRotationFeature = 611,
+
+        [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, GNB.SolidBarrel)]
+        GunbreakerRangedUptimeFeature = 612,
 
         #endregion
         // ====================================================================================
@@ -548,6 +554,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, NIN.AeolianEdge)]
         NinjaBavacakraFeature = 917,
 
+        [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID, NIN.AeolianEdge)]
+        NinjaRangedUptimeFeature = 918,
+
         #endregion
         // ====================================================================================
         #region PALADIN
@@ -589,6 +598,9 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(PaladinInterveneFeature)]
         [CustomComboInfo("Intervene Option", "Adds intervene onto main combo whenever its available (Leaves 1 stack).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinInterveneFeatureOption = 1011,
+
+        [CustomComboInfo("Shield Lob Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Shield Lob when out of range.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        PaladinRangedUptimeFeature = 1012,
 
         #endregion
         // ====================================================================================
@@ -632,6 +644,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, RDM.ContreSixte, RDM.Fleche)]
         RedMageOgcdCombo = 1110,
+
+        [CustomComboInfo("SmartCast Opener Feature", "Verthunder Opener Feature. Allows you to prepull with verthunder and still let the combo balance the mana for you", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
+        RedMageVerprocOpenerSmartCastFeature = 1111,
 
         #endregion
         // ====================================================================================
@@ -886,6 +901,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with FellCleave when under InnerRelease buff. Replaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, WAR.Infuriate)]
         WarriorInfuriateFeature = 1515,
 
+        [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, WAR.StormsPath)]
+        WARRangedUptimeFeature = 1516,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
@@ -932,8 +950,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Rapture On Medica Feature", "Adds Afflatus Rapture onto the Medica Feature", WHM.JobID, WHM.Medica1, WHM.Medica2)]
         WhiteMageAfflatusRaptureMedicaFeature = 1611,
 
+        [CustomComboInfo("Afflatus Misery Feature", "Changes Cure 2 into Afflatus Misery.", WHM.JobID, WHM.Cure2)]
+        WhiteMageAfflatusMiseryCure2Feature = 1612,
+
         [CustomComboInfo("Remove DoT From Glare3 Feature", "Removes DoT from DPS feature", WHM.JobID, WHM.Glare3, WHM.Dia)]
-        WHMRemoveDotFromDPSFeature = 1612,
+        WHMRemoveDotFromDPSFeature = 1613,
+
+        [DependentCombos(WHMRaiseFeature)]
+        [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature", WHM.JobID, WHM.Swiftcast, WHM.Raise)]
+        WHMThinAirFeature = 1614,
 
         #endregion
         // ====================================================================================

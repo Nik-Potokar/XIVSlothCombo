@@ -35,7 +35,9 @@ namespace XIVSlothComboPlugin.Combos
             Aero2 = 132,
 
             // buff
+            ThinAir = 7430,
             PresenceOfMind = 136;
+
 
 
         public static class Buffs
@@ -120,6 +122,8 @@ namespace XIVSlothComboPlugin.Combos
 
             if (actionID == WHM.Cure2)
             {
+                if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryCure2Feature) && gauge.BloodLily == 3)
+                    return WHM.AfflatusMisery;
                 if (level >= WHM.Levels.AfflatusSolace && gauge.Lily > 0)
                     return WHM.AfflatusSolace;
 
@@ -147,6 +151,9 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (IsEnabled(CustomComboPreset.WHMRaiseFeature))
                     {
+                        var thinairCD = GetCooldown(WHM.ThinAir);
+                        if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && !thinairCD.IsCooldown && HasEffect(WHM.Buffs.Swiftcast))
+                            return WHM.ThinAir;
                         if (HasEffect(WHM.Buffs.Swiftcast))
                             return WHM.Raise;
                     }
