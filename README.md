@@ -43,6 +43,7 @@
 * Single and AoE target combos
 
 #### Gunbreaker
+* Completely reworked the job to play much smoother (Courtesy of [damolitionn](https://github.com/damolitionn))
 * 1 Button Continuation Feature
 * Overcap features
 * Single target oGCDs combos on Main Combo
@@ -109,4 +110,4 @@ We're building this as a side project but if you want something special added le
 
 ### Big Thanks to [attick](https://github.com/attickdoor), [daemitus](https://github.com/daemitus) for creating most of the original code, as well as [Grammernatzi](https://github.com/Grammernatzi) for providing us with a lot of extra tweaks. Please show them support for their original work <3 
 
-Brought to you by attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM
+Brought to you by attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn
