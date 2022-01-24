@@ -46,7 +46,10 @@ namespace XIVSlothComboPlugin.Combos
                 ShadowbiteReady = 3002,
                 WanderersMinuet = 865,
                 MagesBallad = 135,
-                ArmysPaeon = 137;
+                ArmysPaeon = 137,
+                RadiantFinale = 2722,
+                BattleVoice = 141,
+                Barrage = 128;
         }
 
         public static class Debuffs
@@ -449,16 +452,221 @@ namespace XIVSlothComboPlugin.Combos
     internal class SimpleBardFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SimpleBardFeature;
+        internal bool inOpener = false;
+        internal bool openerFinished = false;
+        internal byte step = 0;
+        internal byte subStep = 0;
+        internal bool usedStraightShotReady = false;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == BRD.HeavyShot || actionID == BRD.BurstShot) {
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+
+
+                if (IsEnabled(CustomComboPreset.BardSimpleOpener) && level >= 90) {
+                    if (inCombat && lastComboMove == BRD.Stormbite && !inOpener) {
+                        inOpener = true;
+                    }
+
+                    if (!inOpener) {
+                        return BRD.Stormbite;
+                    }
+
+                    if (!inCombat && (inOpener || openerFinished)) {
+                        inOpener = false;
+                        step = 0;
+                        subStep = 0;
+                        usedStraightShotReady = false;
+                        return BRD.Stormbite;
+                    }
+
+                    if (inCombat && inOpener && !openerFinished) {
+                        // Stormbite
+                        // Minuet
+                        // Raging Strikes
+                        // Caustic Bite
+                        // Empyreal Arrow
+                        // Bloodletter
+                        // Burst shot OR Refulgent Arrow
+                        // Radiant Finale
+                        // Battle Voice
+                        // Burst shot OR Refulgent Arrow
+                        if (step == 0) {
+                            // Do this in steps, by using the ifs as the step changer...
+                            if (subStep == 0) {
+                                if (GetCooldown(BRD.WanderersMinuet).IsCooldown && !GetCooldown(BRD.RagingStrikes).IsCooldown) subStep++;
+                                else return BRD.WanderersMinuet;
+                            }
+                            if (subStep == 1) {
+                                if (GetCooldown(BRD.RagingStrikes).IsCooldown && !TargetHasEffect(BRD.Debuffs.CausticBite)) subStep++;
+                                else return BRD.RagingStrikes;
+                            }
+                            if (subStep == 2) {
+                                if (lastComboMove == BRD.CausticBite) subStep++;
+                                else return BRD.CausticBite;
+                            }
+                            if (subStep == 3) {
+                                if (lastComboMove == BRD.EmpyrealArrow && GetCooldown(BRD.Bloodletter).CooldownRemaining == 0) subStep++;
+                                else return BRD.EmpyrealArrow;
+                            }
+                            if (subStep == 4) {
+                                if (!HasEffect(BRD.Buffs.BattleVoice) && GetCooldown(BRD.Bloodletter).CooldownRemaining > 40 && (lastComboMove != BRD.RefulgentArrow && lastComboMove != BRD.BurstShot)) subStep++;
+                                else return BRD.Bloodletter;
+                            }
+                            if (subStep == 5) {
+                                if (usedStraightShotReady || lastComboMove == BRD.BurstShot) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        usedStraightShotReady = true;
+                                        return BRD.RefulgentArrow;
+                                    }
+                                    else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 6) {
+                                usedStraightShotReady = false;
+
+                                if (HasEffect(BRD.Buffs.RadiantFinale)) subStep++;
+                                else return BRD.RadiantFinale;
+                            }
+                            if (subStep == 7) {
+                                if (HasEffect(BRD.Buffs.BattleVoice)) subStep++;
+                                else return BRD.BattleVoice;
+                            }
+                            if (subStep == 8) {
+                                if (usedStraightShotReady || lastComboMove == BRD.BurstShot) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        usedStraightShotReady = true;
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+
+                            if (HasEffect(BRD.Buffs.StraightShotReady)) step = 1;
+                            else step = 2;
+
+                            usedStraightShotReady = false;
+                            subStep = 0;
+                        }
+
+                        // if Straight Shot Ready
+                        // -- yes
+                        // Sidewinder
+                        // Refulgent Arrow
+                        // Barrage
+                        // Refulgent Arrow
+                        // Burst Shot
+                        // Burst shot OR Refulgent Arrow
+                        // Empyreal Arrow
+                        // Iron Jaws
+                        if (step == 1) {
+                            if (subStep == 0) {
+                                if (GetCooldown(BRD.Sidewinder).IsCooldown) subStep++;
+                                else return BRD.Sidewinder;
+                            }
+                            if (subStep == 1) {
+                                if (!HasEffect(BRD.Buffs.StraightShotReady)) subStep++;
+                                else return BRD.RefulgentArrow;
+                            }
+                            if (subStep == 2) {
+                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
+                                else return BRD.Barrage;
+                            }
+                            if (subStep == 3) {
+                                if (!HasEffect(BRD.Buffs.StraightShotReady)) subStep++;
+                                else return BRD.RefulgentArrow;
+                            }
+                            if (subStep == 4) {
+                                if (lastComboMove == BRD.BurstShot) subStep++;
+                                else return BRD.BurstShot;
+                            }
+                            if (subStep == 5) {
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 4) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 6) {
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 1) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 7) {
+                                if (lastComboMove == BRD.EmpyrealArrow) subStep++;
+                                else return BRD.EmpyrealArrow;
+                            }
+                            if (subStep == 8) {
+                                if (FindTargetEffect(BRD.Debuffs.Stormbite).RemainingTime < 10) return BRD.IronJaws;
+                            }
+                            openerFinished = true;
+                        }
+
+                        // -- no
+                        // Barrage
+                        // Refulgent Arrow
+                        // Sidewinder
+                        // Burst Shot
+                        // Burst Shot OR Refulgent Arrow
+                        // Burst Shot OR Refulgent Arrow
+                        // Empyreal Arrow
+                        // Iron Jaws
+                        if (step == 2) {
+                            if (subStep == 0) {
+                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
+                                else return BRD.Barrage;
+                            }
+                            if (subStep == 1) {
+                                if (!HasEffect(BRD.Buffs.StraightShotReady)) subStep++;
+                                else return BRD.RefulgentArrow;
+                            }
+                            if (subStep == 2) {
+                                if (GetCooldown(BRD.Sidewinder).IsCooldown) subStep++;
+                                else return BRD.Sidewinder;
+                            }
+                            if (subStep == 3) {
+                                if (lastComboMove == BRD.BurstShot) subStep++;
+                                else return BRD.BurstShot;
+                            }
+                            if (subStep == 4) {
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 4) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 5) {
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 1) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 6) {
+                                if (lastComboMove == BRD.EmpyrealArrow) subStep++;
+                                else return BRD.EmpyrealArrow;
+                            }
+                            if (subStep == 7) {
+                                if (FindTargetEffect(BRD.Debuffs.Stormbite).RemainingTime < 10) return BRD.IronJaws;
+                            }
+                            openerFinished = true;
+                        }
+                    }
+                }
+
                 if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && !GetCooldown(BRD.HeadGraze).IsCooldown) {
                     return BRD.HeadGraze;
                 }
 
                 var gauge = GetJobGauge<BRDGauge>();
-                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var heavyShot = GetCooldown(actionID);
                 var heavyShotOnCooldown = heavyShot.CooldownRemaining > 0.7;
                 var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleRaidMode) ? true : CustomCombo.EnemyHealthPercentage() > 1;
