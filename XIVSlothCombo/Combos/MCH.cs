@@ -88,6 +88,8 @@ namespace XIVSlothComboPlugin.Combos
                 var ricochetCD = GetCooldown(MCH.Ricochet);
                 var chainsawCD = GetCooldown(MCH.ChainSaw);
                 var barrelCD = GetCooldown(MCH.BarrelStabilizer);
+                var battery = GetJobGauge<MCHGauge>().Battery;
+                var heat = GetJobGauge<MCHGauge>().Heat;
 
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
@@ -100,7 +102,6 @@ namespace XIVSlothComboPlugin.Combos
                     else
                         return MCH.Ricochet;
                 }
-
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
                     if (HasEffect(MCH.Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= MCH.Levels.AirAnchor)
@@ -118,7 +119,6 @@ namespace XIVSlothComboPlugin.Combos
                         return MCH.GaussRound;
 
                 }
-
                 if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
                 {
                     if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= 76)
@@ -137,17 +137,16 @@ namespace XIVSlothComboPlugin.Combos
                         if (HasEffect(MCH.Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 110 && !drillCD.IsCooldown)
                             return MCH.Drill;
                     }
-
-                    var battery = GetJobGauge<MCHGauge>().Battery;
-                    var heat = GetJobGauge<MCHGauge>().Heat;
                     if (IsEnabled(CustomComboPreset.BarrelStabilizerDrift))
                     {
                         if (level >= MCH.Levels.BarrelStabilizer && heat >= 5 && heat <= 20 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7 && !barrelCD.IsCooldown)
                             return MCH.BarrelStabilizer;
                     }
-                    if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
-                        if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
-                            return MCH.RookAutoturret;
+                }
+                if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
+                {
+                    if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
+                        return MCH.RookAutoturret;
                     if (battery == 100 && level >= 80 && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                         return MCH.AutomatonQueen;
                 }
