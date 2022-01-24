@@ -95,12 +95,13 @@ namespace XIVSlothComboPlugin.Combos
 
                     // Gnashing Fang combo + Continuation, Gnashing Fang needs to be used manually in order for users to control for any delay based on fight times
                     if (level >= GNB.Levels.GnashingFang && IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain))
-                        if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
-                            return GNB.JugularRip;
+                    {
                         if (level < GNB.Levels.DoubleDown && !blastingZoneCD.IsCooldown && level >= GNB.Levels.DangerZone && gauge.AmmoComboStep == 1 && IsEnabled(CustomComboPreset.GunbreakerCDsOnMainComboFeature))
                             return OriginalHook(GNB.DangerZone);
+                        if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
+                            return GNB.JugularRip;
 
-                    if (HasEffect(GNB.Buffs.NoMercy))
+                        if (HasEffect(GNB.Buffs.NoMercy))
                         {
                             if (level >= GNB.Levels.DoubleDown)
                             {
@@ -135,20 +136,21 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(GNB.DangerZone);
 
                         if (gauge.AmmoComboStep == 2)
-                           return OriginalHook(GNB.GnashingFang);
+                            return OriginalHook(GNB.GnashingFang);
                         if (HasEffect(GNB.Buffs.ReadyToGouge) && level >= GNB.Levels.Continuation && GCD.CooldownRemaining > 0.7)
-                           return GNB.EyeGouge;
+                            return GNB.EyeGouge;
                         if (HasEffect(GNB.Buffs.NoMercy) && gnashingFangCD.IsCooldown && gauge.AmmoComboStep == 0)
                         {
                             if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
                                 return GNB.Hypervelocity;
                             if ((gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
-                                    return GNB.BurstStrike;
+                                return GNB.BurstStrike;
                         }
 
                         //final check if Burst Strike is used right before No Mercy ends
-                        if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature)) 
-                                return GNB.Hypervelocity;
+                        if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
+                            return GNB.Hypervelocity;
+                    }
 
                     // uses all stacks
                     if (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && level >= 56)
