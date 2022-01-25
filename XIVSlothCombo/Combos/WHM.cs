@@ -152,7 +152,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.WHMRaiseFeature))
                     {
                         var thinairCD = GetCooldown(WHM.ThinAir);
-                        if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && !thinairCD.IsCooldown && HasEffect(WHM.Buffs.Swiftcast))
+                        if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && !thinairCD.IsCooldown && HasEffect(WHM.Buffs.Swiftcast) && level >= 58)
                             return WHM.ThinAir;
                         if (HasEffect(WHM.Buffs.Swiftcast))
                             return WHM.Raise;
