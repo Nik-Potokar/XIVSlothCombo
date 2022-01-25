@@ -203,6 +203,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disable ApexArrow From SimpleBard", "Removes Apex Arrow from SimpleBard and AoE Feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardRemoveApexArrowFeature = 221,
 
+        [DependentCombos(SimpleBardFeature)]
+        [CustomComboInfo("Simple Opener", "BETA TESTING - Adds the optimum opener to simple bard.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimpleOpener = 222,
+
         #endregion
         // ====================================================================================
         #region DANCER
