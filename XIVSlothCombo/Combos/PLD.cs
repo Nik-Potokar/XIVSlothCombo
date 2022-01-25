@@ -112,6 +112,18 @@ namespace XIVSlothComboPlugin.Combos
                 var valorDebuffonTarget = TargetHasEffect(PLD.Debuffs.BladeOfValor);
                 var interveneCD = GetCooldown(PLD.Intervene);
                 var actionIDCD = GetCooldown(actionID);
+                var riotcd = GetCooldown(actionID);
+                var fofremainingTime = FindEffect(PLD.Buffs.FightOrFlight);
+                if (IsEnabled(CustomComboPreset.PaladinFightOrFlightMainComboFeature))
+                {
+                    if (lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < 0.5 && riotcd.CooldownRemaining > 0.3 && !foFCD.IsCooldown)
+                        return PLD.FightOrFlight;
+                }
+                if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature))
+                {
+                    if (HasEffect(PLD.Buffs.FightOrFlight) && fofremainingTime.RemainingTime < 17 && !reqCD.IsCooldown)
+                        return PLD.Requiescat;
+                }
                 if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature))
                 {
                     if (!InMeleeRange(true))
@@ -169,11 +181,12 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+
                 if (comboTime > 0)
                 {
                     if (lastComboMove == PLD.FastBlade)
                         return PLD.RiotBlade;
-                }
+                }                
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
                 {

@@ -605,6 +605,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Shield Lob Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Shield Lob when out of range.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinRangedUptimeFeature = 1012,
 
+        [CustomComboInfo("FoF Feature", "Adds FoF onto the main combo (Testing).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        PaladinFightOrFlightMainComboFeature = 1013,
+
+        [CustomComboInfo("Req Feature", "Adds Req onto the main combo (Testing).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        PaladinReqMainComboFeature = 1014,
+
+
+
         #endregion
         // ====================================================================================
         #region RED MAGE
@@ -613,7 +621,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Red Mage AoE Combo", "Replaces Veraero/Verthunder 2 with Impact when Dualcast or Swiftcast are active.", RDM.JobID, RDM.Veraero2, RDM.Verthunder2)]
         RedMageAoECombo = 1100,
 
-        [CustomComboInfo("Redoublement combo", "Replaces Redoublement with its combo chain, following enchantment rules.", RDM.JobID, RDM.Redoublement)]
+        [CustomComboInfo("Redoublement combo", "Replaces Redoublement with its combo chain, following enchantment rules.", RDM.JobID, RDM.Redoublement, RDM.Zwerchhau, RDM.Riposte)]
         RedMageMeleeCombo = 1101,
 
         [CustomComboInfo("Redoublement Combo Plus", "Replaces Redoublement with Verflare/Verholy after Enchanted Redoublement, whichever is more appropriate.\nRequires Redoublement Combo.", RDM.JobID, RDM.Redoublement)]
@@ -650,6 +658,16 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("SmartCast Opener Feature", "Verthunder Opener Feature. Allows you to prepull with verthunder and still let the combo balance the mana for you", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
         RedMageVerprocOpenerSmartCastFeature = 1111,
+
+        [DependentCombos(RedMageSmartcastAoECombo)]
+        [CustomComboInfo("Red Mage AoE Finisher", "Adds Finishers onto Moulinet and SmartCast AoE Feature.", RDM.JobID, RDM.EnchantedMoulinet, RDM.Moulinet)]
+        RedMageMeleeAoECombo = 1112,
+
+        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos . (Testing Only!)", RDM.JobID, RDM.EnchantedMoulinet, RDM.Moulinet, RDM.Redoublement, RDM.Zwerchhau, RDM.Riposte)]
+        RedMageEngagementFeature = 1113,
+
+        [CustomComboInfo("Simple Red Mage", "Combines Ranged and melee combo into one button.(Testing Only!)", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
+        SimpleRedMage = 1114,
 
         #endregion
         // ====================================================================================
