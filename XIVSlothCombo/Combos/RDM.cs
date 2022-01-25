@@ -719,6 +719,77 @@ namespace XIVSlothComboPlugin.Combos
         }
 
     }
+    internal class SimpleRedMageAoE : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SimpleRedMageAoE;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is RDM.Veraero2 or RDM.Verthunder2)
+            {
+                const int
+                FINISHER_DELTA = 11,
+                IMBALANCE_DIFF_MAX = 30;
+                var accelBuff = HasEffect(RDM.Buffs.Acceleration);
+                var dualcastBuff = HasEffect(RDM.Buffs.Dualcast);
+                var swiftcastBuff = HasEffect(RDM.Buffs.Swiftcast);
+                var gauge = GetJobGauge<RDMGauge>();
+                int black = gauge.BlackMana;
+                int white = gauge.WhiteMana;
+                int blackThreshold = white + IMBALANCE_DIFF_MAX;
+                int whiteThreshold = black + IMBALANCE_DIFF_MAX;
+
+                if (IsEnabled(CustomComboPreset.SimpleRedMageAoE) && InMeleeRange(true))
+                {
+                    if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && gauge.ManaStacks == 0)
+                    {
+                        return RDM.EnchantedMoulinet;
+                    }
+                    if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 && gauge.ManaStacks == 1)
+                    {
+                        return RDM.EnchantedMoulinet;
+                    }
+                    if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20 && gauge.ManaStacks == 2)
+                    {
+                        return RDM.EnchantedMoulinet;
+                    }
+                }
+                if (lastComboMove == RDM.Scorch && level >= RDM.Levels.Resolution)
+                    return RDM.Resolution;
+                if (lastComboMove == RDM.Verholy && level >= RDM.Levels.Scorch || lastComboMove == RDM.Verflare && level >= RDM.Levels.Scorch)
+                    return RDM.Scorch;
+                if (gauge.ManaStacks == 3 && level >= RDM.Levels.Verflare)
+                {
+                    if (black >= white && level >= RDM.Levels.Verholy)
+                    {
+                        if (HasEffect(RDM.Buffs.VerstoneReady) && !HasEffect(RDM.Buffs.VerfireReady) && (black + FINISHER_DELTA <= blackThreshold))
+                            return RDM.Verflare;
+
+                        return RDM.Verholy;
+                    }
+                    if (HasEffect(RDM.Buffs.VerfireReady) && !HasEffect(RDM.Buffs.VerstoneReady) && level >= RDM.Levels.Verholy && (white + FINISHER_DELTA <= whiteThreshold))
+                        return RDM.Verholy;
+
+                    return RDM.Verflare;
+                }
+                if (dualcastBuff || accelBuff || swiftcastBuff || level <= 18)
+                    return OriginalHook(RDM.Impact);
+
+                if (level <= 18)
+                    return RDM.Verthunder2;
+
+                if (gauge.BlackMana > gauge.WhiteMana)
+                    return RDM.Veraero2;
+
+                if (gauge.WhiteMana > gauge.BlackMana)
+                    return RDM.Verthunder2;
+
+
+            }
+
+            return actionID;
+        }
+    }
 }
 
 

@@ -663,11 +663,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Red Mage AoE Finisher", "Adds Finishers onto Moulinet and SmartCast AoE Feature.", RDM.JobID, RDM.EnchantedMoulinet, RDM.Moulinet)]
         RedMageMeleeAoECombo = 1112,
 
-        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos . (Testing Only!)", RDM.JobID, RDM.EnchantedMoulinet, RDM.Moulinet, RDM.Redoublement, RDM.Zwerchhau, RDM.Riposte)]
+        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos. (Testing Only!)", RDM.JobID, RDM.EnchantedMoulinet, RDM.Moulinet, RDM.Redoublement, RDM.Zwerchhau, RDM.Riposte)]
         RedMageEngagementFeature = 1113,
 
-        [CustomComboInfo("Simple Red Mage", "Combines Ranged and melee combo into one button.(Testing Only!)", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
+        [CustomComboInfo("Simple Red Mage Single Target", "Combines Ranged and melee combo into one button(Veraero,Verthunder,Verstone,Verfire).\n (Testing Only!!! Disable Everything else other than SimpleFeatures!)", RDM.JobID, RDM.Veraero, RDM.Verthunder, RDM.Verstone, RDM.Verfire)]
         SimpleRedMage = 1114,
+
+        [CustomComboInfo("Simple Red Mage AoE", "Combines Ranged and melee combo into one button(Veraero2,Verthunder2). \n (Testing Only!!! Disable Everything else other than SimpleFeatures!)", RDM.JobID, RDM.Veraero2, RDM.Verthunder2)]
+        SimpleRedMageAoE = 1115,
+
 
         #endregion
         // ====================================================================================
