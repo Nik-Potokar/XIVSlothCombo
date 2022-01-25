@@ -177,5 +177,57 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class CustomValuesTest : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SageDPSFeatureTest;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SGE.Dosis1 || actionID == SGE.Dosis2 || actionID == SGE.Dosis3)
+            {
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var dosis3CD = GetCooldown(SGE.Dosis3);
+                var dosis1Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
+                var dosis2Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
+                var dosis3Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
+                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
+                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
+                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+
+                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= 82 && incombat)
+                {
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianDosis3;
+                    if (dosis3Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue || (dosis3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
+                        return SGE.Eukrasia;
+                }
+
+                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= 72 && level <= 81 && incombat)
+                {
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianDosis2;
+                    if (dosis2Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue || (dosis2Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
+                            return SGE.Eukrasia;
+                }
+
+                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= 30 && level <= 71 && incombat)
+                {
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianDosis1;
+                    if (dosis1Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue || (dosis1Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
+                        return SGE.Eukrasia;
+                }
+                if (IsEnabled(CustomComboPreset.SageLucidFeature))
+                {
+                    var lucidDreaming = GetCooldown(SGE.LucidDreaming);
+                    var actionIDCD = GetCooldown(actionID);
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
+                        return AST.LucidDreaming;
+                }
+            }
+
+            return actionID;
+        }
+    }
 
 }

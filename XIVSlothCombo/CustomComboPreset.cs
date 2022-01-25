@@ -1043,6 +1043,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Phlegma into Dyskrasia", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, SGE.Phlegma, SGE.Phlegmara, SGE.Phlegmaga)]
         SagePhlegmaFeature = 1801,
 
+        [ConflictingCombos(SageDPSFeatureTest)]
         [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button", SGE.JobID, SGE.Dosis1, SGE.Dosis2, SGE.Dosis3, SGE.Eukrasia, SGE.EukrasianDosis1)]
         SageDPSFeature = 1802,
 
@@ -1052,6 +1053,10 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds LucidDreaming onto Dosis DPS Feature when you have 8k mana or less", SGE.JobID, SGE.Dosis1, SGE.Dosis2, SGE.Dosis3, SGE.Eukrasia, SGE.EukrasianDosis1)]
         SageLucidFeature = 1804,
+
+        [ConflictingCombos(SageDPSFeature)]
+        [CustomComboInfo("Dosis DPS Feature Testing", "Same function as Above DPS Feature but you can input some values to your liking ", SGE.JobID, SGE.Dosis1, SGE.Dosis2, SGE.Dosis3, SGE.Eukrasia, SGE.EukrasianDosis1)]
+        SageDPSFeatureTest = 1805,
 
         #endregion
         // ====================================================================================
