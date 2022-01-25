@@ -570,6 +570,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Royal Authority Combo", "Replace Royal Authority/Rage of Halone with its combo chain.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinRoyalAuthorityCombo = 1001,
 
+        [ConflictingCombos(PaladinAtonementTestFeature)]
         [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, PLD.RoyalAuthority, PLD.Confiteor)]
         PaladinAtonementFeature = 1002,
 
@@ -602,6 +603,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Intervene Option", "Adds intervene onto main combo whenever its available (Leaves 1 stack).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinInterveneFeatureOption = 1011,
 
+        [ConflictingCombos(PaladinRangedUptimeFeature2)]
         [CustomComboInfo("Shield Lob Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Shield Lob when out of range.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinRangedUptimeFeature = 1012,
 
@@ -610,6 +612,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Req Feature", "Adds Req onto the main combo (Testing).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
         PaladinReqMainComboFeature = 1014,
+
+        [ConflictingCombos(PaladinAtonementFeature)]
+        [CustomComboInfo("Atonement Drop Feature", "Drops Atonement to prevent Potency loss (Testing).", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        PaladinAtonementTestFeature = 1015,
+
+        [ConflictingCombos(PaladinRangedUptimeFeature)]
+        [CustomComboInfo("Holyspirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with HolySpirit when out of range.", PLD.JobID, PLD.RoyalAuthority, PLD.RageOfHalone, PLD.Confiteor)]
+        PaladinRangedUptimeFeature2 = 1016,
 
 
 
@@ -750,6 +760,19 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
         SamuraiYatenFeature = 1221,
+
+        [CustomComboInfo("KaitenFeature Option 4", "Adds Kaiten when above 20 gauge to Ikishoten.", SAM.JobID, SAM.Ikishoten)]
+        SamuraiKaitenFeature4 = 1222,
+
+        [ConflictingCombos(SamuraiOvercapFeature85)]
+        [CustomComboInfo("SimpleSamurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        SamuraiOvercapFeature75 = 1223,
+
+        [ConflictingCombos(SamuraiOvercapFeature75)]
+        [CustomComboInfo("SimpleSamurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        SamuraiOvercapFeature85 = 1224,
+
+
 
         #endregion
         // ====================================================================================

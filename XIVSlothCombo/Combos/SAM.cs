@@ -376,9 +376,15 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (level >= 90)
                 {
+                    var gauge = GetJobGauge<SAMGauge>();
+                    var ikiCD = GetCooldown(SAM.Ikishoten);
+                    if(IsEnabled(CustomComboPreset.SamuraiKaitenFeature4))
+                    {
+                        if (gauge.Kenki >= 20 && ikiCD.IsCooldown)
+                            return SAM.Kaiten;
+                    }
                     if (HasEffect(SAM.Buffs.OgiNamikiriReady))
                     {
-                        var gauge = GetJobGauge<SAMGauge>();
                         if (gauge.MeditationStacks >= 3)
                             return SAM.Shoha;
                         return SAM.OgiNamikiri;
@@ -427,7 +433,23 @@ namespace XIVSlothComboPlugin.Combos
                     var fuka = HasEffect(SAM.Buffs.Fuka);
                     var fugetsu = HasEffect(SAM.Buffs.Fugetsu);
                     var higanbana = TargetHasEffect(SAM.Debuffs.Higanbana);
+                    var seneiCD = GetCooldown(SAM.Senei);
+                    var actionIDCD = GetCooldown(actionID);
 
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
+                    {
+                        if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown)
+                            return SAM.Senei;
+                        if (gauge.Kenki >= 75 && seneiCD.IsCooldown && actionIDCD.IsCooldown)
+                            return SAM.Shinten;
+                    }
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85))
+                    {
+                        if (gauge.Kenki >= 85 && !seneiCD.IsCooldown && actionIDCD.IsCooldown)
+                            return SAM.Senei;
+                        if (gauge.Kenki >= 85 && seneiCD.IsCooldown && actionIDCD.IsCooldown)
+                            return SAM.Shinten;
+                    }
                     if (comboTime > 0 && level >= SAM.Levels.Shifu)
                     {
                         if(HasEffect(SAM.Buffs.MeikyoShisui))

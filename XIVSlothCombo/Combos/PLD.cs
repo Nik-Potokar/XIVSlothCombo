@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin.Combos
                 var fofremainingTime = FindEffect(PLD.Buffs.FightOrFlight);
                 if (IsEnabled(CustomComboPreset.PaladinFightOrFlightMainComboFeature))
                 {
-                    if (lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < 0.5 && riotcd.CooldownRemaining > 0.3 && !foFCD.IsCooldown)
+                    if (lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < 0.6 && riotcd.CooldownRemaining > 0.4 && !foFCD.IsCooldown)
                         return PLD.FightOrFlight;
                 }
                 if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature))
@@ -128,6 +128,11 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (!InMeleeRange(true))
                         return PLD.ShieldLob;
+                }
+                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2))
+                {
+                    if (!InMeleeRange(true))
+                        return PLD.HolySpirit;
                 }
                 if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= 74)
                 {
@@ -186,9 +191,16 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (lastComboMove == PLD.FastBlade)
                         return PLD.RiotBlade;
-                }                
+                }
 
-                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+
+                if (IsEnabled(CustomComboPreset.PaladinAtonementTestFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+                {
+                    var fofCD = GetCooldown(PLD.FightOrFlight);
+                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && foFCD.CooldownRemaining > 3)
+                        return PLD.Atonement;
+                }
+                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementTestFeature))
                 {
                     if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
                         return PLD.Atonement;
