@@ -180,12 +180,12 @@ namespace XIVSlothComboPlugin.Combos
                     var assizeCD = GetCooldown(WHM.Assize);
                     var glare3 = GetCooldown(WHM.Glare3);
 
-                    if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature))
+                    if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature) && level >= 30)
                     {
                         if (!presenceofmindCD.IsCooldown && glare3.CooldownRemaining > 0.2)
                             return WHM.PresenceOfMind;
                     }
-                    if (IsEnabled(CustomComboPreset.WHMAssizeFeature))
+                    if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= 56)
                     {
                         if (!assizeCD.IsCooldown && glare3.CooldownRemaining > 0.2)
                             return WHM.Assize;
