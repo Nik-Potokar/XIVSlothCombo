@@ -197,7 +197,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.PaladinAtonementTestFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementFeature))
                 {
                     var fofCD = GetCooldown(PLD.FightOrFlight);
-                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && foFCD.CooldownRemaining > 3)
+                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && foFCD.CooldownRemaining >= 3)
                         return PLD.Atonement;
                 }
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementTestFeature))

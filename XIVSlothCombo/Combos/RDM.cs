@@ -570,19 +570,19 @@ namespace XIVSlothComboPlugin.Combos
                 int white = gauge.WhiteMana;
                 var engagementCD = GetCooldown(RDM.Engagement);
                 var actionIDCD = GetCooldown(OriginalHook(actionID));
-                if(InMeleeRange(true) && gauge.WhiteMana > 50 && gauge.BlackMana > 50)
+                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau)
+                    return OriginalHook(RDM.Zwerchhau);
+
+                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
+                    return OriginalHook(RDM.Redoublement);
+                if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50)
                 {
                     return RDM.EnchantedRiposte;
                 }
                 if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && actionIDCD.IsCooldown && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
                 {
                     return RDM.Engagement;
-                }
-                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau)
-                    return OriginalHook(RDM.Zwerchhau);
-
-                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
-                    return OriginalHook(RDM.Redoublement);
+                };
                 if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerSmartCastFeature))
                 {
                     if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
