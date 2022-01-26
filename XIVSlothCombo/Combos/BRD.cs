@@ -478,6 +478,8 @@ namespace XIVSlothComboPlugin.Combos
                         step = 0;
                         subStep = 0;
                         usedStraightShotReady = false;
+                        openerFinished = false;
+
                         return BRD.Stormbite;
                     }
 
@@ -515,7 +517,7 @@ namespace XIVSlothComboPlugin.Combos
                                 else return BRD.Bloodletter;
                             }
                             if (subStep == 5) {
-                                if (usedStraightShotReady || lastComboMove == BRD.BurstShot) subStep++;
+                                if ((usedStraightShotReady && !HasEffect(BRD.Buffs.StraightShotReady)) || lastComboMove == BRD.BurstShot) subStep++;
                                 else {
                                     if (HasEffect(BRD.Buffs.StraightShotReady)) {
                                         usedStraightShotReady = true;
@@ -535,7 +537,7 @@ namespace XIVSlothComboPlugin.Combos
                                 else return BRD.BattleVoice;
                             }
                             if (subStep == 8) {
-                                if (usedStraightShotReady || lastComboMove == BRD.BurstShot) subStep++;
+                                if ((usedStraightShotReady && !HasEffect(BRD.Buffs.StraightShotReady)) || lastComboMove == BRD.BurstShot) subStep++;
                                 else {
                                     if (HasEffect(BRD.Buffs.StraightShotReady)) {
                                         usedStraightShotReady = true;
