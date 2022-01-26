@@ -265,7 +265,7 @@ namespace XIVSlothComboPlugin.Combos
                             return BLM.HighBlizzardII;
                     }
                 }
-                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
+                if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= BLM.Levels.Blizzard4)
                 {
                     if (gauge.InUmbralIce && gauge.UmbralHearts <= 2)
                         return BLM.Freeze;
