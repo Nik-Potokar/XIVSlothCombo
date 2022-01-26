@@ -171,6 +171,10 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (gauge.IsParadoxActive && level >= 90)
                             return BLM.Paradox;
+
+                        if (gauge.UmbralHearts == 3 && LocalPlayer.CurrentMp >= 10000)
+                            return BLM.Fire3;
+
                     }
 
                     return BLM.Blizzard4;
@@ -180,7 +184,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.ElementTimeRemaining >= 6000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
                     {
-                        if (HasEffect(BLM.Buffs.Thundercloud))
+                        if (HasEffect(BLM.Buffs.Thundercloud) && LocalPlayer.CurrentMp > 0)
                         {
                             if ((TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(BLM.Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35))
                                 return BLM.Thunder3;
@@ -188,7 +192,13 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature))
+                    {
                         return BLM.Fire3;
+                    }
+                    if (LocalPlayer.CurrentMp == 0 && level >= BLM.Levels.Blizzard3)
+                    {
+                        return BLM.Blizzard3;
+                    }
                     if (LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && CustomCombo.IsEnabled(CustomComboPreset.BlackDespairFeature))
                     {
                         return BLM.Despair;
@@ -212,12 +222,16 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (level < BLM.Levels.Fire3)
                     return BLM.Fire;
+
                 if (gauge.InAstralFire)
                 {
                     if (HasEffect(BLM.Buffs.Firestarter) && level == 90)
                         return BLM.Paradox;
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
+                    if (LocalPlayer.CurrentMp < 1600)
+                        return BLM.Blizzard3;
+
                     return BLM.Fire;
                 }
             }
