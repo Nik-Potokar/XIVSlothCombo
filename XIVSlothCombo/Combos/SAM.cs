@@ -608,13 +608,13 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == SAM.OgiNamikiri)
             {
                 var gauge = GetJobGauge<SAMGauge>();
-                if (gauge.Kenki >= 20 )
+                if (HasEffect(SAM.Buffs.OgiNamikiriReady) && gauge.Kenki >= 20 )
                     return SAM.Kaiten;
                 if (HasEffect(SAM.Buffs.Kaiten) && HasEffect(SAM.Buffs.OgiNamikiriReady))
                     return OriginalHook(SAM.OgiNamikiri);
 
             }
-            return actionID;
+            return OriginalHook(SAM.OgiNamikiri);
         }
     }
 
