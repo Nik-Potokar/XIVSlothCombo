@@ -778,15 +778,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
         SamuraiYatenFeature = 1221,
 
-        [CustomComboInfo("KaitenFeature Option 4", "Adds Kaiten when above 20 gauge to Ikishoten.", SAM.JobID, SAM.Ikishoten)]
-        SamuraiKaitenFeature4 = 1222,
+        [CustomComboInfo("KaitenFeature Option 4", "Adds Kaiten when above 20 gauge to OgiNamikiri and OgiNamikiri is ready.", SAM.JobID, SAM.OgiNamikiri)]
+        SamuraiOgiNamikiriFeature = 1222,
 
         [ConflictingCombos(SamuraiOvercapFeature85)]
-        [CustomComboInfo("SimpleSamurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        [CustomComboInfo("SimpleSamurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
         SamuraiOvercapFeature75 = 1223,
 
         [ConflictingCombos(SamuraiOvercapFeature75)]
-        [CustomComboInfo("SimpleSamurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        [CustomComboInfo("SimpleSamurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
         SamuraiOvercapFeature85 = 1224,
 
 
