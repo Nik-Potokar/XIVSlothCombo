@@ -203,8 +203,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disable ApexArrow From SimpleBard", "Removes Apex Arrow from SimpleBard and AoE Feature.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardRemoveApexArrowFeature = 221,
 
+        [ConflictingCombos(BardoGCDSingleTargetFeature)]
         [DependentCombos(SimpleBardFeature)]
-        [CustomComboInfo("Simple Opener", "BETA TESTING - Adds the optimum opener to simple bard.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("Simple Opener", "BETA TESTING - Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardSimpleOpener = 222,
 
         #endregion
@@ -374,10 +375,22 @@ namespace XIVSlothComboPlugin
         GunbreakerAmmoOvercapFeature = 607,
 
         [ConflictingCombos(GunbreakerNoMercyRotationFeature)]
-        [CustomComboInfo("Gnashing Fang Combo", "Replace Gnashing Fang with its combo chain. Includes DD and other oGCDs.", GNB.JobID, GNB.GnashingFang)]
+        [CustomComboInfo("Gnashing Fang Continuation Combo", "Adds Continuation to Gnashing Fang.", GNB.JobID, GNB.GnashingFang)]
         GunbreakerGnashingFangCombo = 608,
 
-        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        [DependentCombos(GunbreakerGnashingFangCombo)]
+        [CustomComboInfo("No Mercy on Gnashing Fang", "Adds No Mercy to Gnashing Fang when it's ready.", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        GunbreakerNoMercyonGF = 613,
+        
+        [DependentCombos(GunbreakerGnashingFangCombo)]
+        [CustomComboInfo("Double Down on Gnashing Fang", "Adds Double Down to Gnashing Fang when No Mercy buff is up.", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        GunbreakerDDOnGF = 614,
+
+        [DependentCombos(GunbreakerGnashingFangCombo)]
+        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike added if there's charges while No Mercy buff is up.", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
+        GunbreakerCDsOnGF = 615,
+
+        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo and Gnashing Fang.", GNB.JobID, GNB.BurstStrike, GNB.Hypervelocity)]
         GunbreakerBurstStrikeConFeature = 609,
 
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, GNB.BurstStrike)]
@@ -765,15 +778,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, SAM.Yaten, SAM.Gyoten)]
         SamuraiYatenFeature = 1221,
 
-        [CustomComboInfo("KaitenFeature Option 4", "Adds Kaiten when above 20 gauge to Ikishoten.", SAM.JobID, SAM.Ikishoten)]
-        SamuraiKaitenFeature4 = 1222,
+        [CustomComboInfo("KaitenFeature Option 4", "Adds Kaiten when above 20 gauge to OgiNamikiri and OgiNamikiri is ready.", SAM.JobID, SAM.OgiNamikiri)]
+        SamuraiOgiNamikiriFeature = 1222,
 
         [ConflictingCombos(SamuraiOvercapFeature85)]
-        [CustomComboInfo("SimpleSamurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        [CustomComboInfo("SimpleSamurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
         SamuraiOvercapFeature75 = 1223,
 
         [ConflictingCombos(SamuraiOvercapFeature75)]
-        [CustomComboInfo("SimpleSamurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
+        [CustomComboInfo("SimpleSamurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID, SAM.Yukikaze, SAM.Shifu, SAM.Kasha, SAM.Hakaze)]
         SamuraiOvercapFeature85 = 1224,
 
 
