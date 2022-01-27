@@ -513,7 +513,7 @@ namespace XIVSlothComboPlugin.Combos
                                 else return BRD.EmpyrealArrow;
                             }
                             if (subStep == 4) {
-                                if (!HasEffect(BRD.Buffs.BattleVoice) && GetCooldown(BRD.Bloodletter).CooldownRemaining > 40 && (lastComboMove != BRD.RefulgentArrow && lastComboMove != BRD.BurstShot)) subStep++;
+                                if (GetCooldown(BRD.Bloodletter).CooldownRemaining > 10) subStep++;
                                 else return BRD.Bloodletter;
                             }
                             if (subStep == 5) {
@@ -545,6 +545,11 @@ namespace XIVSlothComboPlugin.Combos
                                     } else return BRD.BurstShot;
                                 }
                             }
+                            if (subStep == 9) {
+                                usedStraightShotReady = false;
+                                if (GetCooldown(BRD.Bloodletter).CooldownRemaining > 25) subStep++;
+                                else return BRD.Bloodletter;
+                            }
 
                             if (HasEffect(BRD.Buffs.StraightShotReady)) step = 1;
                             else step = 2;
@@ -573,27 +578,23 @@ namespace XIVSlothComboPlugin.Combos
                                 else return BRD.RefulgentArrow;
                             }
                             if (subStep == 2) {
+                                if (GetCooldown(BRD.Bloodletter).CooldownRemaining > 25) subStep++;
+                                else return BRD.Bloodletter;
+                            }
+                            if (subStep == 3) {
                                 if (HasEffect(BRD.Buffs.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
-                            if (subStep == 3) {
+                            if (subStep == 4) {
                                 if (!HasEffect(BRD.Buffs.StraightShotReady)) subStep++;
                                 else return BRD.RefulgentArrow;
                             }
-                            if (subStep == 4) {
+                            if (subStep == 5) {
                                 if (lastComboMove == BRD.BurstShot) subStep++;
                                 else return BRD.BurstShot;
                             }
-                            if (subStep == 5) {
-                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 4) subStep++;
-                                else {
-                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
-                                        return BRD.RefulgentArrow;
-                                    } else return BRD.BurstShot;
-                                }
-                            }
                             if (subStep == 6) {
-                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 1) subStep++;
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 6) subStep++;
                                 else {
                                     if (HasEffect(BRD.Buffs.StraightShotReady)) {
                                         return BRD.RefulgentArrow;
@@ -601,11 +602,27 @@ namespace XIVSlothComboPlugin.Combos
                                 }
                             }
                             if (subStep == 7) {
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 3) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 8) {
+                                if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 9) {
                                 if (lastComboMove == BRD.EmpyrealArrow) subStep++;
                                 else return BRD.EmpyrealArrow;
                             }
-                            if (subStep == 8) {
-                                if (FindTargetEffect(BRD.Debuffs.Stormbite).RemainingTime < 10) return BRD.IronJaws;
+                            if (subStep == 10) {
+                                if (FindTargetEffect(BRD.Debuffs.Stormbite).RemainingTime < 40) return BRD.IronJaws;
                             }
                             openerFinished = true;
                         }
@@ -629,23 +646,19 @@ namespace XIVSlothComboPlugin.Combos
                                 else return BRD.RefulgentArrow;
                             }
                             if (subStep == 2) {
+                                if (GetCooldown(BRD.Bloodletter).CooldownRemaining > 25) subStep++;
+                                else return BRD.Bloodletter;
+                            }
+                            if (subStep == 3) {
                                 if (GetCooldown(BRD.Sidewinder).IsCooldown) subStep++;
                                 else return BRD.Sidewinder;
                             }
-                            if (subStep == 3) {
+                            if (subStep == 4) {
                                 if (lastComboMove == BRD.BurstShot) subStep++;
                                 else return BRD.BurstShot;
                             }
-                            if (subStep == 4) {
-                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 4) subStep++;
-                                else {
-                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
-                                        return BRD.RefulgentArrow;
-                                    } else return BRD.BurstShot;
-                                }
-                            }
                             if (subStep == 5) {
-                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 1) subStep++;
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 6) subStep++;
                                 else {
                                     if (HasEffect(BRD.Buffs.StraightShotReady)) {
                                         return BRD.RefulgentArrow;
@@ -653,11 +666,28 @@ namespace XIVSlothComboPlugin.Combos
                                 }
                             }
                             if (subStep == 6) {
+                                if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 3) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            
+                            if (subStep == 7) {
+                                if (!GetCooldown(BRD.EmpyrealArrow).IsCooldown) subStep++;
+                                else {
+                                    if (HasEffect(BRD.Buffs.StraightShotReady)) {
+                                        return BRD.RefulgentArrow;
+                                    } else return BRD.BurstShot;
+                                }
+                            }
+                            if (subStep == 8) {
                                 if (lastComboMove == BRD.EmpyrealArrow) subStep++;
                                 else return BRD.EmpyrealArrow;
                             }
-                            if (subStep == 7) {
-                                if (FindTargetEffect(BRD.Debuffs.Stormbite).RemainingTime < 10) return BRD.IronJaws;
+                            if (subStep == 9) {
+                                if (FindTargetEffect(BRD.Debuffs.Stormbite).RemainingTime < 40) return BRD.IronJaws;
                             }
                             openerFinished = true;
                         }
