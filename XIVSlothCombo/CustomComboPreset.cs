@@ -205,7 +205,7 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(BardoGCDSingleTargetFeature)]
         [DependentCombos(SimpleBardFeature)]
-        [CustomComboInfo("Simple Opener", "BETA TESTING - Adds the optimum opener to simple bard. This conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        [CustomComboInfo("Simple Opener", "BETA TESTING - Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardSimpleOpener = 222,
 
         #endregion
