@@ -77,7 +77,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MNK.ShadowOfTheDestroyer || actionID == MNK.ArmOfTheDestroyer)
+            if (actionID == OriginalHook(MNK.ShadowOfTheDestroyer))
             {
                 if (HasEffect(MNK.Buffs.OpoOpoForm))
                     return OriginalHook(MNK.ArmOfTheDestroyer);
@@ -94,9 +94,8 @@ namespace XIVSlothComboPlugin.Combos
                 return OriginalHook(MNK.MasterfulBlitz);
             }
             var actionIDCD = GetCooldown(OriginalHook(actionID));
-            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature)  && level >= 74)
+            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 40)
             {
-                if(gauge.Chakra == 5)
                 return OriginalHook(MNK.Enlightenment);
             }
             if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnAoECombo))
@@ -126,6 +125,15 @@ namespace XIVSlothComboPlugin.Combos
                     if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
                         return MNK.Rockbreaker;
                 }
+                if (lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level >= 60)
+                {
+                    if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
+                        return OriginalHook(MNK.ArmOfTheDestroyer);
+                    if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == OriginalHook(MNK.ArmOfTheDestroyer))
+                        return MNK.FourPointFury;
+                    if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == MNK.FourPointFury)
+                        return MNK.Rockbreaker;
+                }
                 // highlevel
                 if (!nadiNONE && !lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level >= 82)
                 {
@@ -144,16 +152,6 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(MNK.ArmOfTheDestroyer);
                     if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
                         return OriginalHook(MNK.ArmOfTheDestroyer);
-                }
-                if (lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level >= 82)
-                {
-                    if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
-                        return OriginalHook(MNK.ArmOfTheDestroyer);
-                    if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == OriginalHook(MNK.ArmOfTheDestroyer))
-                        return MNK.FourPointFury;
-                    if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == MNK.FourPointFury)
-                        return MNK.Rockbreaker;
-
                 }
             }
             return actionID;
@@ -254,7 +252,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return OriginalHook(MNK.MasterfulBlitz);
                 }
-                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 54)
+                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 15)
                 {
                     return OriginalHook(MNK.ForbiddenChakra);
                 }
