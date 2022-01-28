@@ -77,7 +77,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == OriginalHook(MNK.ShadowOfTheDestroyer))
+            if (actionID == MNK.ShadowOfTheDestroyer || actionID == MNK.ArmOfTheDestroyer)
             {
                 if (HasEffect(MNK.Buffs.OpoOpoForm))
                     return OriginalHook(MNK.ArmOfTheDestroyer);
