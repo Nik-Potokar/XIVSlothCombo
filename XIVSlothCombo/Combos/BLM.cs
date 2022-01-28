@@ -184,7 +184,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.ElementTimeRemaining >= 6000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
                     {
-                        if (HasEffect(BLM.Buffs.Thundercloud) && LocalPlayer.CurrentMp > 0)
+                        if (HasEffect(BLM.Buffs.Thundercloud))
                         {
                             if ((TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(BLM.Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35))
                                 return BLM.Thunder3;
