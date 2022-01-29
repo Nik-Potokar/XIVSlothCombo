@@ -481,6 +481,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Monk Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, MNK.DragonKick)]
         MnkBootshineFeature = 801,
 
+        [ConflictingCombos(MnkBasicComboPlus)]
         [CustomComboInfo("Monk Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, MNK.Bootshine)]
         MnkBasicCombo = 802,
 
@@ -493,6 +494,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Howling Fist / Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, MNK.HowlingFist, MNK.Enlightenment)]
         MonkHowlingFistMeditationFeature = 805,
 
+        [ConflictingCombos(MnkBasicCombo)]
         [CustomComboInfo("Monk Basic Rotation Plus", "Basic Monk Combo on one button Plus (Only for Testing)", MNK.JobID, MNK.Bootshine)]
         MnkBasicComboPlus = 806,
 
