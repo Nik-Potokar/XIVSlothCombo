@@ -79,7 +79,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             var gauge = GetJobGauge<MNKGauge>();
             var actionIDCD = GetCooldown(OriginalHook(actionID));
-            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 40)
+            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && HasBattleTarget(true) && level >= 40)
             {
                 return OriginalHook(MNK.Enlightenment);
             }
