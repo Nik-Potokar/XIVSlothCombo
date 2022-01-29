@@ -481,6 +481,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Monk Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, MNK.DragonKick)]
         MnkBootshineFeature = 801,
 
+        [ConflictingCombos(MnkBasicComboPlus)]
         [CustomComboInfo("Monk Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, MNK.Bootshine)]
         MnkBasicCombo = 802,
 
@@ -493,6 +494,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Howling Fist / Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, MNK.HowlingFist, MNK.Enlightenment)]
         MonkHowlingFistMeditationFeature = 805,
 
+        [ConflictingCombos(MnkBasicCombo)]
         [CustomComboInfo("Monk Basic Rotation Plus", "Basic Monk Combo on one button Plus (Only for Testing)", MNK.JobID, MNK.Bootshine)]
         MnkBasicComboPlus = 806,
 
@@ -828,10 +830,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Enable Single Target (RuinIII)", "Enables changing Single-Target Combo (Ruin III).", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SummonerMainComboFeature = 1400,
 
-        [CustomComboInfo("Enable AOE", "Enables changing AOE Combo (Tri-Disaster)", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
+        [CustomComboInfo("Enable AOE", "Enables changing AOE Combo (Tri-Disaster)", SMN.JobID, SMN.Tridisaster, SMN.Deathflare, SMN.Outburst)]
         SummonerAOEComboFeature = 1401,
 
-        [DependentCombos(SummonerMainComboFeature)]
         [CustomComboInfo("Single Target Demi Feature", "Replaces Astral Impulse/Fountain of Fire with Enkindle/Deathflare/Rekindle when appropriate.", SMN.JobID, SMN.Ruin3)]
         SummonerSingleTargetDemiFeature = 1402,
 
@@ -865,21 +866,22 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ruin 4 On Ruin3 Combo Feature", "Adds Ruin4 on main RuinI/RuinIII combo feature when there are currently no summons being active.", SMN.JobID, SMN.Ruin, SMN.Ruin2, SMN.Ruin3, SMN.Ruin4)]
         SummonerRuin4ToRuin3Feature = 1411,
 
-        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster)]
+        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on main Tridisaster combo feature when there are currently no summons being active.", SMN.JobID, SMN.Tridisaster, SMN.Outburst)]
         SummonerRuin4ToTridisasterFeature = 1412,
 
         [DependentCombos(SummonerEDFesterCombo, SummonerESPainflareCombo)]
         [CustomComboInfo("Ruin IV Fester/PainFlare Feature", "Change Fester/PainFlare into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, SMN.Painflare, SMN.Fester)]
         SummonerFesterPainflareRuinFeature = 1413,
 
-        [CustomComboInfo("Lazy Fester Feature", "Adds Fester during GCDs of most skills (Ruin3/Ruin4/AstralImpulse/FountainOfFire).\nKeep in mind that for optimal fester usage you should only use it when you have Searing Light, and not every time it comes up.", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
+        [DependentCombos(SummonerEDFesterCombo)]
+        [CustomComboInfo("Lazy Fester Feature", "Adds ED/Fester during (AstralImpulse).\n. Will only ED during Phoenix phase in order to save it Fester for burst in bahamut", SMN.JobID, SMN.Ruin3, SMN.Ruin4, SMN.AstralImpulse, SMN.FountainOfFire)]
         SummonerLazyFesterFeature = 1414,
 
         [ConflictingCombos(SimpleSummonerOption2)]
         [CustomComboInfo("One Button Rotation Feature", "Summoner Single Target One Button Rotation (Single Target) on Ruin1/Ruin3.(Titan>Garuda>Ifrit) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SimpleSummoner = 1415,
 
-        [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare)]
+        [CustomComboInfo("One Button AoE Rotation Feature", "Summoner AoE One Button Rotation (AoE) on Tridisaster", SMN.JobID, SMN.Tridisaster, SMN.Deathflare, SMN.Outburst)]
         SimpleAoESummoner = 1416,
 
         [DependentCombos(SimpleSummoner)] 
@@ -887,7 +889,7 @@ namespace XIVSlothComboPlugin
         BuffOnSimpleSummoner = 1417,
 
         [DependentCombos(SimpleAoESummoner)]
-        [CustomComboInfo("Searing Light  AoE Option", "Adds Searing Light to Simple Summoner Rotation, AoE", SMN.JobID, SMN.Tridisaster, SMN.SearingLight)]
+        [CustomComboInfo("Searing Light  AoE Option", "Adds Searing Light to Simple Summoner Rotation, AoE", SMN.JobID, SMN.Tridisaster, SMN.Outburst, SMN.SearingLight)]
         BuffOnSimpleAoESummoner = 1418,
 
         [CustomComboInfo("DemiReminderFeature", "Adds Only Demi Summons on RuinIII (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
@@ -896,12 +898,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, SMN.Ruin3, SMN.Deathflare)]
         SummonerDemiAoESummonsFeature = 1420,
 
+        [ConflictingCombos(SummonerMainComboFeatureRuin1)]
         [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I.\nWill break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, SMN.Ruin4)]
         SummonerRuinIVMobilityFeature = 1421,
 
+        [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, SMN.Ruin3)]
         SummonerSwiftcastFeatureGaruda = 1422,
 
+        [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
         [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, SMN.Ruin3)]
         SummonerSwiftcastFeatureIfrit = 1423,
 
@@ -912,7 +917,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Prevent Ruin4 Waste Feature", "Puts Ruin4 Above anything if FurtherRuin about to expire and there is no Demi present.", SMN.JobID, SMN.Ruin3)]
         SummonerRuin4WastePrevention = 1425,
 
-        [ConflictingCombos(SummonerMainComboFeature)]
+        [ConflictingCombos(SummonerMainComboFeature, SummonerRuinIVMobilityFeature)]
         [CustomComboInfo("Enable Single Target (Ruin1)", "Enables changing Single-Target Combo (Ruin I).", SMN.JobID, SMN.Ruin)]
         SummonerMainComboFeatureRuin1 = 1426,
 

@@ -42,6 +42,7 @@ namespace XIVSlothComboPlugin.Combos
             EmeralRuin3 = 25819,
 
             // summon outbursts
+            Outburst = 16511,
             RubyOutburst = 25814,
             TopazOutburst = 25815,
             EmeraldOutburst = 25816,
@@ -384,7 +385,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Tridisaster)
+            if (actionID == SMN.Tridisaster || actionID == SMN.Outburst)
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 if (IsEnabled(CustomComboPreset.SimpleAoESummoner))
