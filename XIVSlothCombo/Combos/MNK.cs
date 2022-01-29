@@ -77,7 +77,15 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MNK.ShadowOfTheDestroyer || actionID == MNK.ArmOfTheDestroyer)
+            var gauge = GetJobGauge<MNKGauge>();
+            var actionIDCD = GetCooldown(OriginalHook(actionID));
+
+            if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
+
+                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 40)
+                {
+                    return OriginalHook(MNK.Enlightenment);
+                }
             {
                 if (HasEffect(MNK.Buffs.OpoOpoForm))
                     return OriginalHook(MNK.ArmOfTheDestroyer);
@@ -88,16 +96,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
                     return MNK.Rockbreaker;
             }
-            var gauge = GetJobGauge<MNKGauge>();
+
             if (gauge.BlitzTimeRemaining > 0 && level >= 60)
             {
                 return OriginalHook(MNK.MasterfulBlitz);
             }
-            var actionIDCD = GetCooldown(OriginalHook(actionID));
-            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 40)
-            {
-                return OriginalHook(MNK.Enlightenment);
-            }
+            
             if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnAoECombo))
             {
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
