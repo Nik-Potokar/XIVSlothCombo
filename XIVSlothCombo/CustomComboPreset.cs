@@ -208,6 +208,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Opener", "BETA TESTING - Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
         BardSimpleOpener = 222,
 
+        [DependentCombos(SimpleBardFeature)]
+        [CustomComboInfo("Simple Pooling", "BETA TESTING - Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, BRD.HeavyShot, BRD.BurstShot)]
+        BardSimplePooling = 223,
+
         #endregion
         // ====================================================================================
         #region DANCER

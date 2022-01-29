@@ -49,7 +49,8 @@ namespace XIVSlothComboPlugin.Combos
                 ArmysPaeon = 137,
                 RadiantFinale = 2722,
                 BattleVoice = 141,
-                Barrage = 128;
+                Barrage = 128,
+                RagingStrikes = 125;
         }
 
         public static class Debuffs
@@ -810,8 +811,27 @@ namespace XIVSlothComboPlugin.Combos
                             return BRD.PitchPerfect;
                         if (level >= BRD.Levels.EmpyrealArrow && !GetCooldown(BRD.EmpyrealArrow).IsCooldown)
                             return BRD.EmpyrealArrow;
-                        if (level >= BRD.Levels.Bloodletter && GetCooldown(BRD.Bloodletter).CooldownRemaining < 30)
-                            return BRD.Bloodletter;
+                        if (level >= BRD.Levels.Bloodletter) {
+                            var bloodletterCD = GetCooldown(BRD.Bloodletter).CooldownRemaining;
+
+                            if (IsEnabled(CustomComboPreset.BardSimplePooling) && level >= BRD.Levels.WanderersMinuet) {
+                                if (gauge.Song == Song.WANDERER) {
+                                    if (
+                                        (HasEffect(BRD.Buffs.RagingStrikes) || GetCooldown(BRD.RagingStrikes).CooldownRemaining > 10) &&
+                                        bloodletterCD < 30
+                                    ) {
+                                        return BRD.Bloodletter;
+                                    }
+                                }
+
+                                if (gauge.Song == Song.ARMY && bloodletterCD == 0) return BRD.Bloodletter;
+                                if (gauge.Song == Song.MAGE && bloodletterCD < 30) return BRD.Bloodletter;
+                                if (gauge.Song == Song.NONE && bloodletterCD == 0)  return BRD.Bloodletter;
+
+                            } else if (bloodletterCD < 30) {
+                                return BRD.Bloodletter;
+                            }
+                        }
                         if (level >= BRD.Levels.Sidewinder && !GetCooldown(BRD.Sidewinder).IsCooldown)
                             return BRD.Sidewinder;
                     }
