@@ -360,7 +360,7 @@ namespace XIVSlothComboPlugin.Combos
 
             return currentHealth / maxHealth * 100;
         }
-                protected static bool HasBattleTarget(bool v)
+        protected static bool HasBattleTarget(bool v)
         {
             if (CurrentTarget is null)
                 return false;
