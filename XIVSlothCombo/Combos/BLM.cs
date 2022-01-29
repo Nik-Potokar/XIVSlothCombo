@@ -171,6 +171,10 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (gauge.IsParadoxActive && level >= 90)
                             return BLM.Paradox;
+
+                        if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && gauge.UmbralHearts == 3 && LocalPlayer.CurrentMp >= 10000)
+                            return BLM.Fire3;
+
                     }
 
                     return BLM.Blizzard4;
@@ -188,7 +192,13 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature))
+                    {
                         return BLM.Fire3;
+                    }
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp == 0 && level >= BLM.Levels.Blizzard3)
+                    {
+                        return BLM.Blizzard3;
+                    }
                     if (LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && CustomCombo.IsEnabled(CustomComboPreset.BlackDespairFeature))
                     {
                         return BLM.Despair;
@@ -212,12 +222,16 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (level < BLM.Levels.Fire3)
                     return BLM.Fire;
+
                 if (gauge.InAstralFire)
                 {
                     if (HasEffect(BLM.Buffs.Firestarter) && level == 90)
                         return BLM.Paradox;
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 1600)
+                        return BLM.Blizzard3;
+
                     return BLM.Fire;
                 }
             }
@@ -254,11 +268,22 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature))
                 {
                     if (gauge.InUmbralIce && gauge.UmbralHearts <= 2)
-                        return BLM.Freeze;
+                    {
+                        if (level >= BLM.Levels.Blizzard4)
+                        {
+                            return BLM.Freeze;
+                        }
+                        else if (level >= 40 && currentMP < 10000 && thunder2Debuff)
+                        {
+                            return BLM.Freeze;
+                        }
+                    }
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
                 {
-                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder2Debuff) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder2Timer.RemainingTime <= 3 && level >= 26 && level <= 63) || (gauge.InAstralFire && !thunder2Debuff && level >= 26 && level <= 63))
+                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && !thunder2Debuff) || 
+                        (gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Timer.RemainingTime <= 3 && level >= 26 && level <= 63) || 
+                        (gauge.InAstralFire && !thunder2Debuff && level >= 26 && level <= 63))
                     {
                         if (lastComboMove == BLM.Thunder2)
                         {
@@ -285,7 +310,8 @@ namespace XIVSlothComboPlugin.Combos
                 // low level
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
                 {
-                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder2Debuff && thunder2Timer.RemainingTime >= 3) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && lastComboMove == BLM.Thunder2))
+                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Debuff && thunder2Timer.RemainingTime >= 3) || 
+                        (gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && lastComboMove == BLM.Thunder2))
                     {
                         if (level <= 81)
                             return BLM.Fire2;
