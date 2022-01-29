@@ -102,6 +102,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, BLM.Paradox)]
         BlackBlizzardParadoxFeature = 109,
 
+        [DependentCombos(BlackEnochianFeature)]
+        [CustomComboInfo("Aspect Swap Feature", "Changes Scathe to Blizzard 3 when at 0 MP in Astral Fire or to Fire 3 when at 10000 MP in Umbral Ice with 3 Umbral Hearts.", BLM.JobID, BLM.Scathe)]
+        BlackAspectSwapFeature = 110,
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE

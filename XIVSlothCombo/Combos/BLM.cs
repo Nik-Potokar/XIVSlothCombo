@@ -172,7 +172,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (gauge.IsParadoxActive && level >= 90)
                             return BLM.Paradox;
 
-                        if (gauge.UmbralHearts == 3 && LocalPlayer.CurrentMp >= 10000)
+                        if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && gauge.UmbralHearts == 3 && LocalPlayer.CurrentMp >= 10000)
                             return BLM.Fire3;
 
                     }
@@ -195,7 +195,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return BLM.Fire3;
                     }
-                    if (LocalPlayer.CurrentMp == 0 && level >= BLM.Levels.Blizzard3)
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp == 0 && level >= BLM.Levels.Blizzard3)
                     {
                         return BLM.Blizzard3;
                     }
@@ -229,7 +229,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Paradox;
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
-                    if (LocalPlayer.CurrentMp < 1600)
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 1600)
                         return BLM.Blizzard3;
 
                     return BLM.Fire;
