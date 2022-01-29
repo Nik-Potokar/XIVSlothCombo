@@ -71,7 +71,7 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-internal class MnkAoECombo : CustomCombo
+    internal class MnkAoECombo : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.MnkAoECombo;
 
