@@ -273,7 +273,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return BLM.Freeze;
                         }
-                        else if (currentMP < 10000)
+                        else if (currentMP < 10000 && thunder2Debuff)
                         {
                             return BLM.Freeze;
                         }
@@ -281,7 +281,9 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
                 {
-                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && !thunder2Debuff) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder2Timer.RemainingTime <= 3 && level >= 26 && level <= 63) || (gauge.InAstralFire && !thunder2Debuff && level >= 26 && level <= 63))
+                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && !thunder2Debuff) || 
+                        (gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Timer.RemainingTime <= 3 && level >= 26 && level <= 63) || 
+                        (gauge.InAstralFire && !thunder2Debuff && level >= 26 && level <= 63))
                     {
                         if (lastComboMove == BLM.Thunder2)
                         {
@@ -308,7 +310,8 @@ namespace XIVSlothComboPlugin.Combos
                 // low level
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
                 {
-                    if ((gauge.InUmbralIce && gauge.UmbralHearts == 3 && thunder2Debuff && thunder2Timer.RemainingTime >= 3) || (gauge.InUmbralIce && gauge.UmbralHearts == 3 && lastComboMove == BLM.Thunder2))
+                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Debuff && thunder2Timer.RemainingTime >= 3) || 
+                        (gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && lastComboMove == BLM.Thunder2))
                     {
                         if (level <= 81)
                             return BLM.Fire2;
