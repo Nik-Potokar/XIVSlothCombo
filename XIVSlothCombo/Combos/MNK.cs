@@ -77,7 +77,13 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MNK.ShadowOfTheDestroyer || actionID == MNK.ArmOfTheDestroyer)
+            var gauge = GetJobGauge<MNKGauge>();
+            var actionIDCD = GetCooldown(OriginalHook(actionID));
+            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && HasBattleTarget(true) && level >= 40)
+            {
+                return OriginalHook(MNK.Enlightenment);
+            }
+            if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
                 if (HasEffect(MNK.Buffs.OpoOpoForm))
                     return OriginalHook(MNK.ArmOfTheDestroyer);
@@ -88,16 +94,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
                     return MNK.Rockbreaker;
             }
-            var gauge = GetJobGauge<MNKGauge>();
+
             if (gauge.BlitzTimeRemaining > 0 && level >= 60)
             {
                 return OriginalHook(MNK.MasterfulBlitz);
             }
-            var actionIDCD = GetCooldown(OriginalHook(actionID));
-            if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 40)
-            {
-                return OriginalHook(MNK.Enlightenment);
-            }
+            
             if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnAoECombo))
             {
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
@@ -241,20 +243,21 @@ namespace XIVSlothComboPlugin.Combos
                 var twinsnakeBuff = HasEffect(MNK.Buffs.DisciplinedFist);
                 var twinsnakeDuration = FindEffect(MNK.Buffs.DisciplinedFist);
                 var demolishDuration = FindTargetEffect(MNK.Debuffs.Demolish);
-                var actionIDCD = GetCooldown(OriginalHook(actionID));
                 //Nadi
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
                 var pbCD = GetCooldown(MNK.PerfectBalance);
                 var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                 var solarNadi = gauge.Nadi == Nadi.SOLAR;
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
-                if (gauge.BlitzTimeRemaining > 0 && level >= 60)
-                {
-                    return OriginalHook(MNK.MasterfulBlitz);
-                }
+                var actionIDCD = GetCooldown(actionID);
+
                 if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 15)
                 {
                     return OriginalHook(MNK.ForbiddenChakra);
+                }
+                if (gauge.BlitzTimeRemaining > 0 && level >= 60)
+                {
+                    return OriginalHook(MNK.MasterfulBlitz);
                 }
                 if (HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.TrueStrike)
                 {
