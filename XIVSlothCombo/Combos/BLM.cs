@@ -273,7 +273,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return BLM.Freeze;
                         }
-                        else if (currentMP < 10000 && thunder2Debuff)
+                        else if (level >= 40 && currentMP < 10000 && thunder2Debuff)
                         {
                             return BLM.Freeze;
                         }
