@@ -369,7 +369,7 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.Combust1;
                 }
             }
-            return OriginalHook(AST.Malefic1);
+            return actionID;
         }
     }
     internal class CustomValuesTest : CustomCombo
@@ -440,7 +440,7 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.Combust1;
                 }
             }
-            return OriginalHook(AST.Malefic1);
+            return actionID;
         }
 
     }
