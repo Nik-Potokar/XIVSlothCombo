@@ -168,7 +168,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
                 {
-                    return OriginalHook(BRD.RefulgentArrow);
+                    return BRD.RefulgentArrow;
                 }
             }
 
@@ -384,7 +384,7 @@ namespace XIVSlothComboPlugin.Combos
 
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 
@@ -440,7 +440,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 
@@ -1016,18 +1016,18 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.SimpleDoTOption))
                             {
                                 if (level >= BRD.Levels.Windbite && !windbite)
-                                    return OriginalHook(BRD.Windbite);
+                                    return BRD.Windbite;
                                 if (level >= BRD.Levels.VenomousBite && !venomous)
-                                    return OriginalHook(BRD.VenomousBite);
+                                    return BRD.VenomousBite;
                             }
                         }
 
                         if (HasEffect(BRD.Buffs.StraightShotReady))
                         {
-                            return OriginalHook(BRD.RefulgentArrow);
+                            return BRD.RefulgentArrow;
                         }
 
-                        return OriginalHook(BRD.BurstShot);
+                        return BRD.BurstShot;
                     }
 
                     if (inCombat)
@@ -1054,10 +1054,10 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
                 {
-                    return OriginalHook(BRD.RefulgentArrow);
+                    return BRD.RefulgentArrow;
                 }
 
-                return OriginalHook(BRD.BurstShot);
+                return BRD.BurstShot;
             }
 
             return actionID;
@@ -1077,7 +1077,7 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.BattleVoice;
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
     internal class BardOneButtonSongs : CustomCombo
@@ -1096,7 +1096,7 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.ArmysPaeon;
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 }
