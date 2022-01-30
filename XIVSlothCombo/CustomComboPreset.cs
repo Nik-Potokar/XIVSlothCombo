@@ -612,9 +612,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterfull Bliz when Perfect Balance Is Active", MNK.JobID)]
         MnkPerfectBalancePlus = 9007,
 
+        [ParentCombo(MnkBasicComboPlus)]
         [CustomComboInfo("MasterfullBliz To Main Combo", "Adds all of (Optimal?) Bliz combos and Masterfull Bliz on Main Combo", MNK.JobID)]
         MonkMasterfullBlizOnMainCombo = 9008,
 
+        [ParentCombo(MnkAoECombo)]
         [CustomComboInfo("MasterfullBliz To AoE Combo", "Adds all of (Optimal?) Bliz combos and Masterfull Bliz on AoE Combo.", MNK.JobID)]
         MonkMasterfullBlizOnAoECombo = 9009,
 
@@ -722,6 +724,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID)]
         PaladinScornfulSpiritsFeature = 11006,
 
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [CustomComboInfo("Royal Goring Option", "Insert Goring Blade into the main combo when appropriate.\nRequires Royal Authority Combo", PLD.JobID)]
         PaladinRoyalGoringOption = 11007,
 
@@ -980,15 +983,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID)]
         SamuraiSimpleSamuraiAoECombo = 15016,
 
-        [ParentCombo(SamuraiIaijutsuTsubameGaeshiFeature)]
         [CustomComboInfo("KaitenFeature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID)]
         SamuraiKaitenFeature1 = 15018,
 
-        [ParentCombo(SamuraiIaijutsuTsubameGaeshiFeature)]
         [CustomComboInfo("KaitenFeature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID)]
         SamuraiKaitenFeature2 = 15019,
 
-        [ParentCombo(SamuraiIaijutsuTsubameGaeshiFeature)]
         [CustomComboInfo("KaitenFeature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID)]
         SamuraiKaitenFeature3 = 15020,
 
