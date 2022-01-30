@@ -211,6 +211,32 @@ namespace XIVSlothComboPlugin
                 }
 
                 ImGui.Spacing();
+
+
+            }
+            if (preset == CustomComboPreset.CustomValuesTest && enabled || preset == CustomComboPreset.SageDPSFeatureTest && enabled)
+            {
+                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
+                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
+                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75);
+                inputChanged |= ImGui.InputFloat("Input Target MAX Hp  (If targets MAX Hp is BELOW this value it will not use DoT)", ref MaxHpValue);
+                inputChanged |= ImGui.InputFloat("Input Current Enemy Hp (Flat Value) (If targets Current HP is BELOW this value it will not use DoT)", ref CurrentHpValue);
+                inputChanged |= ImGui.InputFloat("Input Current Enemy % Hp (If targets Current % Hp is BELOW this value it will not use DoT)", ref PercentageHpValue);
+
+
+                if (inputChanged)
+                {
+                    Service.Configuration.EnemyHealthMaxHp = MaxHpValue;
+                    Service.Configuration.EnemyHealthPercentage = PercentageHpValue;
+                    Service.Configuration.EnemyCurrentHp = CurrentHpValue;
+
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
             }
 
             i++;
@@ -229,6 +255,7 @@ namespace XIVSlothComboPlugin
                     ImGui.Unindent();
                 }
             }
+
         }
 
         /// <summary>
