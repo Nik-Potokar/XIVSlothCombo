@@ -36,7 +36,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 Thundercloud = 164,
                 LeyLines = 737,
                 Firestarter = 165;
@@ -44,7 +44,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const short
+            public const ushort
                 Thunder = 161,
                 Thunder2 = 162,
                 Thunder3 = 163,
@@ -70,7 +70,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BlackBlizzardFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BlackBlizzardFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackBlizzardFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -92,9 +92,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class BlackFireFeature : CustomCombo
+    internal class BlackFire13Feature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BlackFire13Feature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackFire13Feature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -113,7 +113,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BlackLeyLinesFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BlackLeyLinesFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackLeyLinesFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -128,7 +128,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BlackManaFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BlackManaFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackManaFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -147,7 +147,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BlackEnochianFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BlackEnochianFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackEnochianFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -242,7 +242,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BlackAoEComboFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BlackAoEComboFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackAoEComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -281,8 +281,8 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
                 {
-                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && !thunder2Debuff) || 
-                        (gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Timer.RemainingTime <= 3 && level >= 26 && level <= 63) || 
+                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && !thunder2Debuff) ||
+                        (gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Timer.RemainingTime <= 3 && level >= 26 && level <= 63) ||
                         (gauge.InAstralFire && !thunder2Debuff && level >= 26 && level <= 63))
                     {
                         if (lastComboMove == BLM.Thunder2)
@@ -310,7 +310,7 @@ namespace XIVSlothComboPlugin.Combos
                 // low level
                 if (IsEnabled(CustomComboPreset.BlackAoEComboFeature) && level >= 26 && level <= 63)
                 {
-                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Debuff && thunder2Timer.RemainingTime >= 3) || 
+                    if ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && thunder2Debuff && thunder2Timer.RemainingTime >= 3) ||
                         (gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4) && lastComboMove == BLM.Thunder2))
                     {
                         if (level <= 81)

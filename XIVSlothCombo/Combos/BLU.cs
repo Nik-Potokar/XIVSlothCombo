@@ -29,7 +29,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 MoonFlute = 1718,
                 Bristle = 1716,
                 Tingle = 2492,
@@ -38,7 +38,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const short
+            public const ushort
                 SongOfTorment = 273;
         }
 
@@ -51,7 +51,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BluBuffedSoT : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BluBuffedSoT;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluBuffedSoT;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -68,7 +68,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BluOpener : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BluOpener;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluOpener;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -121,7 +121,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class BluFinalSting : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BluFinalSting;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluFinalSting;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

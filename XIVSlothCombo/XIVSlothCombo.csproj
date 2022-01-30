@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Authors>attick,Kami,Daemitus,Grammernatzi,Aki,Iaotle,Codemned,PrincessRTFM,damolitionn,ele-starshade </Authors>
     <Company>-</Company>
-    <Version>2.1.2.7</Version> <!-- This is the version that will be used when pushing to the repo.-->
+    <Version>3.0.0.0</Version> <!-- This is the version that will be used when pushing to the repo.-->
     <Description>XIVCombo for lazy players</Description>
     <Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
@@ -46,6 +46,7 @@
   <ItemGroup>
     <PackageReference Include="DalamudLinter" Version="1.0.3" />
     <PackageReference Include="DalamudPackager" Version="2.1.5" />
+	  <ProjectReference Include="..\lib\FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>

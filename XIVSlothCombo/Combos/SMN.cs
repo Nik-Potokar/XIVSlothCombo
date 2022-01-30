@@ -107,11 +107,14 @@ namespace XIVSlothComboPlugin.Combos
             SearingLight = 25801,
 
             // other
-            Sleep = 25880;
+            Sleep = 25880,
+            Swiftcast = 7561;
+
 
         public static class Buffs
         {
-            public const short
+            public const ushort
+                Swiftcast = 167,
                 FurtherRuin = 2701,
                 GarudasFavor = 2725,
                 TitansFavor = 2853,
@@ -150,10 +153,10 @@ namespace XIVSlothComboPlugin.Combos
                 EmeralRuin3 = 54;
         }
     }
-    
+
     internal class SummonerEDFesterCombo : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerEDFesterCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerEDFesterCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -174,7 +177,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class SummonerESPainflareCombo : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerESPainflareCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerESPainflareCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -196,11 +199,11 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class SummonerMainComboFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerMainComboFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerMainComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature))
+            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || (actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature)))
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
@@ -209,333 +212,7 @@ namespace XIVSlothComboPlugin.Combos
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var buffCD = GetCooldown(SMN.SearingLight);
                 var searingLight = HasEffect(SMN.Buffs.SearingLight);
-                var swiftCD = GetCooldown(All.Swiftcast);
-                var slipstreamCD = GetCooldown(SMN.Slipstream);
-                var energyDrainCD = GetCooldown(SMN.EnergyDrain);
-                var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
-                var fofCD = GetCooldown(SMN.FountainOfFire);
-                var smnBahamut = GetCooldown(SMN.SummonBahamut);
-                var smnPhoenix = GetCooldown(SMN.SummonPhoenix);
-                var astralCD = GetCooldown(SMN.AstralImpulse);
-                var deathflare = GetCooldown(SMN.Deathflare);
-                var fountainfireCD = GetCooldown(SMN.FountainOfFire);
-                var enkindleBahamut = GetCooldown(SMN.EnkindleBahamut);
-                var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
-                var rekindle = GetCooldown(SMN.Rekindle);
-                if (IsEnabled(CustomComboPreset.SummonerRuin4WastePrevention) && incombat)
-                {
-                    if (HasEffect(SMN.Buffs.FurtherRuin) && furtheRuin.RemainingTime > 0 && furtheRuin.RemainingTime <= 5 && gauge.SummonTimerRemaining == 0)
-                    {
-                        return SMN.Ruin4;
-                    }
-                }
-                if (IsEnabled(CustomComboPreset.SimpleSummoner))
-                {
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
-                        return SMN.SearingLight;
-
-                    // Egis
-                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
-                        return OriginalHook(SMN.SummonTopaz);
-                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
-                        return OriginalHook(SMN.SummonEmerald);
-                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
-                        return OriginalHook(SMN.SummonRuby);
-                    // Demi
-                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown && searingLight)
-                        return OriginalHook(SMN.Aethercharge);
-                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown && !searingLight)
-                        return OriginalHook(SMN.Aethercharge);
-                }
-                if (IsEnabled(CustomComboPreset.SimpleSummonerOption2))
-                {
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
-                        return SMN.SearingLight;
-
-                    // Egis
-                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
-                        return OriginalHook(SMN.SummonEmerald);
-                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
-                        return OriginalHook(SMN.SummonTopaz);
-                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
-                        return OriginalHook(SMN.SummonRuby);
-
-                    // Demi
-                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-                }
-                if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda))
-                {
-                    if (!swiftCD.IsCooldown && HasEffect(SMN.Buffs.GarudasFavor) && gauge.IsGarudaAttuned )
-                        return All.Swiftcast; 
-                }
-                if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit))
-                {
-                    if (!swiftCD.IsCooldown && gauge.IsIfritAttuned && lastComboMove == OriginalHook(SMN.RubyRite))
-                        return All.Swiftcast;
-                }
-                if (IsEnabled(CustomComboPreset.SummonerDemiSummonsFeature))
-                {
-                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-                }
-                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
-                {
-                    if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.99)
-                        return SMN.Fester;
-                    if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.2)
-                        return SMN.Fester;
-                    if ((lastComboMove == SMN.AstralImpulse && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.FountainOfFire && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95))
-                        return SMN.EnergyDrain;
-                }
-                if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature))
-                {
-                    // Bahamut
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.99)
-                        return SMN.Deathflare;
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.3)
-                        return SMN.Deathflare;
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && deathflare.IsCooldown && !enkindleBahamut.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.99)
-                        return SMN.EnkindleBahamut;
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && deathflare.IsCooldown && !enkindleBahamut.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.3)
-                        return SMN.EnkindleBahamut;
-                    // Phoenix
-                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.99)
-                        return SMN.EnkindlePhoenix;
-                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
-                        return SMN.EnkindlePhoenix;
-                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
-                        return SMN.Rekindle;
-                }
-                if(IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
-                {
-                    if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor))
-                        return SMN.Slipstream;
-                }
-                if(IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
-                {
-                    if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite)
-                        return SMN.MountainBuster;
-                }
-                if(IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
-                {
-                    if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor))
-                        return SMN.CrimsonCyclone;
-                    if (gauge.IsIfritAttuned && !HasEffect(SMN.Buffs.IfritsFavor) && lastComboMove == SMN.CrimsonCyclone)
-                        return SMN.CrimsonStrike;
-                }
-                if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature))
-                {
-                    if (gauge.IsGarudaAttuned && level >= 72)
-                        return SMN.EmeraldRite;
-                    if (gauge.IsTitanAttuned && level >= 72)
-                        return SMN.TopazRite;
-                    if (gauge.IsIfritAttuned && level >= 72)
-                        return SMN.RubyRite;
-
-                    // low level 54-71
-                    if (gauge.IsGarudaAttuned && level >= 54)
-                        return SMN.EmeralRuin3;
-                    if (gauge.IsTitanAttuned && level >= 54)
-                        return SMN.TopazRuin3;
-                    if (gauge.IsIfritAttuned && level >= 54)
-                        return SMN.RubyRuin3;
-
-
-                    // low level 30-53
-                    if (gauge.IsGarudaAttuned && level >= 30)
-                        return SMN.EmeralRuin2;
-                    if (gauge.IsTitanAttuned && level >= 30)
-                        return SMN.TopazRuin2;
-                    if (gauge.IsIfritAttuned && level >= 30)
-                        return SMN.RubyRuin2;
-
-                    // low level 1-29
-                    if (gauge.IsGarudaAttuned)
-                        return SMN.EmeralRuin1;
-                    if (gauge.IsTitanAttuned)
-                        return SMN.TopazRuin1;
-                    if (gauge.IsIfritAttuned)
-                        return SMN.RubyRuin1;
-                }
-                if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature) && incombat)
-                {
-                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
-                        return SMN.Ruin4;
-                }
-                if (IsEnabled(CustomComboPreset.SummonerCarbuncleSummonFeature))
-                {
-                    var carbyPresent = Service.BuddyList.PetBuddyPresent;
-                    if (!carbyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && gauge.AttunmentTimerRemaining == 0)
-                        return SMN.SummonCarbuncle;
-                }
-            }
-
-            return OriginalHook(actionID);
-        }
-    }
-
-    internal class SummonerAOEComboFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerAOEComboFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SMN.Tridisaster || actionID == SMN.Outburst)
-            {
-                var gauge = GetJobGauge<SMNGauge>();
-                if (IsEnabled(CustomComboPreset.SimpleAoESummoner))
-                {
-                    var bahaCD = GetCooldown(SMN.SummonBahamut);
-                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var buffCD = GetCooldown(SMN.SearingLight);
-
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
-                        return SMN.SearingLight;
-
-                    // Egis
-                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
-                        return OriginalHook(SMN.SummonTopaz);
-                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
-                        return OriginalHook(SMN.SummonEmerald);
-                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
-                        return OriginalHook(SMN.SummonRuby);
-
-                    // Demi
-                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown || gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-
-
-                }
-                if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
-                {
-                    var bahaCD = GetCooldown(SMN.SummonBahamut);
-                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
-                        return OriginalHook(SMN.Aethercharge);
-                }
-                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
-                {
-                    var energyDrainCD = GetCooldown(SMN.EnergyDrain);
-                    var energySiphonCD = GetCooldown(SMN.EnergySiphon);
-                    var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
-                    var astralflareCD = GetCooldown(SMN.AstralFlare);
-                    var fofCD = GetCooldown(SMN.FountainOfFire);
-                    if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.99)
-                        return SMN.Painflare;
-                    if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.2)
-                        return SMN.Painflare;
-                    if ((lastComboMove == SMN.AstralFlare && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.BrandOfPurgatory && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95))
-                        return SMN.EnergySiphon;
-                }
-                if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature))
-                {
-                    var smnBahamut = GetCooldown(SMN.SummonBahamut);
-                    var smnPhoenix = GetCooldown(SMN.SummonPhoenix);
-
-                    var astralflareCD = GetCooldown(SMN.AstralFlare);
-                    var deathflare = GetCooldown(SMN.Deathflare);
-                    var brandofpurgaCD = GetCooldown(SMN.BrandOfPurgatory);
-                    var enkindleBahamut = GetCooldown(SMN.EnkindleBahamut);
-                    var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
-                    var rekindle = GetCooldown(SMN.Rekindle);
-
-
-                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > 0.7)
-                        return SMN.Deathflare;
-                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
-                        return SMN.Rekindle;
-                    if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.AstralFlare || lastComboMove == SMN.SummonBahamut) && !enkindleBahamut.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
-                        return SMN.EnkindleBahamut;
-                    if (level > SMN.Levels.Phoenix && (lastComboMove == SMN.BrandOfPurgatory || lastComboMove == SMN.SummonPhoenix) && !enkindlePhoenix.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
-                        return SMN.EnkindlePhoenix;
-                }
-
-                if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
-                    return SMN.Slipstream;
-                if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazCata && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
-                    return SMN.MountainBuster;
-                if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
-                    return SMN.CrimsonCyclone;
-                if (gauge.IsIfritAttuned && !HasEffect(SMN.Buffs.IfritsFavor) && lastComboMove == SMN.CrimsonCyclone && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
-                    return SMN.CrimsonStrike;
-
-                if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature))
-                {
-                    // low level 1-29
-                    if (gauge.IsGarudaAttuned && level >= 26 && level <= 73)
-                        return SMN.EmeraldOutburst;
-                    if (gauge.IsTitanAttuned && level >= 26 && level <= 73)
-                        return SMN.TopazOutburst;
-                    if (gauge.IsIfritAttuned && level >= 26 && level <= 73)
-                        return SMN.RubyOutburst;
-
-                    if (gauge.IsGarudaAttuned && level >= 82)
-                        return SMN.EmeraldCata;
-                    if (gauge.IsGarudaAttuned && level <= 81)
-                        return SMN.EmeraldDisaster;
-                    if (gauge.IsTitanAttuned && level >= 82)
-                        return SMN.TopazCata;
-                    if (gauge.IsTitanAttuned && level <= 81)
-                        return SMN.TopazDisaster;
-                    if (gauge.IsIfritAttuned && level >= 82)
-                        return SMN.RubyCata;
-                    if (gauge.IsIfritAttuned && level <= 81)
-                        return SMN.RubyDisaster;
-                }
-                if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature)) 
-                {
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin) && incombat)
-                        return SMN.Ruin4;
-                }
-            }
-
-            return actionID;
-        }
-    }
-    internal class SummonerRuinIVMobilityFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerRuinIVMobilityFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SMN.Ruin4)
-            {
-                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
-                if (!furtherRuin)
-                    return SMN.Ruin;
-            }
-
-            return OriginalHook(SMN.Ruin4);
-        }
-    }
-    internal class SummonerMainComboFeatureRuin1 : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.SummonerMainComboFeatureRuin1;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SMN.Ruin  && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature))
-            {
-                var gauge = GetJobGauge<SMNGauge>();
-                var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
-                var bahaCD = GetCooldown(SMN.SummonBahamut);
-                var phoenixCD = GetCooldown(SMN.SummonPhoenix);
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var buffCD = GetCooldown(SMN.SearingLight);
-                var searingLight = HasEffect(SMN.Buffs.SearingLight);
-                var swiftCD = GetCooldown(All.Swiftcast);
+                var swiftCD = GetCooldown(SMN.Swiftcast);
                 var slipstreamCD = GetCooldown(SMN.Slipstream);
                 var energyDrainCD = GetCooldown(SMN.EnergyDrain);
                 var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
@@ -595,12 +272,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda))
                 {
                     if (!swiftCD.IsCooldown && HasEffect(SMN.Buffs.GarudasFavor) && gauge.IsGarudaAttuned)
-                        return All.Swiftcast;
+                        return SMN.Swiftcast;
                 }
                 if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit))
                 {
                     if (!swiftCD.IsCooldown && gauge.IsIfritAttuned && lastComboMove == OriginalHook(SMN.RubyRite))
-                        return All.Swiftcast;
+                        return SMN.Swiftcast;
                 }
                 if (IsEnabled(CustomComboPreset.SummonerDemiSummonsFeature))
                 {
@@ -701,7 +378,333 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
+        }
+    }
+
+    internal class SummonerAOEComboFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerAOEComboFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Tridisaster || actionID == SMN.Outburst)
+            {
+                var gauge = GetJobGauge<SMNGauge>();
+                if (IsEnabled(CustomComboPreset.SimpleAoESummoner))
+                {
+                    var bahaCD = GetCooldown(SMN.SummonBahamut);
+                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var buffCD = GetCooldown(SMN.SearingLight);
+
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                        return SMN.SearingLight;
+
+                    // Egis
+                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                        return OriginalHook(SMN.SummonTopaz);
+                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonEmerald);
+                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonRuby);
+
+                    // Demi
+                    if ((gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown) || gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+
+
+                }
+                if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
+                {
+                    var bahaCD = GetCooldown(SMN.SummonBahamut);
+                    var phoenixCD = GetCooldown(SMN.SummonPhoenix);
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                }
+                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
+                {
+                    var energyDrainCD = GetCooldown(SMN.EnergyDrain);
+                    var energySiphonCD = GetCooldown(SMN.EnergySiphon);
+                    var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
+                    var astralflareCD = GetCooldown(SMN.AstralFlare);
+                    var fofCD = GetCooldown(SMN.FountainOfFire);
+                    if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.99)
+                        return SMN.Painflare;
+                    if (lastComboMove == SMN.AstralFlare && gauge.HasAetherflowStacks && astralflareCD.CooldownRemaining > 0.2)
+                        return SMN.Painflare;
+                    if ((lastComboMove == SMN.AstralFlare && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.BrandOfPurgatory && !gauge.HasAetherflowStacks && !energySiphonCD.IsCooldown && astralflareCD.CooldownRemaining > 0.95))
+                        return SMN.EnergySiphon;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature))
+                {
+                    var smnBahamut = GetCooldown(SMN.SummonBahamut);
+                    var smnPhoenix = GetCooldown(SMN.SummonPhoenix);
+
+                    var astralflareCD = GetCooldown(SMN.AstralFlare);
+                    var deathflare = GetCooldown(SMN.Deathflare);
+                    var brandofpurgaCD = GetCooldown(SMN.BrandOfPurgatory);
+                    var enkindleBahamut = GetCooldown(SMN.EnkindleBahamut);
+                    var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
+                    var rekindle = GetCooldown(SMN.Rekindle);
+
+
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > 0.7)
+                        return SMN.Deathflare;
+                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
+                        return SMN.Rekindle;
+                    if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.AstralFlare || lastComboMove == SMN.SummonBahamut) && !enkindleBahamut.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
+                        return SMN.EnkindleBahamut;
+                    if (level > SMN.Levels.Phoenix && (lastComboMove == SMN.BrandOfPurgatory || lastComboMove == SMN.SummonPhoenix) && !enkindlePhoenix.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
+                        return SMN.EnkindlePhoenix;
+                }
+
+                if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) && IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
+                    return SMN.Slipstream;
+                if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazCata && IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
+                    return SMN.MountainBuster;
+                if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
+                    return SMN.CrimsonCyclone;
+                if (gauge.IsIfritAttuned && !HasEffect(SMN.Buffs.IfritsFavor) && lastComboMove == SMN.CrimsonCyclone && IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
+                    return SMN.CrimsonStrike;
+
+                if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature))
+                {
+                    // low level 1-29
+                    if (gauge.IsGarudaAttuned && level >= 26 && level <= 73)
+                        return SMN.EmeraldOutburst;
+                    if (gauge.IsTitanAttuned && level >= 26 && level <= 73)
+                        return SMN.TopazOutburst;
+                    if (gauge.IsIfritAttuned && level >= 26 && level <= 73)
+                        return SMN.RubyOutburst;
+
+                    if (gauge.IsGarudaAttuned && level >= 82)
+                        return SMN.EmeraldCata;
+                    if (gauge.IsGarudaAttuned && level <= 81)
+                        return SMN.EmeraldDisaster;
+                    if (gauge.IsTitanAttuned && level >= 82)
+                        return SMN.TopazCata;
+                    if (gauge.IsTitanAttuned && level <= 81)
+                        return SMN.TopazDisaster;
+                    if (gauge.IsIfritAttuned && level >= 82)
+                        return SMN.RubyCata;
+                    if (gauge.IsIfritAttuned && level <= 81)
+                        return SMN.RubyDisaster;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature))
+                {
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin) && incombat)
+                        return SMN.Ruin4;
+                }
+            }
+
+            return actionID;
+        }
+    }
+    internal class SummonerRuinIVMobilityFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerRuinIVMobilityFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Ruin4)
+            {
+                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
+                if (!furtherRuin)
+                    return SMN.Ruin;
+            }
+
+            return OriginalHook(SMN.Ruin4);
+        }
+    }
+    internal class SummonerMainComboFeatureRuin1 : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerMainComboFeatureRuin1;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature))
+            {
+                var gauge = GetJobGauge<SMNGauge>();
+                var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
+                var bahaCD = GetCooldown(SMN.SummonBahamut);
+                var phoenixCD = GetCooldown(SMN.SummonPhoenix);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var buffCD = GetCooldown(SMN.SearingLight);
+                var searingLight = HasEffect(SMN.Buffs.SearingLight);
+                var swiftCD = GetCooldown(SMN.Swiftcast);
+                var slipstreamCD = GetCooldown(SMN.Slipstream);
+                var energyDrainCD = GetCooldown(SMN.EnergyDrain);
+                var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
+                var fofCD = GetCooldown(SMN.FountainOfFire);
+                var smnBahamut = GetCooldown(SMN.SummonBahamut);
+                var smnPhoenix = GetCooldown(SMN.SummonPhoenix);
+                var astralCD = GetCooldown(SMN.AstralImpulse);
+                var deathflare = GetCooldown(SMN.Deathflare);
+                var fountainfireCD = GetCooldown(SMN.FountainOfFire);
+                var enkindleBahamut = GetCooldown(SMN.EnkindleBahamut);
+                var enkindlePhoenix = GetCooldown(SMN.EnkindlePhoenix);
+                var rekindle = GetCooldown(SMN.Rekindle);
+                if (IsEnabled(CustomComboPreset.SummonerRuin4WastePrevention) && incombat)
+                {
+                    if (HasEffect(SMN.Buffs.FurtherRuin) && furtheRuin.RemainingTime > 0 && furtheRuin.RemainingTime <= 5 && gauge.SummonTimerRemaining == 0)
+                    {
+                        return SMN.Ruin4;
+                    }
+                }
+                if (IsEnabled(CustomComboPreset.SimpleSummoner))
+                {
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                        return SMN.SearingLight;
+
+                    // Egis
+                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                        return OriginalHook(SMN.SummonTopaz);
+                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonEmerald);
+                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonRuby);
+                    // Demi
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown && searingLight)
+                        return OriginalHook(SMN.Aethercharge);
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown && !searingLight)
+                        return OriginalHook(SMN.Aethercharge);
+                }
+                if (IsEnabled(CustomComboPreset.SimpleSummonerOption2))
+                {
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                        return SMN.SearingLight;
+
+                    // Egis
+                    if (gauge.IsGarudaReady && !gauge.IsTitanAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonEmerald);
+                    if (gauge.IsTitanReady && !gauge.IsGarudaAttuned && !gauge.IsIfritAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat)
+                        return OriginalHook(SMN.SummonTopaz);
+                    if (gauge.IsIfritReady && !gauge.IsGarudaAttuned && !gauge.IsTitanAttuned && gauge.SummonTimerRemaining == 0 && bahaCD.IsCooldown && phoenixCD.IsCooldown && incombat && !HasEffect(SMN.Buffs.TitansFavor))
+                        return OriginalHook(SMN.SummonRuby);
+
+                    // Demi
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                }
+                if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda))
+                {
+                    if (!swiftCD.IsCooldown && HasEffect(SMN.Buffs.GarudasFavor) && gauge.IsGarudaAttuned)
+                        return SMN.Swiftcast;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit))
+                {
+                    if (!swiftCD.IsCooldown && gauge.IsIfritAttuned && lastComboMove == OriginalHook(SMN.RubyRite))
+                        return SMN.Swiftcast;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerDemiSummonsFeature))
+                {
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                    if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
+                        return OriginalHook(SMN.Aethercharge);
+                }
+                if (IsEnabled(CustomComboPreset.SummonerLazyFesterFeature))
+                {
+                    if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.99)
+                        return SMN.Fester;
+                    if (lastComboMove == SMN.AstralImpulse && gauge.HasAetherflowStacks && astralimpulseCD.CooldownRemaining > 0.2)
+                        return SMN.Fester;
+                    if ((lastComboMove == SMN.AstralImpulse && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95) || (lastComboMove == SMN.FountainOfFire && !gauge.HasAetherflowStacks && !energyDrainCD.IsCooldown && astralimpulseCD.CooldownRemaining > 0.95))
+                        return SMN.EnergyDrain;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature))
+                {
+                    // Bahamut
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.99)
+                        return SMN.Deathflare;
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && !deathflare.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.3)
+                        return SMN.Deathflare;
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && deathflare.IsCooldown && !enkindleBahamut.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.99)
+                        return SMN.EnkindleBahamut;
+                    if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralImpulse && deathflare.IsCooldown && !enkindleBahamut.IsCooldown && !gauge.HasAetherflowStacks && astralCD.CooldownRemaining > 0.3)
+                        return SMN.EnkindleBahamut;
+                    // Phoenix
+                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.99)
+                        return SMN.EnkindlePhoenix;
+                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
+                        return SMN.EnkindlePhoenix;
+                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
+                        return SMN.Rekindle;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
+                {
+                    if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor))
+                        return SMN.Slipstream;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
+                {
+                    if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite)
+                        return SMN.MountainBuster;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
+                {
+                    if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor))
+                        return SMN.CrimsonCyclone;
+                    if (gauge.IsIfritAttuned && !HasEffect(SMN.Buffs.IfritsFavor) && lastComboMove == SMN.CrimsonCyclone)
+                        return SMN.CrimsonStrike;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature))
+                {
+                    if (gauge.IsGarudaAttuned && level >= 72)
+                        return SMN.EmeraldRite;
+                    if (gauge.IsTitanAttuned && level >= 72)
+                        return SMN.TopazRite;
+                    if (gauge.IsIfritAttuned && level >= 72)
+                        return SMN.RubyRite;
+
+                    // low level 54-71
+                    if (gauge.IsGarudaAttuned && level >= 54)
+                        return SMN.EmeralRuin3;
+                    if (gauge.IsTitanAttuned && level >= 54)
+                        return SMN.TopazRuin3;
+                    if (gauge.IsIfritAttuned && level >= 54)
+                        return SMN.RubyRuin3;
+
+
+                    // low level 30-53
+                    if (gauge.IsGarudaAttuned && level >= 30)
+                        return SMN.EmeralRuin2;
+                    if (gauge.IsTitanAttuned && level >= 30)
+                        return SMN.TopazRuin2;
+                    if (gauge.IsIfritAttuned && level >= 30)
+                        return SMN.RubyRuin2;
+
+                    // low level 1-29
+                    if (gauge.IsGarudaAttuned)
+                        return SMN.EmeralRuin1;
+                    if (gauge.IsTitanAttuned)
+                        return SMN.TopazRuin1;
+                    if (gauge.IsIfritAttuned)
+                        return SMN.RubyRuin1;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature) && incombat)
+                {
+                    if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
+                        return SMN.Ruin4;
+                }
+                if (IsEnabled(CustomComboPreset.SummonerCarbuncleSummonFeature))
+                {
+                    var carbyPresent = Service.BuddyList.PetBuddyPresent;
+                    if (!carbyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && gauge.AttunmentTimerRemaining == 0)
+                        return SMN.SummonCarbuncle;
+                }
+            }
+
+            return actionID;
         }
     }
 }

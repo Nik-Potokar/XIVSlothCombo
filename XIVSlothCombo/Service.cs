@@ -1,4 +1,5 @@
 using Dalamud.Data;
+using Dalamud.Game;
 using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Buddy;
 using Dalamud.Game.ClientState.Conditions;
@@ -22,6 +23,11 @@ namespace XIVSlothComboPlugin
         internal static PluginConfiguration Configuration { get; set; } = null!;
 
         /// <summary>
+        /// Gets or sets the plugin caching mechanism.
+        /// </summary>
+        internal static CustomComboCache ComboCache { get; set; } = null!;
+
+        /// <summary>
         /// Gets or sets the plugin icon replacer.
         /// </summary>
         internal static IconReplacer IconReplacer { get; set; } = null!;
@@ -36,6 +42,12 @@ namespace XIVSlothComboPlugin
         /// </summary>
         [PluginService]
         internal static DalamudPluginInterface Interface { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets the Dalamud buddy list.
+        /// </summary>
+        [PluginService]
+        internal static BuddyList BuddyList { get; private set; } = null!;
 
         /// <summary>
         /// Gets the Dalamud chat gui.
@@ -68,21 +80,27 @@ namespace XIVSlothComboPlugin
         internal static DataManager DataManager { get; private set; } = null!;
 
         /// <summary>
+        /// Gets the Dalamud framework manager.
+        /// </summary>
+        [PluginService]
+        internal static Framework Framework { get; private set; } = null!;
+
+        /// <summary>
         /// Gets the Dalamud job gauges.
         /// </summary>
         [PluginService]
         internal static JobGauges JobGauges { get; private set; } = null!;
 
         /// <summary>
+        /// Gets the Dalamud object table.
+        /// </summary>
+        [PluginService]
+        internal static ObjectTable ObjectTable { get; private set; } = null!;
+
+        /// <summary>
         /// Gets the Dalamud target manager.
         /// </summary>
         [PluginService]
         internal static TargetManager TargetManager { get; private set; } = null!;
-
-        /// <summary>
-        /// Gets the Dalamud Buddy List.
-        /// </summary>
-        [PluginService]
-        internal static BuddyList BuddyList { get; private set; } = null!;
     }
 }

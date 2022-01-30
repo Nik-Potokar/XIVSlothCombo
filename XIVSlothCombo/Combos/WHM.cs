@@ -42,7 +42,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
             Swiftcast = 167,
             Medica2 = 150,
             PresenceOfMind = 157;
@@ -50,11 +50,11 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const short
+            public const ushort
             Dia = 1871,
             Aero = 143,
             Aero2 = 144;
-            
+
         }
 
         public static class Levels
@@ -68,7 +68,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class WhiteMageSolaceMiseryFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WhiteMageSolaceMiseryFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageSolaceMiseryFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -83,7 +83,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class WhiteMageRaptureMiseryFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WhiteMageRaptureMiseryFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageRaptureMiseryFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -98,7 +98,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class WhiteMageCureFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WhiteMageCureFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageCureFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -114,7 +114,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class WhiteMageAfflatusFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WhiteMageAfflatusFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageAfflatusFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -143,7 +143,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class WHMRaiseFeature : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.WHMRaiseFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMRaiseFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -165,7 +165,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class WHMDotMainComboFeature : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.WHMDotMainComboFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMDotMainComboFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -227,7 +227,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class WHMMedicaFeature : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.WHMMedicaFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMMedicaFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {

@@ -30,11 +30,6 @@ namespace XIVSlothComboPlugin
         /// </summary>
         public IntPtr IsActionIdReplaceable { get; private set; }
 
-        /// <summary>
-        /// Gets the address of fpGetActionCooldown.
-        /// </summary>
-        public IntPtr GetActionCooldown { get; private set; }
-
         /// <inheritdoc/>
         protected override void Setup64Bit(SigScanner scanner)
         {
@@ -44,14 +39,11 @@ namespace XIVSlothComboPlugin
 
             this.IsActionIdReplaceable = scanner.ScanText("81 F9 ?? ?? ?? ?? 7F 35");
 
-            this.GetActionCooldown = scanner.ScanText("E8 ?? ?? ?? ?? 0F 57 FF 48 85 C0");
-
             PluginLog.Verbose("===== X I V C O M B O =====");
-            PluginLog.Verbose($"GetAdjustedActionId   0x{this.GetAdjustedActionId:X}");
-            PluginLog.Verbose($"IsActionIdReplaceable 0x{this.IsActionIdReplaceable:X}");
-            PluginLog.Verbose($"ComboTimer            0x{this.ComboTimer:X}");
-            PluginLog.Verbose($"LastComboMove         0x{this.LastComboMove:X}");
-            PluginLog.Verbose($"GetActionCooldown     0x{this.GetActionCooldown:X}");
+            PluginLog.Verbose($"{nameof(this.GetAdjustedActionId)}   0x{this.GetAdjustedActionId:X}");
+            PluginLog.Verbose($"{nameof(this.IsActionIdReplaceable)} 0x{this.IsActionIdReplaceable:X}");
+            PluginLog.Verbose($"{nameof(this.ComboTimer)}            0x{this.ComboTimer:X}");
+            PluginLog.Verbose($"{nameof(this.LastComboMove)}         0x{this.LastComboMove:X}");
         }
     }
 }

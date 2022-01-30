@@ -33,7 +33,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 InnerRelease = 1177,
                 SurgingTempest = 2677,
                 NascentChaos = 1897,
@@ -65,7 +65,7 @@ namespace XIVSlothComboPlugin.Combos
     // Replace Storm's Path with Storm's Path combo and overcap feature on main combo to fellcleave
     internal class WarriorStormsPathCombo : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WarriorStormsPathCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorStormsPathCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -92,7 +92,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && beserkCD.IsCooldown && level >= 64 && level <= 69)
                     return WAR.Upheaval;
-                    else
+                else
                 if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 70)
                     return WAR.Upheaval;
 
@@ -119,7 +119,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 // leaves 2 stacks
                 if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && level >= 64)
-                {                    
+                {
                     if (level >= 88)
                     {
                         if (onslaughtCD.CooldownRemaining < 1 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff && level >= 88)
@@ -180,7 +180,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class WarriorStormsEyeCombo : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.WarriorStormsEyeCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorStormsEyeCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -207,7 +207,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class WarriorMythrilTempestCombo : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.WarriorMythrilTempestCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorMythrilTempestCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -223,13 +223,13 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.Orogeny;
                     if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && !orogenyCD.IsCooldown && mythrilCd.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 86)
                         return WAR.Orogeny;
-                    
+
 
                     if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= 90)
                         return OriginalHook(WAR.PrimalRend);
                     if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                         return OriginalHook(WAR.Decimate);
-                    if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && gauge >=50 && level >= 72)
+                    if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && gauge >= 50 && level >= 72)
                         return OriginalHook(WAR.ChaoticCyclone);
 
                     if (comboTime > 0)
@@ -253,7 +253,7 @@ namespace XIVSlothComboPlugin.Combos
                             if ((lastComboMove == WAR.Overpower && level >= 60) || (lastComboMove == WAR.MythrilTempest && gauge >= 90 && level >= 60 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature)))
                                 return WAR.Decimate;
                         }
-                       
+
                     }
 
                     return WAR.Overpower;
@@ -265,7 +265,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class WarriorNascentFlashFeature : CustomCombo
         {
-            protected override CustomComboPreset Preset => CustomComboPreset.WarriorNascentFlashFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorNascentFlashFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -283,7 +283,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class WarriorPrimalRendFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WarriorPrimalRendFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorPrimalRendFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -304,7 +304,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class WarriorInfuriateFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WarriorInfuriateFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorInfuriateFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
