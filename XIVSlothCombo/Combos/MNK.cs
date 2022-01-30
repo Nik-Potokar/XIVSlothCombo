@@ -84,7 +84,6 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return OriginalHook(MNK.Enlightenment);
                 }
-
                 if (gauge.BlitzTimeRemaining > 0 && level >= 60)
                     return OriginalHook(MNK.MasterfulBlitz);
 
