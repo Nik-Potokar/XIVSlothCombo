@@ -80,13 +80,23 @@ namespace XIVSlothComboPlugin.Combos
             var actionIDCD = GetCooldown(OriginalHook(actionID));
             if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
-
-                if (gauge.BlitzTimeRemaining > 0 && level >= 60)
-                    return OriginalHook(MNK.MasterfulBlitz);
                 if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && HasBattleTarget(true) && level >= 40)
                 {
                     return OriginalHook(MNK.Enlightenment);
                 }
+
+                if (gauge.BlitzTimeRemaining > 0 && level >= 60)
+                    return OriginalHook(MNK.MasterfulBlitz);
+
+                if (HasEffect(MNK.Buffs.OpoOpoForm))
+                    return OriginalHook(MNK.ArmOfTheDestroyer);
+
+                if (HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.FourPointFury)
+                    return MNK.FourPointFury;
+
+                if (HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
+                    return MNK.Rockbreaker;
+
                 if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnAoECombo))
                 {
                     var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
@@ -143,14 +153,6 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(MNK.ArmOfTheDestroyer);
                     }
 
-                    if (HasEffect(MNK.Buffs.OpoOpoForm))
-                    return OriginalHook(MNK.ArmOfTheDestroyer);
-
-                    if (HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.FourPointFury)
-                    return MNK.FourPointFury;
-
-                    if (HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
-                    return MNK.Rockbreaker;
                 }
 
             }
