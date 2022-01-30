@@ -113,10 +113,12 @@ namespace XIVSlothComboPlugin.Combos
                 var interveneCD = GetCooldown(PLD.Intervene);
                 var actionIDCD = GetCooldown(actionID);
                 var riotcd = GetCooldown(actionID);
+                var customGCDHigh = Service.Configuration.CustomGCDValueHigh;
+                var customGCDLow = Service.Configuration.CustomGCDValueLow;
                 var fofremainingTime = FindEffect(PLD.Buffs.FightOrFlight);
-                if (IsEnabled(CustomComboPreset.PaladinFightOrFlightMainComboFeature))
+                if (IsEnabled(CustomComboPreset.PaladinFightOrFlightMainComboFeatureTest))
                 {
-                    if (lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < 0.6 && riotcd.CooldownRemaining > 0.4 && !foFCD.IsCooldown)
+                    if (lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < customGCDLow && riotcd.CooldownRemaining > customGCDHigh && !foFCD.IsCooldown)
                         return PLD.FightOrFlight;
                 }
                 if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature))
@@ -192,8 +194,13 @@ namespace XIVSlothComboPlugin.Combos
                     if (lastComboMove == PLD.FastBlade)
                         return PLD.RiotBlade;
                 }
-
-
+                if (IsEnabled(CustomComboPreset.SkillCooldownRemaining) && !IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+                {
+                    var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
+                    var fofCD = GetCooldown(PLD.FightOrFlight);
+                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && foFCD.CooldownRemaining >= SkillCooldownRemaining)
+                        return PLD.Atonement;
+                }
                 if (IsEnabled(CustomComboPreset.PaladinAtonementTestFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementFeature))
                 {
                     var fofCD = GetCooldown(PLD.FightOrFlight);

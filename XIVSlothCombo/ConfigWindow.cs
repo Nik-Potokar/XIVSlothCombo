@@ -238,6 +238,48 @@ namespace XIVSlothComboPlugin
 
                 ImGui.Spacing();
             }
+            if (preset == CustomComboPreset.PaladinFightOrFlightMainComboFeatureTest)
+            {
+                var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
+                var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75); 
+                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
+                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
+
+
+
+
+                if (inputChanged)
+                {
+                    Service.Configuration.CustomGCDValueHigh = CustomGCDValueHigh;
+                    Service.Configuration.CustomGCDValueLow = CustomGCDValueLow;
+
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+            }
+            if (preset == CustomComboPreset.SkillCooldownRemaining)
+            {
+                var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
+
+
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75);
+                inputChanged |= ImGui.InputFloat("Input Skill Cooldown remaining Time", ref SkillCooldownRemaining);
+
+                if (inputChanged)
+                {
+                    Service.Configuration.SkillCooldownRemaining = SkillCooldownRemaining;
+
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+            }
 
             i++;
 

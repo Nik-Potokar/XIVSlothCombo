@@ -743,15 +743,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Shield Lob Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Shield Lob when out of range.", PLD.JobID)]
         PaladinRangedUptimeFeature = 11012,
 
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [ParentCombo(PaladinFightOrFlightMainComboFeature)]
+        [ConflictingCombos(PaladinFightOrFlightMainComboFeatureTest)]
         [CustomComboInfo("FoF Feature", "Adds FoF onto the main combo (Testing).", PLD.JobID)]
         PaladinFightOrFlightMainComboFeature = 11013,
+
         [ParentCombo(PaladinRoyalAuthorityCombo)]
         [CustomComboInfo("Req Feature", "Adds Req onto the main combo (Testing).", PLD.JobID)]
         PaladinReqMainComboFeature = 11014,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinAtonementFeature)]
+        [ConflictingCombos(PaladinAtonementFeature, SkillCooldownRemaining)]
         [CustomComboInfo("Atonement Drop Feature", "Drops Atonement to prevent Potency loss (Testing).", PLD.JobID)]
         PaladinAtonementTestFeature = 11015,
 
@@ -759,6 +761,17 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(PaladinRangedUptimeFeature)]
         [CustomComboInfo("Holyspirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with HolySpirit when out of range.", PLD.JobID)]
         PaladinRangedUptimeFeature2 = 11016,
+
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [ConflictingCombos(PaladinRangedUptimeFeature, PaladinFightOrFlightMainComboFeature)]
+        [CustomComboInfo("FoF Feature (Custom Values) ", "Adds FoF onto the main combo (Testing). You can Input your own gcd value.", PLD.JobID)]
+        PaladinFightOrFlightMainComboFeatureTest = 11017,
+
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [ConflictingCombos(PaladinAtonementFeature, PaladinAtonementTestFeature)]
+        [CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID)]
+        SkillCooldownRemaining = 11018,
+        
 
 
 

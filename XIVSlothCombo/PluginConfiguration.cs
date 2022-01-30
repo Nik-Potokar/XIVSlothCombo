@@ -118,5 +118,12 @@ namespace XIVSlothComboPlugin
         public float EnemyHealthMaxHp { get; set; } = 0;
 
         public float EnemyCurrentHp { get; set; } = 0;
+
+        public float CustomGCDValueHigh { get; set; } = 0;
+
+        public float CustomGCDValueLow { get; set; } = 0;
+
+        public float SkillCooldownRemaining { get; set; } = 0;
+
     }
 }
