@@ -84,6 +84,10 @@ namespace XIVSlothComboPlugin.Combos
             }
             if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
+
+                if (gauge.BlitzTimeRemaining > 0 && level >= 60)
+                    return OriginalHook(MNK.MasterfulBlitz);
+
                 if (HasEffect(MNK.Buffs.OpoOpoForm))
                     return OriginalHook(MNK.ArmOfTheDestroyer);
 
@@ -93,12 +97,6 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
                     return MNK.Rockbreaker;
             }
-
-            if (gauge.BlitzTimeRemaining > 0 && level >= 60)
-            {
-                return OriginalHook(MNK.MasterfulBlitz);
-            }
-
             if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnAoECombo))
             {
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
@@ -211,7 +209,7 @@ namespace XIVSlothComboPlugin.Combos
                 return MNK.Bootshine;
             }
 
-            return MNK.Bootshine;
+            return actionID;
         }
     }
 
@@ -304,12 +302,11 @@ namespace XIVSlothComboPlugin.Combos
                         if (pbStacks.StackCount == 1)
                             return MNK.Demolish;
                     }
+                    if (!HasEffect(MNK.Buffs.LeadenFist) && HasEffect(MNK.Buffs.OpoOpoForm) && level >= MNK.Levels.DragonKick)
+                        return MNK.DragonKick;
                 }
-                if (!HasEffect(MNK.Buffs.LeadenFist) && HasEffect(MNK.Buffs.OpoOpoForm) && level >= MNK.Levels.DragonKick)
-                    return MNK.DragonKick;
-                return MNK.Bootshine;
             }
-            return MNK.Bootshine;
+            return actionID;
         }
     }
     internal class MnkPerfectBalancePlus : CustomCombo
