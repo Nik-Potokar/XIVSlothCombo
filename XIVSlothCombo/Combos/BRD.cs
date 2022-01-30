@@ -413,7 +413,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BRD.PitchPerfect;
                     if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow))
                         return BRD.EmpyrealArrow;
-                    if (level >= BRD.Levels.RainOfDeath && GetMaxCharges(BRD.RainOfDeath) > 0)
+                    if (level >= BRD.Levels.RainOfDeath && GetRemainingCharges(BRD.RainOfDeath) > 0)
                         return BRD.RainOfDeath;
                     if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder))
                         return BRD.Sidewinder;
