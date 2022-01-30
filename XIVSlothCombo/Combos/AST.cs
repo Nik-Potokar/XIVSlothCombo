@@ -325,6 +325,10 @@ namespace XIVSlothComboPlugin.Combos
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);
+                if(!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                {
+                    return OriginalHook(AST.Malefic1);
+                }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                 {
                     if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
@@ -368,6 +372,7 @@ namespace XIVSlothComboPlugin.Combos
                     if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
                         return AST.Combust1;
                 }
+                return OriginalHook(AST.Malefic1);
             }
             return actionID;
         }
