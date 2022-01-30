@@ -147,6 +147,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DPS Feature Custom Values Testing", "Same as DPSFeature(OnMalefic).Allows you to customize target MaxHp & CurrentPercentageHp & CurrentHp checks. Testing Only! ", AST.JobID)]
         CustomValuesTest = 1017,
 
+        [ParentCombo(AstrologianDpsFeature)]
+        [ConflictingCombos(AstrologianAlternateDpsFeature)]
+        [CustomComboInfo("Removes DoT From DPS Feature", "Removed DoT From the DPS Feature, You can still use all other features that are on malefic! ", AST.JobID)]
+        DisableCombustOnDpsFeature = 1018,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE

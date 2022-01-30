@@ -188,7 +188,7 @@ namespace XIVSlothComboPlugin.Combos
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.VorpalThrust)
                         return DRG.VorpalThrust;
 
-                    if (lastComboMove == DRG.VorpalThrust && !HasEffect(DRG.Buffs.LifeSurge) && GetCooldown(DRG.LifeSurge).CooldownRemaining < 45)
+                    if (lastComboMove == DRG.VorpalThrust && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0)
                         return DRG.LifeSurge;
 
                     if (lastComboMove == DRG.VorpalThrust && level >= DRG.Levels.FullThrust)

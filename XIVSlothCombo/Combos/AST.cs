@@ -205,19 +205,19 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
                         return AST.LordOfCrowns;
                 }
-                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 72 && incombat)
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 72 && incombat)
                 {
                     if ((combust3Debuff is null) && EnemyHealthMaxHp() > 100000 || (combust3Debuff.RemainingTime <= 3))
                         return AST.Combust3;
                 }
 
-                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 46 && level <= 71 && incombat)
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 46 && level <= 71 && incombat)
                 {
                     if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
                         return AST.Combust2;
                 }
 
-                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && level >= 4 && level <= 45 && incombat)
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 4 && level <= 45 && incombat)
                 {
                     if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
                         return AST.Combust1;
