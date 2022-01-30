@@ -151,10 +151,12 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var gauge = GetJobGauge<SCHGauge>();
-            if (!Service.BuddyList.PetBuddyPresent && gauge.SeraphTimer == 0)
-                return SCH.SummonSelene;
-
+            if(actionID == SCH.WhisperingDawn || actionID == SCH.FeyBless || actionID == SCH.FeyBless || actionID == SCH.FeyIllumination || actionID == SCH.Dissipation || actionID == SCH.Aetherpact)
+            {
+                var gauge = GetJobGauge<SCHGauge>();
+                if (!Service.BuddyList.PetBuddyPresent && gauge.SeraphTimer == 0)
+                    return SCH.SummonSelene;
+            }
             return actionID;
         }
     }
@@ -179,9 +181,6 @@ namespace XIVSlothComboPlugin.Combos
                 // buff
                 var chainBuff = GetCooldown(SCH.ChainStratagem);
                 var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
-
-
-
                 if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature))
                 {
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)

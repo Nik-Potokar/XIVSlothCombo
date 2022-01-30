@@ -72,11 +72,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var gauge = GetJobGauge<WHMGauge>();
+            if(actionID == WHM.AfflatusSolace)
+            {
+                var gauge = GetJobGauge<WHMGauge>();
 
-            if (gauge.BloodLily == 3)
-                return WHM.AfflatusMisery;
+                if (gauge.BloodLily == 3)
+                    return WHM.AfflatusMisery;
 
+            }
             return actionID;
         }
     }
@@ -87,11 +90,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var gauge = GetJobGauge<WHMGauge>();
+            if (actionID == WHM.AfflatusRapture)
+            {
+                var gauge = GetJobGauge<WHMGauge>();
 
-            if (gauge.BloodLily == 3)
-                return WHM.AfflatusMisery;
+                if (gauge.BloodLily == 3)
+                    return WHM.AfflatusMisery;
 
+            }
             return actionID;
         }
     }
