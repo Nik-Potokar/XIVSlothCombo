@@ -1027,7 +1027,12 @@ namespace XIVSlothComboPlugin.Combos
                             return BRD.RefulgentArrow;
                         }
 
-                        return BRD.BurstShot;
+                        if (level >= BRD.Levels.BurstShot)
+                        {
+                            return BRD.BurstShot;
+                        }
+
+                        return BRD.HeavyShot;
                     }
 
                     if (inCombat)
@@ -1057,7 +1062,12 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.RefulgentArrow;
                 }
 
-                return BRD.BurstShot;
+                if (level >= BRD.Levels.BurstShot)
+                {
+                    return BRD.BurstShot;
+                }
+
+                return BRD.HeavyShot;
             }
 
             return actionID;
