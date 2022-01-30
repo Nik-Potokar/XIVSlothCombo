@@ -400,29 +400,28 @@ namespace XIVSlothComboPlugin.Combos
                 var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
                 var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
 
-
-                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 50)
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                 {
                     if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
                         return AST.Astrodyne;
                 }
-                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 30)
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                 {
                     if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
                         return AST.Draw;
 
                 }
-                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 70)
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                 {
                     if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
                         return AST.MinorArcana;
                 }
-                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 24)
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
                 {
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
                         return AST.LucidDreaming;
                 }
-                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 70)
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                 {
                     if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
                         return AST.LordOfCrowns;
