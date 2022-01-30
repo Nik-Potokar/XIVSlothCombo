@@ -168,7 +168,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
                 {
-                    return BRD.RefulgentArrow;
+                    return (level >= BRD.Levels.RefulgentArrow) ? BRD.RefulgentArrow : BRD.StraightShot;
                 }
             }
 
@@ -1024,15 +1024,10 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (HasEffect(BRD.Buffs.StraightShotReady))
                         {
-                            return BRD.RefulgentArrow;
+                            return (level >= BRD.Levels.RefulgentArrow) ? BRD.RefulgentArrow : BRD.StraightShot;
                         }
 
-                        if (level >= BRD.Levels.BurstShot)
-                        {
-                            return BRD.BurstShot;
-                        }
-
-                        return BRD.HeavyShot;
+                        return (level >= BRD.Levels.BurstShot) ? BRD.BurstShot : BRD.HeavyShot;
                     }
 
                     if (inCombat)
@@ -1059,15 +1054,10 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
                 {
-                    return BRD.RefulgentArrow;
+                    return (level >= BRD.Levels.RefulgentArrow) ? BRD.RefulgentArrow : BRD.StraightShot;
                 }
 
-                if (level >= BRD.Levels.BurstShot)
-                {
-                    return BRD.BurstShot;
-                }
-
-                return BRD.HeavyShot;
+                return (level >= BRD.Levels.BurstShot) ? BRD.BurstShot : BRD.HeavyShot;
             }
 
             return actionID;
