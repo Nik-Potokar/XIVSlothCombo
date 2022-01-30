@@ -85,20 +85,23 @@
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (level >= SGE.Levels.Dosis3)
+            if(actionID == SGE.Phlegma)
             {
-                if (GetCooldown(SGE.Phlegmaga).CooldownRemaining > 45)
-                    return SGE.Dyskrasia2;
-            }
+                if (level >= SGE.Levels.Dosis3)
+                {
+                    if (GetCooldown(SGE.Phlegmaga).CooldownRemaining > 45)
+                        return SGE.Dyskrasia2;
+                }
 
-            if (level >= SGE.Levels.Dosis2)
-            {
-                if (GetCooldown(SGE.Phlegmara).CooldownRemaining > 45)
+                if (level >= SGE.Levels.Dosis2)
+                {
+                    if (GetCooldown(SGE.Phlegmara).CooldownRemaining > 45)
+                        return SGE.Dyskrasia;
+                }
+
+                if (GetCooldown(SGE.Phlegma).CooldownRemaining > 45)
                     return SGE.Dyskrasia;
             }
-
-            if (GetCooldown(SGE.Phlegma).CooldownRemaining > 45)
-                return SGE.Dyskrasia;
 
             return actionID;
         }
