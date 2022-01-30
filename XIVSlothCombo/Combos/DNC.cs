@@ -44,7 +44,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 FlourishingCascade = 1814,
                 FlourishingFountain = 1815,
                 FlourishingWindmill = 1816,
@@ -76,9 +76,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerDanceComboCompatibility : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerDanceComboCompatibility;
-
-        protected override uint[] ActionIDs => Service.Configuration.DancerDanceCompatActionIDs;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerDanceComboCompatibility;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -106,7 +104,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerFanDanceCombo : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerFanDanceCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerFanDanceCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -138,7 +136,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerDanceStepCombo : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerDanceStepCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerDanceStepCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -171,7 +169,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerFlourishFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerFlourishFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerFlourishFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -198,7 +196,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerSingleTargetMultibutton : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerSingleTargetMultibutton;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerSingleTargetMultibutton;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -239,7 +237,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerAoeMultibutton : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerAoeMultibutton;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerAoeMultibutton;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -280,7 +278,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerDevilmentFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerDevilmentFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerDevilmentFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -297,7 +295,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class DancerDanceStepComboTest : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerDanceStepComboTest;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerDanceStepComboTest;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -317,7 +315,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= 70 && standardCD.IsCooldown && techstepCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                         return DNC.Devilment;
                 }
-                if(IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown && incombat && level >= 72 && standardCD.IsCooldown)
+                if (IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown && incombat && level >= 72 && standardCD.IsCooldown)
                 {
                     return DNC.Flourish;
                 }
@@ -332,7 +330,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (standardCD.IsCooldown && !techstepCD.IsCooldown && !gauge.IsDancing && !HasEffect(DNC.Buffs.StandardStep))
                 {
                     return DNC.TechnicalStep;
-                }                
+                }
                 if (gauge.IsDancing && HasEffect(DNC.Buffs.StandardStep))
                 {
                     if (gauge.CompletedSteps < 2)
@@ -347,18 +345,18 @@ namespace XIVSlothComboPlugin.Combos
 
                     return DNC.TechnicalFinish4;
                 }
-                
+
             }
             return actionID;
         }
     }
     internal class DancerSaberFanDanceFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DancerSaberFanDanceFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerSaberFanDanceFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == DNC.FanDance1 || actionID == DNC.FanDance2 || actionID == DNC.FanDance3 || actionID == DNC.FanDance4)
+            if (actionID == DNC.FanDance1 || actionID == DNC.FanDance2 || actionID == DNC.FanDance3 || actionID == DNC.FanDance4)
             {
                 var gauge = GetJobGauge<DNCGauge>();
                 if (gauge.Feathers == 0 && gauge.Esprit >= 50)

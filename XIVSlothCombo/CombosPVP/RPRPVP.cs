@@ -28,14 +28,14 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 Enshrouded = 2863;
         }
     }
 
     internal class InfernalSliceComboFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.InfernalSliceComboFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.InfernalSliceComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -63,7 +63,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class NightmareScytheComboFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.NightmareScytheComboFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NightmareScytheComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

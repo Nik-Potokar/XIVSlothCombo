@@ -1,6 +1,4 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Enums;
-using Dalamud.Game.ClientState.JobGauge.Types;
-namespace XIVSlothComboPlugin.Combos
+﻿namespace XIVSlothComboPlugin.Combos
 {
     internal static class All
     {
@@ -22,7 +20,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 Swiftcast = 167;
         }
 
@@ -39,7 +37,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class InterruptFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.InterruptFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.InterruptFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -57,7 +55,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DoMSwiftcastFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DoMSwiftcastFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DoMSwiftcastFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

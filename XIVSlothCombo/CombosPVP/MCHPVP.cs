@@ -22,19 +22,19 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 Concentrate = 2186;
         }
 
         public static class Debuffs
         {
-            public const short
+            public const ushort
                 Wildfire = 1323;
         }
     }
     internal class HeatedCleanShotFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.HeatedCleanShotFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.HeatedCleanShotFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -62,7 +62,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class WildfireBlankFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.WildfireBlankFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WildfireBlankFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

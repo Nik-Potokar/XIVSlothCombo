@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothComboPlugin.Attributes
 {
     /// <summary>
     /// Attribute documenting conflicting presets for each combo.

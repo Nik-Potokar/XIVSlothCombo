@@ -20,7 +20,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 Mudra = 496,
                 Kassatsu = 497,
                 Suiton = 507,
@@ -32,7 +32,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaAeolianEdgePvpCombo : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.NinjaAeolianEdgePvpCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaAeolianEdgePvpCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

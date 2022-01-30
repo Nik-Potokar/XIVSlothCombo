@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 using Dalamud.Game.ClientState.Conditions;
@@ -7,6 +7,7 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
+using XIVSlothComboPlugin.Attributes;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -15,8 +16,6 @@ namespace XIVSlothComboPlugin.Combos
     /// </summary>
     internal abstract partial class CustomCombo
     {
-        private const uint InvalidObjectID = 0xE000_0000;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomCombo"/> class.
         /// </summary>
@@ -26,6 +25,7 @@ namespace XIVSlothComboPlugin.Combos
             this.JobID = presetInfo.JobID;
             this.ClassID = this.JobID switch
             {
+                ADV.JobID => ADV.ClassID,
                 BLM.JobID => BLM.ClassID,
                 BRD.JobID => BRD.ClassID,
                 DRG.JobID => DRG.ClassID,
@@ -38,13 +38,12 @@ namespace XIVSlothComboPlugin.Combos
                 WHM.JobID => WHM.ClassID,
                 _ => 0xFF,
             };
-            this.ActionIDs = presetInfo.ActionIDs;
         }
 
         /// <summary>
         /// Gets the preset associated with this combo.
         /// </summary>
-        protected abstract CustomComboPreset Preset { get; }
+        protected internal abstract CustomComboPreset Preset { get; }
 
         /// <summary>
         /// Gets the class ID associated with this combo.
@@ -57,40 +56,108 @@ namespace XIVSlothComboPlugin.Combos
         protected byte JobID { get; }
 
         /// <summary>
-        /// Gets the action IDs associated with this combo.
-        /// </summary>
-        protected virtual uint[] ActionIDs { get; }
-
-        /// <summary>
         /// Performs various checks then attempts to invoke the combo.
         /// </summary>
         /// <param name="actionID">Starting action ID.</param>
-        /// <param name="lastComboActionID">Last combo action.</param>
-        /// <param name="comboTime">Current combo time.</param>
-        /// <param name="level">Current player level.</param>
+        /// <param name="level">Player level.</param>
+        /// <param name="lastComboMove">Last combo action ID.</param>
+        /// <param name="comboTime">Combo timer.</param>
         /// <param name="newActionID">Replacement action ID.</param>
         /// <returns>True if the action has changed, otherwise false.</returns>
-        public bool TryInvoke(uint actionID, uint lastComboActionID, float comboTime, byte level, out uint newActionID)
+        public bool TryInvoke(uint actionID, byte level, uint lastComboMove, float comboTime, out uint newActionID)
         {
             newActionID = 0;
 
             if (!IsEnabled(this.Preset))
                 return false;
 
-            var classJobID = LocalPlayer?.ClassJob.Id;
+            var classJobID = LocalPlayer!.ClassJob.Id;
 
-            if (this.JobID != classJobID && this.ClassID != classJobID && this.JobID != 99)
+            if (classJobID >= 8 && classJobID <= 15)
+                classJobID = DOH.JobID;
+
+            if (classJobID >= 16 && classJobID <= 18)
+                classJobID = DOL.JobID;
+
+            if (this.JobID != ADV.JobID && this.ClassID != ADV.ClassID &&
+                this.JobID != classJobID && this.ClassID != classJobID)
                 return false;
 
-            if (!this.ActionIDs.Contains(actionID))
-                return false;
+            var resultingActionID = this.Invoke(actionID, lastComboMove, comboTime, level);
 
-            var resultingActionID = this.Invoke(actionID, lastComboActionID, comboTime, level);
             if (resultingActionID == 0 || actionID == resultingActionID)
                 return false;
 
             newActionID = resultingActionID;
             return true;
+        }
+
+        /// <summary>
+        /// Calculate the best action to use, based on cooldown remaining.
+        /// If there is a tie, the original is used.
+        /// </summary>
+        /// <param name="original">The original action.</param>
+        /// <param name="actions">Action data.</param>
+        /// <returns>The appropriate action to use.</returns>
+        protected static uint CalcBestAction(uint original, params uint[] actions)
+        {
+            static (uint ActionID, CooldownData Data) Compare(
+                uint original,
+                (uint ActionID, CooldownData Data) a1,
+                (uint ActionID, CooldownData Data) a2)
+            {
+                // Neither, return the first parameter
+                if (!a1.Data.IsCooldown && !a2.Data.IsCooldown)
+                    return original == a1.ActionID ? a1 : a2;
+
+                // Both, return soonest available
+                if (a1.Data.IsCooldown && a2.Data.IsCooldown)
+                {
+                    if (a1.Data.HasCharges && a2.Data.HasCharges)
+                    {
+                        if (a1.Data.RemainingCharges == a2.Data.RemainingCharges)
+                        {
+                            return a1.Data.ChargeCooldownRemaining < a2.Data.ChargeCooldownRemaining
+                                ? a1 : a2;
+                        }
+
+                        return a1.Data.RemainingCharges > a2.Data.RemainingCharges
+                            ? a1 : a2;
+                    }
+                    else if (a1.Data.HasCharges)
+                    {
+                        if (a1.Data.RemainingCharges > 0)
+                            return a1;
+
+                        return a1.Data.ChargeCooldownRemaining < a2.Data.CooldownRemaining
+                            ? a1 : a2;
+                    }
+                    else if (a2.Data.HasCharges)
+                    {
+                        if (a2.Data.RemainingCharges > 0)
+                            return a2;
+
+                        return a2.Data.ChargeCooldownRemaining < a1.Data.CooldownRemaining
+                            ? a2 : a1;
+                    }
+                    else
+                    {
+                        return a1.Data.CooldownRemaining < a2.Data.CooldownRemaining
+                            ? a1 : a2;
+                    }
+                }
+
+                // One or the other
+                return a1.Data.IsCooldown ? a2 : a1;
+            }
+
+            static (uint ActionID, CooldownData Data) Selector(uint actionID)
+                => (actionID, GetCooldown(actionID));
+
+            return actions
+                .Select(Selector)
+                .Aggregate((a1, a2) => Compare(original, a1, a2))
+                .ActionID;
         }
 
         /// <summary>
@@ -112,33 +179,75 @@ namespace XIVSlothComboPlugin.Combos
         /// <summary>
         /// Gets the player or null.
         /// </summary>
-        protected static PlayerCharacter? LocalPlayer => Service.ClientState.LocalPlayer;
+        protected static PlayerCharacter? LocalPlayer
+            => Service.ClientState.LocalPlayer;
 
         /// <summary>
         /// Gets the current target or null.
         /// </summary>
-        protected static GameObject? CurrentTarget => Service.TargetManager.Target;
+        protected static GameObject? CurrentTarget
+            => Service.TargetManager.Target;
+
+        /// <summary>
+        /// Find if the player has a target.
+        /// </summary>
+        /// <returns>A value indicating whether the player has a target.</returns>
+        protected static bool HasTarget()
+            => CurrentTarget is not null;
 
         /// <summary>
         /// Calls the original hook.
         /// </summary>
         /// <param name="actionID">Action ID.</param>
         /// <returns>The result from the hook.</returns>
-        protected static uint OriginalHook(uint actionID) => Service.IconReplacer.OriginalHook(actionID);
+        protected static uint OriginalHook(uint actionID)
+            => Service.IconReplacer.OriginalHook(actionID);
+
+        /// <summary>
+        /// Compare the original hook to the given action ID.
+        /// </summary>
+        /// <param name="actionID">Action ID.</param>
+        /// <returns>A value indicating whether the action would be modified.</returns>
+        protected static bool IsOriginal(uint actionID)
+            => Service.IconReplacer.OriginalHook(actionID) == actionID;
 
         /// <summary>
         /// Determine if the given preset is enabled.
         /// </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>A value indicating whether the preset is enabled.</returns>
-        protected static bool IsEnabled(CustomComboPreset preset) => Service.Configuration.IsEnabled(preset);
+        protected static bool IsEnabled(CustomComboPreset preset)
+            => (int)preset < 100 || Service.Configuration.IsEnabled(preset);
 
         /// <summary>
-        /// Find if the player is in condition.
+        /// Determine if the given preset is not enabled.
+        /// </summary>
+        /// <param name="preset">Preset to check.</param>
+        /// <returns>A value indicating whether the preset is not enabled.</returns>
+        protected static bool IsNotEnabled(CustomComboPreset preset)
+            => !IsEnabled(preset);
+
+        /// <summary>
+        /// Find if the player has a certain condition.
         /// </summary>
         /// <param name="flag">Condition flag.</param>
         /// <returns>A value indicating whether the player is in the condition.</returns>
-        protected static bool HasCondition(ConditionFlag flag) => Service.Condition[flag];
+        protected static bool HasCondition(ConditionFlag flag)
+            => Service.Condition[flag];
+
+        /// <summary>
+        /// Find if the player is in combat.
+        /// </summary>
+        /// <returns>A value indicating whether the player is in combat.</returns>
+        protected static bool InCombat()
+            => Service.Condition[ConditionFlag.InCombat];
+
+        /// <summary>
+        /// Find if the player has a pet present.
+        /// </summary>
+        /// <returns>A value indicating whether the player has a pet present.</returns>
+        protected static bool HasPetPresent()
+            => Service.BuddyList.PetBuddyPresent;
 
         /// <summary>
         /// Find if an effect on the player exists.
@@ -146,7 +255,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool HasEffect(short effectID) => FindEffect(effectID) is not null;
+        protected static bool HasEffect(ushort effectID)
+            => FindEffect(effectID) is not null;
 
         /// <summary>
         /// Finds an effect on the player.
@@ -154,7 +264,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindEffect(short effectID) => FindEffect(effectID, LocalPlayer, LocalPlayer?.ObjectId);
+        protected static Status? FindEffect(ushort effectID)
+            => FindEffect(effectID, LocalPlayer, LocalPlayer?.ObjectId);
 
         /// <summary>
         /// Find if an effect on the target exists.
@@ -162,7 +273,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool TargetHasEffect(short effectID) => FindTargetEffect(effectID) is not null;
+        protected static bool TargetHasEffect(ushort effectID)
+            => FindTargetEffect(effectID) is not null;
 
         /// <summary>
         /// Finds an effect on the current target.
@@ -170,7 +282,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindTargetEffect(short effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.ObjectId);
+        protected static Status? FindTargetEffect(ushort effectID)
+            => FindEffect(effectID, CurrentTarget, LocalPlayer?.ObjectId);
 
         /// <summary>
         /// Find if an effect on the player exists.
@@ -178,7 +291,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool HasEffectAny(short effectID) => FindEffectAny(effectID) is not null;
+        protected static bool HasEffectAny(ushort effectID)
+            => FindEffectAny(effectID) is not null;
 
         /// <summary>
         /// Finds an effect on the player.
@@ -186,7 +300,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindEffectAny(short effectID) => FindEffect(effectID, LocalPlayer, null);
+        protected static Status? FindEffectAny(ushort effectID)
+            => FindEffect(effectID, LocalPlayer, null);
 
         /// <summary>
         /// Find if an effect on the target exists.
@@ -194,7 +309,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool TargetHasEffectAny(short effectID) => FindTargetEffectAny(effectID) is not null;
+        protected static bool TargetHasEffectAny(ushort effectID)
+            => FindTargetEffectAny(effectID) is not null;
 
         /// <summary>
         /// Finds an effect on the current target.
@@ -202,7 +318,8 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindTargetEffectAny(short effectID) => FindEffect(effectID, CurrentTarget, null);
+        protected static Status? FindTargetEffectAny(ushort effectID)
+            => FindEffect(effectID, CurrentTarget, null);
 
         /// <summary>
         /// Finds an effect on the given object.
@@ -211,80 +328,65 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="obj">Object to look for effects on.</param>
         /// <param name="sourceID">Source object ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindEffect(short effectID, GameObject? obj, uint? sourceID)
-        {
-            if (obj is null)
-                return null;
-
-            if (obj is not BattleChara chara)
-                return null;
-
-            foreach (var status in chara.StatusList)
-            {
-                if (status.StatusId == effectID && (!sourceID.HasValue || status.SourceID == 0 || status.SourceID == InvalidObjectID || status.SourceID == sourceID))
-                    return status;
-            }
-
-            return null;
-        }
+        protected static Status? FindEffect(ushort effectID, GameObject? obj, uint? sourceID)
+            => Service.ComboCache.GetStatus(effectID, obj, sourceID);
 
         /// <summary>
         /// Gets the cooldown data for an action.
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>Cooldown data.</returns>
-        protected static IconReplacer.CooldownData GetCooldown(uint actionID) => Service.IconReplacer.GetCooldown(actionID);
+        protected static CooldownData GetCooldown(uint actionID)
+            => Service.ComboCache.GetCooldown(actionID);
 
         /// <summary>
-        /// Gets the job gauge.
+        /// Gets a value indicating whether an action is on cooldown.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>True or false.</returns>
+        protected static bool IsOnCooldown(uint actionID)
+            => GetCooldown(actionID).IsCooldown;
+
+        /// <summary>
+        /// Gets a value indicating whether an action is off cooldown.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>True or false.</returns>
+        protected static bool IsOffCooldown(uint actionID)
+            => !GetCooldown(actionID).IsCooldown;
+
+        /// <summary>
+        /// Gets a value indicating whether an action has any available charges.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>True or false.</returns>
+        protected static bool HasCharges(uint actionID)
+            => GetCooldown(actionID).RemainingCharges > 0;
+
+        /// <summary>
+        /// Get the current number of charges remaining for an action.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>Number of charges.</returns>
+        protected static ushort GetRemainingCharges(uint actionID)
+            => GetCooldown(actionID).RemainingCharges;
+
+        /// <summary>
+        /// Get the maximum number of charges for an action.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>Number of charges.</returns>
+        protected static ushort GetMaxCharges(uint actionID)
+            => GetCooldown(actionID).MaxCharges;
+
+        /// <summary>
+        /// Get a job gauge.
         /// </summary>
         /// <typeparam name="T">Type of job gauge.</typeparam>
         /// <returns>The job gauge.</returns>
-        protected static T GetJobGauge<T>() where T : JobGaugeBase => Service.JobGauges.Get<T>();
+        protected static T GetJobGauge<T>() where T : JobGaugeBase
+            => Service.ComboCache.GetJobGauge<T>();
 
-        protected static uint CalcBestAction(uint original, params uint[] actions)
-        {
-            static (uint ActionID, IconReplacer.CooldownData Data) Compare(
-                uint original,
-                (uint ActionID, IconReplacer.CooldownData Data) a1,
-                (uint ActionID, IconReplacer.CooldownData Data) a2)
-            {
-                // Neither, return the first parameter
-                if (!a1.Data.IsCooldown && !a2.Data.IsCooldown)
-                    return original == a1.ActionID ? a1 : a2;
-
-                // Both, return soonest available
-                if (a1.Data.IsCooldown && a2.Data.IsCooldown)
-                    return a1.Data.CooldownRemaining < a2.Data.CooldownRemaining ? a1 : a2;
-
-                // One or the other
-                return a1.Data.IsCooldown ? a2 : a1;
-            }
-
-            static (uint ActionID, IconReplacer.CooldownData Data) Selector(uint actionID)
-            {
-                return (actionID, GetCooldown(actionID));
-            }
-
-            return actions
-                .Select(Selector)
-                .Aggregate((a1, a2) => Compare(original, a1, a2))
-                .ActionID;
-        }
-        /// <summary>
-        /// Determines if the enemy can be interrupted if they are currently casting.
-        /// </summary>
-        /// <returns>Bool indicating whether they can be interrupted or not.</returns>
-        protected static bool CanInterruptEnemy()
-        {
-            if (CurrentTarget is null)
-                return false;
-            if (CurrentTarget is not BattleChara chara)
-                return false;
-            if (chara.IsCasting)
-                return chara.IsCastInterruptible;
-            return false;
-        }
         /// <summary>
         /// Gets the distance from the target.
         /// </summary>
@@ -304,7 +406,7 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         /// <summary>
-        /// Determines if you are in melee range from the current target.
+        /// Gets a value indicating whether you are in melee range from the current target.
         /// </summary>
         /// <returns>Bool indicating whether you are in melee range.</returns>
         protected static bool InMeleeRange(bool v)
@@ -325,10 +427,10 @@ namespace XIVSlothComboPlugin.Combos
                 return 0;
             if (CurrentTarget is not BattleChara chara)
                 return 0;
-             
+
             double health = chara.CurrentHp;
-            double maxHealth = chara.MaxHp; 
-             
+            double maxHealth = chara.MaxHp;
+
             return health / maxHealth * 100;
         }
         protected static double EnemyHealthMaxHp()
@@ -368,6 +470,20 @@ namespace XIVSlothComboPlugin.Combos
                 return false;
 
             return true;
+        }
+        /// <summary>
+        /// Determines if the enemy can be interrupted if they are currently casting.
+        /// </summary>
+        /// <returns>Bool indicating whether they can be interrupted or not.</returns>
+        protected static bool CanInterruptEnemy()
+        {
+            if (CurrentTarget is null)
+                return false;
+            if (CurrentTarget is not BattleChara chara)
+                return false;
+            if (chara.IsCasting)
+                return chara.IsCastInterruptible;
+            return false;
         }
     }
 }

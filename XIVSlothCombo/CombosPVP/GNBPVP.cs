@@ -27,7 +27,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const short
+            public const ushort
                 ReadyToRip = 2002,
                 ReadyToTear = 2003,
                 ReadyToGouge = 2004,
@@ -36,7 +36,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const short
+            public const ushort
                 BowShock = 1838,
                 SonicBreak = 1837;
         }
@@ -61,7 +61,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class SolidBarrelComboFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.SolidBarrelComboFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SolidBarrelComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -82,7 +82,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class DemonSlaughterComboFeature : CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.DemonSlaughterComboFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DemonSlaughterComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
