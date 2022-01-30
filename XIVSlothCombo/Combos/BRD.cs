@@ -757,11 +757,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 1)
                             {
-                                if (!HasEffect(BRD.Buffs.StraightShotReady))
-                                {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
-                                    subStep++;
-                                }
+                                if (!HasEffect(BRD.Buffs.StraightShotReady)) subStep++;
                                 else return BRD.RefulgentArrow;
                             }
                             if (subStep == 2)
