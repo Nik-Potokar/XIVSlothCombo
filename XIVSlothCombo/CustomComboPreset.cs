@@ -359,7 +359,7 @@ namespace XIVSlothComboPlugin
         DancerSaberFanDanceFeature = 4010,
 
         [ParentCombo(DancerSingleTargetMultibutton)]
-        [CustomComboInfo("FanDance On Cascade Feature", "Adds FanDance 1/3/4 Onto Cascade When available", DNC.JobID)]
+        [CustomComboInfo("FanDance On Cascade Feature", "Adds FanDance 1/3/4 Onto Cascade When available (Fan Overcap protection)", DNC.JobID)]
         DancerFanDanceOnMainComboFeature = 4011,
 
         [ParentCombo(DancerAoeMultibutton)]
@@ -373,6 +373,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DancerDanceStepComboTest)]
         [CustomComboInfo("Flourish On Combined Dance Feature", "Adds Flourish to the CombinedStepCombo.", DNC.JobID)]
         DancerFlourishOnCombinedDanceFeature = 4014,
+
 
         #endregion
         // ====================================================================================
