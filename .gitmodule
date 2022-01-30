@@ -1,3 +1,0 @@
-[submodule "lib/FFXIVClientStructs"]
-	path = lib/FFXIVClientStructs
-	url = https://github.com/aers/FFXIVClientStructs.git
