@@ -36,7 +36,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 Mudra = 496,
                 Kassatsu = 497,
                 Suiton = 507,
@@ -48,7 +48,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
             TrickAttack = 1054;
         }
 
@@ -69,7 +69,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaAeolianEdgeCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaAeolianEdgeCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaAeolianEdgeCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -112,7 +112,7 @@ namespace XIVSlothComboPlugin.Combos
                         return NIN.Bavacakra;
                 }
                 // Probably better to use with trick
-                if (IsEnabled(CustomComboPreset.NinjaDreamWithinADream) && level >= 40)
+                if(IsEnabled(CustomComboPreset.NinjaDreamWithinADream) && level >= 40)
                 {
                     var actionIDCD = GetCooldown(actionID);
                     var gauge = GetJobGauge<NINGauge>();
@@ -152,7 +152,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaArmorCrushCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaArmorCrushCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaArmorCrushCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -185,7 +185,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaAssassinateFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaAssassinateFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaAssassinateFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -200,7 +200,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaHakkeMujinsatsuCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaHakkeMujinsatsuCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaHakkeMujinsatsuCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -224,7 +224,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class NinjaHideMugFeature : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaHideMugFeature;
+            protected override CustomComboPreset Preset => CustomComboPreset.NinjaHideMugFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -248,7 +248,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaKassatsuChiJinFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaKassatsuChiJinFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaKassatsuChiJinFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -263,7 +263,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaKassatsuTrickFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaKassatsuTrickFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaKassatsuTrickFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -283,7 +283,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaTCJMeisuiFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaTCJMeisuiFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaTCJMeisuiFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -303,7 +303,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaHuraijinRaijuFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaHuraijinRaijuFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.NinjaHuraijinRaijuFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

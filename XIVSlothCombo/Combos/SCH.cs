@@ -36,13 +36,13 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
             Swiftcast = 167;
         }
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
             Bio1 = 179,
             Bio2 = 189,
             Biolysis = 1895,
@@ -57,7 +57,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ScholarSeraphConsolationFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarSeraphConsolationFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ScholarSeraphConsolationFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -74,7 +74,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ScholarEnergyDrainFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarEnergyDrainFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ScholarEnergyDrainFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -90,7 +90,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class SchRaiseFeature : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SchRaiseFeature;
+            protected override CustomComboPreset Preset => CustomComboPreset.SchRaiseFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -112,7 +112,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class SCHDPSAlternateFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCHDPSAlternateFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SCHDPSAlternateFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -147,7 +147,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class ScholarFairyFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarFairyFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ScholarFairyFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -160,11 +160,11 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class ScholarDPSFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarDPSFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ScholarDPSFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.Broil4 || actionID == SCH.Broil3 || actionID == SCH.Broil2 || actionID == SCH.Broil1 || actionID == SCH.Ruin1)
+            if(actionID == SCH.Broil4 || actionID == SCH.Broil3 || actionID == SCH.Broil2 || actionID == SCH.Broil1 || actionID == SCH.Ruin1)
             {
                 var actionIDCD = GetCooldown(actionID);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
@@ -179,7 +179,7 @@ namespace XIVSlothComboPlugin.Combos
                 // buff
                 var chainBuff = GetCooldown(SCH.ChainStratagem);
                 var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
-
+                
 
 
                 if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature))
@@ -210,7 +210,7 @@ namespace XIVSlothComboPlugin.Combos
 
 
             }
-            return actionID;
+            return OriginalHook(SCH.Broil4);
         }
     }
 

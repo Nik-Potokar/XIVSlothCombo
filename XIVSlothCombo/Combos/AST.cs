@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Interface;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -50,7 +51,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
             Swiftcast = 167,
             LordOfCrownsDrawn = 2054,
             LadyOfCrownsDrawn = 2055,
@@ -65,7 +66,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
             Combust1 = 838,
             Combust2 = 843,
             Combust3 = 1881;
@@ -81,9 +82,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
+    internal class AstrologianCardsOnDrawFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianCardsOnDrawFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -105,7 +106,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class AstrologianCrownPlayFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCrownPlayFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianCrownPlayFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -125,7 +126,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class AstrologianBeneficFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianBeneficFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianBeneficFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -141,7 +142,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class AstrologianAscendFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAscendFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAscendFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -162,7 +163,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class AstrologianDpsFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianDpsFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianDpsFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -230,7 +231,7 @@ namespace XIVSlothComboPlugin.Combos
    
     internal class AstrologianHeliosFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianHeliosFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianHeliosFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -246,7 +247,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class AstrologianDpsAoEFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianDpsAoEFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianDpsAoEFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -292,11 +293,11 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class AstrologianAstrodyneOnPlayFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAstrodyneOnPlayFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAstrodyneOnPlayFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == AST.Play && !IsEnabled(CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat))
+            if (actionID == AST.Play && !IsEnabled(CustomComboPreset.AstrologianCardsOnDrawFeature))
             {
                 var gauge = GetJobGauge<ASTGauge>();
                 if (!gauge.ContainsSeal(SealType.NONE))
@@ -308,7 +309,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class AstrologianAlternateDpsFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAlternateDpsFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.AstrologianAlternateDpsFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -372,9 +373,9 @@ namespace XIVSlothComboPlugin.Combos
             return OriginalHook(AST.Malefic1);
         }
     }
-    internal class CustomValuesTest : CustomCombo
+    internal class AstrologianTestingFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.CustomValuesTest;
+        protected override CustomComboPreset Preset => CustomComboPreset.CustomValuesTest;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

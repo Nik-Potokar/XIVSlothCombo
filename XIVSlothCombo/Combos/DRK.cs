@@ -29,7 +29,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 BloodWeapon = 742,
                 Delirium = 1972,
                 SaltedEarth = 749;
@@ -63,7 +63,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DarkSouleaterCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkSouleaterCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.DarkSouleaterCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -84,10 +84,10 @@ namespace XIVSlothComboPlugin.Combos
                 var livingshadowCD = GetCooldown(DRK.LivingShadow);
                 var saltedCD = GetCooldown(DRK.SaltedEarth);
                 var carveCD = GetCooldown(DRK.CarveAndSpit);
-                if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= 15)
+                if(IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= 15)
                 {
-                    if (!InMeleeRange(true))
-                        return DRK.Unmend;
+                    if(!InMeleeRange(true))
+                    return DRK.Unmend;
                 }
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
@@ -159,7 +159,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DarkStalwartSoulCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkStalwartSoulCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.DarkStalwartSoulCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -195,7 +195,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class DarkoGCDFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkoGCDFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.DarkoGCDFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -207,11 +207,11 @@ namespace XIVSlothComboPlugin.Combos
                 var saltedCD = GetCooldown(DRK.SaltedEarth);
                 var actionIDCD = GetCooldown(actionID);
 
-                if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= 80)
+                if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= 80 )
                     return DRK.LivingShadow;
                 if (!saltedCD.IsCooldown && level >= DRK.Levels.SaltedEarth)
                     return DRK.SaltedEarth;
-                if (!actionIDCD.IsCooldown && level >= DRK.Levels.CarveAndSpit)
+                if (!actionIDCD.IsCooldown &&  level >= DRK.Levels.CarveAndSpit)
                     return actionID;
                 if (HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
                     return DRK.SaltAndDarkness;

@@ -34,7 +34,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 Requiescat = 1368,
                 SwordOath = 1902,
                 FightOrFlight = 76;
@@ -42,7 +42,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
                 BladeOfValor = 2721,
                 GoringBlade = 725;
         }
@@ -69,7 +69,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class PaladinGoringBladeCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinGoringBladeCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinGoringBladeCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -93,7 +93,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class PaladinRoyalAuthorityCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinRoyalAuthorityCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinRoyalAuthorityCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -220,7 +220,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class PaladinProminenceCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinProminenceCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinProminenceCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -278,7 +278,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class PaladinScornfulSpiritsFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinScornfulSpiritsFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinScornfulSpiritsFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -301,13 +301,13 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class PaladinStandaloneHolySpiritFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinStandaloneHolySpiritFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinStandaloneHolySpiritFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.HolySpirit)
+            if(actionID == PLD.HolySpirit)
             {
-                if (HasEffect(PLD.Buffs.Requiescat) && level >= 64)
+                if (HasEffect(PLD.Buffs.Requiescat) && level >= 64 )
                 {
                     var requiescat = FindEffect(PLD.Buffs.Requiescat);
                     if ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0 && level >= 80) || (requiescat.StackCount == 1 && level >= 80) || LocalPlayer.CurrentMp <= 2000)
@@ -329,12 +329,12 @@ namespace XIVSlothComboPlugin.Combos
                     return PLD.BladeOfValor;
                 }
             }
-            return actionID;
+            return OriginalHook(actionID);
         }
     }
     internal class PaladinStandaloneHolyCircleFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinStandaloneHolyCircleFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.PaladinStandaloneHolyCircleFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -347,7 +347,7 @@ namespace XIVSlothComboPlugin.Combos
                         return PLD.Confiteor;
                     return PLD.HolyCircle;
                 }
-
+            
                 if (lastComboMove == PLD.Confiteor && level >= 90)
                 {
                     return PLD.BladeOfFaith;
@@ -363,7 +363,7 @@ namespace XIVSlothComboPlugin.Combos
                     return PLD.BladeOfValor;
                 }
             }
-            return actionID;
+            return OriginalHook(actionID);
         }
     }
 }

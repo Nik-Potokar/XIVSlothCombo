@@ -1,7 +1,8 @@
 {
-  "Author": "attick,Kami,Daemitus,Grammernatzi,Aki,Iaotle,Codemned,PrincessRTFM,damolitionn,ele-starshade",
+  "Author": "attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM",
   "Name": "XIVSlothCombo",
   "InternalName": "XIVSlothCombo",
+  "AssemblyVersion": "1.7.16",
   "DalamudApiLevel": 5,
   "Punchline": "Condenses combos and mutually exclusive abilities onto a single button.",
   "Description": "This plugin condenses combos and mutually exclusive abilities onto a single button. For example, a 1-2-3 combo would become 1-1-1.",

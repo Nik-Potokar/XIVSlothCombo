@@ -1,4 +1,4 @@
-using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -42,7 +42,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 SoulReaver = 2587,
                 ImmortalSacrifice = 2592,
                 EnhancedGibbet = 2588,
@@ -56,7 +56,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
                 DeathsDesign = 2586;
         }
 
@@ -81,7 +81,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperComboCommunioFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperComboCommunioFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperComboCommunioFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -99,7 +99,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperLemureFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperLemureFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperLemureFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -121,7 +121,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperSliceCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperSliceCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperSliceCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -236,7 +236,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperScytheCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperScytheCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperScytheCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -311,9 +311,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class ReaperEnshroudCommunioFeature : CustomCombo
+    internal class EnshroudCommunioFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperEnshroudCommunioFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperEnshroudCommunioFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -330,9 +330,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class ReaperGibbetGallowsFeature : CustomCombo
+    internal class GibbetGallowsFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperGibbetGallowsFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperGibbetGallowsFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -350,7 +350,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperHarvestFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperHarvestFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperHarvestFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -366,7 +366,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperRegressFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperRegressFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperRegressFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -381,7 +381,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperBloodSwatheFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodSwatheFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperBloodSwatheFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -394,7 +394,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class ReaperBloodStalkComboOption : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodSwatheComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperBloodSwatheComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -444,7 +444,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class ReaperBloodStalkAlternateComboOption : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodStalkAlternateComboOption;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperBloodStalkAlternateComboOption;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -499,7 +499,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class ReaperGrimSwatheComboOption : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperGrimSwatheComboOption;
+        protected override CustomComboPreset Preset => CustomComboPreset.ReaperGrimSwatheComboOption;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

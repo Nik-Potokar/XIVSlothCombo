@@ -1,3 +1,5 @@
+using Dalamud.Game.ClientState.JobGauge.Types;
+
 namespace XIVSlothComboPlugin.Combos
 {
     internal static class DRG
@@ -29,7 +31,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 SharperFangAndClaw = 802,
                 EnhancedWheelingThrust = 803,
                 DiveReady = 1243,
@@ -66,7 +68,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DragoonJumpFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonJumpFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.DragoonJumpFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -84,7 +86,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DragoonCoerthanTormentCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonCoerthanTormentCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.DragoonCoerthanTormentCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -105,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DragoonChaosThrustCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonChaosThrustCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.DragoonChaosThrustCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -138,7 +140,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DragoonFullThrustCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonFullThrustCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.DragoonFullThrustCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -167,7 +169,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class DragoonFullThrustComboPlus : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonFullThrustComboPlus;
+        protected override CustomComboPreset Preset => CustomComboPreset.DragoonFullThrustComboPlus;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

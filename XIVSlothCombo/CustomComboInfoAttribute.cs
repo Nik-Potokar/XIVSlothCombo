@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
-using XIVSlothComboPlugin.Combos;
-
-namespace XIVSlothComboPlugin.Attributes
+namespace XIVSlothComboPlugin
 {
     /// <summary>
     /// Attribute documenting additional information for each combo.
@@ -17,13 +14,13 @@ namespace XIVSlothComboPlugin.Attributes
         /// <param name="fancyName">Display name.</param>
         /// <param name="description">Combo description.</param>
         /// <param name="jobID">Associated job ID.</param>
-        /// <param name="order">Display order.</param>
-        internal CustomComboInfoAttribute(string fancyName, string description, byte jobID, [CallerLineNumber] int order = 0)
+        /// <param name="actionIDs">Associated action IDs.</param>
+        internal CustomComboInfoAttribute(string fancyName, string description, byte jobID, params uint[] actionIDs)
         {
             this.FancyName = fancyName;
             this.Description = description;
             this.JobID = jobID;
-            this.Order = order;
+            this.ActionIDs = actionIDs;
         }
 
         /// <summary>
@@ -42,20 +39,19 @@ namespace XIVSlothComboPlugin.Attributes
         public byte JobID { get; }
 
         /// <summary>
-        /// Gets the display order.
-        /// </summary>
-        public int Order { get; }
-
-        /// <summary>
         /// Gets the job name.
         /// </summary>
         public string JobName => JobIDToName(this.JobID);
+
+        /// <summary>
+        /// Gets the action IDs associated with the combo.
+        /// </summary>
+        public uint[] ActionIDs { get; }
 
         private static string JobIDToName(byte key)
         {
             return key switch
             {
-                0 => "Adventurer",
                 1 => "Gladiator",
                 2 => "Pugilist",
                 3 => "Marauder",
@@ -96,9 +92,8 @@ namespace XIVSlothComboPlugin.Attributes
                 38 => "Dancer",
                 39 => "Reaper",
                 40 => "Sage",
-                DOH.JobID => "Disciples of the Hand",
-                DOL.JobID => "Disciples of the Land",
-                All.JobID => "All Global Features",
+                41 => "PvP",
+                99 => "All Global Features",
                 _ => "Unknown",
             };
         }

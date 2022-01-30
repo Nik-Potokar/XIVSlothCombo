@@ -20,7 +20,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class MnkBootshinePvPFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkBootshinePvPFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkBootshinePvPFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

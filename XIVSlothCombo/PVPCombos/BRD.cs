@@ -1,7 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-
-
+using System;
 namespace XIVSlothComboPlugin.Combos
 {
     internal static class BRDPvP
@@ -23,7 +22,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 StraightShotReady = 122,
                 BlastArrowReady = 2692,
                 ShadowbiteReady = 3002,
@@ -35,7 +34,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
                 VenomousBite = 124,
                 Windbite = 129,
                 CausticBite = 1200,
@@ -74,7 +73,7 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class BurstShotFeaturePVP : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BurstShotFeaturePVP;
+            protected override CustomComboPreset Preset => CustomComboPreset.BurstShotFeaturePVP;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -108,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class SongsFeaturePVP : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SongsFeaturePVP;
+        protected override CustomComboPreset Preset => CustomComboPreset.SongsFeaturePVP;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

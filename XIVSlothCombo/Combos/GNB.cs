@@ -39,7 +39,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 NoMercy = 1831,
                 ReadyToRip = 1842,
                 ReadyToTear = 1843,
@@ -49,7 +49,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
                 BowShock = 1838,
                 SonicBreak = 1837;
         }
@@ -77,7 +77,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class GunbreakerSolidBarrelCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerSolidBarrelCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerSolidBarrelCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -85,8 +85,8 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (IsEnabled(CustomComboPreset.GunbreakerRangedUptimeFeature))
                 {
-                    if (!InMeleeRange(true))
-                        return GNB.LightningShot;
+                    if(!InMeleeRange(true))
+                    return GNB.LightningShot;
                 }
                 if (comboTime > 0)
                 {
@@ -179,7 +179,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.GunbreakerAmmoOvercapFeature))
                         {
                             if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
-                                return GNB.Hypervelocity;
+                                    return GNB.Hypervelocity;
                         }
 
                         if (level >= GNB.Levels.BurstStrike && gauge.Ammo == GNB.MaxCartridges(level))
@@ -198,7 +198,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class GunbreakerGnashingFangCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerGnashingFangCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerGnashingFangCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -220,7 +220,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (level < GNB.Levels.DoubleDown && !blastingZoneCD.IsCooldown && level >= GNB.Levels.DangerZone && gauge.AmmoComboStep == 1 && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF))
                     return OriginalHook(GNB.DangerZone);
                 if (HasEffect(GNB.Buffs.ReadyToRip) && level >= GNB.Levels.Continuation)
-                    return GNB.JugularRip;
+                        return GNB.JugularRip;
                 if (HasEffect(GNB.Buffs.NoMercy))
                 {
                     if (level >= GNB.Levels.DoubleDown)
@@ -254,7 +254,7 @@ namespace XIVSlothComboPlugin.Combos
                     return GNB.AbdomenTear;
                 //aligns it with 2nd GCD in NM.
                 if (level >= GNB.Levels.DoubleDown && !HasEffect(GNB.Buffs.NoMercy) && !blastingZoneCD.IsCooldown && gauge.AmmoComboStep == 2 && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF))
-                    return OriginalHook(GNB.DangerZone);
+                    return OriginalHook(GNB.DangerZone); 
 
                 if (gauge.AmmoComboStep == 2)
                     return OriginalHook(GNB.GnashingFang);
@@ -278,7 +278,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class GunbreakerBurstStrikeConFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerBurstStrikeConFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerBurstStrikeConFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -294,7 +294,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class GunbreakerDemonSlaughterCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerDemonSlaughterCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerDemonSlaughterCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -324,7 +324,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class GunbreakerBloodfestOvercapFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerBloodfestOvercapFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerBloodfestOvercapFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -341,7 +341,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class GunbreakerNoMercyRotationFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerNoMercyRotationFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerNoMercyRotationFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

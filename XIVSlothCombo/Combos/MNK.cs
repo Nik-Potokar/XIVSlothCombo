@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
@@ -28,11 +29,11 @@ namespace XIVSlothComboPlugin.Combos
             RisingPhoenix = 25768,
             ShadowOfTheDestroyer = 25767,
             ForbiddenChakra = 3546;
-
+           
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 TwinSnakes = 101,
                 OpoOpoForm = 107,
                 RaptorForm = 108,
@@ -45,7 +46,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
                 Demolish = 246;
         }
 
@@ -72,7 +73,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class MnkAoECombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkAoECombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkAoECombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -98,7 +99,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 return OriginalHook(MNK.MasterfulBlitz);
             }
-
+            
             if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnAoECombo))
             {
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
@@ -161,7 +162,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class MnkBootshineFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkBootshineFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkBootshineFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -185,7 +186,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class MnkBasicCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkBasicCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkBasicCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -217,7 +218,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class MonkPerfectBalanceFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MonkPerfectBalanceFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.MonkPerfectBalanceFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -232,7 +233,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class MnkBasicComboPlus : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkBasicComboPlus;
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkBasicComboPlus;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -272,10 +273,10 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (HasEffect(MNK.Buffs.FormlessFist))
                 {
-                    if (!HasEffect(MNK.Buffs.LeadenFist))
+                    if(!HasEffect(MNK.Buffs.LeadenFist))
                         return MNK.DragonKick;
                 }
-                if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnMainCombo))
+                if(HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnMainCombo))
                 {
                     if (!nadiNONE && !lunarNadi)
                     {
@@ -314,11 +315,11 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class MnkPerfectBalancePlus : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkPerfectBalancePlus;
+        protected override CustomComboPreset Preset => CustomComboPreset.MnkPerfectBalancePlus;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MNK.MasterfulBlitz)
+            if(actionID == MNK.MasterfulBlitz)
 
             {
                 var gauge = GetJobGauge<MNKGauge>();
@@ -327,7 +328,7 @@ namespace XIVSlothComboPlugin.Combos
                 var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                 var solarNadi = gauge.Nadi == Nadi.SOLAR;
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
-                if (!nadiNONE && !lunarNadi)
+                if (!nadiNONE && !lunarNadi )
                 {
                     if (pbStacks.StackCount == 3)
                         return MNK.DragonKick;

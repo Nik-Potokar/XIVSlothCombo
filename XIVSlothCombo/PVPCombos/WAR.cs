@@ -19,7 +19,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 InnerRelease = 1303,
                 NascentChaos = 1992;
 
@@ -47,7 +47,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class StormsPathComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.StormsPathComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.StormsPathComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -65,7 +65,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class SteelCycloneFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SteelCycloneFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SteelCycloneFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

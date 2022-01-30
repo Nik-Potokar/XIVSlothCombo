@@ -24,7 +24,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 Delirium = 1996;
                 
         }
@@ -42,7 +42,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class SouleaterComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SouleaterComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SouleaterComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -63,7 +63,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class StalwartSoulComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.StalwartSoulComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.StalwartSoulComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

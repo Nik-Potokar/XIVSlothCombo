@@ -107,14 +107,11 @@ namespace XIVSlothComboPlugin.Combos
             SearingLight = 25801,
 
             // other
-            Sleep = 25880,
-            Swiftcast = 7561;
-
+            Sleep = 25880;
 
         public static class Buffs
         {
-            public const ushort
-                Swiftcast = 167,
+            public const short
                 FurtherRuin = 2701,
                 GarudasFavor = 2725,
                 TitansFavor = 2853,
@@ -153,10 +150,10 @@ namespace XIVSlothComboPlugin.Combos
                 EmeralRuin3 = 54;
         }
     }
-
+    
     internal class SummonerEDFesterCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerEDFesterCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerEDFesterCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -177,7 +174,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class SummonerESPainflareCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerESPainflareCombo;
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerESPainflareCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -199,11 +196,11 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class SummonerMainComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerMainComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerMainComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || (actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature)))
+            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature))
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
@@ -212,7 +209,7 @@ namespace XIVSlothComboPlugin.Combos
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var buffCD = GetCooldown(SMN.SearingLight);
                 var searingLight = HasEffect(SMN.Buffs.SearingLight);
-                var swiftCD = GetCooldown(SMN.Swiftcast);
+                var swiftCD = GetCooldown(All.Swiftcast);
                 var slipstreamCD = GetCooldown(SMN.Slipstream);
                 var energyDrainCD = GetCooldown(SMN.EnergyDrain);
                 var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
@@ -271,13 +268,13 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda))
                 {
-                    if (!swiftCD.IsCooldown && HasEffect(SMN.Buffs.GarudasFavor) && gauge.IsGarudaAttuned)
-                        return SMN.Swiftcast;
+                    if (!swiftCD.IsCooldown && HasEffect(SMN.Buffs.GarudasFavor) && gauge.IsGarudaAttuned )
+                        return All.Swiftcast; 
                 }
                 if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit))
                 {
                     if (!swiftCD.IsCooldown && gauge.IsIfritAttuned && lastComboMove == OriginalHook(SMN.RubyRite))
-                        return SMN.Swiftcast;
+                        return All.Swiftcast;
                 }
                 if (IsEnabled(CustomComboPreset.SummonerDemiSummonsFeature))
                 {
@@ -314,17 +311,17 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
                         return SMN.Rekindle;
                 }
-                if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
+                if(IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
                 {
                     if (gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor))
                         return SMN.Slipstream;
                 }
-                if (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
+                if(IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature))
                 {
                     if (HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite)
                         return SMN.MountainBuster;
                 }
-                if (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
+                if(IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature))
                 {
                     if (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor))
                         return SMN.CrimsonCyclone;
@@ -378,13 +375,13 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return actionID;
+            return OriginalHook(actionID);
         }
     }
 
     internal class SummonerAOEComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerAOEComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerAOEComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -410,7 +407,7 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(SMN.SummonRuby);
 
                     // Demi
-                    if ((gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown) || gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
+                    if (gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown && buffCD.IsCooldown || gauge.IsBahamutReady && !gauge.IsPhoenixReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !bahaCD.IsCooldown)
                         return OriginalHook(SMN.Aethercharge);
                     if (gauge.IsPhoenixReady && !gauge.IsBahamutReady && gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && incombat && !phoenixCD.IsCooldown)
                         return OriginalHook(SMN.Aethercharge);
@@ -496,7 +493,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.IsIfritAttuned && level <= 81)
                         return SMN.RubyDisaster;
                 }
-                if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature))
+                if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature)) 
                 {
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     if (level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin) && incombat)
@@ -509,7 +506,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class SummonerRuinIVMobilityFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerRuinIVMobilityFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerRuinIVMobilityFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -525,11 +522,11 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class SummonerMainComboFeatureRuin1 : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerMainComboFeatureRuin1;
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerMainComboFeatureRuin1;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature))
+            if (actionID == SMN.Ruin  && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature))
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
@@ -538,7 +535,7 @@ namespace XIVSlothComboPlugin.Combos
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var buffCD = GetCooldown(SMN.SearingLight);
                 var searingLight = HasEffect(SMN.Buffs.SearingLight);
-                var swiftCD = GetCooldown(SMN.Swiftcast);
+                var swiftCD = GetCooldown(All.Swiftcast);
                 var slipstreamCD = GetCooldown(SMN.Slipstream);
                 var energyDrainCD = GetCooldown(SMN.EnergyDrain);
                 var astralimpulseCD = GetCooldown(SMN.AstralImpulse);
@@ -598,12 +595,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda))
                 {
                     if (!swiftCD.IsCooldown && HasEffect(SMN.Buffs.GarudasFavor) && gauge.IsGarudaAttuned)
-                        return SMN.Swiftcast;
+                        return All.Swiftcast;
                 }
                 if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit))
                 {
                     if (!swiftCD.IsCooldown && gauge.IsIfritAttuned && lastComboMove == OriginalHook(SMN.RubyRite))
-                        return SMN.Swiftcast;
+                        return All.Swiftcast;
                 }
                 if (IsEnabled(CustomComboPreset.SummonerDemiSummonsFeature))
                 {
@@ -704,7 +701,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return actionID;
+            return OriginalHook(actionID);
         }
     }
 }

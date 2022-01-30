@@ -20,13 +20,13 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 Requiescat = 1369;
         }
     }
     internal class RoyalAuthorityComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RoyalAuthorityComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.RoyalAuthorityComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -43,7 +43,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class ProminenceComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ProminenceComboFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.ProminenceComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {

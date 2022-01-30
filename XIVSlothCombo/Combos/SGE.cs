@@ -1,4 +1,7 @@
-﻿namespace XIVSlothComboPlugin.Combos
+using Dalamud.Game.ClientState.JobGauge.Enums;
+using Dalamud.Game.ClientState.JobGauge.Types;
+
+namespace XIVSlothComboPlugin.Combos
 {
     internal static class SGE
     {
@@ -31,7 +34,7 @@
 
         public static class Buffs
         {
-            public const ushort
+            public const short
                 Kardia = 2604,
                 Eukrasia = 2606,
                 Swiftcast = 167;
@@ -39,7 +42,7 @@
 
         public static class Debuffs
         {
-            public const ushort
+            public const short
             EukrasianDosis1 = 2614,
             EukrasianDosis2 = 2615,
             EukrasianDosis3 = 2616;
@@ -63,7 +66,7 @@
 
     internal class SageKardiaFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageKardiaFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SageKardiaFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -81,7 +84,7 @@
 
     internal class SagePhlegmaFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SagePhlegmaFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -106,7 +109,7 @@
 
     internal class SageDPSFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageDPSFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SageDPSFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -146,7 +149,7 @@
                     var lucidDreaming = GetCooldown(SGE.LucidDreaming);
                     var actionIDCD = GetCooldown(actionID);
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
-                        return SGE.LucidDreaming;
+                        return AST.LucidDreaming;
                 }
             }
 
@@ -156,7 +159,7 @@
 
     internal class SageEgeiroFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageEgeiroFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.SageEgeiroFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -174,9 +177,9 @@
             return actionID;
         }
     }
-    internal class SageDPSFeatureTest : CustomCombo
+    internal class CustomValuesTest : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageDPSFeatureTest;
+        protected override CustomComboPreset Preset => CustomComboPreset.SageDPSFeatureTest;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -195,7 +198,7 @@
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis3;
-                    if ((dosis3Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((dosis3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
+                    if (dosis3Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue || (dosis3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
                         return SGE.Eukrasia;
                 }
 
@@ -203,15 +206,15 @@
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis2;
-                    if ((dosis2Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((dosis2Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
-                        return SGE.Eukrasia;
+                    if (dosis2Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue || (dosis2Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
+                            return SGE.Eukrasia;
                 }
 
                 if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= 30 && level <= 71 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis1;
-                    if ((dosis1Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((dosis1Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
+                    if (dosis1Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue || (dosis1Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
                         return SGE.Eukrasia;
                 }
                 if (IsEnabled(CustomComboPreset.SageLucidFeature))
@@ -219,7 +222,7 @@
                     var lucidDreaming = GetCooldown(SGE.LucidDreaming);
                     var actionIDCD = GetCooldown(actionID);
                     if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
-                        return SGE.LucidDreaming;
+                        return AST.LucidDreaming;
                 }
             }
 
