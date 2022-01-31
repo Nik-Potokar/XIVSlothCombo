@@ -593,6 +593,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Monk Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID)]
         MnkBootshineFeature = 9001,
 
+        [CustomComboInfo("Monk Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID)]
+        MnkTwinSnakesFeature = 9011,
+
         [ConflictingCombos(MnkBasicComboPlus)]
         [CustomComboInfo("Monk Basic Rotation", "Basic Monk Combo on one button", MNK.JobID)]
         MnkBasicCombo = 9002,
