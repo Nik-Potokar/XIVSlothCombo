@@ -159,6 +159,22 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class AstrologianAlternateAscendFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAlternateAscendFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == AST.Ascend)
+            {
+                var swiftCD = GetCooldown(AST.Swiftcast);
+                if ((swiftCD.CooldownRemaining == 0)
+)
+                    return AST.Swiftcast;
+            }
+            return actionID;
+        }
+    }
 
     internal class AstrologianDpsFeature : CustomCombo
     {

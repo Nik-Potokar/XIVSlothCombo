@@ -107,8 +107,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID)]
         AstrologianBeneficFeature = 1002,
 
+        [ConflictingCombos(AstrologianAlternateAscendFeature)]
         [CustomComboInfo("AST Raise Feature", "Changes Swiftcast to Ascend", AST.JobID)]
         AstrologianAscendFeature = 1003,
+
+        [ConflictingCombos(AstrologianAscendFeature)]
+        [CustomComboInfo("AST Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available", AST.JobID)]
+        AstrologianAlternateAscendFeature = 1019,
 
         [ConflictingCombos(AstrologianAlternateDpsFeature, CustomValuesTest)]
         [CustomComboInfo("DPS Feature(On Malefic)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID)]
@@ -921,8 +926,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button", SGE.JobID)]
         SageDPSFeature = 14002,
 
+        [ConflictingCombos(SageAlternateEgeiroFeature)]
         [CustomComboInfo("SGE Raise Feature", "Changes Swiftcast to Egeiro", SGE.JobID)]
         SageEgeiroFeature = 14003,
+
+        [ConflictingCombos(SageEgeiroFeature)]
+        [CustomComboInfo("SGE Raise Alternate Feature", "Changes Egiero To Swiftcast when Swiftcast is available", SGE.JobID)]
+        SageAlternateEgeiroFeature = 14006,
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds LucidDreaming onto Dosis DPS Feature when you have 8k mana or less", SGE.JobID)]
         SageLucidFeature = 14004,
@@ -1029,8 +1039,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("ED Aetherflow", "Change Energy Drain into Aetherflow when you have no more Aetherflow stacks.", SCH.JobID)]
         ScholarEnergyDrainFeature = 16001,
 
+        [ConflictingCombos(SCHAlternateRaiseFeature)]
         [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID)]
         SchRaiseFeature = 16002,
+
+        [ConflictingCombos(SchRaiseFeature)]
+        [CustomComboInfo("SCH Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available.", SCH.JobID)]
+        SCHAlternateRaiseFeature = 16008,
 
         [CustomComboInfo("SCH Alternate DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID)]
         SCHDPSAlternateFeature = 16003,
@@ -1230,8 +1245,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID)]
         WhiteMageAfflatusFeature = 19003,
 
+        [ConflictingCombos(WHMAlternativeRaise)]
         [CustomComboInfo("WHM Raise Feature", "Changes Swiftcast to Raise", WHM.JobID)]
         WHMRaiseFeature = 19004,
+
+        [ConflictingCombos(WHMRaiseFeature)]
+        [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID)]
+        WHMAlternativeRaise = 19015,
 
         [CustomComboInfo("DoT on Glare3 Feature", "Adds DoT on Glare3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID)]
         WHMDotMainComboFeature = 19005,

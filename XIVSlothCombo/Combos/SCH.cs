@@ -109,6 +109,22 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
     }
+    internal class SCHAlternateRaiseFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCHAlternateRaiseFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SCH.Resurrection)
+            {
+                var swiftCD = GetCooldown(SCH.Swiftcast);
+                if ((swiftCD.CooldownRemaining == 0)
+)
+                    return SCH.Swiftcast;
+            }
+            return actionID;
+        }
+    }
 
     internal class SCHDPSAlternateFeature : CustomCombo
     {

@@ -177,6 +177,23 @@
             return actionID;
         }
     }
+    internal class SageAlternateEgeiroFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageAlternateEgeiroFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SGE.Egeiro)
+            {
+                var swiftCD = GetCooldown(SGE.Swiftcast);
+                if ((swiftCD.CooldownRemaining == 0)
+)
+                    return SGE.Swiftcast;
+            }
+            return actionID;
+        }
+    }
+
     internal class SageDPSFeatureTest : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageDPSFeatureTest;
