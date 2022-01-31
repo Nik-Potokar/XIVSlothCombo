@@ -183,6 +183,30 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+    internal class MnkTwinSnakesFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkTwinSnakesFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == MNK.TrueStrike)
+            {
+                var disciplinedFistBuff = HasEffect(MNK.Buffs.DisciplinedFist);
+                var disciplinedFistDuration = FindEffect(MNK.Buffs.DisciplinedFist);
+
+                if (level >= MNK.Levels.TrueStrike)
+                {
+                    if ((!disciplinedFistBuff && level >= MNK.Levels.TwinSnakes) || (disciplinedFistDuration.RemainingTime < 6 && level >= MNK.Levels.TwinSnakes))
+                        return MNK.TwinSnakes;
+                    return MNK.TrueStrike;
+                }
+
+            }
+
+            return actionID;
+        }
+    }
+
     internal class MnkBasicCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkBasicCombo;
