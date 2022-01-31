@@ -27,6 +27,8 @@ namespace XIVSlothComboPlugin.Combos
             FlintStrike = 25882,
             RisingPhoenix = 25768,
             ShadowOfTheDestroyer = 25767,
+            RiddleOfFire = 7395,
+            Brotherhood = 7396,
             ForbiddenChakra = 3546;
 
 
@@ -377,6 +379,29 @@ namespace XIVSlothComboPlugin.Combos
                         return MNK.Demolish;
                 }
 
+            }
+            return actionID;
+        }
+    }
+    internal class MnkRiddleOfFireBrotherhoodFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkRiddleOfFireBrotherhoodFeature;
+        
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var RoFCD = GetCooldown(MNK.RiddleOfFire);
+            var BrotherhoodCD = GetCooldown(MNK.Brotherhood);
+
+            if (actionID == MNK.RiddleOfFire)
+            {
+                if (level >= 68 && level < 70)
+                    return MNK.RiddleOfFire;
+                if (RoFCD.IsCooldown && BrotherhoodCD.IsCooldown && level >= 70)
+                    return MNK.RiddleOfFire;
+                if (RoFCD.IsCooldown && !BrotherhoodCD.IsCooldown && level >= 70)
+                    return MNK.Brotherhood;
+
+                return MNK.RiddleOfFire;
             }
             return actionID;
         }
