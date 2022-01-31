@@ -1161,6 +1161,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Prevent Ruin4 Waste Feature", "Puts Ruin4 Above anything if FurtherRuin about to expire and there is no Demi present.", SMN.JobID)]
         SummonerRuin4WastePrevention = 17025,
 
+        [CustomComboInfo("Rekindle Feature", "Adds Rekindle onto the main Ruin1 or Ruin3 combo. Requires other features to work.", SMN.JobID)]
+        SummonerRekindlePhoenix = 17026,
+
 
         #endregion
         // ====================================================================================

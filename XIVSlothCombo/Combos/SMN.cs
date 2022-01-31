@@ -311,7 +311,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SMN.EnkindlePhoenix;
                     if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
                         return SMN.EnkindlePhoenix;
-                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
+                    if (IsEnabled(CustomComboPreset.SummonerRekindlePhoenix) && level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
                         return SMN.Rekindle;
                 }
                 if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
@@ -456,7 +456,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level >= SMN.Levels.Bahamut && lastComboMove == SMN.AstralFlare && !deathflare.IsCooldown && !deathflare.IsCooldown && astralflareCD.CooldownRemaining > 0.7)
                         return SMN.Deathflare;
-                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
+                    if (IsEnabled(CustomComboPreset.SummonerRekindlePhoenix) && level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && brandofpurgaCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.Rekindle;
                     if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.AstralFlare || lastComboMove == SMN.SummonBahamut) && !enkindleBahamut.IsCooldown && astralflareCD.CooldownRemaining > SMN.CooldownThreshold)
                         return SMN.EnkindleBahamut;
@@ -637,7 +637,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SMN.EnkindlePhoenix;
                     if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !enkindlePhoenix.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
                         return SMN.EnkindlePhoenix;
-                    if (level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
+                    if (IsEnabled(CustomComboPreset.SummonerRekindlePhoenix) && level >= SMN.Levels.Phoenix && lastComboMove == SMN.FountainOfFire && !rekindle.IsCooldown && fountainfireCD.CooldownRemaining > 0.3)
                         return SMN.Rekindle;
                 }
                 if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature))
