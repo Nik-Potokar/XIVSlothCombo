@@ -378,6 +378,15 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>Number of charges.</returns>
         protected static ushort GetMaxCharges(uint actionID)
             => GetCooldown(actionID).MaxCharges;
+        
+        /// <summary>
+        /// Checks if the provided action ID has cooldown remaining enough to weave against it
+        /// without causing clipping
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>True or false.</returns>
+        protected static bool CanWeave(uint actionID)
+            => GetCooldown(actionID).CooldownRemaining > 0.7;
 
         /// <summary>
         /// Get a job gauge.

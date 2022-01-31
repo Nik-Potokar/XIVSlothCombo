@@ -405,7 +405,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 var gauge = GetJobGauge<BRDGauge>();
                 var soulVoice = gauge.SoulVoice;
-                var heavyShotOnCooldown = GetCooldown(BRD.HeavyShot).CooldownRemaining > 0.7;
+                var heavyShotOnCooldown = CanWeave(BRD.HeavyShot);
 
                 if (heavyShotOnCooldown)
                 {
@@ -848,7 +848,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 var heavyShot = GetCooldown(actionID);
-                var heavyShotOnCooldown = heavyShot.CooldownRemaining > 0.7;
+                var heavyShotOnCooldown = CanWeave(actionID);
                 var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleRaidMode) ? true : CustomCombo.EnemyHealthPercentage() > 1;
 
                 if (IsEnabled(CustomComboPreset.SimpleSongOption) && heavyShot.IsCooldown && isEnemyHealthHigh)
