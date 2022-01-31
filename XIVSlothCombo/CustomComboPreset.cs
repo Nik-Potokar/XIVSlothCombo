@@ -635,6 +635,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Forbidden Chakra Feature", "Adds Forbidden Chakra/Enlightement to the Main/AoE feature combo. Testing Only for now!", MNK.JobID)]
         MonkForbiddenChakraFeature = 9010,
+        
+        [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID)]
+        MnkRiddleOfFireBrotherhoodFeature = 9012,
 
 
         #endregion
