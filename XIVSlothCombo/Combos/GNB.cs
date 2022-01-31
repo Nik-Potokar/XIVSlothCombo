@@ -12,6 +12,8 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         public const uint
+            LowBlow = 7540,
+            Interject = 7538,
             KeenEdge = 16137,
             NoMercy = 16138,
             BrutalShell = 16139,
@@ -405,6 +407,23 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                     return GNB.Hypervelocity;
                 return GNB.NoMercy;
+            }
+
+            return actionID;
+        }
+    }
+    internal class GunbreakerInterruptFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerInterruptFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == GNB.LowBlow)
+            {
+                var interjectCD = GetCooldown(GNB.Interject);
+                var lowBlowCD = GetCooldown(GNB.LowBlow);
+                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
+                    return GNB.Interject;
             }
 
             return actionID;

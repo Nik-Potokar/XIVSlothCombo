@@ -14,9 +14,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", ADV.JobID)]
         AdvAny = 0,
 
-        [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", All.JobID)]
-        AllAny = AdvAny + All.JobID,
-
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", AST.JobID)]
         AstAny = AdvAny + AST.JobID,
 
@@ -87,6 +84,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ADV
         #endregion
+        /*
         #region GLOBAL FEATURES
         [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
         InterruptFeature = 90000,
@@ -96,6 +94,7 @@ namespace XIVSlothComboPlugin
         DoMSwiftcastFeature = 90001,
 
         #endregion
+        */
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -198,7 +197,6 @@ namespace XIVSlothComboPlugin
 
         #endregion
         // ====================================================================================
-
         #region BLUE MAGE
 
         [CustomComboInfo("Buffed Song of Torment", "Turns Song of Torment into Bristle so SoT is buffed.", BLU.JobID)]
@@ -427,6 +425,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID)]
         DarkRangedUptimeFeature = 5011,
 
+        [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", DRK.JobID)]
+        DarkKnightInterruptFeature = 5012,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -514,6 +515,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID)]
         GunbreakerRangedUptimeFeature = 7015,
+
+        [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", GNB.JobID)]
+        GunbreakerInterruptFeature = 7016,
 
         #endregion
         // ====================================================================================
@@ -778,7 +782,10 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(PaladinAtonementFeature, PaladinAtonementTestFeature)]
         [CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID)]
         SkillCooldownRemaining = 11018,
-        
+
+        [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", PLD.JobID)]
+        PaladinInterruptFeature = 11019,
+
 
 
 
@@ -1202,6 +1209,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID)]
         WARRangedUptimeFeature = 18016,
+
+        [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", WAR.JobID)]
+        WarriorInterruptFeature = 18017,
 
         #endregion
         // ====================================================================================

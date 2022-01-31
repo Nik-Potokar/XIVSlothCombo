@@ -207,7 +207,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 72 && incombat)
                 {
-                    if ((combust3Debuff is null) && EnemyHealthMaxHp() > 100000 || (combust3Debuff.RemainingTime <= 3))
+                    if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
                         return AST.Combust3;
                 }
 

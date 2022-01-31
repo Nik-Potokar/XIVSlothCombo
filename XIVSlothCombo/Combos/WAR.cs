@@ -21,6 +21,8 @@ namespace XIVSlothComboPlugin.Combos
             FellCleave = 3549,
             Decimate = 3550,
             Upheaval = 7387,
+            LowBlow = 7540,
+            Interject = 7538,
             InnerRelease = 8768,
             RawIntuition = 3551,
             MythrilTempest = 16462,

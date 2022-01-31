@@ -16,6 +16,8 @@ namespace XIVSlothComboPlugin.Combos
             CarveAndSpit = 3643,
             Quietus = 7391,
             Bloodspiller = 7392,
+            LowBlow = 7540,
+            Interject = 7538,
             FloodOfDarkness = 16466,
             EdgeOfDarkness = 16467,
             StalwartSoul = 16468,
@@ -222,6 +224,23 @@ namespace XIVSlothComboPlugin.Combos
 
             return OriginalHook(actionID);
 
+        }
+    }
+    internal class DarkKnightInterruptFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkKnightInterruptFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == DRK.LowBlow)
+            {
+                var interjectCD = GetCooldown(DRK.Interject);
+                var lowBlowCD = GetCooldown(DRK.LowBlow);
+                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
+                    return DRK.Interject;
+            }
+
+            return actionID;
         }
     }
 }

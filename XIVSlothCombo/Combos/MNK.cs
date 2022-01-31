@@ -273,7 +273,8 @@ namespace XIVSlothComboPlugin.Combos
                 var solarNadi = gauge.Nadi == Nadi.SOLAR;
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
                 var actionIDCD = GetCooldown(actionID);
-
+                if (!HasEffect(MNK.Buffs.LeadenFist) && HasEffect(MNK.Buffs.OpoOpoForm) && level >= MNK.Levels.DragonKick)
+                    return MNK.DragonKick;
                 if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 15)
                 {
                     return OriginalHook(MNK.ForbiddenChakra);
@@ -328,8 +329,6 @@ namespace XIVSlothComboPlugin.Combos
                         if (pbStacks.StackCount == 1)
                             return MNK.Demolish;
                     }
-                    if (!HasEffect(MNK.Buffs.LeadenFist) && HasEffect(MNK.Buffs.OpoOpoForm) && level >= MNK.Levels.DragonKick)
-                        return MNK.DragonKick;
                 }
             }
             return actionID;

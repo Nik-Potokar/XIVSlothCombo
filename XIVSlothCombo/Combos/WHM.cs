@@ -253,5 +253,22 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
+        internal class WarriorInterruptFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorInterruptFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == WAR.LowBlow)
+                {
+                    var interjectCD = GetCooldown(WAR.Interject);
+                    var lowBlowCD = GetCooldown(WAR.LowBlow);
+                    if (CanInterruptEnemy() && !interjectCD.IsCooldown)
+                        return WAR.Interject;
+                }
+
+                return actionID;
+            }
+        }
     }
 }

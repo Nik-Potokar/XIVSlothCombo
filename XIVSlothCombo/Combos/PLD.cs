@@ -21,6 +21,7 @@ namespace XIVSlothComboPlugin.Combos
             TotalEclipse = 7381,
             Requiescat = 7383,
             HolySpirit = 7384,
+            Interject = 7538,
             Prominence = 16457,
             HolyCircle = 16458,
             Confiteor = 16459,
@@ -370,6 +371,23 @@ namespace XIVSlothComboPlugin.Combos
                     return PLD.BladeOfValor;
                 }
             }
+            return actionID;
+        }
+    }
+    internal class PaladinInterruptFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinInterruptFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == PLD.LowBlow)
+            {
+                var interjectCD = GetCooldown(PLD.Interject);
+                var lowBlowCD = GetCooldown(PLD.LowBlow);
+                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
+                    return PLD.Interject;
+            }
+
             return actionID;
         }
     }

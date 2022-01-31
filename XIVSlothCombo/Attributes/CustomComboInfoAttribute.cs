@@ -96,9 +96,9 @@ namespace XIVSlothComboPlugin.Attributes
                 38 => "Dancer",
                 39 => "Reaper",
                 40 => "Sage",
+                99 => "Global",
                 DOH.JobID => "Disciples of the Hand",
                 DOL.JobID => "Disciples of the Land",
-                All.JobID => "All Global Features",
                 _ => "Unknown",
             };
         }
