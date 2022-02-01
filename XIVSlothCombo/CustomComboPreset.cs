@@ -638,6 +638,14 @@ namespace XIVSlothComboPlugin
         
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID)]
         MnkRiddleOfFireBrotherhoodFeature = 9012,
+        
+        [ParentCombo(MnkBasicComboPlus)]
+        [CustomComboInfo("Damage Buffs to Main Combo Feature", "Places Riddle of Fire and Brotherhood onto main combo when Perfect Balance is up.", MNK.JobID)]
+        MnkMainComboBuffsFeature = 9013,
+        
+        [ParentCombo(MnkBasicComboPlus)]
+        [CustomComboInfo("Riddle of Wind Main Combo Feature", "Places Riddle of Wind onto main combo after using Twin Snakes.", MNK.JobID)]
+        MnkRiddleOfWindFeature = 9014,
 
 
         #endregion

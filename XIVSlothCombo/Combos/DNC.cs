@@ -108,26 +108,29 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var gauge = GetJobGauge<DNCGauge>();
-            if (gauge.Feathers == 0)
+            if(actionID == DNC.Cascade || actionID == DNC.Windmill)
             {
-                if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
-                    return DNC.SaberDance;
-            }
-            if (actionID == DNC.FanDance1)
-            {
-                if (HasEffect(DNC.Buffs.FlourishingFanDance))
-                    return DNC.FanDance3;
+                var gauge = GetJobGauge<DNCGauge>();
+                if (gauge.Feathers == 0)
+                {
+                    if (gauge.Esprit >= 90 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerOvercapFeature))
+                        return DNC.SaberDance;
+                }
+                if (actionID == DNC.FanDance1)
+                {
+                    if (HasEffect(DNC.Buffs.FlourishingFanDance))
+                        return DNC.FanDance3;
 
-                return DNC.FanDance1;
-            }
+                    return DNC.FanDance1;
+                }
 
-            if (actionID == DNC.FanDance2)
-            {
-                if (HasEffect(DNC.Buffs.FlourishingFanDance))
-                    return DNC.FanDance3;
+                if (actionID == DNC.FanDance2)
+                {
+                    if (HasEffect(DNC.Buffs.FlourishingFanDance))
+                        return DNC.FanDance3;
 
-                return DNC.FanDance2;
+                    return DNC.FanDance2;
+                }
             }
 
             return actionID;

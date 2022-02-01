@@ -28,6 +28,7 @@ namespace XIVSlothComboPlugin.Combos
             RisingPhoenix = 25768,
             ShadowOfTheDestroyer = 25767,
             RiddleOfFire = 7395,
+            RiddleOfWind = 25766,
             Brotherhood = 7396,
             ForbiddenChakra = 3546;
 
@@ -40,6 +41,7 @@ namespace XIVSlothComboPlugin.Combos
                 RaptorForm = 108,
                 CoerlForm = 109,
                 PerfectBalance = 110,
+                RiddleOfFire = 1181,
                 LeadenFist = 1861,
                 FormlessFist = 2513,
                 DisciplinedFist = 3001;
@@ -82,7 +84,7 @@ namespace XIVSlothComboPlugin.Combos
             var actionIDCD = GetCooldown(OriginalHook(actionID));
             if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
-                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && HasBattleTarget(true) && level >= 40)
+                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.CooldownRemaining > 0.5 && HasBattleTarget(true) && level >= 40)
                 {
                     return OriginalHook(MNK.Enlightenment);
                 }
@@ -268,6 +270,9 @@ namespace XIVSlothComboPlugin.Combos
                 var twinsnakeBuff = HasEffect(MNK.Buffs.DisciplinedFist);
                 var twinsnakeDuration = FindEffect(MNK.Buffs.DisciplinedFist);
                 var demolishDuration = FindTargetEffect(MNK.Debuffs.Demolish);
+                var RoFCD = GetCooldown(MNK.RiddleOfFire);
+                var RoWCD = GetCooldown(MNK.RiddleOfWind);
+                var BrotherhoodCD = GetCooldown(MNK.Brotherhood);
                 //Nadi
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
                 var pbCD = GetCooldown(MNK.PerfectBalance);
@@ -275,9 +280,24 @@ namespace XIVSlothComboPlugin.Combos
                 var solarNadi = gauge.Nadi == Nadi.SOLAR;
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
                 var actionIDCD = GetCooldown(actionID);
+
+                if (IsEnabled(CustomComboPreset.MnkMainComboBuffsFeature))
+                {
+
+                    if (HasEffect(MNK.Buffs.PerfectBalance) && actionIDCD.CooldownRemaining > 0.5 && !RoFCD.IsCooldown && level >= 68)
+                        return MNK.RiddleOfFire;
+                    if (HasEffect(MNK.Buffs.PerfectBalance) && actionIDCD.CooldownRemaining > 0.5 && !BrotherhoodCD.IsCooldown && HasEffect(MNK.Buffs.RiddleOfFire) && level >= 70)
+                        return MNK.Brotherhood;
+                }
+                if (IsEnabled(CustomComboPreset.MnkRiddleOfWindFeature))
+                {
+                    if (lastComboMove == MNK.TwinSnakes && actionIDCD.CooldownRemaining > 0.5 && !RoWCD.IsCooldown && level >= 72)
+                        return MNK.RiddleOfWind;
+                }
+
                 if (!HasEffect(MNK.Buffs.LeadenFist) && HasEffect(MNK.Buffs.OpoOpoForm) && level >= MNK.Levels.DragonKick)
                     return MNK.DragonKick;
-                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.IsCooldown && level >= 15)
+                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.CooldownRemaining > 0.5 && level >= 15)
                 {
                     return OriginalHook(MNK.ForbiddenChakra);
                 }
