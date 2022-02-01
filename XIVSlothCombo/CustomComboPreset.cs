@@ -640,7 +640,7 @@ namespace XIVSlothComboPlugin
         MnkRiddleOfFireBrotherhoodFeature = 9012,
         
         [ParentCombo(MnkBasicComboPlus)]
-        [CustomComboInfo("Damage Buffs to Main Combo Feature", "Places Riddle of Fire, and Brotherhood onto the main combo when in perfect balance.", MNK.JobID)]
+        [CustomComboInfo("Damage Buffs to Main Combo Feature", "Places Riddle of Fire and Brotherhood onto main combo when Perfect Balance is up.", MNK.JobID)]
         MnkMainComboBuffsFeature = 9013,
         
         [ParentCombo(MnkBasicComboPlus)]
