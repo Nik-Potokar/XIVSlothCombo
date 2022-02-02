@@ -1060,6 +1060,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Samurai AoE Overcap Feature 2", "Adds Guren>Kyuten onto main AoE combos at 85 or more Kenki", SAM.JobID)]
         SamuraiOvercapFeatureAoe85 = 15026,
 
+        [CustomComboInfo("Ikishoten on combos", "Adds Ikishoten to most Single Target/AoE combos when at or below 50 Kenki", SAM.JobID)]
+        SamuraiIkishotenonmaincombo = 15027,
+
 
 
         #endregion

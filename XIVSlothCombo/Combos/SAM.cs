@@ -83,6 +83,12 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var actionIDCD = GetCooldown(actionID);
                 var seneiCD = GetCooldown(SAM.Senei);
+                var ikiCD = GetCooldown(SAM.Ikishoten);
+                if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
+                {
+                    if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
+                        return SAM.Ikishoten;
+                }
                 if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
                 {
 
@@ -123,6 +129,12 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var actionIDCD = GetCooldown(actionID);
                 var seneiCD = GetCooldown(SAM.Senei);
+                var ikiCD = GetCooldown(SAM.Ikishoten);
+                if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
+                {
+                    if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
+                        return SAM.Ikishoten;
+                }
                 if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
                 {
 
@@ -170,6 +182,12 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var actionIDCD = GetCooldown(actionID);
                 var seneiCD = GetCooldown(SAM.Senei);
+                var ikiCD = GetCooldown(SAM.Ikishoten);
+                if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
+                {
+                    if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
+                        return SAM.Ikishoten;
+                }
                 if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
                 {
 
@@ -217,6 +235,12 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var actionIDCD = GetCooldown(actionID);
                 var gurenCD = GetCooldown(SAM.Guren);
+                var ikiCD = GetCooldown(SAM.Ikishoten);
+                if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
+                {
+                    if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
+                        return SAM.Ikishoten;
+                }
                 if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe75))
                 {
 
@@ -259,6 +283,12 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var actionIDCD = GetCooldown(actionID);
                 var gurenCD = GetCooldown(SAM.Guren);
+                var ikiCD = GetCooldown(SAM.Ikishoten);
+                if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
+                {
+                    if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
+                        return SAM.Ikishoten;
+                }
                 if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
                 {
 
@@ -528,6 +558,12 @@ namespace XIVSlothComboPlugin.Combos
                     var higanbana = TargetHasEffect(SAM.Debuffs.Higanbana);
                     var seneiCD = GetCooldown(SAM.Senei);
                     var actionIDCD = GetCooldown(actionID);
+                    var ikiCD = GetCooldown(SAM.Ikishoten);
+                    if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
+                    {
+                        if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
+                            return SAM.Ikishoten;
+                    }
                     if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
                     {
 
@@ -601,6 +637,12 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var actionIDCD = GetCooldown(actionID);
                 var gurenCD = GetCooldown(SAM.Guren);
+                var ikiCD = GetCooldown(SAM.Ikishoten);
+                if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
+                {
+                    if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
+                        return SAM.Ikishoten;
+                }
                 if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe75))
                 {
 
