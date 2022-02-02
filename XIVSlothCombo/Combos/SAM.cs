@@ -508,11 +508,10 @@ namespace XIVSlothComboPlugin.Combos
                     var gauge = GetJobGauge<SAMGauge>();
                     if (HasEffect(SAM.Buffs.OgiNamikiriReady))
                     {
+                        if (HasEffect(SAM.Buffs.Kaiten) && HasEffect(SAM.Buffs.OgiNamikiriReady))
+                            return SAM.OgiNamikiri;
                         if (HasEffect(SAM.Buffs.OgiNamikiriReady) && gauge.Kenki >= 20 && IsEnabled(CustomComboPreset.SamuraiIkishotenKaitenNamikiriFeature))
                             return SAM.Kaiten;
-                        if (gauge.MeditationStacks >= 3)
-                            return SAM.Shoha;
-                        return SAM.OgiNamikiri;
                     }
                     if (OriginalHook(SAM.OgiNamikiri) == SAM.KaeshiNamikiri)
                         return SAM.KaeshiNamikiri;
