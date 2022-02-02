@@ -260,7 +260,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 var bioblaster = GetCooldown(MCH.BioBlaster);
-                if (!bioblaster.IsCooldown && level >= 72 && IsEnabled(CustomComboPreset.MachinistBioblasterFeature))
+                if (!bioblaster.IsCooldown && level >= 72 && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MachinistBioblasterFeature))
                     return MCH.BioBlaster;
                 if (!gauge.IsOverheated && level >= 82)
                     return MCH.Scattergun;

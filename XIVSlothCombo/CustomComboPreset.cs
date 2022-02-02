@@ -1023,34 +1023,42 @@ namespace XIVSlothComboPlugin
         SamuraiIkishotenNamikiriFeature = 15014,
 
         [ConflictingCombos(SamuraiYukikazeCombo, SamuraiGekkoCombo, SamuraiKashaCombo)]
-        [CustomComboInfo("SimpleSamuraiSingleTarget", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID)]
+        [CustomComboInfo("SimpleS amurai SingleTarget", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID)]
         SamuraiSimpleSamuraiFeature = 15015,
 
-        [CustomComboInfo("SimpleSamuraiAoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID)]
+        [CustomComboInfo("Simple Samurai AoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID)]
         SamuraiSimpleSamuraiAoECombo = 15016,
 
-        [CustomComboInfo("KaitenFeature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID)]
+        [CustomComboInfo("Kaiten Feature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID)]
         SamuraiKaitenFeature1 = 15018,
 
-        [CustomComboInfo("KaitenFeature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID)]
+        [CustomComboInfo("Kaiten Feature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID)]
         SamuraiKaitenFeature2 = 15019,
 
-        [CustomComboInfo("KaitenFeature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID)]
+        [CustomComboInfo("Kaiten Feature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID)]
         SamuraiKaitenFeature3 = 15020,
 
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID)]
         SamuraiYatenFeature = 15021,
 
-        [CustomComboInfo("KaitenFeature Option 4", "Adds Kaiten when above 20 gauge to OgiNamikiri and OgiNamikiri is ready.", SAM.JobID)]
+        [CustomComboInfo("Kaiten Feature Option 4", "Adds Kaiten when above 20 gauge to OgiNamikiri and OgiNamikiri is ready.", SAM.JobID)]
         SamuraiOgiNamikiriFeature = 15022,
 
         [ConflictingCombos(SamuraiOvercapFeature85)]
-        [CustomComboInfo("SimpleSamurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID)]
+        [CustomComboInfo("Samurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID)]
         SamuraiOvercapFeature75 = 15023,
 
         [ConflictingCombos(SamuraiOvercapFeature75)]
-        [CustomComboInfo("SimpleSamurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID)]
+        [CustomComboInfo("Samurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID)]
         SamuraiOvercapFeature85 = 15024,
+
+        [ConflictingCombos(SamuraiOvercapFeatureAoe85)]
+        [CustomComboInfo("Samurai AoE Overcap Feature 1", "Adds Guren>Kyuten onto main AoE combos at 75 or more Kenki", SAM.JobID)]
+        SamuraiOvercapFeatureAoe75 = 15025,
+
+        [ConflictingCombos(SamuraiOvercapFeatureAoe75)]
+        [CustomComboInfo("Samurai AoE Overcap Feature 2", "Adds Guren>Kyuten onto main AoE combos at 85 or more Kenki", SAM.JobID)]
+        SamuraiOvercapFeatureAoe85 = 15026,
 
 
 
