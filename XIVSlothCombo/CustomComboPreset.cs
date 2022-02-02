@@ -1023,7 +1023,7 @@ namespace XIVSlothComboPlugin
         SamuraiIkishotenNamikiriFeature = 15014,
 
         [ConflictingCombos(SamuraiYukikazeCombo, SamuraiGekkoCombo, SamuraiKashaCombo)]
-        [CustomComboInfo("SimpleS amurai SingleTarget", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID)]
+        [CustomComboInfo("Simple Samurai Single Target", "Every Sticker Combo On One Button (On Hakaze). Big Thanks to Stein121", SAM.JobID)]
         SamuraiSimpleSamuraiFeature = 15015,
 
         [CustomComboInfo("Simple Samurai AoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID)]
