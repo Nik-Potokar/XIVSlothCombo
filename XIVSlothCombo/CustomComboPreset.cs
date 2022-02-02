@@ -189,7 +189,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID)]
         BlackDespairFeature = 2007,
 
-        [CustomComboInfo("AoE Combo Feature", "One Button AoE Feature that adds whole AoE rotation onto HighBlizzard2 (TESTING ONLY!!!)", BLM.JobID)]
+        [CustomComboInfo("AoE Combo Feature", "One Button AoE Feature that adds whole AoE rotation onto FLARE (TESTING ONLY!!!)", BLM.JobID)]
         BlackAoEComboFeature = 2008,
 
         [ParentCombo(BlackEnochianFeature)]
@@ -432,6 +432,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", DRK.JobID)]
         DarkKnightInterruptFeature = 5012,
+
+        [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60% hp.", DRK.JobID)]
+        DRKStalwartabyssalDrainFeature = 5013,
+
+        [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE Combo.", DRK.JobID)]
+        DRKStalwartShadowbringerFeature = 5014,
+
+
 
         #endregion
         // ====================================================================================
@@ -923,6 +931,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos. (Testing Only!)", RDM.JobID)]
         RedMageEngagementFeature = 13013,
 
+        [CustomComboInfo("Simple Red Mage Feature Single Target", "Combines Smartcast feature with melee combo on Verstone,Verfire or melee skills (This is not optimal until i find a solution for distance delay)", RDM.JobID)]
+        SimpleRedMage = 13014,
+
+        [CustomComboInfo("Simple Red Mage Feature AoE", "Combines Smartcast AoE feature with melee AoE combo on Verthunder2/Veraero2 (This is not optimal until i find a solution for distance delay)", RDM.JobID)]
+        SimpleRedMageAoE = 13015,
+
         #endregion
         // ====================================================================================
         #region SAGE
@@ -1296,6 +1310,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Misery Feature", "Changes Cure 2 into Afflatus Misery.", WHM.JobID)]
         WhiteMageAfflatusMiseryCure2Feature = 19012,
 
+        [ParentCombo(WHMDotMainComboFeature)]
         [CustomComboInfo("Remove DoT From Glare3 Feature", "Removes DoT from DPS feature", WHM.JobID)]
         WHMRemoveDotFromDPSFeature = 19013,
 

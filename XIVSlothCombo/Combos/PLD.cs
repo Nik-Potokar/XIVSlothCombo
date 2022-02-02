@@ -122,17 +122,17 @@ namespace XIVSlothComboPlugin.Combos
                     if (lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < customGCDLow && riotcd.CooldownRemaining > customGCDHigh && !foFCD.IsCooldown)
                         return PLD.FightOrFlight;
                 }
-                if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature))
+                if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= 68)
                 {
                     if (HasEffect(PLD.Buffs.FightOrFlight) && fofremainingTime.RemainingTime < 17 && !reqCD.IsCooldown)
                         return PLD.Requiescat;
                 }
-                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature))
+                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= 15)
                 {
                     if (!InMeleeRange(true))
                         return PLD.ShieldLob;
                 }
-                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2))
+                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= 64)
                 {
                     if (!InMeleeRange(true))
                         return PLD.HolySpirit;

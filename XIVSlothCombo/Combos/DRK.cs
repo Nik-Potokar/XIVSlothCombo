@@ -169,6 +169,17 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var gauge = GetJobGauge<DRKGauge>();
                 var deliriumTime = FindEffect(DRK.Buffs.Delirium);
+                var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.DRKStalwartabyssalDrainFeature) && level >= 56)
+                {
+                    if (actionIDCD.IsCooldown && IsOffCooldown(DRK.AbyssalDrain) && PlayerHealthPercentageHp() >= 60)
+                        return DRK.AbyssalDrain;
+                }
+                if (IsEnabled(CustomComboPreset.DRKStalwartShadowbringerFeature) && level >= 90)
+                {
+                    if (actionIDCD.IsCooldown && GetRemainingCharges(DRK.Shadowbringer) > 0 && gauge.DarksideTimeRemaining > 0)
+                        return DRK.Shadowbringer;
+                }
                 if (IsEnabled(CustomComboPreset.DRKOvercapFeature))
                 {
                     if (lastComboMove == DRK.Unleash && gauge.Blood >= 90)

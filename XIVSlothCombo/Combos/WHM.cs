@@ -243,7 +243,7 @@ namespace XIVSlothComboPlugin.Combos
                     var medica2Buff = FindEffect(WHM.Buffs.Medica2);
                     if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryMedicaFeature) && gauge.BloodLily == 3)
                         return WHM.AfflatusMisery;
-                    if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= WHM.Levels.AfflatusRapture && gauge.Lily > 0)
+                    if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= WHM.Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff.RemainingTime > 2)
                         return WHM.AfflatusRapture;
                     if (HasEffect(WHM.Buffs.Medica2) && medica2Buff.RemainingTime > 2)
 

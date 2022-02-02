@@ -231,7 +231,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MCH.SpreadShot)
+            if (actionID == MCH.SpreadShot || actionID == MCH.Scattergun)
             {
                 var battery = GetJobGauge<MCHGauge>().Battery;
                 if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption) && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
