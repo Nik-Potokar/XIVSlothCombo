@@ -1063,6 +1063,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ikishoten on combos", "Adds Ikishoten to most Single Target/AoE combos when at or below 50 Kenki", SAM.JobID)]
         SamuraiIkishotenonmaincombo = 15027,
 
+        [ParentCombo(SamuraiIkishotenNamikiriFeature)]
+        [CustomComboInfo("Kaiten On Ikishoten", "Adds Kaiten to Ikishoten Namikiri Feature", SAM.JobID)]
+        SamuraiIkishotenKaitenNamikiriFeature = 15028,
+
 
 
         #endregion

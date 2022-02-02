@@ -506,6 +506,8 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= 90)
                 {
                     var gauge = GetJobGauge<SAMGauge>();
+                    if (HasEffect(SAM.Buffs.OgiNamikiriReady) && gauge.Kenki >= 20 && IsEnabled(CustomComboPreset.SamuraiIkishotenKaitenNamikiriFeature))
+                        return SAM.Kaiten;
                     if (HasEffect(SAM.Buffs.OgiNamikiriReady))
                     {
                         if (gauge.MeditationStacks >= 3)
