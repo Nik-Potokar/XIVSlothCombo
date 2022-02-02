@@ -799,7 +799,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinRangedUptimeFeature, PaladinFightOrFlightMainComboFeature)]
-        [CustomComboInfo("FoF Feature (Custom Values) ", "Adds FoF onto the main combo (Testing). You can Input your own gcd value.", PLD.JobID)]
+        [CustomComboInfo("FoF Feature (Custom Values) ", "Adds FoF onto the main combo (Testing). You can Input your own gcd value(Value represtents percentage of your GCD, 1 = full GCD).", PLD.JobID)]
         PaladinFightOrFlightMainComboFeatureTest = 11017,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
