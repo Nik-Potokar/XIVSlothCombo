@@ -128,7 +128,11 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == RPR.Slice)
             {
                 var gauge = GetJobGauge<RPRGauge>();
-                var stcombo = 0;
+
+                if ((IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3)) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10))
+                {
+                    return RPR.ShadowOfDeath;
+                }
 
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature))
                 {
@@ -152,6 +156,8 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(RPR.Gibbet);
                 }
 
+
+                //this seems not okay
                 if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
                 {
                     if ((HasEffect(RPR.Buffs.EnhancedGibbet) && !HasEffect(RPR.Buffs.Enshrouded) && IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded)))
@@ -162,74 +168,16 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(RPR.Gallows);
                 }
 
-                if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
+                if (level >= RPR.Levels.WaxingSlice && lastComboMove == RPR.Slice)
                 {
-                    var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
-                    var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
-
-                    if (lastComboMove == RPR.Slice && (!deathsDesign || deathsDesignTimer.RemainingTime <= 3))
-                    {
-                        stcombo = 1;
-                        return RPR.ShadowOfDeath;
-                    }
-
-                    if (((stcombo == 1) || (lastComboMove == RPR.Slice && deathsDesignTimer.RemainingTime >= 4)) && level >= RPR.Levels.WaxingSlice)
-                    {
-                        if (!deathsDesign || deathsDesignTimer.RemainingTime <= 3)
-                        {
-                            stcombo = 1;
-                            return RPR.ShadowOfDeath;
-                        }
-
-                        if (stcombo == 1 && (deathsDesignTimer.RemainingTime >= 4))
-                        {
-                            stcombo = 2;
-                            return RPR.WaxingSlice;
-                        }
-
-                        return RPR.WaxingSlice;
-                    }
-
-                    if (((stcombo == 2) || (lastComboMove == RPR.WaxingSlice && deathsDesignTimer.RemainingTime >= 4)) && level >= RPR.Levels.InfernalSlice)
-                    {
-                        if (!deathsDesign || deathsDesignTimer.RemainingTime <= 3)
-                        {
-                            stcombo = 2;
-                            return RPR.ShadowOfDeath;
-                        }
-
-                        if (stcombo == 2 && (deathsDesignTimer.RemainingTime >= 4))
-                        {
-                            stcombo = 0;
-                            return RPR.InfernalSlice;
-                        }
-
-                        return RPR.InfernalSlice;
-                    }
+                    return RPR.WaxingSlice;
+                }
+                else if (level >= RPR.Levels.InfernalSlice && lastComboMove == RPR.WaxingSlice)
+                {
+                    return RPR.InfernalSlice;
                 }
 
-                if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
-                {
-                    if (lastComboMove == RPR.Slice && level >= RPR.Levels.WaxingSlice)
-                        return RPR.WaxingSlice;
-
-                    if (lastComboMove == RPR.WaxingSlice && level >= RPR.Levels.InfernalSlice)
-                        return RPR.InfernalSlice;
-                }
-
-                if (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature))
-                {
-                    var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
-                    var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
-                    var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
-
-                    if ((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 7 && !soulReaverBuff))
-                        return RPR.ShadowOfDeath;
-                }
-
-                return RPR.Slice;
             }
-
             return actionID;
         }
     }
