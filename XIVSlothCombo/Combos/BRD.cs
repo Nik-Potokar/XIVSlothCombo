@@ -403,6 +403,11 @@ namespace XIVSlothComboPlugin.Combos
                     SimpleBardFeature.openerFinished = true;
                 }
 
+                if (!inCombat)
+                {
+                    SimpleBardFeature.openerFinished = false;
+                }
+
                 var gauge = GetJobGauge<BRDGauge>();
                 var soulVoice = gauge.SoulVoice;
                 var heavyShotOnCooldown = CanWeave(BRD.HeavyShot);
@@ -604,7 +609,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 7)
                             {
-                                if (HasEffect(BRD.Buffs.BattleVoice)) subStep++;
+                                if (HasEffect(BRD.Buffs.BattleVoice) || IsOnCooldown(BRD.BattleVoice)) subStep++;
                                 else return BRD.BattleVoice;
                             }
                             if (subStep == 8)
