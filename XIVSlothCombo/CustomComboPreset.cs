@@ -377,6 +377,56 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Flourish On Combined Dance Feature", "Adds Flourish to the CombinedStepCombo.", DNC.JobID)]
         DancerFlourishOnCombinedDanceFeature = 4014,
 
+        [CustomComboInfo("Simple Dancer", "BETA TESTING - Single button single target dancer, including songs, flourishes and overprotections.\nConflicts with all other non-simple toggles!!", DNC.JobID)]
+        DancerSimpleFeature = 4015,
+
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Opener", "NOT READY YET - Optimised opener before each fight\nStart at 14 seconds (or 15.5 if using tincture manually)", DNC.JobID)]
+        DancerSimpleOpenerFeature = 4016,
+
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Interrupt", "Includes an interrupt in the st rotation", DNC.JobID)]
+        DancerSimpleInterruptFeature = 4017,
+
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Dances", "Includes standard and technical step in the st rotation", DNC.JobID)]
+        DancerSimpleDancesFeature = 4018,
+
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Buffs", "Includes delivment and flourish in the st rotation", DNC.JobID)]
+        DancerSimpleBuffsFeature = 4019,
+
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Feather", "Includes feather usage in the st rotation", DNC.JobID)]
+        DancerSimpleFeatherFeature = 4020,
+
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Feather Pooling", "Makes it so the st rotation only uses feathers when you have more than 3\nor when you are under the effects of technical step", DNC.JobID)]
+        DancerSimpleFeatherPoolingFeature = 4021,
+
+        [CustomComboInfo("Simple Dancer AOE", "BETA TESTING - Single button aoe dancer, including songs, flourishes and overprotections.\nConflicts with all other non-simple toggles!!", DNC.JobID)]
+        DancerSimpleAoeFeature = 4050,
+
+        [ParentCombo(DancerSimpleAoeFeature)]
+        [CustomComboInfo("Simple AOE Standard", "Includes standard step in the simple aoe rotation", DNC.JobID)]
+        DancerSimpleAoeStandardFeature = 4051,
+
+        [ParentCombo(DancerSimpleAoeFeature)]
+        [CustomComboInfo("Simple AOE Technical", "Includes technical step in the simple aoe rotation", DNC.JobID)]
+        DancerSimpleAoeTechnicalFeature = 4052,
+
+        [ParentCombo(DancerSimpleAoeFeature)]
+        [CustomComboInfo("Simple AOE Buffs", "Includes devilment and flourish in the simple aoe rotation", DNC.JobID)]
+        DancerSimpleAoeBuffsFeature = 4053,
+
+        [ParentCombo(DancerSimpleAoeFeature)]
+        [CustomComboInfo("Simple AOE Feathers", "Includes feather usage in the simple aoe rotation", DNC.JobID)]
+        DancerSimpleAoeFeatherFeature = 4054,
+
+        [ParentCombo(DancerSimpleAoeFeature)]
+        [CustomComboInfo("Simple AOE Feather Pooling", "Makes it so the aoe rotation only uses feathers when you have more than 3", DNC.JobID)]
+        DancerSimpleAoeFeatherPoolingFeature = 4055,
+
 
         #endregion
         // ====================================================================================
@@ -809,9 +859,6 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", PLD.JobID)]
         PaladinInterruptFeature = 11019,
-
-
-
 
         #endregion
         // ====================================================================================
