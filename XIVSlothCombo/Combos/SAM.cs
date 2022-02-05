@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
@@ -75,6 +76,7 @@ namespace XIVSlothComboPlugin.Combos
                 Kasha = 40,
                 Oka = 45,
                 Yukikaze = 50,
+                Kaiten = 52,
                 TsubameGaeshi = 76,
                 Shoha = 80;
         }
@@ -97,22 +99,15 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
                         return SAM.Ikishoten;
                 }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
-                {
 
-                    if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
-                        return SAM.Senei;
-                    if (gauge.Kenki >= 75 && actionIDCD.IsCooldown && level >= 62)
-                        return SAM.Shinten;
-
-                }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85))
+                if (((IsEnabled(CustomComboPreset.SamuraiOvercapFeature75) ? 75 : 0) | (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85) ? 85 : 0)) is var cap && cap != 0 && gauge.Kenki >= cap && actionIDCD.IsCooldown)
                 {
-                    if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
+                    if (!seneiCD.IsCooldown && level >= 72)
                         return SAM.Senei;
-                    if (gauge.Kenki >= 75 && actionIDCD.IsCooldown && level >= 62)
+                    if (level >= 62)
                         return SAM.Shinten;
                 }
+
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Yukikaze;
 
@@ -143,23 +138,15 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
                         return SAM.Ikishoten;
                 }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
+
+                if (((IsEnabled(CustomComboPreset.SamuraiOvercapFeature75) ? 75 : 0) | (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85) ? 85 : 0)) is var cap && cap != 0 && gauge.Kenki >= cap && actionIDCD.IsCooldown)
                 {
-
-                    if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
+                    if (!seneiCD.IsCooldown && level >= 72)
                         return SAM.Senei;
-                    if (gauge.Kenki >= 75 && actionIDCD.IsCooldown && level >= 62)
+                    if (level >= 62)
                         return SAM.Shinten;
-
                 }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85))
-                {
-                    if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
-                        return SAM.Senei;
-                    if (gauge.Kenki >= 75 && actionIDCD.IsCooldown && level >= 62)
-                        return SAM.Shinten;
 
-                }
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Gekko;
 
@@ -196,23 +183,15 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
                         return SAM.Ikishoten;
                 }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
+
+                if (((IsEnabled(CustomComboPreset.SamuraiOvercapFeature75) ? 75 : 0) | (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85) ? 85 : 0)) is var cap && cap != 0 && gauge.Kenki >= cap && actionIDCD.IsCooldown)
                 {
-
-                    if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
+                    if (!seneiCD.IsCooldown && level >= 72)
                         return SAM.Senei;
-                    if (gauge.Kenki >= 75 && actionIDCD.IsCooldown && level >= 62)
+                    if (level >= 62)
                         return SAM.Shinten;
-
                 }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85))
-                {
-                    if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
-                        return SAM.Senei;
-                    if (gauge.Kenki >= 75 && actionIDCD.IsCooldown && level >= 62)
-                        return SAM.Shinten;
 
-                }
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Kasha;
 
@@ -292,12 +271,14 @@ namespace XIVSlothComboPlugin.Combos
                 var actionIDCD = GetCooldown(actionID);
                 var gurenCD = GetCooldown(SAM.Guren);
                 var ikiCD = GetCooldown(SAM.Ikishoten);
+
                 if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo))
                 {
                     if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
                         return SAM.Ikishoten;
                 }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
+
+                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe75))
                 {
 
                     if (gauge.Kenki >= 75 && !gurenCD.IsCooldown && actionIDCD.IsCooldown && level >= 7)
@@ -306,7 +287,8 @@ namespace XIVSlothComboPlugin.Combos
                         return SAM.Kyuten;
 
                 }
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85))
+
+                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe85))
                 {
                     if (gauge.Kenki >= 85 && !gurenCD.IsCooldown && actionIDCD.IsCooldown && level >= 7)
                         return SAM.Guren;
@@ -371,7 +353,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class SamuraiIaijutsuShohaFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SamuraiYukikazeCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SamuraiIaijutsuShohaFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -411,7 +393,7 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
 
-            if(actionID == SAM.Iaijutsu)
+            if (actionID == SAM.Iaijutsu)
             {
                 //var iaijutsuCD = GetCooldown(SAM.Iaijutsu);
                 var gauge = GetJobGauge<SAMGauge>();
@@ -420,35 +402,34 @@ namespace XIVSlothComboPlugin.Combos
                 var banana = FindTargetEffect(SAM.Debuffs.Higanbana);
 
 
-                if (!kaiten && level >= SAM.Levels.Iaijutsu)
+                if (!kaiten && level >= SAM.Levels.Iaijutsu && level >= SAM.Levels.Kaiten && gauge.Kenki >= 20)
                 {
                     int numSen = SAM.NumSen(gauge);
                     if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature1) && numSen == 1)
                     {
-                        if ((!hasBanana || banana.RemainingTime < 5) && gauge.Kenki >= 20)
+                        if ((!hasBanana || banana.RemainingTime < 5))
+                        {
                             return SAM.Kaiten;
-                        return OriginalHook(SAM.Iaijutsu);
+                        }
                     }
                     if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature2) && numSen == 2)
                     {
-                        if (gauge.Kenki >= 20)
+                        {
                             return SAM.Kaiten;
-                        return OriginalHook(SAM.Iaijutsu);
+                        }
                     }
                     if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature3) && numSen == 3)
                     {
-                        if (gauge.Kenki >= 20)
+                        {
                             return SAM.Kaiten;
-                        return OriginalHook(SAM.Iaijutsu);
+                        }
                     }
 
                 }
 
-                if (actionID == SAM.Iaijutsu)
+                if (level >= SAM.Levels.TsubameGaeshi && gauge.Sen == Sen.NONE)
                 {
-                    if (level >= SAM.Levels.TsubameGaeshi && gauge.Sen == Sen.NONE)
-                        return OriginalHook(SAM.TsubameGaeshi);
-                    return OriginalHook(SAM.Iaijutsu);
+                    return OriginalHook(SAM.TsubameGaeshi);
                 }
             }
 
@@ -569,7 +550,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (actionIDCD.IsCooldown && gauge.Kenki <= 50 && !ikiCD.IsCooldown && level >= 68)
                             return SAM.Ikishoten;
                     }
-                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature75))
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe75))
                     {
 
                         if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
@@ -578,7 +559,7 @@ namespace XIVSlothComboPlugin.Combos
                             return SAM.Shinten;
 
                     }
-                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature85))
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe85))
                     {
                         if (gauge.Kenki >= 75 && !seneiCD.IsCooldown && actionIDCD.IsCooldown && level >= 72)
                             return SAM.Senei;
