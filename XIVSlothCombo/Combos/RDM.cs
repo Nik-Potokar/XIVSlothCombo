@@ -35,7 +35,9 @@ namespace XIVSlothComboPlugin.Combos
             Scorch = 16530,
             Resolution = 25858,
             Moulinet = 7513,
-            EnchantedMoulinet = 7530;
+            EnchantedMoulinet = 7530,
+            Corpsacorps = 7506,
+            Displacement = 7515;
 
         public static class Buffs
         {
@@ -82,6 +84,20 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var actionIDCD = GetCooldown(actionID);
+            if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+            {
+                if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                    return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                if (level >= RDM.Levels.ContreSixte)
+                    return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                if (level >= RDM.Levels.Fleche)
+                    return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                return RDM.Fleche;
+            }
             if (actionID == RDM.Veraero2)
             {
                 if (HasEffect(RDM.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
@@ -114,6 +130,19 @@ namespace XIVSlothComboPlugin.Combos
                 var engagementCD = GetCooldown(RDM.Engagement);
                 var actionIDCD = GetCooldown(OriginalHook(actionID));
 
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
+                }
                 if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && actionIDCD.IsCooldown && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
                 {
                     return RDM.Engagement;
@@ -172,6 +201,20 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == RDM.Verstone)
             {
+                var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
+                }
                 if (IsEnabled(CustomComboPreset.RedmageResolutionFinisher))
                 {
                     if (lastComboMove == RDM.Scorch && level >= 90)
@@ -309,11 +352,38 @@ namespace XIVSlothComboPlugin.Combos
                 int white = gauge.WhiteMana;
                 int blackThreshold = white + IMBALANCE_DIFF_MAX;
                 int whiteThreshold = black + IMBALANCE_DIFF_MAX;
+                var actionIDCD = GetCooldown(actionID);
 
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
+                }
                 if (lastComboMove == RDM.Scorch && level >= RDM.Levels.Resolution)
                     return RDM.Resolution;
                 if (lastComboMove == RDM.Verholy && level >= RDM.Levels.Scorch || lastComboMove == RDM.Verflare && level >= RDM.Levels.Scorch)
                     return RDM.Scorch;
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
+                }
                 if (gauge.ManaStacks == 3 && level >= RDM.Levels.Verflare)
                 {
                     if (black >= white && level >= RDM.Levels.Verholy)
@@ -368,10 +438,24 @@ namespace XIVSlothComboPlugin.Combos
                 int white = gauge.WhiteMana;
                 var engagementCD = GetCooldown(RDM.Engagement);
                 var actionIDCD = GetCooldown(OriginalHook(actionID));
+
                 if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerSmartCastFeature))
                 {
                     if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
                         return OriginalHook(RDM.Verthunder);
+                }
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
                 }
                 if (actionID is RDM.Veraero or RDM.Verthunder)
                 {
@@ -522,6 +606,19 @@ namespace XIVSlothComboPlugin.Combos
                 int whiteThreshold = black + IMBALANCE_DIFF_MAX;
                 var engagementCD = GetCooldown(RDM.Engagement);
                 var actionIDCD = GetCooldown(OriginalHook(actionID));
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
+                }
                 if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && actionIDCD.IsCooldown && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
                 {
                     return RDM.Engagement;
@@ -575,6 +672,19 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
                     return OriginalHook(RDM.Redoublement);
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
+                }
                 if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50)
                 {
                     return RDM.EnchantedRiposte;
@@ -738,7 +848,20 @@ namespace XIVSlothComboPlugin.Combos
                 int white = gauge.WhiteMana;
                 int blackThreshold = white + IMBALANCE_DIFF_MAX;
                 int whiteThreshold = black + IMBALANCE_DIFF_MAX;
+                var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                {
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
+                    if (level >= RDM.Levels.ContreSixte)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    if (level >= RDM.Levels.Fleche)
+                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
+
+                    return RDM.Fleche;
+                }
                 if (IsEnabled(CustomComboPreset.SimpleRedMageAoE) && InMeleeRange(true))
                 {
                     if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && gauge.ManaStacks == 0)
@@ -785,6 +908,20 @@ namespace XIVSlothComboPlugin.Combos
                     return RDM.Verthunder2;
             }
 
+            return actionID;
+        }
+    }
+    internal class RedMageMovementFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageMovementFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if(actionID == RDM.Corpsacorps)
+            {
+                if (InMeleeRange(true) && HasCharges(RDM.Displacement))
+                    return RDM.Displacement;
+            }
             return actionID;
         }
     }

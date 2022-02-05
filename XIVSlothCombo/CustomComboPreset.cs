@@ -980,6 +980,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Red Mage Feature AoE", "Combines Smartcast AoE feature with melee AoE combo on Verthunder2/Veraero2 (This is not optimal until i find a solution for distance delay)", RDM.JobID)]
         SimpleRedMageAoE = 13015,
 
+        [CustomComboInfo("Corps-A-corps/Displacement Feature", "Corps-A-corps becomes displacement when in melee range", RDM.JobID)]
+        RedMageMovementFeature = 13016,
+
+        [ParentCombo(RedMageOgcdCombo)]
+        [CustomComboInfo("oGCD Feature Everywhere", "Adds oGCD Feature to all other combos", RDM.JobID)]
+        RedMageOgcdComboOnCombos = 13017,
+
         #endregion
         // ====================================================================================
         #region SAGE
