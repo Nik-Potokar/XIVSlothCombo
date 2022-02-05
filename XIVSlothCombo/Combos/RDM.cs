@@ -46,6 +46,7 @@ namespace XIVSlothComboPlugin.Combos
                 VerfireReady = 1234,
                 VerstoneReady = 1235,
                 Dualcast = 1249,
+                Chainspell = 2560,
                 Acceleration = 1238;
         }
 
@@ -100,7 +101,7 @@ namespace XIVSlothComboPlugin.Combos
             }
             if (actionID == RDM.Veraero2)
             {
-                if (HasEffect(RDM.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
+                if (HasEffect(RDM.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell))
                     return OriginalHook(RDM.Impact);
 
                 return RDM.Veraero2;
@@ -108,7 +109,7 @@ namespace XIVSlothComboPlugin.Combos
 
             if (actionID == RDM.Verthunder2)
             {
-                if (HasEffect(RDM.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
+                if (HasEffect(RDM.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell))
                     return OriginalHook(RDM.Impact);
 
                 return RDM.Verthunder2;
@@ -229,7 +230,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero3)
                         return RDM.Veraero3;
                 }
 
@@ -241,7 +242,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero && level < RDM.Levels.Veraero3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero && level < RDM.Levels.Veraero3)
                         return RDM.Veraero;
                 }
 
@@ -268,7 +269,7 @@ namespace XIVSlothComboPlugin.Combos
                 // Thunder 3
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder3)
                         return RDM.Verthunder3;
                 }
 
@@ -280,7 +281,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
                         return RDM.Verthunder;
                 }
 
@@ -398,7 +399,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     return RDM.Verflare;
                 }
-                if (dualcastBuff || accelBuff || swiftcastBuff || level <= 18)
+                if (dualcastBuff || accelBuff || swiftcastBuff || HasEffect(RDM.Buffs.Chainspell) || level <= 18)
                     return OriginalHook(RDM.Impact);
 
                 if (level <= 18)
@@ -895,7 +896,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     return RDM.Verflare;
                 }
-                if (dualcastBuff || accelBuff || swiftcastBuff || level <= 18)
+                if (dualcastBuff || accelBuff || swiftcastBuff || HasEffect(RDM.Buffs.Chainspell) || level <= 18)
                     return OriginalHook(RDM.Impact);
 
                 if (level <= 18)
