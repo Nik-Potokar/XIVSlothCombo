@@ -919,7 +919,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if(actionID == RDM.Corpsacorps)
             {
-                if (InMeleeRange(true) && HasCharges(RDM.Displacement))
+                if (InMeleeRange(true) && HasCharges(RDM.Displacement) && level >= 40)
                     return RDM.Displacement;
             }
             return actionID;
