@@ -501,10 +501,10 @@ namespace XIVSlothComboPlugin.Combos
                                 ? (uint)gauge.NextStep
                                 : DNC.StandardFinish2;
 
-                    if (level >= DNC.Levels.StandardStep && EnemyHealthPercentage() > 5 && IsOffCooldown(DNC.StandardStep))
+                    if (level >= DNC.Levels.StandardStep && (!HasTarget() || EnemyHealthPercentage() > 5) && IsOffCooldown(DNC.StandardStep))
                         return DNC.StandardStep;
 
-                    if (level >= DNC.Levels.TechnicalStep && EnemyHealthPercentage() > 5 && IsOffCooldown(DNC.TechnicalStep) && GetCooldown(DNC.StandardStep).CooldownRemaining > 5)
+                    if (level >= DNC.Levels.TechnicalStep && (!HasTarget() || EnemyHealthPercentage() > 5) && IsOffCooldown(DNC.TechnicalStep) && GetCooldown(DNC.StandardStep).CooldownRemaining > 5)
                         return DNC.TechnicalStep;
                 }
 
@@ -535,6 +535,7 @@ namespace XIVSlothComboPlugin.Combos
                         return DNC.FanDance1;
                 }
 
+                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance)) return DNC.FanDance4;
                 if (level >= DNC.Levels.Fountainfall && HasEffect(DNC.Buffs.FlourishingFlow)) return DNC.Fountainfall;
                 if (level >= DNC.Levels.ReverseCascade && HasEffect(DNC.Buffs.FlourishingSymmetry)) return DNC.ReverseCascade;
                 if (level >= DNC.Levels.Fountain && lastComboMove == DNC.Cascade) return DNC.Fountain;
@@ -572,12 +573,12 @@ namespace XIVSlothComboPlugin.Combos
                         : DNC.TechnicalFinish4;
 
 
-                if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoeStandardFeature)&& EnemyHealthPercentage() > 5 && !HasEffect(DNC.Buffs.TechnicalStep))
+                if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoeStandardFeature) && (!HasTarget() || EnemyHealthPercentage() > 5) && !HasEffect(DNC.Buffs.TechnicalStep))
                 {
                     if (IsOffCooldown(DNC.StandardStep)) return DNC.StandardStep;
                 }
 
-                if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoeTechnicalFeature)&& EnemyHealthPercentage() > 5 && !HasEffect(DNC.Buffs.StandardStep))
+                if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoeTechnicalFeature) && (!HasTarget() || EnemyHealthPercentage() > 5) && !HasEffect(DNC.Buffs.StandardStep))
                 {
                     if (IsOffCooldown(DNC.TechnicalStep)) return DNC.TechnicalStep;
                 }
@@ -612,6 +613,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.Feathers > minFeathers) return DNC.FanDance2;
                 }
 
+                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance)) return DNC.FanDance4;
                 if (level >= DNC.Levels.Bloodshower && HasEffect(DNC.Buffs.FlourishingFlow)) return DNC.Bloodshower;
                 if (level >= DNC.Levels.RisingWindmill && HasEffect(DNC.Buffs.FlourishingSymmetry)) return DNC.RisingWindmill;
                 if (level >= DNC.Levels.Bladeshower && lastComboMove == DNC.Windmill) return DNC.Bladeshower;
