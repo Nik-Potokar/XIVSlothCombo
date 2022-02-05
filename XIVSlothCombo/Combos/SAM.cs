@@ -7,6 +7,14 @@ namespace XIVSlothComboPlugin.Combos
     {
         public const byte JobID = 34;
 
+        public static int NumSen(SAMGauge gauge)
+        {
+            var ka = gauge.Sen.HasFlag(Sen.KA);
+            var getsu = gauge.Sen.HasFlag(Sen.GETSU);
+            var setsu = gauge.Sen.HasFlag(Sen.SETSU);
+            return (ka ? 1 : 0) + (getsu ? 1 : 0) + (setsu ? 1 : 0);
+        }
+
         public const uint
             Hakaze = 7477,
             Yukikaze = 7480,
@@ -408,16 +416,13 @@ namespace XIVSlothComboPlugin.Combos
                 //var iaijutsuCD = GetCooldown(SAM.Iaijutsu);
                 var gauge = GetJobGauge<SAMGauge>();
                 var kaiten = HasEffect(SAM.Buffs.Kaiten);
-                var ka = gauge.Sen.HasFlag(Sen.KA);
-                var getsu = gauge.Sen.HasFlag(Sen.GETSU);
-                var setsu = gauge.Sen.HasFlag(Sen.SETSU);
                 var hasBanana = TargetHasEffect(SAM.Debuffs.Higanbana);
                 var banana = FindTargetEffect(SAM.Debuffs.Higanbana);
 
 
                 if (!kaiten && level >= SAM.Levels.Iaijutsu)
                 {
-                    int numSen = (ka ? 1 : 0) + (getsu ? 1 : 0) + (setsu ? 1 : 0);
+                    int numSen = SAM.NumSen(gauge);
                     if (IsEnabled(CustomComboPreset.SamuraiKaitenFeature1) && numSen == 1)
                     {
                         if ((!hasBanana || banana.RemainingTime < 5) && gauge.Kenki >= 20)
