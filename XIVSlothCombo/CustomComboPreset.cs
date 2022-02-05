@@ -381,7 +381,7 @@ namespace XIVSlothComboPlugin
         DancerSimpleFeature = 4015,
 
         [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Opener", "NOT READY YET - Optimised opener before each fight\nStart at 14 seconds (or 15.5 if using tincture manually)", DNC.JobID)]
+        [CustomComboInfo("Simple Opener", "BETA TESTING - Optimised opener before each fight, including peloton", DNC.JobID)]
         DancerSimpleOpenerFeature = 4016,
 
         [ParentCombo(DancerSimpleFeature)]
