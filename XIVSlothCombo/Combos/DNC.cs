@@ -418,124 +418,6 @@ namespace XIVSlothComboPlugin.Combos
                     CanWeave(DNC.Tillana) ||
                     CanWeave(DNC.StarfallDance)
                 );
-
-                if (IsEnabled(CustomComboPreset.DancerSimpleOpenerFeature) && level >= 90)
-                {
-                    if (gauge.IsDancing) inOpener = true;
-
-                    if (!inCombat && (inOpener || openerFinished) && !gauge.IsDancing && !HasEffect(DNC.Buffs.StandardStep) && !HasEffect(DNC.Buffs.Peloton))
-                    {
-                        inOpener = false;
-                        openerFinished = false;
-                        step = 0;
-
-                        return DNC.StandardStep;
-                    }
-
-                    if ((inCombat || gauge.IsDancing) && inOpener && !openerFinished)
-                    {
-                        // StandardStep (Done first)
-                        // Step #1
-                        if (step == 0) {
-                            if (gauge.CompletedSteps == 1) step++;
-                            else return (uint)gauge.NextStep;
-                        }
-                        // Step #2
-                        if (step == 1) {
-                            if (gauge.CompletedSteps == 2) step++;
-                            else return (uint)gauge.NextStep;
-                        }
-                        // Peloton
-                        if (step == 2) {
-                            if (HasEffect(DNC.Buffs.Peloton)) step++;
-                            else return DNC.Peloton;
-                        }
-                        // Standard Finish
-                        if (step == 3) {
-                            if (!gauge.IsDancing) step++;
-                            else return DNC.StandardFinish2;
-                        }
-                        // Technical Step
-                        if (step == 4) {
-                            if (gauge.IsDancing) step++;
-                            else return DNC.TechnicalStep;
-                        }
-                        // Step #1
-                        if (step == 5) {
-                            if (gauge.CompletedSteps == 1) step++;
-                            else return (uint)gauge.NextStep;
-                        }
-                        // Step #2
-                        if (step == 6) {
-                            if (gauge.CompletedSteps == 2) step++;
-                            else return (uint)gauge.NextStep;
-                        }
-                        // Step #3
-                        if (step == 7) {
-                            if (gauge.CompletedSteps == 3) step++;
-                            else return (uint)gauge.NextStep;
-                        }
-                        // Step #4
-                        if (step == 8) {
-                            if (gauge.CompletedSteps == 4) step++;
-                            else return (uint)gauge.NextStep;
-                        }
-                        // Technical Finish
-                        if (step == 9) {
-                            if (!gauge.IsDancing) step++;
-                            else return DNC.TechnicalFinish4;
-                        }
-                        // [Weave] Devilment
-                        if (step == 10) {
-                            if (IsOnCooldown(DNC.Devilment) && HasEffect(DNC.Buffs.FlourishingStarfall)) step++;
-                            else return DNC.Devilment;
-                        }
-                        // Starfall Dance
-                        if (step == 11) {
-                            if (!HasEffect(DNC.Buffs.FlourishingStarfall)) step++;
-                            else return DNC.StarfallDance;
-                        }
-                        // [Weave] Flourish
-                        if (step == 12) {
-                            if (IsOnCooldown(DNC.Flourish) && HasEffect(DNC.Buffs.ThreeFoldFanDance)) step++;
-                            else return DNC.Flourish;
-                        }
-                        // [Weave] Fan Dance 3
-                        if (step == 13) {
-                            if (!HasEffect(DNC.Buffs.ThreeFoldFanDance)) step++;
-                            else return DNC.FanDance3;
-                        }
-                        // Tillana
-                        if (step == 14) {
-                            if (!HasEffect(DNC.Buffs.FlourishingFinish) && HasEffect(DNC.Buffs.FourFoldFanDance)) step++;
-                            else return DNC.Tillana;
-                        }
-                        // [Weave] Fan Dance 4
-                        if (step == 15) {
-                            if (!HasEffect(DNC.Buffs.FourFoldFanDance)) step++;
-                            else return DNC.FanDance4;
-                        }
-                        // Saber Dance OR Fountainfall
-                        if (step == 16) {
-                            if ((doneSaberDance && gauge.Esprit < 50) || (doneFountainfall && !HasEffect(DNC.Buffs.FlourishingFlow))) step++;
-                            else
-                            {
-                                if (gauge.Esprit > 50)
-                                {
-                                    doneSaberDance = true;
-                                    return DNC.SaberDance;
-                                }
-                                else
-                                {
-                                    doneFountainfall = true;
-                                    return DNC.Fountainfall;
-                                }
-                            }
-                        }
-
-                        openerFinished = true;
-                    }
-                }
             
                 if (level >= DNC.Levels.HeadGraze && IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature))
                 {
@@ -588,9 +470,10 @@ namespace XIVSlothComboPlugin.Combos
                         return DNC.FanDance1;
                 }
 
+                if (level >= DNC.Levels.Fountain && lastComboMove == DNC.Cascade && comboTime < 2) return DNC.Fountain;
+                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance) && canWeaveAbilities) return DNC.FanDance4;
                 if (level >= DNC.Levels.Tillana && HasEffect(DNC.Buffs.FlourishingFinish)) return DNC.Tillana;
                 if (level >= DNC.Levels.StarfallDance && HasEffect(DNC.Buffs.FlourishingStarfall)) return DNC.StarfallDance;
-                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance)) return DNC.FanDance4;
                 if (level >= DNC.Levels.Fountainfall && HasEffect(DNC.Buffs.FlourishingFlow)) return DNC.Fountainfall;
                 if (level >= DNC.Levels.ReverseCascade && HasEffect(DNC.Buffs.FlourishingSymmetry)) return DNC.ReverseCascade;
                 if (level >= DNC.Levels.Fountain && lastComboMove == DNC.Cascade) return DNC.Fountain;
@@ -667,9 +550,9 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.Feathers > minFeathers) return DNC.FanDance2;
                 }
 
+                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance) && canWeaveAbilities) return DNC.FanDance4;
                 if (level >= DNC.Levels.Tillana && HasEffect(DNC.Buffs.FlourishingFinish)) return DNC.Tillana;
                 if (level >= DNC.Levels.StarfallDance && HasEffect(DNC.Buffs.FlourishingStarfall)) return DNC.StarfallDance;
-                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance)) return DNC.FanDance4;
                 if (level >= DNC.Levels.Bloodshower && HasEffect(DNC.Buffs.FlourishingFlow)) return DNC.Bloodshower;
                 if (level >= DNC.Levels.RisingWindmill && HasEffect(DNC.Buffs.FlourishingSymmetry)) return DNC.RisingWindmill;
                 if (level >= DNC.Levels.Bladeshower && lastComboMove == DNC.Windmill) return DNC.Bladeshower;

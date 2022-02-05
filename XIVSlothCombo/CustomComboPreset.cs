@@ -381,10 +381,6 @@ namespace XIVSlothComboPlugin
         DancerSimpleFeature = 4015,
 
         [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Opener", "BETA TESTING - Optimised opener before each fight, including peloton", DNC.JobID)]
-        DancerSimpleOpenerFeature = 4016,
-
-        [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Interrupt", "Includes an interrupt in the st rotation", DNC.JobID)]
         DancerSimpleInterruptFeature = 4017,
 
