@@ -853,10 +853,18 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 var heavyShot = GetCooldown(actionID);
-                var heavyShotOnCooldown = CanWeave(actionID);
+                var canWeave = (
+                    CanWeave(actionID) ||
+                    CanWeave(BRD.BlastArrow) ||
+                    CanWeave(BRD.ApexArrow) ||
+                    CanWeave(BRD.Stormbite) ||
+                    CanWeave(BRD.CausticBite) ||
+                    CanWeave(BRD.VenomousBite) ||
+                    CanWeave(BRD.Windbite)
+                );
                 var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleRaidMode) ? true : CustomCombo.EnemyHealthPercentage() > 1;
 
-                if (IsEnabled(CustomComboPreset.SimpleSongOption) && heavyShot.IsCooldown && isEnemyHealthHigh)
+                if (IsEnabled(CustomComboPreset.SimpleSongOption) && canWeave && isEnemyHealthHigh)
                 {
                     // Limit optimisation to only when you are high enough to benefit from it.
                     if (level >= BRD.Levels.WanderersMinuet)
@@ -919,7 +927,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature) && inCombat && heavyShotOnCooldown && gauge.Song != Song.NONE && isEnemyHealthHigh)
+                if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature) && inCombat && canWeave && gauge.Song != Song.NONE && isEnemyHealthHigh)
                 {
                     if (level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes))
                         return BRD.RagingStrikes;
@@ -939,12 +947,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && inCombat)
                 {
-                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
-                        return BRD.ApexArrow;
-                    if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
-                        return BRD.BlastArrow;
-
-                    if (heavyShotOnCooldown)
+                    if (canWeave)
                     {
                         if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
                             return BRD.PitchPerfect;
@@ -978,6 +981,28 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder))
                             return BRD.Sidewinder;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BardSimpleOpener) && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                    {
+                        if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
+                            return BRD.BlastArrow;
+                        if (level >= BRD.Levels.ApexArrow)
+                        {
+                            var songTimerInSeconds = gauge.SongTimer / 1000;
+                            
+                            if (gauge.Song == Song.MAGE && gauge.SoulVoice == 100) return BRD.ApexArrow;
+                            if (gauge.Song == Song.MAGE && gauge.SoulVoice >= 80 && songTimerInSeconds > 21 && songTimerInSeconds < 23) return BRD.ApexArrow;
+                            if (gauge.Song == Song.WANDERER && HasEffect(BRD.Buffs.BattleVoice) && HasEffect(BRD.Buffs.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
+                        }
+                    }
+                    else
+                    {
+                        if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
+                            return BRD.BlastArrow;
+
+                        if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                            return BRD.ApexArrow;
                     }
                 }
 
@@ -1048,11 +1073,6 @@ namespace XIVSlothComboPlugin.Combos
                                 return BRD.CausticBite;
                             if (level >= BRD.Levels.StormBite && !stormbite)
                                 return BRD.Stormbite;
-                        }
-
-                        if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
-                        {
-                            return BRD.ApexArrow;
                         }
                     }
                 }
