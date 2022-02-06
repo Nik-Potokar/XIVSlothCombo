@@ -400,6 +400,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Feather Pooling", "Makes it so the st rotation only uses feathers when you have more than 3\nor when you are under the effects of technical step", DNC.JobID)]
         DancerSimpleFeatherPoolingFeature = 4021,
 
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Heals n Shields", "Makes it so the st rotation uses shield n heal ogcd's when available", DNC.JobID)]
+        DancerSimpleShieldNHealsFeature = 4022,
+
         [CustomComboInfo("Simple Dancer AOE", "BETA TESTING - Single button aoe dancer, including songs, flourishes and overprotections.\nConflicts with all other non-simple toggles!!", DNC.JobID)]
         DancerSimpleAoeFeature = 4050,
 
