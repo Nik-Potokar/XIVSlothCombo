@@ -98,6 +98,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             return value != Song.NONE;
         }
+        
+        internal static bool SongIsNone(Song value)
+        {
+            return value == Song.NONE;
+        }
     }
 
     // Replace Wanderer's Minuet with PP when in WM.
@@ -609,7 +614,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 usedStraightShotReady = false;
 
-                                if (HasEffect(BRD.Buffs.RadiantFinale)) subStep++;
+                                if (HasEffect(BRD.Buffs.RadiantFinale) || Array.TrueForAll(gauge.Coda, BRD.SongIsNone)) subStep++;
                                 else return BRD.RadiantFinale;
                             }
                             if (subStep == 7)
@@ -672,7 +677,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 3)
                             {
-                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
+                                if (HasEffect(BRD.Buffs.Barrage) || IsOnCooldown(BRD.Buffs.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
                             if (subStep == 4)
@@ -762,7 +767,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (subStep == 0)
                             {
-                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
+                                if (HasEffect(BRD.Buffs.Barrage) || IsOnCooldown(BRD.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
                             if (subStep == 1)
