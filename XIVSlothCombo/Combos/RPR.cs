@@ -128,7 +128,12 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == RPR.Slice)
             {
                 var gauge = GetJobGauge<RPRGauge>();
-
+                var actionIDCD = GetCooldown(RPR.SoulScythe);
+                if (IsEnabled(CustomComboPreset.ReaperSoulSliceFeature))
+                {
+                    if (gauge.Soul <= 50 && !actionIDCD.IsCooldown && TargetHasEffect(RPR.Debuffs.DeathsDesign))
+                        return RPR.SoulSlice;
+                }
                 if ((IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3)) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10))
                 {
                     return RPR.ShadowOfDeath;
@@ -192,7 +197,13 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var gauge = GetJobGauge<RPRGauge>();
                 var aoecombo = 0;
+                var actionIDCD = GetCooldown(actionID);
 
+                if (IsEnabled(CustomComboPreset.ReaperSoulScytheFeature))
+                {
+                    if (gauge.Soul <= 50 && IsOffCooldown(RPR.SoulScythe) && TargetHasEffect(RPR.Debuffs.DeathsDesign))
+                        return RPR.SoulScythe;
+                }
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature))
                 {
                     if (HasEffect(RPR.Buffs.Enshrouded) && gauge.VoidShroud >= 2)

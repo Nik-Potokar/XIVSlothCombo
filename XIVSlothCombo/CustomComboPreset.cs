@@ -485,6 +485,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE Combo.", DRK.JobID)]
         DRKStalwartShadowbringerFeature = 5014,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("FoS Overcap Feature", "Uses FoS if you are above 8.5k mana or DarkSide is about to expire(10sec or less)", DRK.JobID)]
+        DarkManaOvercapAoEFeature = 5015,
+
 
 
         #endregion
@@ -510,6 +514,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID)]
         DragoonFangThrustFeature = 6005,
+
+        [CustomComboInfo("Wheeling Thrust/Fang and Claw Feature", "Fang And Claw Becomes Wheeloing Thrust when under Enhanced Wheeling Thrust Buff.", DRG.JobID)]
+        DragoonFangAndClawFeature = 6006,
 
         #endregion
         // ====================================================================================
@@ -918,6 +925,14 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(ReaperBloodSwatheComboFeature)]
         [CustomComboInfo("Blood Stalk Combo Option Alternative", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. Adds Enshrouded Combo to button as well", RPR.JobID)]
         ReaperBloodStalkAlternateComboOption = 12017,
+
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Soul Slice Feature", "Adds Soul Slice to main combo when under or at 50 gauge and target is under Death's Design debuff", RPR.JobID)]
+        ReaperSoulSliceFeature = 12018,
+
+        [ParentCombo(ReaperScytheCombo)]
+        [CustomComboInfo("Soul Scythe Feature", "Adds Soul Scythe to main AoE combo when under or at 50 gauge and target is under Death's Design debuff", RPR.JobID)]
+        ReaperSoulScytheFeature = 12019,
 
 
 

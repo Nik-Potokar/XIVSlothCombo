@@ -91,13 +91,14 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                     return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                if (level >= RDM.Levels.ContreSixte)
+                if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                     return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                if (level >= RDM.Levels.Fleche)
+                if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                     return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                return RDM.Fleche;
+                if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                    return RDM.Fleche;
             }
             if (actionID == RDM.Veraero2)
             {
@@ -136,13 +137,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.ContreSixte)
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    return RDM.Fleche;
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
                 }
                 if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && actionIDCD.IsCooldown && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
                 {
@@ -208,13 +210,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.ContreSixte)
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    return RDM.Fleche;
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
                 }
                 if (IsEnabled(CustomComboPreset.RedmageResolutionFinisher))
                 {
@@ -360,31 +363,19 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.ContreSixte)
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    return RDM.Fleche;
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
                 }
                 if (lastComboMove == RDM.Scorch && level >= RDM.Levels.Resolution)
                     return RDM.Resolution;
                 if (lastComboMove == RDM.Verholy && level >= RDM.Levels.Scorch || lastComboMove == RDM.Verflare && level >= RDM.Levels.Scorch)
                     return RDM.Scorch;
-                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
-                {
-                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
-                    if (level >= RDM.Levels.ContreSixte)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
-                    if (level >= RDM.Levels.Fleche)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
-                    return RDM.Fleche;
-                }
                 if (gauge.ManaStacks == 3 && level >= RDM.Levels.Verflare)
                 {
                     if (black >= white && level >= RDM.Levels.Verholy)
@@ -450,13 +441,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.ContreSixte)
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    return RDM.Fleche;
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
                 }
                 if (actionID is RDM.Veraero or RDM.Verthunder)
                 {
@@ -612,13 +604,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.ContreSixte)
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    return RDM.Fleche;
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
                 }
                 if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && actionIDCD.IsCooldown && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
                 {
@@ -678,13 +671,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.ContreSixte)
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    return RDM.Fleche;
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
                 }
                 if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50)
                 {
@@ -855,13 +849,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.ContreSixte)
+                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    if (level >= RDM.Levels.Fleche)
+                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
 
-                    return RDM.Fleche;
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
                 }
                 if (IsEnabled(CustomComboPreset.SimpleRedMageAoE) && InMeleeRange(true))
                 {

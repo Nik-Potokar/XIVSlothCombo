@@ -170,6 +170,16 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<DRKGauge>();
                 var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 var actionIDCD = GetCooldown(actionID);
+                if (IsEnabled(CustomComboPreset.DarkManaOvercapAoEFeature))
+                {
+                    if (LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                    {
+                        var gcd = GetCooldown(actionID);
+                        if (level >= 30 && gcd.IsCooldown)
+                            return OriginalHook(DRK.FloodOfDarkness);
+
+                    }
+                }
                 if (IsEnabled(CustomComboPreset.DRKStalwartabyssalDrainFeature) && level >= 56)
                 {
                     if (actionIDCD.IsCooldown && IsOffCooldown(DRK.AbyssalDrain) && PlayerHealthPercentageHp() >= 60)
@@ -185,7 +195,6 @@ namespace XIVSlothComboPlugin.Combos
                     if (lastComboMove == DRK.Unleash && gauge.Blood >= 90)
                         return DRK.Quietus;
                 }
-
                 if (IsEnabled(CustomComboPreset.DeliriumFeature))
                 {
                     if (level >= DRK.Levels.Quietus && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))

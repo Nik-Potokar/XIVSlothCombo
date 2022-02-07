@@ -213,5 +213,22 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class DragoonFangAndClawFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonFangAndClawFeature;
 
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == DRG.FangAndClaw)
+            {
+                if (HasEffect(DRG.Buffs.EnhancedWheelingThrust) && level >= DRG.Levels.WheelingThrust)
+                    return DRG.WheelingThrust;
+                if (HasEffect(DRG.Buffs.SharperFangAndClaw) && level >= DRG.Levels.FangAndClaw)
+                    return DRG.FangAndClaw;
+
+            }
+
+            return actionID;
+        }
+    }
 }
