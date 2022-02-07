@@ -98,6 +98,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             return value != Song.NONE;
         }
+        
+        internal static bool SongIsNone(Song value)
+        {
+            return value == Song.NONE;
+        }
     }
 
     // Replace Wanderer's Minuet with PP when in WM.
@@ -401,10 +406,15 @@ namespace XIVSlothComboPlugin.Combos
                 if (inCombat && (lastComboMove == BRD.Ladonsbite || lastComboMove == BRD.QuickNock))
                 {
                     SimpleBardFeature.openerFinished = true;
+                    SimpleBardFeature.inOpener = true;
                 }
 
                 if (!inCombat)
                 {
+                    SimpleBardFeature.inOpener = false;
+                    SimpleBardFeature.step = 0;
+                    SimpleBardFeature.subStep = 0;
+                    SimpleBardFeature.usedStraightShotReady = false;
                     SimpleBardFeature.openerFinished = false;
                 }
 
@@ -511,11 +521,11 @@ namespace XIVSlothComboPlugin.Combos
     internal class SimpleBardFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SimpleBardFeature;
-        internal bool inOpener = false;
+        internal static bool inOpener = false;
         internal static bool openerFinished = false;
-        internal byte step = 0;
-        internal byte subStep = 0;
-        internal bool usedStraightShotReady = false;
+        internal static byte step = 0;
+        internal static byte subStep = 0;
+        internal static bool usedStraightShotReady = false;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -579,7 +589,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 3)
                             {
-                                if (lastComboMove == BRD.EmpyrealArrow) subStep++;
+                                if (IsOnCooldown(BRD.EmpyrealArrow)) subStep++;
                                 else return BRD.EmpyrealArrow;
                             }
                             if (subStep == 4)
@@ -604,7 +614,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 usedStraightShotReady = false;
 
-                                if (HasEffect(BRD.Buffs.RadiantFinale)) subStep++;
+                                if (HasEffect(BRD.Buffs.RadiantFinale) || Array.TrueForAll(gauge.Coda, BRD.SongIsNone)) subStep++;
                                 else return BRD.RadiantFinale;
                             }
                             if (subStep == 7)
@@ -667,7 +677,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 3)
                             {
-                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
+                                if (HasEffect(BRD.Buffs.Barrage) || IsOnCooldown(BRD.Buffs.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
                             if (subStep == 4)
@@ -734,7 +744,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 9)
                             {
-                                if (lastComboMove == BRD.EmpyrealArrow) subStep++;
+                                if (IsOnCooldown(BRD.EmpyrealArrow)) subStep++;
                                 else return BRD.EmpyrealArrow;
                             }
                             if (subStep == 10)
@@ -757,7 +767,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (subStep == 0)
                             {
-                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
+                                if (HasEffect(BRD.Buffs.Barrage) || IsOnCooldown(BRD.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
                             if (subStep == 1)
@@ -835,7 +845,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 8)
                             {
-                                if (lastComboMove == BRD.EmpyrealArrow) subStep++;
+                                if (IsOnCooldown(BRD.EmpyrealArrow)) subStep++;
                                 else return BRD.EmpyrealArrow;
                             }
                             if (subStep == 9)
