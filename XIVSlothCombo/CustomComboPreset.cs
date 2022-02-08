@@ -203,6 +203,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspect Swap Feature", "Changes Scathe to Blizzard 3 when at 0 MP in Astral Fire or to Fire 3 when at 10000 MP in Umbral Ice with 3 Umbral Hearts.", BLM.JobID)]
         BlackAspectSwapFeature = 2010,
 
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE
@@ -619,6 +620,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge.", MCH.JobID)]
         MachinistHeatblastGaussRicochetFeature = 8006,
 
+        [CustomComboInfo("Single Button Auto Crossbow", "Switches Auto Crossbow to Hypercharge and weaves gauss/rico.", MCH.JobID)]
+        MachinistAutoCrossBowGaussRicochetFeature = 8018,
+
         [ParentCombo(MachinistMainCombo)]
         [ConflictingCombos(MachinistDrillAirOnMainCombo)]
         [CustomComboInfo("Alternate Drill/Air Feature on Main Combo", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff \nOr Reasemble is on CD(Will do nothing if Reassemble is OFF CD)", MCH.JobID)]
@@ -644,6 +648,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Always Gauss Round/Ricochet on AoE Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID)]
         MachinistAoEGaussOption = 8012,
 
+        [ConflictingCombos(MachinistRicochetGaussMainCombo)]
+        [ParentCombo(MachinistMainCombo)]
+        [CustomComboInfo("Ricochet & Gauss Round Feature", "Adds Ricochet and Gauss Round to main combo. Will use all charges.", MCH.JobID)]
+        MachinistRicochetGaussChargesMainCombo = 8017,
+
+        [ConflictingCombos(MachinistRicochetGaussChargesMainCombo)]
         [ParentCombo(MachinistMainCombo)]
         [CustomComboInfo("Ricochet & Gauss Round overcap protection option", "Adds Ricochet and Gauss Round to main combo. Will leave 1 charge of each.", MCH.JobID)]
         MachinistRicochetGaussMainCombo = 8013,
@@ -659,6 +669,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(MachinistSpreadShotFeature)]
         [CustomComboInfo("BioBlaster Feature", "Adds Bioblaster to the Spreadshot feature", MCH.JobID)]
         MachinistBioblasterFeature = 8016,
+
+
+        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabalizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 heat and is off cooldown", MCH.JobID)]
+        MachinistAutoBarrel = 8019,
 
         #endregion
         // ====================================================================================
