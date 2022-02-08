@@ -156,6 +156,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Removes DoT From DPS Feature", "Removed DoT From the DPS Feature, You can still use all other features that are on malefic! ", AST.JobID)]
         DisableCombustOnDpsFeature = 1018,
 
+        [CustomComboInfo("Lightspeed Feature", "Adds Lightspeed to the DPS Feature", AST.JobID)]
+        AstrologianLightSpeedFeature = 1020,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE

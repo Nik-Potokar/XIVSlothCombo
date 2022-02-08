@@ -33,6 +33,8 @@ namespace XIVSlothComboPlugin.Combos
             Play = 17055,
             LordOfCrowns = 7444,
             LadyOfCrown = 7445,
+            Divination = 16552,
+            Lightspeed = 3606,
 
             // aoes
             Gravity = 3615,
@@ -51,6 +53,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
+            Divination = 1878,
             Swiftcast = 167,
             LordOfCrownsDrawn = 2054,
             LadyOfCrownsDrawn = 2055,
@@ -195,20 +198,27 @@ namespace XIVSlothComboPlugin.Combos
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
+                {
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && incombat && fallmalefic.CooldownRemaining >= 0.6)
+                        return AST.Lightspeed;
+                }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                 {
-                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
                         return AST.Astrodyne;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                 {
-                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
                         return AST.Draw;
                      
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
                         return AST.MinorArcana;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
@@ -218,7 +228,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
                         return AST.LordOfCrowns;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 72 && incombat)
@@ -276,25 +286,32 @@ namespace XIVSlothComboPlugin.Combos
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
+                {
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && incombat && actionIDCD.CooldownRemaining >= 0.6)
+                        return AST.Lightspeed;
+                }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                 {
-                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 50)
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 50)
                         return AST.Astrodyne;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                 {
-                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
                         return AST.Draw;
 
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
                         return AST.LordOfCrowns;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
                         return AST.MinorArcana;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
@@ -341,24 +358,32 @@ namespace XIVSlothComboPlugin.Combos
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);
-                if(!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
+                {
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && incombat && actionIDCD.CooldownRemaining >= 0.6)
+                        return AST.Lightspeed;
+                }
+                if (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
                     return OriginalHook(AST.Malefic1);
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                 {
-                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
                         return AST.Astrodyne;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                 {
-                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
                         return AST.Draw;
 
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
                         return AST.MinorArcana;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
@@ -368,7 +393,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
                         return AST.LordOfCrowns;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 72 && incombat)
@@ -416,20 +441,27 @@ namespace XIVSlothComboPlugin.Combos
                 var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
                 var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
 
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
+                {
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && incombat && actionIDCD.CooldownRemaining >= 0.6)
+                        return AST.Lightspeed;
+                }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                 {
-                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
                         return AST.Astrodyne;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                 {
-                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
                         return AST.Draw;
 
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
                         return AST.MinorArcana;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
@@ -439,7 +471,9 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                    var buff = HasEffect(AST.Buffs.Divination);
+                    var buffcd = GetCooldown(AST.Divination);
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70 && buff || gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70 && buffcd.IsCooldown)
                         return AST.LordOfCrowns;
                 }
                 if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 72 && incombat)
