@@ -820,11 +820,13 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID)]
         PaladinProminenceCombo = 11003,
+
         [ParentCombo(PaladinRoyalAuthorityCombo)]
         [CustomComboInfo("Requiescat Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active \n And when Fight Or Flight is not Active.\nRequires said combos to be activated to work.", PLD.JobID)]
         PaladinRequiescatFeature = 11004,
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains \nand adds Faith/Truth/Valor Combo after Confiteor.", PLD.JobID)]
+
+        [ParentCombo(PaladinRequiescatFeature)]
+        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains \nand adds Faith/Truth/Valor Combo after Confiteor. \n Requiescat Feature Needs to be Enabled for this one to work!!!  ", PLD.JobID)]
         PaladinConfiteorFeature = 11005,
 
         [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID)]
