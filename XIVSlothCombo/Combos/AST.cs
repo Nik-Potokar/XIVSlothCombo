@@ -202,7 +202,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
                     var lightspeed = GetCooldown(AST.Lightspeed);
-                    if (!lightspeed.IsCooldown && incombat && fallmalefic.CooldownRemaining >= 0.6)
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
                         return AST.Lightspeed;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
@@ -290,7 +290,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
                     var lightspeed = GetCooldown(AST.Lightspeed);
-                    if (!lightspeed.IsCooldown && incombat && actionIDCD.CooldownRemaining >= 0.6)
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
                         return AST.Lightspeed;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
@@ -360,10 +360,11 @@ namespace XIVSlothComboPlugin.Combos
                 var actionIDCD = GetCooldown(actionID);
 
 
+
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
                     var lightspeed = GetCooldown(AST.Lightspeed);
-                    if (!lightspeed.IsCooldown && incombat && actionIDCD.CooldownRemaining >= 0.6)
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
                         return AST.Lightspeed;
                 }
                 if (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
@@ -445,7 +446,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
                     var lightspeed = GetCooldown(AST.Lightspeed);
-                    if (!lightspeed.IsCooldown && incombat && actionIDCD.CooldownRemaining >= 0.6)
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
                         return AST.Lightspeed;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
