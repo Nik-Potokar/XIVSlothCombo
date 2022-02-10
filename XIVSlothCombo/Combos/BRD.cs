@@ -677,7 +677,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 3)
                             {
-                                if (HasEffect(BRD.Buffs.Barrage) || IsOnCooldown(BRD.Barrage)) subStep++;
+                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
                             if (subStep == 4)
@@ -767,7 +767,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (subStep == 0)
                             {
-                                if (HasEffect(BRD.Buffs.Barrage) || IsOnCooldown(BRD.Barrage)) subStep++;
+                                if (HasEffect(BRD.Buffs.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
                             if (subStep == 1)
