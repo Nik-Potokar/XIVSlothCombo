@@ -1029,11 +1029,15 @@ namespace XIVSlothComboPlugin.Combos
                     var causticDuration = FindTargetEffect(BRD.Debuffs.CausticBite);
                     var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
 
+                    var ragingStrikesDuration = FindEffect(BRD.Buffs.RagingStrikes);
+
                     var useIronJaws = (
-                        level >= BRD.Levels.IronJaws &&
-                        ((venomous && venomousDuration.RemainingTime < 4) || (caustic && causticDuration.RemainingTime < 4)) ||
-                        level >= BRD.Levels.IronJaws &&
-                        ((windbite && windbiteDuration.RemainingTime < 4) || (stormbite && stormbiteDuration.RemainingTime < 4))
+                        level >= BRD.Levels.IronJaws && 
+                            ((venomous && venomousDuration.RemainingTime < 4) || (caustic && causticDuration.RemainingTime < 4)) ||
+                        level >= BRD.Levels.IronJaws && 
+                            ((windbite && windbiteDuration.RemainingTime < 4) || (stormbite && stormbiteDuration.RemainingTime < 4)) ||
+                        level >= BRD.Levels.IronJaws && 
+                            (IsEnabled(CustomComboPreset.BardSimpleRagingJaws) && HasEffect(BRD.Buffs.RagingStrikes) && ragingStrikesDuration.RemainingTime < 3)
                     );
 
                     if (level < BRD.Levels.BiteUpgrade)
