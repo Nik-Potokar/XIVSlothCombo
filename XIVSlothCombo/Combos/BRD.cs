@@ -1006,8 +1006,8 @@ namespace XIVSlothComboPlugin.Combos
                             var songTimerInSeconds = gauge.SongTimer / 1000;
                             
                             if (gauge.Song == Song.MAGE && gauge.SoulVoice == 100) return BRD.ApexArrow;
-                            if (gauge.Song == Song.MAGE && gauge.SoulVoice >= 80 && songTimerInSeconds > 21 && songTimerInSeconds < 23) return BRD.ApexArrow;
-                            if (gauge.Song == Song.WANDERER && HasEffect(BRD.Buffs.BattleVoice) && HasEffect(BRD.Buffs.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
+                            if (gauge.Song == Song.MAGE && gauge.SoulVoice >= 80 && songTimerInSeconds > 18 && songTimerInSeconds < 22) return BRD.ApexArrow;
+                            if (gauge.Song == Song.WANDERER && HasEffect(BRD.Buffs.RagingStrikes) && HasEffect(BRD.Buffs.BattleVoice) && HasEffect(BRD.Buffs.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
                         }
                     }
                     else
