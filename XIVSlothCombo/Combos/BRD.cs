@@ -941,18 +941,17 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes))
                         return BRD.RagingStrikes;
-                    if (level >= BRD.Levels.BattleVoice && IsOffCooldown(BRD.BattleVoice))
-                        return BRD.BattleVoice;
-                    if (level >= BRD.Levels.Barrage && IsOffCooldown(BRD.Barrage))
-                        return BRD.Barrage;
-
-                    if (IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && Array.TrueForAll(gauge.Coda, BRD.SongIsNotNone))
+                    if (IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && Array.TrueForAll(gauge.Coda, BRD.SongIsNotNone) && IsOnCooldown(BRD.BattleVoice))
                     {
                         if (level >= BRD.Levels.RadiantFinale && IsOffCooldown(BRD.RadiantFinale))
                         {
                             return BRD.RadiantFinale;
                         }
                     }
+                    if (level >= BRD.Levels.BattleVoice && IsOffCooldown(BRD.BattleVoice))
+                        return BRD.BattleVoice;
+                    if (level >= BRD.Levels.Barrage && IsOffCooldown(BRD.Barrage))
+                        return BRD.Barrage;
                 }
 
                 if (IsEnabled(CustomComboPreset.SimpleBardFeature) && inCombat)
@@ -963,6 +962,8 @@ namespace XIVSlothComboPlugin.Combos
                             return BRD.PitchPerfect;
                         if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow))
                             return BRD.EmpyrealArrow;
+                        if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder))
+                            return BRD.Sidewinder;
                         if (level >= BRD.Levels.Bloodletter)
                         {
                             var bloodletterCharges = GetRemainingCharges(BRD.Bloodletter);
@@ -989,8 +990,6 @@ namespace XIVSlothComboPlugin.Combos
                                 return BRD.Bloodletter;
                             }
                         }
-                        if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder))
-                            return BRD.Sidewinder;
                     }
 
                     if (IsEnabled(CustomComboPreset.BardSimpleOpener) && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
