@@ -1,5 +1,6 @@
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
+using XIVSlothComboPlugin.Classes;
 
 namespace XIVSlothComboPlugin
 {
