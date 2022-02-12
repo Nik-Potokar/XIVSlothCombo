@@ -911,7 +911,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (gauge.Song == Song.WANDERER)
                         {
                             // Spend any repertoire before switching to next song
-                            if (songTimerInSeconds <= 3 && gauge.Repertoire > 0)
+                            if (songTimerInSeconds < 3 && gauge.Repertoire > 0)
                             {
                                 return BRD.PitchPerfect;
                             }
