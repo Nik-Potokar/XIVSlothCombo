@@ -175,7 +175,7 @@ namespace XIVSlothComboPlugin.Classes
     public static bool IsUnlocked (ushort actionID, byte level) {
       byte requiredLevel;
 
-      if (!AST.Levels.Dictionary.TryGetValue(actionID, out requiredLevel)) return false;
+      if (!Levels.Dictionary.TryGetValue(actionID, out requiredLevel)) return false;
 
       return level >= requiredLevel;
     }
