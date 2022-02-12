@@ -177,7 +177,7 @@ namespace XIVSlothComboPlugin.Classes
 
       if (!AST.Levels.Dictionary.TryGetValue(actionID, out requiredLevel)) return false;
 
-      return requiredLevel >= level;
+      return level >= requiredLevel;
     }
   }
 }
