@@ -189,6 +189,15 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BRD.IronJaws)
             {
+                if (IsEnabled(CustomComboPreset.BardIronJawsApexFeature) && level >= BRD.Levels.ApexArrow)
+                {
+                    var gauge = GetJobGauge<BRDGauge>();
+
+                    if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady)) return BRD.BlastArrow;
+                    if (gauge.SoulVoice == 100 && IsOffCooldown(BRD.ApexArrow)) return BRD.ApexArrow;
+                }
+
+
                 if (level < BRD.Levels.IronJaws)
                 {
                     var venomous = FindTargetEffect(BRD.Debuffs.VenomousBite);
