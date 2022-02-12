@@ -316,6 +316,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Pooling", "BETA TESTING - Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID)]
         BardSimplePooling = 3023,
 
+        [ParentCombo(BardIronJawsFeature)]
+        [CustomComboInfo("Iron Jaws Apex", "Adds apex and blast arrow to IRON JAWS when available", BRD.JobID)]
+        BardIronJawsApexFeature = 3024,
+
         #endregion
         // ====================================================================================
         #region DANCER
