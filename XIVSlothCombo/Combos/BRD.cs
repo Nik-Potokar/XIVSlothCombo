@@ -535,6 +535,7 @@ namespace XIVSlothComboPlugin.Combos
         internal static byte step = 0;
         internal static byte subStep = 0;
         internal static bool usedStraightShotReady = false;
+        internal static bool usedPitchPerfect = false;
 
         internal delegate bool DotRecast(int value);
 
@@ -563,6 +564,7 @@ namespace XIVSlothComboPlugin.Combos
                         step = 0;
                         subStep = 0;
                         usedStraightShotReady = false;
+                        usedPitchPerfect = false;
                         openerFinished = false;
 
                         return BRD.Stormbite;
@@ -683,11 +685,18 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 2)
                             {
-                                if (GetRemainingCharges(BRD.Bloodletter) == 0) subStep++;
+                                if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                                {
+                                    usedPitchPerfect = true;
+                                    return BRD.PitchPerfect;
+                                } 
+                                if (GetRemainingCharges(BRD.Bloodletter) == 0 || usedPitchPerfect) subStep++;
                                 else return BRD.Bloodletter;
                             }
                             if (subStep == 3)
                             {
+                                usedPitchPerfect = false;
+
                                 if (HasEffect(BRD.Buffs.Barrage)) subStep++;
                                 else return BRD.Barrage;
                             }
@@ -788,22 +797,32 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 2)
                             {
-                                if (GetRemainingCharges(BRD.Bloodletter) < 1) subStep++;
+                                if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
+                                {
+                                    usedPitchPerfect = true;
+                                    return BRD.PitchPerfect;
+                                }
+                                if (GetRemainingCharges(BRD.Bloodletter) < 1 || usedPitchPerfect) subStep++;
                                 else return BRD.Bloodletter;
                             }
                             if (subStep == 3)
                             {
+                                usedPitchPerfect = false;
+
                                 if (IsOnCooldown(BRD.Sidewinder)) subStep++;
                                 else return BRD.Sidewinder;
                             }
                             if (subStep == 4)
                             {
-                                if (lastComboMove == BRD.BurstShot)
+                                if (HasEffect(BRD.Buffs.StraightShotReady))
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
-                                    subStep++;
+                                    return BRD.RefulgentArrow;
                                 }
-                                else return BRD.BurstShot;
+                                else
+                                {
+                                    subStep++;
+                                    return BRD.BurstShot;
+                                }
                             }
                             if (subStep == 5)
                             {
