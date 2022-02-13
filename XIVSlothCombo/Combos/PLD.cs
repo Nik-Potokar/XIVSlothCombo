@@ -200,7 +200,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption))
                 {
-                    if ((lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime > 10) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime > 10))
+                    if ((lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime > 10 && level >= PLD.Levels.RoyalAuthority) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime > 10 && level >= PLD.Levels.RoyalAuthority))
                         return PLD.RoyalAuthority;
                     else
                     if (
