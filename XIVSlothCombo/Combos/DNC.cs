@@ -458,8 +458,7 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (
                     level >= DNC.Levels.SaberDance &&
-                    (gauge.Esprit >= 80 || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Esprit > 50)) &&
-                    IsOffCooldown(DNC.SaberDance)
+                    (gauge.Esprit >= 80 || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Esprit > 50))
                 )
                 {
                     return DNC.SaberDance;
@@ -557,7 +556,7 @@ namespace XIVSlothComboPlugin.Combos
                         return DNC.Flourish;
                 }
                 
-                if (level >= DNC.Levels.SaberDance && gauge.Esprit >= 80 && IsOffCooldown(DNC.SaberDance))
+                if (level >= DNC.Levels.SaberDance && gauge.Esprit >= 80 )
                 {
                     return DNC.SaberDance;
                 }
