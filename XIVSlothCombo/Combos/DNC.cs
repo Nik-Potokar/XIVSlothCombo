@@ -409,10 +409,13 @@ namespace XIVSlothComboPlugin.Combos
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<DNCGauge>();
                 var canWeaveAbilities = (
+                    CanWeave(DNC.Fountain) ||
+                    CanWeave(DNC.Fountainfall) ||
                     CanWeave(DNC.Windmill) ||
                     CanWeave(DNC.Bladeshower) ||
                     CanWeave(DNC.RisingWindmill) ||
                     CanWeave(DNC.Bloodshower) ||
+                    CanWeave(DNC.SaberDance) ||
                     CanWeave(DNC.Tillana) ||
                     CanWeave(DNC.StarfallDance)
                 );

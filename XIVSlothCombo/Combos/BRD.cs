@@ -1066,7 +1066,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature) && inCombat && canWeave && gauge.Song != Song.NONE && isEnemyHealthHigh)
                 {
-                    if (level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes))
+                    if (level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes) && GetCooldown(BRD.BattleVoice).CooldownRemaining < 5 )
                         return BRD.RagingStrikes;
                     if (IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && Array.TrueForAll(gauge.Coda, BRD.SongIsNotNone) && IsOffCooldown(BRD.BattleVoice))
                     {
@@ -1090,7 +1090,21 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow))
                             return BRD.EmpyrealArrow;
                         if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder))
-                            return BRD.Sidewinder;
+                            if (IsEnabled(CustomComboPreset.BardSimplePooling))
+                            {
+                                if (gauge.Song == Song.WANDERER)
+                                {
+                                    if (
+                                        (HasEffect(BRD.Buffs.RagingStrikes) || GetCooldown(BRD.RagingStrikes).CooldownRemaining > 10) &&
+                                        (HasEffect(BRD.Buffs.BattleVoice) || GetCooldown(BRD.BattleVoice).CooldownRemaining > 10) &&
+                                        (HasEffect(BRD.Buffs.RadiantFinale) || GetCooldown(BRD.RadiantFinale).CooldownRemaining > 10)
+                                       )
+                                    {
+                                        return BRD.Sidewinder;
+                                    }
+                                }
+                                else return BRD.Sidewinder;
+                            } else return BRD.Sidewinder;
                         if (level >= BRD.Levels.Bloodletter)
                         {
                             var bloodletterCharges = GetRemainingCharges(BRD.Bloodletter);
@@ -1101,6 +1115,8 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (
                                         (HasEffect(BRD.Buffs.RagingStrikes) || GetCooldown(BRD.RagingStrikes).CooldownRemaining > 10) &&
+                                        (HasEffect(BRD.Buffs.BattleVoice)   || GetCooldown(BRD.BattleVoice).CooldownRemaining > 10 ) && 
+                                        (HasEffect(BRD.Buffs.RadiantFinale) || GetCooldown(BRD.RadiantFinale).CooldownRemaining > 10) &&
                                         bloodletterCharges > 0
                                     )
                                     {
