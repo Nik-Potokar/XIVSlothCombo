@@ -409,10 +409,13 @@ namespace XIVSlothComboPlugin.Combos
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<DNCGauge>();
                 var canWeaveAbilities = (
+                    CanWeave(DNC.Fountain) ||
+                    CanWeave(DNC.Fountainfall) ||
                     CanWeave(DNC.Windmill) ||
                     CanWeave(DNC.Bladeshower) ||
                     CanWeave(DNC.RisingWindmill) ||
                     CanWeave(DNC.Bloodshower) ||
+                    CanWeave(DNC.SaberDance) ||
                     CanWeave(DNC.Tillana) ||
                     CanWeave(DNC.StarfallDance)
                 );
@@ -455,8 +458,7 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (
                     level >= DNC.Levels.SaberDance &&
-                    (gauge.Esprit >= 80 || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Esprit > 50)) &&
-                    IsOffCooldown(DNC.SaberDance)
+                    (gauge.Esprit >= 80 || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Esprit > 50))
                 )
                 {
                     return DNC.SaberDance;
@@ -554,7 +556,7 @@ namespace XIVSlothComboPlugin.Combos
                         return DNC.Flourish;
                 }
                 
-                if (level >= DNC.Levels.SaberDance && gauge.Esprit >= 80 && IsOffCooldown(DNC.SaberDance))
+                if (level >= DNC.Levels.SaberDance && gauge.Esprit >= 80 )
                 {
                     return DNC.SaberDance;
                 }
