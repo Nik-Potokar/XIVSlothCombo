@@ -1,4 +1,5 @@
-using System.Collections.Generic;  
+using System.Collections.Generic;
+using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVSlothComboPlugin.Classes
 {
@@ -179,5 +180,8 @@ namespace XIVSlothComboPlugin.Classes
 
       return level >= requiredLevel;
     }
+
+    public static ASTGauge JobGauge =>
+      Service.ComboCache.GetJobGauge<ASTGauge>();
   }
 }
