@@ -683,10 +683,11 @@ namespace XIVSlothComboPlugin.Combos
                     return RDM.Engagement;
                 }
 
-                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau)
+                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau &&
+                     gauge.WhiteMana >= 30 && gauge.BlackMana >= 30)
                     return OriginalHook(RDM.Zwerchhau);
 
-                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
+                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement && gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
                     return OriginalHook(RDM.Redoublement);
 
                 if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 && gauge.ManaStacks == 0 && 
@@ -700,6 +701,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
                         return OriginalHook(RDM.Verthunder);
                 }
+
                 if (actionID is RDM.Veraero or RDM.Verthunder)
                 {
 
@@ -867,7 +869,8 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
                         return RDM.Fleche;
                 }
-                if (IsEnabled(CustomComboPreset.SimpleRedMageAoE) && InMeleeRange(true))
+
+                if (InMeleeRange(true))
                 {
                     if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && gauge.ManaStacks == 0)
                     {
@@ -882,6 +885,7 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.EnchantedMoulinet;
                     }
                 }
+
                 if (lastComboMove == RDM.Scorch && level >= RDM.Levels.Resolution)
                     return RDM.Resolution;
                 if (lastComboMove == RDM.Verholy && level >= RDM.Levels.Scorch || lastComboMove == RDM.Verflare && level >= RDM.Levels.Scorch)
