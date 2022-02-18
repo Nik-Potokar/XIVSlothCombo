@@ -646,7 +646,9 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 
         {
-            if (actionID == RDM.Veraero || actionID == RDM.Verthunder || actionID == RDM.Verstone || actionID == RDM.Verfire || actionID == RDM.Riposte || actionID == RDM.Zwerchhau || actionID == RDM.Redoublement)
+            if (actionID == RDM.Jolt || actionID == RDM.Veraero || actionID == RDM.Verthunder || 
+                actionID == RDM.Verstone || actionID == RDM.Verfire || actionID == RDM.Riposte || 
+                actionID == RDM.Zwerchhau || actionID == RDM.Redoublement)
             {
                 const int
                 LONG_DELTA = 6,
@@ -684,10 +686,11 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau &&
-                     gauge.WhiteMana >= 30 && gauge.BlackMana >= 30)
+                     gauge.WhiteMana >= 30 && gauge.BlackMana >= 30 && gauge.ManaStacks == 1 )
                     return OriginalHook(RDM.Zwerchhau);
 
-                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement && gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
+                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement && gauge.ManaStacks == 2 && 
+                    gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
                     return OriginalHook(RDM.Redoublement);
 
                 if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 && gauge.ManaStacks == 0 && 
