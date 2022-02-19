@@ -363,13 +363,10 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == MNK.MasterfulBlitz)
-
             {
                 var gauge = GetJobGauge<MNKGauge>();
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
-                var pbCD = GetCooldown(MNK.PerfectBalance);
                 var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                var solarNadi = gauge.Nadi == Nadi.SOLAR;
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
                 if (!nadiNONE && !lunarNadi)
                 {
