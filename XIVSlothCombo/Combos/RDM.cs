@@ -680,18 +680,30 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.Fleche;
                 }
 
-                if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
+                if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 &&
+                    InMeleeRange(true) && level >= RDM.Levels.Engagement )
                 {
                     return RDM.Engagement;
                 }
 
-                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau &&
-                     gauge.WhiteMana >= 30 && gauge.BlackMana >= 30 )
-                    return OriginalHook(RDM.Zwerchhau);
+                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && gauge.WhiteMana >= 30 && gauge.BlackMana >= 30 )
+                {
+                    if (level >= RDM.Levels.Zwerchhau )
+                    {
+                        return OriginalHook(RDM.Zwerchhau);
+                    } else  return RDM.EnchantedRiposte;
+                }
+                    
 
-                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement && 
-                    gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
-                    return OriginalHook(RDM.Redoublement);
+                if ((lastComboMove == RDM.Zwerchhau || lastComboMove == RDM.EnchantedRiposte) && gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
+                {
+                    if (level >= RDM.Levels.Redoublement)
+                    {
+                        return OriginalHook(RDM.Redoublement);
+                    }
+                    else return RDM.EnchantedRiposte;
+                }
+                    
 
                 if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 &&  
                     lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch && !HasEffect(RDM.Buffs.Dualcast))
