@@ -686,15 +686,15 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau &&
-                     gauge.WhiteMana >= 30 && gauge.BlackMana >= 30 && gauge.ManaStacks == 1 )
+                     gauge.WhiteMana >= 30 && gauge.BlackMana >= 30 )
                     return OriginalHook(RDM.Zwerchhau);
 
-                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement && gauge.ManaStacks == 2 && 
+                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement && 
                     gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
                     return OriginalHook(RDM.Redoublement);
 
-                if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 && gauge.ManaStacks == 0 && 
-                    lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch)
+                if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 &&  
+                    lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch && !HasEffect(RDM.Buffs.Dualcast))
                 {
                     return RDM.EnchantedRiposte;
                 }
@@ -873,17 +873,17 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.Fleche;
                 }
 
-                if (InMeleeRange(true))
+                if (InMeleeRange(true) && !HasEffect(RDM.Buffs.Dualcast))
                 {
-                    if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && gauge.ManaStacks == 0)
+                    if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 )
                     {
                         return RDM.EnchantedMoulinet;
                     }
-                    if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 && gauge.ManaStacks == 1)
+                    if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 )
                     {
                         return RDM.EnchantedMoulinet;
                     }
-                    if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20 && gauge.ManaStacks == 2)
+                    if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20 )
                     {
                         return RDM.EnchantedMoulinet;
                     }
