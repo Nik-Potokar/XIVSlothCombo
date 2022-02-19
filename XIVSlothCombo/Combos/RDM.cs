@@ -646,7 +646,9 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 
         {
-            if (actionID == RDM.Veraero || actionID == RDM.Verthunder || actionID == RDM.Verstone || actionID == RDM.Verfire || actionID == RDM.Riposte || actionID == RDM.Zwerchhau || actionID == RDM.Redoublement)
+            if (actionID == RDM.Jolt || actionID == RDM.Veraero || actionID == RDM.Verthunder || 
+                actionID == RDM.Verstone || actionID == RDM.Verfire || actionID == RDM.Riposte || 
+                actionID == RDM.Zwerchhau || actionID == RDM.Redoublement)
             {
                 const int
                 LONG_DELTA = 6,
@@ -660,13 +662,10 @@ namespace XIVSlothComboPlugin.Combos
                 int black = gauge.BlackMana;
                 int white = gauge.WhiteMana;
                 var engagementCD = GetCooldown(RDM.Engagement);
-                var actionIDCD = GetCooldown(OriginalHook(actionID));
-                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau)
-                    return OriginalHook(RDM.Zwerchhau);
-
-                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
-                    return OriginalHook(RDM.Redoublement);
-                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                var canWeave = CanWeave(actionID);
+                
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.Fleche) || 
+                    IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.ContreSixte))
                 {
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
@@ -680,19 +679,32 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
                         return RDM.Fleche;
                 }
-                if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50)
+
+                if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
+                {
+                    return RDM.Engagement;
+                }
+
+                if ((lastComboMove == RDM.Riposte || lastComboMove == RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau &&
+                     gauge.WhiteMana >= 30 && gauge.BlackMana >= 30 && gauge.ManaStacks == 1 )
+                    return OriginalHook(RDM.Zwerchhau);
+
+                if (lastComboMove == RDM.Zwerchhau && level >= RDM.Levels.Redoublement && gauge.ManaStacks == 2 && 
+                    gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
+                    return OriginalHook(RDM.Redoublement);
+
+                if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 && gauge.ManaStacks == 0 && 
+                    lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch)
                 {
                     return RDM.EnchantedRiposte;
                 }
-                if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && actionIDCD.IsCooldown && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
-                {
-                    return RDM.Engagement;
-                };
+                
                 if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerSmartCastFeature))
                 {
                     if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
                         return OriginalHook(RDM.Verthunder);
                 }
+
                 if (actionID is RDM.Veraero or RDM.Verthunder)
                 {
 
@@ -843,8 +855,10 @@ namespace XIVSlothComboPlugin.Combos
                 int white = gauge.WhiteMana;
                 int blackThreshold = white + IMBALANCE_DIFF_MAX;
                 int whiteThreshold = black + IMBALANCE_DIFF_MAX;
-                var actionIDCD = GetCooldown(actionID);
-                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.Fleche) || IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && actionIDCD.IsCooldown && IsOffCooldown(RDM.ContreSixte))
+                var canWeave = CanWeave(actionID);
+
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.Fleche) ||
+                    IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.ContreSixte))
                 {
                     if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
                         return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
@@ -858,7 +872,8 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
                         return RDM.Fleche;
                 }
-                if (IsEnabled(CustomComboPreset.SimpleRedMageAoE) && InMeleeRange(true))
+
+                if (InMeleeRange(true))
                 {
                     if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && gauge.ManaStacks == 0)
                     {
@@ -873,6 +888,7 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.EnchantedMoulinet;
                     }
                 }
+
                 if (lastComboMove == RDM.Scorch && level >= RDM.Levels.Resolution)
                     return RDM.Resolution;
                 if (lastComboMove == RDM.Verholy && level >= RDM.Levels.Scorch || lastComboMove == RDM.Verflare && level >= RDM.Levels.Scorch)
