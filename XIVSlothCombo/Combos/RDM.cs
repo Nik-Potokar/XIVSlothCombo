@@ -891,18 +891,18 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.Fleche;
                 }
 
-                if (InMeleeRange(true) && !HasEffect(RDM.Buffs.Dualcast) && level >= RDM.Levels.Moulinet &&
+                if (!HasEffect(RDM.Buffs.Dualcast) && level >= RDM.Levels.Moulinet &&
                     lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch )
                 {
-                    if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 )
+                    if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20 && lastComboMove == RDM.Moulinet)
                     {
                         return RDM.EnchantedMoulinet;
                     }
-                    if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 )
+                    if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 && lastComboMove == RDM.Moulinet)
                     {
                         return RDM.EnchantedMoulinet;
                     }
-                    if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20 )
+                    if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && InMeleeRange(true))
                     {
                         return RDM.EnchantedMoulinet;
                     }
