@@ -846,21 +846,13 @@ namespace XIVSlothComboPlugin.Combos
                         openerFinished = true;
                     }
                 }
-                
-                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.Fleche) || 
-                    IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.ContreSixte))
+
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave)
                 {
-                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
-                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
-                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
                     if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
                         return RDM.Fleche;
+                    if (level >= RDM.Levels.ContreSixte && IsOffCooldown(RDM.ContreSixte))
+                        return RDM.ContreSixte;
                 }
 
                 if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 &&
@@ -1082,20 +1074,12 @@ namespace XIVSlothComboPlugin.Combos
                     SimpleRedMage.step = 0;
                 }
 
-                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.Fleche) ||
-                    IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.ContreSixte))
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave )
                 {
-                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
-                    if (level >= RDM.Levels.ContreSixte && level <= RDM.Levels.Fleche)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
-                    if (level >= RDM.Levels.Fleche && level >= RDM.Levels.ContreSixte)
-                        return CalcBestAction(actionID, RDM.ContreSixte, RDM.Fleche);
-
                     if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
                         return RDM.Fleche;
+                    if (level >= RDM.Levels.ContreSixte && IsOffCooldown(RDM.ContreSixte))
+                        return RDM.ContreSixte;
                 }
 
                 if (!HasEffect(RDM.Buffs.Dualcast) && level >= RDM.Levels.Moulinet &&
