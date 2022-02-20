@@ -860,7 +860,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is RDM.Veraero2 or RDM.Verthunder2)
+            if (actionID is RDM.Veraero2 or RDM.Verthunder2 )
             {
                 const int
                 FINISHER_DELTA = 11,
@@ -891,7 +891,8 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.Fleche;
                 }
 
-                if (InMeleeRange(true) && !HasEffect(RDM.Buffs.Dualcast))
+                if (InMeleeRange(true) && !HasEffect(RDM.Buffs.Dualcast) && level >= RDM.Levels.Moulinet &&
+                    lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch )
                 {
                     if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 )
                     {
@@ -925,17 +926,18 @@ namespace XIVSlothComboPlugin.Combos
 
                     return RDM.Verflare;
                 }
-                if (dualcastBuff || accelBuff || swiftcastBuff || HasEffect(RDM.Buffs.Chainspell) || level <= 18)
+                if (dualcastBuff || accelBuff || swiftcastBuff || HasEffect(RDM.Buffs.Chainspell) )
                     return OriginalHook(RDM.Impact);
 
-                if (level <= 18)
-                    return RDM.Verthunder2;
+                if (level < RDM.Levels.Verthunder2)
+                    return RDM.Jolt;
 
-                if (gauge.BlackMana > gauge.WhiteMana)
+                if (gauge.BlackMana > gauge.WhiteMana && level >= RDM.Levels.Veraero2)
                     return RDM.Veraero2;
-
-                if (gauge.WhiteMana > gauge.BlackMana)
+                
+                if (gauge.WhiteMana > gauge.BlackMana && level >= RDM.Levels.Verthunder2) 
                     return RDM.Verthunder2;
+                
             }
 
             return actionID;
