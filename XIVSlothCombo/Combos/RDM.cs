@@ -37,7 +37,13 @@ namespace XIVSlothComboPlugin.Combos
             Moulinet = 7513,
             EnchantedMoulinet = 7530,
             Corpsacorps = 7506,
-            Displacement = 7515;
+            Displacement = 7515,
+
+            //Buffs
+            Acceleration = 7518,
+            Swiftcast = 7561,
+            Manafication = 7521,
+            Embolden = 7520;
 
         public static class Buffs
         {
@@ -65,6 +71,7 @@ namespace XIVSlothComboPlugin.Combos
                 Veraero2 = 22,
                 Verraise = 64,
                 Zwerchhau = 35,
+                Swiftcast = 18,
                 Acceleration = 50,
                 Redoublement = 50,
                 Moulinet = 52,
@@ -662,6 +669,8 @@ namespace XIVSlothComboPlugin.Combos
                 FINISHER_DELTA = 11,
                 IMBALANCE_DIFF_MAX = 30;
 
+                var inCombat = HasCondition(ConditionFlag.InCombat);
+
                 bool verfireUp = HasEffect(RDM.Buffs.VerfireReady);
                 bool verstoneUp = HasEffect(RDM.Buffs.VerstoneReady);
                 RDMGauge gauge = GetJobGauge<RDMGauge>();
@@ -721,6 +730,22 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
                         return OriginalHook(RDM.Verthunder);
+                }
+
+                if (IsEnabled(CustomComboPreset.SimpleRedMageFishing) && inCombat && canWeave) 
+                {
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasEffect(RDM.Buffs.VerstoneReady) && !HasEffect(RDM.Buffs.Dualcast) )
+                    {
+                        if (!HasEffect(RDM.Buffs.Acceleration) && HasCharges(RDM.Acceleration) && level >= RDM.Levels.Acceleration)
+                        {
+                            return RDM.Acceleration;
+                        }
+                        if (!IsEnabled(CustomComboPreset.SimpleRedMageAccelOnlyFishing) && !HasEffect(RDM.Buffs.Swiftcast) &&
+                            IsOffCooldown(RDM.Swiftcast) && level >= RDM.Levels.Swiftcast)
+                        {
+                            return RDM.Swiftcast;
+                        }
+                    }
                 }
 
                 if (actionID is RDM.Veraero or RDM.Verthunder)
