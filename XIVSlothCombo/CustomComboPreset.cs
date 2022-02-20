@@ -1033,6 +1033,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("oGCD Feature Everywhere", "Adds oGCD Feature to all other combos", RDM.JobID)]
         RedMageOgcdComboOnCombos = 13017,
 
+        [ParentCombo(SimpleRedMage)]
+        [CustomComboInfo("Simple Proc Fishing","Add Acceleration and Swiftcast to Simple Red Mage for proc fishing when necessary.", RDM.JobID)]
+        SimpleRedMageFishing = 13018,
+
+        [ParentCombo(SimpleRedMageFishing)]
+        [CustomComboInfo("Save swiftcast", "Only use Acceleration to fish.", RDM.JobID)]
+        SimpleRedMageAccelOnlyFishing = 13019,
+
+        [ParentCombo(SimpleRedMage)]
+        [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
+        [CustomComboInfo("Simple opener","Do the optimal opener. [lv90 only]", RDM.JobID)]
+        SimpleRedMageOpener = 13020,
+
         #endregion
         // ====================================================================================
         #region SAGE
