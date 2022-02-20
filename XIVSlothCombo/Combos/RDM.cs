@@ -656,6 +656,11 @@ namespace XIVSlothComboPlugin.Combos
     internal class SimpleRedMage : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SimpleRedMage;
+
+        internal static bool inOpener = false;
+        internal static bool openerFinished = false;
+        internal static byte step = 0;
+
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 
         {
@@ -678,6 +683,169 @@ namespace XIVSlothComboPlugin.Combos
                 int white = gauge.WhiteMana;
                 var engagementCD = GetCooldown(RDM.Engagement);
                 var canWeave = CanWeave(actionID);
+
+
+                if (IsEnabled(CustomComboPreset.SimpleRedMageOpener) && level >= 90)
+                {
+                    if (inCombat && lastComboMove == RDM.Verthunder3 && HasEffect(RDM.Buffs.Dualcast) && !inOpener)
+                    {
+                        inOpener = true;
+                    }
+
+                    if (!inOpener)
+                    {
+                        return RDM.Verthunder3;
+                    }
+
+                    if (!inCombat && (inOpener || openerFinished))
+                    {
+                        inOpener = false;
+                        openerFinished = false;
+                        step = 0;
+
+                        return RDM.Verthunder3;
+                    }
+
+                    if (inCombat && inOpener && !openerFinished)
+                    {
+                        //veraero
+                        //swiftcast
+                        //accel
+                        //verthunder
+                        //verthunder
+                        //embolden
+                        //manafication
+                        //Riposte
+                        //Fleche
+                        //Zwercchau
+                        //Contre-sixte
+                        //Redoublement
+                        //Corps-a-corps
+                        //Engagement
+                        //Verholy
+                        //Corps-a-corps
+                        //Engagement
+                        //Scorch
+                        //Resolution
+
+                        //we do it in steps to be able to control it
+                        if (step == 0)
+                        {
+                            if ( lastComboMove == RDM.Veraero3 ) step++;
+                            else return RDM.Veraero3;
+                        }
+
+                        if (step == 1)
+                        {
+                            if (IsOnCooldown(RDM.Swiftcast)) step++;
+                            else return RDM.Swiftcast;
+                        }
+
+                        if (step == 2)
+                        {
+                            if (GetRemainingCharges(RDM.Acceleration) < 2) step++;
+                            else return RDM.Acceleration;
+                        }
+
+                        if (step == 3)
+                        {
+                            if (lastComboMove == RDM.Verthunder3) step++;
+                            else return RDM.Verthunder3;
+                        }
+
+                        if (step == 4)
+                        {
+                            if (lastComboMove == RDM.Verthunder3) step++;
+                            else return RDM.Verthunder3;
+                        }
+
+                        if (step == 5)
+                        {
+                            if (IsOnCooldown(RDM.Embolden)) step++;
+                            else return RDM.Embolden;
+                        }
+
+                        if (step == 6)
+                        {
+                            if (IsOnCooldown(RDM.Manafication)) step++;
+                            else return RDM.Manafication;
+                        }
+
+                        if (step == 7)
+                        {
+                            if (lastComboMove == RDM.Riposte) step++;
+                            else return RDM.EnchantedRiposte;
+                        }
+
+                        if (step == 8)
+                        {
+                            if (IsOnCooldown(RDM.Fleche)) step++;
+                            else return RDM.Fleche;
+                        }
+
+                        if (step == 9)
+                        {
+                            if (lastComboMove == RDM.Zwerchhau) step++;
+                            else return RDM.EnchantedZwerchhau;
+                        }
+
+                        if (step == 10)
+                        {
+                            if (IsOnCooldown(RDM.ContreSixte)) step++;
+                            else return RDM.ContreSixte;
+                        }
+
+                        if (step == 11)
+                        {
+                            if (lastComboMove == RDM.Redoublement || gauge.ManaStacks == 3) step++;
+                            else return RDM.EnchantedRedoublement;
+                        }
+
+                        if (step == 12)
+                        {
+                            if (GetRemainingCharges(RDM.Corpsacorps) < 2) step++;
+                            else return RDM.Corpsacorps;
+                        }
+
+                        if (step == 13)
+                        {
+                            if (GetRemainingCharges(RDM.Engagement) < 2) step++;
+                            else return RDM.Engagement;
+                        }
+
+                        if (step == 14)
+                        {
+                            if (lastComboMove == RDM.Verholy) step++;
+                            else return RDM.Verholy;
+                        }
+
+                        if (step == 15)
+                        {
+                            if (GetRemainingCharges(RDM.Corpsacorps) < 1) step++;
+                            else return RDM.Corpsacorps;
+                        }
+
+                        if (step == 16)
+                        {
+                            if (GetRemainingCharges(RDM.Engagement) < 1) step++;
+                            else return RDM.Engagement;
+                        }
+
+                        if (step == 17)
+                        {
+                            if (lastComboMove == RDM.Scorch) step++;
+                            else return RDM.Scorch;
+                        }
+
+                        if (step == 18)
+                        {
+                            if (lastComboMove == RDM.Resolution) step++;
+                            else return RDM.Resolution;
+                        }
+
+                        openerFinished = true;
+                    }
+                }
                 
                 if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.Fleche) || 
                     IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.ContreSixte))
@@ -898,7 +1066,21 @@ namespace XIVSlothComboPlugin.Combos
                 int white = gauge.WhiteMana;
                 int blackThreshold = white + IMBALANCE_DIFF_MAX;
                 int whiteThreshold = black + IMBALANCE_DIFF_MAX;
+
                 var canWeave = CanWeave(actionID);
+                var inCombat = HasCondition(ConditionFlag.InCombat);
+
+                if (inCombat && (lastComboMove is RDM.Veraero2 or RDM.Verthunder2))
+                {
+                    SimpleRedMage.openerFinished = true;
+                    SimpleRedMage.inOpener = true;
+                }
+
+                if (!inCombat)
+                {
+                    SimpleRedMage.inOpener = false;
+                    SimpleRedMage.step = 0;
+                }
 
                 if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.Fleche) ||
                     IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && IsOffCooldown(RDM.ContreSixte))

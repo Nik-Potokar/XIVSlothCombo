@@ -1041,6 +1041,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Save swiftcast", "Only use Acceleration to fish.", RDM.JobID)]
         SimpleRedMageAccelOnlyFishing = 13019,
 
+        [ParentCombo(SimpleRedMage)]
+        [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
+        [CustomComboInfo("Simple opener","Do the optimal opener. [lv90 only]", RDM.JobID)]
+        SimpleRedMageOpener = 13020,
+
         #endregion
         // ====================================================================================
         #region SAGE
