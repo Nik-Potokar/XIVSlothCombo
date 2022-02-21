@@ -1034,11 +1034,11 @@ namespace XIVSlothComboPlugin
         RedMageOgcdComboOnCombos = 13017,
 
         [ParentCombo(SimpleRedMage)]
-        [CustomComboInfo("Simple Proc Fishing","Add Acceleration and Swiftcast to Simple Red Mage for proc fishing when necessary.", RDM.JobID)]
+        [CustomComboInfo("Verstone/Verfire Activation","Add Acceleration and Swiftcast to Simple Red Mage to force activation of verstone or verfire effects when necessary.", RDM.JobID)]
         SimpleRedMageFishing = 13018,
 
         [ParentCombo(SimpleRedMageFishing)]
-        [CustomComboInfo("Save swiftcast", "Only use Acceleration to fish.", RDM.JobID)]
+        [CustomComboInfo("Acceleration only", "Only use Acceleration to force verfire or verstone activations.", RDM.JobID)]
         SimpleRedMageAccelOnlyFishing = 13019,
 
         [ParentCombo(SimpleRedMage)]

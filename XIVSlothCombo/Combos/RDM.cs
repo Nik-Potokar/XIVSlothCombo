@@ -664,9 +664,8 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 
         {
-            if (actionID == RDM.Jolt || actionID == RDM.Veraero || actionID == RDM.Verthunder || 
-                actionID == RDM.Verstone || actionID == RDM.Verfire || actionID == RDM.Riposte || 
-                actionID == RDM.Zwerchhau || actionID == RDM.Redoublement)
+            if (actionID is RDM.Jolt or RDM.Veraero or RDM.Verthunder or RDM.Verstone 
+                or RDM.Verfire or RDM.Riposte or RDM.Zwerchhau or RDM.Redoublement)
             {
                 const int
                 LONG_DELTA = 6,
