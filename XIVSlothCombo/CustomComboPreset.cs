@@ -1033,6 +1033,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("oGCD Feature Everywhere", "Adds oGCD Feature to all other combos", RDM.JobID)]
         RedMageOgcdComboOnCombos = 13017,
 
+        [ParentCombo(SimpleRedMage)]
+        [CustomComboInfo("Verstone/Verfire Activation","Add Acceleration and Swiftcast to Simple Red Mage to force activation of verstone or verfire effects when necessary.", RDM.JobID)]
+        SimpleRedMageFishing = 13018,
+
+        [ParentCombo(SimpleRedMageFishing)]
+        [CustomComboInfo("Acceleration only", "Only use Acceleration to force verfire or verstone activations.", RDM.JobID)]
+        SimpleRedMageAccelOnlyFishing = 13019,
+
+        [ParentCombo(SimpleRedMage)]
+        [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
+        [CustomComboInfo("Simple opener","Do the optimal opener. [lv90 only]", RDM.JobID)]
+        SimpleRedMageOpener = 13020,
+
         #endregion
         // ====================================================================================
         #region SAGE
