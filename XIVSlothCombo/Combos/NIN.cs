@@ -50,7 +50,9 @@ namespace XIVSlothComboPlugin.Combos
             Katon = 2266,
             Suiton = 2271,
             Raiton = 2267,
-            Huton = 2269;
+            Huton = 2269,
+            GokaMekkyaku = 16491,
+            HyoshoRanryu = 16492;
 
         public static class Buffs
         {
@@ -354,7 +356,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (level >= NIN.Levels.Ten && actionID == NIN.Ten)
                     {
-                        if (level >= NIN.Levels.Chi && OriginalHook(NIN.Ninjutsu) == NIN.Hyoton)
+                        if (level >= NIN.Levels.Chi && (OriginalHook(NIN.Ninjutsu) is NIN.Hyoton or NIN.HyoshoRanryu))
                         {
                             return OriginalHook(NIN.ChiCombo);
                         }
@@ -366,7 +368,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level >= NIN.Levels.Chi && actionID == NIN.Chi)
                     {
-                        if (level >= NIN.Levels.Jin && OriginalHook(NIN.Ninjutsu) == NIN.Katon)
+                        if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
                         {
                             return OriginalHook(NIN.JinCombo);
                         }
