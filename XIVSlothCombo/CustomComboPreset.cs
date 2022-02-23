@@ -811,6 +811,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DreamWithinADream Feature", "Adds Assassinate/DwD onto main combo (Not optimal prob).", NIN.JobID)]
         NinjaDreamWithinADream = 10019,
 
+        [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID)]
+        NinjaSimpleMudras = 10020,
+
         #endregion
         // ====================================================================================
         #region PALADIN
