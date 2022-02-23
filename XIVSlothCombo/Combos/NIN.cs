@@ -17,9 +17,6 @@ namespace XIVSlothComboPlugin.Combos
             DeathBlossom = 2254,
             AeolianEdge = 2255,
             TrickAttack = 2258,
-            Ninjutsu = 2260,
-            Chi = 2261,
-            JinNormal = 2263,
             Kassatsu = 2264,
             ArmorCrush = 3563,
             DreamWithinADream = 3566,
@@ -27,12 +24,35 @@ namespace XIVSlothComboPlugin.Combos
             Bavacakra = 7402,
             HakkeMujinsatsu = 16488,
             Meisui = 16489,
-            Jin = 18807,
             Bunshin = 16493,
             Huraijin = 25876,
             PhantomKamaitachi = 25774,
             ForkedRaiju = 25777,
-            FleetingRaiju = 25778;
+            FleetingRaiju = 25778,
+
+            //Mudras
+            Ninjutsu = 2260,
+
+            //-- initial state mudras (the ones with charges)
+            Ten = 2259, 
+            Chi = 2261,
+            Jin = 2263,
+
+            //-- mudras used for combos (the one used while you have the mudra buff)
+            TenCombo = 18805,
+            ChiCombo = 18806,
+            JinCombo = 18807,
+
+            //Ninjutsu
+            FumaShuriken = 2265,
+            Hyoton = 2268,
+            Doton = 2270,
+            Katon = 2266,
+            Suiton = 2271,
+            Raiton = 2267,
+            Huton = 2269,
+            GokaMekkyaku = 16491,
+            HyoshoRanryu = 16492;
 
         public static class Buffs
         {
@@ -57,6 +77,10 @@ namespace XIVSlothComboPlugin.Combos
             public const byte
                 GustSlash = 4,
                 AeolianEdge = 26,
+                Ten = 30,
+                Chi = 35,
+                Jin = 45,
+                Assassinate = 40,
                 HakkeMujinsatsu = 52,
                 ArmorCrush = 54,
                 Meisui = 72,
@@ -80,7 +104,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (!InMeleeRange(true))
                         return NIN.ThrowingDaggers;
                 }
-                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.JinNormal) == CustomCombo.OriginalHook(NIN.Jin))
+                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.Jin) == CustomCombo.OriginalHook(NIN.JinCombo))
                 {
                     return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
@@ -158,7 +182,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.ArmorCrush)
             {
-                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.JinNormal) == CustomCombo.OriginalHook(NIN.Jin))
+                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.Jin) == CustomCombo.OriginalHook(NIN.JinCombo))
                 {
                     return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
@@ -206,7 +230,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.HakkeMujinsatsu)
             {
-                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.JinNormal) == CustomCombo.OriginalHook(NIN.Jin))
+                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.Jin) == CustomCombo.OriginalHook(NIN.JinCombo))
                 {
                     return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
@@ -317,6 +341,60 @@ namespace XIVSlothComboPlugin.Combos
             }
 
             return actionID;
+        }
+    }
+
+    internal class NinjaSimpleMudras : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaSimpleMudras;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is NIN.Ten or NIN.Chi or NIN.Jin )
+            {
+                if (HasEffect(NIN.Buffs.Mudra)) 
+                {
+                    if (level >= NIN.Levels.Ten && actionID == NIN.Ten)
+                    {
+                        if (level >= NIN.Levels.Chi && (OriginalHook(NIN.Ninjutsu) is NIN.Hyoton or NIN.HyoshoRanryu))
+                        {
+                            return OriginalHook(NIN.ChiCombo);
+                        }
+                        if (level >= NIN.Levels.Jin && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                        {
+                            return OriginalHook(NIN.JinCombo);
+                        }
+                    }
+
+                    if (level >= NIN.Levels.Chi && actionID == NIN.Chi)
+                    {
+                        if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
+                        {
+                            return OriginalHook(NIN.JinCombo);
+                        }
+                        if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                        {
+                            return OriginalHook(NIN.TenCombo);
+                        }
+                    }
+
+                    if (level >= NIN.Levels.Jin && actionID == NIN.Jin)
+                    {
+                        if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.Raiton)
+                        {
+                            return OriginalHook(NIN.TenCombo);
+                        }
+                        if (level >= NIN.Levels.Chi && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                        {
+                            return OriginalHook(NIN.ChiCombo);
+                        }
+                    }
+
+                    return OriginalHook(NIN.Ninjutsu);
+                }
+            }
+
+            return OriginalHook(actionID);
         }
     }
 }
