@@ -429,9 +429,9 @@ namespace XIVSlothComboPlugin.Combos
 
                 var gauge = GetJobGauge<BRDGauge>();
                 var soulVoice = gauge.SoulVoice;
-                var heavyShotOnCooldown = CanWeave(BRD.HeavyShot);
+                var canWeave = CanWeave(actionID);
 
-                if (heavyShotOnCooldown)
+                if (canWeave)
                 {
                     if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
                         return BRD.PitchPerfect;
@@ -450,7 +450,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                     return BRD.BlastArrow;
 
-                if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && heavyShotOnCooldown)
+                if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && canWeave)
                 {
                     if ((gauge.SongTimer < 1 || gauge.Song == Song.ARMY) && IsOnCooldown(actionID))
                     {
@@ -996,8 +996,6 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return BRD.HeadGraze;
                 }
-
-                var heavyShot = GetCooldown(actionID);
                 
                 var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleRaidMode) ? true : CustomCombo.EnemyHealthPercentage() > 1;
 
@@ -1081,7 +1079,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BRD.Barrage;
                 }
 
-                if (IsEnabled(CustomComboPreset.SimpleBardFeature) && inCombat)
+                if (inCombat)
                 {
                     if (canWeave)
                     {
@@ -1134,30 +1132,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                     }
-
-                    if (IsEnabled(CustomComboPreset.BardSimpleOpener) && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
-                    {
-                        if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
-                            return BRD.BlastArrow;
-                        if (level >= BRD.Levels.ApexArrow)
-                        {
-                            var songTimerInSeconds = gauge.SongTimer / 1000;
-                            
-                            if (gauge.Song == Song.MAGE && gauge.SoulVoice == 100) return BRD.ApexArrow;
-                            if (gauge.Song == Song.MAGE && gauge.SoulVoice >= 80 && songTimerInSeconds > 18 && songTimerInSeconds < 22) return BRD.ApexArrow;
-                            if (gauge.Song == Song.WANDERER && HasEffect(BRD.Buffs.RagingStrikes) && HasEffect(BRD.Buffs.BattleVoice) && HasEffect(BRD.Buffs.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
-                        }
-                    }
-                    else
-                    {
-                        if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
-                            return BRD.BlastArrow;
-
-                        if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
-                            return BRD.ApexArrow;
-                    }
                 }
-
 
                 if (isEnemyHealthHigh)
                 {
@@ -1215,13 +1190,6 @@ namespace XIVSlothComboPlugin.Combos
                                     return BRD.VenomousBite;
                             }
                         }
-
-                        if (HasEffect(BRD.Buffs.StraightShotReady))
-                        {
-                            return (level >= BRD.Levels.RefulgentArrow) ? BRD.RefulgentArrow : BRD.StraightShot;
-                        }
-
-                        return (level >= BRD.Levels.BurstShot) ? BRD.BurstShot : BRD.HeavyShot;
                     }
 
                     if (inCombat)
@@ -1239,6 +1207,28 @@ namespace XIVSlothComboPlugin.Combos
                                 return BRD.Stormbite;
                         }
                     }
+                }
+
+                if (IsEnabled(CustomComboPreset.BardSimpleOpener) && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature) && inCombat)
+                {
+                    if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
+                        return BRD.BlastArrow;
+                    if (level >= BRD.Levels.ApexArrow)
+                    {
+                        var songTimerInSeconds = gauge.SongTimer / 1000;
+
+                        if (gauge.Song == Song.MAGE && gauge.SoulVoice == 100) return BRD.ApexArrow;
+                        if (gauge.Song == Song.MAGE && gauge.SoulVoice >= 80 && songTimerInSeconds > 18 && songTimerInSeconds < 22) return BRD.ApexArrow;
+                        if (gauge.Song == Song.WANDERER && HasEffect(BRD.Buffs.RagingStrikes) && HasEffect(BRD.Buffs.BattleVoice) && HasEffect(BRD.Buffs.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
+                    }
+                }
+                else
+                {
+                    if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
+                        return BRD.BlastArrow;
+
+                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                        return BRD.ApexArrow;
                 }
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))

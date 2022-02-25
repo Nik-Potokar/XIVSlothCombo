@@ -79,11 +79,12 @@ namespace XIVSlothComboPlugin.Combos
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkAoECombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            var gauge = GetJobGauge<MNKGauge>();
-            var actionIDCD = GetCooldown(OriginalHook(actionID));
+        {         
             if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
+                var gauge = GetJobGauge<MNKGauge>();
+                var actionIDCD = GetCooldown(OriginalHook(actionID));
+
                 if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.CooldownRemaining > 0.5 && HasBattleTarget(true) && level >= 40)
                 {
                     return OriginalHook(MNK.Enlightenment);
