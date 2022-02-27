@@ -362,7 +362,8 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
                         {
-                            return OriginalHook(level >= NIN.Levels.Jin ? NIN.JinCombo : NIN.ChiCombo);
+                            if (level >= NIN.Levels.Jin) return OriginalHook(NIN.JinCombo);
+                            else if (level >= NIN.Levels.Chi) return OriginalHook(NIN.ChiCombo);
                         }
                     }
 
