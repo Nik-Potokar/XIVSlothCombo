@@ -1,6 +1,4 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
-using FFXIVClientStructs;
-using static FFXIVClientStructs.FFXIV.Client.UI.AddonAOZNotebook.ActiveActions;
 
 namespace XIVSlothComboPlugin.Combos
 {
