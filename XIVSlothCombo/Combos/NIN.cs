@@ -360,9 +360,10 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return OriginalHook(NIN.ChiCombo);
                         }
-                        if (level >= NIN.Levels.Jin && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                        if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
                         {
-                            return OriginalHook(NIN.JinCombo);
+                            if (level >= NIN.Levels.Jin) return OriginalHook(NIN.JinCombo);
+                            else if (level >= NIN.Levels.Chi) return OriginalHook(NIN.ChiCombo);
                         }
                     }
 
