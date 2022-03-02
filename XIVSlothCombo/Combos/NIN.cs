@@ -307,18 +307,27 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class NinjaTCJMeisuiFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaTCJMeisuiFeature;
+        protected internal override CustomComboPreset Preset => CustomComboPreset.NinjaTCJMeisuiFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == NIN.TenChiJin)
             {
-                if (CustomCombo.HasEffect(NIN.Buffs.Suiton))
-                {
-                    return NIN.Meisui;
-                }
 
-                return NIN.TenChiJin;
+                if (HasEffect(NIN.Buffs.Suiton))
+                    return NIN.Meisui;
+
+                if (HasEffect(NIN.Buffs.TenChiJin) && IsEnabled(CustomComboPreset.NinTCJFeature))
+                {
+                    var tcjTimer = FindEffectAny(NIN.Buffs.TenChiJin).RemainingTime;
+
+                    if (tcjTimer > 5)
+                        return OriginalHook(NIN.Ten);
+                    if (tcjTimer > 4)
+                        return OriginalHook(NIN.Chi);
+                    if (tcjTimer > 3)
+                        return OriginalHook(NIN.Jin);
+                }
             }
 
             return actionID;
