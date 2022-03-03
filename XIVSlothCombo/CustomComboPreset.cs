@@ -836,6 +836,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID)]
         NinjaSimpleMudras = 10020,
 
+        [ParentCombo(NinjaTCJMeisuiFeature)]
+        [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID)]
+        NinTCJFeature = 10021,
+
         #endregion
         // ====================================================================================
         #region PALADIN
