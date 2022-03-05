@@ -223,7 +223,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Amplifier Feature", "Changes Scathe to Amplifier when available to weave.", BLM.JobID)]
         BlackAmplifierFeature = 2015,
 
-        [CustomComboInfo("Ley Lines Auto Feature", "Changes to Scathe to Ley Lines when available.", BLM.JobID)]
+        [CustomComboInfo("Ley Lines Auto Feature", "Changes to Scathe to Ley Lines when available to weave.", BLM.JobID)]
         BlackLeyLinesAutoFeature = 2016,
 
         [ParentCombo(BlackEnochianFeature)]
