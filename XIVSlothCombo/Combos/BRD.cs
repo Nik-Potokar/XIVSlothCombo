@@ -94,6 +94,12 @@ namespace XIVSlothComboPlugin.Combos
                 HeadGraze = 24;
         }
 
+        public static class Config
+        {
+            public const string
+                RagingJawsRenewTime = "ragingJawsRenewTime";
+        }
+
         internal static bool SongIsNotNone(Song value)
         {
             return value != Song.NONE;
@@ -547,20 +553,9 @@ namespace XIVSlothComboPlugin.Combos
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<BRDGauge>();
 
-                var canWeave = (
-                    CanWeave(actionID) ||
-                    CanWeave(BRD.BlastArrow) ||
-                    CanWeave(BRD.ApexArrow) ||
-                    CanWeave(BRD.Stormbite) ||
-                    CanWeave(BRD.CausticBite) ||
-                    CanWeave(BRD.VenomousBite) ||
-                    CanWeave(BRD.Windbite) ||
-                    CanWeave(BRD.StraightShot) ||
-                    CanWeave(BRD.RefulgentArrow) ||
-                    CanWeave(BRD.IronJaws)
-                );
+                var canWeave = CanWeave(actionID);
 
-                if (IsEnabled(CustomComboPreset.BardSimpleOpener) && level >= 90)
+                if (IsEnabled(CustomComboPreset.BardSimpleOpener) && level >= 80)
                 {
                     if (inCombat && lastComboMove == BRD.Stormbite && !inOpener)
                     {
@@ -641,7 +636,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 usedStraightShotReady = false;
 
-                                if (HasEffect(BRD.Buffs.RadiantFinale) || Array.TrueForAll(gauge.Coda, BRD.SongIsNone)) subStep++;
+                                if (HasEffect(BRD.Buffs.RadiantFinale) || Array.TrueForAll(gauge.Coda, BRD.SongIsNone) || level < BRD.Levels.RadiantFinale) subStep++;
                                 else return BRD.RadiantFinale;
                             }
                             if (subStep == 7)
@@ -1083,10 +1078,11 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (canWeave)
                     {
-                        if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
-                            return BRD.PitchPerfect;
                         if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow))
                             return BRD.EmpyrealArrow;
+                        if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && 
+                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 2)) )
+                            return BRD.PitchPerfect;
                         if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder))
                             if (IsEnabled(CustomComboPreset.BardSimplePooling))
                             {
@@ -1095,7 +1091,10 @@ namespace XIVSlothComboPlugin.Combos
                                     if (
                                         (HasEffect(BRD.Buffs.RagingStrikes) || GetCooldown(BRD.RagingStrikes).CooldownRemaining > 10) &&
                                         (HasEffect(BRD.Buffs.BattleVoice) || GetCooldown(BRD.BattleVoice).CooldownRemaining > 10) &&
-                                        (HasEffect(BRD.Buffs.RadiantFinale) || GetCooldown(BRD.RadiantFinale).CooldownRemaining > 10)
+                                        (
+                                          HasEffect(BRD.Buffs.RadiantFinale) || GetCooldown(BRD.RadiantFinale).CooldownRemaining > 10 ||
+                                          level < BRD.Levels.RadiantFinale
+                                        )
                                        )
                                     {
                                         return BRD.Sidewinder;
@@ -1113,16 +1112,21 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (
                                         (HasEffect(BRD.Buffs.RagingStrikes) || GetCooldown(BRD.RagingStrikes).CooldownRemaining > 10) &&
-                                        (HasEffect(BRD.Buffs.BattleVoice)   || GetCooldown(BRD.BattleVoice).CooldownRemaining > 10 ) && 
-                                        (HasEffect(BRD.Buffs.RadiantFinale) || GetCooldown(BRD.RadiantFinale).CooldownRemaining > 10) &&
+                                        (
+                                          HasEffect(BRD.Buffs.BattleVoice)   || GetCooldown(BRD.BattleVoice).CooldownRemaining > 10 ||
+                                          level < BRD.Levels.BattleVoice
+                                        ) && 
+                                        (
+                                          HasEffect(BRD.Buffs.RadiantFinale) || GetCooldown(BRD.RadiantFinale).CooldownRemaining > 10 ||
+                                          level < BRD.Levels.RadiantFinale
+                                        ) &&
                                         bloodletterCharges > 0
                                     )
                                     {
                                         return BRD.Bloodletter;
                                     }
                                 }
-
-                                if (gauge.Song == Song.ARMY && bloodletterCharges == 3) return BRD.Bloodletter;
+                                if (gauge.Song == Song.ARMY && (bloodletterCharges == 3 || ((gauge.SongTimer / 1000) > 30 && bloodletterCharges > 0))) return BRD.Bloodletter;
                                 if (gauge.Song == Song.MAGE && bloodletterCharges > 0) return BRD.Bloodletter;
                                 if (gauge.Song == Song.NONE && bloodletterCharges == 3) return BRD.Bloodletter;
                             }
@@ -1147,6 +1151,9 @@ namespace XIVSlothComboPlugin.Combos
                     var stormbiteDuration = FindTargetEffect(BRD.Debuffs.Stormbite);
 
                     var ragingStrikesDuration = FindEffect(BRD.Buffs.RagingStrikes);
+
+                    var ragingJawsRenewTime = Service.Configuration.GetCustomConfigValue(BRD.Config.RagingJawsRenewTime);
+
                     DotRecast poisonRecast = delegate (int duration)
                     {
                        return (venomous && venomousDuration.RemainingTime < duration) || (caustic && causticDuration.RemainingTime < duration);
@@ -1154,14 +1161,13 @@ namespace XIVSlothComboPlugin.Combos
                     DotRecast windRecast = delegate (int duration)
                     {
                         return (windbite && windbiteDuration.RemainingTime < duration) || (stormbite && stormbiteDuration.RemainingTime < duration);
-                    }; 
-
+                    };     
                    
                     var useIronJaws = (
                         (level >= BRD.Levels.IronJaws && poisonRecast(4)) ||
                         (level >= BRD.Levels.IronJaws && windRecast(4)) ||
                         (level >= BRD.Levels.IronJaws && IsEnabled(CustomComboPreset.BardSimpleRagingJaws) &&
-                            HasEffect(BRD.Buffs.RagingStrikes) && ragingStrikesDuration.RemainingTime < 3 &&
+                            HasEffect(BRD.Buffs.RagingStrikes) && ragingStrikesDuration.RemainingTime < ragingJawsRenewTime &&
                             poisonRecast(40) && windRecast(40))
                     );
 
@@ -1219,7 +1225,8 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (gauge.Song == Song.MAGE && gauge.SoulVoice == 100) return BRD.ApexArrow;
                         if (gauge.Song == Song.MAGE && gauge.SoulVoice >= 80 && songTimerInSeconds > 18 && songTimerInSeconds < 22) return BRD.ApexArrow;
-                        if (gauge.Song == Song.WANDERER && HasEffect(BRD.Buffs.RagingStrikes) && HasEffect(BRD.Buffs.BattleVoice) && HasEffect(BRD.Buffs.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
+                        if (gauge.Song == Song.WANDERER && HasEffect(BRD.Buffs.RagingStrikes) && HasEffect(BRD.Buffs.BattleVoice) && 
+                            (HasEffect(BRD.Buffs.RadiantFinale) || level < BRD.Levels.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
                     }
                 }
                 else

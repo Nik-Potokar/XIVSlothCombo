@@ -343,7 +343,7 @@ namespace XIVSlothComboPlugin
         BardIronJawsApexFeature = 3024,
         
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple RagingJaws", "BETA TESTING - Enable the snapshotting of dots by the end of raging strikes", BRD.JobID)]
+        [CustomComboInfo("Simple RagingJaws", "BETA TESTING - Enable the snapshotting of dots, within the remaining time of Raging Strikes below:", BRD.JobID)]
         BardSimpleRagingJaws = 3025,
 
         #endregion

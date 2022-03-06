@@ -9,6 +9,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using ImGuiNET;
 using XIVSlothComboPlugin.Attributes;
+using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
@@ -275,6 +276,25 @@ namespace XIVSlothComboPlugin
                 {
                     Service.Configuration.SkillCooldownRemaining = SkillCooldownRemaining;
 
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+            }
+            if (preset == CustomComboPreset.BardSimpleRagingJaws && enabled)
+            {
+                var ragingJawsRenewTime = Service.Configuration.GetCustomConfigValue(BRD.Config.RagingJawsRenewTime);
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75);
+                inputChanged |= ImGui.InputFloat("Remaining time (In seconds)", ref ragingJawsRenewTime);
+                
+                if (inputChanged)
+                {
+                    ragingJawsRenewTime = ragingJawsRenewTime < 3 ? 3 : ragingJawsRenewTime;
+
+                    Service.Configuration.SetCustomConfigValue(BRD.Config.RagingJawsRenewTime, ragingJawsRenewTime);
+                    
                     Service.Configuration.Save();
                 }
 
