@@ -384,7 +384,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     if (gauge.Heat < 50 && IsOffCooldown(MCH.BarrelStabilizer) && level >= MCH.Levels.BarrelStabilizer &&
-                        GetCooldown(MCH.Wildfire).CooldownRemaining < 12 )
+                        GetCooldown(MCH.Wildfire).CooldownRemaining < 10 )
                         return MCH.BarrelStabilizer;
 
                     if (openerFinished && !gauge.IsRobotActive)
@@ -449,33 +449,33 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= MCH.Levels.Hypercharge && !gauge.IsOverheated )
                         {
                             //protection
-                            if (HasEffect(MCH.Buffs.Wildfire) || gauge.Heat >= 90) return MCH.Hypercharge;
+                            if (HasEffect(MCH.Buffs.Wildfire) || (gauge.Heat == 100 && GetCooldown(MCH.Wildfire).CooldownRemaining > 6)) return MCH.Hypercharge;
 
-                            if (level >= MCH.Levels.Drill && GetCooldown(MCH.Drill).CooldownRemaining > 6)
+                            if (level >= MCH.Levels.Drill && GetCooldown(MCH.Drill).CooldownRemaining > 8)
                             {
                                 if (level >= MCH.Levels.AirAnchor && GetCooldown(MCH.AirAnchor).CooldownRemaining > 8)
                                 {
                                     if (level >= MCH.Levels.ChainSaw && GetCooldown(MCH.ChainSaw).CooldownRemaining > 8)
                                     {
-                                        if (level >= MCH.Levels.Wildfire && IsOffCooldown(MCH.Wildfire))
+                                        if (IsOffCooldown(MCH.Wildfire))
                                             return MCH.Wildfire;
 
-                                        if (GetCooldown(MCH.Wildfire).CooldownRemaining > 9) return MCH.Hypercharge;
+                                        if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14) return MCH.Hypercharge;
                                     }
                                     else if (level < MCH.Levels.ChainSaw)
                                     {
-                                        if (level >= MCH.Levels.Wildfire && IsOffCooldown(MCH.Wildfire))
+                                        if (IsOffCooldown(MCH.Wildfire))
                                             return MCH.Wildfire;
 
-                                        if (GetCooldown(MCH.Wildfire).CooldownRemaining > 9) return MCH.Hypercharge;
+                                        if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14) return MCH.Hypercharge;
                                     }
                                 }
                                 else if (level < MCH.Levels.AirAnchor)
                                 {
-                                    if (level >= MCH.Levels.Wildfire && IsOffCooldown(MCH.Wildfire))
+                                    if (IsOffCooldown(MCH.Wildfire))
                                         return MCH.Wildfire;
 
-                                    if (GetCooldown(MCH.Wildfire).CooldownRemaining > 9) return MCH.Hypercharge;
+                                    if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14) return MCH.Hypercharge;
                                 }
                             }
                             else if (level < MCH.Levels.Drill)
@@ -483,7 +483,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (level >= MCH.Levels.Wildfire && IsOffCooldown(MCH.Wildfire))
                                     return MCH.Wildfire;
 
-                                if (GetCooldown(MCH.Wildfire).CooldownRemaining > 9)  return MCH.Hypercharge;
+                                if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14)  return MCH.Hypercharge;
                             }
                         }       
                     }
@@ -497,10 +497,10 @@ namespace XIVSlothComboPlugin.Combos
                     var chargeLimit = openerFinished ? 0 : 1;
                     
                     if (gaussCharges >= ricochetCharges && gaussCharges > chargeLimit && level >= MCH.Levels.GaussRound &&
-                        (GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
+                        (level <= MCH.Levels.ChainSaw || GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
                         return MCH.GaussRound;
                     else if (ricochetCharges > 0 && level >= MCH.Levels.Ricochet && 
-                        (GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
+                        (level <= MCH.Levels.ChainSaw || GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
                         return MCH.Ricochet;
                 }
 
