@@ -555,7 +555,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 var canWeave = CanWeave(actionID);
 
-                if (IsEnabled(CustomComboPreset.BardSimpleOpener) && level >= 80)
+                if (IsEnabled(CustomComboPreset.BardSimpleOpener) && level >= 70)
                 {
                     if (inCombat && lastComboMove == BRD.Stormbite && !inOpener)
                     {
@@ -621,7 +621,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 5)
                             {
-                                if ((usedStraightShotReady && !HasEffect(BRD.Buffs.StraightShotReady)) || lastComboMove == BRD.BurstShot) subStep++;
+                                if ((usedStraightShotReady && !HasEffect(BRD.Buffs.StraightShotReady)) || lastComboMove is BRD.BurstShot or BRD.HeavyShot) subStep++;
                                 else
                                 {
                                     if (HasEffect(BRD.Buffs.StraightShotReady))
@@ -629,7 +629,8 @@ namespace XIVSlothComboPlugin.Combos
                                         usedStraightShotReady = true;
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 6)
@@ -646,7 +647,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             if (subStep == 8)
                             {
-                                if ((usedStraightShotReady && !HasEffect(BRD.Buffs.StraightShotReady)) || lastComboMove == BRD.BurstShot) subStep++;
+                                if ((usedStraightShotReady && !HasEffect(BRD.Buffs.StraightShotReady)) || lastComboMove is BRD.BurstShot or BRD.HeavyShot) subStep++;
                                 else
                                 {
                                     if (HasEffect(BRD.Buffs.StraightShotReady))
@@ -654,7 +655,8 @@ namespace XIVSlothComboPlugin.Combos
                                         usedStraightShotReady = true;
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 9)
@@ -749,8 +751,9 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 usedPitchPerfect = false;
 
-                                if (lastComboMove == BRD.BurstShot) subStep++;
-                                else return BRD.BurstShot;
+                                if (lastComboMove is BRD.BurstShot or BRD.HeavyShot) subStep++;
+                                else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                else return BRD.HeavyShot;
                             }
                             if (subStep == 7)
                             {
@@ -765,7 +768,8 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 8)
@@ -796,7 +800,8 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 10)
@@ -812,7 +817,8 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 11)
@@ -877,7 +883,8 @@ namespace XIVSlothComboPlugin.Combos
                                 else
                                 {
                                     subStep++;
-                                    return BRD.BurstShot;
+                                    if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 5)
@@ -908,7 +915,8 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 6)
@@ -939,7 +947,8 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 8)
@@ -970,7 +979,8 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         return BRD.RefulgentArrow;
                                     }
-                                    else return BRD.BurstShot;
+                                    else if (level >= BRD.Levels.BurstShot) return BRD.BurstShot;
+                                    else return BRD.HeavyShot;
                                 }
                             }
                             if (subStep == 10)
