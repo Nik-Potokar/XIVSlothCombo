@@ -31,12 +31,14 @@ namespace XIVSlothComboPlugin.Combos
             ChainSaw = 25788,
             BioBlaster = 16499,
             BarrelStabilizer = 7414,
-            Wildfire = 2878;
+            Wildfire = 2878,
+            HeadGraze = 7551;
 
         public static class Buffs
         {
             public const ushort
-                Reassembled = 851;
+                Reassembled = 851,
+                Wildfire = 1946;
         }
 
         public static class Debuffs
@@ -50,6 +52,7 @@ namespace XIVSlothComboPlugin.Combos
                 SlugShot = 2,
                 Hotshot = 4,
                 GaussRound = 15,
+                HeadGraze = 24,
                 CleanShot = 26,
                 Hypercharge = 30,
                 HeatBlast = 35,
@@ -349,6 +352,208 @@ namespace XIVSlothComboPlugin.Combos
                     return MCH.GaussRound;
                 else
                     return MCH.Ricochet;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class MachinistSimpleFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistSimpleFeature;
+        internal static bool openerFinished = false;
+        
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if ( actionID is MCH.SplitShot or MCH.HeatedSplitShot )
+            {
+                var inCombat = InCombat();
+                var gauge = GetJobGauge<MCHGauge>();
+
+                if (!inCombat)
+                {
+                    openerFinished = false;
+                    
+                }
+
+                if (CanWeave(actionID)) // normal weaves
+                {
+                    if (IsEnabled(CustomComboPreset.MachinistSimpleInterrupt) && CanInterruptEnemy() && IsOffCooldown(MCH.HeadGraze))
+                    {
+                        return MCH.HeadGraze;
+                    }
+
+                    if (gauge.Heat < 50 && IsOffCooldown(MCH.BarrelStabilizer) && level >= MCH.Levels.BarrelStabilizer &&
+                        GetCooldown(MCH.Wildfire).CooldownRemaining < 10 )
+                        return MCH.BarrelStabilizer;
+
+                    if (openerFinished && !gauge.IsRobotActive)
+                    {
+                        //overflow protection
+                        if (gauge.Battery == 100)
+                        {
+                            if (level >= MCH.Levels.QueenOverdrive)
+                            {
+                                return MCH.AutomatonQueen;
+                            }
+
+                            if (level >= MCH.Levels.RookOverdrive)
+                            {
+                                return MCH.RookAutoturret;
+                            }
+                        }
+                        // even bursts ?
+                        else if (gauge.Battery >= 80 && IsOnCooldown(MCH.Wildfire) && GetCooldown(MCH.AirAnchor).CooldownRemaining < 7 &&
+                            GetCooldown(MCH.Drill).CooldownRemaining < 10 && GetCooldown(MCH.ChainSaw).CooldownRemaining < 17)
+                        {
+                            if (level >= MCH.Levels.QueenOverdrive)
+                            {
+                                return MCH.AutomatonQueen;
+                            }
+
+                            if (level >= MCH.Levels.RookOverdrive)
+                            {
+                                return MCH.RookAutoturret;
+                            }
+                        //odd bursts ?
+                        } else if (gauge.Battery >= 50 && IsOnCooldown(MCH.Wildfire) &&
+                            GetCooldown(MCH.ChainSaw).CooldownRemaining < 17)
+                        {
+                            if (level >= MCH.Levels.QueenOverdrive)
+                            {
+                                return MCH.AutomatonQueen;
+                            }
+
+                            if (level >= MCH.Levels.RookOverdrive)
+                            {
+                                return MCH.RookAutoturret;
+                            }
+                        //opener
+                        } else if (gauge.LastSummonBatteryPower == 0 && gauge.Battery >= 50)
+                        {
+                            if (level >= MCH.Levels.QueenOverdrive)
+                            {
+                                return MCH.AutomatonQueen;
+                            }
+
+                            if (level >= MCH.Levels.RookOverdrive)
+                            {
+                                return MCH.RookAutoturret;
+                            }
+                        } 
+                        
+                    }
+
+                    if (gauge.Heat >= 50 && openerFinished)
+                    {
+                        if (level >= MCH.Levels.Hypercharge && !gauge.IsOverheated )
+                        {
+                            //protection
+                            if (HasEffect(MCH.Buffs.Wildfire) || (gauge.Heat == 100 && GetCooldown(MCH.Wildfire).CooldownRemaining > 6)) return MCH.Hypercharge;
+
+                            if (level >= MCH.Levels.Drill && GetCooldown(MCH.Drill).CooldownRemaining > 8)
+                            {
+                                if (level >= MCH.Levels.AirAnchor && GetCooldown(MCH.AirAnchor).CooldownRemaining > 8)
+                                {
+                                    if (level >= MCH.Levels.ChainSaw && GetCooldown(MCH.ChainSaw).CooldownRemaining > 8)
+                                    {
+                                        if (IsOffCooldown(MCH.Wildfire))
+                                            return MCH.Wildfire;
+
+                                        if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14) return MCH.Hypercharge;
+                                    }
+                                    else if (level < MCH.Levels.ChainSaw)
+                                    {
+                                        if (IsOffCooldown(MCH.Wildfire))
+                                            return MCH.Wildfire;
+
+                                        if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14) return MCH.Hypercharge;
+                                    }
+                                }
+                                else if (level < MCH.Levels.AirAnchor)
+                                {
+                                    if (IsOffCooldown(MCH.Wildfire))
+                                        return MCH.Wildfire;
+
+                                    if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14) return MCH.Hypercharge;
+                                }
+                            }
+                            else if (level < MCH.Levels.Drill)
+                            {
+                                if (level >= MCH.Levels.Wildfire && IsOffCooldown(MCH.Wildfire))
+                                    return MCH.Wildfire;
+
+                                if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14)  return MCH.Hypercharge;
+                            }
+                        }       
+                    }
+                }
+
+                if ( GetCooldown(actionID).CooldownRemaining > 0.6 ) //gauss and ricochet weave
+                {
+                    var gaussCharges = GetRemainingCharges(MCH.GaussRound);
+                    var ricochetCharges = GetRemainingCharges(MCH.Ricochet);
+
+                    var chargeLimit = openerFinished ? 0 : 1;
+                    
+                    if (gaussCharges >= ricochetCharges && gaussCharges > chargeLimit && level >= MCH.Levels.GaussRound &&
+                        (level <= MCH.Levels.ChainSaw || GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
+                        return MCH.GaussRound;
+                    else if (ricochetCharges > 0 && level >= MCH.Levels.Ricochet && 
+                        (level <= MCH.Levels.ChainSaw || GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
+                        return MCH.Ricochet;
+                }
+
+                if (gauge.IsOverheated && level >= MCH.Levels.HeatBlast )
+                {
+                    return MCH.HeatBlast;
+                }
+
+                if (IsOffCooldown(MCH.AirAnchor) && level >= MCH.Levels.AirAnchor)
+                {
+                    if (!openerFinished && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                    {
+                        return MCH.Reassemble;
+                    }
+                    return MCH.AirAnchor;
+                } else if (IsOffCooldown(MCH.HotShot) && level >= MCH.Levels.Hotshot && level < MCH.Levels.AirAnchor)
+                    return MCH.HotShot;
+
+
+                if (IsOffCooldown(MCH.Drill) && level >= MCH.Levels.Drill)
+                {
+                    if (level < MCH.Levels.AirAnchor && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                    {
+                        return MCH.Reassemble;
+                    }
+                    return MCH.Drill;
+                }
+                   
+                if (IsOffCooldown(MCH.ChainSaw) && level >= MCH.Levels.ChainSaw && openerFinished)
+                {
+                    if (!HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                    {
+                        return MCH.Reassemble;
+                    }
+                    return MCH.ChainSaw;
+                }
+
+                if (comboTime > 0)
+                {
+                    if (lastComboMove == MCH.SplitShot && level >= MCH.Levels.SlugShot)
+                        return OriginalHook(MCH.SlugShot);
+
+                    if (lastComboMove == MCH.SlugShot && level >= MCH.Levels.CleanShot)
+                    {
+                        if (level < MCH.Levels.Drill && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                        {
+                            return MCH.Reassemble;
+                        }
+                        return OriginalHook(MCH.CleanShot);
+                    }
+                } 
+
+                if (lastComboMove == MCH.CleanShot) openerFinished = true;
             }
 
             return actionID;
