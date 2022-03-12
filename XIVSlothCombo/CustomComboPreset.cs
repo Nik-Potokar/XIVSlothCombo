@@ -203,6 +203,32 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspect Swap Feature", "Changes Scathe to Blizzard 3 when at 0 MP in Astral Fire or to Fire 3 when at 10000 MP in Umbral Ice with 3 Umbral Hearts.", BLM.JobID)]
         BlackAspectSwapFeature = 2010,
 
+        [ParentCombo(BlackThunderFeature)]
+        [CustomComboInfo("Thunder Uptime Feature", "Changes Scathe to Thunder 1/3 when not detected on target.", BLM.JobID)]
+        BlackThunderUptimeFeature = 2011,
+
+        [ParentCombo(BlackAspectSwapFeature)]
+        [CustomComboInfo("Manafont Feature", "Adds Manafont when 0 mana in astral fire phase and available to weave.", BLM.JobID)]
+        BlackManafontFeature = 2012,
+
+        [ParentCombo(BlackEnochianFeature)]
+        [CustomComboInfo("Polygot Overcap Feature", "Changes Scathe to Xenoglossy / Foul when polygot stacks are capped.", BLM.JobID)]
+        BlackPolygotFeature = 2013,
+
+        [ParentCombo(BlackEnochianFeature)]
+        [CustomComboInfo("Sharpcast Feature", "Changes Scathe to Sharpcast when available to weave.", BLM.JobID)]
+        BlackSharpcastFeature = 2014,
+
+        [ParentCombo(BlackEnochianFeature)]
+        [CustomComboInfo("Amplifier Feature", "Changes Scathe to Amplifier when available to weave.", BLM.JobID)]
+        BlackAmplifierFeature = 2015,
+
+        [CustomComboInfo("Ley Lines Auto Feature", "Changes to Scathe to Ley Lines when available to weave.", BLM.JobID)]
+        BlackLeyLinesAutoFeature = 2016,
+
+        [ParentCombo(BlackEnochianFeature)]
+        [CustomComboInfo("Enochain Recovery Feature", "Changes Scathe to Fire3 / Blizzard3 depending on current player's mana when enochain is inactive.", BLM.JobID)]
+        BlackEnochainRecoveryFeature = 2017,
 
         #endregion
         // ====================================================================================
