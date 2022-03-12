@@ -125,5 +125,24 @@ namespace XIVSlothComboPlugin
 
         public float SkillCooldownRemaining { get; set; } = 0;
 
+        [JsonProperty]
+        private static Dictionary<string,float> CustomConfigValues { get; set; } = new Dictionary<string,float>();
+
+        //public static Dictionary<string, float> CustomConfigValues = new Dictionary<string, float>();
+
+
+        public float GetCustomConfigValue(string config)
+        {
+            float configValue;
+
+            if (!CustomConfigValues.TryGetValue(config, out configValue)) return 0;
+
+            return configValue;
+        }
+
+        public void SetCustomConfigValue(string config, float value)
+        {
+            CustomConfigValues[config] = value;
+        }
     }
 }
