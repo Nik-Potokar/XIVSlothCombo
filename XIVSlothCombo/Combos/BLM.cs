@@ -58,7 +58,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
-                Fire3 = 34,
+                Fire3 = 35,
                 Blizzard3 = 35,
                 Freeze = 40,
                 Thunder3 = 45,
@@ -351,7 +351,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (gauge.InUmbralIce)
                 {
-                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp >= 10000)
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp >= 10000 && level >= BLM.Levels.Fire3)
                         return BLM.Fire3;
 
                     return BLM.Blizzard;
