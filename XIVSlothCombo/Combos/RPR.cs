@@ -69,6 +69,8 @@ namespace XIVSlothComboPlugin.Combos
                 SpinningScythe = 25,
                 InfernalSlice = 30,
                 NightmareScythe = 45,
+                SoulSlice = 60,
+                SoulScythe = 65,
                 SoulReaver = 70,
                 Regress = 74,
                 Gluttony = 76,
@@ -131,7 +133,7 @@ namespace XIVSlothComboPlugin.Combos
                 var actionIDCD = GetCooldown(RPR.SoulScythe);
                 if (IsEnabled(CustomComboPreset.ReaperSoulSliceFeature))
                 {
-                    if (gauge.Soul <= 50 && !actionIDCD.IsCooldown && TargetHasEffect(RPR.Debuffs.DeathsDesign))
+                    if (level >= RPR.Levels.SoulSlice && gauge.Soul <= 50 && !actionIDCD.IsCooldown && TargetHasEffect(RPR.Debuffs.DeathsDesign))
                         return RPR.SoulSlice;
                 }
                 if ((IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3)) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10))
@@ -196,7 +198,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.ReaperSoulScytheFeature))
                 {
-                    if (gauge.Soul <= 50 && IsOffCooldown(RPR.SoulScythe) && TargetHasEffect(RPR.Debuffs.DeathsDesign))
+                    if (level >= RPR.Levels.SoulScythe && gauge.Soul <= 50 && IsOffCooldown(RPR.SoulScythe) && TargetHasEffect(RPR.Debuffs.DeathsDesign))
                         return RPR.SoulScythe;
                 }
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature))
