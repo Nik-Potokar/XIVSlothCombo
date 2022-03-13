@@ -59,8 +59,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 Fire3 = 34,
-                Freeze = 35,
-                Blizzard3 = 40,
+                Blizzard3 = 35,
+                Freeze = 40,
                 Thunder3 = 45,
                 Flare = 50,
                 LeyLines = 52,
@@ -209,7 +209,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return BLM.Thunder3;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !thunder3DebuffOnTarget && lastComboMove != BLM.Thunder3)
+                        if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !thunder3DebuffOnTarget && lastComboMove != BLM.Thunder3 && LocalPlayer.CurrentMp >= 400)
                             return BLM.Thunder3;
 
                         if (gauge.IsParadoxActive && level >= 90)
@@ -225,7 +225,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (level >= BLM.Levels.Fire4)
                 {
-                    if (gauge.ElementTimeRemaining >= 6000 && CustomCombo.IsEnabled(CustomComboPreset.BlackThunderFeature))
+                    if (gauge.ElementTimeRemaining >= 6000 && IsEnabled(CustomComboPreset.BlackThunderFeature))
                     {
                         if (HasEffect(BLM.Buffs.Thundercloud))
                         {
@@ -233,11 +233,11 @@ namespace XIVSlothComboPlugin.Combos
                                 return BLM.Thunder3;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !thunder3DebuffOnTarget && lastComboMove != BLM.Thunder3)
+                        if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !thunder3DebuffOnTarget && lastComboMove != BLM.Thunder3 && LocalPlayer.CurrentMp >= 400)
                             return BLM.Thunder3;
                     }
 
-                    if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && CustomCombo.IsEnabled(CustomComboPreset.BlackFire13Feature))
+                    if (gauge.ElementTimeRemaining < 3000 && HasEffect(BLM.Buffs.Firestarter) && IsEnabled(CustomComboPreset.BlackFire13Feature))
                     {
                         return BLM.Fire3;
                     }
@@ -254,7 +254,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (gauge.ElementTimeRemaining > 0 && LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && CustomCombo.IsEnabled(CustomComboPreset.BlackDespairFeature))
+                    if (gauge.ElementTimeRemaining > 0 && LocalPlayer.CurrentMp < 2400 && level >= BLM.Levels.Despair && IsEnabled(CustomComboPreset.BlackDespairFeature))
                     {
                         return BLM.Despair;
                     }
@@ -281,20 +281,52 @@ namespace XIVSlothComboPlugin.Combos
                     return BLM.Fire4;
                 }
 
-                if (gauge.ElementTimeRemaining >= 5000 && IsEnabled(CustomComboPreset.BlackThunderFeature) && level < BLM.Levels.Thunder3)
+                if (gauge.ElementTimeRemaining >= 5000 && IsEnabled(CustomComboPreset.BlackThunderFeature))
                 {
-                    if (HasEffect(BLM.Buffs.Thundercloud))
+                    if (level < BLM.Levels.Thunder3)
                     {
-                        if (TargetHasEffect(BLM.Debuffs.Thunder) && thunderOneDebuff.RemainingTime < 4)
-                            return BLM.Thunder;
+                        if (HasEffect(BLM.Buffs.Thundercloud))
+                        {
+                            if (TargetHasEffect(BLM.Debuffs.Thunder) && thunderOneDebuff.RemainingTime < 4)
+                                return BLM.Thunder;
+                        }
+                    }
+                    else
+                    {
+                        if (HasEffect(BLM.Buffs.Thundercloud))
+                        {
+                            if (TargetHasEffect(BLM.Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4)
+                                return BLM.Thunder3;
+                        }
                     }
 
-                    if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !TargetHasEffect(BLM.Debuffs.Thunder) && lastComboMove != BLM.Thunder)
-                        return BLM.Thunder;
+                    if (level < BLM.Levels.Thunder3)
+                    {
+                        if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !TargetHasEffect(BLM.Debuffs.Thunder) && lastComboMove != BLM.Thunder && LocalPlayer.CurrentMp >= 200)
+                            return BLM.Thunder;
+                    }
+                    else
+                    {
+                        if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !TargetHasEffect(BLM.Debuffs.Thunder3) && lastComboMove != BLM.Thunder3 && LocalPlayer.CurrentMp >= 400)
+                            return BLM.Thunder3;
+                    }
                 }
 
                 if (level < BLM.Levels.Fire3)
+                {
                     return BLM.Fire;
+                }
+                else if (IsEnabled(CustomComboPreset.BlackEnochainRecoveryFeature) && gauge.ElementTimeRemaining <= 0)
+                {
+                    if (LocalPlayer.CurrentMp >= 2000)
+                    {
+                        return BLM.Fire3;
+                    }
+                    else
+                    {
+                        return BLM.Blizzard3;
+                    }
+                }
 
                 if (gauge.InAstralFire)
                 {
@@ -302,7 +334,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Paradox;
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
-                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 1600)
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 1600 && level >= BLM.Levels.Blizzard3)
                     {
                         if (IsEnabled(CustomComboPreset.BlackManafontFeature) && IsOffCooldown(BLM.Manafont) && CanWeave(lastComboMove))
                         {
@@ -315,6 +347,11 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     return BLM.Fire;
+                }
+
+                if (gauge.InUmbralIce)
+                {
+                    return BLM.Blizzard;
                 }
             }
 
