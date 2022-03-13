@@ -351,6 +351,9 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (gauge.InUmbralIce)
                 {
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp >= 10000)
+                        return BLM.Fire3;
+
                     return BLM.Blizzard;
                 }
             }
