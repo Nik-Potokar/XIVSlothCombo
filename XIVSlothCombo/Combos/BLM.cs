@@ -242,7 +242,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Fire3;
                     }
 
-                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp == 0 && level >= BLM.Levels.Blizzard3)
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 800 && level >= BLM.Levels.Blizzard3)
                     {
                         if (IsEnabled(CustomComboPreset.BlackManafontFeature) && IsOffCooldown(BLM.Manafont) && GCD.CooldownRemaining > 0.7)
                         {
