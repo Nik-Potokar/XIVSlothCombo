@@ -242,15 +242,18 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Fire3;
                     }
 
-                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 800 && level >= BLM.Levels.Blizzard3)
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && level >= BLM.Levels.Blizzard3)
                     {
-                        if (IsEnabled(CustomComboPreset.BlackManafontFeature) && IsOffCooldown(BLM.Manafont) && GCD.CooldownRemaining > 0.7)
+                        if ((LocalPlayer.CurrentMp < 800) || (LocalPlayer.CurrentMp < 1600 && level < BLM.Levels.Despair))
                         {
-                            return BLM.Manafont;
-                        }
-                        if (lastComboMove != BLM.Manafont)
-                        {
-                            return BLM.Blizzard3;
+                            if (IsEnabled(CustomComboPreset.BlackManafontFeature) && IsOffCooldown(BLM.Manafont) && GCD.CooldownRemaining > 0.7)
+                            {
+                                return BLM.Manafont;
+                            }
+                            if (lastComboMove != BLM.Manafont)
+                            {
+                                return BLM.Blizzard3;
+                            }
                         }
                     }
 
