@@ -449,7 +449,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.DancerSimpleDevilmentFeature) && canWeaveAbilities)
                 {
-                    if (level >= DNC.Levels.Devilment && (HasEffect(DNC.Buffs.TechnicalFinish) && IsOffCooldown(DNC.Devilment))
+                    if (level >= DNC.Levels.Devilment && (HasEffect(DNC.Buffs.TechnicalFinish) && IsOffCooldown(DNC.Devilment)))
                         return DNC.Devilment;
                 }
                 
@@ -481,11 +481,19 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance)) return DNC.FanDance4;
 
-                    if (IsEnabled(CustomComboPreset.DancerSimpleShieldNHealsFeature))
+                    if (IsEnabled(CustomComboPreset.DancerSimpleSambaFeature))
                     {
                         if (level >= DNC.Levels.ShieldSamba && IsOffCooldown(DNC.ShieldSamba)) return DNC.ShieldSamba;
-                        if (level >= DNC.Levels.CuringWaltz && PlayerHealthPercentageHp() < 75 && IsOffCooldown(DNC.CuringWaltz)) return DNC.CuringWaltz;
-                        if (level >= DNC.Levels.SecondWind && PlayerHealthPercentageHp() < 75 && IsOffCooldown(DNC.SecondWind)) return DNC.SecondWind;
+                    }
+                    
+                    if (IsEnabled(CustomComboPreset.DancerSimplePanicHealsFeature))
+                    {
+                        if (level >= DNC.Levels.CuringWaltz && PlayerHealthPercentageHp() < 30 && IsOffCooldown(DNC.CuringWaltz)) return DNC.CuringWaltz;
+                        if (level >= DNC.Levels.SecondWind && PlayerHealthPercentageHp() < 50 && IsOffCooldown(DNC.SecondWind)) return DNC.SecondWind;
+                    }
+                    
+                    if (IsEnabled(CustomComboPreset.DancerSimpleImprovFeature))
+                    {
                         if (level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation)) return DNC.Improvisation;
                     }
                 }
