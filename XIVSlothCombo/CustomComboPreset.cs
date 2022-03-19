@@ -466,15 +466,15 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Samba", "Includes Shield Samba in the rotation when available (not optimal).", DNC.JobID)]
-        DancerSimpleShieldNHealsFeature = 4022,
+        DancerSimpleSambaFeature = 4022,
         
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30% / 50% HP, respectively.", DNC.JobID)]
-        DancerSimpleShieldNHealsFeature = 4023,
+        DancerSimplePanicHealsFeature = 4023,
         
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Improv", "Includes Improvisation in the rotation when available", DNC.JobID)]
-        DancerSimpleShieldNHealsFeature = 4024,
+        DancerSimpleImprovFeature = 4024,
 
         [CustomComboInfo("Simple Dancer AOE", "BETA - Single button aoe dancer, including songs, flourishes and overprotections.\nConflicts with all other non-simple toggles!!", DNC.JobID)]
         DancerSimpleAoeFeature = 4050,
