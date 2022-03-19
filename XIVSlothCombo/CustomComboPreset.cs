@@ -445,36 +445,40 @@ namespace XIVSlothComboPlugin
         DancerSimpleInterruptFeature = 4016,
 
         [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Dances", "Includes Standard Step and Technical Step in the rotation", DNC.JobID)]
-        DancerSimpleDancesFeature = 4017,
+        [CustomComboInfo("Simple Standard Step", "Includes Standard Step in the rotation", DNC.JobID)]
+        DancerSimpleStandardFeature = 4017,
+        
+        [ParentCombo(DancerSimpleFeature)]
+        [CustomComboInfo("Simple Technical Step", "Includes Technical Step in the rotation", DNC.JobID)]
+        DancerSimpleTechnicalFeature = 4018,
 
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation (during Technical Finish).", DNC.JobID)]
-        DancerSimpleDevilmentFeature = 4018,
+        DancerSimpleDevilmentFeature = 4019,
 
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Flourish", "Includes Flourish in the rotation", DNC.JobID)]
-        DancerSimpleFlourishFeature = 4019,
+        DancerSimpleFlourishFeature = 4020,
 
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Feather", "Includes feather usage in the rotation", DNC.JobID)]
-        DancerSimpleFeatherFeature = 4020,
+        DancerSimpleFeatherFeature = 4021,
 
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when under the effects of Technical Step", DNC.JobID)]
-        DancerSimpleFeatherPoolingFeature = 4021,
+        DancerSimpleFeatherPoolingFeature = 4022,
 
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Samba", "Includes Shield Samba in the rotation when available (not optimal).", DNC.JobID)]
-        DancerSimpleSambaFeature = 4022,
+        DancerSimpleSambaFeature = 4023,
         
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30% / 50% HP, respectively.", DNC.JobID)]
-        DancerSimplePanicHealsFeature = 4023,
+        DancerSimplePanicHealsFeature = 4024,
         
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Improv", "Includes Improvisation in the rotation when available", DNC.JobID)]
-        DancerSimpleImprovFeature = 4024,
+        DancerSimpleImprovFeature = 4025,
 
         [CustomComboInfo("Simple Dancer AOE", "BETA - Single button aoe dancer, including songs, flourishes and overprotections.\nConflicts with all other non-simple toggles!!", DNC.JobID)]
         DancerSimpleAoeFeature = 4050,
