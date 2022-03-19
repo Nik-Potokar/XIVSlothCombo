@@ -428,16 +428,16 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+                if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
+                    return gauge.CompletedSteps < 4
+                        ? (uint)gauge.NextStep
+                        : DNC.TechnicalFinish4;
+
                 if (HasEffect(DNC.Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature))
                     return gauge.CompletedSteps < 2
                         ? (uint)gauge.NextStep
                         : DNC.StandardFinish2;
                 
-                if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
-                    return gauge.CompletedSteps < 4
-                        ? (uint)gauge.NextStep
-                        : DNC.TechnicalFinish4;
-                        
 
                 if (!HasTarget() || EnemyHealthPercentage() > 5)
                 {
