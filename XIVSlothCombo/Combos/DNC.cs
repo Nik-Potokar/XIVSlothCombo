@@ -447,11 +447,14 @@ namespace XIVSlothComboPlugin.Combos
                         return DNC.TechnicalStep;
                 }
 
-                if (IsEnabled(CustomComboPreset.DancerSimpleBuffsFeature) && canWeaveAbilities)
+                if (IsEnabled(CustomComboPreset.DancerSimpleDevilmentFeature) && canWeaveAbilities)
                 {
-                    if (level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment))
+                    if (level >= DNC.Levels.Devilment && (HasEffect(DNC.Buffs.TechnicalFinish) && IsOffCooldown(DNC.Devilment))
                         return DNC.Devilment;
-
+                }
+                
+                if (IsEnabled(CustomComboPreset.DancerSimpleFlourishFeature) && canWeaveAbilities)
+                {
                     if (level >= DNC.Levels.Flourish && IsOffCooldown(DNC.Flourish))
                         return DNC.Flourish;
                 }
