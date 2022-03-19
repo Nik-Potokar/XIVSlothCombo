@@ -428,23 +428,32 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.DancerSimpleDancesFeature))
+                if (HasEffect(DNC.Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature))
+                    return gauge.CompletedSteps < 2
+                        ? (uint)gauge.NextStep
+                        : DNC.StandardFinish2;
+                
+                if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
+                    return gauge.CompletedSteps < 4
+                        ? (uint)gauge.NextStep
+                        : DNC.TechnicalFinish4;
+                        
+
+                if (!HasTarget() || EnemyHealthPercentage() > 5)
                 {
-                    if (HasEffect(DNC.Buffs.TechnicalStep))
-                        return gauge.CompletedSteps < 4
-                            ? (uint)gauge.NextStep
-                            : DNC.TechnicalFinish4;
-                    
-                    if (HasEffect(DNC.Buffs.StandardStep))
-                            return gauge.CompletedSteps < 2
-                                ? (uint)gauge.NextStep
-                                : DNC.StandardFinish2;
+                    if (
+                        level >= DNC.Levels.StandardStep &&
+                        IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) &&
+                        !HasEffect(DNC.Buffs.TechnicalStep) &&
+                        IsOffCooldown(DNC.StandardStep)
+                    ) return DNC.StandardStep;
 
-                    if (level >= DNC.Levels.StandardStep && (!HasTarget() || EnemyHealthPercentage() > 5) && IsOffCooldown(DNC.StandardStep))
-                        return DNC.StandardStep;
-
-                    if (level >= DNC.Levels.TechnicalStep && (!HasTarget() || EnemyHealthPercentage() > 5) && IsOffCooldown(DNC.TechnicalStep) && GetCooldown(DNC.StandardStep).CooldownRemaining > 5)
-                        return DNC.TechnicalStep;
+                    if (
+                        level >= DNC.Levels.TechnicalStep &&
+                        IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) &&
+                        !HasEffect(DNC.Buffs.StandardStep) &&
+                        IsOffCooldown(DNC.TechnicalStep)
+                    ) return DNC.TechnicalStep;
                 }
 
                 if (IsEnabled(CustomComboPreset.DancerSimpleDevilmentFeature) && canWeaveAbilities)
