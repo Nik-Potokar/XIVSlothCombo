@@ -1509,8 +1509,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Remove DoT From Glare3 Feature", "Removes DoT from DPS feature", WHM.JobID)]
         WHMRemoveDotFromDPSFeature = 19013,
 
-        [ParentCombo(WHMRaiseFeature)]
-        [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature", WHM.JobID)]
+        [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature/Alternative Feature", WHM.JobID)]
         WHMThinAirFeature = 19014,
 
         #endregion
