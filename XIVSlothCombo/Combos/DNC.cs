@@ -428,30 +428,42 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.DancerSimpleDancesFeature))
+                if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
+                    return gauge.CompletedSteps < 4
+                        ? (uint)gauge.NextStep
+                        : DNC.TechnicalFinish4;
+
+                if (HasEffect(DNC.Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature))
+                    return gauge.CompletedSteps < 2
+                        ? (uint)gauge.NextStep
+                        : DNC.StandardFinish2;
+                
+
+                if (!HasTarget() || EnemyHealthPercentage() > 5)
                 {
-                    if (HasEffect(DNC.Buffs.TechnicalStep))
-                        return gauge.CompletedSteps < 4
-                            ? (uint)gauge.NextStep
-                            : DNC.TechnicalFinish4;
-                    
-                    if (HasEffect(DNC.Buffs.StandardStep))
-                            return gauge.CompletedSteps < 2
-                                ? (uint)gauge.NextStep
-                                : DNC.StandardFinish2;
+                    if (
+                        level >= DNC.Levels.StandardStep &&
+                        IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) &&
+                        !HasEffect(DNC.Buffs.TechnicalStep) &&
+                        IsOffCooldown(DNC.StandardStep)
+                    ) return DNC.StandardStep;
 
-                    if (level >= DNC.Levels.StandardStep && (!HasTarget() || EnemyHealthPercentage() > 5) && IsOffCooldown(DNC.StandardStep))
-                        return DNC.StandardStep;
-
-                    if (level >= DNC.Levels.TechnicalStep && (!HasTarget() || EnemyHealthPercentage() > 5) && IsOffCooldown(DNC.TechnicalStep) && GetCooldown(DNC.StandardStep).CooldownRemaining > 5)
-                        return DNC.TechnicalStep;
+                    if (
+                        level >= DNC.Levels.TechnicalStep &&
+                        IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) &&
+                        !HasEffect(DNC.Buffs.StandardStep) &&
+                        IsOffCooldown(DNC.TechnicalStep)
+                    ) return DNC.TechnicalStep;
                 }
 
-                if (IsEnabled(CustomComboPreset.DancerSimpleBuffsFeature) && canWeaveAbilities)
+                if (IsEnabled(CustomComboPreset.DancerSimpleDevilmentFeature) && canWeaveAbilities)
                 {
-                    if (level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment))
+                    if (level >= DNC.Levels.Devilment && (HasEffect(DNC.Buffs.TechnicalFinish) && IsOffCooldown(DNC.Devilment)))
                         return DNC.Devilment;
-
+                }
+                
+                if (IsEnabled(CustomComboPreset.DancerSimpleFlourishFeature) && canWeaveAbilities)
+                {
                     if (level >= DNC.Levels.Flourish && IsOffCooldown(DNC.Flourish))
                         return DNC.Flourish;
                 }
@@ -478,11 +490,19 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance)) return DNC.FanDance4;
 
-                    if (IsEnabled(CustomComboPreset.DancerSimpleShieldNHealsFeature))
+                    if (IsEnabled(CustomComboPreset.DancerSimpleSambaFeature))
                     {
                         if (level >= DNC.Levels.ShieldSamba && IsOffCooldown(DNC.ShieldSamba)) return DNC.ShieldSamba;
-                        if (level >= DNC.Levels.CuringWaltz && PlayerHealthPercentageHp() < 75 && IsOffCooldown(DNC.CuringWaltz)) return DNC.CuringWaltz;
-                        if (level >= DNC.Levels.SecondWind && PlayerHealthPercentageHp() < 75 && IsOffCooldown(DNC.SecondWind)) return DNC.SecondWind;
+                    }
+                    
+                    if (IsEnabled(CustomComboPreset.DancerSimplePanicHealsFeature))
+                    {
+                        if (level >= DNC.Levels.CuringWaltz && PlayerHealthPercentageHp() < 30 && IsOffCooldown(DNC.CuringWaltz)) return DNC.CuringWaltz;
+                        if (level >= DNC.Levels.SecondWind && PlayerHealthPercentageHp() < 50 && IsOffCooldown(DNC.SecondWind)) return DNC.SecondWind;
+                    }
+                    
+                    if (IsEnabled(CustomComboPreset.DancerSimpleImprovFeature))
+                    {
                         if (level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation)) return DNC.Improvisation;
                     }
                 }
