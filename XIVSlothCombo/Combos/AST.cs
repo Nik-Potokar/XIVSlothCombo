@@ -214,7 +214,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
                         return AST.Draw;
-                     
+
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                 {
@@ -253,7 +253,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-   
+
     internal class AstrologianHeliosFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianHeliosFeature;
@@ -446,40 +446,40 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
                     var lightspeed = GetCooldown(AST.Lightspeed);
-                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4)
                         return AST.Lightspeed;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                 {
-                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
+                    if (!gauge.ContainsSeal(SealType.NONE) && lastComboMove == OriginalHook(actionID) && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
                         return AST.Astrodyne;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                 {
-                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
                         return AST.Draw;
 
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                 {
-                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                    if (gauge.DrawnCrownCard == CardType.NONE && lastComboMove == OriginalHook(actionID) && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
                         return AST.MinorArcana;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.4 && level >= 24)
                         return AST.LucidDreaming;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                 {
                     var buff = HasEffect(AST.Buffs.Divination);
                     var buffcd = GetCooldown(AST.Divination);
-                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70 && buff || gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70 && buffcd.IsCooldown)
+                    if (gauge.DrawnCrownCard == CardType.LORD && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buff || gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buffcd.IsCooldown)
                         return AST.LordOfCrowns;
                 }
                 if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 72 && incombat)
                 {
-                    if ((combust3Debuff is null) && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue || (combust3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue )
+                    if ((combust3Debuff is null) && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue || (combust3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
                         return AST.Combust3;
                 }
 
