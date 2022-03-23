@@ -1036,6 +1036,20 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Soul Scythe Feature", "Adds Soul Scythe to main AoE combo when under or at 50 gauge and target is under Death's Design debuff", RPR.JobID)]
         ReaperSoulScytheFeature = 12019,
 
+        [CustomComboInfo("Harpe Soulsow Feature", "Changes Harpe into Soulsow when you are out of combat or have no target, and are not already under the effect of Soulsow.", RPR.JobID)]
+        ReaperHarpeSoulsowFeature = 12020,
+
+        [CustomComboInfo("Harpe Harvest Moon Feature", "Changes Harpe into Harvest Moon when you are in combat with Soulsow active.", RPR.JobID)]
+        ReaperHarpeHarvestMoonFeature = 12021,
+
+        [ParentCombo(ReaperHarpeHarvestMoonFeature)]
+        [CustomComboInfo("Enhanced Harpe Option", "Prevent Harvest Moon replacing Harpe when Enhanced Harpe is active.", RPR.JobID)]
+        ReaperHarpeHarvestMoonEnhancedOption = 12022,
+
+        [ParentCombo(ReaperHarpeHarvestMoonFeature)]
+        [CustomComboInfo("Combat Harpe Option", "Prevent Harvest Moon replacing Harpe when you are not in combat.", RPR.JobID)]
+        ReaperHarpeHarvestMoonCombatOption = 12023,
+
 
 
         #endregion
