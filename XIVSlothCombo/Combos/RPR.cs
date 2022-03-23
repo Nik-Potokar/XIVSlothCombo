@@ -36,6 +36,8 @@ namespace XIVSlothComboPlugin.Combos
             HellsEgress = 24402,
             Regress = 24403,
             Harpe = 24386,
+            Soulsow = 24387,
+            HarvestMoon = 24388,
             // Gauge
             SoulSlice = 24380,
             SoulScythe = 24381;
@@ -51,6 +53,7 @@ namespace XIVSlothComboPlugin.Combos
                 EnhancedCrossReaping = 2591,
                 EnhancedHarpe = 2859,
                 Enshrouded = 2593,
+                Soulsow = 2594,
                 Threshold = 2595;
         }
 
@@ -77,7 +80,9 @@ namespace XIVSlothComboPlugin.Combos
                 Enshroud = 80,
                 PlentifulHarvest = 88,
                 Communio = 90,
-                WhorlOfDeath = 35;
+                WhorlOfDeath = 35,
+                Soulsow = 82,
+                HarvestMoon = 82;
         }
     }
 
@@ -236,7 +241,7 @@ namespace XIVSlothComboPlugin.Combos
                     //var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
 
                     //if (((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 4 && !soulReaverBuff)) && level >= RPR.Levels.WhorlOfDeath)
-                        return RPR.WhorlOfDeath;
+                    return RPR.WhorlOfDeath;
                 }
 
                 if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
@@ -350,6 +355,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
     internal class ReaperBloodStalkComboOption : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodSwatheComboFeature;
@@ -400,6 +406,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
     internal class ReaperBloodStalkAlternateComboOption : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodStalkAlternateComboOption;
@@ -454,7 +461,6 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-
     internal class ReaperGrimSwatheComboOption : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperGrimSwatheComboOption;
@@ -490,6 +496,53 @@ namespace XIVSlothComboPlugin.Combos
                     return RPR.Guillotine;
                 }
             }
+            return actionID;
+        }
+    }
+
+    internal class ReaperHarpeSoulsowFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperHarpeSoulsowFeature;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == RPR.Harpe)
+            {
+                if (level >= RPR.Levels.Soulsow && !HasEffect(RPR.Buffs.Soulsow) && (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat) || !HasTarget()))
+                    return RPR.Soulsow;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class ReaperHarvestMoonFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperHarpeHarvestMoonFeature;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == RPR.Harpe)
+
+                if (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonFeature))
+                {
+                    if (level >= RPR.Levels.HarvestMoon && HasEffect(RPR.Buffs.Soulsow))
+                    {
+
+                        if (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonEnhancedOption))
+                        {
+                            if (HasEffect(RPR.Buffs.EnhancedHarpe))
+                                return RPR.Harpe;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonCombatOption))
+                        {
+                            if (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                                return RPR.Harpe;
+                        }
+
+                        return RPR.HarvestMoon;
+                    }
+                }
+
             return actionID;
         }
     }
