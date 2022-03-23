@@ -511,7 +511,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsOffCooldown(MCH.AirAnchor) && level >= MCH.Levels.AirAnchor)
                 {
-                    if (!openerFinished && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                    if ((!openerFinished || level < MCH.Levels.ChainSaw) && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
                     {
                         return MCH.Reassemble;
                     }
