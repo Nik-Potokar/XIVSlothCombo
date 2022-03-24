@@ -1,33 +1,51 @@
-﻿namespace XIVSlothComboPlugin.Combos
+using Dalamud.Game.ClientState.JobGauge.Types;
+
+namespace XIVSlothComboPlugin.Combos
 {
     internal static class SGE
     {
         public const byte JobID = 40;
 
         public const uint
+            // Heals and Shields
             Diagnosis = 24284,
-            Holos = 24310,
-            Ixochole = 24299,
+            Prognosis = 24286,
             Egeiro = 24287,
-            Kardia = 24285,
-            Soteria = 24294,
-            Phlegma = 24289,
-            Phlegmara = 24307,
-            Phlegmaga = 24313,
-            Dyskrasia = 24297,
-            Dyskrasia2 = 24315,
-            Eukrasia = 24290,
-
-            // dps
+            Physis = 24288,
+            Druochole = 24296,
+            Kerachole = 24298,
+            Ixochole = 24299,
+            Pepsis = 24301,
+            Physis2 = 24302,
+            Taurochole = 24303,
+            Haima = 24305,
+            Panhaima = 24311,
+            Holos = 24310,
+            // DPS
             Dosis1 = 24283,
             Dosis2 = 24306,
             Dosis3 = 24312,
             EukrasianDosis1 = 24293,
             EukrasianDosis2 = 24308,
             EukrasianDosis3 = 24314,
+            Phlegma = 24289,
+            Phlegma2 = 24307,
+            Phlegma3 = 24313,
+            Dyskrasia = 24297,
+            Dyskrasia2 = 24315,
+            Toxikon = 24304,
+            Pneuma = 24318,
+            // Buffs
+            Soteria = 24294,
+            Zoe = 24300,
+            Krasis = 24317,
             // Other
             Swiftcast = 7561,
-            LucidDreaming = 7562;
+            LucidDreaming = 7562,
+            Kardia = 24285,
+            Eukrasia = 24290,
+            Rhizomata = 24309;
+			
 
         public static class Buffs
         {
@@ -50,14 +68,23 @@
             public const ushort
                 Dosis = 1,
                 Prognosis = 10,
+                Phlegma = 26,
+                Soteria = 35,
                 Druochole = 45,
                 Kerachole = 50,
-                Taurochole = 62,
                 Ixochole = 52,
+                Physis2 = 60,
+                Taurochole = 62,
+                Haima = 70,
+                Phlegma2 = 72,
                 Dosis2 = 72,
+                Rhizomata = 74,
                 Holos = 76,
-                Rizomata = 74,
-                Dosis3 = 82;
+                Panhaima = 80,
+                Phlegma3 = 82,
+                Dosis3 = 82,
+                Krasis = 86,
+                Pneuma = 90;
         }
     }
 
@@ -79,23 +106,82 @@
         }
     }
 
-    internal class SagePhlegmaFeature : CustomCombo
+    internal class SageRhizomataFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageRhizomataFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == SGE.Phlegma)
+            if (actionID == SGE.Taurochole || actionID == SGE.Druochole || actionID == SGE.Ixochole || actionID == SGE.Kerachole)
+            {
+                if (level >= SGE.Levels.Rhizomata && GetJobGauge<SGEGauge>().Addersgall == 0)
+                        return SGE.Rhizomata;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class SageTauroDruoFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageTauroDruoFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SGE.Taurochole)
+            {
+                var taurocholeCD = GetCooldown(SGE.Taurochole);
+                if (taurocholeCD.CooldownRemaining > 0)
+
+                    return SGE.Druochole;
+            }
+            return actionID;
+        }
+    }
+
+    internal class SagePhlegmaToxikonFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaToxikonFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SGE.Phlegma || actionID == SGE.Phlegma2 || actionID == SGE.Phlegma3)
             {
                 if (level >= SGE.Levels.Dosis3)
                 {
-                    if (GetCooldown(SGE.Phlegmaga).CooldownRemaining > 45)
+                    if (GetCooldown(SGE.Phlegma3).CooldownRemaining > 45 && GetJobGauge<SGEGauge>().Addersting > 0)
+                        return OriginalHook(SGE.Toxikon);
+                }
+
+                if (level >= 66)
+                {
+                    if (GetCooldown(SGE.Phlegma2).CooldownRemaining > 45 && GetJobGauge<SGEGauge>().Addersting > 0)
+                        return OriginalHook(SGE.Toxikon);
+                }
+
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class SagePhlegmaDyskrasiaFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaDyskrasiaFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SGE.Phlegma || actionID == SGE.Phlegma2 || actionID == SGE.Phlegma3)
+            {
+                if (level >= SGE.Levels.Dosis3)
+                {
+                    if (GetCooldown(SGE.Phlegma3).CooldownRemaining > 45)
                         return SGE.Dyskrasia2;
                 }
 
                 if (level >= SGE.Levels.Dosis2)
                 {
-                    if (GetCooldown(SGE.Phlegmara).CooldownRemaining > 45)
+                    if (GetCooldown(SGE.Phlegma2).CooldownRemaining > 45)
                         return SGE.Dyskrasia;
                 }
 
@@ -163,7 +249,7 @@
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Egeiro)
+            if (actionID == SGE.Swiftcast)
             {
                 if (IsEnabled(CustomComboPreset.SageEgeiroFeature))
                 {
@@ -177,6 +263,7 @@
             return actionID;
         }
     }
+
     internal class SageAlternateEgeiroFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageAlternateEgeiroFeature;
@@ -234,7 +321,7 @@
                     if ((dosis1Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((dosis1Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
                         return SGE.Eukrasia;
                 }
-                if (IsEnabled(CustomComboPreset.SageLucidFeature))
+                if (IsEnabled(CustomComboPreset.SageLucidFeatureTest))
                 {
                     var lucidDreaming = GetCooldown(SGE.LucidDreaming);
                     var actionIDCD = GetCooldown(actionID);
