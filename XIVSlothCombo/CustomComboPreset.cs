@@ -1050,6 +1050,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Combat Harpe Option", "Prevent Harvest Moon replacing Harpe when you are not in combat.", RPR.JobID)]
         ReaperHarpeHarvestMoonCombatOption = 12023,
 
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Simple Panic Heals", "Includes Bloodbath and Second Wind in the rotation when available and below 30% / 50% HP, respectively.", RPR.JobID)]
+        ReaperSimplePanicHealsFeature = 12024,
+
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Simple Stun", "Includes a stun in the rotation, but only to attempt an interrupt.", RPR.JobID)]
+        ReaperSimpleInterruptFeature = 12025,
 
 
         #endregion

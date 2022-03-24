@@ -38,6 +38,9 @@ namespace XIVSlothComboPlugin.Combos
             Harpe = 24386,
             Soulsow = 24387,
             HarvestMoon = 24388,
+            LegSweep = 7863,    
+            SecondWind = 7541,  
+            Bloodbath = 7542,
             // Gauge
             SoulSlice = 24380,
             SoulScythe = 24381;
@@ -67,6 +70,9 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 WaxingSlice = 5,
+                SecondWind = 8,
+                LegSweep =10,
+                Bloodbath = 12,
                 HellsIngress = 20,
                 HellsEgress = 20,
                 SpinningScythe = 25,
@@ -184,6 +190,22 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return RPR.InfernalSlice;
                 }
+
+                 // If target can be stunned this will attempt to stun an intrruptable cast. 
+                if (level >= RPR.Levels.LegSweep && IsEnabled(CustomComboPreset.ReaperSimpleInterruptFeature))
+                {
+                    if (CanInterruptEnemy() && IsOffCooldown(RPR.LegSweep))
+                    {
+                        return RPR.LegSweep;
+                    }
+                }
+
+                // Simple heal in combo
+                if (IsEnabled(CustomComboPreset.ReaperSimplePanicHealsFeature))
+                    {
+                        if (level >= RPR.Levels.Bloodbath && PlayerHealthPercentageHp() < 30 && IsOffCooldown(RPR.Bloodbath)) return RPR.Bloodbath;
+                        if (level >= RPR.Levels.SecondWind && PlayerHealthPercentageHp() < 50 && IsOffCooldown(RPR.SecondWind)) return RPR.SecondWind;
+                    }
 
             }
             return actionID;
