@@ -1135,30 +1135,44 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SAGE
 
-        [CustomComboInfo("Soteria into Kardia", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID)]
+        [CustomComboInfo("Soteria into Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID)]
         SageKardiaFeature = 14000,
 
-        [CustomComboInfo("Phlegma into Dyskrasia", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID)]
-        SagePhlegmaFeature = 14001,
+        [CustomComboInfo("Rhizomata Feature", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID)]
+        SageRhizomataFeature = 14001,
+
+        [CustomComboInfo("Taurochole into Druochole Feature", "Replaces Taurochole with Druochole when Taurochole is on cooldown.", SGE.JobID)]
+        SageTauroDruoFeature = 14002,
+
+        [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID)]
+        SagePhlegmaToxikonFeature = 14003,
+
+        [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID)]
+        SagePhlegmaDyskrasiaFeature = 14004,
 
         [ConflictingCombos(SageDPSFeatureTest)]
-        [CustomComboInfo("Dosis Dps Feature", "Adds Eukrasia and Eukrasian dosis on one combo button", SGE.JobID)]
-        SageDPSFeature = 14002,
+        [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID)]
+        SageDPSFeature = 14005,
+
+        [ParentCombo(SageDPSFeature)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature when you have 8,000 mana or less.", SGE.JobID)]
+        SageLucidFeature = 14006,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
-        [CustomComboInfo("SGE Raise Feature", "Changes Swiftcast to Egeiro", SGE.JobID)]
-        SageEgeiroFeature = 14003,
+        [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID)]
+        SageEgeiroFeature = 14007,
 
         [ConflictingCombos(SageEgeiroFeature)]
-        [CustomComboInfo("SGE Raise Alternate Feature", "Changes Egiero To Swiftcast when Swiftcast is available", SGE.JobID)]
-        SageAlternateEgeiroFeature = 14006,
-
-        [CustomComboInfo("Lucid Dreaming Feature", "Adds LucidDreaming onto Dosis DPS Feature when you have 8k mana or less", SGE.JobID)]
-        SageLucidFeature = 14004,
+        [CustomComboInfo("Egeiro into Swiftcast Feature", "Changes Egiero to Swiftcast when Swiftcast is available.", SGE.JobID)]
+        SageAlternateEgeiroFeature = 14008,
 
         [ConflictingCombos(SageDPSFeature)]
-        [CustomComboInfo("Dosis DPS Feature Testing", "Same function as Above DPS Feature but you can input some values to your liking ", SGE.JobID)]
-        SageDPSFeatureTest = 14005,
+        [CustomComboInfo("Dosis DPS Feature (Testing)", "Identical to the Dosis DPS feature, but you can input some values to your liking.", SGE.JobID)]
+        SageDPSFeatureTest = 14009,
+
+        [ParentCombo(SageDPSFeatureTest)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature (Testing) when you have 8,000 mana or less.", SGE.JobID)]
+        SageLucidFeatureTest = 14010,
 
         #endregion
         // ====================================================================================
