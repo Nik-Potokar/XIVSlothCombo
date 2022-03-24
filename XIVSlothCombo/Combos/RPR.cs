@@ -191,7 +191,7 @@ namespace XIVSlothComboPlugin.Combos
                     return RPR.InfernalSlice;
                 }
 
-                 // If target can be stunned this will attempt to stun an intrruptable cast. 
+                 // If target can be stunned this will attempt to stun an interruptible cast. 
                 if (level >= RPR.Levels.LegSweep && IsEnabled(CustomComboPreset.ReaperSimpleInterruptFeature))
                 {
                     if (CanInterruptEnemy() && IsOffCooldown(RPR.LegSweep))
