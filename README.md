@@ -1,7 +1,10 @@
 # XIVSlothCombo - The Super Expanded XIVCombo
 
-[![Build](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml/badge.svg)](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml)
-# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/XIVSlothCombo/issues). If something dosen't seem to be working please swap class or re-slot the skill.
+[![Build](https://img.shields.io/github/workflow/status/Nik-Potokar/XIVSlothCombo/Build?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml)
+[![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Nik-Potokar/XIVSlothCombo/main?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/commits/main)
+
+# Have an issue or suggestion? Please post them [here](https://github.com/Nik-Potokar/XIVSlothCombo/issues).
+# If something dosen't seem to be working please swap class or re-slot the skill.
 
 ## How to install
 * Copy the Custom Repo Link `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json `
