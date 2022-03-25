@@ -11,36 +11,45 @@ namespace XIVSlothComboPlugin.Combos
             Slice = 24373,
             WaxingSlice = 24374,
             InfernalSlice = 24375,
-            Gluttony = 24393,
+            ShadowOfDeath = 24378,
+            SoulSlice = 24380,
             // AoE
             SpinningScythe = 24376,
             NightmareScythe = 24377,
             WhorlOfDeath = 24379,
-            GrimSwathe = 24392,
-            // Soul Reaver
-            BloodStalk = 24389,
+            SoulScythe = 24381,
+            // Unveiled
             Gibbet = 24382,
             Gallows = 24383,
             Guillotine = 24384,
+            // Reaver
+            BloodStalk = 24389,
+            GrimSwathe = 24392,
+            Gluttony = 24393,
             // Sacrifice
             ArcaneCircle = 24405,
             PlentifulHarvest = 24385,
-            // Shroud
+            // Enshroud
             Enshroud = 24394,
             Communio = 24398,
             LemuresSlice = 24399,
             LemuresScythe = 24400,
-            // Misc
-            ShadowOfDeath = 24378,
+            VoidReaping = 24395,
+            CrossReaping = 24396,
+            GrimReaping = 24397,
+            // Miscellaneous
             HellsIngress = 24401,
             HellsEgress = 24402,
             Regress = 24403,
             Harpe = 24386,
             Soulsow = 24387,
             HarvestMoon = 24388,
-            // Gauge
-            SoulSlice = 24380,
-            SoulScythe = 24381;
+            // Role
+            SecondWind = 7541,
+            Bloodbath = 7542,
+            LegSweep = 7863,
+            Feint = 7549;
+        
 
         public static class Buffs
         {
@@ -67,10 +76,15 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 WaxingSlice = 5,
+                SecondWind = 8,
+                LegSweep = 10,
+                Bloodbath = 12,
                 HellsIngress = 20,
                 HellsEgress = 20,
+                Feint = 22,
                 SpinningScythe = 25,
                 InfernalSlice = 30,
+                WhorlOfDeath = 35,
                 NightmareScythe = 45,
                 SoulSlice = 60,
                 SoulScythe = 65,
@@ -78,11 +92,11 @@ namespace XIVSlothComboPlugin.Combos
                 Regress = 74,
                 Gluttony = 76,
                 Enshroud = 80,
-                PlentifulHarvest = 88,
-                Communio = 90,
-                WhorlOfDeath = 35,
                 Soulsow = 82,
-                HarvestMoon = 82;
+                HarvestMoon = 82,
+                PlentifulHarvest = 88,
+                Communio = 90;
+                
         }
     }
 
@@ -136,15 +150,65 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var gauge = GetJobGauge<RPRGauge>();
                 var actionIDCD = GetCooldown(RPR.SoulSlice);
+                var distance = GetTargetDistance();
+
+                if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && distance > 3)
+                {
+
+                    if (HasEffect(RPR.Buffs.Enshrouded) && gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= RPR.Levels.Communio)
+                        return RPR.Communio;
+
+                    if (level >= RPR.Levels.HarvestMoon && HasEffect(RPR.Buffs.Soulsow)) 
+                    {
+
+                        if (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonEnhancedOption))
+                        {
+                            if (HasEffect(RPR.Buffs.EnhancedHarpe))
+                                return RPR.Harpe;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonCombatOption))
+                        {
+                            if (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                                return RPR.Harpe;
+                        }
+
+                        return RPR.HarvestMoon;
+                    }
+                    return RPR.Harpe;
+                }
+
+                if (IsEnabled(CustomComboPreset.ReaperStunOption) && level >= RPR.Levels.LegSweep)
+                {
+                    if (CanInterruptEnemy() && IsOffCooldown(RPR.LegSweep))
+                        return RPR.LegSweep;
+                }
+
                 if (IsEnabled(CustomComboPreset.ReaperSoulSliceFeature) && !HasEffect(RPR.Buffs.Enshrouded))
                 {
                     if (level >= RPR.Levels.SoulSlice && gauge.Soul <= 50 && !actionIDCD.IsCooldown && TargetHasEffect(RPR.Debuffs.DeathsDesign))
                         return RPR.SoulSlice;
                 }
 
-                if ((IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3)) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10))
+                if (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10) && EnemyHealthPercentage() > 5)
                 {
                     return RPR.ShadowOfDeath;
+                }
+
+                if (IsEnabled(CustomComboPreset.ReaperComboHealsOption))
+                {
+                    if (level >= RPR.Levels.Bloodbath && PlayerHealthPercentageHp() < 65 && IsOffCooldown(RPR.Bloodbath))
+                        return RPR.Bloodbath;
+
+                    if (level >= RPR.Levels.SecondWind && PlayerHealthPercentageHp() < 40 && IsOffCooldown(RPR.SecondWind))
+                        return RPR.SecondWind;
+                }
+
+                if (IsEnabled(CustomComboPreset.ReaperFeintOption))
+                {
+                    // Detect if target is casting or something?
+                    if (level >= RPR.Levels.Feint && IsOffCooldown(RPR.Feint)) 
+                        return RPR.Feint;
                 }
 
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature))
@@ -169,7 +233,7 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(RPR.Gibbet);
                 }
 
-                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeatureOption) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsInverseFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
                 {
                     if ((HasEffect(RPR.Buffs.EnhancedGibbet) && !HasEffect(RPR.Buffs.Enshrouded)) || (HasEffect(RPR.Buffs.EnhancedVoidReaping) && HasEffect(RPR.Buffs.Enshrouded)))
                         return OriginalHook(RPR.Gibbet);
@@ -180,6 +244,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return RPR.WaxingSlice;
                 }
+
                 else if (level >= RPR.Levels.InfernalSlice && lastComboMove == RPR.WaxingSlice)
                 {
                     return RPR.InfernalSlice;
@@ -208,7 +273,7 @@ namespace XIVSlothComboPlugin.Combos
                         return RPR.SoulScythe;
                 }
 
-                if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10))
+                if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10) && EnemyHealthPercentage() > 5)
                 {
                     var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
                     var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
@@ -234,7 +299,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 4) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10))
+                if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 4) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10) && EnemyHealthPercentage() > 5)
                 {
                     //var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
                     //var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
@@ -244,7 +309,7 @@ namespace XIVSlothComboPlugin.Combos
                     return RPR.WhorlOfDeath;
                 }
 
-                if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature))
+                if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && EnemyHealthPercentage() > 5)
                 {
                     if (lastComboMove == RPR.SpinningScythe && level >= RPR.Levels.NightmareScythe)
                         return RPR.NightmareScythe;
@@ -266,6 +331,9 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
                     return OriginalHook(RPR.Guillotine);
+
+                if (lastComboMove == RPR.SpinningScythe)
+                    return OriginalHook(RPR.NightmareScythe);
 
                 return RPR.SpinningScythe;
             }
@@ -349,16 +417,16 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var gluttonyCD = GetCooldown(RPR.Gluttony);
-            if ((actionID == RPR.GrimSwathe || actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
+            if ((actionID == RPR.GrimSwathe || actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= RPR.Levels.Gluttony)
                 return RPR.Gluttony;
 
             return actionID;
         }
     }
 
-    internal class ReaperBloodStalkComboOption : CustomCombo
+    internal class ReaperBloodStalkComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodSwatheComboFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodStalkComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -367,13 +435,13 @@ namespace XIVSlothComboPlugin.Combos
 
             if (actionID == RPR.BloodStalk)
             {
-                if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
+                if (HasEffect(RPR.Buffs.Enshrouded) && level >= RPR.Levels.Enshroud)
                 {
                     if (gauge.VoidShroud >= 2)
                     {
                         return OriginalHook(RPR.BloodStalk);
                     }
-                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= 90)
+                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= RPR.Levels.Communio)
                     {
                         return OriginalHook(RPR.Communio);
                     }
@@ -390,7 +458,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (!HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded))
                 {
-                    if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
+                    if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= RPR.Levels.Gluttony)
                         return RPR.Gluttony;
                     return RPR.BloodStalk;
                 }
@@ -418,13 +486,13 @@ namespace XIVSlothComboPlugin.Combos
 
             if (actionID == RPR.BloodStalk)
             {
-                if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
+                if (HasEffect(RPR.Buffs.Enshrouded) && level >= (RPR.Levels.Enshroud))
                 {
                     if (gauge.VoidShroud >= 2)
                     {
                         return OriginalHook(RPR.BloodStalk);
                     }
-                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= 90)
+                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= RPR.Levels.Communio)
                     {
                         return OriginalHook(RPR.Communio);
                     }
@@ -441,7 +509,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (!HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded))
                 {
-                    if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= 76)
+                    if ((actionID == RPR.BloodStalk) && !gluttonyCD.IsCooldown && level >= RPR.Levels.Gluttony)
                         return RPR.Gluttony;
                     return RPR.BloodStalk;
                 }
@@ -461,9 +529,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class ReaperGrimSwatheComboOption : CustomCombo
+    internal class ReaperGrimSwatheComboFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperGrimSwatheComboOption;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperGrimSwatheComboFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -471,13 +539,13 @@ namespace XIVSlothComboPlugin.Combos
             var gauge = GetJobGauge<RPRGauge>();
             if (actionID == RPR.GrimSwathe)
             {
-                if (HasEffect(RPR.Buffs.Enshrouded) && level >= 80)
+                if (HasEffect(RPR.Buffs.Enshrouded) && level >= RPR.Levels.Enshroud)
                 {
                     if (gauge.VoidShroud >= 2)
                     {
                         return OriginalHook(RPR.GrimSwathe);
                     }
-                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= 90)
+                    if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= RPR.Levels.Communio)
                     {
                         return OriginalHook(RPR.Communio);
                     }
@@ -486,7 +554,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (!HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(RPR.Buffs.Enshrouded))
                 {
-                    if ((actionID == RPR.GrimSwathe) && !gluttonyCD.IsCooldown && level >= 76)
+                    if ((actionID == RPR.GrimSwathe) && !gluttonyCD.IsCooldown && level >= RPR.Levels.Gluttony)
                         return RPR.Gluttony;
                     return RPR.GrimSwathe;
                 }
