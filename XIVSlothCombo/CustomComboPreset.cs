@@ -363,11 +363,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple Pooling", "BETA TESTING - Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID)]
         BardSimplePooling = 3023,
-        
+
         [ParentCombo(BardIronJawsFeature)]
         [CustomComboInfo("Iron Jaws Apex", "Adds apex and blast arrow to IRON JAWS when available", BRD.JobID)]
         BardIronJawsApexFeature = 3024,
-        
+
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple RagingJaws", "BETA TESTING - Enable the snapshotting of dots, within the remaining time of Raging Strikes below:", BRD.JobID)]
         BardSimpleRagingJaws = 3025,
@@ -447,7 +447,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Standard Step", "Includes Standard Step in the rotation", DNC.JobID)]
         DancerSimpleStandardFeature = 4017,
-        
+
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Technical Step", "Includes Technical Step in the rotation", DNC.JobID)]
         DancerSimpleTechnicalFeature = 4018,
@@ -471,11 +471,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Samba", "Includes Shield Samba in the rotation when available (not optimal).", DNC.JobID)]
         DancerSimpleSambaFeature = 4023,
-        
+
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30% / 50% HP, respectively.", DNC.JobID)]
         DancerSimplePanicHealsFeature = 4024,
-        
+
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Improv", "Includes Improvisation in the rotation when available", DNC.JobID)]
         DancerSimpleImprovFeature = 4025,
@@ -789,14 +789,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Forbidden Chakra Feature", "Adds Forbidden Chakra/Enlightement to the Main/AoE feature combo. Testing Only for now!", MNK.JobID)]
         MonkForbiddenChakraFeature = 9010,
-        
+
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID)]
         MnkRiddleOfFireBrotherhoodFeature = 9012,
-        
+
         [ParentCombo(MnkBasicComboPlus)]
         [CustomComboInfo("Damage Buffs to Main Combo Feature", "Places Riddle of Fire and Brotherhood onto main combo when Perfect Balance is up.", MNK.JobID)]
         MnkMainComboBuffsFeature = 9013,
-        
+
         [ParentCombo(MnkBasicComboPlus)]
         [CustomComboInfo("Riddle of Wind Main Combo Feature", "Places Riddle of Wind onto main combo after using Twin Snakes.", MNK.JobID)]
         MnkRiddleOfWindFeature = 9014,
@@ -969,88 +969,145 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region REAPER
 
-        [CustomComboInfo("Slice Combo", "Replace Slice with its combo chain.", RPR.JobID)]
+        // Single Target Combo Section
+        [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain. Features and options inside.\nCollapsing this category disables the features inside.", RPR.JobID)]
         ReaperSliceCombo = 12000,
 
-        [CustomComboInfo("Scythe Combo", "Replace Spinning Scythe with its combo chain.", RPR.JobID)]
-        ReaperScytheCombo = 12001,
-
-        [CustomComboInfo("Enshroud Communio Feature", "Replace Enshroud with Communio when Enshrouded.", RPR.JobID)]
-        ReaperEnshroudCommunioFeature = 12002,
-
-        [ConflictingCombos(ReaperGibbetGallowsFeatureOption)]
-        [CustomComboInfo("Gallows And Gibbet Option", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.(Swapped positional skills from ReaperGibbetGallowsFeatureOption)", RPR.JobID)]
-        ReaperGibbetGallowsFeature = 12003,
-
-        [CustomComboInfo("Guillotine Feature", "Spinning Scythe's combo gets replaced with Guillotine while Soul Reaver or Shroud is active.", RPR.JobID)]
-        ReaperGuillotineFeature = 12004,
-
-        [CustomComboInfo("GG Gallows Option", "Slice now turns into Gallows when Gallows is Enhanced, and removes it from Shadow of Death.", RPR.JobID)]
-        ReaperGibbetGallowsOption = 12005,
-
-        [CustomComboInfo("Combo Communio Feature", "When one stack is left of Shroud, Communio replaces Gibbet/Gallows/Guillotine.", RPR.JobID)]
-        ReaperComboCommunioFeature = 12006,
-
-        [CustomComboInfo("Lemure Feature", "When you have two or more stacks of Void Shroud, Lemure Slice/Scythe replaces Gibbet/Gallows and Guillotine respectively.", RPR.JobID)]
-        ReaperLemureFeature = 12007,
-
-        [CustomComboInfo("Arcane Circle Harvest Feature", "Replace Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID)]
-        ReaperHarvestFeature = 12008,
-
-        [CustomComboInfo("Regress Feature", "Both Hell's Ingress and Hell's Egress turn into Regress when Threshold is active, instead of just the opposite of the one you used.", RPR.JobID)]
-        ReaperRegressFeature = 12009,
-
-        [CustomComboInfo("Shadow Of Death Feature", "Adds Shadow of Death to Main Combo if the debuff is not present or is about to expire", RPR.JobID)]
-        ReaperShadowOfDeathFeature = 12010,
-
-        [CustomComboInfo("Whorl Of Death Feature", "Adds Whorl of Death to Main AoE Combo if the debuff is not present or is about to expire", RPR.JobID)]
-        ReaperWhorlOfDeathFeature = 12011,
-
-        [CustomComboInfo("Blood Stalk / Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID)]
-        ReaperBloodSwatheFeature = 12012,
-
-        [ConflictingCombos(ReaperBloodSwatheFeature, ReaperBloodStalkAlternateComboOption)]
-        [CustomComboInfo("Blood Stalk Combo Option", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. Adds Enshrouded Combo to button as well", RPR.JobID)]
-        ReaperBloodSwatheComboFeature = 12013,
-
-        [ConflictingCombos(ReaperBloodSwatheFeature)]
-        [CustomComboInfo("Grim Swathe Combo Option", "Turns Grim Swathe into Gluttony when off-cooldown and puts Guillotine on the same button as Grim Swathe. Adds Enshrouded Combo to button as well", RPR.JobID)]
-        ReaperGrimSwatheComboOption = 12014,
-
-        [CustomComboInfo("Cross/Void Reaping Feature", "Turns Enshroud into Cross/Void reaping with Lemure Slice as oGCD after Cross Reaping.", RPR.JobID)]
-        ReaperVoidCrossReapingComboOption = 12015,
-
-        [ConflictingCombos(ReaperGibbetGallowsFeature)]
-        [CustomComboInfo("Gibbets and Gallows Feature Option", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID)]
-        ReaperGibbetGallowsFeatureOption = 12016,
-
-        [ConflictingCombos(ReaperBloodSwatheComboFeature)]
-        [CustomComboInfo("Blood Stalk Combo Option Alternative", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbets and Gallows on the same button as Blood Stalk. Adds Enshrouded Combo to button as well", RPR.JobID)]
-        ReaperBloodStalkAlternateComboOption = 12017,
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to Slice Combo when Soul Gauge is 50 or less, and target is under Death's Design debuff.", RPR.JobID)]
+        ReaperSoulSliceFeature = 12001,
 
         [ParentCombo(ReaperSliceCombo)]
-        [CustomComboInfo("Soul Slice Feature", "Adds Soul Slice to main combo when under or at 50 gauge and target is under Death's Design debuff", RPR.JobID)]
-        ReaperSoulSliceFeature = 12018,
+        [CustomComboInfo("Shadow Of Death Option", "Adds Shadow of Death to Slice Combo if debuff is not present or is about to expire.", RPR.JobID)]
+        ReaperShadowOfDeathFeature = 12002,
+
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Stun Option", "Adds Leg Sweep to main combo when target is performing an interruptible cast i.e. uses stun as an interrupt.", RPR.JobID)]
+        ReaperStunOption = 12003,
+
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo at 65 and 40 percent HP, respectively.", RPR.JobID)]
+        ReaperComboHealsOption = 12004,
+
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe (or Harvest Moon, if available) when outside of melee range. Will not override Communio.", RPR.JobID)]
+        ReaperRangedFillerOption = 12005,
+
+        [ParentCombo(ReaperSliceCombo)]
+        [CustomComboInfo("Feint Option", "Adds Feint into the combo.\nOnly use this if you're really asleep at the wheel (NOT optimal).", RPR.JobID)]
+        ReaperFeintOption = 12006,
+
+        // AoE Combo Section
+        [CustomComboInfo("Scythe Combo Feature", "Replace Spinning Scythe with its combo chain. Features and options inside.\nCollapsing this category disables the features inside.", RPR.JobID)]
+        ReaperScytheCombo = 12010,
 
         [ParentCombo(ReaperScytheCombo)]
-        [CustomComboInfo("Soul Scythe Feature", "Adds Soul Scythe to main AoE combo when under or at 50 gauge and target is under Death's Design debuff", RPR.JobID)]
-        ReaperSoulScytheFeature = 12019,
+        [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to Scythe Combo when Soul Gauge is 50 or less, and target is under Death's Design debuff.", RPR.JobID)]
+        ReaperSoulScytheFeature = 12011,
 
+        [ParentCombo(ReaperScytheCombo)]
+        [CustomComboInfo("Whorl Of Death Option", "Adds Whorl of Death to Scythe Combo if debuff is not present or is about to expire.", RPR.JobID)]
+        ReaperWhorlOfDeathFeature = 12012,
+
+
+        // Gibbet, Gallows, Guillotine Combo Section
+        [CustomComboInfo("[Unveiled Features]", "Features and options involving Gibbet, Gallows and Guillotine.\nCollapsing this category does NOT disable the features inside.", RPR.JobID)]
+        ReaperMenuUnveiledFeatures = 12020,
+
+        [ParentCombo(ReaperMenuUnveiledFeatures)]
+        [ConflictingCombos(ReaperGibbetGallowsInverseFeature)]
+        [CustomComboInfo("Gibbet/Gallows Feature", "Slice and Shadow of Death are replaced with Gibbet and Gallows while Soul Reaver or Shroud is active.", RPR.JobID)]
+        ReaperGibbetGallowsFeature = 12021,
+
+        [ParentCombo(ReaperGibbetGallowsFeature)]
+        [CustomComboInfo("Gibbet/Gallows One-Button Option", "Slice is instead replaced with whichever move is procced, and Shadow of Death remains untouched.", RPR.JobID)]
+        ReaperGibbetGallowsOption = 12022,
+
+        [ParentCombo(ReaperMenuUnveiledFeatures)]
+        [ConflictingCombos(ReaperGibbetGallowsFeature)]
+        [CustomComboInfo("Gallows/Gibbet (Inverse) Feature - BROKEN (Currently same effect as above)", "Slice and Shadow of Death are replaced with Gallows and Gibbet while Soul Reaver or Shroud is active.\n(Positional replacements swapped)", RPR.JobID)]
+        ReaperGibbetGallowsInverseFeature = 12023,
+
+        [ParentCombo(ReaperMenuUnveiledFeatures)]
+        [CustomComboInfo("Guillotine Feature", "Spinning Scythe's combo gets replaced with Guillotine while Soul Reaver or Shroud is active.", RPR.JobID)]
+        ReaperGuillotineFeature = 12024,
+
+
+        // Blood Stalk, Grim Swathe, Gluttony Combo Section
+        [CustomComboInfo("[Soul Reaver Features]", "Features and options involving Blood Stalk, Grim Swathe and Gluttony.\nCollapsing this category does NOT disable the features inside.", RPR.JobID)]
+        ReaperMenuSoulReaverFeatures = 12030,
+
+        [ParentCombo(ReaperMenuSoulReaverFeatures)]
+        [ConflictingCombos(ReaperBloodStalkComboFeature, ReaperBloodStalkAlternateComboOption, ReaperGrimSwatheComboFeature)]
+        [CustomComboInfo("Blood Stalk/Grim Swathe Feature", "When Gluttony is off-cooldown, Blood Stalk and Grim Swathe will turn into Gluttony.", RPR.JobID)]
+        ReaperBloodSwatheFeature = 12031,
+
+        [ParentCombo(ReaperMenuSoulReaverFeatures)]
+        [ConflictingCombos(ReaperBloodSwatheFeature, ReaperBloodStalkAlternateComboOption)]
+        [CustomComboInfo("Blood Stalk Multi-Combo Feature", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbet and Gallows on the same button as Blood Stalk. Also adds Enshrouded Combo.", RPR.JobID)]
+        ReaperBloodStalkComboFeature = 12032,
+
+        [ParentCombo(ReaperMenuSoulReaverFeatures)]
+        [ConflictingCombos(ReaperBloodSwatheFeature, ReaperBloodStalkComboFeature)]
+        [CustomComboInfo("Blood Stalk Multi-Combo Feature Alternative - Same but better (?)", "Turns Blood Stalk into Gluttony when off-cooldown and puts Gibbet and Gallows on the same button as Blood Stalk. Also adds Enshrouded Combo.\n[Seems like the code is more effective in edge cases. Both features need further review.", RPR.JobID)]
+        ReaperBloodStalkAlternateComboOption = 12033,
+
+        [ParentCombo(ReaperMenuSoulReaverFeatures)]
+        [ConflictingCombos(ReaperBloodSwatheFeature)]
+        [CustomComboInfo("Grim Swathe Multi-Combo Feature", "Turns Grim Swathe into Gluttony when off-cooldown and puts Guillotine on the same button as Grim Swathe. Also adds Enshrouded Combo.", RPR.JobID)]
+        ReaperGrimSwatheComboFeature = 12034,
+
+
+        // Enshroud Combo Section
+        [CustomComboInfo("[Enshroud Features]", "Features and options involving the Enshrouded burst phase.\nCollapsing this category does NOT disable the features inside.", RPR.JobID)]
+        ReaperMenuEnshroudFeatures = 12040,
+
+        [ParentCombo(ReaperMenuEnshroudFeatures)]
+        [CustomComboInfo("Lemure Feature", "When you have two or more stacks of Void Shroud, Lemure Slice replaces Gibbet/Gallows and Lemure Scythe replaces Guillotine.", RPR.JobID)]
+        ReaperLemureFeature = 12041,
+
+        [ParentCombo(ReaperMenuEnshroudFeatures)]
+        [CustomComboInfo("Combo Communio Feature", "When one stack of Lemure Shroud remains, Communio replaces Gibbet/Gallows/Guillotine.", RPR.JobID)]
+        ReaperComboCommunioFeature = 12042,
+
+        [ParentCombo(ReaperMenuEnshroudFeatures)]
+        // [ConflictingCombos(ReaperEnshroudComboFeature)]
+        [CustomComboInfo("Enshroud Communio Feature", "Replace Enshroud with Communio when Enshrouded.", RPR.JobID)]
+        ReaperEnshroudCommunioFeature = 12043,
+
+        // [ParentCombo(ReaperMenuEnshroudFeatures)]
+        // [ConflictingCombos(ReaperEnshroudCommunioFeature)]
+        // [CustomComboInfo("Enshroud One-Button Single Target Combo - DOESN'T EXIST YET", "Turns Enshroud into Void/Cross Reaping, weaves Lemure Slice and finishes with Communio.", RPR.JobID)]
+        // ReaperEnshroudComboFeature = 12044,
+
+
+        // Miscellaneous Combo Section
+        [CustomComboInfo("[Extra Features]", "Miscellaneous features and options.\nCollapsing this category does NOT disable the features inside.", RPR.JobID)]
+        ReaperMenuExtraFeatures = 12050,
+
+        [ParentCombo(ReaperMenuExtraFeatures)]
+        [CustomComboInfo("Arcane Circle Harvest Feature", "Replace Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID)]
+        ReaperHarvestFeature = 12051,
+
+        [ParentCombo(ReaperMenuExtraFeatures)]
+        [CustomComboInfo("Regress Feature", "Both Hell's Ingress and Hell's Egress turn into Regress when Threshold is active, instead of just the opposite of the one you used.", RPR.JobID)]
+        ReaperRegressFeature = 12052,
+
+        [ParentCombo(ReaperMenuExtraFeatures)]
         [CustomComboInfo("Harpe Soulsow Feature", "Changes Harpe into Soulsow when you are out of combat or have no target, and are not already under the effect of Soulsow.", RPR.JobID)]
-        ReaperHarpeSoulsowFeature = 12020,
+        ReaperHarpeSoulsowFeature = 12053,
 
+        [ParentCombo(ReaperMenuExtraFeatures)]
         [CustomComboInfo("Harpe Harvest Moon Feature", "Changes Harpe into Harvest Moon when you are in combat with Soulsow active.", RPR.JobID)]
-        ReaperHarpeHarvestMoonFeature = 12021,
+        ReaperHarpeHarvestMoonFeature = 12054,
 
         [ParentCombo(ReaperHarpeHarvestMoonFeature)]
-        [CustomComboInfo("Enhanced Harpe Option", "Prevent Harvest Moon replacing Harpe when Enhanced Harpe is active.", RPR.JobID)]
-        ReaperHarpeHarvestMoonEnhancedOption = 12022,
+        [CustomComboInfo("Enhanced Harpe Option", "Prevent Harvest Moon replacing Harpe when Enhanced Harpe is active.\nThis option also affects the Ranged Filler Option for the Slice Combo Feature.", RPR.JobID)]
+        ReaperHarpeHarvestMoonEnhancedOption = 12055,
 
         [ParentCombo(ReaperHarpeHarvestMoonFeature)]
-        [CustomComboInfo("Combat Harpe Option", "Prevent Harvest Moon replacing Harpe when you are not in combat.", RPR.JobID)]
-        ReaperHarpeHarvestMoonCombatOption = 12023,
-
-
+        [CustomComboInfo("Combat Harpe Option", "Prevent Harvest Moon replacing Harpe when you are not in combat.\nThis option also affects the Ranged Filler Option for the Slice Combo Feature.", RPR.JobID)]
+        ReaperHarpeHarvestMoonCombatOption = 12056,
 
         #endregion
         // ====================================================================================
@@ -1119,7 +1176,7 @@ namespace XIVSlothComboPlugin
         RedMageOgcdComboOnCombos = 13017,
 
         [ParentCombo(SimpleRedMage)]
-        [CustomComboInfo("Verstone/Verfire Activation","Add Acceleration and Swiftcast to Simple Red Mage to force activation of verstone or verfire effects when necessary.", RDM.JobID)]
+        [CustomComboInfo("Verstone/Verfire Activation", "Add Acceleration and Swiftcast to Simple Red Mage to force activation of verstone or verfire effects when necessary.", RDM.JobID)]
         SimpleRedMageFishing = 13018,
 
         [ParentCombo(SimpleRedMageFishing)]
@@ -1128,7 +1185,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(SimpleRedMage)]
         [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
-        [CustomComboInfo("Simple opener","Do the optimal opener. [lv90 only]", RDM.JobID)]
+        [CustomComboInfo("Simple opener", "Do the optimal opener. [lv90 only]", RDM.JobID)]
         SimpleRedMageOpener = 13020,
 
         #endregion
