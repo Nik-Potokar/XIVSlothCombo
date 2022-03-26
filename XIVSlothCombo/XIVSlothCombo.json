@@ -1,12 +1,12 @@
 {
-  "Author": "attick,Kami,Daemitus,Grammernatzi,Aki,Iaotle,Codemned,PrincessRTFM,damolitionn,ele-starshade",
+  "Author": "attick,Kami,Daemitus,Grammernatzi,Aki,Iaotle,Codemned,PrincessRTFM,damolitionn,ele-starshade, k-kz",
   "Name": "XIVSlothCombo",
   "InternalName": "XIVSlothCombo",
   "DalamudApiLevel": 5,
-  "Punchline": "Condenses combos and mutually exclusive abilities onto a single button.",
+  "Punchline": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
   "Description": "This plugin condenses combos and mutually exclusive abilities onto a single button. For example, a 1-2-3 combo would become 1-1-1.",
   "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
-  "IconUrl": "https://cdn.discordapp.com/attachments/594230324209123330/905362481671720970/akified.png",
-  "ImageUrls": [ "https://cdn.discordapp.com/attachments/594230324209123330/905362481671720970/akified.png" ],
-  "Changelog": "Added MCH Features and fixed barrel drift feature since it was broken"
+  "IconUrl": "https://i.imgur.com/UeRukF8.png",
+  "ImageUrls": [ "https://i.imgur.com/UeRukF8.png" ],
+  "Changelog": "Icon update"
 }
