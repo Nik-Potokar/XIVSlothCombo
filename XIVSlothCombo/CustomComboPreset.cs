@@ -899,11 +899,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID)]
         NinjaAeolianEdgeCombo = 10001,
 
-        [CustomComboInfo("Hakke Mujinsatsu Combo", "Replace Hakke Mujinsatsu with its combo chain.", NIN.JobID)]
-        NinjaHakkeMujinsatsuCombo = 10002,
+        //[CustomComboInfo("Simple AoE", "Replaces Death Blossom with the AoE rotation.", NIN.JobID)]
+        //NinjaHakkeMujinsatsuCombo = 10002,
 
-        [CustomComboInfo("Dream to Assassinate", "Replace Dream Within a Dream with Assassinate when Assassinate Ready.", NIN.JobID)]
-        NinjaAssassinateFeature = 10003,
+        //[CustomComboInfo("Dream to Assassinate", "Replace Dream Within a Dream with Assassinate when Assassinate Ready.", NIN.JobID)]
+        //NinjaAssassinateFeature = 10003,
 
         [CustomComboInfo("Kassatsu to Trick", "Replaces Kassatsu with Trick Attack while Suiton or Hidden is up.\nCooldown tracking plugin recommended.", NIN.JobID)]
         NinjaKassatsuTrickFeature = 10004,
@@ -958,16 +958,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID)]
         NinjaRangedUptimeFeature = 10018,
 
-        [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("DreamWithinADream Feature", "Adds Assassinate/DwD onto main combo (Not optimal prob).", NIN.JobID)]
-        NinjaDreamWithinADream = 10019,
-
         [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID)]
         NinjaSimpleMudras = 10020,
 
         [ParentCombo(NinjaTCJMeisuiFeature)]
         [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID)]
         NinTCJFeature = 10021,
+
+        [ConflictingCombos(NinjaArmorCrushCombo, NinjaAeolianEdgeCombo, NinjaGCDNinjutsuFeature)]
+        [CustomComboInfo("Simple Ninja Single Target", "Turns Spinning Edge into a one-button full single target rotation.\nUses Ninjitsus, applies Trick Attack and uses Armor Crush to upkeep Huton buff.\nConflicts with a lot of features. Please only use this and the AoE version and disable all other Ninja features.", NIN.JobID)]
+        NinSimpleSingleTarget = 10022,
+
+        [CustomComboInfo("Simple Ninja AoE", "Turns Death Blossom into a one-button full AoE rotation.\nApplies Doton but will only use Ninjitsus if under the effect of Kassatsu or have 2 charges to ensure more Doton uptime.", NIN.JobID)]
+        NinSimpleAoE = 10023,
 
         #endregion
         // ====================================================================================
