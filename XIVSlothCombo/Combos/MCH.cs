@@ -383,11 +383,12 @@ namespace XIVSlothComboPlugin.Combos
                         return MCH.HeadGraze;
                     }
 
-                    if (gauge.Heat < 50 && IsOffCooldown(MCH.BarrelStabilizer) && level >= MCH.Levels.BarrelStabilizer &&
+                    if (IsEnabled(CustomComboPreset.MachinistSimpleStabilizer) && gauge.Heat < 50 &&
+                        IsOffCooldown(MCH.BarrelStabilizer) && level >= MCH.Levels.BarrelStabilizer &&
                         GetCooldown(MCH.Wildfire).CooldownRemaining < 10 )
                         return MCH.BarrelStabilizer;
 
-                    if (openerFinished && !gauge.IsRobotActive)
+                    if (openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MachinistSimpleGadget) )
                     {
                         //overflow protection
                         if (gauge.Battery == 100)
@@ -403,7 +404,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                         // even bursts ?
-                        else if (gauge.Battery >= 80 && IsOnCooldown(MCH.Wildfire) && GetCooldown(MCH.AirAnchor).CooldownRemaining < 7 &&
+                        else if (gauge.Battery >= 80 && (IsOnCooldown(MCH.Wildfire) || GetCooldown(MCH.Wildfire).CooldownRemaining < 5) && GetCooldown(MCH.AirAnchor).CooldownRemaining < 7 &&
                             GetCooldown(MCH.Drill).CooldownRemaining < 10 && GetCooldown(MCH.ChainSaw).CooldownRemaining < 17)
                         {
                             if (level >= MCH.Levels.QueenOverdrive)
@@ -416,7 +417,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return MCH.RookAutoturret;
                             }
                         //odd bursts ?
-                        } else if (gauge.Battery >= 50 && IsOnCooldown(MCH.Wildfire) &&
+                        } else if (gauge.Battery >= 50 && (IsOnCooldown(MCH.Wildfire) || GetCooldown(MCH.Wildfire).CooldownRemaining < 5) &&
                             GetCooldown(MCH.ChainSaw).CooldownRemaining < 17)
                         {
                             if (level >= MCH.Levels.QueenOverdrive)
@@ -444,7 +445,7 @@ namespace XIVSlothComboPlugin.Combos
                         
                     }
 
-                    if (gauge.Heat >= 50 && openerFinished)
+                    if (gauge.Heat >= 50 && openerFinished && IsEnabled(CustomComboPreset.MachinistSimpleWildCharge) )
                     {
                         if (level >= MCH.Levels.Hypercharge && !gauge.IsOverheated )
                         {
@@ -489,18 +490,17 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if ( GetCooldown(actionID).CooldownRemaining > 0.6 ) //gauss and ricochet weave
+                if ( IsEnabled(CustomComboPreset.MachinistSimpleGaussRicochet) && GetCooldown(actionID).CooldownRemaining > 0.6) //gauss and ricochet weave
                 {
                     var gaussCharges = GetRemainingCharges(MCH.GaussRound);
                     var ricochetCharges = GetRemainingCharges(MCH.Ricochet);
 
-                    var chargeLimit = openerFinished ? 0 : 1;
+                    var chargeLimit = openerFinished || level < MCH.Levels.Ricochet ? 0 : 1;
                     
-                    if (gaussCharges >= ricochetCharges && gaussCharges > chargeLimit && level >= MCH.Levels.GaussRound &&
-                        (level <= MCH.Levels.ChainSaw || GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
+                    if ((gaussCharges >= ricochetCharges || level < MCH.Levels.Ricochet) && gaussCharges > chargeLimit &&
+                        level >= MCH.Levels.GaussRound )
                         return MCH.GaussRound;
-                    else if (ricochetCharges > 0 && level >= MCH.Levels.Ricochet && 
-                        (level <= MCH.Levels.ChainSaw || GetCooldown(MCH.ChainSaw).CooldownRemaining > 1 || !openerFinished))
+                    else if (ricochetCharges > 0 && level >= MCH.Levels.Ricochet)
                         return MCH.Ricochet;
                 }
 
@@ -511,7 +511,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsOffCooldown(MCH.AirAnchor) && level >= MCH.Levels.AirAnchor)
                 {
-                    if ((!openerFinished || level < MCH.Levels.ChainSaw) && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                    if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && (!openerFinished || level < MCH.Levels.ChainSaw) && 
+                        !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
                     {
                         return MCH.Reassemble;
                     }
@@ -522,7 +523,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsOffCooldown(MCH.Drill) && level >= MCH.Levels.Drill)
                 {
-                    if (level < MCH.Levels.AirAnchor && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                    if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && level < MCH.Levels.AirAnchor && 
+                        !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
                     {
                         return MCH.Reassemble;
                     }
@@ -531,7 +533,8 @@ namespace XIVSlothComboPlugin.Combos
                    
                 if (IsOffCooldown(MCH.ChainSaw) && level >= MCH.Levels.ChainSaw && openerFinished)
                 {
-                    if (!HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                    if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && !HasEffect(MCH.Buffs.Reassembled) && 
+                        GetRemainingCharges(MCH.Reassemble) > 0)
                     {
                         return MCH.Reassemble;
                     }
@@ -545,7 +548,8 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (lastComboMove == MCH.SlugShot && level >= MCH.Levels.CleanShot)
                     {
-                        if (level < MCH.Levels.Drill && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
+                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && 
+                            level < MCH.Levels.Drill && !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
                         {
                             return MCH.Reassemble;
                         }

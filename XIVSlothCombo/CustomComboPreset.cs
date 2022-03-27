@@ -730,12 +730,32 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabalizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 heat and is off cooldown", MCH.JobID)]
         MachinistAutoBarrel = 8019,
 
-        [CustomComboInfo("Simple Machinist", "BETA TESTING - Single button single target machinist, including buffs and overprotections.\nConflicts with all other non-simple toggles!!", MCH.JobID)]
+        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other ST toggles!!", MCH.JobID)]
         MachinistSimpleFeature = 8020,
 
         [ParentCombo(MachinistSimpleFeature)]
-        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple machinist rotation if applicable", MCH.JobID)]
+        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple machinist rotation, if applicable.", MCH.JobID)]
         MachinistSimpleInterrupt = 8021,
+
+        [ParentCombo(MachinistSimpleFeature)]
+        [CustomComboInfo("Simple Gadget", "Adds Queen or Rook uses to the feature, based on your current level.\nTry to use Queen at optimal intervals between :55 to :05 windows.", MCH.JobID)]
+        MachinistSimpleGadget = 8022,
+
+        [ParentCombo(MachinistSimpleFeature)]
+        [CustomComboInfo("Simple Assembling", "Adds optimal reassemble uses to the feature.", MCH.JobID)]
+        MachinistSimpleAssembling = 8023,
+
+        [ParentCombo(MachinistSimpleFeature)]
+        [CustomComboInfo("Simple Gauss Ricochet", "Adds Gauss Round and Ricochet uses to the feature.", MCH.JobID)]
+        MachinistSimpleGaussRicochet = 8024,
+
+        [ParentCombo(MachinistSimpleFeature)]
+        [CustomComboInfo("Simple Wildcharge", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, AirAnchor and Chainsaw.", MCH.JobID)]
+        MachinistSimpleWildCharge = 8025,
+
+        [ParentCombo(MachinistSimpleFeature)]
+        [CustomComboInfo("Simple Stabilizer", "Adds Barrel Stabilizer to the feature.\n When heat < 50 and Wildfire is off CD or about to come off CD.", MCH.JobID)]
+        MachinistSimpleStabilizer = 8026,
 
         #endregion
         // ====================================================================================
