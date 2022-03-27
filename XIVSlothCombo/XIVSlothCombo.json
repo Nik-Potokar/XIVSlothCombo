@@ -1,5 +1,5 @@
 {
-  "Author": "attick,Kami,Daemitus,Grammernatzi,Aki,Iaotle,Codemned,PrincessRTFM,damolitionn,ele-starshade, k-kz",
+  "Author": "attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz",
   "Name": "XIVSlothCombo",
   "InternalName": "XIVSlothCombo",
   "DalamudApiLevel": 5,
@@ -8,5 +8,5 @@
   "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
   "IconUrl": "https://i.imgur.com/UeRukF8.png",
   "ImageUrls": [ "https://i.imgur.com/UeRukF8.png" ],
-  "Changelog": "Icon update"
+  "Changelog": "Huge DNC update, with Features and Fixes. Please see the project's GitHub page for a full changelog."
 }
