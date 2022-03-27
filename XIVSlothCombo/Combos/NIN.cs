@@ -11,7 +11,7 @@ namespace XIVSlothComboPlugin.Combos
             SpinningEdge = 2240,
             GustSlash = 2242,
             Hide = 2245,
-            Assassinate = 8814,
+            Assassinate = 2246,
             ThrowingDaggers = 2247,
             Mug = 2248,
             DeathBlossom = 2254,
@@ -29,12 +29,14 @@ namespace XIVSlothComboPlugin.Combos
             PhantomKamaitachi = 25774,
             ForkedRaiju = 25777,
             FleetingRaiju = 25778,
+            Hellfrog = 7401,
 
             //Mudras
             Ninjutsu = 2260,
+            Rabbit = 2272,
 
             //-- initial state mudras (the ones with charges)
-            Ten = 2259, 
+            Ten = 2259,
             Chi = 2261,
             Jin = 2263,
 
@@ -63,7 +65,9 @@ namespace XIVSlothComboPlugin.Combos
                 Hidden = 614,
                 TenChiJin = 1186,
                 AssassinateReady = 1955,
-                RaijuReady = 2690;
+                RaijuReady = 2690,
+                PhantomReady = 2723,
+                Doton = 501;
         }
 
         public static class Debuffs
@@ -80,6 +84,7 @@ namespace XIVSlothComboPlugin.Combos
                 Ten = 30,
                 Chi = 35,
                 Jin = 45,
+                Doton = 45,
                 Assassinate = 40,
                 HakkeMujinsatsu = 52,
                 ArmorCrush = 54,
@@ -99,7 +104,9 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.AeolianEdge)
             {
-                if (IsEnabled(CustomComboPreset.NinjaRangedUptimeFeature))
+                if (OriginalHook(NIN.Ninjutsu) is NIN.Rabbit) return OriginalHook(NIN.Ninjutsu);
+
+                if (IsEnabled(CustomComboPreset.NinjaRangedUptimeFeature) && !HasEffect(NIN.Buffs.Mudra))
                 {
                     if (!InMeleeRange(true))
                         return NIN.ThrowingDaggers;
@@ -108,17 +115,18 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return CustomCombo.OriginalHook(NIN.Ninjutsu);
                 }
-                if (IsEnabled(CustomComboPreset.NinjaFleetingRaijuFeature))
+                if (IsEnabled(CustomComboPreset.NinjaFleetingRaijuFeature) && !HasEffect(NIN.Buffs.Mudra))
                 {
                     if (HasEffect(NIN.Buffs.RaijuReady))
                         return NIN.FleetingRaiju;
                 }
-                if (IsEnabled(CustomComboPreset.NinjaHuraijinFeature) && level >= 60)
+                if (IsEnabled(CustomComboPreset.NinjaHuraijinFeature) && level >= 60 && !HasEffect(NIN.Buffs.Mudra))
                 {
                     var gauge = GetJobGauge<NINGauge>();
                     if (gauge.HutonTimer == 0)
                         return NIN.Huraijin;
                 }
+
                 if (IsEnabled(CustomComboPreset.NinjaBunshinFeature) && level >= 80)
                 {
                     var actionIDCD = GetCooldown(actionID);
@@ -126,8 +134,10 @@ namespace XIVSlothComboPlugin.Combos
                     var bunshinCD = GetCooldown(NIN.Bunshin);
                     if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown)
                         return NIN.Bunshin;
+                    if (HasEffect(NIN.Buffs.PhantomReady) && level >= 82)
+                        return NIN.PhantomKamaitachi;
                 }
-                if (IsEnabled(CustomComboPreset.NinjaBavacakraFeature) && level >= 80)
+                if (IsEnabled(CustomComboPreset.NinjaBavacakraFeature) && level >= 68)
                 {
                     var actionIDCD = GetCooldown(actionID);
                     var gauge = GetJobGauge<NINGauge>();
@@ -135,8 +145,8 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.Ninki >= 50 && actionIDCD.IsCooldown)
                         return NIN.Bavacakra;
                 }
-                // Probably better to use with trick
-                if (IsEnabled(CustomComboPreset.NinjaDreamWithinADream) && level >= 40)
+
+                if (level >= 40)
                 {
                     var actionIDCD = GetCooldown(actionID);
                     var gauge = GetJobGauge<NINGauge>();
@@ -146,8 +156,16 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(NIN.DreamWithinADream);
                     if (actionIDCD.IsCooldown && !assasinateCD.IsCooldown && level >= 40 && level <= 55)
                         return OriginalHook(NIN.Assassinate);
-
                 }
+                if (level >= 15)
+                {
+                    var actionIDCD = GetCooldown(actionID);
+                    var gauge = GetJobGauge<NINGauge>();
+                    var mugCD = GetCooldown(NIN.Mug);
+                    if (actionIDCD.IsCooldown && !mugCD.IsCooldown && gauge.Ninki <= 60)
+                        return OriginalHook(NIN.Mug);
+                }
+
                 if (comboTime > 0f)
                 {
                     if (lastComboMove == NIN.SpinningEdge && level >= 4)
@@ -168,6 +186,231 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 return NIN.SpinningEdge;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class SimpleNinjaSingleTarget : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinSimpleSingleTarget;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == NIN.SpinningEdge)
+            {
+                var actionIDCD = GetCooldown(actionID);
+                var gauge = GetJobGauge<NINGauge>();
+                var bunshinCD = GetCooldown(NIN.Bunshin);
+
+                if (OriginalHook(NIN.Ninjutsu) is NIN.Rabbit) return OriginalHook(NIN.Ninjutsu);
+
+
+                if (IsEnabled(CustomComboPreset.NinjaFleetingRaijuFeature) && HasEffect(NIN.Buffs.RaijuReady) && !HasEffect(NIN.Buffs.Mudra))
+                    return NIN.FleetingRaiju;
+
+                if (level >= 60 && gauge.HutonTimer == 0 && !HasEffect(NIN.Buffs.Mudra))
+                    return NIN.Huraijin;
+
+
+                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45)
+                {
+                    if (HasEffect(NIN.Buffs.Suiton))
+                        return NIN.TrickAttack;
+
+                    if (!HasEffect(NIN.Buffs.Mudra) && GetCooldown(NIN.Chi).RemainingCharges > 0)
+                        return OriginalHook(NIN.Chi);
+
+                    if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                        return OriginalHook(NIN.TenCombo);
+
+                    if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
+                        return OriginalHook(NIN.JinCombo);
+
+                    if (OriginalHook(NIN.Ninjutsu) is NIN.Suiton)
+                        return OriginalHook(NIN.Ninjutsu);
+                }
+
+                if (!GetCooldown(NIN.Kassatsu).IsCooldown && !HasEffect(NIN.Buffs.Mudra) && level >= 50)
+                    return NIN.Kassatsu;
+
+
+                if (level >= 76)
+                {
+                    if (!HasEffect(NIN.Buffs.Kassatsu))
+                    {
+                        if (OriginalHook(NIN.Ninjutsu) == NIN.Raiton)
+                            return OriginalHook(NIN.Ninjutsu);
+                        if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            return OriginalHook(NIN.ChiCombo);
+                        if (HasEffect(NIN.Buffs.Kassatsu))
+                            return NIN.JinCombo;
+                        if (GetCooldown(NIN.Jin).RemainingCharges > 0)
+                            return NIN.Jin;
+                    }
+                    else
+                    {
+                        if (OriginalHook(NIN.Ninjutsu) is NIN.HyoshoRanryu or NIN.Raiton)
+                            return OriginalHook(NIN.Ninjutsu);
+                        if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            return OriginalHook(NIN.JinCombo);
+
+                        return OriginalHook(NIN.Ten);
+                    }
+                }
+                else
+                {
+                    if (OriginalHook(NIN.Ninjutsu) == NIN.Raiton)
+                        return OriginalHook(NIN.Ninjutsu);
+                    if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                    {
+                        if (level < NIN.Levels.Chi)
+                            return OriginalHook(NIN.Ninjutsu);
+
+                        return OriginalHook(NIN.ChiCombo);
+                    }
+                    if (HasEffect(NIN.Buffs.Kassatsu))
+                        return NIN.JinCombo;
+                    if (GetCooldown(NIN.Jin).RemainingCharges > 0)
+                        return NIN.Jin;
+                }
+
+
+                if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown)
+                    return NIN.Bunshin;
+                if (HasEffect(NIN.Buffs.PhantomReady) && level >= 82)
+                    return NIN.PhantomKamaitachi;
+
+                if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && level >= 68)
+                    return NIN.Bavacakra;
+
+
+                if (level >= 40)
+                {
+                    var assasinateCD = GetCooldown(OriginalHook(NIN.Assassinate));
+                    if (actionIDCD.IsCooldown && !assasinateCD.IsCooldown)
+                        return OriginalHook(NIN.Assassinate);
+                }
+                if (level >= 15)
+                {
+                    var mugCD = GetCooldown(NIN.Mug);
+                    if (actionIDCD.IsCooldown && !mugCD.IsCooldown && gauge.Ninki <= 60)
+                        return OriginalHook(NIN.Mug);
+                }
+
+                if (comboTime > 0f)
+                {
+                    if (lastComboMove == NIN.SpinningEdge && level >= 4)
+                        return NIN.GustSlash;
+
+
+                    if (lastComboMove == NIN.GustSlash && level >= 20 && gauge.HutonTimer < 15000 && level >= 54)
+                        return NIN.ArmorCrush;
+
+
+                    if (lastComboMove == NIN.GustSlash && level >= 26)
+                        return NIN.AeolianEdge;
+
+                }
+
+                return NIN.SpinningEdge;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class SimpleNinjaAoE : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinSimpleAoE;
+
+        private static uint lastUsedJutsu { get; set; }
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == NIN.DeathBlossom)
+            {
+
+                var dotonBuff = FindEffect(NIN.Buffs.Doton);
+                var jutsuCooldown = GetCooldown(NIN.Ten);
+                var jutsuCharges = jutsuCooldown.RemainingCharges;
+                var jutsuFullCooldown = jutsuCooldown.CooldownRemaining;
+                lastUsedJutsu = OriginalHook(NIN.Ninjutsu) != NIN.Ninjutsu ? OriginalHook(NIN.Ninjutsu) : lastUsedJutsu;
+
+
+                var gauge = GetJobGauge<NINGauge>();
+                if (gauge.HutonTimer == 0 && !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.Kassatsu) && level >= 60)
+                    return NIN.Huraijin;
+
+                //Doton is really annoying. It takes a hot moment for the buff to apply. This is just logic to try and deal with it so it doesn't clip with the rest of the feature.
+                if (OriginalHook(NIN.Ninjutsu) == NIN.Doton)
+                {
+                    return OriginalHook(NIN.Ninjutsu);
+                }
+
+                if ((!HasEffect(NIN.Buffs.Doton) || (dotonBuff != null && dotonBuff?.RemainingTime <= 5)) && (jutsuCharges > 0 || HasEffect(NIN.Buffs.Mudra)) && level >= NIN.Levels.Doton && lastUsedJutsu != NIN.Doton)
+                {
+                    if (OriginalHook(NIN.Ninjutsu) == NIN.Doton)
+                    {
+                        return NIN.Doton;
+                    }
+                    if (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku)
+                    {
+                        return NIN.ChiCombo;
+                    }
+                    if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                    {
+                        return NIN.TenCombo;
+                    }
+
+                    if (HasEffect(NIN.Buffs.Kassatsu)) return NIN.JinCombo;
+
+                    if (!HasEffect(NIN.Buffs.Mudra))
+                        return NIN.Jin;
+
+                }
+
+
+
+                if (jutsuCharges > 1 || HasEffect(NIN.Buffs.Mudra) || HasEffect(NIN.Buffs.Kassatsu) || (!GetCooldown(NIN.Kassatsu).IsCooldown && level >= 50))
+                {
+                    if (!GetCooldown(NIN.Kassatsu).IsCooldown && !HasEffect(NIN.Buffs.Mudra) && level >= 50)
+                    {
+                        return NIN.Kassatsu;
+                    }
+
+                    if (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku) return OriginalHook(NIN.Ninjutsu);
+                    if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken) return NIN.TenCombo;
+
+                    if (HasEffect(NIN.Buffs.Kassatsu)) return NIN.JinCombo;
+
+                    return NIN.Jin;
+
+                }
+
+                if (!HasEffect(NIN.Buffs.Mudra))
+                {
+                    var actionIDCD = GetCooldown(actionID);
+                    var bunshinCD = GetCooldown(NIN.Bunshin);
+
+                    if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= 80)
+                        return NIN.Bunshin;
+                    if (HasEffect(NIN.Buffs.PhantomReady) && level >= 82)
+                        return NIN.PhantomKamaitachi;
+                    if (gauge.Ninki >= 50 && actionIDCD.IsCooldown)
+                        return NIN.Hellfrog;
+
+                    if (comboTime > 0f && lastComboMove == NIN.DeathBlossom && level >= 52)
+                    {
+                        return NIN.HakkeMujinsatsu;
+                    }
+
+
+                    return NIN.DeathBlossom;
+                }
+
+
             }
 
             return actionID;
@@ -207,66 +450,27 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class NinjaAssassinateFeature : CustomCombo
+
+    internal class NinjaHideMugFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaAssassinateFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaHideMugFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == NIN.DreamWithinADream && level >= 60 && CustomCombo.HasEffect(NIN.Buffs.AssassinateReady))
+            if (actionID == NIN.Hide)
             {
-                return 2246u;
+                if (CustomCombo.HasEffect(NIN.Buffs.Suiton) || CustomCombo.HasEffect(NIN.Buffs.Hidden))
+                {
+                    return NIN.TrickAttack;
+                }
+
+                if (CustomCombo.HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                {
+                    return NIN.Mug;
+                }
             }
 
             return actionID;
-        }
-    }
-
-    internal class NinjaHakkeMujinsatsuCombo : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaHakkeMujinsatsuCombo;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == NIN.HakkeMujinsatsu)
-            {
-                if (CustomCombo.IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && CustomCombo.OriginalHook(NIN.Jin) == CustomCombo.OriginalHook(NIN.JinCombo))
-                {
-                    return CustomCombo.OriginalHook(NIN.Ninjutsu);
-                }
-
-                if (comboTime > 0f && lastComboMove == NIN.DeathBlossom && level >= 52)
-                {
-                    return NIN.HakkeMujinsatsu;
-                }
-
-                return NIN.DeathBlossom;
-            }
-
-            return actionID;
-        }
-
-        internal class NinjaHideMugFeature : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinjaHideMugFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == NIN.Hide)
-                {
-                    if (CustomCombo.HasEffect(NIN.Buffs.Suiton) || CustomCombo.HasEffect(NIN.Buffs.Hidden))
-                    {
-                        return NIN.TrickAttack;
-                    }
-
-                    if (CustomCombo.HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
-                    {
-                        return NIN.Mug;
-                    }
-                }
-
-                return actionID;
-            }
         }
     }
 
@@ -359,9 +563,9 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is NIN.Ten or NIN.Chi or NIN.Jin )
+            if (actionID is NIN.Ten or NIN.Chi or NIN.Jin)
             {
-                if (HasEffect(NIN.Buffs.Mudra)) 
+                if (HasEffect(NIN.Buffs.Mudra))
                 {
                     if (level >= NIN.Levels.Ten && actionID == NIN.Ten)
                     {
