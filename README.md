@@ -1,4 +1,5 @@
 # XIVSlothCombo - The Super Expanded XIVCombo
+## NEW: Join our [discord](https://discord.gg/xT7zyjzjtY)!
 
 [![Build](https://img.shields.io/github/workflow/status/Nik-Potokar/XIVSlothCombo/Build?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml)
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Nik-Potokar/XIVSlothCombo/main?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/commits/main)
