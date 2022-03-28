@@ -2,6 +2,7 @@
 
 [![Build](https://img.shields.io/github/workflow/status/Nik-Potokar/XIVSlothCombo/Build?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml)
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Nik-Potokar/XIVSlothCombo/main?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/commits/main)
+![Discord](https://img.shields.io/discord/957680331056615506?color=5865F2&label=Discord&logo=Discord&logoColor=ffffff&style=for-the-badge)
 
 # Have an issue or suggestion? Please post them *[here](https://github.com/Nik-Potokar/XIVSlothCombo/issues)*. If something dosen't seem to be working please swap class or re-slot the skill.
 
