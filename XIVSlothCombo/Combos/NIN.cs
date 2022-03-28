@@ -132,9 +132,10 @@ namespace XIVSlothComboPlugin.Combos
                     var actionIDCD = GetCooldown(actionID);
                     var gauge = GetJobGauge<NINGauge>();
                     var bunshinCD = GetCooldown(NIN.Bunshin);
-                    if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown)
+                    if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= NIN.Levels.Bunshin)
                         return NIN.Bunshin;
-                    if (HasEffect(NIN.Buffs.PhantomReady) && level >= 82)
+                        
+                    if (HasEffect(NIN.Buffs.PhantomReady) && level >= NIN.Levels.PhantomKamaitachi)
                         return NIN.PhantomKamaitachi;
                 }
                 if (IsEnabled(CustomComboPreset.NinjaBavacakraFeature) && level >= 68)
@@ -277,9 +278,11 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
 
-                if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown)
+
+                if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= NIN.Levels.Bunshin)
                     return NIN.Bunshin;
-                if (HasEffect(NIN.Buffs.PhantomReady) && level >= 82)
+                if (HasEffect(NIN.Buffs.PhantomReady) && level >= NIN.Levels.PhantomKamaitachi)
+
                     return NIN.PhantomKamaitachi;
 
                 if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && level >= 68)
