@@ -450,7 +450,8 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= MCH.Levels.Hypercharge && !gauge.IsOverheated )
                         {
                             //protection
-                            if (HasEffect(MCH.Buffs.Wildfire) || (gauge.Heat == 100 && GetCooldown(MCH.Wildfire).CooldownRemaining > 6)) return MCH.Hypercharge;
+                            if (HasEffect(MCH.Buffs.Wildfire) || (gauge.Heat == 100 && 
+                                (GetCooldown(MCH.Wildfire).CooldownRemaining > 6 || level < MCH.Levels.Wildfire))) return MCH.Hypercharge;
 
                             if (level >= MCH.Levels.Drill && GetCooldown(MCH.Drill).CooldownRemaining > 8)
                             {
@@ -484,7 +485,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (level >= MCH.Levels.Wildfire && IsOffCooldown(MCH.Wildfire))
                                     return MCH.Wildfire;
 
-                                if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14)  return MCH.Hypercharge;
+                                if (GetCooldown(MCH.Wildfire).CooldownRemaining > 14 || level < MCH.Levels.Wildfire)  return MCH.Hypercharge;
                             }
                         }       
                     }
