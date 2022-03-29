@@ -134,7 +134,6 @@ namespace XIVSlothComboPlugin.Combos
                     var bunshinCD = GetCooldown(NIN.Bunshin);
                     if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= NIN.Levels.Bunshin)
                         return NIN.Bunshin;
-                        
                     if (HasEffect(NIN.Buffs.PhantomReady) && level >= NIN.Levels.PhantomKamaitachi)
                         return NIN.PhantomKamaitachi;
                 }
@@ -208,14 +207,14 @@ namespace XIVSlothComboPlugin.Combos
                 if (OriginalHook(NIN.Ninjutsu) is NIN.Rabbit) return OriginalHook(NIN.Ninjutsu);
 
 
-                if (IsEnabled(CustomComboPreset.NinjaFleetingRaijuFeature) && HasEffect(NIN.Buffs.RaijuReady) && !HasEffect(NIN.Buffs.Mudra))
+                if (HasEffect(NIN.Buffs.RaijuReady) && !HasEffect(NIN.Buffs.Mudra))
                     return NIN.FleetingRaiju;
 
                 if (level >= 60 && gauge.HutonTimer == 0 && !HasEffect(NIN.Buffs.Mudra))
                     return NIN.Huraijin;
 
 
-                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
+                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45)
                 {
                     if (HasEffect(NIN.Buffs.Suiton))
                         return NIN.TrickAttack;
@@ -278,11 +277,9 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
 
-
                 if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= NIN.Levels.Bunshin)
                     return NIN.Bunshin;
                 if (HasEffect(NIN.Buffs.PhantomReady) && level >= NIN.Levels.PhantomKamaitachi)
-
                     return NIN.PhantomKamaitachi;
 
                 if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && level >= 68)
