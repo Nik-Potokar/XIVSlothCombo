@@ -215,7 +215,7 @@ namespace XIVSlothComboPlugin.Combos
                     return NIN.Huraijin;
 
 
-                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45)
+                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
                 {
                     if (HasEffect(NIN.Buffs.Suiton))
                         return NIN.TrickAttack;
@@ -568,46 +568,149 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is NIN.Ten or NIN.Chi or NIN.Jin)
             {
+                var mudrapath = Service.Configuration.MudraPathSelection;
+
                 if (HasEffect(NIN.Buffs.Mudra))
                 {
-                    if (level >= NIN.Levels.Ten && actionID == NIN.Ten)
+                    if (mudrapath == 0)
                     {
-                        if (level >= NIN.Levels.Chi && (OriginalHook(NIN.Ninjutsu) is NIN.Hyoton or NIN.HyoshoRanryu))
+                        if (level >= NIN.Levels.Ten && actionID == NIN.Ten)
                         {
-                            return OriginalHook(NIN.ChiCombo);
+                            if (level >= NIN.Levels.Chi && (OriginalHook(NIN.Ninjutsu) is NIN.Hyoton or NIN.HyoshoRanryu))
+                            {
+                                return OriginalHook(NIN.ChiCombo);
+                            }
+                            if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                if (level >= NIN.Levels.Jin) return OriginalHook(NIN.JinCombo);
+                                else if (level >= NIN.Levels.Chi) return OriginalHook(NIN.ChiCombo);
+                            }
                         }
-                        if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+
+                        if (level >= NIN.Levels.Chi && actionID == NIN.Chi)
                         {
-                            if (level >= NIN.Levels.Jin) return OriginalHook(NIN.JinCombo);
-                            else if (level >= NIN.Levels.Chi) return OriginalHook(NIN.ChiCombo);
+                            if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
+                            {
+                                return OriginalHook(NIN.JinCombo);
+                            }
+                            if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                return OriginalHook(NIN.TenCombo);
+                            }
                         }
+
+                        if (level >= NIN.Levels.Jin && actionID == NIN.Jin)
+                        {
+                            if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.Raiton)
+                            {
+                                return OriginalHook(NIN.TenCombo);
+                            }
+                            if (level >= NIN.Levels.Chi && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                return OriginalHook(NIN.ChiCombo);
+                            }
+                        }
+
+                        return OriginalHook(NIN.Ninjutsu);
                     }
 
-                    if (level >= NIN.Levels.Chi && actionID == NIN.Chi)
+
+                    if (mudrapath == 1)
                     {
-                        if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
+                        if (level >= NIN.Levels.Ten && actionID == NIN.Ten)
                         {
-                            return OriginalHook(NIN.JinCombo);
+                            if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Raiton))
+                            {
+                                return OriginalHook(NIN.JinCombo);
+                            }
+                            if (level >= NIN.Levels.Chi && (OriginalHook(NIN.Ninjutsu) is NIN.HyoshoRanryu))
+                            {
+                                return OriginalHook(NIN.ChiCombo);
+                            }
+                            if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                if (HasEffect(NIN.Buffs.Kassatsu) && level >= NIN.Levels.EnhancedKassatsu) return NIN.JinCombo;
+                                if (level >= NIN.Levels.Chi) return OriginalHook(NIN.ChiCombo);
+                                else if (level >= NIN.Levels.Jin) return OriginalHook(NIN.JinCombo);
+                            }
                         }
-                        if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+
+                        if (level >= NIN.Levels.Chi && actionID == NIN.Chi)
                         {
-                            return OriginalHook(NIN.TenCombo);
+                            if (level >= NIN.Levels.Ten && (OriginalHook(NIN.Ninjutsu) is NIN.Hyoton))
+                            {
+                                return OriginalHook(NIN.TenCombo);
+                            }
+                            if (level >= NIN.Levels.Jin && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                return OriginalHook(NIN.JinCombo);
+                            }
                         }
+
+                        if (level >= NIN.Levels.Jin && actionID == NIN.Jin)
+                        {
+                            if (level >= NIN.Levels.Chi && OriginalHook(NIN.Ninjutsu) is NIN.GokaMekkyaku or NIN.Katon)
+                            {
+                                return OriginalHook(NIN.ChiCombo);
+                            }
+                            if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                return OriginalHook(NIN.TenCombo);
+                            }
+                        }
+
+                        return OriginalHook(NIN.Ninjutsu);
                     }
 
-                    if (level >= NIN.Levels.Jin && actionID == NIN.Jin)
+                    if (mudrapath == 2)
                     {
-                        if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.Raiton)
+                        if (level >= NIN.Levels.Ten && actionID == NIN.Ten)
                         {
-                            return OriginalHook(NIN.TenCombo);
+                            if (level >= NIN.Levels.Chi && (OriginalHook(NIN.Ninjutsu) is NIN.Hyoton or NIN.HyoshoRanryu))
+                            {
+                                return OriginalHook(NIN.Chi);
+                            }
+
+                            if (OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                if (level >= NIN.Levels.Jin) return OriginalHook(NIN.JinCombo);
+                                else if (level >= NIN.Levels.Chi) return OriginalHook(NIN.ChiCombo);
+                            }
                         }
-                        if (level >= NIN.Levels.Chi && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+
+                        if (level >= NIN.Levels.Chi && actionID == NIN.Chi)
                         {
-                            return OriginalHook(NIN.ChiCombo);
+                            if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
+                            {
+                                return OriginalHook(NIN.Jin);
+                            }
+                            if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                return OriginalHook(NIN.Ten);
+                            }
                         }
+
+                        if (level >= NIN.Levels.Jin && actionID == NIN.Jin)
+                        {
+                            if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) is NIN.Raiton)
+                            {
+                                return OriginalHook(NIN.Ten);
+                            }
+                            if (level >= NIN.Levels.Chi && OriginalHook(NIN.Ninjutsu) == NIN.GokaMekkyaku)
+                            {
+                                return OriginalHook(NIN.Chi);
+                            }
+                            if (level >= NIN.Levels.Chi && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                            {
+                                if (HasEffect(NIN.Buffs.Kassatsu) && level >= NIN.Levels.EnhancedKassatsu) return OriginalHook(NIN.Ten);
+                                return OriginalHook(NIN.Chi);
+                            }
+                        }
+
+                        return OriginalHook(NIN.Ninjutsu);
                     }
 
-                    return OriginalHook(NIN.Ninjutsu);
+
                 }
             }
 

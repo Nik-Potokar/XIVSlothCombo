@@ -300,6 +300,42 @@ namespace XIVSlothComboPlugin
 
                 ImGui.Spacing();
             }
+            if (preset == CustomComboPreset.NinjaSimpleMudras && enabled)
+            {
+                var mudrapath = Service.Configuration.MudraPathSelection;
+
+                bool path1 = mudrapath == 1 ? true : false;
+                bool path2 = mudrapath == 2 ? true : false;
+
+                ImGui.Indent();
+                ImGui.PushItemWidth(75);
+
+                if (ImGui.Checkbox("Mudra Path Set 1", ref path1))
+                {
+
+                    Service.Configuration.MudraPathSelection = 1;
+                    Service.Configuration.Save();
+
+                }
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+                ImGui.TextWrapped($"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton");
+                ImGui.PopStyleColor();
+
+                if (ImGui.Checkbox("Mudra Path Set 2", ref path2))
+                {
+                    Service.Configuration.MudraPathSelection = 2;
+                    Service.Configuration.Save();
+
+                }
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+                ImGui.TextWrapped($"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).");
+                ImGui.PopStyleColor();
+
+
+                ImGui.Unindent();
+                ImGui.Spacing();
+
+            }
 
             i++;
 
