@@ -9,7 +9,9 @@
 
 
 ## Installation
-* Copy the Custom Repo Link `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json`
+* Copy the Custom Repo Link
+
+`https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json`
 * Open dalamud settings ingame
 * Paste the link into the Custom Plugin repositories
 * Install as normal from Dalamud Plugins window.
