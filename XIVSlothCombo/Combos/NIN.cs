@@ -214,7 +214,7 @@ namespace XIVSlothComboPlugin.Combos
                     return NIN.Huraijin;
 
 
-                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45)
+                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
                 {
                     if (HasEffect(NIN.Buffs.Suiton))
                         return NIN.TrickAttack;
