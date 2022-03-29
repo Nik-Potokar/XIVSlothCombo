@@ -7,10 +7,10 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 40;
 
         public const uint
+
             // Heals and Shields
             Diagnosis = 24284,
             Prognosis = 24286,
-            Egeiro = 24287,
             Physis = 24288,
             Druochole = 24296,
             Kerachole = 24298,
@@ -21,6 +21,7 @@ namespace XIVSlothComboPlugin.Combos
             Haima = 24305,
             Panhaima = 24311,
             Holos = 24310,
+
             // DPS
             Dosis1 = 24283,
             Dosis2 = 24306,
@@ -35,17 +36,21 @@ namespace XIVSlothComboPlugin.Combos
             Dyskrasia2 = 24315,
             Toxikon = 24304,
             Pneuma = 24318,
+
             // Buffs
             Soteria = 24294,
             Zoe = 24300,
             Krasis = 24317,
+
             // Other
-            Swiftcast = 7561,
-            LucidDreaming = 7562,
             Kardia = 24285,
             Eukrasia = 24290,
-            Rhizomata = 24309;
-			
+            Rhizomata = 24309,
+
+            // Role
+            Egeiro = 24287,
+            Swiftcast = 7561,
+            LucidDreaming = 7562;
 
         public static class Buffs
         {
@@ -69,12 +74,14 @@ namespace XIVSlothComboPlugin.Combos
                 Dosis = 1,
                 Prognosis = 10,
                 Phlegma = 26,
+                Eukrasia = 30,
                 Soteria = 35,
                 Druochole = 45,
                 Kerachole = 50,
                 Ixochole = 52,
                 Physis2 = 60,
                 Taurochole = 62,
+                Toxikon = 66,
                 Haima = 70,
                 Phlegma2 = 72,
                 Dosis2 = 72,
@@ -153,7 +160,7 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(SGE.Toxikon);
                 }
 
-                if (level >= 66)
+                if (level >= SGE.Levels.Toxikon)
                 {
                     if (GetCooldown(SGE.Phlegma2).CooldownRemaining > 45 && GetJobGauge<SGEGauge>().Addersting > 0)
                         return OriginalHook(SGE.Toxikon);
@@ -207,7 +214,7 @@ namespace XIVSlothComboPlugin.Combos
                 var dosis2Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
                 var dosis3Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 82 && incombat)
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= SGE.Levels.Dosis3 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis3;
@@ -215,7 +222,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Eukrasia;
                 }
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 72 && level <= 81 && incombat)
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= SGE.Levels.Dosis2 && level < SGE.Levels.Dosis3 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis2;
@@ -223,7 +230,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Eukrasia;
                 }
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= 30 && level <= 71 && incombat)
+                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= SGE.Levels.Eukrasia && level < SGE.Levels.Dosis2 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis1;
@@ -298,7 +305,7 @@ namespace XIVSlothComboPlugin.Combos
                 var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
                 var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= 82 && incombat)
+                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= SGE.Levels.Dosis3 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis3;
@@ -306,7 +313,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Eukrasia;
                 }
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= 72 && level <= 81 && incombat)
+                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= SGE.Levels.Dosis2 && level < SGE.Levels.Dosis3 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis2;
@@ -314,7 +321,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Eukrasia;
                 }
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= 30 && level <= 71 && incombat)
+                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= SGE.Levels.Eukrasia && level < SGE.Levels.Dosis2 && incombat)
                 {
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDosis1;
