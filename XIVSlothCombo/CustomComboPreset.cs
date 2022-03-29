@@ -1446,20 +1446,22 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SCH Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available.", SCH.JobID)]
         SCHAlternateRaiseFeature = 16008,
 
-        [CustomComboInfo("SCH Alternate DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID)]
-        SCHDPSAlternateFeature = 16003,
-
         [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID)]
         ScholarFairyFeature = 16004,
 
         [CustomComboInfo("DPS Feature", "Adds Bio1/Bio2/Biosys to Broil/Ruin whenever the debuff is not present or about to expire.", SCH.JobID)]
         ScholarDPSFeature = 16005,
 
+        [ParentCombo(ScholarDPSFeature)]
         [CustomComboInfo("DPS Feature Buff Option", "Adds Chainstratagem to the DPS Feature.", SCH.JobID)]
         ScholarDPSFeatureBuffOption = 16006,
 
+        [ParentCombo(ScholarDPSFeature)]
         [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below 8k mana.", SCH.JobID)]
         ScholarLucidDPSFeature = 16007,
+
+        [CustomComboInfo("SCH Alternate DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID)]
+        SCHDPSAlternateFeature = 16003,
 
         #endregion
         // ====================================================================================
