@@ -972,6 +972,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Ninja AoE", "Turns Death Blossom into a one-button full AoE rotation.\nApplies Doton but will only use Ninjitsus if under the effect of Kassatsu or have 2 charges to ensure more Doton uptime.", NIN.JobID)]
         NinSimpleAoE = 10023,
 
+        [ParentCombo(NinSimpleSingleTarget)]
+        [CustomComboInfo("Include Trick Attack", "Add or disable Trick Attack as part of the feature.", NIN.JobID)]
+        NinSimpleTrickFeature = 10024,
+
         #endregion
         // ====================================================================================
         #region PALADIN

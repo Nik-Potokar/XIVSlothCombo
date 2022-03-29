@@ -125,6 +125,8 @@ namespace XIVSlothComboPlugin
 
         public float SkillCooldownRemaining { get; set; } = 0;
 
+        public int MudraPathSelection { get; set; } = 0;
+
         [JsonProperty]
         private static Dictionary<string,float> CustomConfigValues { get; set; } = new Dictionary<string,float>();
 
