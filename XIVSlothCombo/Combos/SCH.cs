@@ -8,31 +8,48 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 28;
 
         public const uint
-            FeyBless = 16543,
+
+            // Heals
+            Physick = 190,
+            Adloquium = 185,
+            Succor = 186,
+            Lustrate = 189,
+            SacredSoil = 188,
+            Indomitability = 3583,
             Consolation = 16546,
-            EnergyDrain = 167,
-            LucidDreaming = 7562,
-            Resurrection = 173,
-            Swiftcast = 7561,
-            Aetherflow = 166,
+
+            // Offense
             Bio1 = 17864,
             Bio2 = 17865,
             Biolysis = 16540,
             Ruin1 = 163,
             Ruin2 = 17870,
-            SummonSeraph = 16545,
-            SummonEos = 17215,
-            SummonSelene = 17216,
             Broil1 = 3584,
             Broil2 = 7435,
             Broil3 = 16541,
             Broil4 = 25865,
-            Indomitability = 3583,
+            Scourge = 16539,
+            EnergyDrain = 167,
+
+            // Faerie
+            SummonSeraph = 16545,
+            SummonEos = 17215,
+            SummonSelene = 17216,
             WhisperingDawn = 16537,
             FeyIllumination = 16538,
             Dissipation = 3587,
             Aetherpact = 7437,
-            ChainStratagem = 7436;
+            FeyBlessing = 16543,
+
+            // Other
+            Aetherflow = 166,
+            ChainStratagem = 7436,
+
+            // Role
+            Swiftcast = 7561,
+            Resurrection = 173,
+            LucidDreaming = 7562,
+            Esuna = 5768;
 
         public static class Buffs
         {
@@ -51,7 +68,39 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Levels
         {
-            // public const byte placeholder = 0;
+            public const byte
+
+                Bio1 = 2,
+                Physick = 4,
+                WhisperingDawn = 20,
+                Bio2 = 26,
+                Adloquium = 30,
+                Succor = 35,
+                Ruin2 = 38,
+                FeyIllumination = 40,
+                Aetherflow = 45,
+                EnergyDrain = 45,
+                Lustrate = 45,
+                Scourge = 46,
+                SacredSoil = 50,
+                Indomitability = 52,
+                Broil = 54,
+                DeploymentTactics = 56,
+                EmergencyTactics = 58,
+                Dissipation = 60,
+                Excogitation = 62,
+                Broil2 = 64,
+                ChainStratagem = 66,
+                Aetherpact = 70,
+                Biolysis = 72,
+                Broil3 = 72,
+                Recitation = 74,
+                FeyBlessing = 76,
+                SummonSeraph = 80,
+                Broil4 = 82,
+                Scoura = 82,
+                Protraction = 86,
+                Expedient = 90;
         }
     }
 
@@ -61,7 +110,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.FeyBless)
+            if (actionID == SCH.FeyBlessing)
             {
                 var gauge = GetJobGauge<SCHGauge>();
                 if (gauge.SeraphTimer > 0)
@@ -140,21 +189,21 @@ namespace XIVSlothComboPlugin.Combos
                 var bio2Debuff = FindTargetEffect(SCH.Debuffs.Bio2);
                 var bio1Debuff = FindTargetEffect(SCH.Debuffs.Bio1);
 
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= 72)
+                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Biolysis)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Biolysis) && incombat && level >= 72) || (biolysisDebuff.RemainingTime < 5 && incombat && level >= 72))
+                    if ((!TargetHasEffect(SCH.Debuffs.Biolysis) && incombat && level >= SCH.Levels.Biolysis) || (biolysisDebuff.RemainingTime < 5 && incombat && level >= SCH.Levels.Biolysis))
                         return SCH.Biolysis;
                 }
 
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= 26 && level <= 71)
+                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level <= 71 && level >= 26) || (bio2Debuff.RemainingTime < 5 && incombat && level >= 26 && level <= 71))
+                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level < SCH.Levels.Biolysis && level >= SCH.Levels.Bio2) || (bio2Debuff.RemainingTime < 5 && incombat && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis))
                         return SCH.Bio2;
                 }
 
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= 2 && level <= 25)
+                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level < SCH.Levels.Bio2)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio1) && level >= 2 && level <= 25) || (bio1Debuff.RemainingTime < 5 && incombat && level >= 2 && level <= 25))
+                    if ((!TargetHasEffect(SCH.Debuffs.Bio1) && level < SCH.Levels.Bio2) || (bio1Debuff.RemainingTime < 5 && incombat && level < SCH.Levels.Bio2))
                         return SCH.Bio1;
                 }
             }
@@ -167,7 +216,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == SCH.WhisperingDawn || actionID == SCH.FeyBless || actionID == SCH.FeyBless || actionID == SCH.FeyIllumination || actionID == SCH.Dissipation || actionID == SCH.Aetherpact)
+            if(actionID == SCH.WhisperingDawn || actionID == SCH.FeyBlessing || actionID == SCH.FeyBlessing || actionID == SCH.FeyIllumination || actionID == SCH.Dissipation || actionID == SCH.Aetherpact)
             {
                 var gauge = GetJobGauge<SCHGauge>();
                 if (!Service.BuddyList.PetBuddyPresent && gauge.SeraphTimer == 0)
@@ -176,53 +225,50 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
     internal class ScholarDPSFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarDPSFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.Broil4 || actionID == SCH.Broil3 || actionID == SCH.Broil2 || actionID == SCH.Broil1 || actionID == SCH.Ruin1)
+            if (actionID is SCH.Broil4 or SCH.Broil3 or SCH.Broil2 or SCH.Broil1 or SCH.Ruin1)
             {
                 var actionIDCD = GetCooldown(actionID);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var gauge = GetJobGauge<SCHGauge>();
                 var lucidDreaming = GetCooldown(SCH.LucidDreaming);
-                // biosys
-                var biosys = FindTargetEffect(SCH.Debuffs.Biolysis);
-                // bio 1
+                var biolysis = FindTargetEffect(SCH.Debuffs.Biolysis);
                 var bio1 = FindTargetEffect(SCH.Debuffs.Bio1);
-                // bio 2
                 var bio2 = FindTargetEffect(SCH.Debuffs.Bio2);
-                // buff
                 var chainBuff = GetCooldown(SCH.ChainStratagem);
                 var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
+                var canWeave = CanWeave(actionID);
+
                 if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature))
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && canWeave)
                         return SCH.LucidDreaming;
                 }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 72 && incombat)
+                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Biolysis && incombat)
                 {
-                    if ((biosys is null) || (biosys.RemainingTime <= 3))
+                    if ((biolysis is null) || (biolysis.RemainingTime <= 3))
                         return SCH.Biolysis;
                 }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 26 && level <= 71 && incombat)
+                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis && incombat)
                 {
                     if ((bio2 is null) || (bio2.RemainingTime <= 3))
                         return SCH.Bio2;
                 }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= 4 && level <= 25 && incombat)
+                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio1 && level < SCH.Levels.Bio2 && incombat)
                 {
                     if ((bio1 is null) || (bio1.RemainingTime <= 3))
                         return SCH.Bio1;
                 }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeatureBuffOption) && level >= 66)
+                if (IsEnabled(CustomComboPreset.ScholarDPSFeatureBuffOption) && level >= SCH.Levels.ChainStratagem)
                 {
                     if (!chainBuff.IsCooldown && !chainTarget && actionIDCD.IsCooldown && incombat)
                         return SCH.ChainStratagem;
                 }
-
 
             }
             return actionID;
