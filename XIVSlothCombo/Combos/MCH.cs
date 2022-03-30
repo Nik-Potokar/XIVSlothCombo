@@ -403,9 +403,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return MCH.RookAutoturret;
                             }
                         }
-                        // even bursts ?
-                        else if (gauge.Battery >= 80 && (IsOnCooldown(MCH.Wildfire) || GetCooldown(MCH.Wildfire).CooldownRemaining < 5) && GetCooldown(MCH.AirAnchor).CooldownRemaining < 7 &&
-                            GetCooldown(MCH.Drill).CooldownRemaining < 10 && GetCooldown(MCH.ChainSaw).CooldownRemaining < 17)
+                        else if (gauge.Battery >= 50 && CombatEngageDuration().Seconds >= 55 )
                         {
                             if (level >= MCH.Levels.QueenOverdrive)
                             {
@@ -416,20 +414,6 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 return MCH.RookAutoturret;
                             }
-                        //odd bursts ?
-                        } else if (gauge.Battery >= 50 && (IsOnCooldown(MCH.Wildfire) || GetCooldown(MCH.Wildfire).CooldownRemaining < 5) &&
-                            GetCooldown(MCH.ChainSaw).CooldownRemaining < 17)
-                        {
-                            if (level >= MCH.Levels.QueenOverdrive)
-                            {
-                                return MCH.AutomatonQueen;
-                            }
-
-                            if (level >= MCH.Levels.RookOverdrive)
-                            {
-                                return MCH.RookAutoturret;
-                            }
-                        //opener
                         } else if (gauge.LastSummonBatteryPower == 0 && gauge.Battery >= 50)
                         {
                             if (level >= MCH.Levels.QueenOverdrive)
