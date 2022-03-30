@@ -38,7 +38,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
     internal class ProminenceComboFeature : CustomCombo
@@ -55,7 +55,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 }

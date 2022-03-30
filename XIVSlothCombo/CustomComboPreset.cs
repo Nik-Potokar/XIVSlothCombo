@@ -1457,7 +1457,7 @@ namespace XIVSlothComboPlugin
         ScholarDPSFeatureBuffOption = 16006,
 
         [ParentCombo(ScholarDPSFeature)]
-        [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below 8k mana.", SCH.JobID)]
+        [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below set MP value.", SCH.JobID)]
         ScholarLucidDPSFeature = 16007,
 
         [CustomComboInfo("SCH Alternate DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID)]

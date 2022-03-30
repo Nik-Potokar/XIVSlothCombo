@@ -127,11 +127,13 @@ namespace XIVSlothComboPlugin
 
         public int MudraPathSelection { get; set; } = 0;
 
+        public bool AprilFoolsSlothIrl { get; set; } = false;
+
         [JsonProperty]
         private static Dictionary<string,float> CustomConfigValues { get; set; } = new Dictionary<string,float>();
 
-        //public static Dictionary<string, float> CustomConfigValues = new Dictionary<string, float>();
-
+        [JsonProperty]
+        private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
 
         public float GetCustomConfigValue(string config)
         {
@@ -145,6 +147,20 @@ namespace XIVSlothComboPlugin
         public void SetCustomConfigValue(string config, float value)
         {
             CustomConfigValues[config] = value;
+        }
+
+        public int GetCustomIntValue(string config)
+        {
+            int configValue;
+
+            if (!CustomIntValues.TryGetValue(config, out configValue)) return 0;
+
+            return configValue;
+        }
+
+        public void SetCustomIntValue(string config, int value)
+        {
+            CustomIntValues[config] = value;
         }
     }
 }

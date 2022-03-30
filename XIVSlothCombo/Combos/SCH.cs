@@ -102,6 +102,12 @@ namespace XIVSlothComboPlugin.Combos
                 Protraction = 86,
                 Expedient = 90;
         }
+
+        public static class Config
+        {
+            public const string
+                ScholarLucidDreaming = "LucidScholar";
+        }
     }
 
     internal class ScholarSeraphConsolationFeature : CustomCombo
@@ -243,10 +249,11 @@ namespace XIVSlothComboPlugin.Combos
                 var chainBuff = GetCooldown(SCH.ChainStratagem);
                 var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
                 var canWeave = CanWeave(actionID);
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(SCH.Config.ScholarLucidDreaming);
 
                 if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature))
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && canWeave)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && canWeave)
                         return SCH.LucidDreaming;
                 }
                 if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Biolysis && incombat)

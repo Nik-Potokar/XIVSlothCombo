@@ -711,7 +711,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 }
