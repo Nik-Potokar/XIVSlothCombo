@@ -57,7 +57,7 @@ namespace XIVSlothComboPlugin.Combos
                     return MCHPVP.Airanchor;
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
     internal class WildfireBlankFeature : CustomCombo
@@ -72,7 +72,7 @@ namespace XIVSlothComboPlugin.Combos
                     return MCHPVP.Blank;
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 }

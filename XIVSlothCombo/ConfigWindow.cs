@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using ImGuiNET;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 
@@ -63,12 +62,13 @@ namespace XIVSlothComboPlugin
             this.Size = new Vector2(740, 490);
         }
         public override void Draw()
-        {   
+        {
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
             ImGui.SameLine();
             ImGui.TextColored(ImGuiColors.DalamudRed, $" Notice! All Settings Have Been Reset!");
 
+            var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
 
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
@@ -85,11 +85,23 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTooltip();
             }
 
+
             var hideChildren = Service.Configuration.HideChildren;
             if (ImGui.Checkbox("Hide SubCombo Options", ref hideChildren))
             {
                 Service.Configuration.HideChildren = hideChildren;
                 Service.Configuration.Save();
+            }
+
+            var slothIrl = Service.Configuration.AprilFoolsSlothIrl;
+            if (isAprilFools)
+            {
+
+                if (ImGui.Checkbox("Actually turn into a sloth irl", ref slothIrl))
+                {
+                    Service.Configuration.AprilFoolsSlothIrl = slothIrl;
+                    Service.Configuration.Save();
+                }
             }
 
             ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
@@ -100,6 +112,7 @@ namespace XIVSlothComboPlugin
 
             foreach (var jobName in this.groupedPresets.Keys)
             {
+
                 if (ImGui.CollapsingHeader(jobName))
                 {
                     foreach (var (preset, info) in this.groupedPresets[jobName])
@@ -111,6 +124,7 @@ namespace XIVSlothComboPlugin
                 {
                     i += this.groupedPresets[jobName].Count;
                 }
+
             }
 
             ImGui.PopStyleVar();
@@ -126,6 +140,8 @@ namespace XIVSlothComboPlugin
             var showSecrets = Service.Configuration.EnableSecretCombos;
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
+            var irlsloth = Service.Configuration.AprilFoolsSlothIrl;
+
 
             if (secret && !showSecrets)
                 return;
@@ -150,6 +166,7 @@ namespace XIVSlothComboPlugin
 
                 Service.Configuration.Save();
             }
+
 
             if (secret)
             {
@@ -245,7 +262,7 @@ namespace XIVSlothComboPlugin
                 var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
 
                 var inputChanged = false;
-                ImGui.PushItemWidth(75); 
+                ImGui.PushItemWidth(75);
                 inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
                 inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
 
@@ -288,13 +305,13 @@ namespace XIVSlothComboPlugin
                 var inputChanged = false;
                 ImGui.PushItemWidth(75);
                 inputChanged |= ImGui.InputFloat("Remaining time (In seconds)", ref ragingJawsRenewTime);
-                
+
                 if (inputChanged)
                 {
                     ragingJawsRenewTime = ragingJawsRenewTime < 3 ? 3 : ragingJawsRenewTime;
 
                     Service.Configuration.SetCustomConfigValue(BRD.Config.RagingJawsRenewTime, ragingJawsRenewTime);
-                    
+
                     Service.Configuration.Save();
                 }
 
@@ -335,6 +352,14 @@ namespace XIVSlothComboPlugin
                 ImGui.Unindent();
                 ImGui.Spacing();
 
+            }
+            if (preset == CustomComboPreset.ScholarLucidDPSFeature && enabled)
+            {
+                DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
+            }
+            if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
+            {
+                DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
             }
 
             i++;
@@ -378,6 +403,40 @@ namespace XIVSlothComboPlugin
 
                 parentMaybe = Service.Configuration.GetParent(parent);
             }
+        }
+
+        private void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150)
+        {
+            var output = Service.Configuration.GetCustomIntValue(config);
+            Dalamud.Logging.PluginLog.Debug(output.ToString());
+            var inputChanged = false;
+            ImGui.PushItemWidth(itemWidth);
+            inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
+
+            if (inputChanged)
+            {
+                Service.Configuration.SetCustomIntValue(config, output);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Spacing();
+        }
+
+        private void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
+        {
+            var output = Service.Configuration.GetCustomConfigValue(config);
+            Dalamud.Logging.PluginLog.Debug(output.ToString());
+            var inputChanged = false;
+            ImGui.PushItemWidth(itemWidth);
+            inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
+
+            if (inputChanged)
+            {
+                Service.Configuration.SetCustomConfigValue(config, output);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Spacing();
         }
     }
 }

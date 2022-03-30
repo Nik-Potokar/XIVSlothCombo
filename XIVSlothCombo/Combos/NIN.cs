@@ -94,6 +94,12 @@ namespace XIVSlothComboPlugin.Combos
                 PhantomKamaitachi = 82,
                 ForkedRaiju = 90;
         }
+
+        public static class Config
+        {
+            public const string
+                TrickCooldownRemaining = "TrickCooldownRemaining";
+        }
     }
 
     internal class NinjaAeolianEdgeCombo : CustomCombo
@@ -203,6 +209,7 @@ namespace XIVSlothComboPlugin.Combos
                 var actionIDCD = GetCooldown(actionID);
                 var gauge = GetJobGauge<NINGauge>();
                 var bunshinCD = GetCooldown(NIN.Bunshin);
+                var trickCDThreshold = Service.Configuration.GetCustomIntValue(NIN.Config.TrickCooldownRemaining);
 
                 if (OriginalHook(NIN.Ninjutsu) is NIN.Rabbit) return OriginalHook(NIN.Ninjutsu);
 
@@ -214,21 +221,21 @@ namespace XIVSlothComboPlugin.Combos
                     return NIN.Huraijin;
 
 
-                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= 3) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
+                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= trickCDThreshold) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
                 {
-                    if (HasEffect(NIN.Buffs.Suiton))
+                    if (HasEffect(NIN.Buffs.Suiton) && !GetCooldown(NIN.TrickAttack).IsCooldown)
                         return NIN.TrickAttack;
 
-                    if (!HasEffect(NIN.Buffs.Mudra) && GetCooldown(NIN.Chi).RemainingCharges > 0)
+                    if (!HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.Suiton) && GetCooldown(NIN.Chi).RemainingCharges > 0)
                         return OriginalHook(NIN.Chi);
 
-                    if (level >= NIN.Levels.Ten && OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
+                    if (level >= NIN.Levels.Ten && !HasEffect(NIN.Buffs.Suiton) &&  OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
                         return OriginalHook(NIN.TenCombo);
 
-                    if (level >= NIN.Levels.Jin && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
+                    if (level >= NIN.Levels.Jin && !HasEffect(NIN.Buffs.Suiton) && (OriginalHook(NIN.Ninjutsu) is NIN.Katon or NIN.GokaMekkyaku))
                         return OriginalHook(NIN.JinCombo);
 
-                    if (OriginalHook(NIN.Ninjutsu) is NIN.Suiton)
+                    if (OriginalHook(NIN.Ninjutsu) is NIN.Suiton && !HasEffect(NIN.Buffs.Suiton))
                         return OriginalHook(NIN.Ninjutsu);
                 }
 
@@ -711,7 +718,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 }
