@@ -68,7 +68,7 @@ namespace XIVSlothComboPlugin
             ImGui.SameLine();
             ImGui.TextColored(ImGuiColors.DalamudRed, $" Notice! All Settings Have Been Reset!");
 
-            var isAprilFools = DateTime.Now.Day == 30 && DateTime.Now.Month == 3 ? true : false;
+            var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
 
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
@@ -357,6 +357,11 @@ namespace XIVSlothComboPlugin
             {
                 DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
             }
+            if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
+            {
+                DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+            }
+
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
@@ -400,12 +405,12 @@ namespace XIVSlothComboPlugin
             }
         }
 
-        private void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription)
+        private void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
             var output = Service.Configuration.GetCustomIntValue(config);
             Dalamud.Logging.PluginLog.Debug(output.ToString());
             var inputChanged = false;
-            ImGui.PushItemWidth(300);
+            ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
 
             if (inputChanged)
@@ -417,12 +422,12 @@ namespace XIVSlothComboPlugin
             ImGui.Spacing();
         }
 
-        private void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription)
+        private void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
             var output = Service.Configuration.GetCustomConfigValue(config);
             Dalamud.Logging.PluginLog.Debug(output.ToString());
             var inputChanged = false;
-            ImGui.PushItemWidth(300);
+            ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
 
             if (inputChanged)
