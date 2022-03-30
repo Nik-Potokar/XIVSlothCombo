@@ -68,7 +68,7 @@ namespace XIVSlothComboPlugin
             ImGui.SameLine();
             ImGui.TextColored(ImGuiColors.DalamudRed, $" Notice! All Settings Have Been Reset!");
 
-            var isAprilFools = DateTime.Now.Day == 30 && DateTime.Now.Month == 3 ? true : false;
+            var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
 
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
