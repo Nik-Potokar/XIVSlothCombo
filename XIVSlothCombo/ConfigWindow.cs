@@ -416,5 +416,22 @@ namespace XIVSlothComboPlugin
 
             ImGui.Spacing();
         }
+
+        private void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription)
+        {
+            var output = Service.Configuration.GetCustomConfigValue(config);
+            Dalamud.Logging.PluginLog.Debug(output.ToString());
+            var inputChanged = false;
+            ImGui.PushItemWidth(300);
+            inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
+
+            if (inputChanged)
+            {
+                Service.Configuration.SetCustomConfigValue(config, output);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Spacing();
+        }
     }
 }
