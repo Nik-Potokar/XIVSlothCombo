@@ -60,7 +60,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
     internal class SteelCycloneFeature : CustomCombo
@@ -78,7 +78,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            return OriginalHook(actionID);
+            return actionID;
         }
     }
 

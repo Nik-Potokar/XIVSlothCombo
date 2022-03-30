@@ -520,7 +520,7 @@ namespace XIVSlothComboPlugin.Combos
                     return SMN.Ruin;
             }
 
-            return OriginalHook(SMN.Ruin4);
+            return actionID;
         }
     }
     internal class SummonerMainComboFeatureRuin1 : CustomCombo
