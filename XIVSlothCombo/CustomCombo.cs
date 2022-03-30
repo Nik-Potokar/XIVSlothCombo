@@ -8,6 +8,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
 using XIVSlothComboPlugin.Attributes;
+using System.Timers;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -38,6 +39,11 @@ namespace XIVSlothComboPlugin.Combos
                 WHM.JobID => WHM.ClassID,
                 _ => 0xFF,
             };
+
+            combatTimer = new Timer(1000); // in miliseconds
+            combatTimer.Elapsed += updateCombatTimer;
+            combatTimer.Start();
+
         }
 
         /// <summary>
@@ -54,6 +60,45 @@ namespace XIVSlothComboPlugin.Combos
         /// Gets the job ID associated with this combo.
         /// </summary>
         protected byte JobID { get; }
+
+        /// <summary>
+        /// Function that keeps getting called by the timer set up in the constructor,
+        /// to keep track of combat duration.
+        /// </summary>
+        private bool restartCombatTimer = true;
+        private TimeSpan combatDuration = new TimeSpan();
+        private DateTime combatStart;
+        private DateTime combatEnd;
+        private Timer combatTimer;
+        private void updateCombatTimer(object sender, EventArgs e)
+        {
+            if (InCombat())
+            {
+                if (restartCombatTimer)
+                {
+                    restartCombatTimer = false;
+                    combatStart = DateTime.Now;
+                }
+
+                combatEnd = DateTime.Now;
+            }
+            else
+            {
+                restartCombatTimer = true;
+                combatDuration = TimeSpan.Zero;
+            }
+
+            combatDuration = combatEnd - combatStart;
+        }
+
+        /// <summary>
+        /// Tells the elapsed time since the combat started.
+        /// </summary>
+        /// <returns>Combat time in seconds.</returns>
+        protected TimeSpan CombatEngageDuration()
+        {
+            return combatDuration;
+        }
 
         /// <summary>
         /// Performs various checks then attempts to invoke the combo.
