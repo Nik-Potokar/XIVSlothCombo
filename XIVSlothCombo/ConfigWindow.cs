@@ -248,8 +248,18 @@ namespace XIVSlothComboPlugin
                     if (!showSecrets && Service.Configuration.IsSecret(conflict))
                         return string.Empty;
 
+
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
-                    return $"\n - {conflictInfo.FancyName}";
+                    if (irlsloth) 
+                    {
+                        return $"\n - {conflictInfo.MemeName}";
+                    }
+                    else
+                    {
+                        return $"\n - {conflictInfo.FancyName}";
+
+                    }
+
                 }).Aggregate((t1, t2) => $"{t1}{t2}");
 
                 if (conflictText.Length > 0)
