@@ -952,7 +952,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID)]
-        NinjaBavacakraFeature = 10017,
+        NinjaBhavacakraFeature = 10017,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID)]
@@ -975,6 +975,14 @@ namespace XIVSlothComboPlugin
         [ParentCombo(NinSimpleSingleTarget)]
         [CustomComboInfo("Include Trick Attack", "Add or disable Trick Attack as part of the feature.", NIN.JobID)]
         NinSimpleTrickFeature = 10024,
+
+        [ParentCombo(NinjaAeolianEdgeCombo)]
+        [CustomComboInfo("Assassinate/Dream Within a Dream Feature", "Adds Assassinate and Dream Within a Dream to the combo.", NIN.JobID)]
+        NinAeolianAssassinateFeature = 10025,
+
+        [ParentCombo(NinjaAeolianEdgeCombo)]
+        [CustomComboInfo("Mug Feature", "Adds Mug to the combo.", NIN.JobID)]
+        NinAeolianMugFeature = 10026,
 
         #endregion
         // ====================================================================================
