@@ -9,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
+using XIVSlothComboPlugin.ConfigFunctions;
 
 namespace XIVSlothComboPlugin
 {
@@ -27,9 +28,27 @@ namespace XIVSlothComboPlugin
         public ConfigWindow()
             : base("Sloth Combo Setup")
         {
+            var p = Service.Configuration.AprilFoolsSlothIrl;
+
             this.RespectCloseHotkey = true;
 
-            this.groupedPresets = Enum
+            if (p)
+            {
+                this.groupedPresets = Enum
+                .GetValues<CustomComboPreset>()
+                .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
+                .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
+                .Where(tpl => tpl.Info != null && Service.Configuration.GetParent(tpl.Preset) == null)
+                .OrderBy(tpl => tpl.Info.MemeJobName)
+                .ThenBy(tpl => tpl.Info.Order)
+                .GroupBy(tpl => tpl.Info.MemeJobName)
+                .ToDictionary(
+                    tpl => tpl.Key,
+                    tpl => tpl.ToList());
+            }
+            else
+            {
+                this.groupedPresets = Enum
                 .GetValues<CustomComboPreset>()
                 .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
                 .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
@@ -40,6 +59,8 @@ namespace XIVSlothComboPlugin
                 .ToDictionary(
                     tpl => tpl.Key,
                     tpl => tpl.ToList());
+            }
+
 
             var childCombos = Enum.GetValues<CustomComboPreset>().ToDictionary(
                 tpl => tpl,
@@ -52,11 +73,15 @@ namespace XIVSlothComboPlugin
                     childCombos[parent.Value].Add(preset);
             }
 
+
             this.presetChildren = childCombos.ToDictionary(
                 kvp => kvp.Key,
                 kvp => kvp.Value
                     .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
                     .OrderBy(tpl => tpl.Info.Order).ToArray());
+
+
+
 
             this.SizeCondition = ImGuiCond.FirstUseEver;
             this.Size = new Vector2(740, 490);
@@ -93,15 +118,20 @@ namespace XIVSlothComboPlugin
                 Service.Configuration.Save();
             }
 
-            var slothIrl = Service.Configuration.AprilFoolsSlothIrl;
+            var slothIrl = isAprilFools ? Service.Configuration.AprilFoolsSlothIrl : false;
             if (isAprilFools)
             {
 
-                if (ImGui.Checkbox("Actually turn into a sloth irl", ref slothIrl))
+                if (ImGui.Checkbox("Sloth Mode!?", ref slothIrl))
                 {
                     Service.Configuration.AprilFoolsSlothIrl = slothIrl;
                     Service.Configuration.Save();
                 }
+            }
+            else
+            {
+                Service.Configuration.AprilFoolsSlothIrl = false;
+                Service.Configuration.Save();
             }
 
             ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
@@ -148,24 +178,49 @@ namespace XIVSlothComboPlugin
 
             ImGui.PushItemWidth(200);
 
-            if (ImGui.Checkbox(info.FancyName, ref enabled))
+            if (irlsloth && !string.IsNullOrEmpty(info.MemeName))
             {
-                if (enabled)
+                if (ImGui.Checkbox(info.MemeName, ref enabled))
                 {
-                    this.EnableParentPresets(preset);
-                    Service.Configuration.EnabledActions.Add(preset);
-                    foreach (var conflict in conflicts)
+                    if (enabled)
                     {
-                        Service.Configuration.EnabledActions.Remove(conflict);
+                        this.EnableParentPresets(preset);
+                        Service.Configuration.EnabledActions.Add(preset);
+                        foreach (var conflict in conflicts)
+                        {
+                            Service.Configuration.EnabledActions.Remove(conflict);
+                        }
                     }
-                }
-                else
-                {
-                    Service.Configuration.EnabledActions.Remove(preset);
-                }
+                    else
+                    {
+                        Service.Configuration.EnabledActions.Remove(preset);
+                    }
 
-                Service.Configuration.Save();
+                    Service.Configuration.Save();
+                }
             }
+            else
+            {
+                if (ImGui.Checkbox(info.FancyName, ref enabled))
+                {
+                    if (enabled)
+                    {
+                        this.EnableParentPresets(preset);
+                        Service.Configuration.EnabledActions.Add(preset);
+                        foreach (var conflict in conflicts)
+                        {
+                            Service.Configuration.EnabledActions.Remove(conflict);
+                        }
+                    }
+                    else
+                    {
+                        Service.Configuration.EnabledActions.Remove(preset);
+                    }
+
+                    Service.Configuration.Save();
+                }
+            }
+
 
 
             if (secret)
@@ -189,8 +244,17 @@ namespace XIVSlothComboPlugin
 
             ImGui.PopItemWidth();
 
+
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
-            ImGui.TextWrapped($"#{i}: {info.Description}");
+            if (irlsloth && !string.IsNullOrEmpty(info.MemeDescription))
+            {
+                ImGui.TextWrapped($"#{i}: {info.MemeDescription}");
+            }
+            else
+            {
+                ImGui.TextWrapped($"#{i}: {info.Description}");
+            }
+
             ImGui.PopStyleColor();
             ImGui.Spacing();
 
@@ -355,13 +419,24 @@ namespace XIVSlothComboPlugin
             }
             if (preset == CustomComboPreset.ScholarLucidDPSFeature && enabled)
             {
-                DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
             }
             if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
             {
-                DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+                ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
             }
-
+            if (preset == CustomComboPreset.NinjaHuraijinFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
+            }
+            if (preset == CustomComboPreset.NinAeolianMugFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
+            }
+            if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+            }
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
@@ -403,40 +478,6 @@ namespace XIVSlothComboPlugin
 
                 parentMaybe = Service.Configuration.GetParent(parent);
             }
-        }
-
-        private void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150)
-        {
-            var output = Service.Configuration.GetCustomIntValue(config);
-            Dalamud.Logging.PluginLog.Debug(output.ToString());
-            var inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
-
-            if (inputChanged)
-            {
-                Service.Configuration.SetCustomIntValue(config, output);
-                Service.Configuration.Save();
-            }
-
-            ImGui.Spacing();
-        }
-
-        private void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
-        {
-            var output = Service.Configuration.GetCustomConfigValue(config);
-            Dalamud.Logging.PluginLog.Debug(output.ToString());
-            var inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
-
-            if (inputChanged)
-            {
-                Service.Configuration.SetCustomConfigValue(config, output);
-                Service.Configuration.Save();
-            }
-
-            ImGui.Spacing();
         }
     }
 }

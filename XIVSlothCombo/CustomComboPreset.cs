@@ -893,7 +893,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region NINJA
 
-        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID)]
+        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID, 0, "Smush Attack", "Goes Smush Smush")]
         NinjaArmorCrushCombo = 10000,
 
         [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID)]
@@ -935,11 +935,11 @@ namespace XIVSlothComboPlugin
         NinjaHuraijinRaijuFeature2 = 10012,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Armor Crush Main Comb Combo", "Adds Armor Crush onto main combo.", NIN.JobID)]
+        [CustomComboInfo("Armor Crush Feature", "Adds Armor Crush onto main combo.", NIN.JobID)]
         NinjaArmorCrushOnMainCombo = 10013,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("RaijuToMainComboFeature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID)]
+        [CustomComboInfo("Raiju Feature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID)]
         NinjaFleetingRaijuFeature = 10014,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
@@ -952,7 +952,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID)]
-        NinjaBavacakraFeature = 10017,
+        NinjaBhavacakraFeature = 10017,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID)]
@@ -975,6 +975,14 @@ namespace XIVSlothComboPlugin
         [ParentCombo(NinSimpleSingleTarget)]
         [CustomComboInfo("Include Trick Attack", "Add or disable Trick Attack as part of the feature.", NIN.JobID)]
         NinSimpleTrickFeature = 10024,
+
+        [ParentCombo(NinjaAeolianEdgeCombo)]
+        [CustomComboInfo("Assassinate/Dream Within a Dream Feature", "Adds Assassinate and Dream Within a Dream to the combo.", NIN.JobID)]
+        NinAeolianAssassinateFeature = 10025,
+
+        [ParentCombo(NinjaAeolianEdgeCombo)]
+        [CustomComboInfo("Mug Feature", "Adds Mug to the combo.", NIN.JobID)]
+        NinAeolianMugFeature = 10026,
 
         #endregion
         // ====================================================================================
