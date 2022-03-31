@@ -732,9 +732,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("(Heated) Shot Combo", "Replace either form of Clean Shot with its combo chain.", MCH.JobID)]
         MachinistMainCombo = 8000,
 
-        [CustomComboInfo("Spread Shot/Scattergun Heat, +BioBlaster", "Spread Shot turns into Scattergun when lvl 82 or higher, Both turn into Auto Crossbow when overheated\nand Bioblaster is used first whenever it is off cooldown.", MCH.JobID)]
-        MachinistSpreadShotFeature = 8001,
-
         [CustomComboInfo("Overdrive Feature", "Replace Rook Autoturret and Automaton Queen with Overdrive while active.", MCH.JobID)]
         MachinistOverdriveFeature = 8002,
 
@@ -776,7 +773,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gauss Round Ricochet on AOE Feature", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID)]
         MachinistAoEGaussRicochetFeature = 8011,
 
-        [ParentCombo(MachinistSpreadShotFeature)]
+        [ParentCombo(MachinistAoEGaussRicochetFeature)]
         [CustomComboInfo("Always Gauss Round/Ricochet on AoE Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID)]
         MachinistAoEGaussOption = 8012,
 
@@ -832,6 +829,14 @@ namespace XIVSlothComboPlugin
         [ParentCombo(MachinistSimpleFeature)]
         [CustomComboInfo("Simple Stabilizer", "Adds Barrel Stabilizer to the feature.\n When heat < 50 and Wildfire is off CD or about to come off CD.", MCH.JobID)]
         MachinistSimpleStabilizer = 8026,
+
+        [ParentCombo(MachinistSpreadShotFeature)]
+        [CustomComboInfo("Hypercharge", "Adds hypercharge to the AoE.", MCH.JobID)]
+        MachinistAoEHyperchargeFeature = 8027,
+
+        [CustomComboInfo("Simple Machinist AOE", "Spread Shot turns into Scattergun when lvl 82 or higher, Both turn into Auto Crossbow when overheated\nand Bioblaster is used first whenever it is off cooldown.", MCH.JobID)]
+        MachinistSpreadShotFeature = 8028,
+
 
         #endregion
         // ====================================================================================
