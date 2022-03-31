@@ -803,6 +803,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabalizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 heat and is off cooldown", MCH.JobID)]
         MachinistAutoBarrel = 8019,
 
+        [ConflictingCombos(MachinistMainCombo)]
         [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other ST toggles!!", MCH.JobID)]
         MachinistSimpleFeature = 8020,
 
