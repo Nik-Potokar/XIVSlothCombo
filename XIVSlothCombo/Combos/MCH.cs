@@ -246,7 +246,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == MCH.SpreadShot || actionID == MCH.Scattergun)
             {
                 var battery = GetJobGauge<MCHGauge>().Battery;
-                if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption) && canWeave)
+                if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption) && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7)
                 {
                     if (battery == 100 && level >= 40 && level <= 79)
                         return MCH.RookAutoturret;
