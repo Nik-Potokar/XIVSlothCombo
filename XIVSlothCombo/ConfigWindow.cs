@@ -252,6 +252,7 @@ namespace XIVSlothComboPlugin
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
                     if (irlsloth) 
                     {
+                        //kek
                         return $"\n - {conflictInfo.MemeName}";
                     }
                     else
