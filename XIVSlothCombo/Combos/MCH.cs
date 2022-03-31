@@ -68,7 +68,6 @@ namespace XIVSlothComboPlugin.Combos
                 BioBlaster = 72,
                 ChargedActionMastery = 74,
                 QueenOverdrive = 80,
-                Scattergun = 82,
                 BarrelStabilizer = 66,
                 ChainSaw = 90;
         }
@@ -246,8 +245,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == MCH.SpreadShot || actionID == MCH.Scattergun)
             {
-                var canWeave = CanWeave(actionID);
-
                 var battery = GetJobGauge<MCHGauge>().Battery;
                 if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption) && canWeave)
                 {
@@ -258,31 +255,30 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 var gauge = GetJobGauge<MCHGauge>();
 
-                if (IsEnabled(CustomComboPreset.MachinistAoEHyperchargeFeature) && canWeave)
-                {
-                    if (gauge.Heat >= 50 && level >= MCH.Levels.Hypercharge && !gauge.IsOverheated)
-                        return MCH.Hypercharge;
-                }
 
-                if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && canWeave && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated))
+                if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && GetCooldown(MCH.CleanShot).CooldownRemaining > 0.7 && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated))
                 {
-                    var gaussCharges = GetRemainingCharges(MCH.GaussRound);
-                    var ricochetCharges = GetRemainingCharges(MCH.Ricochet);
+                    var gaussCd = GetCooldown(MCH.GaussRound);
+                    var ricochetCd = GetCooldown(MCH.Ricochet);
 
-                    if ((gaussCharges >= ricochetCharges || level < MCH.Levels.Ricochet) &&
-                        level >= MCH.Levels.GaussRound)
+                    // Prioritize the original if both are off cooldown
+                    if (level <= 49)
                         return MCH.GaussRound;
-                    else if (ricochetCharges > 0 && level >= MCH.Levels.Ricochet)
-                        return MCH.Ricochet;
 
+                    if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining)
+                        return MCH.GaussRound;
+
+                    return MCH.Ricochet;
                 }
 
+                var bioblaster = GetCooldown(MCH.BioBlaster);
+                if (!bioblaster.IsCooldown && level >= 72 && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MachinistBioblasterFeature))
+                    return MCH.BioBlaster;
+                if (!gauge.IsOverheated && level >= 82)
+                    return MCH.Scattergun;
                 if (gauge.IsOverheated && level >= MCH.Levels.AutoCrossbow)
                     return MCH.AutoCrossbow;
 
-                var bioblaster = GetCooldown(MCH.BioBlaster);
-                if (!bioblaster.IsCooldown && level >= MCH.Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MachinistBioblasterFeature))
-                    return MCH.BioBlaster;
 
             }
 
