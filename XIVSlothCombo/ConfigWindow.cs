@@ -9,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
+using XIVSlothComboPlugin.ConfigFunctions;
 
 namespace XIVSlothComboPlugin
 {
@@ -355,13 +356,24 @@ namespace XIVSlothComboPlugin
             }
             if (preset == CustomComboPreset.ScholarLucidDPSFeature && enabled)
             {
-                DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
             }
             if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
             {
-                DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+                ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
             }
-
+            if (preset == CustomComboPreset.NinjaHuraijinFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
+            }
+            if (preset == CustomComboPreset.NinAeolianMugFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
+            }
+            if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+            }
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
@@ -403,40 +415,6 @@ namespace XIVSlothComboPlugin
 
                 parentMaybe = Service.Configuration.GetParent(parent);
             }
-        }
-
-        private void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150)
-        {
-            var output = Service.Configuration.GetCustomIntValue(config);
-            Dalamud.Logging.PluginLog.Debug(output.ToString());
-            var inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
-
-            if (inputChanged)
-            {
-                Service.Configuration.SetCustomIntValue(config, output);
-                Service.Configuration.Save();
-            }
-
-            ImGui.Spacing();
-        }
-
-        private void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
-        {
-            var output = Service.Configuration.GetCustomConfigValue(config);
-            Dalamud.Logging.PluginLog.Debug(output.ToString());
-            var inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
-
-            if (inputChanged)
-            {
-                Service.Configuration.SetCustomConfigValue(config, output);
-                Service.Configuration.Save();
-            }
-
-            ImGui.Spacing();
         }
     }
 }

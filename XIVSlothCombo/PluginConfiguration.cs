@@ -135,6 +135,9 @@ namespace XIVSlothComboPlugin
         [JsonProperty]
         private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
 
+        [JsonProperty]
+        private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
+
         public float GetCustomConfigValue(string config)
         {
             float configValue;
@@ -161,6 +164,20 @@ namespace XIVSlothComboPlugin
         public void SetCustomIntValue(string config, int value)
         {
             CustomIntValues[config] = value;
+        }
+
+        public bool GetCustomBoolValue(string config)
+        {
+            bool configValue;
+
+            if (!CustomBoolValues.TryGetValue(config, out configValue)) return false;
+
+            return configValue;
+        }
+
+        public void SetCustomBoolValue(string config, bool value)
+        {
+            CustomBoolValues[config] = value;
         }
     }
 }
