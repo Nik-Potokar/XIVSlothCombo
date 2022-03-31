@@ -10,6 +10,7 @@
 		<PackageProjectUrl></PackageProjectUrl>
 	</PropertyGroup>
 
+<<<<<<< HEAD
 	<PropertyGroup>
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
@@ -22,6 +23,20 @@
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 		<NoWarn>CS1591</NoWarn>
 	</PropertyGroup>
+=======
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Platforms>x64</Platforms>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+>>>>>>> parent of 21f2dfa (.NET 6.0 bump)
 
 	<PropertyGroup Label="Documentation">
 		<DocumentationFile></DocumentationFile>
