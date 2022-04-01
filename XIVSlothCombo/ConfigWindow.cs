@@ -44,8 +44,6 @@ namespace XIVSlothComboPlugin
                 tpl => tpl.Key,
                 tpl => tpl.ToList());
 
-
-
             var childCombos = Enum.GetValues<CustomComboPreset>().ToDictionary(
                 tpl => tpl,
                 tpl => new List<CustomComboPreset>());
