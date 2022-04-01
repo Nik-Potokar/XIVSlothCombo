@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 
 using XIVSlothComboPlugin.Combos;
@@ -151,7 +151,7 @@ namespace XIVSlothComboPlugin.Attributes
                 20 => "Monk",
                 21 => "Warrior",
                 22 => "Dragoon",
-                23 => "Bowman",
+                23 => "Bard",
                 24 => "White Mage",
                 25 => "Black Mage",
                 26 => "Arcanist",
@@ -159,7 +159,7 @@ namespace XIVSlothComboPlugin.Attributes
                 28 => "Scholar",
                 29 => "Rogue",
                 30 => "Ninja",
-                31 => "Gun Mage",
+                31 => "Machinist",
                 32 => "Dark Knight",
                 33 => "Astrologian",
                 34 => "Samurai",
