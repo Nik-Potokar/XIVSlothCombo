@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Authors>attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz</Authors>
     <Company>-</Company>
-    <Version>3.0.7.12</Version> <!-- This is the version that will be used when pushing to the repo.-->
+    <Version>3.0.8.2</Version> <!-- This is the version that will be used when pushing to the repo.-->
     <Description>XIVCombo for lazy players</Description>
     <Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
@@ -18,7 +18,7 @@
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <OutputPath>C:\Users\thero\AppData\Roaming\XIVLauncher\installedPlugins\XIVSlothCombo\3.0.8.2\</OutputPath>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
 
@@ -50,9 +50,8 @@
   <ItemGroup>
     <PackageReference Include="DalamudLinter" Version="1.0.3" />
     <PackageReference Include="DalamudPackager" Version="2.1.5" />
-	  <ProjectReference Include="..\lib\FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj" />
 	  <Reference Include="FFXIVClientStructs">
-	    <HintPath>..\lib\FFXIVClientStructs\bin\Debug\FFXIVClientStructs.dll</HintPath>
+	    <HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
 	  </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
