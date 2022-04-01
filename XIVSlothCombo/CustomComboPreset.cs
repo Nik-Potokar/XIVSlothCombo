@@ -893,7 +893,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region NINJA
 
-        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID)]
+        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID, 0, "Smush Attack", "Goes Smush Smush")]
         NinjaArmorCrushCombo = 10000,
 
         [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID)]
@@ -935,11 +935,11 @@ namespace XIVSlothComboPlugin
         NinjaHuraijinRaijuFeature2 = 10012,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Armor Crush Main Comb Combo", "Adds Armor Crush onto main combo.", NIN.JobID)]
+        [CustomComboInfo("Armor Crush Feature", "Adds Armor Crush onto main combo.", NIN.JobID)]
         NinjaArmorCrushOnMainCombo = 10013,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("RaijuToMainComboFeature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID)]
+        [CustomComboInfo("Raiju Feature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID)]
         NinjaFleetingRaijuFeature = 10014,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]

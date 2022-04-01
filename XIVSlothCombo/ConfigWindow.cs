@@ -28,19 +28,23 @@ namespace XIVSlothComboPlugin
         public ConfigWindow()
             : base("Sloth Combo Setup")
         {
+            var p = Service.Configuration.AprilFoolsSlothIrl;
+
             this.RespectCloseHotkey = true;
 
             this.groupedPresets = Enum
-                .GetValues<CustomComboPreset>()
-                .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
-                .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-                .Where(tpl => tpl.Info != null && Service.Configuration.GetParent(tpl.Preset) == null)
-                .OrderBy(tpl => tpl.Info.JobName)
-                .ThenBy(tpl => tpl.Info.Order)
-                .GroupBy(tpl => tpl.Info.JobName)
-                .ToDictionary(
-                    tpl => tpl.Key,
-                    tpl => tpl.ToList());
+            .GetValues<CustomComboPreset>()
+            .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
+            .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
+            .Where(tpl => tpl.Info != null && Service.Configuration.GetParent(tpl.Preset) == null)
+            .OrderBy(tpl => tpl.Info.JobName)
+            .ThenBy(tpl => tpl.Info.Order)
+            .GroupBy(tpl => tpl.Info.JobName)
+            .ToDictionary(
+                tpl => tpl.Key,
+                tpl => tpl.ToList());
+
+
 
             var childCombos = Enum.GetValues<CustomComboPreset>().ToDictionary(
                 tpl => tpl,
@@ -53,11 +57,15 @@ namespace XIVSlothComboPlugin
                     childCombos[parent.Value].Add(preset);
             }
 
+
             this.presetChildren = childCombos.ToDictionary(
                 kvp => kvp.Key,
                 kvp => kvp.Value
                     .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
                     .OrderBy(tpl => tpl.Info.Order).ToArray());
+
+
+
 
             this.SizeCondition = ImGuiCond.FirstUseEver;
             this.Size = new Vector2(740, 490);
@@ -94,15 +102,22 @@ namespace XIVSlothComboPlugin
                 Service.Configuration.Save();
             }
 
-            var slothIrl = Service.Configuration.AprilFoolsSlothIrl;
+            var slothIrl = isAprilFools ? Service.Configuration.AprilFoolsSlothIrl : false;
             if (isAprilFools)
             {
 
-                if (ImGui.Checkbox("Actually turn into a sloth irl", ref slothIrl))
+                if (ImGui.Checkbox("Sloth Mode!?", ref slothIrl))
                 {
                     Service.Configuration.AprilFoolsSlothIrl = slothIrl;
                     Service.Configuration.Save();
+
+
                 }
+            }
+            else
+            {
+                Service.Configuration.AprilFoolsSlothIrl = false;
+                Service.Configuration.Save();
             }
 
             ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
@@ -113,7 +128,6 @@ namespace XIVSlothComboPlugin
 
             foreach (var jobName in this.groupedPresets.Keys)
             {
-
                 if (ImGui.CollapsingHeader(jobName))
                 {
                     foreach (var (preset, info) in this.groupedPresets[jobName])
@@ -149,24 +163,49 @@ namespace XIVSlothComboPlugin
 
             ImGui.PushItemWidth(200);
 
-            if (ImGui.Checkbox(info.FancyName, ref enabled))
+            if (irlsloth && !string.IsNullOrEmpty(info.MemeName))
             {
-                if (enabled)
+                if (ImGui.Checkbox(info.MemeName, ref enabled))
                 {
-                    this.EnableParentPresets(preset);
-                    Service.Configuration.EnabledActions.Add(preset);
-                    foreach (var conflict in conflicts)
+                    if (enabled)
                     {
-                        Service.Configuration.EnabledActions.Remove(conflict);
+                        this.EnableParentPresets(preset);
+                        Service.Configuration.EnabledActions.Add(preset);
+                        foreach (var conflict in conflicts)
+                        {
+                            Service.Configuration.EnabledActions.Remove(conflict);
+                        }
                     }
-                }
-                else
-                {
-                    Service.Configuration.EnabledActions.Remove(preset);
-                }
+                    else
+                    {
+                        Service.Configuration.EnabledActions.Remove(preset);
+                    }
 
-                Service.Configuration.Save();
+                    Service.Configuration.Save();
+                }
             }
+            else
+            {
+                if (ImGui.Checkbox(info.FancyName, ref enabled))
+                {
+                    if (enabled)
+                    {
+                        this.EnableParentPresets(preset);
+                        Service.Configuration.EnabledActions.Add(preset);
+                        foreach (var conflict in conflicts)
+                        {
+                            Service.Configuration.EnabledActions.Remove(conflict);
+                        }
+                    }
+                    else
+                    {
+                        Service.Configuration.EnabledActions.Remove(preset);
+                    }
+
+                    Service.Configuration.Save();
+                }
+            }
+
 
 
             if (secret)
@@ -190,8 +229,17 @@ namespace XIVSlothComboPlugin
 
             ImGui.PopItemWidth();
 
+
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
-            ImGui.TextWrapped($"#{i}: {info.Description}");
+            if (irlsloth && !string.IsNullOrEmpty(info.MemeDescription))
+            {
+                ImGui.TextWrapped($"#{i}: {info.MemeDescription}");
+            }
+            else
+            {
+                ImGui.TextWrapped($"#{i}: {info.Description}");
+            }
+
             ImGui.PopStyleColor();
             ImGui.Spacing();
 
