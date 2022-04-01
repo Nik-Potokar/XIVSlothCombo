@@ -430,11 +430,11 @@ namespace XIVSlothComboPlugin
             }
             if (preset == CustomComboPreset.ScholarLucidDPSFeature && enabled)
             {
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
             }
             if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
             {
-                ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+                ConfigWindowFunctions.DrawSliderInt(2, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
             }
             if (preset == CustomComboPreset.NinjaHuraijinFeature && enabled)
             {
