@@ -166,7 +166,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(WAR.FellCleave);
                         }
 
-                        if (stormseyeBuff.RemainingTime < 15 && level > 50)
+                        if (stormseyeBuff.RemainingTime < 7 && level > 50)
                             return WAR.StormsEye;
                         return WAR.StormsPath;
                     }
