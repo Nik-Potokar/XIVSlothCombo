@@ -666,7 +666,7 @@ namespace XIVSlothComboPlugin
         GunbreakerSolidBarrelCombo = 7000,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
-        [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID)]
+        [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be held due to downtime.", GNB.JobID)]
         GunbreakerGnashingFangOnMain = 7001,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
@@ -682,6 +682,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID)]
         GunbreakerRoughDivide1StackOption = 7004,
 
+        [ParentCombo(GunbreakerSolidBarrelCombo)]
         [ConflictingCombos(GunbreakerRoughDivide1StackOption)]
         [CustomComboInfo("Rough Divide Option (Uses all stacks)", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID)]
         GunbreakerRoughDivide2StackOption = 7005,
@@ -708,14 +709,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike added if there's charges while No Mercy buff is up.", GNB.JobID)]
         GunbreakerCDsOnGF = 7011,
 
-        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo and Gnashing Fang.", GNB.JobID)]
+        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo, main combo and Gnashing Fang.", GNB.JobID)]
         GunbreakerBurstStrikeConFeature = 7012,
 
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID)]
         GunbreakerBloodfestOvercapFeature = 7013,
 
         [ConflictingCombos(GunbreakerGnashingFangCombo)]
-        [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used. \nCurrently coded for the level 90 burst window.", GNB.JobID)]
+        [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used.", GNB.JobID)]
         GunbreakerNoMercyRotationFeature = 7014,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
