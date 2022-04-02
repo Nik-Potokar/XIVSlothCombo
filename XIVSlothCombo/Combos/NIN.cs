@@ -236,12 +236,12 @@ namespace XIVSlothComboPlugin.Combos
                     return NIN.Huraijin;
 
 
-                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= trickCDThreshold) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
+                if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= trickCDThreshold) && (!HasEffect(NIN.Buffs.Kassatsu) || (HasEffect(NIN.Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NinSimpleTrickKassatsuFeature))) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
                 {
                     if (HasEffect(NIN.Buffs.Suiton) && !GetCooldown(NIN.TrickAttack).IsCooldown)
                         return NIN.TrickAttack;
 
-                    if (!HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.Suiton) && GetCooldown(NIN.Chi).RemainingCharges > 0)
+                    if (!HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.Suiton) && (GetCooldown(NIN.Chi).RemainingCharges > 0 || (HasEffect(NIN.Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NinSimpleTrickKassatsuFeature))))
                         return OriginalHook(NIN.Chi);
 
                     if (level >= NIN.Levels.Ten && !HasEffect(NIN.Buffs.Suiton) &&  OriginalHook(NIN.Ninjutsu) == NIN.FumaShuriken)
@@ -420,7 +420,7 @@ namespace XIVSlothComboPlugin.Combos
                         return NIN.Bunshin;
                     if (HasEffect(NIN.Buffs.PhantomReady) && level >= 82)
                         return NIN.PhantomKamaitachi;
-                    if (gauge.Ninki >= 50 && actionIDCD.IsCooldown)
+                    if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && IsEnabled(CustomComboPreset.NinSimpleHellfrogFeature))
                         return NIN.Hellfrog;
 
                     if (comboTime > 0f && lastComboMove == NIN.DeathBlossom && level >= 52)
