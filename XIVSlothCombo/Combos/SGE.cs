@@ -138,8 +138,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == SGE.Taurochole)
             {
                 var taurocholeCD = GetCooldown(SGE.Taurochole);
-                if (taurocholeCD.CooldownRemaining > 0)
-
+                if (taurocholeCD.CooldownRemaining > 0 || level < SGE.Levels.Taurochole)
                     return SGE.Druochole;
             }
             return actionID;
