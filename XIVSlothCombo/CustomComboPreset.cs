@@ -677,9 +677,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
         GunbreakerRoughDivide1StackOption = 7004,
 
+        [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
         GunbreakerBowShockFeature = 7017,
-
+        
         [ConflictingCombos(GunbreakerRoughDivide1StackOption)]
         [CustomComboInfo("Rough Divide Option (Uses all stacks)", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID, 0, "Divide... Rougher!", "Ayo pour two out for the homie Squall")]
         GunbreakerRoughDivide2StackOption = 7005,
@@ -706,6 +707,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "More Teeth", "Gnashing fang, but like, if a shark did it. Or something.")]
         GunbreakerCDsOnGF = 7011,
 
+
         [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo and Gnashing Fang.", GNB.JobID, 0, "Swish, swoosh", "Now we're cooking with gas! Hyper!")]
         GunbreakerBurstStrikeConFeature = 7012,
 
@@ -713,7 +715,7 @@ namespace XIVSlothComboPlugin
         GunbreakerBloodfestOvercapFeature = 7013,
 
         [ConflictingCombos(GunbreakerGnashingFangCombo)]
-        [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used. \nCurrently coded for the level 90 burst window.", GNB.JobID, 0, "The Balance Brought Me Here", "Level 90 rotation for the truly asleep")]
+        [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used.", GNB.JobID, 0, "The Balance Brought Me Here", "Level 90 rotation for the truly asleep")]
         GunbreakerNoMercyRotationFeature = 7014,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
