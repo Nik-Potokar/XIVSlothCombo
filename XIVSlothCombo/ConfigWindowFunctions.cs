@@ -14,7 +14,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
     {
         public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
-            var output = Service.Configuration.GetCustomIntValue(config);
+            var output = Service.Configuration.GetCustomIntValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
@@ -30,7 +30,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
         public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
-            var output = Service.Configuration.GetCustomConfigValue(config);
+            var output = Service.Configuration.GetCustomConfigValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
