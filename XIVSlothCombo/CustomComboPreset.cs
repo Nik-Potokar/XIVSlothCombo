@@ -143,11 +143,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 0, "Astro-whine on Play", "Seal me up and let me die, baby")]
         AstrologianAstrodyneOnPlayFeature = 1015,
 
-        [ConflictingCombos(AstrologianDpsFeature)]
+        [ConflictingCombos(AstrologianDpsFeature, CustomValuesTest)]
         [CustomComboInfo("Alternate DPS Feature (On Combust)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, 0, "Alternate Deeps, buddy", "Now we're really doing your job for you. Damn.")]
         AstrologianAlternateDpsFeature = 1016,
 
-        [ConflictingCombos(AstrologianDpsFeature, AstrologianAlternateDpsFeature)]
+        [ConflictingCombos(AstrologianDpsFeature, AstrologianAlternateDpsFeature, DisableCombustOnDpsFeature)]
         [CustomComboInfo("DPS Feature Custom Values Testing", "Same as DPSFeature (On Malefic).Allows you to customize target MaxHp & CurrentPercentageHp & CurrentHp checks. Testing Only! ", AST.JobID, 0, "Green DPS? But you looked further...", "Same as that other guy, but with NUMBERS.")]
         CustomValuesTest = 1017,
 
@@ -296,10 +296,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, 0, "Robin Hood Feature", "Steal from Lolorito and give to Garlemald, I guess?\nGood on ya.")]
         BardApexFeature = 3005,
 
-        [ConflictingCombos(SimpleBardFeature)]
+        [ConflictingCombos(SimpleBardFeature, BardSimpleOpener)]
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, 0, "oGCD's spilling everywhere", "The Algorithm between the lines. Trademark")]
         BardoGCDSingleTargetFeature = 3006,
 
+        [ConflictingCombos(BardAoEComboFeature)]
         [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on Rain of Death depending on their CD.", BRD.JobID, 0, "", "Arrows! Everywhere! Run!")]
         BardoGCDAoEFeature = 3007,
 
@@ -307,6 +308,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready", BRD.JobID, 0, "", "C-C-C-Combo!")]
         BardAoEComboFeature = 3008,
 
+        [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature)]
         [CustomComboInfo("Simple Bard", "Adds every single target ability except DoTs to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
         SimpleBardFeature = 3009,
 
@@ -892,9 +894,11 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region NINJA
 
+        [ConflictingCombos(NinSimpleSingleTarget)]
         [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID, 0, "One, Two, Three", "It's a Ninja's life for me")]
         NinjaArmorCrushCombo = 10000,
 
+        [ConflictingCombos(NinSimpleSingleTarget)]
         [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID, 0, "Edgy Edge Combo", "Knife go stab")]
         NinjaAeolianEdgeCombo = 10001,
 
@@ -919,6 +923,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID, 0, "Hand signs and all that", "Do the Naruto thing, I think.\nIdk I don't watch anime, sorry")]
         NinjaNinjutsuFeature = 10008,
 
+        [ConflictingCombos(NinSimpleSingleTarget)]
         [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, 0, "Full-on Sign Language", "NOW you're really communicating with the party.")]
         NinjaGCDNinjutsuFeature = 10009,
 
@@ -982,6 +987,14 @@ namespace XIVSlothComboPlugin
         [ParentCombo(NinjaAeolianEdgeCombo)]
         [CustomComboInfo("Mug Feature", "Adds Mug to the combo.", NIN.JobID, 0, "Petty Theft", "Embarrassing.")]
         NinAeolianMugFeature = 10026,
+
+        [ParentCombo(NinSimpleTrickFeature)]
+        [CustomComboInfo("Kassatsu for Suiton Feature", "Allows the use of Kassatsu to set up Suiton. Suiton is prioritised above Hyosho Ranryu under this effect \nand your trick cooldown window has elapsed.", NIN.JobID)]
+        NinSimpleTrickKassatsuFeature = 10027,
+
+        [ParentCombo(NinSimpleAoE)]
+        [CustomComboInfo("Hellfrog Medium Feature", "Adds Hellfrog Medium to the combo if you have Ninki to spend.", NIN.JobID)]
+        NinSimpleHellfrogFeature = 10028,
 
         #endregion
         // ====================================================================================
