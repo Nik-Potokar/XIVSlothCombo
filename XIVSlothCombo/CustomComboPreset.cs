@@ -645,11 +645,43 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 0, "", "F- Three combo MORE!")]
         DragoonFullThrustComboPlus = 6004,
 
+        [ParentCombo(DragoonFullThrustComboPlus)]
+        [CustomComboInfo("High Jump Plus Feature", "Includes High Jump in the rotation.", DRG.JobID, 0, "", "Jumping, but higher.")]
+        DragoonHighJumpPlusFeature = 6005,
+
+        [ParentCombo(DragoonHighJumpPlusFeature)]
+        [CustomComboInfo("Mirage Plus Feature", "Includes Mirage in the rotation.", DRG.JobID, 0, "", "They thought they saw it coming.")]
+        DragoonMiragePlusFeature = 6006,
+
+        [ConflictingCombos(DragoonFullThrustCombo, DragoonFullThrustComboPlus)]
+        [CustomComboInfo("Simple Dragoon", "One Button, One Dragoon.", DRG.JobID, 0, "", "Nidhogg never stood a chance.")]
+        DragoonSimple = 6007,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Geirskogul and Nastrond Feature", "Includes Geirskogul and Nastrond in the rotation.", DRG.JobID, 0, "", "Let me chuck another dragon soul at them!")]
+        DragoonGeirskogulNastrondFeature = 6008,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Dives under Litany Feature", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany.", DRG.JobID, 0, "", "Don't jump to your death!")]
+        DragoonLitanyDiveFeature = 6009,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("High Jump Feature", "Includes High Jump in the rotation.", DRG.JobID, 0, "", "Jumping, but higher.")]
+        DragoonHighJumpFeature = 6010,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Mirage Feature", "Includes Mirage in the rotation.", DRG.JobID, 0, "", "They thought they saw it coming.")]
+        DragoonMirageFeature = 6011,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Buffs feature", "Includes Lance Charge and Battle Litany to the rotation.", DRG.JobID, 0, "", "This is why your team loves you.")]
+        DragoonBuffsFeature = 6012,
+
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 0, "ALL THE COMBOS", "Turns Wheeling Thrust into Fire IV when Hallowed or PvP options are active.")]
-        DragoonFangThrustFeature = 6005,
+        DragoonFangThrustFeature = 6013,
 
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Feature", "Fang And Claw Becomes Wheeling Thrust when under Enhanced Wheeling Thrust Buff.", DRG.JobID, 0, "Reinventing the Wheel", "Absolutely WHEELING, my guy")]
-        DragoonFangAndClawFeature = 6006,
+        DragoonFangAndClawFeature = 6014,
 
         #endregion
         // ====================================================================================
