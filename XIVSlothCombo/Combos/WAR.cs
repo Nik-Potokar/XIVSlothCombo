@@ -70,7 +70,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == WAR.StormsPath)
+            if (IsEnabled(CustomComboPreset.WarriorStormsPathCombo) && actionID == WAR.StormsPath)
             {
                 var heavyswingCD = GetCooldown(WAR.HeavySwing);
                 var upheavalCD = GetCooldown(WAR.Upheaval);

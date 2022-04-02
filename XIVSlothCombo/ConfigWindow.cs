@@ -90,8 +90,11 @@ namespace XIVSlothComboPlugin
         {
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
-            ImGui.SameLine();
-            ImGui.TextColored(ImGuiColors.DalamudRed, $" Notice! All Settings Have Been Reset!");
+
+
+            //Settings were reset many, many versions ago. This message is no longer relevant?
+            //ImGui.SameLine();
+            //ImGui.TextColored(ImGuiColors.DalamudRed, $" Notice! All Settings Have Been Reset!");
 
             var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
 
@@ -117,6 +120,26 @@ namespace XIVSlothComboPlugin
                 Service.Configuration.HideChildren = hideChildren;
                 Service.Configuration.Save();
             }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Hides all options a combo might have until you enable it.");
+                ImGui.EndTooltip();
+            }
+
+            var hideConflicting = Service.Configuration.HideConflictedCombos;
+            if (ImGui.Checkbox("Hide Conflicted Combos", ref hideConflicting))
+            {
+                Service.Configuration.HideConflictedCombos = hideConflicting;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Hides any combos that conflict with anything you have selected.");
+                ImGui.EndTooltip();
+            }
 
             var slothIrl = isAprilFools ? Service.Configuration.AprilFoolsSlothIrl : false;
             if (isAprilFools)
@@ -134,6 +157,9 @@ namespace XIVSlothComboPlugin
                 Service.Configuration.Save();
             }
 
+
+
+
             ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
@@ -147,7 +173,35 @@ namespace XIVSlothComboPlugin
                 {
                     foreach (var (preset, info) in this.groupedPresets[jobName])
                     {
-                        this.DrawPreset(preset, info, ref i);
+                        if (Service.Configuration.HideConflictedCombos)
+                        {
+                            //Presets that are contained within a ConflictedAttribute
+                            var conflictOriginals = Service.Configuration.GetConflicts(preset);
+
+                            //Presets with the ConflictedAttribute
+                            var conflictsSource = Service.Configuration.GetAllConflicts();
+
+                            if (conflictsSource.Where(x => x == preset).Count() == 0 || conflictOriginals.Length == 0)
+                            {
+                                this.DrawPreset(preset, info, ref i);
+                                continue;
+                            }
+                            if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
+                            {
+                                Service.Configuration.EnabledActions.Remove(preset);
+                                Service.Configuration.Save();
+                            }
+                            else
+                            {
+                                this.DrawPreset(preset, info, ref i);
+                                continue;
+                            }
+
+                        }
+                        else
+                        {
+                            this.DrawPreset(preset, info, ref i);
+                        }
                     }
                 }
                 else
@@ -171,7 +225,6 @@ namespace XIVSlothComboPlugin
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
             var irlsloth = Service.Configuration.AprilFoolsSlothIrl;
-
 
             if (secret && !showSecrets)
                 return;
@@ -219,6 +272,7 @@ namespace XIVSlothComboPlugin
 
                     Service.Configuration.Save();
                 }
+
             }
 
 
@@ -267,7 +321,7 @@ namespace XIVSlothComboPlugin
 
 
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
-                    if (irlsloth) 
+                    if (irlsloth)
                     {
                         //kek
                         return $"\n - {conflictInfo.MemeName}";
@@ -430,7 +484,7 @@ namespace XIVSlothComboPlugin
             }
             if (preset == CustomComboPreset.ScholarLucidDPSFeature && enabled)
             {
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
             }
             if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
             {
@@ -464,6 +518,7 @@ namespace XIVSlothComboPlugin
                     ImGui.Unindent();
                 }
             }
+
 
         }
 

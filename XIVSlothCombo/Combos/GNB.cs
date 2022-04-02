@@ -307,6 +307,15 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
+                    if(IsEnabled(CustomComboPreset.GunbreakerBowShockFeature) && level >= GNB.Levels.BowShock)
+                    {
+                        var bowShockCD = GetCooldown(GNB.BowShock);
+                        if (!bowShockCD.IsCooldown)
+                        {
+                            return GNB.BowShock;
+                        }
+                    }
+
                     return GNB.DemonSlaughter;
                 }
 

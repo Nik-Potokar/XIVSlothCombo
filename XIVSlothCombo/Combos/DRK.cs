@@ -182,7 +182,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.DRKStalwartabyssalDrainFeature) && level >= 56)
                 {
-                    if (actionIDCD.IsCooldown && IsOffCooldown(DRK.AbyssalDrain) && PlayerHealthPercentageHp() >= 60)
+                    if (actionIDCD.IsCooldown && IsOffCooldown(DRK.AbyssalDrain) && PlayerHealthPercentageHp() <= 60)
                         return DRK.AbyssalDrain;
                 }
                 if (IsEnabled(CustomComboPreset.DRKStalwartShadowbringerFeature) && level >= 90)
