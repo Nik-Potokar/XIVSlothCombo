@@ -429,6 +429,7 @@ namespace XIVSlothComboPlugin.Combos
         /// without causing clipping
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
+        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
         /// <returns>True or false.</returns>
          protected static bool CanWeave(uint actionID, double weaveTime = 0.7)
             => GetCooldown(actionID).CooldownRemaining > weaveTime;

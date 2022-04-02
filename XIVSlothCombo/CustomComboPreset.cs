@@ -675,6 +675,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
         GunbreakerRoughDivide1StackOption = 7004,
 
+        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
+        GunbreakerBowShockFeature = 7017,
+
         [ConflictingCombos(GunbreakerRoughDivide1StackOption)]
         [CustomComboInfo("Rough Divide Option (Uses all stacks)", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID, 0, "Divide... Rougher!", "Ayo pour two out for the homie Squall")]
         GunbreakerRoughDivide2StackOption = 7005,
