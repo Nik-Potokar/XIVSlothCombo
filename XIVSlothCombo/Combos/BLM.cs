@@ -91,9 +91,9 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            if (actionID == BLM.Freeze && level < 35)
+            if (actionID == BLM.Freeze && level < 40)
             {
-                return 146u;
+                return BLM.Blizzard2;
             }
 
             return actionID;
