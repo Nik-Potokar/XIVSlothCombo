@@ -5,6 +5,7 @@ using Dalamud.Game.ClientState.Buddy;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge;
 using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.IoC;
@@ -102,5 +103,11 @@ namespace XIVSlothComboPlugin
         /// </summary>
         [PluginService]
         internal static TargetManager TargetManager { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets the Dalamud party list.
+        /// </summary>
+        [PluginService]
+        internal static PartyList PartyList { get; private set; } = null!;
     }
 }

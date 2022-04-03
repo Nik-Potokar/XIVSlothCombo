@@ -28,7 +28,7 @@ namespace XIVSlothComboPlugin
         public ConfigWindow()
             : base("Sloth Combo Setup")
         {
-            var p = Service.Configuration.AprilFoolsSlothIrl;
+            var p = Service.Configuration.SpecialEvent;
 
             this.RespectCloseHotkey = true;
 
@@ -90,17 +90,18 @@ namespace XIVSlothComboPlugin
         {
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
-
+            ImGui.Columns(2, null, false);
 
             //Settings were reset many, many versions ago. This message is no longer relevant?
             //ImGui.SameLine();
             //ImGui.TextColored(ImGuiColors.DalamudRed, $" Notice! All Settings Have Been Reset!");
 
-            var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
+            var isSpecialEvent = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
 
+            #region PvPCombos
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
-            if (ImGui.Checkbox("Enable PvP Combos", ref showSecrets))
+            if (ImGui.Checkbox("Show PvP Combos", ref showSecrets))
             {
                 Service.Configuration.EnableSecretCombos = showSecrets;
                 Service.Configuration.Save();
@@ -112,7 +113,30 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Adds PVP Combos To The Combo Setup Screen");
                 ImGui.EndTooltip();
             }
+            ImGui.NextColumn();
 
+            #endregion
+
+            #region TrustIncompatibles
+
+            var showTrustIncompatible = Service.Configuration.EnableTrustIncompatibles;
+            if (ImGui.Checkbox("Show Trust Incompatible Combos", ref showTrustIncompatible))
+            {
+                Service.Configuration.EnableTrustIncompatibles = showTrustIncompatible;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("These features won't work in a trust run due to technical restraints.");
+                ImGui.EndTooltip();
+            }
+            ImGui.NextColumn();
+
+            #endregion
+
+            #region SubCombos
 
             var hideChildren = Service.Configuration.HideChildren;
             if (ImGui.Checkbox("Hide SubCombo Options", ref hideChildren))
@@ -126,6 +150,11 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Hides all options a combo might have until you enable it.");
                 ImGui.EndTooltip();
             }
+            ImGui.NextColumn();
+
+            #endregion
+
+            #region Conflicting
 
             var hideConflicting = Service.Configuration.HideConflictedCombos;
             if (ImGui.Checkbox("Hide Conflicted Combos", ref hideConflicting))
@@ -141,24 +170,28 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTooltip();
             }
 
-            var slothIrl = isAprilFools ? Service.Configuration.AprilFoolsSlothIrl : false;
-            if (isAprilFools)
+            #endregion
+
+            #region SpecialEvent
+            var slothIrl = isSpecialEvent ? Service.Configuration.SpecialEvent : false;
+            if (isSpecialEvent)
             {
 
                 if (ImGui.Checkbox("Sloth Mode!?", ref slothIrl))
                 {
-                    Service.Configuration.AprilFoolsSlothIrl = slothIrl;
+                    Service.Configuration.SpecialEvent = slothIrl;
                     Service.Configuration.Save();
                 }
             }
             else
             {
-                Service.Configuration.AprilFoolsSlothIrl = false;
+                Service.Configuration.SpecialEvent = false;
                 Service.Configuration.Save();
             }
 
+            #endregion
 
-
+            ImGui.Columns(1);
 
             ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
 
@@ -221,12 +254,17 @@ namespace XIVSlothComboPlugin
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = Service.Configuration.IsSecret(preset);
+            var trust = Service.Configuration.IsTrustIncompatible(preset);
             var showSecrets = Service.Configuration.EnableSecretCombos;
+            var showTrusts = Service.Configuration.EnableTrustIncompatibles;
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
-            var irlsloth = Service.Configuration.AprilFoolsSlothIrl;
+            var irlsloth = Service.Configuration.SpecialEvent;
 
             if (secret && !showSecrets)
+                return;
+
+            if (trust && !showTrusts)
                 return;
 
             ImGui.PushItemWidth(200);
@@ -292,6 +330,24 @@ namespace XIVSlothComboPlugin
                 {
                     ImGui.BeginTooltip();
                     ImGui.TextUnformatted("This is a PVP Combo (Only Works in PVP Enabled Areas)");
+                    ImGui.EndTooltip();
+                }
+            }
+            if (trust)
+            {
+                ImGui.SameLine();
+                ImGui.Text("  ");
+                ImGui.SameLine();
+                ImGui.PushFont(UiBuilder.IconFont);
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+                ImGui.Text(FontAwesomeIcon.UserFriends.ToIconString());
+                ImGui.PopStyleColor();
+                ImGui.PopFont();
+
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.BeginTooltip();
+                    ImGui.TextUnformatted("This feature does not work in trust runs.");
                     ImGui.EndTooltip();
                 }
             }
@@ -501,6 +557,10 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo && enabled)
             {
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+            }
+            if (preset == CustomComboPreset.WarriorInfuriateFellCleave && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
             }
             i++;
 
