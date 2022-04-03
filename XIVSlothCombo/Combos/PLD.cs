@@ -443,17 +443,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.LowBlow)
+            if (actionID == PLD.ShieldBash)
             {
                 var interjectCD = GetCooldown(PLD.Interject);
                 var lowBlowCD = GetCooldown(PLD.LowBlow);
-                if (IsEnabled(CustomComboPreset.PaladinShieldBashOption))
-                {
-                    if (CanInterruptEnemy() && interjectCD.IsCooldown && lowBlowCD.IsCooldown)
-                        return PLD.ShieldBash;
-                }
                 if (CanInterruptEnemy() && !interjectCD.IsCooldown)
                     return PLD.Interject;
+                if (!lowBlowCD.IsCooldown)
+                    return PLD.LowBlow;
             }
 
             return actionID;

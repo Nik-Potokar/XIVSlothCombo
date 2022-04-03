@@ -1117,12 +1117,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
         SkillCooldownRemaining = 11018,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
+        [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
         PaladinInterruptFeature = 11019,
-
-        [ParentCombo(PaladinInterruptFeature)]
-        [CustomComboInfo("Shield Bash option", "If target is interruptable, will use Interject, Low Blow, Shield Bash in that order", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
-        PaladinShieldBashOption = 11020,
 
         #endregion
         // ====================================================================================
