@@ -48,7 +48,8 @@ namespace XIVSlothComboPlugin.Combos
 
             // heals
             Helios = 3600,
-            AspectedHelios = 3601;
+            AspectedHelios = 3601,
+            CelestialOpposition = 16553;
 
         public static class Buffs
         {
@@ -80,7 +81,8 @@ namespace XIVSlothComboPlugin.Combos
                 Benefic2 = 26,
                 MinorArcana = 50,
                 Draw = 30,
-                CrownPlay = 70;
+                CrownPlay = 70,
+                CelestialOpposition = 60;
         }
     }
 
@@ -262,6 +264,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == AST.AspectedHelios)
             {
+                var celestialOppositionCD = GetCooldown(AST.CelestialOpposition);
+                if (IsEnabled(CustomComboPreset.AstrologianCelestialOppositionFeature) && celestialOppositionCD.CooldownRemaining == 0 && level >= AST.Levels.CelestialOpposition)
+                    return AST.CelestialOpposition;
+
                 var heliosBuff = FindEffect(AST.Buffs.AspectedHelios);
                 if (HasEffect(AST.Buffs.AspectedHelios) && heliosBuff.RemainingTime > 2)
                     return AST.Helios;

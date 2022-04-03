@@ -159,6 +159,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lightspeed Feature", "Adds Lightspeed to the DPS Feature", AST.JobID, 0, "Warp-speed", "GO FASTER! FASTER!")]
         AstrologianLightSpeedFeature = 1020,
 
+        [ParentCombo(AstrologianHeliosFeature)]
+        [CustomComboInfo("Celestial Opposition Feature", "Adds Celestial Opposition", AST.JobID, 0)]
+        AstrologianCelestialOppositionFeature = 1021,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
