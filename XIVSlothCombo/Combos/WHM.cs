@@ -45,7 +45,8 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
             Swiftcast = 167,
             Medica2 = 150,
-            PresenceOfMind = 157;
+            PresenceOfMind = 157,
+            ThinAir = 1217;
         }
 
         public static class Debuffs
@@ -62,6 +63,7 @@ namespace XIVSlothComboPlugin.Combos
             public const byte
                 Cure2 = 30,
                 AfflatusSolace = 52,
+                ThinAir = 58,
                 AfflatusRapture = 76;
         }
     }
@@ -72,7 +74,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == WHM.AfflatusSolace)
+            if (actionID == WHM.AfflatusSolace)
             {
                 var gauge = GetJobGauge<WHMGauge>();
 
@@ -155,14 +157,13 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == WHM.Swiftcast)
                 {
-                    if (IsEnabled(CustomComboPreset.WHMRaiseFeature))
-                    {
-                        var thinairCD = GetCooldown(WHM.ThinAir);
-                        if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && !thinairCD.IsCooldown && HasEffect(WHM.Buffs.Swiftcast) && level >= 58)
-                            return WHM.ThinAir;
-                        if (HasEffect(WHM.Buffs.Swiftcast))
-                            return WHM.Raise;
-                    }
+                    var thinairCD = GetCooldown(WHM.ThinAir);
+                    var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
+
+                    if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(WHM.Buffs.Swiftcast) && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
+                        return WHM.ThinAir;
+                    if (HasEffect(WHM.Buffs.Swiftcast))
+                        return WHM.Raise;
                 }
 
                 return actionID;
@@ -264,11 +265,16 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == WHM.Raise)
             {
                 var thinairCD = GetCooldown(WHM.ThinAir);
-                if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && !thinairCD.IsCooldown && HasEffect(WHM.Buffs.Swiftcast) && level >= 58)
-                    return WHM.ThinAir;
+                var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
                 var swiftCD = GetCooldown(WHM.Swiftcast);
-                if ((swiftCD.CooldownRemaining == 0)
-)
+
+                if (!swiftCD.IsCooldown)
+                    return WHM.Swiftcast;
+
+                if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
+                    return WHM.ThinAir;
+
+                if (!swiftCD.IsCooldown)
                     return WHM.Swiftcast;
             }
             return actionID;
