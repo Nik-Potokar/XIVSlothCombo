@@ -628,20 +628,22 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region DRAGOON
 
+        [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Jump + Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, 0, "Jump off map", "Oh no, muh double-weaves!")]
         DragoonJumpFeature = 6000,
 
         [CustomComboInfo("Coerthan Torment Combo", "Replace Coerthan Torment with its combo chain.", DRG.JobID, 0, "", "One combo!")]
         DragoonCoerthanTormentCombo = 6001,
 
+        [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Chaos Thrust Combo", "Replace Chaos Thrust with its combo chain.", DRG.JobID, 0, "", "Two combo!")]
         DragoonChaosThrustCombo = 6002,
 
-        [ConflictingCombos(DragoonFullThrustComboPlus)]
+        [ConflictingCombos(DragoonFullThrustComboPlus, DragoonSimple)]
         [CustomComboInfo("Full Thrust Combo", "Replace Full Thrust with its combo chain.", DRG.JobID, 0, "", "Wait... Three combo?")]
         DragoonFullThrustCombo = 6003,
 
-        [ConflictingCombos(DragoonFullThrustCombo)]
+        [ConflictingCombos(DragoonFullThrustCombo, DragoonSimple)]
         [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 0, "", "F- Three combo MORE!")]
         DragoonFullThrustComboPlus = 6004,
 
@@ -653,8 +655,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Mirage Plus Feature", "Includes Mirage in the rotation.", DRG.JobID, 0, "", "They thought they saw it coming.")]
         DragoonMiragePlusFeature = 6006,
 
-        [ConflictingCombos(DragoonFullThrustCombo, DragoonFullThrustComboPlus)]
-        [CustomComboInfo("Simple Dragoon", "One Button, One Dragoon.", DRG.JobID, 0, "", "Nidhogg never stood a chance.")]
+        [ConflictingCombos(DragoonFullThrustCombo, DragoonFullThrustComboPlus, DragoonJumpFeature, DragoonChaosThrustCombo, DragoonFangThrustFeature, DragoonFangAndClawFeature)]
+        [CustomComboInfo("Simple Dragoon", "One Button, One Dragoon. Conflicts with every non-AoE feature.", DRG.JobID, 0, "", "Nidhogg never stood a chance.")]
         DragoonSimple = 6007,
 
         [ParentCombo(DragoonSimple)]
@@ -677,9 +679,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Buffs feature", "Includes Lance Charge and Battle Litany to the rotation.", DRG.JobID, 0, "", "This is why your team loves you.")]
         DragoonBuffsFeature = 6012,
 
+        [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 0, "ALL THE COMBOS", "Turns Wheeling Thrust into Fire IV when Hallowed or PvP options are active.")]
         DragoonFangThrustFeature = 6013,
 
+        [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Feature", "Fang And Claw Becomes Wheeling Thrust when under Enhanced Wheeling Thrust Buff.", DRG.JobID, 0, "Reinventing the Wheel", "Absolutely WHEELING, my guy")]
         DragoonFangAndClawFeature = 6014,
 
