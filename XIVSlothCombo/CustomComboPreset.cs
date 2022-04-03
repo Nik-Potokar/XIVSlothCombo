@@ -1120,6 +1120,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
         PaladinInterruptFeature = 11019,
 
+        [ParentCombo(PaladinInterruptFeature)]
+        [CustomComboInfo("Shield Bash option", "If target is interruptable, will use Interject, Low Blow, Shield Bash in that order", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
+        PaladinShieldBashOption = 11020,
+
         #endregion
         // ====================================================================================
         #region REAPER
