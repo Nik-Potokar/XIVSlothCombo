@@ -73,7 +73,172 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
         public static void DrawJobGrid(string config)
         {
-            
+            var values = Service.Configuration.GetCustomBoolArrayValue(config);
+
+            ImGui.Columns(5, null, false);
+
+            if (values.Length == 0) Array.Resize<bool>(ref values, 20);
+            if (ImGui.Checkbox("Paladin", ref values[0]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Warrior", ref values[1]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Dark Knight", ref values[2]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Gunbreaker", ref values[3]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("White Mage", ref values[4]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Scholar", ref values[5]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Astrologian", ref values[6]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Sage", ref values[7]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Monk", ref values[8]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Dragoon", ref values[9]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Ninja", ref values[10]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Samurai", ref values[11]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Reaper", ref values[12]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Bard", ref values[13]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Machinist", ref values[14]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Dancer", ref values[15]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Black Mage", ref values[16]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Summoner", ref values[17]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox("Red Mage", ref values[18]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+            if (ImGui.Checkbox("Blue Mage", ref values[19]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+            ImGui.Columns(1);
+            ImGui.Spacing();
         }
 
         public static int RoundOff(this int i, uint sliderIncrement)

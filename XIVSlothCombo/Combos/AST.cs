@@ -86,6 +86,10 @@ namespace XIVSlothComboPlugin.Combos
                 CrownPlay = 70;
         }
 
+        public static class Config
+        {
+
+        }
         public static class MeleeCardTargets
         {
             public const string
