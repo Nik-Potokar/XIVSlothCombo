@@ -136,9 +136,10 @@ namespace XIVSlothComboPlugin.Combos
                     return DRK.LivingShadow;
                 }
 
-                if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                if (IsEnabled(CustomComboPreset.DarkBloodGaugeOvercapFeature) && level >= 62)
                 {
-                    return DRK.Bloodspiller;
+                    if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                        return DRK.Bloodspiller;
                 }
                 if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= 54)
                 {

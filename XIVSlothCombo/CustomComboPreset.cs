@@ -626,6 +626,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("FoS Overcap Feature", "Uses FoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "Something about mana", "You're basically a black mage! Well done!")]
         DarkManaOvercapAoEFeature = 5015,
 
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
+        DarkBloodGaugeOvercapFeature = 5016,
         #endregion
         // ====================================================================================
         #region DRAGOON
