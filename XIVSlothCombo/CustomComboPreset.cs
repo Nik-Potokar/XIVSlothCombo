@@ -626,6 +626,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("FoS Overcap Feature", "Uses FoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "Something about mana", "You're basically a black mage! Well done!")]
         DarkManaOvercapAoEFeature = 5015,
 
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
+        DarkBloodGaugeOvercapFeature = 5016,
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -1114,7 +1117,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
         SkillCooldownRemaining = 11018,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
+        [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
         PaladinInterruptFeature = 11019,
 
         #endregion
