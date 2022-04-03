@@ -669,7 +669,7 @@ namespace XIVSlothComboPlugin
         DragoonGeirskogulNastrondFeature = 6008,
 
         [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives under Litany Feature", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany.", DRG.JobID, 0, "", "Don't jump to your death!")]
+        [CustomComboInfo("Dives under Litany Features", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany.", DRG.JobID, 0, "", "Don't jump to your death!")]
         DragoonLitanyDiveFeature = 6009,
 
         [ParentCombo(DragoonSimple)]
@@ -684,13 +684,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Buffs feature", "Includes Lance Charge and Battle Litany to the rotation.", DRG.JobID, 0, "", "This is why your team loves you.")]
         DragoonBuffsFeature = 6012,
 
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Life Surge Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs.", DRG.JobID, 0, "", "Hit them with more feeling!")]
+        DragoonLifeSurgeFeature = 6013,
+
         [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 0, "ALL THE COMBOS", "Turns Wheeling Thrust into Fire IV when Hallowed or PvP options are active.")]
-        DragoonFangThrustFeature = 6013,
+        DragoonFangThrustFeature = 6014,
 
         [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Feature", "Fang And Claw Becomes Wheeling Thrust when under Enhanced Wheeling Thrust Buff.", DRG.JobID, 0, "Reinventing the Wheel", "Absolutely WHEELING, my guy")]
-        DragoonFangAndClawFeature = 6014,
+        DragoonFangAndClawFeature = 6015,
 
         #endregion
         // ====================================================================================
