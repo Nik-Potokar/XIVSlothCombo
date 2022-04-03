@@ -159,6 +159,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lightspeed Feature", "Adds Lightspeed to the DPS Feature", AST.JobID, 0, "Warp-speed", "GO FASTER! FASTER!")]
         AstrologianLightSpeedFeature = 1020,
 
+        [TrustIncompatible]
+        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+        [CustomComboInfo("Auto-Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        AstAutoCardTarget = 1021,
+
+        [TrustIncompatible]
+        [ParentCombo(AstAutoCardTarget)]
+        [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
+        AstrologianTargetLock = 1022,
+
+        [TrustIncompatible]
+        [ParentCombo(AstAutoCardTarget)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for auto card target selection", AST.JobID)]
+        AstrologianTargetExtraFeature = 1023,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -1650,6 +1665,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", WAR.JobID, 0, "", "That's a low blow to my bro-bro, bro.")]
         WarriorInterruptFeature = 18017,
+
+        [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
+        WarriorInfuriateFellCleave = 18018,
 
         #endregion
         // ====================================================================================

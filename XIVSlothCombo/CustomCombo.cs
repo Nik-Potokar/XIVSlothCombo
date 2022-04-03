@@ -1,14 +1,15 @@
-using System;
-using System.Linq;
-using System.Numerics;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
-using XIVSlothComboPlugin.Attributes;
+using System;
+using System.Linq;
+using System.Numerics;
 using System.Timers;
+using XIVSlothComboPlugin.Attributes;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -303,6 +304,16 @@ namespace XIVSlothComboPlugin.Combos
         protected static bool HasEffect(ushort effectID)
             => FindEffect(effectID) is not null;
 
+        ///<summary>
+        ///Checks a member object for an effect.
+        ///The effect may be owned by anyone or unowned.
+        ///</summary>
+        ///<param name="effectID">Status effect ID.</param>
+        ///<param name="obj"></param>
+        ///<return>Status object or null.</return>
+        protected static Status? FindEffectOnMember(ushort effectID, GameObject? obj) =>
+            Service.ComboCache.GetStatus(effectID, obj, null);
+
         /// <summary>
         /// Finds an effect on the player.
         /// The effect must be owned by the player or unowned.
@@ -423,7 +434,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>Number of charges.</returns>
         protected static ushort GetMaxCharges(uint actionID)
             => GetCooldown(actionID).MaxCharges;
-        
+
         /// <summary>
         /// Checks if the provided action ID has cooldown remaining enough to weave against it
         /// without causing clipping
@@ -431,8 +442,8 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
         /// <returns>True or false.</returns>
-         protected static bool CanWeave(uint actionID, double weaveTime = 0.7)
-            => GetCooldown(actionID).CooldownRemaining > weaveTime;
+        protected static bool CanWeave(uint actionID, double weaveTime = 0.7)
+           => GetCooldown(actionID).CooldownRemaining > weaveTime;
 
         /// <summary>
         /// Get a job gauge.
@@ -539,6 +550,40 @@ namespace XIVSlothComboPlugin.Combos
             if (chara.IsCasting)
                 return chara.IsCastInterruptible;
             return false;
+        }
+
+        /// <summary>
+        /// Gets the party list
+        /// </summary>
+        /// <returns>Current party list.</returns>
+        protected static PartyList GetPartyMembers() => Service.PartyList;
+
+        /// <summary>
+        /// Sets the player's target. 
+        /// </summary>
+        /// <param name="target">Target must be a game object that the player can normally click and target.</param>
+        protected static void SetTarget(GameObject? target) =>
+            Service.TargetManager.Target = target;
+
+        /// <summary>
+        /// Checks if target is in appropriate range for targeting
+        /// </summary>
+        /// <param name="target">The target object to check</param>
+        protected static bool IsInRange(GameObject? target)
+        {
+            if (target == null) return false;
+            if (target.YalmDistanceX >= 30) return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Attempts to target the given party member
+        /// </summary>
+        /// <param name="target"></param>
+        protected static void TargetPartyMember(PartyMember target)
+        {
+            if (IsInRange(target.GameObject)) SetTarget(target.GameObject);
         }
     }
 }

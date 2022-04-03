@@ -19,6 +19,7 @@ namespace XIVSlothComboPlugin
         private static readonly HashSet<CustomComboPreset> SecretCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset[]> ConflictingCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset?> ParentCombos;  // child: parent
+        private static readonly HashSet<CustomComboPreset> TrustIncompatibles;
 
         static PluginConfiguration()
         {
@@ -35,6 +36,11 @@ namespace XIVSlothComboPlugin
                 .ToDictionary(
                     preset => preset,
                     preset => preset.GetAttribute<ParentComboAttribute>()?.ParentPreset);
+
+            TrustIncompatibles = Enum.GetValues<CustomComboPreset>()
+                .Where(preset => preset.GetAttribute<TrustIncompatibleAttribute>() != default)
+                .ToHashSet();
+
         }
 
         /// <summary>
@@ -59,6 +65,12 @@ namespace XIVSlothComboPlugin
         /// </summary>
         [JsonProperty("Debug")]
         public bool EnableSecretCombos { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets or sets a value indicating wheteher to allow and display trust incompatible combos.
+        /// </summary>
+        public bool EnableTrustIncompatibles { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether to hide combos which conflict with enabled presets.
@@ -104,6 +116,14 @@ namespace XIVSlothComboPlugin
             => SecretCombos.Contains(preset);
 
         /// <summary>
+        /// Gets a value indicating whether a preset is trust incompatible.
+        /// </summary>
+        /// <param name="preset">Preset to check.</param>
+        /// <returns>The boolean representation.</returns>
+        public bool IsTrustIncompatible(CustomComboPreset preset)
+            => TrustIncompatibles.Contains(preset);
+
+        /// <summary>
         /// Gets an array of conflicting combo presets.
         /// </summary>
         /// <param name="preset">Preset to check.</param>
@@ -145,7 +165,7 @@ namespace XIVSlothComboPlugin
 
         public int MudraPathSelection { get; set; } = 0;
 
-        public bool AprilFoolsSlothIrl { get; set; } = false;
+        public bool SpecialEvent { get; set; } = false;
 
         [JsonProperty]
         private static Dictionary<string,float> CustomConfigValues { get; set; } = new Dictionary<string,float>();
