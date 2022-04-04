@@ -273,7 +273,6 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.LadyOfCrown;
                 }
 
-
                 var celestialOppositionCD = GetCooldown(AST.CelestialOpposition);
                 if (IsEnabled(CustomComboPreset.AstrologianCelestialOppositionFeature) && celestialOppositionCD.CooldownRemaining == 0 && level >= AST.Levels.CelestialOpposition)
                     return AST.CelestialOpposition;

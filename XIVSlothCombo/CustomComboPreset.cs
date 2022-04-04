@@ -166,9 +166,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianHeliosFeature)]
         [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID, 0)]
         AstrologianLazyLadyFeature = 1022,
-
-
-
         
         #endregion
         // ====================================================================================
