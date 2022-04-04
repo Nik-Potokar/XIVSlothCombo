@@ -51,11 +51,15 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 Maim = 4,
+                Tomahawk = 15,
                 StormsPath = 26,
+                InnerBeast = 35,
                 MythrilTempest = 40,
                 StormsEye = 50,
                 FellCleave = 54,
                 Decimate = 60,
+                Onslaught = 62,
+                Upheaval = 64,
                 MythrilTempestTrait = 74,
                 NascentFlash = 76,
                 InnerChaos = 80,
@@ -72,101 +76,52 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (IsEnabled(CustomComboPreset.WarriorStormsPathCombo) && actionID == WAR.StormsPath)
             {
-                var heavyswingCD = GetCooldown(WAR.HeavySwing);
-                var upheavalCD = GetCooldown(WAR.Upheaval);
-                var innerreleaseCD = GetCooldown(WAR.InnerRelease);
-                var beserkCD = GetCooldown(WAR.Berserk);
                 var stormseyeBuff = FindEffectAny(WAR.Buffs.SurgingTempest);
-                var innerReleaseBuff = HasEffect(WAR.Buffs.InnerRelease);
-                var onslaughtCD = GetCooldown(WAR.Onslaught);
-                var actionIDCD = GetCooldown(actionID);
-                var surgingtempestBuff = HasEffect(WAR.Buffs.SurgingTempest);
                 var gauge = GetJobGauge<WARGauge>().BeastGauge;
 
-                if (IsEnabled(CustomComboPreset.WARRangedUptimeFeature) && level >= 15)
+                if (IsEnabled(CustomComboPreset.WARRangedUptimeFeature) && level >= WAR.Levels.Tomahawk)
                 {
                     if (!InMeleeRange(true))
                         return WAR.Tomahawk;
                 }
-                if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest) && gauge >= 50 && level >= 80)
-                    return WAR.InnerChaos;
 
-                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && beserkCD.IsCooldown && level >= 64 && level <= 69)
-                    return WAR.Upheaval;
-                else
-                if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && !upheavalCD.IsCooldown && heavyswingCD.CooldownRemaining > 0.7 && HasEffect(WAR.Buffs.SurgingTempest) && level >= 70)
-                    return WAR.Upheaval;
-
-                if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady))
+                if (HasEffect(WAR.Buffs.SurgingTempest))
                 {
-                    return WAR.PrimalRend;
-                }
-
-                if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
-                {
-                    return WAR.FellCleave;
-                }
-                // uses all stacks
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 62)
-                {
-                    if (onslaughtCD.CooldownRemaining < 60 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
-                        return WAR.Onslaught;
-                }
-                // leaves 1 stack
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && level >= 62)
-                {
-                    if (onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff)
-                        return WAR.Onslaught;
-                }
-                // leaves 2 stacks
-                if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && level >= 64)
-                {
-                    if (level >= 88)
+                    if (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && gauge >= 50 && level >= WAR.Levels.InnerChaos)
+                        return WAR.InnerChaos;
+                    if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady))
+                        return WAR.PrimalRend;
+                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
+                        return WAR.FellCleave;
+                    if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.InnerBeast)
+                        return OriginalHook(WAR.InnerBeast);
+                    if (CanWeave(actionID))
                     {
-                        if (onslaughtCD.CooldownRemaining < 1 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff && level >= 88)
-                            return WAR.Onslaught;
+                        if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
+                            return WAR.Upheaval;
+
+                        if (level >= WAR.Levels.Onslaught &&
+                            ((IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && GetRemainingCharges(WAR.Onslaught) is 1 or 2 or 3) || //uses all stacks
+                            (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && GetRemainingCharges(WAR.Onslaught) == 3 && level >= 88) || // leaves 2 stacks
+                            (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && ((GetRemainingCharges(WAR.Onslaught) is 2 or 3 && level >= 88) || (GetRemainingCharges(WAR.Onslaught) == 2 && level < 88))))) // leaves 1 stack
+                                return WAR.Onslaught;
                     }
-                    else
-                        if (onslaughtCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7 && surgingtempestBuff && level >= 62)
-                        return WAR.Onslaught;
                 }
+
                 if (comboTime > 0)
                 {
-
-                    if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 54)
-                        return WAR.FellCleave;
-                    if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 35 && level <= 53)
-                        return WAR.InnerBeast;
-                    if (lastComboMove == WAR.Maim && level >= 50 && !HasEffectAny(WAR.Buffs.SurgingTempest))
-                        return WAR.StormsEye;
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                     {
-                        if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 35 && level <= 53)
-                        {
-                            return WAR.InnerBeast;
-                        }
-
-                        if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 54)
-                        {
-                            return WAR.FellCleave;
-                        }
-
+                        if (HasEffectAny(WAR.Buffs.SurgingTempest) && gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= WAR.Levels.InnerBeast)
+                            return OriginalHook(WAR.InnerBeast);
                         return WAR.Maim;
                     }
 
                     if (lastComboMove == WAR.Maim && level >= WAR.Levels.StormsPath)
                     {
-                        if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 35 && level <= 53)
-                        {
+                        if (HasEffectAny(WAR.Buffs.SurgingTempest) && gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= WAR.Levels.InnerBeast)
                             return OriginalHook(WAR.InnerBeast);
-                        }
-
-                        if (gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 54)
-                        {
-                            return OriginalHook(WAR.FellCleave);
-                        }
-
-                        if (stormseyeBuff.RemainingTime < 15 && level > 50)
+                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime < 15) && level >= WAR.Levels.StormsEye)
                             return WAR.StormsEye;
                         return WAR.StormsPath;
                     }
