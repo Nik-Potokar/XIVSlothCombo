@@ -352,8 +352,12 @@ namespace XIVSlothComboPlugin.Combos
                 //Wyrmwind Thrust Feature
                 if (canWeaveAbilities)
                 {
-                    if (gauge.FirstmindsFocusCount == 2 && canWeaveAbilities)
-                        return DRG.WyrmwindThrust;
+                    if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
+                    {
+                        if (
+                            gauge.FirstmindsFocusCount == 2 && canWeaveAbilities
+                           ) return DRG.WyrmwindThrust;
+                    }
                 }
 
                 //Life Surge Feature
@@ -531,6 +535,219 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
+    internal class DragoonSimpleAoE : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonSimpleAoE;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var gauge = GetJobGauge<DRGGauge>();
+            if (actionID == DRG.CoerthanTorment)
+            {
+
+                //Buffs AoE Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoEBuffsFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.LanceCharge &&
+                            IsOffCooldown(DRG.LanceCharge) && CanWeave(actionID)
+                           ) return DRG.LanceCharge;
+
+                        if (
+                            level >= DRG.Levels.BattleLitany &&
+                            IsOffCooldown(DRG.BattleLitany) && CanWeave(actionID)
+                           ) return DRG.BattleLitany;
+                    }
+                }
+
+                //Dragon Sight AoE Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoEDragonSightFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.DragonSight &&
+                            IsOffCooldown(DRG.DragonSight) && CanWeave(actionID)
+                           ) return DRG.DragonSight;
+                    }
+                }
+
+                //Wyrmwind Thrust AoE Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoEWyrmwindFeature))
+                    {
+                        if (
+                            gauge.FirstmindsFocusCount == 2 && CanWeave(actionID)
+                           ) return DRG.WyrmwindThrust;
+                    }
+                }
+
+                //Life Surge AoE Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoELifeSurgeFeature))
+                    {
+                        if (
+                            HasEffect(DRG.Buffs.LanceCharge) &&
+                            lastComboMove == DRG.CoerthanTorment && level >= DRG.Levels.CoerthanTorment &&
+                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.RightEye) &&
+                            lastComboMove == DRG.CoerthanTorment && level >= DRG.Levels.CoerthanTorment &&
+                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.LanceCharge) &&
+                            lastComboMove == DRG.SonicThrust && level >= DRG.Levels.SonicThrust && level <= DRG.Levels.CoerthanTorment &&
+                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.RightEye) &&
+                            lastComboMove == DRG.SonicThrust && level >= DRG.Levels.SonicThrust && level <= DRG.Levels.CoerthanTorment &&
+                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.LanceCharge) &&
+                            lastComboMove == OriginalHook(DRG.DoomSpike) && level <= DRG.Levels.SonicThrust &&
+                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.RightEye) &&
+                            lastComboMove == OriginalHook(DRG.DoomSpike) && level <= DRG.Levels.SonicThrust &&
+                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                    }
+                }
+
+                //Geirskogul and Nastrond AoE Feature
+                {
+
+                    if (IsEnabled(CustomComboPreset.DragoonAoEGeirskogulNastrondFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.Geirskogul &&
+                            IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID)
+                           ) return DRG.Geirskogul;
+
+                        if (
+                            gauge.IsLOTDActive == true &&
+                            level >= DRG.Levels.Nastrond &&
+                            IsOffCooldown(DRG.Nastrond) && CanWeave(actionID)
+                           ) return DRG.Nastrond;
+                    }
+                }
+
+                //(High) Jump AoE Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoEHighJumpFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.HighJump &&
+                            IsOffCooldown(DRG.HighJump) && CanWeave(actionID)
+                           ) return DRG.HighJump;
+
+                        if (
+                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
+                            IsOffCooldown(DRG.Jump) && CanWeave(actionID)
+                           ) return DRG.Jump;
+                    }
+                }
+
+                //Dives under Litany and Life of the Dragon AoE Feature
+                {
+
+                    if (IsEnabled(CustomComboPreset.DragoonAoELifeLitanyDiveFeature))
+                    {
+                        if (
+                            gauge.IsLOTDActive == true &&
+                            level >= DRG.Levels.DragonfireDive &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, weaveTime: 0.9)
+                           ) return DRG.DragonfireDive;
+
+                        if (
+                            gauge.IsLOTDActive == true &&
+                            level >= DRG.Levels.Stardiver &&
+                            IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, weaveTime: 1.7)
+                           ) return DRG.Stardiver;
+
+                        if (
+                            gauge.IsLOTDActive == true &&
+                            level >= DRG.Levels.SpineshatterDive &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, weaveTime: 0.9)
+                           ) return DRG.SpineshatterDive;
+                    }
+                }
+
+                //Dives under Litany AoE Feature
+                {
+
+                    if (IsEnabled(CustomComboPreset.DragoonAoELitanyDiveFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.DragonfireDive &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, weaveTime: 0.9)
+                           ) return DRG.DragonfireDive;
+
+                        if (
+                            gauge.IsLOTDActive == true &&
+                            level >= DRG.Levels.Stardiver &&
+                            IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, weaveTime: 1.7)
+                           ) return DRG.Stardiver;
+
+                        if (
+                            level >= DRG.Levels.SpineshatterDive &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, weaveTime: 0.9)
+                           ) return DRG.SpineshatterDive;
+                    }
+                }
+
+                //Mirage AoE Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoEMirageFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.MirageDive &&
+                            HasEffect(DRG.Buffs.DiveReady) && CanWeave(actionID)
+                           ) return DRG.MirageDive;
+                    }
+                }
+
+                if (comboTime > 0)
+                {
+                    if ((lastComboMove == OriginalHook(DRG.DoomSpike)) && level >= DRG.Levels.SonicThrust)
+                        return DRG.SonicThrust;
+
+                    if (lastComboMove == DRG.SonicThrust && level >= DRG.Levels.CoerthanTorment)
+                        return DRG.CoerthanTorment;
+
+                    if ((lastComboMove == DRG.DraconianFury))
+                        return DRG.SonicThrust;
+                }
+
+                return OriginalHook(DRG.DoomSpike);
+            }
+
+            return actionID;
+        }
+    }
+
     internal class DragoonFangAndClawFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonFangAndClawFeature;
