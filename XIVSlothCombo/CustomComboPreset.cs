@@ -1045,6 +1045,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Hellfrog Medium Feature", "Adds Hellfrog Medium to the combo if you have Ninki to spend.", NIN.JobID)]
         NinSimpleHellfrogFeature = 10028,
 
+        [ParentCombo(NinSimpleAoE)]
+        [CustomComboInfo("Mudra Feature", "Adds Doton and Katon/Goka Mekkyaku to the combo.", NIN.JobID)]
+        NinSimpleAoeMudras = 10029,
+
+        [ParentCombo(NinSimpleAoE)]
+        [CustomComboInfo("Bunshin Feature", "Adds Bunshin and Phantom Kamaitachi to the combo.", NIN.JobID)]
+        NinSimpleAoeBunshin = 10030,
+
         #endregion
         // ====================================================================================
         #region PALADIN
