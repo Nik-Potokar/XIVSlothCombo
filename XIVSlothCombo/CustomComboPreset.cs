@@ -1696,6 +1696,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", WAR.JobID, 0, "", "That's a low blow to my bro-bro, bro.")]
         WarriorInterruptFeature = 18017,
 
+        [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
+        WarriorInfuriateFellCleave = 18018,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
