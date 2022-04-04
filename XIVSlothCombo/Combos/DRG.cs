@@ -427,13 +427,11 @@ namespace XIVSlothComboPlugin.Combos
                 if (comboTime > 0)
                 {
 
-                    if (lastComboMove == DRG.RaidenThrust)
-                    {
-                        var gauge = GetJobGauge<DRGGauge>();
-                        if (gauge.FirstmindsFocusCount == 2 && CanWeave(actionID))
-                            return DRG.WyrmwindThrust;
-                    }
-
+                    var gauge = GetJobGauge<DRGGauge>();
+                    if (
+                        gauge.FirstmindsFocusCount == 2 && canWeaveAbilities
+                      ) return DRG.WyrmwindThrust;                       
+                    
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.Disembowel && (Disembowel == null || (Disembowel.RemainingTime < 10)))
                         return DRG.Disembowel;
 
