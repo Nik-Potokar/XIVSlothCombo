@@ -629,17 +629,19 @@ namespace XIVSlothComboPlugin.Combos
                     // Buffs
                     if (canWeave)
                     {
-                        // Use Triplecast/Swiftcast only with Astral Fire/Umbral Hearts
-                        if (IsEnabled(CustomComboPreset.BlackSimpleCastsFeature) && (gauge.InAstralFire || gauge.UmbralHearts == 3))
+                        if (IsEnabled(CustomComboPreset.BlackSimpleCastsFeature))
                         {
-                            if (level >= BLM.Levels.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0)
+                            // Use Triplecast only with Astral Fire/Umbral Hearts
+                            if (level >= BLM.Levels.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0 && (gauge.InAstralFire || gauge.UmbralHearts == 3))
                             {
                                 if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) || GetRemainingCharges(BLM.Triplecast) > 1)
                                 {
                                     return BLM.Triplecast;
                                 }
                             }
-                            if (level >= BLM.Levels.Swiftcast && IsOffCooldown(BLM.Swiftcast))
+
+                            // Use Swiftcast in Astral Fire
+                            if (level >= BLM.Levels.Swiftcast && IsOffCooldown(BLM.Swiftcast) && gauge.InAstralFire)
                             {
                                 return BLM.Swiftcast;
                             }
