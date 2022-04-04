@@ -88,6 +88,7 @@ namespace XIVSlothComboPlugin.Combos
                 Jin = 45,
                 Doton = 45,
                 Assassinate = 40,
+                Kassatsu = 50,
                 HakkeMujinsatsu = 52,
                 ArmorCrush = 54,
                 Huraijin = 60,
@@ -371,7 +372,7 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(NIN.Ninjutsu);
                 }
 
-                if ((!HasEffect(NIN.Buffs.Doton) || (dotonBuff != null && dotonBuff?.RemainingTime <= 5)) && (jutsuCharges > 0 || HasEffect(NIN.Buffs.Mudra)) && level >= NIN.Levels.Doton && lastUsedJutsu != NIN.Doton)
+                if ((!HasEffect(NIN.Buffs.Doton) || (dotonBuff != null && dotonBuff?.RemainingTime <= 5)) && (jutsuCharges > 0 || HasEffect(NIN.Buffs.Mudra)) && level >= NIN.Levels.Doton && lastUsedJutsu != NIN.Doton && IsEnabled(CustomComboPreset.NinSimpleAoeMudras))
                 {
                     if (OriginalHook(NIN.Ninjutsu) == NIN.Doton)
                     {
@@ -395,9 +396,9 @@ namespace XIVSlothComboPlugin.Combos
 
 
 
-                if (jutsuCharges > 1 || HasEffect(NIN.Buffs.Mudra) || HasEffect(NIN.Buffs.Kassatsu) || (!GetCooldown(NIN.Kassatsu).IsCooldown && level >= 50))
+                if ((jutsuCharges > 1 || HasEffect(NIN.Buffs.Mudra) || HasEffect(NIN.Buffs.Kassatsu) || (!GetCooldown(NIN.Kassatsu).IsCooldown) && level >= NIN.Levels.Kassatsu) && IsEnabled(CustomComboPreset.NinSimpleAoeMudras))
                 {
-                    if (!GetCooldown(NIN.Kassatsu).IsCooldown && !HasEffect(NIN.Buffs.Mudra) && level >= 50)
+                    if (!GetCooldown(NIN.Kassatsu).IsCooldown && !HasEffect(NIN.Buffs.Mudra) && level >= NIN.Levels.Kassatsu)
                     {
                         return NIN.Kassatsu;
                     }
@@ -416,9 +417,9 @@ namespace XIVSlothComboPlugin.Combos
                     var actionIDCD = GetCooldown(actionID);
                     var bunshinCD = GetCooldown(NIN.Bunshin);
 
-                    if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= 80)
+                    if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= NIN.Levels.Bunshin && IsEnabled(CustomComboPreset.NinSimpleAoeBunshin))
                         return NIN.Bunshin;
-                    if (HasEffect(NIN.Buffs.PhantomReady) && level >= 82)
+                    if (HasEffect(NIN.Buffs.PhantomReady) && level >= NIN.Levels.PhantomKamaitachi && IsEnabled(CustomComboPreset.NinSimpleAoeBunshin))
                         return NIN.PhantomKamaitachi;
                     if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && IsEnabled(CustomComboPreset.NinSimpleHellfrogFeature))
                         return NIN.Hellfrog;
