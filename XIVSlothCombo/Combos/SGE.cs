@@ -91,7 +91,9 @@ namespace XIVSlothComboPlugin.Combos
                 Phlegma3 = 82,
                 Dosis3 = 82,
                 Krasis = 86,
-                Pneuma = 90;
+                Pneuma = 90,
+                //Role
+                LucidDreaming = 24;
         }
     }
 
@@ -139,6 +141,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var taurocholeCD = GetCooldown(SGE.Taurochole);
                 if (taurocholeCD.CooldownRemaining > 0 || level < SGE.Levels.Taurochole)
+
                     return SGE.Druochole;
             }
             return actionID;
@@ -207,44 +210,46 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == SGE.Dosis1 || actionID == SGE.Dosis2 || actionID == SGE.Dosis3)
             {
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var dosis3CD = GetCooldown(SGE.Dosis3);
-                var dosis1Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
-                var dosis2Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
-                var dosis3Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
+                if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                {
+                    //If we're too low level to use Eukrasia, we can stop here.
+                    if ((CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) && (level >= SGE.Levels.Eukrasia))
+                    {
+                        //Eukrasian Dosis vars
+                        Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
+                        uint EkDosisAtkID;
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= SGE.Levels.Dosis3 && incombat)
-                {
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianDosis3;
-                    if ((dosis3Debuff is null) || (dosis3Debuff.RemainingTime <= 4))
-                        return SGE.Eukrasia;
-                }
+                        switch (level)
+                        {
+                            case >= (byte)SGE.Levels.Dosis3:
+                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
+                                EkDosisAtkID = SGE.EukrasianDosis3;
+                                break;
+                            case >= (byte)SGE.Levels.Dosis2:
+                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
+                                EkDosisAtkID = SGE.EukrasianDosis2;
+                                break;
+                            default: //Ekrasia Dosis unlocks with Eukrasia, checked at the start
+                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
+                                EkDosisAtkID = SGE.EukrasianDosis1;
+                                break;
+                        }
+                        if (HasEffect(SGE.Buffs.Eukrasia))
+                            return EkDosisAtkID;
+                        if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 4))
+                            return SGE.Eukrasia;
+                    }
 
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= SGE.Levels.Dosis2 && level < SGE.Levels.Dosis3 && incombat)
-                {
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianDosis2;
-                    if ((dosis2Debuff is null) || (dosis2Debuff.RemainingTime <= 4))
-                        return SGE.Eukrasia;
-                }
-
-                if (IsEnabled(CustomComboPreset.SageDPSFeature) && level >= SGE.Levels.Eukrasia && level < SGE.Levels.Dosis2 && incombat)
-                {
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianDosis1;
-                    if ((dosis1Debuff is null) || (dosis1Debuff.RemainingTime <= 4))
-                        return SGE.Eukrasia;
-                }
-                if (IsEnabled(CustomComboPreset.SageLucidFeature))
-                {
-                    var lucidDreaming = GetCooldown(SGE.LucidDreaming);
-                    var actionIDCD = GetCooldown(actionID);
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
-                        return SGE.LucidDreaming;
+                    //Lucid should be usable outside of whatever is targetted
+                    if (IsEnabled(CustomComboPreset.SageLucidFeature) && level >= SGE.Levels.LucidDreaming)
+                    {
+                        var lucidDreaming = GetCooldown(SGE.LucidDreaming);
+                        var actionIDCD = GetCooldown(actionID); //Should this be changed to CanWeave similar to SCH? Seems fine as is
+                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
+                            return SGE.LucidDreaming;
+                    }
                 }
             }
-
             return actionID;
         }
     }
