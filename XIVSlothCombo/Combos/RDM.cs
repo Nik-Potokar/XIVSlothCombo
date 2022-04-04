@@ -1110,6 +1110,28 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
+    internal class RedMageJoltVerprocCombo : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageJoltVerprocCombo;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if ((actionID == RDM.Jolt) || (actionID == RDM.Jolt2))
+            {
+                var gauge = GetJobGauge<RDMGauge>();
+                if ((HasEffect(RDM.Buffs.VerfireReady)) && (gauge.WhiteMana > gauge.BlackMana))
+                {
+                    return RDM.Verfire;
+                }
+                if ((HasEffect(RDM.Buffs.VerstoneReady)) && (gauge.BlackMana > gauge.WhiteMana))
+                {
+                    return RDM.Verstone;
+                }
+            }
+            return actionID;
+        }
+    }
 }
 
 
