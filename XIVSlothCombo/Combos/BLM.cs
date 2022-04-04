@@ -298,6 +298,10 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Paradox;
                     if (HasEffect(BLM.Buffs.Firestarter))
                         return BLM.Fire3;
+                    if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 1600 && level >= BLM.Levels.Blizzard3)
+                    {
+                        return BLM.Blizzard3;
+                    }
 
                     return BLM.Fire;
                 }
