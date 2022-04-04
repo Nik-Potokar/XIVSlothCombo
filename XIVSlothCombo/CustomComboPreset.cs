@@ -1657,10 +1657,6 @@ namespace XIVSlothComboPlugin
         WarriorNascentFlashFeature = 18005,
 
         [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Fellcleave/IB Feature", "Replaces Main Combo With Fell Cleave/IB When you are about to overcap ", WAR.JobID, 0, "All you're good for", "Cleavey cleave cleave. Right?")]
-        WarriorFellCleaveOvercapFeature = 18006,
-
-        [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest", WAR.JobID, 0, "", "I use this feature when I'm moving house.")]
         WarriorUpheavalMainComboFeature = 18007,
 
