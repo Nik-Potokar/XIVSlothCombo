@@ -112,7 +112,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && (HasEffect(WAR.Buffs.InnerRelease) || HasEffect(WAR.Buffs.Berserk)) && level >= WAR.Levels.InnerBeast && HasEffect(WAR.Buffs.SurgingTempest)) ||
+                if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.InnerBeast && HasEffect(WAR.Buffs.SurgingTempest)) ||
                     (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.InnerChaos) ||
                     (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.InnerBeast))
                         return OriginalHook(WAR.InnerBeast);
@@ -187,7 +187,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(WAR.PrimalRend);
                     }
 
-                    if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && (HasEffect(WAR.Buffs.InnerRelease) || HasEffect(WAR.Buffs.Berserk)) && level >= WAR.Levels.SteelCyclone && HasEffect(WAR.Buffs.SurgingTempest)) ||
+                    if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.SteelCyclone && HasEffect(WAR.Buffs.SurgingTempest)) ||
                         (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.SteelCyclone) ||
                         (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.ChaoticCyclone))
                             return OriginalHook(WAR.SteelCyclone);
