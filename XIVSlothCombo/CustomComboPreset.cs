@@ -1647,12 +1647,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Overpower Combo", "Add combos to Overpower", WAR.JobID, 0, "Underpower", "Bet you wish you had damage like DRK right now, huh")]
         WarriorMythrilTempestCombo = 18002,
 
-        [ConflictingCombos(WarriorSpenderOption)]
         [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, 0, "", "Taming the beast... for now.")]
         WarriorGaugeOvercapFeature = 18003,
 
-        [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Inner Release Feature", "Replace Single target and AoE combo with Fell Cleave/Decimate during Inner Release and Surging Tempest", WAR.JobID, 0, "", "Unleash your deepest thoughts and feelings upon the party. They'll love it!")]
+        [CustomComboInfo("Inner Release Feature", "Replace Single target and AoE combo with Fell Cleave/Decimate during Inner Release/Berserk", WAR.JobID, 0, "", "Unleash your deepest thoughts and feelings upon the party. They'll love it!")]
         WarriorInnerReleaseFeature = 18004,
 
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, 0, "Nasty-ass Flash", "Jeez. Keep it to yourself.")]
@@ -1666,18 +1664,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest", WAR.JobID, 0, "", "I use this feature when I'm moving house.")]
         WarriorUpheavalMainComboFeature = 18007,
 
-        [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available and under Surging Tempest (Also added onto Main AoE combo)", WAR.JobID, 0, "", "Going back to our roots. Let's get Primal!")]
+        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, 0, "", "Going back to our roots. Let's get Primal!")]
         WarriorPrimalRendFeature = 18008,
 
+        [ParentCombo(WarriorMythrilTempestCombo)]
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, 0, "Orange-y feature", "Orange flavour. Mm.")]
         WarriorOrogenyFeature = 18009,
 
-        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos and Surging Tempest.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, 0, "", "THE EYE OF THE TIGERRRRR")]
+        [ConflictingCombos(WarriorSpenderOption)]
+        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, 0, "", "THE EYE OF THE TIGERRRRR")]
         WarriorInnerChaosOption = 18010,
 
-        [ConflictingCombos(WarriorGaugeOvercapFeature)]
-        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo", WAR.JobID, 0, "", "MORE CLEAVE!")]
+        [ConflictingCombos(WarriorInnerChaosOption)]
+        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used.", WAR.JobID, 0, "", "MORE CLEAVE!")]
         WarriorSpenderOption = 18011,
 
         [ConflictingCombos(WarriorOnslaughtFeatureOption, WarriorOnslaughtFeatureOptionTwo)]
