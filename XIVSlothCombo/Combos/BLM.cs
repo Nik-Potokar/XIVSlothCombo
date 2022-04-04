@@ -236,6 +236,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if ((LocalPlayer.CurrentMp < 800) || (LocalPlayer.CurrentMp < 1600 && level < BLM.Levels.Despair))
                         {
+                            return BLM.Blizzard3;
                         }
                     }
 
@@ -611,14 +612,14 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (level < BLM.Levels.Thunder3)
                         {
-                            if (lastComboMove != BLM.Thunder && thunderRecast(4))
+                            if (lastComboMove != BLM.Thunder && thunderRecast(4) && currentMP >= BLM.MP.AspectThunder)
                             {
                                 return BLM.Thunder;
                             }
                         }
                         else
                         {
-                            if (lastComboMove != BLM.Thunder3 && thunder3Recast(4))
+                            if (lastComboMove != BLM.Thunder3 && thunder3Recast(4) && currentMP >= BLM.MP.AspectThunder)
                             {
                                 return BLM.Thunder3;
                             }
@@ -786,12 +787,12 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
-                    if (IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) &&
+                    var pooledPolygotStacks = IsEnabled(CustomComboPreset.BlackSimplePoolingFeature) ? 1 : 0;
+                    if (gauge.PolyglotStacks > 0 && IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) &&
                         level >= BLM.Levels.Amplifier && IsOffCooldown(BLM.Amplifier))
                     {
                         return BLM.Xenoglossy;
                     }
-                    var pooledPolygotStacks = IsEnabled(CustomComboPreset.BlackSimplePoolingFeature) ? 1 : 0;
                     if (gauge.PolyglotStacks > pooledPolygotStacks && lastComboMove != BLM.Xenoglossy)
                     {
                         if (IsEnabled(CustomComboPreset.BlackSimpleBuffsLeylinesFeature) &&
