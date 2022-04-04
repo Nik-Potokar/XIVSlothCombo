@@ -52,15 +52,16 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
-        public static void DrawCheckboxSingle(string config, string checkBoxName, string checkboxDescription, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        public static void DrawCheckboxSingleChoice(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
         {
-            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.TankBlue;
-            var output = Service.Configuration.GetCustomBoolValue(config);
+            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
+            var output = Service.Configuration.GetCustomIntValue(config);
             ImGui.PushItemWidth(itemWidth);
+            var enabled = output == outputValue ? true : false;
 
-            if (ImGui.Checkbox(checkBoxName, ref output))
+            if (ImGui.Checkbox(checkBoxName, ref enabled))
             {
-                Service.Configuration.SetCustomBoolValue(config, output);
+                Service.Configuration.SetCustomIntValue(config, output);
                 Service.Configuration.Save();
 
             }
@@ -78,6 +79,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Columns(5, null, false);
 
             if (values.Length == 0) Array.Resize<bool>(ref values, 20);
+
             if (ImGui.Checkbox("Paladin", ref values[0]))
             {
                 Service.Configuration.SetCustomBoolArrayValue(config, values);

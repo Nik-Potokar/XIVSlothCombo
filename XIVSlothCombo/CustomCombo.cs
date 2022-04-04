@@ -552,6 +552,31 @@ namespace XIVSlothComboPlugin.Combos
             return false;
         }
 
+        protected static string CorrectPositional()
+        {
+            if (CurrentTarget is null)
+                return "NO TARGET";
+            if (CurrentTarget is not BattleChara chara)
+                return "INVALID TARGET";
+
+            //Do simple rotation check, hitbox later
+            var rotationalDiff = CurrentTarget.Rotation - LocalPlayer.Rotation;
+            var degrees = RadiansToDegrees(rotationalDiff);
+
+            return "";
+        }
+
+        private static float RadiansToDegrees(float d)
+        {
+            return Convert.ToSingle(d * (180 / Math.PI));
+        }
+        public static class Positionals
+        {
+            public const string
+                Rear = "Rear",
+                Flank = "Flank",
+                Front = "Front";
+        }
         /// <summary>
         /// Gets the party list
         /// </summary>
