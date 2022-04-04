@@ -159,6 +159,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lightspeed Feature", "Adds Lightspeed to the DPS Feature", AST.JobID, 0, "Warp-speed", "GO FASTER! FASTER!")]
         AstrologianLightSpeedFeature = 1020,
 
+        [ParentCombo(AstrologianHeliosFeature)]
+        [CustomComboInfo("Celestial Opposition Feature", "Adds Celestial Opposition", AST.JobID, 0)]
+        AstrologianCelestialOppositionFeature = 1021,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -626,6 +630,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("FoS Overcap Feature", "Uses FoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "Something about mana", "You're basically a black mage! Well done!")]
         DarkManaOvercapAoEFeature = 5015,
 
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
+        DarkBloodGaugeOvercapFeature = 5016,
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -666,7 +673,7 @@ namespace XIVSlothComboPlugin
         DragoonGeirskogulNastrondFeature = 6008,
 
         [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives under Litany Feature", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany.", DRG.JobID, 0, "", "Don't jump to your death!")]
+        [CustomComboInfo("Dives under Litany Features", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany.", DRG.JobID, 0, "", "Don't jump to your death!")]
         DragoonLitanyDiveFeature = 6009,
 
         [ParentCombo(DragoonSimple)]
@@ -681,13 +688,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Buffs feature", "Includes Lance Charge and Battle Litany to the rotation.", DRG.JobID, 0, "", "This is why your team loves you.")]
         DragoonBuffsFeature = 6012,
 
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Life Surge Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs.", DRG.JobID, 0, "", "Hit them with more feeling!")]
+        DragoonLifeSurgeFeature = 6013,
+
         [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 0, "ALL THE COMBOS", "Turns Wheeling Thrust into Fire IV when Hallowed or PvP options are active.")]
-        DragoonFangThrustFeature = 6013,
+        DragoonFangThrustFeature = 6014,
 
         [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Feature", "Fang And Claw Becomes Wheeling Thrust when under Enhanced Wheeling Thrust Buff.", DRG.JobID, 0, "Reinventing the Wheel", "Absolutely WHEELING, my guy")]
-        DragoonFangAndClawFeature = 6014,
+        DragoonFangAndClawFeature = 6015,
 
         #endregion
         // ====================================================================================
@@ -1114,7 +1125,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
         SkillCooldownRemaining = 11018,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
+        [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
         PaladinInterruptFeature = 11019,
 
         #endregion
@@ -1693,6 +1704,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", WAR.JobID, 0, "", "That's a low blow to my bro-bro, bro.")]
         WarriorInterruptFeature = 18017,
+
+        [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
+        WarriorInfuriateFellCleave = 18018,
 
         #endregion
         // ====================================================================================

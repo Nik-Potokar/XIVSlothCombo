@@ -502,6 +502,10 @@ namespace XIVSlothComboPlugin
             {
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
             }
+            if (preset == CustomComboPreset.WarriorInfuriateFellCleave && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
+            }
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
