@@ -105,9 +105,9 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
                             return WAR.Upheaval;
                         if (level >= WAR.Levels.Onslaught &&
-                            ((IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && GetRemainingCharges(WAR.Onslaught) is 1 or 2 or 3) || //uses all stacks
-                            (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && GetRemainingCharges(WAR.Onslaught) == 3 && level >= 88) || // leaves 2 stacks
-                            (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && ((GetRemainingCharges(WAR.Onslaught) is 2 or 3 && level >= 88) || (GetRemainingCharges(WAR.Onslaught) == 2 && level < 88))))) // leaves 1 stack
+                            ((IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && GetRemainingCharges(WAR.Onslaught) > 0) || //uses all stacks
+                            (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOptionTwo) && GetRemainingCharges(WAR.Onslaught) > 2 && level >= 88) || // leaves 2 stacks
+                            (IsEnabled(CustomComboPreset.WarriorOnslaughtFeatureOption) && GetRemainingCharges(WAR.Onslaught) > 1))) // leaves 1 stack
                                 return WAR.Onslaught;
                     }
                 }

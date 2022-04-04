@@ -162,8 +162,8 @@ namespace XIVSlothComboPlugin.Combos
                     if (CanWeave(actionID) && level >= GNB.Levels.RoughDivide)
                     {
                         
-                        if (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && GetRemainingCharges(GNB.RoughDivide) is 1 or 2 || // uses all stacks
-                            IsEnabled(CustomComboPreset.GunbreakerRoughDivide1StackOption) && GetRemainingCharges(GNB.RoughDivide) == 2) // leaves 1 stack
+                        if (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && GetRemainingCharges(GNB.RoughDivide) > 0 || // uses all stacks
+                            IsEnabled(CustomComboPreset.GunbreakerRoughDivide1StackOption) && GetRemainingCharges(GNB.RoughDivide) > 1) // leaves 1 stack
                             return GNB.RoughDivide;
                     }
 
