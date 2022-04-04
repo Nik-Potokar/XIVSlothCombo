@@ -167,6 +167,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region BLACK MAGE
 
+        [ConflictingCombos(BlackSimpleFeature)]
         [CustomComboInfo("Enochian Stance Switcher ++", "Change Scathe to Fire 4 or Blizzard 4 depending on stance.\nScathe becomes all in one rotation.\nIf Thunder Feature is turned on it also adds Thunder3 proces onto all in one combo when DoT is about to expire or dosen't exist\nThis REQUIRES other features to be turned on!!!", BLM.JobID, 0, "BrainLess Mage", "One button, BAYBEE!")]
         BlackEnochianFeature = 2000,
 
@@ -180,6 +181,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blizzard 1/2/3 Feature", "Blizzard 1 becomes Blizzard 3 when out of Umbral Ice. Freeze becomes Blizzard 2 when synced.", BLM.JobID, 0, "Chilly boi", "Chill out, for real. It's sleepy sloth time")]
         BlackBlizzardFeature = 2003,
 
+        [ConflictingCombos(BlackEnochianFeature, BlackSimpleFeature)]
         [CustomComboInfo("Scathe/Xenoglossy Feature", "Scathe becomes Xenoglossy when available.", BLM.JobID, 0, "Glossy paint", "So shiny, so glossy...")]
         BlackScatheFeature = 2004,
 
@@ -210,28 +212,33 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Thunder Uptime Feature", "Changes Scathe to Thunder 1/3 when not detected on target.", BLM.JobID, 0, "Bzzt", "Shocking!")]
         BlackThunderUptimeFeature = 2011,
 
-        [ParentCombo(BlackAspectSwapFeature)]
-        [CustomComboInfo("Manafont Feature", "Adds Manafont when 0 mana in astral fire phase and available to weave.", BLM.JobID, 0, "Just had to be different", "It's basically Lucid Dreaming? Or something? I dunno, do I look like I play BLM?")]
-        BlackManafontFeature = 2012,
+        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature)]
+        [CustomComboInfo("Simple BLM", "Adds the whole rotation to one button.", BLM.JobID, 0, "", "")]
+        BlackSimpleFeature = 2012,
 
-        [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Polygot Overcap Feature", "Changes Scathe to Xenoglossy / Foul when polygot stacks are capped.", BLM.JobID, 0, "Polyamorous Feature", "Foul play, if you ask me")]
-        BlackPolygotFeature = 2013,
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Buffs Feature", "Adds Manafont, Sharpcast, Amplifier onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        BlackSimpleBuffsFeature = 2013,
 
-        [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Sharpcast Feature", "Changes Scathe to Sharpcast when available to weave.", BLM.JobID, 0, "sHaRpCaSt", "Trying to be different again? Sharpcast? Really?")]
-        BlackSharpcastFeature = 2014,
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Buffs - Ley Lines", "Adds Ley Lines onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        BlackSimpleBuffsLeylinesFeature = 2014,
 
-        [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Amplifier Feature", "Changes Scathe to Amplifier when available to weave.", BLM.JobID, 0, "AmpliFIRE ;)", "Ba-BOOM! Amplifier!")]
-        BlackAmplifierFeature = 2015,
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Casts Feature", "Adds Triplecast/Swiftcast onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        BlackSimpleCastsFeature = 2015,
 
-        [CustomComboInfo("Ley Lines Auto Feature", "Changes to Scathe to Ley Lines when available to weave.", BLM.JobID, 0, "Auto-Standstill Feature", "Oh hey! A standing still thing! Watch out for that raidw-")]
-        BlackLeyLinesAutoFeature = 2016,
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Casts - Pooling", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        BlackSimpleCastPoolingFeature = 2016,
 
-        [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Enochain Recovery Feature", "Changes Scathe to Fire3 / Blizzard3 depending on current player's mana when enochain is inactive.", BLM.JobID, 0, "Boo hoo, number bad", "Can't manage the number going up or down? Boy do I got a feature for you!")]
-        BlackEnochainRecoveryFeature = 2017,
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Pooling", "Keep one xenoglossy usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        BlackSimplePoolingFeature = 2017,
+
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Fire3 Opener", "Adds the Fire III Opener to Simple BLM.", BLM.JobID, 0, "", "")]
+        BlackSimpleOpenerFeature = 2018,
 
         #endregion
         // ====================================================================================
