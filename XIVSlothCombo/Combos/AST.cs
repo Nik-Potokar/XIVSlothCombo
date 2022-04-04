@@ -264,6 +264,16 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == AST.AspectedHelios)
             {
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLadyFeature) && level >= 70)
+                {
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var gauge = GetJobGauge<ASTGauge>();
+
+                    if (gauge.DrawnCrownCard == CardType.LADY && incombat && level >= 70)
+                        return AST.LadyOfCrown;
+                }
+
+
                 var celestialOppositionCD = GetCooldown(AST.CelestialOpposition);
                 if (IsEnabled(CustomComboPreset.AstrologianCelestialOppositionFeature) && celestialOppositionCD.CooldownRemaining == 0 && level >= AST.Levels.CelestialOpposition)
                     return AST.CelestialOpposition;
