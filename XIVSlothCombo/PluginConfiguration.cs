@@ -61,6 +61,11 @@ namespace XIVSlothComboPlugin
         public bool EnableSecretCombos { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets a value indicating whether to hide combos which conflict with enabled presets.
+        /// </summary>
+        public bool HideConflictedCombos { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets a value indicating whether to hide the children of a feature if it is disabled.
         /// </summary>
         public bool HideChildren { get; set; } = false;
@@ -113,6 +118,19 @@ namespace XIVSlothComboPlugin
         /// <returns>The parent preset.</returns>
         public CustomComboPreset? GetParent(CustomComboPreset preset)
             => ParentCombos[preset];
+
+        /// <summary>
+        /// Gets the full list of conflicted combos
+        /// </summary>
+        public List<CustomComboPreset> GetAllConflicts()
+            => ConflictingCombos.Keys.ToList();
+
+        /// <summary>
+        /// Get all the info from conflicted combos
+        /// </summary>
+        public List<CustomComboPreset[]> GetAllConflictOriginals()
+            => ConflictingCombos.Values.ToList();
+
         public float EnemyHealthPercentage { get; set; } = 0;
 
         public float EnemyHealthMaxHp { get; set; } = 0;
@@ -138,11 +156,11 @@ namespace XIVSlothComboPlugin
         [JsonProperty]
         private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
-        public float GetCustomConfigValue(string config)
+        public float GetCustomConfigValue(string config, float defaultMinValue = 0)
         {
             float configValue;
 
-            if (!CustomConfigValues.TryGetValue(config, out configValue)) return 0;
+            if (!CustomConfigValues.TryGetValue(config, out configValue)) return defaultMinValue;
 
             return configValue;
         }
@@ -152,11 +170,11 @@ namespace XIVSlothComboPlugin
             CustomConfigValues[config] = value;
         }
 
-        public int GetCustomIntValue(string config)
+        public int GetCustomIntValue(string config, int defaultMinVal = 0)
         {
             int configValue;
 
-            if (!CustomIntValues.TryGetValue(config, out configValue)) return 0;
+            if (!CustomIntValues.TryGetValue(config, out configValue)) return defaultMinVal;
 
             return configValue;
         }

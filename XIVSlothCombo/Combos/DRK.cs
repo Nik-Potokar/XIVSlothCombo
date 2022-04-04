@@ -45,7 +45,9 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
+                HardSlash = 1,
                 SyphonStrike = 2,
+                Unleash = 6,
                 Souleater = 26,
                 FloodOfDarkness = 30,
                 EdgeOfDarkness = 40,
@@ -58,8 +60,11 @@ namespace XIVSlothComboPlugin.Combos
                 StalwartSoul = 72,
                 Shadow = 74,
                 EdgeOfShadow = 74,
+                LivingShadow = 80,
                 SaltAndDarkness = 86,
-                Shadowbringer = 90;
+                Shadowbringer = 90,
+                Plunge = 54,
+                Unmend = 15;
         }
     }
 
@@ -86,7 +91,7 @@ namespace XIVSlothComboPlugin.Combos
                 var livingshadowCD = GetCooldown(DRK.LivingShadow);
                 var saltedCD = GetCooldown(DRK.SaltedEarth);
                 var carveCD = GetCooldown(DRK.CarveAndSpit);
-                if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= 15)
+                if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
                 {
                     if (!InMeleeRange(true))
                         return DRK.Unmend;
@@ -121,32 +126,33 @@ namespace XIVSlothComboPlugin.Combos
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
                 }
 
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown2.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown2.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
                 }
 
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown3.CooldownRemaining > 0.8 && level >= 80 && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown3.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
                 {
                     return DRK.LivingShadow;
                 }
 
-                if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                if (IsEnabled(CustomComboPreset.DarkBloodGaugeOvercapFeature) && level >= DRK.Levels.Bloodpiller)
                 {
-                    return DRK.Bloodspiller;
+                    if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                        return DRK.Bloodspiller;
                 }
-                if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= 54)
+                if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= DRK.Levels.Plunge)
                 {
                     if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
                         return DRK.Plunge;
                 }
                 // leaves 1 stack
-                if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= 54)
+                if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= DRK.Levels.Plunge)
                 {
                     if (!plungeCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && plungeCD.CooldownRemaining < 60)
                         return DRK.Plunge;
@@ -175,17 +181,17 @@ namespace XIVSlothComboPlugin.Combos
                     if (LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
                     {
                         var gcd = GetCooldown(actionID);
-                        if (level >= 30 && gcd.IsCooldown)
+                        if (level >= DRK.Levels.FloodOfDarkness && gcd.IsCooldown)
                             return OriginalHook(DRK.FloodOfDarkness);
 
                     }
                 }
-                if (IsEnabled(CustomComboPreset.DRKStalwartabyssalDrainFeature) && level >= 56)
+                if (IsEnabled(CustomComboPreset.DRKStalwartabyssalDrainFeature) && level >= DRK.Levels.AbyssalDrain)
                 {
-                    if (actionIDCD.IsCooldown && IsOffCooldown(DRK.AbyssalDrain) && PlayerHealthPercentageHp() >= 60)
+                    if (actionIDCD.IsCooldown && IsOffCooldown(DRK.AbyssalDrain) && PlayerHealthPercentageHp() <= 60)
                         return DRK.AbyssalDrain;
                 }
-                if (IsEnabled(CustomComboPreset.DRKStalwartShadowbringerFeature) && level >= 90)
+                if (IsEnabled(CustomComboPreset.DRKStalwartShadowbringerFeature) && level >= DRK.Levels.Shadowbringer)
                 {
                     if (actionIDCD.IsCooldown && GetRemainingCharges(DRK.Shadowbringer) > 0 && gauge.DarksideTimeRemaining > 0)
                         return DRK.Shadowbringer;
@@ -229,7 +235,7 @@ namespace XIVSlothComboPlugin.Combos
                 var saltedCD = GetCooldown(DRK.SaltedEarth);
                 var actionIDCD = GetCooldown(actionID);
 
-                if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= 80)
+                if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= DRK.Levels.LivingShadow)
                     return DRK.LivingShadow;
                 if (!saltedCD.IsCooldown && level >= DRK.Levels.SaltedEarth)
                     return DRK.SaltedEarth;

@@ -12,15 +12,23 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 {
     public static class ConfigWindowFunctions
     {
-        public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150)
+        public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150, uint sliderIncrement = SliderIncrements.Ones)
         {
-            var output = Service.Configuration.GetCustomIntValue(config);
+            var output = Service.Configuration.GetCustomIntValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
+            
 
             if (inputChanged)
             {
+                if (output % sliderIncrement != 0)
+                {
+                    output = output.RoundOff(sliderIncrement);
+                    if (output < minValue) output = minValue;
+                    if (output > maxValue) output = maxValue;
+
+                }
                 Service.Configuration.SetCustomIntValue(config, output);
                 Service.Configuration.Save();
             }
@@ -30,7 +38,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
         public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
-            var output = Service.Configuration.GetCustomConfigValue(config);
+            var output = Service.Configuration.GetCustomConfigValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
@@ -62,5 +70,33 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
             ImGui.Spacing();
         }
+
+        public static void DrawJobGrid(string config)
+        {
+            
+        }
+
+        public static int RoundOff(this int i, uint sliderIncrement)
+        {
+            double sliderAsDouble = Convert.ToDouble(sliderIncrement);
+            return ((int)Math.Round(i / sliderAsDouble)) * (int)sliderIncrement;
+        }
+
+        //public static float RoundOff(this float i, uint sliderIncrement)
+        //{
+        //    double sliderAsFloat = Convert.ToDouble(sliderIncrement);
+        //    double iAsFloat = Convert.ToDouble(i);
+
+        //    return Convert.ToSingle(Math.Round(iAsFloat / sliderAsFloat) * sliderIncrement);
+        //}
+    }
+
+    public static class SliderIncrements
+    {
+        public const uint
+            Ones = 1,
+            Tens = 10,
+            Hundreds = 100,
+            Thousands = 1000;
     }
 }

@@ -54,12 +54,19 @@ namespace XIVSlothComboPlugin.Combos
                 StormsPath = 26,
                 MythrilTempest = 40,
                 StormsEye = 50,
+                Infuriate = 50,
                 FellCleave = 54,
                 Decimate = 60,
                 MythrilTempestTrait = 74,
                 NascentFlash = 76,
                 InnerChaos = 80,
                 PrimalRend = 90;
+        }
+
+        public static class Config
+        {
+            public const string
+                WarInfuriateRange = "WarInfuriateRange";
         }
     }
 
@@ -104,7 +111,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
                 {
-                    return WAR.FellCleave;
+                    return OriginalHook(WAR.FellCleave);
                 }
                 // uses all stacks
                 if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= 62)
@@ -134,9 +141,9 @@ namespace XIVSlothComboPlugin.Combos
                 {
 
                     if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 54)
-                        return WAR.FellCleave;
+                        return OriginalHook(WAR.FellCleave);
                     if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= 35 && level <= 53)
-                        return WAR.InnerBeast;
+                        return OriginalHook(WAR.InnerBeast);
                     if (lastComboMove == WAR.Maim && level >= 50 && !HasEffectAny(WAR.Buffs.SurgingTempest))
                         return WAR.StormsEye;
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
@@ -148,7 +155,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= 54)
                         {
-                            return WAR.FellCleave;
+                            return OriginalHook(WAR.FellCleave);
                         }
 
                         return WAR.Maim;
@@ -310,10 +317,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == WAR.Infuriate)
             {
-                if (HasEffect(WAR.Buffs.InnerRelease))
-                    return WAR.FellCleave;
-                if (HasEffect(WAR.Buffs.NascentChaos))
-                    return WAR.InnerChaos;
+                if (HasEffect(WAR.Buffs.InnerRelease) || HasEffect(WAR.Buffs.NascentChaos))
+                    return OriginalHook(WAR.FellCleave);
             }
 
             return actionID;
@@ -331,6 +336,28 @@ namespace XIVSlothComboPlugin.Combos
                 var lowBlowCD = GetCooldown(WAR.LowBlow);
                 if (CanInterruptEnemy() && !interjectCD.IsCooldown)
                     return WAR.Interject;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class WarriorInfuriateFellCleave : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorInfuriateFellCleave;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is WAR.FellCleave or WAR.Decimate or WAR.ChaoticCyclone or WAR.InnerChaos)
+            {
+                var rageGauge = GetJobGauge<WARGauge>();
+                var rageThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarInfuriateRange);
+                var isZerking = HasEffect(WAR.Buffs.InnerRelease);
+
+                if (!InCombat()) return actionID;
+
+                if (rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !isZerking && level >= WAR.Levels.Infuriate)
+                    return OriginalHook(WAR.Infuriate);
             }
 
             return actionID;
