@@ -8,6 +8,7 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 22;
 
         public const uint
+            PiercingTalon = 90,
             LanceCharge = 85,
             DragonSight = 7398,
             BattleLitany = 3557,
@@ -61,6 +62,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 VorpalThrust = 4,
+                PiercingTalon = 15,
                 Disembowel = 18,
                 FullThrust = 26,
                 LanceCharge = 30,
@@ -73,6 +75,7 @@ namespace XIVSlothComboPlugin.Combos
                 WheelingThrust = 58,
                 Geirskogul = 60,
                 SonicThrust = 62,
+                DragonSight = 66,
                 MirageDive = 68,
                 Nastrond = 70,
                 CoerthanTorment = 72,
@@ -132,6 +135,14 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRG.ChaosThrust || actionID == DRG.ChaoticSpring)
             {
+
+                //Piercing Talon Uptime Feature
+                if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
+                {
+                    if (!InMeleeRange(true))
+                        return DRG.PiercingTalon;
+                }
+
                 if (comboTime > 0)
                 {
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.Disembowel)
@@ -165,6 +176,14 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == DRG.FullThrust)
             {
+
+                //Piercing Talon Uptime Feature
+                if (IsEnabled(CustomComboPreset.DragoonPiercingTalonFullFeature) && level >= DRG.Levels.PiercingTalon)
+                {
+                    if (!InMeleeRange(true))
+                        return DRG.PiercingTalon;
+                }
+
                 if (comboTime > 0)
                 {
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.VorpalThrust)
@@ -207,6 +226,13 @@ namespace XIVSlothComboPlugin.Combos
                     CanWeave(DRG.HeavensThrust) ||
                     CanWeave(DRG.ChaoticSpring)
                 );
+
+                //Piercing Talon Uptime Feature
+                if (IsEnabled(CustomComboPreset.DragoonPiercingTalonPlusFeature) && level >= DRG.Levels.PiercingTalon)
+                {
+                    if (!InMeleeRange(true))
+                        return DRG.PiercingTalon;
+                }
 
                 //(High) Jump Plus Feature
                 if (canWeaveAbilities)
@@ -278,6 +304,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var gauge = GetJobGauge<DRGGauge>();
             if (actionID == DRG.FullThrust)
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
@@ -292,7 +319,7 @@ namespace XIVSlothComboPlugin.Combos
                     CanWeave(DRG.HeavensThrust) ||
                     CanWeave(DRG.ChaoticSpring)
                 );
-                
+
                 //Buffs Feature
                 if (canWeaveAbilities)
                 {
@@ -308,6 +335,25 @@ namespace XIVSlothComboPlugin.Combos
                             IsOffCooldown(DRG.BattleLitany) && canWeaveAbilities
                            ) return DRG.BattleLitany;
                     }
+                }
+
+                //Dragon Sight Feature
+                if (canWeaveAbilities)
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonDragonSightFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.DragonSight &&
+                            IsOffCooldown(DRG.DragonSight) && canWeaveAbilities
+                           ) return DRG.DragonSight;
+                    }
+                }
+
+                //Wyrmwind Thrust Feature
+                if (canWeaveAbilities)
+                {
+                    if (gauge.FirstmindsFocusCount == 2 && canWeaveAbilities)
+                        return DRG.WyrmwindThrust;
                 }
 
                 //Life Surge Feature
@@ -356,7 +402,6 @@ namespace XIVSlothComboPlugin.Combos
                             IsOffCooldown(DRG.Geirskogul) && canWeaveAbilities
                            ) return DRG.Geirskogul;
 
-                        var gauge = GetJobGauge<DRGGauge>();
                         if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.Nastrond &&
@@ -382,31 +427,56 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives under Litany Feature
+                //Dives under Litany and Life of the Dragon Feature
                 if (canWeaveAbilities)
                 {
 
-                    if (IsEnabled(CustomComboPreset.DragoonLitanyDiveFeature))
+                    if (IsEnabled(CustomComboPreset.DragoonLifeLitanyDiveFeature))
                     {
-                        var gauge = GetJobGauge<DRGGauge>();
                         if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.DragonfireDive &&
                             HasEffect(DRG.Buffs.BattleLitany) &&
-                            IsOffCooldown(DRG.DragonfireDive) && canWeaveAbilities
+                            IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, weaveTime: 0.9)
                            ) return DRG.DragonfireDive;
 
                         if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.Stardiver &&
-                            IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, weaveTime: 1.5)
+                            IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, weaveTime: 1.7)
                            ) return DRG.Stardiver;
 
                         if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.SpineshatterDive &&
                             HasEffect(DRG.Buffs.BattleLitany) &&
-                            GetRemainingCharges(DRG.SpineshatterDive) > 0 && canWeaveAbilities
+                            GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, weaveTime: 0.9)
+                           ) return DRG.SpineshatterDive;
+                    }
+                }
+
+                //Dives under Litany Feature
+                if (canWeaveAbilities)
+                {
+
+                    if (IsEnabled(CustomComboPreset.DragoonLitanyDiveFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.DragonfireDive &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, weaveTime: 0.9)
+                           ) return DRG.DragonfireDive;
+
+                        if (
+                            gauge.IsLOTDActive == true &&
+                            level >= DRG.Levels.Stardiver &&
+                            IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, weaveTime: 1.7)
+                           ) return DRG.Stardiver;
+
+                        if (
+                            level >= DRG.Levels.SpineshatterDive &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, weaveTime: 0.9)
                            ) return DRG.SpineshatterDive;
                     }
                 }
@@ -423,15 +493,16 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+                //Piercing Talon Uptime Feature
+                if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
+                {
+                    if (!InMeleeRange(true))
+                        return DRG.PiercingTalon;
+                }
+
                 var Disembowel = FindEffectAny(DRG.Buffs.PowerSurge);
                 if (comboTime > 0)
-                {
-
-                    var gauge = GetJobGauge<DRGGauge>();
-                    if (
-                        gauge.FirstmindsFocusCount == 2 && canWeaveAbilities
-                      ) return DRG.WyrmwindThrust;                       
-                    
+                {               
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.Disembowel && (Disembowel == null || (Disembowel.RemainingTime < 10)))
                         return DRG.Disembowel;
 
