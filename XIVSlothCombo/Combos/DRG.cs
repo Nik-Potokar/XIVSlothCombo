@@ -9,6 +9,7 @@ namespace XIVSlothComboPlugin.Combos
 
         public const uint
             LanceCharge = 85,
+            DragonSight = 7398,
             BattleLitany = 3557,
             Jump = 92,
             LifeSurge = 83,
@@ -40,6 +41,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
                 LanceCharge = 1864,
+                RightEye = 1910,
                 BattleLitany = 786,
                 SharperFangAndClaw = 802,
                 EnhancedWheelingThrust = 803,
@@ -308,6 +310,41 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+                //Life Surge Feature
+                if (canWeaveAbilities)
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonLifeSurgeFeature))
+                    {
+                        if (
+                            HasEffect(DRG.Buffs.LanceCharge) &&
+                            lastComboMove == DRG.VorpalThrust &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.RightEye) &&
+                            lastComboMove == DRG.VorpalThrust &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.LanceCharge) &&
+                            HasEffect(DRG.Buffs.RightEye) &&
+                            lastComboMove == DRG.FangAndClaw &&
+                            HasEffect(DRG.Buffs.EnhancedWheelingThrust) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.LanceCharge) &&
+                            HasEffect(DRG.Buffs.RightEye) &&
+                            lastComboMove == DRG.WheelingThrust &&
+                            HasEffect(DRG.Buffs.SharperFangAndClaw) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && canWeaveAbilities
+                           ) return DRG.LifeSurge;
+                    }
+                }
+
                 //Geirskogul and Nastrond Feature
                 if (canWeaveAbilities)
                 {
@@ -339,7 +376,7 @@ namespace XIVSlothComboPlugin.Combos
                            ) return DRG.HighJump;
 
                         if (
-                            level >= DRG.Levels.Jump && level <= 73 &&
+                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
                             IsOffCooldown(DRG.Jump) && canWeaveAbilities
                            ) return DRG.Jump;
                     }
@@ -351,21 +388,22 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.DragoonLitanyDiveFeature))
                     {
+                        var gauge = GetJobGauge<DRGGauge>();
                         if (
+                            gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.DragonfireDive &&
                             HasEffect(DRG.Buffs.BattleLitany) &&
                             IsOffCooldown(DRG.DragonfireDive) && canWeaveAbilities
                            ) return DRG.DragonfireDive;
 
-                        var gauge = GetJobGauge<DRGGauge>();
                         if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.Stardiver &&
-                            gauge.IsLOTDActive == true &&
-                            IsOffCooldown(DRG.Stardiver) && canWeaveAbilities
+                            IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, weaveTime: 1.5)
                            ) return DRG.Stardiver;
 
                         if (
+                            gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.SpineshatterDive &&
                             HasEffect(DRG.Buffs.BattleLitany) &&
                             GetRemainingCharges(DRG.SpineshatterDive) > 0 && canWeaveAbilities
@@ -408,17 +446,8 @@ namespace XIVSlothComboPlugin.Combos
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.VorpalThrust)
                         return DRG.VorpalThrust;
 
-                    if (lastComboMove == DRG.VorpalThrust && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0)
-                        return DRG.LifeSurge;
-
                     if (lastComboMove == DRG.VorpalThrust && level >= DRG.Levels.FullThrust)
                         return DRG.FullThrust;
-
-                    if (lastComboMove == DRG.FullThrust && !GetCooldown(DRG.HighJump).IsCooldown && level >= DRG.Levels.HighJump)
-                        return DRG.HighJump;
-
-                    if (lastComboMove == DRG.FullThrust && !GetCooldown(DRG.Jump).IsCooldown && level >= DRG.Levels.Jump && level <= 73)
-                        return DRG.Jump;
                 }
 
                 if (HasEffect(DRG.Buffs.SharperFangAndClaw) && level >= DRG.Levels.FangAndClaw)
