@@ -792,7 +792,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region GUNBREAKER
 
-        [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain.", GNB.JobID, 0, "Floppy Barrel Combo", "Not so solid NOW, are ya?")]
+        [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Gunbreaker)", GNB.JobID, 0, "Floppy Barrel Combo", "Not so solid NOW, are ya?")]
         GunbreakerSolidBarrelCombo = 7000,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
@@ -812,7 +812,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
         GunbreakerRoughDivide1StackOption = 7004,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
         [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
         GunbreakerBowShockFeature = 7017,
         
@@ -827,7 +827,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, 0, "Pew Pew Forever", "The whole nine yards")]
         GunbreakerAmmoOvercapFeature = 7007,
 
-        [ConflictingCombos(GunbreakerNoMercyRotationFeature)]
         [CustomComboInfo("Gnashing Fang Continuation Combo", "Adds Continuation to Gnashing Fang.", GNB.JobID, 0, "More Mercy", "More, no wait, less, no wait, MORE Mercy! No, wait...")]
         GunbreakerGnashingFangCombo = 7008,
 
@@ -849,16 +848,24 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "P4S Vampire man Bloodfest Feature", "Again with the edgelord names?\nTut, tut, Yoshi-P. Do better.")]
         GunbreakerBloodfestOvercapFeature = 7013,
 
-        [ConflictingCombos(GunbreakerGnashingFangCombo)]
-        [CustomComboInfo("No Mercy Rotation Feature", "Turns No Mercy into the the No Mercy Gnashing Fang Rotation when used.", GNB.JobID, 0, "The Balance Brought Me Here", "Level 90 rotation for the truly asleep")]
-        GunbreakerNoMercyRotationFeature = 7014,
-
         [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
         GunbreakerRangedUptimeFeature = 7015,
 
         [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", GNB.JobID, 0, "Lower blow", "Blow, but low.")]
         GunbreakerInterruptFeature = 7016,
+
+        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
+        GunbreakerBloodfestonST = 7014,
+
+        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to main combo when at full ammo.", GNB.JobID, 0)]
+        GunbreakerNoMercyonST = 7018,
+
+        [ParentCombo(GunbreakerGnashingFangOnMain)]
+        [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
+        GunbreakerGFStartonMain = 7019,
 
         #endregion
         // ====================================================================================
