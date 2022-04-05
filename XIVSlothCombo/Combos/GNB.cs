@@ -65,6 +65,7 @@ namespace XIVSlothComboPlugin.Combos
                 BurstStrike = 30,
                 DemonSlaughter = 40,
                 SonicBreak = 54,
+                RoughDivide = 56,
                 GnashingFang = 60,
                 BowShock = 62,
                 Continuation = 70,
@@ -158,16 +159,11 @@ namespace XIVSlothComboPlugin.Combos
                             return GNB.Hypervelocity;
                     }
 
-                    // uses all stacks
-                    if (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && level >= 56)
+                    if (CanWeave(actionID) && level >= GNB.Levels.RoughDivide)
                     {
-                        if (GetRemainingCharges(GNB.RoughDivide) is 1 or 2 && CanWeave(actionID))
-                            return GNB.RoughDivide;
-                    }
-                    // leaves 1 stack
-                    if (IsEnabled(CustomComboPreset.GunbreakerRoughDivide1StackOption) && level >= 56)
-                    {
-                        if (GetRemainingCharges(GNB.RoughDivide) == 1 && CanWeave(actionID))
+                        
+                        if (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && GetRemainingCharges(GNB.RoughDivide) > 0 || // uses all stacks
+                            IsEnabled(CustomComboPreset.GunbreakerRoughDivide1StackOption) && GetRemainingCharges(GNB.RoughDivide) > 1) // leaves 1 stack
                             return GNB.RoughDivide;
                     }
 
@@ -309,11 +305,8 @@ namespace XIVSlothComboPlugin.Combos
 
                     if(IsEnabled(CustomComboPreset.GunbreakerBowShockFeature) && level >= GNB.Levels.BowShock)
                     {
-                        var bowShockCD = GetCooldown(GNB.BowShock);
-                        if (!bowShockCD.IsCooldown)
-                        {
+                        if (IsOffCooldown(GNB.BowShock))
                             return GNB.BowShock;
-                        }
                     }
 
                     return GNB.DemonSlaughter;
@@ -425,7 +418,6 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == GNB.LowBlow)
             {
                 var interjectCD = GetCooldown(GNB.Interject);
-                var lowBlowCD = GetCooldown(GNB.LowBlow);
                 if (CanInterruptEnemy() && !interjectCD.IsCooldown)
                     return GNB.Interject;
             }

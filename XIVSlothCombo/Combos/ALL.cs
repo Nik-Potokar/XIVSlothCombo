@@ -9,6 +9,7 @@
             Resurrection = 173,
             Verraise = 7523,
             Raise = 125,
+            Reprisal = 7535,
             Ascend = 3603,
             Egeiro = 24287,
             SolidReason = 232,
@@ -26,7 +27,8 @@
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const ushort
+                Reprisal = 1193;
         }
 
         public static class Levels
@@ -69,6 +71,22 @@
                         || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
                         return All.Swiftcast;
                 }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class AllTankReprisalFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.AllTankReprisalFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == All.Reprisal)
+            {
+                if (TargetHasEffectAny(All.Debuffs.Reprisal))
+                    return WHM.Stone1;
             }
 
             return actionID;
