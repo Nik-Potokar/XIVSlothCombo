@@ -401,7 +401,7 @@ namespace XIVSlothComboPlugin
         DancerEspritOvercapSTFeature = 4001,
 
         [ParentCombo(DancerEspritOvercapSTFeature)]
-        [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.", DNC.JobID, 0, "Early Beans Feature", "You in a hurry or something?")]
+        [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.\nOverrides 'ST Instant Saber Option'.", DNC.JobID, 0, "Early Beans Feature", "You in a hurry or something?")]
         DancerEspritOvercapSTInstantOption = 4002,
 
         [ParentCombo(DancerSingleTargetMultibutton)]
@@ -421,7 +421,7 @@ namespace XIVSlothComboPlugin
         DancerEspritOvercapAoEFeature = 4011,
 
         [ParentCombo(DancerEspritOvercapAoEFeature)]
-        [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.", DNC.JobID, 0, "Early Beans Feature", "You in a hurry or something?")]
+        [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "Early Beans Feature", "You in a hurry or something?")]
         DancerEspritOvercapAoEInstantOption = 4012,
 
         [ParentCombo(DancerAoEMultibutton)]
@@ -464,10 +464,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "Big Bird Features", "It's BIRDIN' Time, y'all.")]
         DancerMenuFlourishingFeatures = 4030,
 
-        //[ParentCombo(DancerMenuGaugeFeatures)]
-        //[CustomComboInfo("Fan Dance Combos", "Change Fan Dance and Fan Dance 2 into Fan Dance 3 while flourishing.", DNC.JobID)]
-        //DancerFanDanceCombo = 4031,
-
         [ParentCombo(DancerMenuFlourishingFeatures)]
         [CustomComboInfo("Flourish Proc Saver Feature", "Change Flourish into any available Feather-generating procs before using.", DNC.JobID, 0, "Flourish, but not", "Think it's Flourish? Think again!")]
         DancerFlourishProcFeature = 4032,
@@ -479,7 +475,7 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(DancerFlourishProcFanDanceOption)]
         [ParentCombo(DancerFlourishProcFeature)]
-        [CustomComboInfo("Proc Saver Fan Dance Weave Option", "Include Fan Dance 3 & 4 in the proc saver, ONLY during weave-windows.", DNC.JobID, 0, "Big-Bird Pro Mode", "This one rules!")]
+        [CustomComboInfo("Proc Saver Fan Dance Weave Option", "Include Fan Dance 3 & 4 in the proc saver during weave-windows.", DNC.JobID, 0, "Big-Bird Pro Mode", "This one rules!")]
         DancerFlourishProcFanDanceWeaveOption = 4034,
 
         [ParentCombo(DancerMenuFlourishingFeatures)]
@@ -501,11 +497,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DancerFanDanceComboFeatures)]
         [CustomComboInfo("Fan Dance 2 -> 4", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "Fan Dance 20 -> 4", "It's all backwards!")]
         DancerFanDance2_4Combo = 4039,
-
-        // Why does this exist? I can't really think of a use-case for it, but I'm leaving it here in case I missed something
-        //[ParentCombo(DancerMenuGaugeFeatures)]
-        //[CustomComboInfo("Fan Saber Dance Feature", "Adds Saber Dance onto all Fan Dance skills when no feathers are available and you have 50+ Esprit", DNC.JobID)]
-        //DancerSaberFanDanceFeature = 4039,
 
         [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID, 0, "ooooh implicit combo or something", "Just press the other button 4hed why is this even a feature")]
         DancerDevilmentFeature = 4040,
@@ -540,10 +531,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when under the effects of Technical Step", DNC.JobID, 0, "Feather Hoarder", "Mine, all mine...")]
         DancerSimpleFeatherPoolingFeature = 4067,
-
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Samba", "Includes Shield Samba in the rotation when available (not optimal).", DNC.JobID, 0, "DURRRRR SHIELD", "Brainless, but thick-skinned, at least.")]
-        DancerSimpleSambaFeature = 4068,
 
         [ParentCombo(DancerSimpleFeature)]
         [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "panik.mp4", "oh god oh fuck oh no quick quick the medkit")]
