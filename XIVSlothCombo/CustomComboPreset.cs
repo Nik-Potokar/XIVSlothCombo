@@ -1802,6 +1802,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
         WarriorInfuriateFellCleave = 18018,
 
+        [CustomComboInfo("Simple Warrior", "Combo on one button", WAR.JobID)]
+        WarriorSimpleFeature = 18019,
+        
+        [ParentCombo(CustomComboPreset.WarriorSimpleFeature)]
+        [CustomComboInfo("Simple Warrior Opener", "Combo on one button", WAR.JobID)]
+        WarriorSimpleOpenerFeature = 18020,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE

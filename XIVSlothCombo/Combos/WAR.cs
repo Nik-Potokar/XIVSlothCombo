@@ -312,4 +312,192 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
+    internal class WarriorSimpleFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorSimpleFeature;
+
+        internal static bool inOpener = false;
+        internal static bool openerFinished = false;
+        internal static bool usedStormsEye = false;
+        internal static byte step = 0;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+            var gauge = GetJobGauge<WARGauge>();
+            var canWeave = CanWeave(actionID);
+            var stormseyeBuff = FindEffect(WAR.Buffs.SurgingTempest);
+
+            if (actionID == WAR.HeavySwing)
+            {
+                if (IsEnabled(CustomComboPreset.WarriorSimpleFeature) && level >= 50)
+                {
+                    // 120s Party Buff Window
+                    if ((!inCombat && (inOpener || openerFinished)) ||
+                        (!inOpener && GetRemainingCharges(WAR.Infuriate) == 2))
+                    {
+                        step = 0;
+                        inOpener = false;
+                        openerFinished = false;
+                        usedStormsEye = false;
+                    }
+
+                    if (!inOpener)
+                    {
+                        return WAR.Tomahawk;
+                    }
+
+                    if (inCombat && !inOpener)
+                    {
+                        inOpener = true;
+                    }
+
+                    if (inCombat && inOpener && !openerFinished)
+                    {
+                        // Check if opener is over
+                        if (usedStormsEye)
+                        {
+                            usedStormsEye = false;
+                            step++;
+                        }
+                        if (step >= 2)
+                        {
+                            inOpener = false;
+                        }
+
+                        // oGCDs
+                        if (canWeave)
+                        {
+                            if (!HasEffect(WAR.Buffs.NascentChaos) && !HasEffect(WAR.Buffs.InnerRelease))
+                            {
+                                if (lastComboActionID != WAR.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1)
+                                {
+                                    return WAR.Infuriate;
+                                }
+                            }
+
+                            if (!HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest))
+                            {
+                                if (IsOffCooldown(WAR.InnerRelease))
+                                {
+                                    return WAR.InnerRelease;
+                                }
+                                if (IsOffCooldown(WAR.Upheaval))
+                                {
+                                    return WAR.Upheaval;
+                                }
+                            }
+
+                            if (HasEffect(WAR.Buffs.InnerRelease))
+                            {
+                                if (lastComboActionID != WAR.Onslaught)
+                                {
+                                    return WAR.Onslaught;
+                                }
+                            }
+                        }
+
+                        // GCDs
+                        if (!HasEffect(WAR.Buffs.SurgingTempest))
+                        {
+                            if (lastComboActionID == WAR.HeavySwing && level >= WAR.Levels.Maim)
+                            {
+                                return WAR.Maim;
+                            }
+                            if (lastComboActionID == WAR.Maim && level >= WAR.Levels.StormsPath)
+                            {
+                                if ((!HasEffect(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime <= 15) && level >= WAR.Levels.StormsEye)
+                                {
+                                    usedStormsEye = true;
+                                    return WAR.StormsEye;
+                                }
+                                return WAR.StormsPath;
+                            }
+                            return WAR.HeavySwing;
+                        }
+                        if (HasEffect(WAR.Buffs.NascentChaos))
+                        {
+                            return OriginalHook(WAR.InnerBeast);
+                        }
+                        if (HasEffect(WAR.Buffs.InnerRelease))
+                        {
+                            if (HasEffect(WAR.Buffs.PrimalRendReady))
+                            {
+                                return WAR.PrimalRend;
+                            }
+
+                            if (HasEffect(WAR.Buffs.InnerRelease))
+                            {
+                                return OriginalHook(WAR.InnerBeast);
+                            }
+                        }
+                    }
+                }
+
+                if (HasEffect(WAR.Buffs.SurgingTempest))
+                {
+                    if (HasEffect(WAR.Buffs.PrimalRendReady))
+                    {
+                        return WAR.PrimalRend;
+                    }
+
+                    if (canWeave)
+                    {
+                        if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
+                        {
+                            return WAR.Upheaval;
+                        }
+                        if (level >= WAR.Levels.Onslaught)
+                        {
+                            uint onslaughtChargesTarget = 2;
+                            if (level < WAR.Levels.PrimalRend)
+                            {
+                                onslaughtChargesTarget = 1;
+                            }
+                            if (GetRemainingCharges(WAR.Onslaught) > onslaughtChargesTarget)
+                            {
+                                return WAR.Onslaught;
+                            }
+                        }
+                    }
+                }
+
+                if ((HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.InnerBeast && HasEffect(WAR.Buffs.SurgingTempest)) ||
+                    (HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.InnerChaos))
+                {
+                    return OriginalHook(WAR.InnerBeast);
+                }
+
+                if (comboTime > 0)
+                {
+                    if (lastComboActionID == WAR.HeavySwing && level >= WAR.Levels.Maim)
+                    {
+                        if (gauge.BeastGauge == 100 && level >= WAR.Levels.InnerBeast)
+                        {
+                            return OriginalHook(WAR.InnerBeast);
+                        }
+                        return WAR.Maim;
+                    }
+
+                    if (lastComboActionID == WAR.Maim && level >= WAR.Levels.StormsPath)
+                    {
+                        if (HasEffectAny(WAR.Buffs.SurgingTempest) && gauge.BeastGauge >= 90 && level >= WAR.Levels.InnerBeast)
+                        {
+                            return OriginalHook(WAR.InnerBeast);
+                        }
+                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime <= 10) && level >= WAR.Levels.StormsEye)
+                        {
+                            return WAR.StormsEye;
+                        }
+                        return WAR.StormsPath;
+                    }
+                }
+
+                return WAR.HeavySwing;
+            }
+
+            return actionID;
+        }
+    }
 }
