@@ -253,10 +253,8 @@ namespace XIVSlothComboPlugin.Combos
                 // Esprit overcap options
                 if (level >= DNC.Levels.SaberDance)
                 {
-                    if (gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTInstantOption))
-                        return DNC.SaberDance;
-
-                    if (gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTFeature))
+                    if ((gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTInstantOption)) ||
+                        (gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTFeature)))
                         return DNC.SaberDance;
                 }
 
@@ -308,10 +306,8 @@ namespace XIVSlothComboPlugin.Combos
                 var canWeave = CanWeave(actionID);
 
                 // Esprit Overcap Options
-                if (gauge.Esprit >= 50 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEInstantOption))
-                    return DNC.SaberDance;
-
-                if (gauge.Esprit >= 85 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEFeature))
+                if ((gauge.Esprit >= 50 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEInstantOption)) ||
+                    (gauge.Esprit >= 85 && level >= DNC.Levels.SaberDance && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEFeature)))
                     return DNC.SaberDance;
 
                 // FanDances
@@ -380,10 +376,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.DancerDevilmentOnCombinedDanceFeature) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                 {
-                    if (level >= DNC.Levels.Devilment && level < DNC.Levels.TechnicalStep)
-                        return DNC.Devilment;
-
-                    if (level >= DNC.Levels.TechnicalStep && techstepCD.IsCooldown)
+                    if ((level >= DNC.Levels.Devilment && level < DNC.Levels.TechnicalStep) || (level >= DNC.Levels.TechnicalStep && techstepCD.IsCooldown))
                         return DNC.Devilment;
                 }
 
@@ -508,6 +501,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (level >= DNC.Levels.CuringWaltz && PlayerHealthPercentageHp() < 30 && IsOffCooldown(DNC.CuringWaltz))
                             return DNC.CuringWaltz;
+
                         if (level >= DNC.Levels.SecondWind && PlayerHealthPercentageHp() < 50 && IsOffCooldown(DNC.SecondWind))
                             return DNC.SecondWind;
                     }

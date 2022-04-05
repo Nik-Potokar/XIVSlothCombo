@@ -574,6 +574,9 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region RED MAGE
            
+            if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.",300,100);
+                
             #endregion
             // ====================================================================================
             #region SAGE
@@ -624,6 +627,12 @@ namespace XIVSlothComboPlugin
             #region WARRIOR
             if (preset == CustomComboPreset.WarriorInfuriateFellCleave)
                 ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
+                
+                            if (preset == CustomComboPreset.WarriorStormsPathCombo && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 30, WAR.Config.WarSurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
+                
+            if (preset == CustomComboPreset.WarriorOnslaughtFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 2, WAR.Config.WarKeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
 
             #endregion
             // ====================================================================================

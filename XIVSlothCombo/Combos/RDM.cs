@@ -43,7 +43,8 @@ namespace XIVSlothComboPlugin.Combos
             Acceleration = 7518,
             Swiftcast = 7561,
             Manafication = 7521,
-            Embolden = 7520;
+            Embolden = 7520,
+            LucidDreaming = 7562;
 
         public static class Buffs
         {
@@ -69,6 +70,7 @@ namespace XIVSlothComboPlugin.Combos
                 Veraero = 10,
                 Verthunder2 = 18,
                 Veraero2 = 22,
+                LucidDreaming = 24,
                 Verraise = 64,
                 Zwerchhau = 35,
                 Swiftcast = 18,
@@ -94,7 +96,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                RDMLucidDreamingFeature = "RDMLucidDreamingFeature";
+                RdmLucidMpThreshold = "RdmLucidMpThreshold";
         }
     }
 
@@ -1133,6 +1135,22 @@ namespace XIVSlothComboPlugin.Combos
                 //Avoiding Offbalance difference of 30, Proc adds 5, so 25
                 else if ((HasEffect(RDM.Buffs.VerfireReady)) && (gauge.BlackMana - gauge.WhiteMana) < 25) return RDM.Verfire;
                 else if ((HasEffect(RDM.Buffs.VerstoneReady)) && (gauge.WhiteMana - gauge.BlackMana) < 25) return RDM.Verstone;
+            }
+            return actionID;
+        }
+    }
+
+    internal class RedMageLucidOnJolt : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageLucidOnJolt;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is RDM.Jolt or RDM.Jolt2 or RDM.Verfire or RDM.Verstone or RDM.Verthunder2 or RDM.Veraero2)
+            {
+                var needLucid = Service.Configuration.GetCustomIntValue(RDM.Config.RdmLucidMpThreshold);
+
+                if (level >= RDM.Levels.LucidDreaming && IsOffCooldown(RDM.LucidDreaming) && LocalPlayer.CurrentMp <= needLucid && CanWeave(actionID))
+                    return RDM.LucidDreaming;
             }
             return actionID;
         }
