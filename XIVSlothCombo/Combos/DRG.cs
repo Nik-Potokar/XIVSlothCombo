@@ -309,7 +309,7 @@ namespace XIVSlothComboPlugin.Combos
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var canWeave = CanWeave(actionID);
 
-                if (IsEnabled(CustomComboPreset.DragoonOpenerFeature) && level >= 88)
+                if (IsEnabled(CustomComboPreset.DragoonOpenerFeature) && (gauge.EyeCount < 1) && level >= 88)
                 {
                     if (inCombat && lastComboMove == DRG.TrueThrust && !inOpener)
                     {
