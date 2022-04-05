@@ -217,6 +217,7 @@ namespace XIVSlothComboPlugin
 
         }
 
+        
         private void DrawPreset(CustomComboPreset preset, CustomComboInfoAttribute info, ref int i)
         {
             var enabled = Service.Configuration.IsEnabled(preset);
@@ -341,171 +342,8 @@ namespace XIVSlothComboPlugin
                 }
             }
 
-            if (preset == CustomComboPreset.DancerDanceComboCompatibility && enabled)
-            {
-                var actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
-
-                var inputChanged = false;
-                inputChanged |= ImGui.InputInt("Emboite (Red) ActionID", ref actions[0], 0);
-                inputChanged |= ImGui.InputInt("Entrechat (Blue) ActionID", ref actions[1], 0);
-                inputChanged |= ImGui.InputInt("Jete (Green) ActionID", ref actions[2], 0);
-                inputChanged |= ImGui.InputInt("Pirouette (Yellow) ActionID", ref actions[3], 0);
-
-                if (inputChanged)
-                {
-                    Service.Configuration.DancerDanceCompatActionIDs = actions.Cast<uint>().ToArray();
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-
-
-            }
-            if (preset == CustomComboPreset.CustomValuesTest && enabled || preset == CustomComboPreset.SageDPSFeatureTest && enabled)
-            {
-                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
-                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
-                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
-
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Target MAX Hp  (If targets MAX Hp is BELOW this value it will not use DoT)", ref MaxHpValue);
-                inputChanged |= ImGui.InputFloat("Input Current Enemy Hp (Flat Value) (If targets Current HP is BELOW this value it will not use DoT)", ref CurrentHpValue);
-                inputChanged |= ImGui.InputFloat("Input Current Enemy % Hp (If targets Current % Hp is BELOW this value it will not use DoT)", ref PercentageHpValue);
-
-
-                if (inputChanged)
-                {
-                    Service.Configuration.EnemyHealthMaxHp = MaxHpValue;
-                    Service.Configuration.EnemyHealthPercentage = PercentageHpValue;
-                    Service.Configuration.EnemyCurrentHp = CurrentHpValue;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
-            if (preset == CustomComboPreset.PaladinFightOrFlightMainComboFeatureTest)
-            {
-                var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
-                var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
-
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
-
-
-
-
-                if (inputChanged)
-                {
-                    Service.Configuration.CustomGCDValueHigh = CustomGCDValueHigh;
-                    Service.Configuration.CustomGCDValueLow = CustomGCDValueLow;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
-            if (preset == CustomComboPreset.SkillCooldownRemaining)
-            {
-                var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
-
-
-
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Skill Cooldown remaining Time", ref SkillCooldownRemaining);
-
-                if (inputChanged)
-                {
-                    Service.Configuration.SkillCooldownRemaining = SkillCooldownRemaining;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
-            if (preset == CustomComboPreset.BardSimpleRagingJaws && enabled)
-            {
-                var ragingJawsRenewTime = Service.Configuration.GetCustomConfigValue(BRD.Config.RagingJawsRenewTime);
-
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Remaining time (In seconds)", ref ragingJawsRenewTime);
-
-                if (inputChanged)
-                {
-                    ragingJawsRenewTime = ragingJawsRenewTime < 3 ? 3 : ragingJawsRenewTime;
-
-                    Service.Configuration.SetCustomConfigValue(BRD.Config.RagingJawsRenewTime, ragingJawsRenewTime);
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
-            if (preset == CustomComboPreset.NinjaSimpleMudras && enabled)
-            {
-                var mudrapath = Service.Configuration.MudraPathSelection;
-
-                bool path1 = mudrapath == 1 ? true : false;
-                bool path2 = mudrapath == 2 ? true : false;
-
-                ImGui.Indent();
-                ImGui.PushItemWidth(75);
-
-                if (ImGui.Checkbox("Mudra Path Set 1", ref path1))
-                {
-
-                    Service.Configuration.MudraPathSelection = 1;
-                    Service.Configuration.Save();
-
-                }
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
-                ImGui.TextWrapped($"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton");
-                ImGui.PopStyleColor();
-
-                if (ImGui.Checkbox("Mudra Path Set 2", ref path2))
-                {
-                    Service.Configuration.MudraPathSelection = 2;
-                    Service.Configuration.Save();
-
-                }
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
-                ImGui.TextWrapped($"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).");
-                ImGui.PopStyleColor();
-
-
-                ImGui.Unindent();
-                ImGui.Spacing();
-
-            }
-            if (preset == CustomComboPreset.ScholarLucidDPSFeature && enabled)
-            {
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
-            }
-            if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
-            {
-                ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
-            }
-            if (preset == CustomComboPreset.NinjaHuraijinFeature && enabled)
-            {
-                ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
-            }
-            if (preset == CustomComboPreset.NinAeolianMugFeature && enabled)
-            {
-                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
-            }
-            if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo && enabled)
-            {
-                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
-            }
-            if (preset == CustomComboPreset.WarriorInfuriateFellCleave && enabled)
-            {
-                ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
-            }
+            DrawUserConfigs(preset, enabled);
+            
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
@@ -548,6 +386,276 @@ namespace XIVSlothComboPlugin
 
                 parentMaybe = Service.Configuration.GetParent(parent);
             }
+        }
+
+        /// <summary>
+        /// Draws the User Configurable settings
+        /// </summary>
+        /// <param name="preset">The preset it's attached to</param>
+        /// <param name="enabled">If it's enabled or not</param>
+        private void DrawUserConfigs(CustomComboPreset preset, bool enabled)
+        {
+
+            // ====================================================================================
+            #region Misc
+
+            #endregion
+            // ====================================================================================
+            #region ADV
+
+            #endregion
+            // ====================================================================================
+            #region ASTROLOGIAN
+
+            #endregion
+            // ====================================================================================
+            #region BLACK MAGE
+
+            #endregion
+            // ====================================================================================
+            #region BLUE MAGE
+
+            #endregion
+            // ====================================================================================
+            #region BARD
+            if (preset == CustomComboPreset.BardSimpleRagingJaws && enabled)
+            {
+                var ragingJawsRenewTime = Service.Configuration.GetCustomConfigValue(BRD.Config.RagingJawsRenewTime);
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75);
+                inputChanged |= ImGui.InputFloat("Remaining time (In seconds)", ref ragingJawsRenewTime);
+
+                if (inputChanged)
+                {
+                    ragingJawsRenewTime = ragingJawsRenewTime < 3 ? 3 : ragingJawsRenewTime;
+
+                    Service.Configuration.SetCustomConfigValue(BRD.Config.RagingJawsRenewTime, ragingJawsRenewTime);
+
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+            }
+            #endregion
+            // ====================================================================================
+            #region DANCER
+            if (preset == CustomComboPreset.DancerDanceComboCompatibility && enabled)
+            {
+                var actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
+
+                var inputChanged = false;
+                inputChanged |= ImGui.InputInt("Emboite (Red) ActionID", ref actions[0], 0);
+                inputChanged |= ImGui.InputInt("Entrechat (Blue) ActionID", ref actions[1], 0);
+                inputChanged |= ImGui.InputInt("Jete (Green) ActionID", ref actions[2], 0);
+                inputChanged |= ImGui.InputInt("Pirouette (Yellow) ActionID", ref actions[3], 0);
+
+                if (inputChanged)
+                {
+                    Service.Configuration.DancerDanceCompatActionIDs = actions.Cast<uint>().ToArray();
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+
+
+            }
+            #endregion
+            // ====================================================================================
+            #region DARK KNIGHT
+
+            #endregion
+            // ====================================================================================
+            #region DRAGOON
+
+            #endregion
+            // ====================================================================================
+            #region GUNBREAKER
+
+            #endregion
+            // ====================================================================================
+            #region MACHINIST
+
+            #endregion
+            // ====================================================================================
+            #region MONK
+
+            #endregion
+            // ====================================================================================
+            #region NINJA
+            if (preset == CustomComboPreset.NinjaSimpleMudras && enabled)
+            {
+                var mudrapath = Service.Configuration.MudraPathSelection;
+
+                bool path1 = mudrapath == 1 ? true : false;
+                bool path2 = mudrapath == 2 ? true : false;
+
+                ImGui.Indent();
+                ImGui.PushItemWidth(75);
+
+                if (ImGui.Checkbox("Mudra Path Set 1", ref path1))
+                {
+
+                    Service.Configuration.MudraPathSelection = 1;
+                    Service.Configuration.Save();
+
+                }
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+                ImGui.TextWrapped($"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton");
+                ImGui.PopStyleColor();
+
+                if (ImGui.Checkbox("Mudra Path Set 2", ref path2))
+                {
+                    Service.Configuration.MudraPathSelection = 2;
+                    Service.Configuration.Save();
+
+                }
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+                ImGui.TextWrapped($"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).");
+                ImGui.PopStyleColor();
+
+
+                ImGui.Unindent();
+                ImGui.Spacing();
+
+            }
+            if (preset == CustomComboPreset.NinSimpleTrickFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+            }
+            if (preset == CustomComboPreset.NinjaHuraijinFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
+            }
+            if (preset == CustomComboPreset.NinAeolianMugFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
+            }
+            if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+            }
+            #endregion
+            // ====================================================================================
+            #region PALADIN
+            if (preset == CustomComboPreset.PaladinFightOrFlightMainComboFeatureTest)
+            {
+                var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
+                var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75);
+                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
+                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
+
+
+
+
+                if (inputChanged)
+                {
+                    Service.Configuration.CustomGCDValueHigh = CustomGCDValueHigh;
+                    Service.Configuration.CustomGCDValueLow = CustomGCDValueLow;
+
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+            }
+
+            if (preset == CustomComboPreset.SkillCooldownRemaining)
+            {
+                var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
+
+
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75);
+                inputChanged |= ImGui.InputFloat("Input Skill Cooldown remaining Time", ref SkillCooldownRemaining);
+
+                if (inputChanged)
+                {
+                    Service.Configuration.SkillCooldownRemaining = SkillCooldownRemaining;
+
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+            }
+            #endregion
+            // ====================================================================================
+            #region REAPER
+
+            #endregion
+            // ====================================================================================
+            #region RED MAGE
+
+            #endregion
+            // ====================================================================================
+            #region SAGE
+            if (preset == CustomComboPreset.CustomValuesTest && enabled || preset == CustomComboPreset.SageDPSFeatureTest && enabled)
+            {
+                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
+                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
+                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+
+                var inputChanged = false;
+                ImGui.PushItemWidth(75);
+                inputChanged |= ImGui.InputFloat("Input Target MAX Hp  (If targets MAX Hp is BELOW this value it will not use DoT)", ref MaxHpValue);
+                inputChanged |= ImGui.InputFloat("Input Current Enemy Hp (Flat Value) (If targets Current HP is BELOW this value it will not use DoT)", ref CurrentHpValue);
+                inputChanged |= ImGui.InputFloat("Input Current Enemy % Hp (If targets Current % Hp is BELOW this value it will not use DoT)", ref PercentageHpValue);
+
+
+                if (inputChanged)
+                {
+                    Service.Configuration.EnemyHealthMaxHp = MaxHpValue;
+                    Service.Configuration.EnemyHealthPercentage = PercentageHpValue;
+                    Service.Configuration.EnemyCurrentHp = CurrentHpValue;
+
+                    Service.Configuration.Save();
+                }
+
+                ImGui.Spacing();
+            }
+            #endregion
+            // ====================================================================================
+            #region SAMURAI
+
+            #endregion
+            // ====================================================================================
+            #region SCHOLAR
+            if (preset == CustomComboPreset.ScholarLucidDPSFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work");
+            }
+            #endregion
+            // ====================================================================================
+            #region SUMMONER
+
+            #endregion
+            // ====================================================================================
+            #region WARRIOR
+            if (preset == CustomComboPreset.WarriorInfuriateFellCleave && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
+            }
+            #endregion
+            // ====================================================================================
+            #region WHITE MAGE
+
+            #endregion
+            // ====================================================================================
+            #region DOH
+
+            #endregion
+            // ====================================================================================
+            #region DOL
+
+            #endregion
+            // ====================================================================================
+            #region PVP VALUES
+
+            #endregion
+
         }
     }
 }
