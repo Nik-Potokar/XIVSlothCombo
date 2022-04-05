@@ -1806,8 +1806,12 @@ namespace XIVSlothComboPlugin
         WarriorSimpleFeature = 18019,
         
         [ParentCombo(CustomComboPreset.WarriorSimpleFeature)]
-        [CustomComboInfo("Simple Warrior Opener", "Combo on one button", WAR.JobID)]
+        [CustomComboInfo("Simple Warrior Opener", "Opener for Warrior. The opener is started at the start of battle, or when Infuriate is used at 2 stacks.", WAR.JobID)]
         WarriorSimpleOpenerFeature = 18020,
+
+        [ParentCombo(CustomComboPreset.WarriorSimpleFeature)]
+        [CustomComboInfo("Simple Warrior Opener - Auto", "Automatically enters the opener when Infuriate is at 2 stacks.", WAR.JobID)]
+        WarriorSimpleAutoOpenerFeature = 18021,
 
         #endregion
         // ====================================================================================
