@@ -66,6 +66,12 @@ namespace XIVSlothComboPlugin.Combos
                 ThinAir = 58,
                 AfflatusRapture = 76;
         }
+
+        public static class Config
+        {
+            public const string
+                WHMLucidDreamingFeature = "WHMLucidDreamingFeature";
+        }
     }
 
     internal class WhiteMageSolaceMiseryFeature : CustomCombo
