@@ -645,6 +645,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Jump + Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, 0, "Jump off map", "Oh no, muh double-weaves!")]
         DragoonJumpFeature = 6000,
 
+        [ConflictingCombos(DragoonSimpleAoE)]
         [CustomComboInfo("Coerthan Torment Combo", "Replace Coerthan Torment with its combo chain.", DRG.JobID, 0, "", "One combo!")]
         DragoonCoerthanTormentCombo = 6001,
 
@@ -652,57 +653,133 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Chaos Thrust Combo", "Replace Chaos Thrust with its combo chain.", DRG.JobID, 0, "", "Two combo!")]
         DragoonChaosThrustCombo = 6002,
 
+        [ParentCombo(DragoonChaosThrustCombo)]
+        [CustomComboInfo("Chaos Piercing Talon Uptime", "Replaces Chaos Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 0, "", "Never stop hitting them.")]
+        DragoonPiercingTalonChaosFeature = 6003,
+
         [ConflictingCombos(DragoonFullThrustComboPlus, DragoonSimple)]
         [CustomComboInfo("Full Thrust Combo", "Replace Full Thrust with its combo chain.", DRG.JobID, 0, "", "Wait... Three combo?")]
-        DragoonFullThrustCombo = 6003,
+        DragoonFullThrustCombo = 6004,
+
+        [ParentCombo(DragoonFullThrustCombo)]
+        [CustomComboInfo("Full Piercing Talon Uptime", "Replaces Full Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 0, "", "Never stop hitting them.")]
+        DragoonPiercingTalonFullFeature = 6005,
 
         [ConflictingCombos(DragoonFullThrustCombo, DragoonSimple)]
-        [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 0, "", "F- Three combo MORE!")]
-        DragoonFullThrustComboPlus = 6004,
+        [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust Plus Combo with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 0, "", "F- Three combo MORE!")]
+        DragoonFullThrustComboPlus = 6006,
 
         [ParentCombo(DragoonFullThrustComboPlus)]
         [CustomComboInfo("High Jump Plus Feature", "Includes High Jump in the rotation.", DRG.JobID, 0, "", "Jumping, but higher.")]
-        DragoonHighJumpPlusFeature = 6005,
+        DragoonHighJumpPlusFeature = 6007,
 
         [ParentCombo(DragoonHighJumpPlusFeature)]
         [CustomComboInfo("Mirage Plus Feature", "Includes Mirage in the rotation.", DRG.JobID, 0, "", "They thought they saw it coming.")]
-        DragoonMiragePlusFeature = 6006,
+        DragoonMiragePlusFeature = 6008,
+
+        [ParentCombo(DragoonFullThrustComboPlus)]
+        [CustomComboInfo("Plus Piercing Talon Uptime", "Replaces Full Thrust with Piercing Talon when you are out of range.", DRG.JobID, 0, "", "Never stop hitting them.")]
+        DragoonPiercingTalonPlusFeature = 6009,
 
         [ConflictingCombos(DragoonFullThrustCombo, DragoonFullThrustComboPlus, DragoonJumpFeature, DragoonChaosThrustCombo, DragoonFangThrustFeature, DragoonFangAndClawFeature)]
         [CustomComboInfo("Simple Dragoon", "One Button, One Dragoon. Conflicts with every non-AoE feature.", DRG.JobID, 0, "", "Nidhogg never stood a chance.")]
-        DragoonSimple = 6007,
+        DragoonSimple = 6010,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Simple Opener", "Includes an opener to the Simple Dragoon rotation. NOTE: Requires ReAction or MoAction for optimal Dragon Sight use.", DRG.JobID, 0, "", "Open with a backjump into the wall!")]
+        DragoonOpenerFeature = 6011,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Wyrmwind Thrust Feature", "Includes Wyrmwind Thrust to the Simple Dragoon rotation.", DRG.JobID, 0, "", "Blue and red Dragons! Oh my.")]
+        DragoonWyrmwindFeature = 6012,
 
         [ParentCombo(DragoonSimple)]
         [CustomComboInfo("Geirskogul and Nastrond Feature", "Includes Geirskogul and Nastrond in the rotation.", DRG.JobID, 0, "", "Let me chuck another dragon soul at them!")]
-        DragoonGeirskogulNastrondFeature = 6008,
+        DragoonGeirskogulNastrondFeature = 6013,
 
+        [ConflictingCombos(DragoonLifeLitanyDiveFeature)]
         [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives under Litany Features", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany.", DRG.JobID, 0, "", "Don't jump to your death!")]
-        DragoonLitanyDiveFeature = 6009,
+        [CustomComboInfo("Dives under Litany Features", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 0, "", "Don't jump to your death!")]
+        DragoonLitanyDiveFeature = 6014,
+
+        [ConflictingCombos(DragoonLitanyDiveFeature)]
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Dives under Litany and Life of the Dragon Features", "Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 0, "", "Don't jump to your death!")]
+        DragoonLifeLitanyDiveFeature = 6015,
 
         [ParentCombo(DragoonSimple)]
         [CustomComboInfo("High Jump Feature", "Includes High Jump in the rotation.", DRG.JobID, 0, "", "Jumping, but higher.")]
-        DragoonHighJumpFeature = 6010,
+        DragoonHighJumpFeature = 6016,
 
         [ParentCombo(DragoonSimple)]
         [CustomComboInfo("Mirage Feature", "Includes Mirage in the rotation.", DRG.JobID, 0, "", "They thought they saw it coming.")]
-        DragoonMirageFeature = 6011,
+        DragoonMirageFeature = 6017,
 
         [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Buffs feature", "Includes Lance Charge and Battle Litany to the rotation.", DRG.JobID, 0, "", "This is why your team loves you.")]
-        DragoonBuffsFeature = 6012,
+        [CustomComboInfo("Buffs Feature", "Includes Lance Charge and Battle Litany to the rotation.", DRG.JobID, 0, "", "This is why your team loves you.")]
+        DragoonBuffsFeature = 6018,
+
+        [ParentCombo(DragoonBuffsFeature)]
+        [CustomComboInfo("Dragon Sight Feature", "Includes Dragon Sight to the rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "This is why your team loves you, too.")]
+        DragoonDragonSightFeature = 6019,
 
         [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Life Surge Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs.", DRG.JobID, 0, "", "Hit them with more feeling!")]
-        DragoonLifeSurgeFeature = 6013,
+        [CustomComboInfo("Life Surge Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, 0, "", "Hit them with more feeling!")]
+        DragoonLifeSurgeFeature = 6020,
+
+        [ParentCombo(DragoonSimple)]
+        [CustomComboInfo("Simple Piercing Talon Feature", "Replaces Full Thrust Combo with Piercing Talon when you are out of range. NOT OPTIMAL", DRG.JobID, 0, "", "Never stop hitting them.")]
+        DragoonSimplePiercingTalonFeature = 6021,
+
+        [ConflictingCombos(DragoonCoerthanTormentCombo)]
+        [CustomComboInfo("Simple Dragoon AoE", "One Button, many enemies hit.", DRG.JobID, 0, "", "Never stop hitting them ALL.")]
+        DragoonSimpleAoE = 6022,
+
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Wyrmwind Thrust AoE Feature", "Includes Wyrmwind Thrust to the Simple Dragoon AoE rotation.", DRG.JobID, 0, "", "Blue and red Dragons! Oh my.")]
+        DragoonAoEWyrmwindFeature = 6023,
+
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Geirskogul and Nastrond AoE Feature", "Includes Geirskogul and Nastrond in the AoE rotation.", DRG.JobID, 0, "", "Let me chuck another dragon soul at them!")]
+        DragoonAoEGeirskogulNastrondFeature = 6024,
+
+        [ConflictingCombos(DragoonAoELifeLitanyDiveFeature)]
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Dives under Litany AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 0, "", "Don't jump to your death!")]
+        DragoonAoELitanyDiveFeature = 6025,
+
+        [ConflictingCombos(DragoonAoELitanyDiveFeature)]
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Dives under Litany and Life of the Dragon AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 0, "", "Don't jump to your death!")]
+        DragoonAoELifeLitanyDiveFeature = 6026,
+
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("High Jump AoE Feature", "Includes High Jump in the AoE rotation.", DRG.JobID, 0, "", "Jumping, but higher.")]
+        DragoonAoEHighJumpFeature = 6027,
+
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Mirage AoE Feature", "Includes Mirage in the AoE rotation.", DRG.JobID, 0, "", "They thought they saw it coming.")]
+        DragoonAoEMirageFeature = 6028,
+
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Buffs AoE Feature", "Includes Lance Charge and Battle Litany to the AoE rotation.", DRG.JobID, 0, "", "This is why your team loves you.")]
+        DragoonAoEBuffsFeature = 6029,
+
+        [ParentCombo(DragoonAoEBuffsFeature)]
+        [CustomComboInfo("Dragon Sight AoE Feature", "Includes Dragon Sight to the AoE rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "This is why your team loves you, too.")]
+        DragoonAoEDragonSightFeature = 6030,
+
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Life Surge AoE Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the AoE rotation.", DRG.JobID, 0, "", "Hit them with more feeling!")]
+        DragoonAoELifeSurgeFeature = 6031,
 
         [ConflictingCombos(DragoonSimple)]
-        [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust,\nChaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw.\nRequires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 0, "ALL THE COMBOS", "Turns Wheeling Thrust into Fire IV when Hallowed or PvP options are active.")]
-        DragoonFangThrustFeature = 6014,
+        [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust, Chaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw. Requires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 0, "ALL THE COMBOS", "Turns Wheeling Thrust into Fire IV when Hallowed or PvP options are active.")]
+        DragoonFangThrustFeature = 6032,
 
         [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Feature", "Fang And Claw Becomes Wheeling Thrust when under Enhanced Wheeling Thrust Buff.", DRG.JobID, 0, "Reinventing the Wheel", "Absolutely WHEELING, my guy")]
-        DragoonFangAndClawFeature = 6015,
+        DragoonFangAndClawFeature = 6033,
 
         #endregion
         // ====================================================================================
