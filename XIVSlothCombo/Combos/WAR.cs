@@ -378,7 +378,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (!HasEffect(WAR.Buffs.NascentChaos))
                                 {
                                     if ((HasEffect(WAR.Buffs.SurgingTempest) && GetRemainingCharges(WAR.Infuriate) > 0) || 
-                                        GetRemainingCharges(WAR.Infuriate) > 1))
+                                        GetRemainingCharges(WAR.Infuriate) > 1)
                                     {
                                         return WAR.Infuriate;
                                     }
