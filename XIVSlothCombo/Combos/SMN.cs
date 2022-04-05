@@ -152,6 +152,12 @@ namespace XIVSlothComboPlugin.Combos
                 EmeralRuin2 = 30,
                 EmeralRuin3 = 54;
         }
+
+        public static class Config
+        {
+            public const string
+                SMNLucidDreamingFeature = "SMNLucidDreamingFeature";
+        }
     }
 
     internal class SummonerEDFesterCombo : CustomCombo
