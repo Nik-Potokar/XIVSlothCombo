@@ -389,7 +389,7 @@ namespace XIVSlothComboPlugin
         }
 
         /// <summary>
-        /// Draws the User Configurable settings
+        /// Draws the User Configurable settings.
         /// </summary>
         /// <param name="preset">The preset it's attached to</param>
         /// <param name="enabled">If it's enabled or not</param>
