@@ -516,7 +516,7 @@ namespace XIVSlothComboPlugin
             }
             if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
             {
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.");
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.",300,100);
             }
             i++;
 
