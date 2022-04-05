@@ -506,6 +506,14 @@ namespace XIVSlothComboPlugin
             {
                 ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
             }
+            if (preset == CustomComboPreset.WarriorStormsPathCombo && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 30, WAR.Config.WarSurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
+            }
+            if (preset == CustomComboPreset.WarriorOnslaughtFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 2, WAR.Config.WarKeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
+            }
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
