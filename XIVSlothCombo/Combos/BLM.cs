@@ -449,7 +449,7 @@ namespace XIVSlothComboPlugin.Combos
     
     internal class BlackSimpleFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackSimpleOpenerFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackSimpleFeature;
         
         internal static bool inOpener = false;
         internal static bool openerFinished = false;
