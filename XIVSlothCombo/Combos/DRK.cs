@@ -11,10 +11,12 @@ namespace XIVSlothComboPlugin.Combos
             Unleash = 3621,
             SyphonStrike = 3623,
             Souleater = 3632,
+            BloodWeapon = 3625,
             SaltedEarth = 3639,
             AbyssalDrain = 3641,
             CarveAndSpit = 3643,
             Quietus = 7391,
+            Delirium = 7390,
             Bloodspiller = 7392,
             LowBlow = 7540,
             Interject = 7538,
@@ -50,6 +52,7 @@ namespace XIVSlothComboPlugin.Combos
                 Unleash = 6,
                 Souleater = 26,
                 FloodOfDarkness = 30,
+                BloodWeapon = 35,
                 EdgeOfDarkness = 40,
                 SaltedEarth = 52,
                 AbyssalDrain = 56,
@@ -77,47 +80,102 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == DRK.Souleater)
             {
                 var currentMp = LocalPlayer.CurrentMp;
-                var gcd = GetCooldown(DRK.HardSlash);
                 var gauge = GetJobGauge<DRKGauge>();
                 var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 var bloodgauge = GetJobGauge<DRKGauge>().Blood;
-                var shadowCooldown = GetCooldown(DRK.LivingShadow);
-                var gcdCooldown1 = GetCooldown(DRK.HardSlash);
-                var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
-                var gcdCooldown3 = GetCooldown(DRK.Souleater);
-                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
                 var plungeCD = GetCooldown(DRK.Plunge);
-                var actionIDCD = GetCooldown(actionID);
-                var livingshadowCD = GetCooldown(DRK.LivingShadow);
-                var saltedCD = GetCooldown(DRK.SaltedEarth);
-                var carveCD = GetCooldown(DRK.CarveAndSpit);
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+
+                // Uptime protection
                 if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
                 {
                     if (!InMeleeRange(true))
                         return DRK.Unmend;
                 }
-                if (IsEnabled(CustomComboPreset.DeliriumFeature))
+
+                //Adds BloodWeapon both as an opener option only, and on main combo.
+                //DRK opens with Bloodweapon, but it can feel awkward which is why it's an optional feature.
+                //If you turn the Bloodweapon opener feature off, you will have to use bloodweapon yourself the first time, but after that it'll appear on the main combo
+                if (IsOffCooldown(DRK.BloodWeapon))
                 {
-                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
+                    if (!inCombat && IsEnabled(CustomComboPreset.DarkKnightBloodweaponOpenerFeature))
+                        return DRK.BloodWeapon;
+
+                    if (inCombat && IsEnabled(CustomComboPreset.DarkKnightBloodweaponFeature))
+                        return DRK.BloodWeapon;
+                }
+
+                //Adds Delirium on main combo and instantly spend bloodspillers. Not optimal in raid environments due to buff alignments.
+                if (IsEnabled(CustomComboPreset.DeliriumFeature) && level >= DRK.Levels.Delirium)
+                {
+                    if (IsOffCooldown(DRK.Delirium) && CanWeave(actionID))
+                        return DRK.Delirium;
+                    if (level >= DRK.Levels.Bloodpiller && HasEffect(DRK.Buffs.Delirium))
                         return DRK.Bloodspiller;
                 }
-                if (HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10 && deliriumTime.RemainingTime > 0 && IsEnabled(CustomComboPreset.DeliriumFeatureOption))
+
+                //Adds Delirium on main combo and spend bloodspillers after 5 seconds. Should be optimal in raid environments due to buff alignments.
+                if (IsEnabled(CustomComboPreset.DeliriumFeatureOption) && level >= DRK.Levels.Delirium)
                 {
-                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium)
+                    if (IsOffCooldown(DRK.Delirium) && CanWeave(actionID))
+                        return DRK.Delirium;
+                    if (level >= DRK.Levels.Bloodpiller && HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10)
                         return DRK.Bloodspiller;
                 }
+
+                // Adds Living Shadow on main combo.
+                if (bloodgauge >= 50 && IsOffCooldown(DRK.LivingShadow) && CanWeave(actionID) && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                {
+                    return DRK.LivingShadow;
+                }
+
+                // Adds mana overcap protection and Darkside uptime
                 if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
                 {
                     if (currentMp > 8500 || gauge.DarksideTimeRemaining < 10)
                     {
-                        if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
+                        if (level >= DRK.Levels.EdgeOfShadow && CanWeave(actionID))
                             return DRK.EdgeOfShadow;
-                        if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                        if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && CanWeave(actionID))
                             return DRK.FloodOfDarkness;
-                        if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                        if (level >= DRK.Levels.EdgeOfDarkness && CanWeave(actionID))
                             return DRK.EdgeOfDarkness;
                     }
                 }
+
+                if (IsEnabled(CustomComboPreset.DarkKnightogcdFeature))
+                {
+                    if (IsOffCooldown(DRK.SaltedEarth) && level >= DRK.Levels.SaltedEarth && CanWeave(actionID))
+                        return DRK.SaltedEarth;
+                    if (IsOffCooldown(DRK.CarveAndSpit) && level >= DRK.Levels.CarveAndSpit && CanWeave(actionID))
+                        return DRK.CarveAndSpit;
+                    if (IsOffCooldown(DRK.SaltAndDarkness) && HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness && CanWeave(actionID))
+                        return DRK.SaltAndDarkness;
+                    if (level >= DRK.Levels.Shadowbringer && CanWeave(actionID) && GetRemainingCharges(DRK.Shadowbringer) >= 1)
+                        return DRK.Shadowbringer;
+                }
+                // Adds Blood Gauge Overcap protection on main combo.
+                if (IsEnabled(CustomComboPreset.DarkBloodGaugeOvercapFeature) && level >= DRK.Levels.Bloodpiller)
+                {
+                    if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                        return DRK.Bloodspiller;
+                }
+
+                // leaves 0 stacks of plunge on main combo
+                if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= DRK.Levels.Plunge)
+                {
+                    if (plungeCD.CooldownRemaining < 30 && CanWeave(actionID))
+                        return DRK.Plunge;
+                }
+
+                // leaves 1 stack of plunge on main combo
+                if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= DRK.Levels.Plunge)
+                {
+                    if (!plungeCD.IsCooldown && CanWeave(actionID) && plungeCD.CooldownRemaining < 60)
+                        return DRK.Plunge;
+                }
+
+                // Regular 1-2-3 combo
                 if (comboTime > 0)
                 {
                     if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
@@ -126,41 +184,8 @@ namespace XIVSlothComboPlugin.Combos
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
-
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown2.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
-
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown3.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
-
-                if (IsEnabled(CustomComboPreset.DarkBloodGaugeOvercapFeature) && level >= DRK.Levels.Bloodpiller)
-                {
-                    if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
-                        return DRK.Bloodspiller;
-                }
-                if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= DRK.Levels.Plunge)
-                {
-                    if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
-                        return DRK.Plunge;
-                }
-                // leaves 1 stack
-                if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= DRK.Levels.Plunge)
-                {
-                    if (!plungeCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && plungeCD.CooldownRemaining < 60)
-                        return DRK.Plunge;
-                }
-
                 return DRK.HardSlash;
             }
-
             return actionID;
         }
     }
