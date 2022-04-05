@@ -31,8 +31,12 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 }
                 Service.Configuration.SetCustomIntValue(config, output);
                 Service.Configuration.Save();
+
+                inputChanged = false;
             }
 
+            
+            
             ImGui.Spacing();
         }
 

@@ -324,7 +324,6 @@ namespace XIVSlothComboPlugin
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
                     if (irlsloth)
                     {
-                        //kek
                         return $"\n - {conflictInfo.MemeName}";
                     }
                     else
@@ -395,6 +394,8 @@ namespace XIVSlothComboPlugin
         /// <param name="enabled">If it's enabled or not</param>
         private void DrawUserConfigs(CustomComboPreset preset, bool enabled)
         {
+            //WARNING: DO NOT USE THE SAME DESCRIPTIONS BETWEEN DIFFERENT VALUES
+
             if (!enabled) return;
 
             // ====================================================================================
@@ -408,7 +409,8 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region ASTROLOGIAN
             if (preset == CustomComboPreset.AstrologianLucidFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "AST: Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            
 
             #endregion
             // ====================================================================================
@@ -601,7 +603,7 @@ namespace XIVSlothComboPlugin
             }
 
             if (preset == CustomComboPreset.SageLucidFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGELucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGELucidDreamingFeature, "SGE: Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
             #endregion
             // ====================================================================================
             #region SAMURAI
@@ -610,7 +612,8 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "SCH: Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            
             
             #endregion
             // ====================================================================================
@@ -626,7 +629,8 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region WHITE MAGE
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.LucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "WHM: Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            
             #endregion
             // ====================================================================================
             #region DOH
