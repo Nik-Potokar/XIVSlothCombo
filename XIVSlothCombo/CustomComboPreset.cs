@@ -1246,9 +1246,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe (or Harvest Moon, if available) when outside of melee range. Will not override Communio.", RPR.JobID, 0, "Stretch Armstrong", "Can't quite reach? Here.")]
         ReaperRangedFillerOption = 12005,
 
-        [ParentCombo(ReaperSliceCombo)]
-        [CustomComboInfo("Feint Option", "Adds Feint into the combo.\nOnly use this if you're really asleep at the wheel (NOT optimal).", RPR.JobID, 0, "Use this during downtime", "Hey! I'm contributing to the raid!")]
-        ReaperFeintOption = 12006,
 
         // AoE Combo Section
         [CustomComboInfo("Scythe Combo Feature", "Replace Spinning Scythe with its combo chain. Features and options inside.\nCollapsing this category disables the features inside.", RPR.JobID, 0, "One, Two, Th-", "Oh. It's barely a combo!")]
