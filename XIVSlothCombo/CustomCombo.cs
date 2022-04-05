@@ -476,6 +476,8 @@ namespace XIVSlothComboPlugin.Combos
 
             return true;
         }
+
+        // Grabs current target HP %, including teammates.
         protected static double EnemyHealthPercentage()
         {
             if (CurrentTarget is null)
