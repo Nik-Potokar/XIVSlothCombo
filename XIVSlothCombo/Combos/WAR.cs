@@ -287,15 +287,16 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            if (actionID is WAR.FellCleave or WAR.Decimate or WAR.ChaoticCyclone or WAR.InnerChaos)
+            if (actionID is WAR.InnerBeast or WAR.FellCleave or WAR.SteelCyclone or WAR.Decimate)
             {
                 var rageGauge = GetJobGauge<WARGauge>();
                 var rageThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarInfuriateRange);
                 var isZerking = HasEffect(WAR.Buffs.InnerRelease);
+                var hasNascent = HasEffect(WAR.Buffs.NascentChaos);
 
                 if (!InCombat()) return actionID;
 
-                if (rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !isZerking && level >= WAR.Levels.Infuriate)
+                if (rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !isZerking && !hasNascent && level >= WAR.Levels.Infuriate)
                     return OriginalHook(WAR.Infuriate);
             }
 
