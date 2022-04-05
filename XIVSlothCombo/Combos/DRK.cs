@@ -95,7 +95,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 //Adds BloodWeapon both as an opener option only, and on main combo.
                 //DRK opens with Bloodweapon, but it can feel awkward which is why it's an optional feature.
-                //If you turn the Bloodweapon opener feature off, you will have to use bloodweapon yourself the first time, but after that it'll appear on the main combo
+                //If you turn the Bloodweapon opener feature off and bloodweapon feature on, you will have to use bloodweapon yourself the first time, but after that it'll appear on the main combo
                 if (IsOffCooldown(DRK.BloodWeapon))
                 {
                     if (!inCombat && IsEnabled(CustomComboPreset.DarkKnightBloodweaponOpenerFeature))
@@ -105,23 +105,8 @@ namespace XIVSlothComboPlugin.Combos
                         return DRK.BloodWeapon;
                 }
 
-                //Adds Delirium on main combo and instantly spend bloodspillers. Not optimal in raid environments due to buff alignments.
-                if (IsEnabled(CustomComboPreset.DeliriumFeature) && level >= DRK.Levels.Delirium)
-                {
-                    if (IsOffCooldown(DRK.Delirium) && CanWeave(actionID))
-                        return DRK.Delirium;
-                    if (level >= DRK.Levels.Bloodpiller && HasEffect(DRK.Buffs.Delirium))
-                        return DRK.Bloodspiller;
-                }
-
-                //Adds Delirium on main combo and spend bloodspillers after 5 seconds. Should be optimal in raid environments due to buff alignments.
-                if (IsEnabled(CustomComboPreset.DeliriumFeatureOption) && level >= DRK.Levels.Delirium)
-                {
-                    if (IsOffCooldown(DRK.Delirium) && CanWeave(actionID))
-                        return DRK.Delirium;
-                    if (level >= DRK.Levels.Bloodpiller && HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10)
-                        return DRK.Bloodspiller;
-                }
+                if (IsOffCooldown(DRK.Delirium) && CanWeave(actionID))
+                    return DRK.Delirium;
 
                 // Adds Living Shadow on main combo.
                 if (bloodgauge >= 50 && IsOffCooldown(DRK.LivingShadow) && CanWeave(actionID) && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
@@ -154,6 +139,19 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= DRK.Levels.Shadowbringer && CanWeave(actionID) && GetRemainingCharges(DRK.Shadowbringer) >= 1)
                         return DRK.Shadowbringer;
                 }
+
+                //Adds Delirium on main combo and instantly spend bloodspillers. Not optimal in raid environments due to buff alignments.
+                if (IsEnabled(CustomComboPreset.DeliriumFeature) && level >= DRK.Levels.Delirium)
+                {
+                    if (IsOffCooldown(DRK.Delirium) && CanWeave(actionID))
+                        return DRK.Delirium;
+                    if (level >= DRK.Levels.Bloodpiller && HasEffect(DRK.Buffs.Delirium))
+                        return DRK.Bloodspiller;
+                }
+
+                //Adds Delirium on main combo and spend bloodspillers after 5 seconds. Should be optimal in raid environments due to buff alignments.
+                if (IsEnabled(CustomComboPreset.DeliriumFeatureOption) && level >= DRK.Levels.Delirium && level >= DRK.Levels.Bloodpiller && HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10)
+                    return DRK.Bloodspiller;
                 // Adds Blood Gauge Overcap protection on main combo.
                 if (IsEnabled(CustomComboPreset.DarkBloodGaugeOvercapFeature) && level >= DRK.Levels.Bloodpiller)
                 {
