@@ -37,7 +37,7 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 InnerRelease = 1177,
                 SurgingTempest = 2677,
-                NascentChaos = 1992,
+                NascentChaos = 1897,
                 PrimalRendReady = 2624,
                 Berserk = 86;
         }
@@ -62,6 +62,7 @@ namespace XIVSlothComboPlugin.Combos
                 Decimate = 60,
                 Onslaught = 62,
                 Upheaval = 64,
+                InnerRelease = 70,
                 ChaoticCyclone = 72,
                 MythrilTempestTrait = 74,
                 NascentFlash = 76,
@@ -318,8 +319,9 @@ namespace XIVSlothComboPlugin.Combos
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorSimpleFeature;
 
         internal static bool inOpener = false;
-        internal static bool openerFinished = false;
         internal static bool usedStormsEye = false;
+        internal static bool usedInternalRelease = false;
+        internal static byte internalReleaseSteps = 0;
         internal static byte step = 0;
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
@@ -334,22 +336,26 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.WarriorSimpleFeature) && level >= WAR.Levels.Infuriate)
                 {
                     // 120s Party Buff Window
-                    if ((!inCombat && (inOpener || openerFinished)) ||
-                        (!inOpener && GetRemainingCharges(WAR.Infuriate) == 2 &&
-                        (IsEnabled(CustomComboPreset.WarriorSimpleAutoOpenerFeature) || lastComboActionID == WAR.Infuriate)))
+                    if ((!inCombat && inOpener) ||
+                        (!inOpener && IsOffCooldown(WAR.InnerRelease)) ||
+                        (lastComboActionID == WAR.InnerRelease && internalReleaseSteps == 2))
                     {
                         step = 0;
                         inOpener = false;
-                        openerFinished = false;
                         usedStormsEye = false;
+                        internalReleaseSteps = 0;
                     }
 
-                    if (!inOpener)
+                    // Check if we should enter opener
+                    if (usedInternalRelease && lastComboActionID == WAR.InnerRelease)
                     {
-                        if (!InMeleeRange(true))
-                        {
-                            return WAR.Tomahawk;
-                        }
+                        internalReleaseSteps++;
+                        usedInternalRelease = false;
+                    }
+
+                    if (!inCombat && !InMeleeRange(true))
+                    {
+                        return WAR.Tomahawk;
                     }
 
                     if (inCombat && !inOpener)
@@ -357,74 +363,86 @@ namespace XIVSlothComboPlugin.Combos
                         inOpener = true;
                     }
 
-                    if (inCombat && inOpener && !openerFinished)
+                    if (inCombat && inOpener)
                     {
                         // Check if opener is over
-                        if (usedStormsEye)
+                        if (usedStormsEye && lastComboActionID == WAR.StormsEye)
                         {
                             usedStormsEye = false;
                             step++;
                         }
                         if (step >= 2)
                         {
-                            openerFinished = true;
-                        }
-
-                        // Spend buffs + oGCDs
-                        if (canWeave)
-                        {
-                            if (!HasEffect(WAR.Buffs.InnerRelease) && gauge.BeastGauge <= 50 && lastComboActionID != WAR.Infuriate)
-                            {
-                                if (!HasEffect(WAR.Buffs.NascentChaos))
-                                {
-                                    if ((HasEffect(WAR.Buffs.SurgingTempest) && GetRemainingCharges(WAR.Infuriate) > 0) || 
-                                        GetRemainingCharges(WAR.Infuriate) > 1)
-                                    {
-                                        return WAR.Infuriate;
-                                    }
-                                }
-                            }
-
-                            if (HasEffect(WAR.Buffs.SurgingTempest))
-                            {
-                                if (!HasEffect(WAR.Buffs.NascentChaos))
-                                {
-                                    if (IsOffCooldown(WAR.InnerRelease))
-                                    {
-                                        return OriginalHook(WAR.Berserk);
-                                    }
-                                    if (IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
-                                    {
-                                        return WAR.Upheaval;
-                                    }
-                                }
-
-                                if (HasEffect(WAR.Buffs.InnerRelease) && GetRemainingCharges(WAR.Onslaught) > 0 && level >= WAR.Levels.Onslaught)
-                                {
-                                    if (lastComboActionID != WAR.Onslaught)
-                                    {
-                                        return WAR.Onslaught;
-                                    }
-                                }
-                            }
+                            inOpener = false;
                         }
                     }
                 }
 
-                if (HasEffect(WAR.Buffs.SurgingTempest))
+
+                // Spend buffs + oGCDs
+                if (canWeave)
                 {
-                    if (!inOpener && canWeave)
+                    if (!HasEffect(WAR.Buffs.InnerRelease) && gauge.BeastGauge <= 50 && lastComboActionID != WAR.Infuriate)
                     {
-                        if (IsOffCooldown(WAR.InnerRelease) && !HasEffect(WAR.Buffs.NascentChaos))
+                        if (!HasEffect(WAR.Buffs.NascentChaos))
                         {
-                            return OriginalHook(WAR.Berserk);
+                            if (GetRemainingCharges(WAR.Infuriate) > 1)
+                            {
+                                return WAR.Infuriate;
+                            }
+                            if (HasEffect(WAR.Buffs.SurgingTempest) && GetRemainingCharges(WAR.Infuriate) > 0 && inOpener)
+                            {
+                                if (level < WAR.Levels.InnerRelease && IsOnCooldown(WAR.Berserk))
+                                {
+                                    return WAR.Infuriate;
+                                }
+                                if (IsOnCooldown(WAR.InnerRelease))
+                                {
+                                    return WAR.Infuriate;
+                                }
+                            }
                         }
-                        if (IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
+                    }
+
+                    if (HasEffect(WAR.Buffs.SurgingTempest))
+                    {
+                        if (!inOpener || !HasEffect(WAR.Buffs.NascentChaos))
                         {
-                            return WAR.Upheaval;
+                            if (level >= WAR.Levels.Upheaval && IsOffCooldown(WAR.Upheaval))
+                            {
+                                return WAR.Upheaval;
+                            }
                         }
+                        if (!HasEffect(WAR.Buffs.NascentChaos))
+                        {
+                            if (level >= WAR.Levels.InnerRelease)
+                            {
+                                if (IsOffCooldown(WAR.InnerRelease))
+                                {
+                                    usedInternalRelease = true;
+                                    return WAR.InnerRelease;
+                                }
+                            }
+                            else
+                            {
+                                if (IsOffCooldown(WAR.Berserk))
+                                {
+                                    usedInternalRelease = true;
+                                    return WAR.Berserk;
+                                }
+                            }
+                        }
+
                         if (level >= WAR.Levels.Onslaught)
                         {
+                            if (HasEffect(WAR.Buffs.InnerRelease) && GetRemainingCharges(WAR.Onslaught) > 0)
+                            {
+                                if (lastComboActionID != WAR.Onslaught)
+                                {
+                                    return WAR.Onslaught;
+                                }
+                            }
+
                             uint onslaughtChargesTarget = 2;
                             if (level < WAR.Levels.PrimalRend)
                             {
@@ -436,14 +454,17 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                     }
+                }
 
+                if (HasEffect(WAR.Buffs.SurgingTempest))
+                {
                     if (HasEffect(WAR.Buffs.PrimalRendReady))
                     {
                         return WAR.PrimalRend;
                     }
 
-                    if (gauge.BeastGauge > 50 &&
-                        (GetRemainingCharges(WAR.Infuriate) == 2 ||
+                    if (gauge.BeastGauge >= 50 &&
+                        (GetRemainingCharges(WAR.Infuriate) == 2 || inOpener ||
                         (GetRemainingCharges(WAR.Infuriate) == 1 && GetCooldown(WAR.Infuriate).ChargeCooldownRemaining <= 4)))
                     {
                         return OriginalHook(WAR.InnerBeast);
@@ -458,6 +479,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (comboTime > 0)
                 {
+                    var stormseyeBuffRefresh = inOpener ? 15 : 10;
                     if (lastComboActionID == WAR.HeavySwing && level >= WAR.Levels.Maim)
                     {
                         if (gauge.BeastGauge == 100 && level >= WAR.Levels.InnerBeast)
@@ -473,7 +495,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return OriginalHook(WAR.InnerBeast);
                         }
-                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime <= 12) && level >= WAR.Levels.StormsEye)
+                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime <= stormseyeBuffRefresh) && level >= WAR.Levels.StormsEye)
                         {
                             usedStormsEye = true;
                             return WAR.StormsEye;
