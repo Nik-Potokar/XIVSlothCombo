@@ -572,7 +572,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (level < BLM.Levels.Despair)
                             {
-                                if (currentMP < BLM.MP.AspectFire) step++;
+                                if (currentMP < BLM.MP.AspectFire && GetCooldown(BLM.Manafont).CooldownRemaining <= 116) step++;
                                 else
                                 {
                                     if (gauge.ElementTimeRemaining <= 6000) return BLM.Fire;
@@ -581,7 +581,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                             else
                             {
-                                if (currentMP < BLM.MP.AspectFire) step++;
+                                if (currentMP < BLM.MP.AspectFire && GetCooldown(BLM.Manafont).CooldownRemaining <= 116) step++;
                                 else
                                 {
                                     if (lastComboMove == BLM.Fire4) step++;
@@ -802,7 +802,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Use polygot stacks if we don't need it for a future weave
-                if (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0))
+                if (gauge.ElementTimeRemaining >= 5000 && (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0)))
                 {
                     if (level >= BLM.Levels.Xenoglossy)
                     {
