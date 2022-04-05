@@ -22,7 +22,7 @@ namespace XIVSlothComboPlugin.Combos
             Upheaval = 7387,
             LowBlow = 7540,
             Interject = 7538,
-            InnerRelease = 8768,
+            InnerRelease = 7389,
             RawIntuition = 3551,
             MythrilTempest = 16462,
             ChaoticCyclone = 16463,
@@ -37,7 +37,7 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 InnerRelease = 1177,
                 SurgingTempest = 2677,
-                NascentChaos = 1897,
+                NascentChaos = 1992,
                 PrimalRendReady = 2624,
                 Berserk = 86;
         }
@@ -335,15 +335,13 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     // 120s Party Buff Window
                     if ((!inCombat && (inOpener || openerFinished)) ||
-                        (!inOpener && GetRemainingCharges(WAR.Infuriate) == 2))
+                        (!inOpener && GetRemainingCharges(WAR.Infuriate) == 2 &&
+                        (IsEnabled(CustomComboPreset.WarriorSimpleAutoOpenerFeature) || lastComboActionID == WAR.Infuriate)))
                     {
-                        if (IsEnabled(CustomComboPreset.WarriorSimpleAutoOpenerFeature) || lastComboActionID == WAR.Infuriate)
-                        {
-                            step = 0;
-                            inOpener = false;
-                            openerFinished = false;
-                            usedStormsEye = false;
-                        }
+                        step = 0;
+                        inOpener = false;
+                        openerFinished = false;
+                        usedStormsEye = false;
                     }
 
                     if (!inOpener)
@@ -375,31 +373,38 @@ namespace XIVSlothComboPlugin.Combos
                         // Spend buffs + oGCDs
                         if (canWeave)
                         {
-                            if (!HasEffect(WAR.Buffs.NascentChaos) && !HasEffect(WAR.Buffs.InnerRelease))
+                            if (!HasEffect(WAR.Buffs.InnerRelease) && gauge.BeastGauge <= 50 && lastComboActionID != WAR.Infuriate)
                             {
-                                if (lastComboActionID != WAR.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 0)
+                                if (!HasEffect(WAR.Buffs.NascentChaos))
                                 {
-                                    return WAR.Infuriate;
+                                    if ((HasEffect(WAR.Buffs.SurgingTempest) && GetRemainingCharges(WAR.Infuriate) > 0) || 
+                                        GetRemainingCharges(WAR.Infuriate) > 1))
+                                    {
+                                        return WAR.Infuriate;
+                                    }
                                 }
                             }
 
-                            if (!HasEffect(WAR.Buffs.NascentChaos) && HasEffect(WAR.Buffs.SurgingTempest))
+                            if (HasEffect(WAR.Buffs.SurgingTempest))
                             {
-                                if (IsOffCooldown(WAR.InnerRelease))
+                                if (!HasEffect(WAR.Buffs.NascentChaos))
                                 {
-                                    return WAR.InnerRelease;
+                                    if (IsOffCooldown(WAR.InnerRelease))
+                                    {
+                                        return OriginalHook(WAR.Berserk);
+                                    }
+                                    if (IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
+                                    {
+                                        return WAR.Upheaval;
+                                    }
                                 }
-                                if (IsOffCooldown(WAR.Upheaval))
-                                {
-                                    return WAR.Upheaval;
-                                }
-                            }
 
-                            if (HasEffect(WAR.Buffs.InnerRelease))
-                            {
-                                if (lastComboActionID != WAR.Onslaught)
+                                if (HasEffect(WAR.Buffs.InnerRelease) && GetRemainingCharges(WAR.Onslaught) > 0 && level >= WAR.Levels.Onslaught)
                                 {
-                                    return WAR.Onslaught;
+                                    if (lastComboActionID != WAR.Onslaught)
+                                    {
+                                        return WAR.Onslaught;
+                                    }
                                 }
                             }
                         }
@@ -408,14 +413,13 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (HasEffect(WAR.Buffs.SurgingTempest))
                 {
-                    if (HasEffect(WAR.Buffs.PrimalRendReady))
+                    if (!inOpener && canWeave)
                     {
-                        return WAR.PrimalRend;
-                    }
-
-                    if (canWeave)
-                    {
-                        if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
+                        if (IsOffCooldown(WAR.InnerRelease) && !HasEffect(WAR.Buffs.NascentChaos))
+                        {
+                            return OriginalHook(WAR.Berserk);
+                        }
+                        if (IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
                         {
                             return WAR.Upheaval;
                         }
@@ -432,19 +436,24 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                     }
-                }
 
-                if (gauge.BeastGauge > 50 && 
-                    (GetRemainingCharges(WAR.Infuriate) == 2 ||
-                    (GetRemainingCharges(WAR.Infuriate) == 1 && GetCooldown(WAR.Infuriate).ChargeCooldownRemaining <= 4)))
-                {
-                    return OriginalHook(WAR.InnerBeast);
-                }
+                    if (HasEffect(WAR.Buffs.PrimalRendReady))
+                    {
+                        return WAR.PrimalRend;
+                    }
 
-                if ((HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.InnerBeast && HasEffect(WAR.Buffs.SurgingTempest)) ||
-                    (HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.InnerChaos))
-                {
-                    return OriginalHook(WAR.InnerBeast);
+                    if (gauge.BeastGauge > 50 &&
+                        (GetRemainingCharges(WAR.Infuriate) == 2 ||
+                        (GetRemainingCharges(WAR.Infuriate) == 1 && GetCooldown(WAR.Infuriate).ChargeCooldownRemaining <= 4)))
+                    {
+                        return OriginalHook(WAR.InnerBeast);
+                    }
+
+                    if ((HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.InnerBeast && HasEffect(WAR.Buffs.SurgingTempest)) ||
+                        (HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.InnerChaos))
+                    {
+                        return OriginalHook(WAR.InnerBeast);
+                    }
                 }
 
                 if (comboTime > 0)
