@@ -92,6 +92,7 @@ namespace XIVSlothComboPlugin.Combos
                 Verthunder3 = 82,
                 Resolution = 90;
         }
+
         public static class Config
         {
             public const string

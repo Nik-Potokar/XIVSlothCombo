@@ -84,6 +84,12 @@ namespace XIVSlothComboPlugin.Combos
                 CrownPlay = 70,
                 CelestialOpposition = 60;
         }
+
+        public static class Config
+        {
+            public const string
+                ASTLucidDreamingFeature = "ASTLucidDreamingFeature";
+        }
     }
 
     internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
