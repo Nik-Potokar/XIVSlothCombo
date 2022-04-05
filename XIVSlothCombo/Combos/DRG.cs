@@ -309,7 +309,7 @@ namespace XIVSlothComboPlugin.Combos
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var canWeave = CanWeave(actionID);
 
-                if (IsEnabled(CustomComboPreset.DragoonOpenerFeature) && (gauge.EyeCount < 1) && level >= 88)
+                if (IsEnabled(CustomComboPreset.DragoonOpenerFeature) && level >= 88)
                 {
                     if (inCombat && lastComboMove == DRG.TrueThrust && !inOpener)
                     {
@@ -368,38 +368,34 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (
                                     HasEffect(DRG.Buffs.LanceCharge) &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                                    HasEffect(DRG.Buffs.PowerSurge) &&
+                                    !HasEffect(DRG.Buffs.LifeSurge) &&
                                     lastComboMove == DRG.VorpalThrust &&
-                                    GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.3)
+                                    GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
                                    ) return DRG.LifeSurge;
 
                                 if (
                                     HasEffect(DRG.Buffs.RightEye) &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                                    HasEffect(DRG.Buffs.PowerSurge) &&
+                                    !HasEffect(DRG.Buffs.LifeSurge) &&
                                     lastComboMove == DRG.VorpalThrust &&
-                                    GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.3)
+                                    GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
                                    ) return DRG.LifeSurge;
 
                                 if (
-                                    HasEffect(DRG.Buffs.LanceCharge) &&
-                                    HasEffect(DRG.Buffs.RightEye) &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    !HasEffectAny(DRG.Buffs.LifeSurge) &&
-                                    lastComboMove == DRG.FangAndClaw &&
+                                    HasEffect(DRG.Buffs.BattleLitany) &&
+                                    HasEffect(DRG.Buffs.PowerSurge) &&
+                                    !HasEffect(DRG.Buffs.LifeSurge) &&
                                     HasEffect(DRG.Buffs.EnhancedWheelingThrust) &&
-                                    GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.3)
+                                    GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
                                    ) return DRG.LifeSurge;
 
                                 if (
-                                    HasEffect(DRG.Buffs.LanceCharge) &&
-                                    HasEffect(DRG.Buffs.RightEye) &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    !HasEffectAny(DRG.Buffs.LifeSurge) &&
-                                    lastComboMove == DRG.WheelingThrust &&
+                                    HasEffect(DRG.Buffs.BattleLitany) &&
+                                    HasEffect(DRG.Buffs.PowerSurge) &&
+                                    !HasEffect(DRG.Buffs.LifeSurge) &&
                                     HasEffect(DRG.Buffs.SharperFangAndClaw) &&
-                                    GetRemainingCharges(DRG.LifeSurge) > 0 && canWeave
+                                    GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
                                    ) return DRG.LifeSurge;
                             }
                         }
@@ -413,14 +409,14 @@ namespace XIVSlothComboPlugin.Combos
                                 if (
                                     level >= DRG.Levels.Geirskogul &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, 0.4)
+                                    IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, 0.001)
                                    ) return DRG.Geirskogul;
 
                                 if (
                                     gauge.IsLOTDActive == true &&
                                     level >= DRG.Levels.Nastrond &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.Nastrond) && CanWeave(actionID, 0.4)
+                                    IsOffCooldown(DRG.Nastrond) && CanWeave(actionID, 0.001)
                                    ) return DRG.Nastrond;
                             }
                         }
@@ -433,13 +429,13 @@ namespace XIVSlothComboPlugin.Combos
                                 if (
                                     level >= DRG.Levels.HighJump &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.HighJump) && canWeave
+                                    IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 0.5)
                                    ) return DRG.HighJump;
 
                                 if (
                                     level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.Jump) && canWeave
+                                    IsOffCooldown(DRG.Jump) && CanWeave(actionID, 0.5)
                                    ) return DRG.Jump;
                             }
                         }
@@ -455,7 +451,7 @@ namespace XIVSlothComboPlugin.Combos
                                     level >= DRG.Levels.DragonfireDive &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
                                     HasEffect(DRG.Buffs.BattleLitany) &&
-                                    IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID)
+                                    IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, 1)
                                    ) return DRG.DragonfireDive;
 
                                 if (
@@ -470,7 +466,7 @@ namespace XIVSlothComboPlugin.Combos
                                     level >= DRG.Levels.SpineshatterDive &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
                                     HasEffect(DRG.Buffs.BattleLitany) &&
-                                    GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID)
+                                    GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, 1)
                                    ) return DRG.SpineshatterDive;
                             }
                         }
@@ -485,7 +481,7 @@ namespace XIVSlothComboPlugin.Combos
                                     level >= DRG.Levels.DragonfireDive &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
                                     HasEffect(DRG.Buffs.BattleLitany) &&
-                                    IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID)
+                                    IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, 1)
                                    ) return DRG.DragonfireDive;
 
                                 if (
@@ -499,7 +495,7 @@ namespace XIVSlothComboPlugin.Combos
                                     level >= DRG.Levels.SpineshatterDive &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
                                     HasEffect(DRG.Buffs.BattleLitany) &&
-                                    GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID)
+                                    GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, 1)
                                    ) return DRG.SpineshatterDive;
                             }
                         }
@@ -513,46 +509,6 @@ namespace XIVSlothComboPlugin.Combos
                                 if (
                                     level >= DRG.Levels.DragonfireDive &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID)
-                                   ) return DRG.DragonfireDive;
-
-                                if (
-                                    gauge.IsLOTDActive == true &&
-                                    level >= DRG.Levels.Stardiver &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, 1.3)
-                                   ) return DRG.Stardiver;
-
-                                if (
-                                    level >= DRG.Levels.SpineshatterDive &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID)
-                                   ) return DRG.SpineshatterDive;
-                            }
-                        }
-
-                        //Mirage Feature
-                        if (canWeave)
-                        {
-                            if (IsEnabled(CustomComboPreset.DragoonMirageFeature))
-                            {
-                                if (
-                                    level >= DRG.Levels.MirageDive &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    HasEffect(DRG.Buffs.DiveReady) && canWeave
-                                   ) return DRG.MirageDive;
-                            }
-                        }
-
-                        //Dives Feature
-                        if (canWeave)
-                        {
-
-                            if (IsEnabled(CustomComboPreset.DragoonDiveFeature))
-                            {
-                                if (
-                                    level >= DRG.Levels.DragonfireDive &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
                                     IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, 1)
                                    ) return DRG.DragonfireDive;
 
@@ -560,7 +516,7 @@ namespace XIVSlothComboPlugin.Combos
                                     gauge.IsLOTDActive == true &&
                                     level >= DRG.Levels.Stardiver &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, 1.5)
+                                    IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, 1.3)
                                    ) return DRG.Stardiver;
 
                                 if (
@@ -597,6 +553,19 @@ namespace XIVSlothComboPlugin.Combos
                                     HasEffectAny(DRG.Buffs.LanceCharge) &&
                                     GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, 1)
                                    ) return DRG.SpineshatterDive;
+                            }
+                        }
+
+                        //Mirage Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DragoonMirageFeature))
+                            {
+                                if (
+                                    level >= DRG.Levels.MirageDive &&
+                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
+                                    HasEffect(DRG.Buffs.DiveReady) && CanWeave(actionID, 0.001)
+                                   ) return DRG.MirageDive;
                             }
                         }
 
@@ -647,125 +616,131 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (step == 0)
                         {
+                            if (gauge.EyeCount > 0) openerFinished = true;
+                            else step++;
+                        }
+
+                        if (step == 1)
+                        {
                             if (lastComboMove == DRG.TrueThrust) step++;
                             else return DRG.TrueNorth;
                         }
 
-                            if (step == 1)
+                            if (step == 2)
                         {
                             if (lastComboMove == DRG.Disembowel) step++;
                             else return DRG.Disembowel;
                         }
 
-                        if (step == 2)
+                        if (step == 3)
                         {
                             if (IsOnCooldown(DRG.LanceCharge)) step++;
                             else return DRG.LanceCharge;
                         }
 
-                        if (step == 3)
+                        if (step == 4)
                         {
                             if (IsOnCooldown(DRG.DragonSight)) step++;
                             else return DRG.DragonSight;
                         }
 
-                        if (step == 4)
+                        if (step == 5)
                         {
                             if (TargetHasEffectAny(DRG.Debuffs.ChaoticSpring)) step++;
                             return DRG.ChaoticSpring;
                         }
 
-                        if (step == 5)
+                        if (step == 6)
                         {
                             if (IsOnCooldown(DRG.BattleLitany)) step++;
                             else return DRG.BattleLitany;
                         }
 
-                        if (step == 6)
+                        if (step == 7)
                         {
                             if (IsOnCooldown(DRG.Geirskogul)) step++;
                             else return DRG.Geirskogul;
                         }
 
-                        if (step == 7)
+                        if (step == 8)
                         {
                             if (!HasEffectAny(DRG.Buffs.EnhancedWheelingThrust)) step++;
                             else return DRG.WheelingThrust;
                         }
 
-                        if (step == 8)
+                        if (step == 9)
                         {
                             if (IsOnCooldown(DRG.HighJump)) step++;
                             else return DRG.HighJump;
                         }
 
-                        if (step == 9)
+                        if (step == 10)
                         {
                             if (GetRemainingCharges(DRG.LifeSurge) is 0 or 1) step++;
                             else return DRG.LifeSurge;
                         }
 
-                        if (step == 10)
+                        if (step == 11)
                         {
                             if (!HasEffectAny(DRG.Buffs.SharperFangAndClaw)) step++;
                             else return DRG.FangAndClaw;
                         }
 
-                        if (step == 11)
+                        if (step == 12)
                         {
                             if (IsOnCooldown(DRG.DragonfireDive)) step++;
                             else return DRG.DragonfireDive;
                         }
 
-                        if (step == 12)
+                        if (step == 13)
                         {
                             if (lastComboMove == (DRG.RaidenThrust)) step++;
                             else return DRG.RaidenThrust;
                         }
 
-                        if (step == 13)
+                        if (step == 14)
                         {
                             if (GetRemainingCharges(DRG.SpineshatterDive) is 0 or 1) step++;
                             else return DRG.SpineshatterDive;
                         }
 
-                        if (step == 14)
+                        if (step == 15)
                         {
                             if (lastComboMove == DRG.VorpalThrust) step++;
                             else return DRG.VorpalThrust;
                         }
 
-                        if (step == 15)
+                        if (step == 16)
                         {
                             if (GetRemainingCharges(DRG.LifeSurge) == 0) step++;
                             else return DRG.LifeSurge;
                         }
 
-                        if (step == 16)
+                        if (step == 17)
                         {
                             if (IsOnCooldown(DRG.MirageDive)) step++;
                             else return DRG.MirageDive;
                         }
 
-                        if (step == 17)
+                        if (step == 18)
                         {
                             if (lastComboMove == DRG.HeavensThrust) step++;
                             else return DRG.HeavensThrust;
                         }
 
-                        if (step == 18)
+                        if (step == 19)
                         {
                             if (GetRemainingCharges(DRG.SpineshatterDive) == 0) step++;
                             else return DRG.SpineshatterDive;
                         }
 
-                        if (step == 19)
+                        if (step == 20)
                         {
                             if (!HasEffectAny(DRG.Buffs.SharperFangAndClaw)) step++;
                             else return DRG.FangAndClaw;
                         }
 
-                        if (step == 20)
+                        if (step == 21)
                         {
                             if (!HasEffectAny(DRG.Buffs.EnhancedWheelingThrust)) step++;
                             else return DRG.WheelingThrust;
@@ -825,38 +800,36 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (
                             HasEffect(DRG.Buffs.LanceCharge) &&
-                            HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
                             lastComboMove == DRG.VorpalThrust &&
-                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.001)
                            ) return DRG.LifeSurge;
 
                         if (
                             HasEffect(DRG.Buffs.RightEye) &&
-                            HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
                             lastComboMove == DRG.VorpalThrust &&
-                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.001)
                            ) return DRG.LifeSurge;
 
                         if (
-                            HasEffect(DRG.Buffs.LanceCharge) &&
-                            HasEffect(DRG.Buffs.RightEye) &&
-                            HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
-                            lastComboMove == DRG.FangAndClaw &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
                             HasEffect(DRG.Buffs.EnhancedWheelingThrust) &&
-                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3)
+                            lastComboMove == DRG.FangAndClaw &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.001)
                            ) return DRG.LifeSurge;
 
                         if (
-                            HasEffect(DRG.Buffs.LanceCharge) &&
-                            HasEffect(DRG.Buffs.RightEye) &&
-                            HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            !HasEffectAny(DRG.Buffs.LifeSurge) &&
-                            lastComboMove == DRG.WheelingThrust &&
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
                             HasEffect(DRG.Buffs.SharperFangAndClaw) &&
-                            GetRemainingCharges(DRG.LifeSurge) > 0 && canWeave
+                            lastComboMove == DRG.WheelingThrust &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.001)
                            ) return DRG.LifeSurge;
                     }
                 }
@@ -870,14 +843,14 @@ namespace XIVSlothComboPlugin.Combos
                         if (
                             level >= DRG.Levels.Geirskogul &&
                             HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, weaveTime: 0.4)
+                            IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, weaveTime: 0.001)
                            ) return DRG.Geirskogul;
 
                         if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.Nastrond &&
                             HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.Nastrond) && CanWeave(actionID, weaveTime: 0.4)
+                            IsOffCooldown(DRG.Nastrond) && CanWeave(actionID, weaveTime: 0.001)
                            ) return DRG.Nastrond;
                     }
                 }
@@ -890,13 +863,13 @@ namespace XIVSlothComboPlugin.Combos
                         if (
                             level >= DRG.Levels.HighJump &&
                             HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 1)
+                            IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 0.5)
                            ) return DRG.HighJump;
 
                         if (
                             level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
                             HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.Jump) && CanWeave(actionID, 1)
+                            IsOffCooldown(DRG.Jump) && CanWeave(actionID, 0.5)
                            ) return DRG.Jump;
                     }
                 }
@@ -1025,7 +998,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (
                             level >= DRG.Levels.MirageDive &&
                             HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            HasEffect(DRG.Buffs.DiveReady) && canWeave
+                            HasEffect(DRG.Buffs.DiveReady) && CanWeave(actionID, 0.001)
                            ) return DRG.MirageDive;
                     }
                 }
@@ -1076,11 +1049,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             var canWeave = CanWeave(actionID);
             var gauge = GetJobGauge<DRGGauge>();
-            if (actionID == DRG.CoerthanTorment)
-            if (canWeave)
+            if (actionID == DRG.CoerthanTorment)           
             {
 
                 //Buffs AoE Feature
+                if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEBuffsFeature))
                     {
@@ -1097,6 +1070,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Dragon Sight AoE Feature
+                if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEDragonSightFeature))
                     {
@@ -1108,6 +1082,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Wyrmwind Thrust AoE Feature
+                if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEWyrmwindFeature))
                     {
@@ -1118,6 +1093,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Life Surge AoE Feature
+                if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoELifeSurgeFeature))
                     {
@@ -1167,6 +1143,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Geirskogul and Nastrond AoE Feature
+                if (canWeave)
                 {
 
                     if (IsEnabled(CustomComboPreset.DragoonAoEGeirskogulNastrondFeature))
@@ -1185,6 +1162,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //(High) Jump AoE Feature
+                if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEHighJumpFeature))
                     {
@@ -1201,6 +1179,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Dives under Litany and Life of the Dragon AoE Feature
+                if (canWeave)
                 {
 
                     if (IsEnabled(CustomComboPreset.DragoonAoELifeLitanyDiveFeature))
@@ -1228,6 +1207,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Dives under Litany AoE Feature
+                if (canWeave)
                 {
 
                     if (IsEnabled(CustomComboPreset.DragoonAoELitanyDiveFeature))
@@ -1253,6 +1233,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Dives AoE Feature
+                if (canWeave)
                 {
 
                     if (IsEnabled(CustomComboPreset.DragoonAoEDiveFeature))
@@ -1278,35 +1259,37 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                    //Dives under Lance Charge AoE Feature
+                //Dives under Lance Charge AoE Feature
+                if (canWeave)
+                {
+
+                    if (IsEnabled(CustomComboPreset.DragoonAoELanceDiveFeature))
                     {
+                        if (
+                            level >= DRG.Levels.DragonfireDive &&
+                            HasEffectAny(DRG.Buffs.PowerSurge) &&
+                            HasEffectAny(DRG.Buffs.LanceCharge) &&
+                            IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, 1)
+                           ) return DRG.DragonfireDive;
 
-                        if (IsEnabled(CustomComboPreset.DragoonAoELanceDiveFeature))
-                        {
-                            if (
-                                level >= DRG.Levels.DragonfireDive &&
-                                HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                HasEffectAny(DRG.Buffs.LanceCharge) &&
-                                IsOffCooldown(DRG.DragonfireDive) && CanWeave(actionID, 1)
-                               ) return DRG.DragonfireDive;
+                        if (
+                            gauge.IsLOTDActive == true &&
+                            level >= DRG.Levels.Stardiver &&
+                            HasEffectAny(DRG.Buffs.PowerSurge) &&
+                            IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, 1.5)
+                           ) return DRG.Stardiver;
 
-                            if (
-                                gauge.IsLOTDActive == true &&
-                                level >= DRG.Levels.Stardiver &&
-                                HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                IsOffCooldown(DRG.Stardiver) && CanWeave(actionID, 1.5)
-                               ) return DRG.Stardiver;
-
-                            if (
-                                level >= DRG.Levels.SpineshatterDive &&
-                                HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                HasEffectAny(DRG.Buffs.LanceCharge) &&
-                                GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, 1)
-                               ) return DRG.SpineshatterDive;
-                        }
+                        if (
+                            level >= DRG.Levels.SpineshatterDive &&
+                            HasEffectAny(DRG.Buffs.PowerSurge) &&
+                            HasEffectAny(DRG.Buffs.LanceCharge) &&
+                            GetRemainingCharges(DRG.SpineshatterDive) > 0 && CanWeave(actionID, 1)
+                           ) return DRG.SpineshatterDive;
                     }
+                }
 
-                    //Mirage AoE Feature
+                //Mirage AoE Feature
+                if (canWeave)
                     {
                     if (IsEnabled(CustomComboPreset.DragoonAoEMirageFeature))
                     {
