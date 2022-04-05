@@ -514,6 +514,10 @@ namespace XIVSlothComboPlugin
             {
                 ConfigWindowFunctions.DrawSliderInt(0, 2, WAR.Config.WarKeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
             }
+            if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.",300,100);
+            }
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
