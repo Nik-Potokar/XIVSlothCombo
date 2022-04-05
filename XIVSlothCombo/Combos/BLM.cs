@@ -467,9 +467,10 @@ namespace XIVSlothComboPlugin.Combos
                 var currentMP = LocalPlayer.CurrentMp;
 
                 // Opener for BLM
-                if (IsEnabled(CustomComboPreset.BlackSimpleOpenerFeature) && level >= 70)
+                if (IsEnabled(CustomComboPreset.BlackSimpleOpenerFeature) && level >= BLM.Levels.Foul)
                 {
-                    if (!inOpener && !HasEffect(BLM.Buffs.Sharpcast))
+                    // Only enable sharpcast if it's available
+                    if (!inOpener && !HasEffect(BLM.Buffs.Sharpcast) && (GetRemainingCharges(BLM.Sharpcast) >= 1))
                     {
                         return BLM.Sharpcast;
                     }
@@ -488,6 +489,13 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (inCombat && inOpener && !openerFinished)
                     {
+                        // Exit out of opener if enochian is lost
+                        if (!gauge.IsEnochianActive)
+                        {
+                            openerFinished = true;
+                            return BLM.Blizzard3;
+                        }
+
                         if (step == 0)
                         {
                             if (lastComboMove == BLM.Thunder3) step++;
@@ -497,7 +505,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (lastComboMove == BLM.Triplecast ||
                                 HasEffect(BLM.Buffs.Triplecast) ||
-                                GetRemainingCharges(BLM.Triplecast) == 1) step++;
+                                GetRemainingCharges(BLM.Triplecast) <= 1) step++;
                             else return BLM.Triplecast;
                         }
                         if (step == 2)
@@ -542,8 +550,18 @@ namespace XIVSlothComboPlugin.Combos
                         if (step == 9)
                         {
                             if (level < BLM.Levels.Despair) step++;
-                            if (lastComboMove == BLM.Despair) step++;
-                            else return BLM.Despair;
+                            else
+                            {
+                                if (currentMP < BLM.MP.Despair)
+                                {
+                                    step++;
+                                }
+                                else
+                                {
+                                    if (lastComboMove == BLM.Despair) step++;
+                                    else return BLM.Despair;
+                                }
+                            }
                         }
                         if (step == 10)
                         {
@@ -554,25 +572,45 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (level < BLM.Levels.Despair)
                             {
-                                if (gauge.ElementTimeRemaining <= 6000) return BLM.Fire;
-                                if (currentMP < 1600) step++;
-                                else return BLM.Fire4;
+                                if (currentMP < BLM.MP.AspectFire) step++;
+                                else
+                                {
+                                    if (gauge.ElementTimeRemaining <= 6000) return BLM.Fire;
+                                    else return BLM.Fire4;
+                                }
                             }
-                            if (lastComboMove == BLM.Fire4) step++;
-                            else return BLM.Fire4;
+                            else
+                            {
+                                if (currentMP < BLM.MP.AspectFire) step++;
+                                else
+                                {
+                                    if (lastComboMove == BLM.Fire4) step++;
+                                    else return BLM.Fire4;
+                                }
+                            }
                         }
                         if (step == 12)
                         {
                             if (level < BLM.Levels.Paradox) step++;
-                            if (HasEffect(BLM.Buffs.Sharpcast) ||
-                                GetRemainingCharges(BLM.Sharpcast) == 0) step++;
-                            else return BLM.Sharpcast;
+                            else
+                            {
+                                if (HasEffect(BLM.Buffs.Sharpcast) ||
+                                    GetRemainingCharges(BLM.Sharpcast) == 0) step++;
+                                else return BLM.Sharpcast;
+                            }
                         }
                         if (step == 13)
                         {
                             if (level < BLM.Levels.Despair) step++;
-                            if (lastComboMove == BLM.Despair) step++;
-                            else return BLM.Despair;
+                            else
+                            {
+                                if (currentMP < BLM.MP.Despair) step++;
+                                else
+                                {
+                                    if (lastComboMove == BLM.Despair) step++;
+                                    else return BLM.Despair;
+                                }
+                            }
                         }
                         if (step == 14)
                         {
@@ -581,15 +619,21 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (step == 15)
                         {
-                            if (level < BLM.Levels.Xenoglossy) step++;
-                            if (lastComboMove == BLM.Xenoglossy) step++;
-                            else return BLM.Xenoglossy;
+                            if (level < BLM.Levels.Xenoglossy || gauge.PolyglotStacks > 0) step++;
+                            else
+                            {
+                                if (lastComboMove == BLM.Xenoglossy) step++;
+                                else return BLM.Xenoglossy;
+                            }
                         }
                         if (step == 16)
                         {
                             if (level < BLM.Levels.Paradox) step++;
-                            if (lastComboMove == BLM.Paradox) step++;
-                            else return BLM.Paradox;
+                            else
+                            {
+                                if (lastComboMove == BLM.Paradox) step++;
+                                else return BLM.Paradox;
+                            }
                         }
                         if (step == 17)
                         {
