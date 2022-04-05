@@ -693,7 +693,7 @@ namespace XIVSlothComboPlugin
         DragoonSimple = 6010,
 
         [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Simple Opener", "Includes an opener to the Simple Dragoon rotation. NOTE: Requires ReAction or MoAction for optimal Dragon Sight use.", DRG.JobID, 0, "", "Open with a backjump into the wall!")]
+        [CustomComboInfo("Simple Opener", "Includes an opener to the Simple Dragoon rotation. NOTE: Level 86+, Requires ReAction or MoAction for optimal Dragon Sight use.", DRG.JobID, 0, "", "Open with a backjump into the wall!")]
         DragoonOpenerFeature = 6011,
 
         [ParentCombo(DragoonSimple)]
