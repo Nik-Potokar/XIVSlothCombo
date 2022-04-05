@@ -35,7 +35,9 @@ namespace XIVSlothComboPlugin.Combos
             Xenoglossy = 16507,
             Foul = 7422,
             Sharpcast = 3574,
-            Manafont = 158;
+            Manafont = 158,
+            Swiftcast = 7561,
+            Triplecast = 7421;
 
         public static class Buffs
         {
@@ -43,7 +45,9 @@ namespace XIVSlothComboPlugin.Combos
                 Thundercloud = 164,
                 LeyLines = 737,
                 Firestarter = 165,
-                Sharpcast = 867;
+                Sharpcast = 867,
+                Swiftcast = 1987,
+                Triplecast = 1211;
         }
 
         public static class Debuffs
@@ -58,6 +62,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
+                Swiftcast = 18,
+                Manafont = 30,
                 Fire3 = 35,
                 Blizzard3 = 35,
                 Freeze = 40,
@@ -68,11 +74,26 @@ namespace XIVSlothComboPlugin.Combos
                 Blizzard4 = 58,
                 Fire4 = 60,
                 BetweenTheLines = 62,
+                Triplecast = 66,
                 Foul = 70,
                 Despair = 72,
                 UmbralSoul = 76,
                 Xenoglossy = 80,
-                Amplifier = 86;
+                Amplifier = 86,
+                Paradox = 90;
+        }
+
+        public static class MP
+        {
+            public const uint
+                Thunder = 200,
+                AspectThunder = 400,
+                Fire = 800,
+                Despair = 800,
+                Blizzard3 = 800,
+                AspectFire = 1600,
+                Fire3 = 2000,
+                MaxMP = 10000;
         }
     }
 
@@ -168,37 +189,6 @@ namespace XIVSlothComboPlugin.Combos
                 var thunderOneDebuff = FindTargetEffect(BLM.Debuffs.Thunder);
                 var thunder3DebuffOnTarget = TargetHasEffect(BLM.Debuffs.Thunder3);
 
-                // oGCD Feature
-                if (gauge.IsEnochianActive)
-                {
-                    if (IsEnabled(CustomComboPreset.BlackAmplifierFeature) && level >= BLM.Levels.Amplifier && IsOffCooldown(BLM.Amplifier) && gauge.PolyglotStacks < 2 && GCD.CooldownRemaining > 0.7)
-                        return BLM.Amplifier;
-
-                    if (gauge.IsEnochianActive && IsEnabled(CustomComboPreset.BlackLeyLinesAutoFeature) && level >= BLM.Levels.LeyLines && IsOffCooldown(BLM.LeyLines) && GCD.CooldownRemaining > 0.7)
-                        return BLM.LeyLines;
-
-                    if (gauge.IsEnochianActive && IsEnabled(CustomComboPreset.BlackSharpcastFeature) && level >= BLM.Levels.Sharpcast && GetRemainingCharges(BLM.Sharpcast) > 0 && !HasEffect(BLM.Buffs.Sharpcast) && GCD.CooldownRemaining > 0.7)
-                        return BLM.Sharpcast;
-                }
-
-                // Polygot Overcap Feature
-                if (gauge.ElementTimeRemaining >= 6000 && IsEnabled(CustomComboPreset.BlackPolygotFeature) && thunder3DebuffOnTarget)
-                {
-                    if (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0))
-                    {
-                        if (level >= BLM.Levels.Xenoglossy)
-                        {
-                            if (gauge.PolyglotStacks == 2)
-                                return BLM.Xenoglossy;
-                        }
-                        else if (level >= BLM.Levels.Foul)
-                        {
-                            if (gauge.PolyglotStacks == 1)
-                                return BLM.Foul;
-                        }
-                    }
-                }
-
                 if (gauge.InUmbralIce && level >= BLM.Levels.Blizzard4)
                 {
                     if (gauge.ElementTimeRemaining >= 0 && IsEnabled(CustomComboPreset.BlackThunderFeature))
@@ -246,14 +236,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if ((LocalPlayer.CurrentMp < 800) || (LocalPlayer.CurrentMp < 1600 && level < BLM.Levels.Despair))
                         {
-                            if (IsEnabled(CustomComboPreset.BlackManafontFeature) && IsOffCooldown(BLM.Manafont) && GCD.CooldownRemaining > 0.7)
-                            {
-                                return BLM.Manafont;
-                            }
-                            if (lastComboMove != BLM.Manafont)
-                            {
-                                return BLM.Blizzard3;
-                            }
+                            return BLM.Blizzard3;
                         }
                     }
 
@@ -268,17 +251,6 @@ namespace XIVSlothComboPlugin.Combos
                             return BLM.Paradox;
                         if (gauge.ElementTimeRemaining < 6000 && !HasEffect(BLM.Buffs.Firestarter) && IsEnabled(CustomComboPreset.BlackFire13Feature) && !gauge.IsParadoxActive)
                             return BLM.Fire;
-                    }
-                    else if (IsEnabled(CustomComboPreset.BlackEnochainRecoveryFeature))
-                    {
-                        if (LocalPlayer.CurrentMp >= 2000)
-                        {
-                            return BLM.Fire3;
-                        }
-                        else
-                        {
-                            return BLM.Blizzard3;
-                        }
                     }
 
                     return BLM.Fire4;
@@ -319,17 +291,6 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return BLM.Fire;
                 }
-                else if (IsEnabled(CustomComboPreset.BlackEnochainRecoveryFeature) && gauge.ElementTimeRemaining <= 0)
-                {
-                    if (LocalPlayer.CurrentMp >= 2000)
-                    {
-                        return BLM.Fire3;
-                    }
-                    else
-                    {
-                        return BLM.Blizzard3;
-                    }
-                }
 
                 if (gauge.InAstralFire)
                 {
@@ -339,14 +300,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Fire3;
                     if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && LocalPlayer.CurrentMp < 1600 && level >= BLM.Levels.Blizzard3)
                     {
-                        if (IsEnabled(CustomComboPreset.BlackManafontFeature) && IsOffCooldown(BLM.Manafont) && CanWeave(lastComboMove))
-                        {
-                            return BLM.Manafont;
-                        }
-                        if (lastComboMove != BLM.Manafont)
-                        {
-                            return BLM.Blizzard3;
-                        }
+                        return BLM.Blizzard3;
                     }
 
                     return BLM.Fire;
@@ -384,13 +338,6 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if ((!gauge.InUmbralIce && !gauge.InAstralFire) || (gauge.InAstralFire && currentMP <= 100))
                     {
-                        if (IsEnabled(CustomComboPreset.BlackManafontFeature) && gauge.InAstralFire && currentMP <= 100)
-                        {
-                            if (IsOffCooldown(BLM.Manafont) && CanWeave(lastComboMove))
-                            {
-                                return BLM.Manafont;
-                            }
-                        }
                         if (level <= 81)
                             return BLM.Blizzard2;
                         if (level >= 82)
@@ -494,6 +441,424 @@ namespace XIVSlothComboPlugin.Combos
                     return BLM.Blizzard2;
                 if (level >= 82)
                     return BLM.HighBlizzardII;
+            }
+
+            return actionID;
+        }
+    }
+    
+    internal class BlackSimpleFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackAoEComboFeature;
+        
+        internal static bool inOpener = false;
+        internal static bool openerFinished = false;
+        internal static byte step = 0;
+
+        internal delegate bool DotRecast(int value); 
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BLM.Scathe)
+            {
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var gauge = GetJobGauge<BLMGauge>();
+                var canWeave = CanWeave(actionID, 0.6);
+                var currentMP = LocalPlayer.CurrentMp;
+
+                // Opener for BLM
+                if (IsEnabled(CustomComboPreset.BlackSimpleOpenerFeature) && level >= 70)
+                {
+                    if (!inOpener && !HasEffect(BLM.Buffs.Sharpcast))
+                    {
+                        return BLM.Sharpcast;
+                    }
+
+                    if (inCombat && !inOpener)
+                    {
+                        inOpener = true;
+                    }
+
+                    if (!inCombat && (inOpener || openerFinished))
+                    {
+                        step = 0;
+                        inOpener = false;
+                        openerFinished = false;
+                    }
+
+                    if (inCombat && inOpener && !openerFinished)
+                    {
+                        if (step == 0)
+                        {
+                            if (lastComboMove == BLM.Thunder3) step++;
+                            else return BLM.Thunder3;
+                        }
+                        if (step == 1)
+                        {
+                            if (lastComboMove == BLM.Triplecast ||
+                                HasEffect(BLM.Buffs.Triplecast) ||
+                                GetRemainingCharges(BLM.Triplecast) == 1) step++;
+                            else return BLM.Triplecast;
+                        }
+                        if (step == 2)
+                        {
+                            // Fire4 x2; Pot here
+                            if (currentMP <= 4500) step++;
+                            else return BLM.Fire4;
+                        }
+                        if (step == 3)
+                        {
+                            if (level < BLM.Levels.Amplifier) step++;
+                            if (IsOnCooldown(BLM.Amplifier)) step++;
+                            else return BLM.Amplifier;
+                        }
+                        if (step == 4)
+                        {
+                            if (IsOnCooldown(BLM.LeyLines)) step++;
+                            else return BLM.LeyLines;
+                        }
+                        if (step == 5)
+                        {
+                            if (currentMP <= 3000) step++;
+                            else return BLM.Fire4;
+                        }
+                        if (step == 6)
+                        {
+                            if (IsOnCooldown(BLM.Swiftcast)) step++;
+                            else return BLM.Swiftcast;
+                        }
+                        if (step == 7)
+                        {
+                            if (currentMP <= 1500) step++;
+                            else return BLM.Fire4;
+                        }
+                        if (step == 8)
+                        {
+                            if (lastComboMove == BLM.Triplecast ||
+                                HasEffect(BLM.Buffs.Triplecast) ||
+                                GetRemainingCharges(BLM.Triplecast) == 0) step++;
+                            else return BLM.Triplecast;
+                        }
+                        if (step == 9)
+                        {
+                            if (level < BLM.Levels.Despair) step++;
+                            if (lastComboMove == BLM.Despair) step++;
+                            else return BLM.Despair;
+                        }
+                        if (step == 10)
+                        {
+                            if (IsOnCooldown(BLM.Manafont)) step++;
+                            else return BLM.Manafont;
+                        }
+                        if (step == 11)
+                        {
+                            if (level < BLM.Levels.Despair)
+                            {
+                                if (gauge.ElementTimeRemaining <= 6000) return BLM.Fire;
+                                if (currentMP < 1600) step++;
+                                else return BLM.Fire4;
+                            }
+                            if (lastComboMove == BLM.Fire4) step++;
+                            else return BLM.Fire4;
+                        }
+                        if (step == 12)
+                        {
+                            if (level < BLM.Levels.Paradox) step++;
+                            if (HasEffect(BLM.Buffs.Sharpcast) ||
+                                GetRemainingCharges(BLM.Sharpcast) == 0) step++;
+                            else return BLM.Sharpcast;
+                        }
+                        if (step == 13)
+                        {
+                            if (level < BLM.Levels.Despair) step++;
+                            if (lastComboMove == BLM.Despair) step++;
+                            else return BLM.Despair;
+                        }
+                        if (step == 14)
+                        {
+                            if (lastComboMove == BLM.Blizzard3) step++;
+                            else return BLM.Blizzard3;
+                        }
+                        if (step == 15)
+                        {
+                            if (level < BLM.Levels.Xenoglossy) step++;
+                            if (lastComboMove == BLM.Xenoglossy) step++;
+                            else return BLM.Xenoglossy;
+                        }
+                        if (step == 16)
+                        {
+                            if (level < BLM.Levels.Paradox) step++;
+                            if (lastComboMove == BLM.Paradox) step++;
+                            else return BLM.Paradox;
+                        }
+                        if (step == 17)
+                        {
+                            if (lastComboMove == BLM.Blizzard4) step++;
+                            else return BLM.Blizzard4;
+                        }
+                        if (step == 18)
+                        {
+                            if (lastComboMove == BLM.Thunder3) step++;
+                            else return BLM.Thunder3;
+                        }
+
+                        openerFinished = true;
+                    }
+                }
+
+                // Handle thunder uptime and buffs
+                if (gauge.ElementTimeRemaining > 0)
+                {
+                    var thunder = TargetHasEffect(BLM.Debuffs.Thunder);
+                    var thunder3 = TargetHasEffect(BLM.Debuffs.Thunder3);
+                    var thunderDuration = FindTargetEffect(BLM.Debuffs.Thunder);
+                    var thunder3Duration = FindTargetEffect(BLM.Debuffs.Thunder3);
+
+                    DotRecast thunderRecast = delegate (int duration)
+                    {
+                        return !thunder || (thunder && thunderDuration.RemainingTime < duration);
+                    };
+                    DotRecast thunder3Recast = delegate (int duration)
+                    {
+                        return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
+                    };
+
+                    // Thunder uptime
+                    if (gauge.ElementTimeRemaining >= 6000)
+                    {
+                        if (level < BLM.Levels.Thunder3)
+                        {
+                            if (lastComboMove != BLM.Thunder && thunderRecast(4) && currentMP >= BLM.MP.AspectThunder)
+                            {
+                                return BLM.Thunder;
+                            }
+                        }
+                        else
+                        {
+                            if (lastComboMove != BLM.Thunder3 && thunder3Recast(4) && currentMP >= BLM.MP.AspectThunder)
+                            {
+                                return BLM.Thunder3;
+                            }
+                        }
+                    }
+
+                    // Buffs
+                    if (canWeave)
+                    {
+                        if (IsEnabled(CustomComboPreset.BlackSimpleCastsFeature))
+                        {
+                            // Use Triplecast only with Astral Fire/Umbral Hearts
+                            if (level >= BLM.Levels.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0 && (gauge.InAstralFire || gauge.UmbralHearts == 3))
+                            {
+                                if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) || GetRemainingCharges(BLM.Triplecast) > 1)
+                                {
+                                    return BLM.Triplecast;
+                                }
+                            }
+
+                            // Use Swiftcast in Astral Fire
+                            if (level >= BLM.Levels.Swiftcast && IsOffCooldown(BLM.Swiftcast) && gauge.InAstralFire)
+                            {
+                                return BLM.Swiftcast;
+                            }
+                        }
+
+                        if (IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) &&
+                            level >= BLM.Levels.Amplifier && IsOffCooldown(BLM.Amplifier) && gauge.PolyglotStacks < 2)
+                        {
+                            return BLM.Amplifier;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.BlackSimpleBuffsLeylinesFeature) &&
+                            level >= BLM.Levels.LeyLines && IsOffCooldown(BLM.LeyLines))
+                        {
+                            return BLM.LeyLines;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature))
+                        {
+                            if (level >= BLM.Levels.Manafont && IsOffCooldown(BLM.Manafont) && currentMP < BLM.MP.Despair && gauge.InAstralFire)
+                            {
+                                return BLM.Manafont;
+                            }
+                            if (level >= BLM.Levels.Sharpcast && GetRemainingCharges(BLM.Sharpcast) > 0 && !HasEffect(BLM.Buffs.Sharpcast))
+                            {
+                                return BLM.Sharpcast;
+                            }
+                        }
+                    }
+                }
+
+                // Handle initial cast
+                if (gauge.ElementTimeRemaining == 0 || (level >= BLM.Levels.Blizzard4 && !gauge.IsEnochianActive))
+                {
+                    if (level >= BLM.Levels.Fire3)
+                    {
+                        if (currentMP >= BLM.MP.Fire3)
+                        {
+                            return BLM.Fire3;
+                        }
+                        return BLM.Blizzard3;
+                    }
+                    if (currentMP >= BLM.MP.Fire)
+                    {
+                        return BLM.Fire;
+                    }
+                    return BLM.Blizzard;
+                }
+
+                // Before Blizzard 3; Fire until 0 MP, then Blizzard until max MP.
+                if (level < BLM.Levels.Blizzard3)
+                {
+                    if (gauge.InAstralFire)
+                    {
+                        if (currentMP < BLM.MP.AspectFire)
+                        {
+                            return BLM.Transpose;
+                        }
+                        return BLM.Fire;
+                    }
+                    if (gauge.InUmbralIce)
+                    {
+                        if (currentMP >= BLM.MP.MaxMP)
+                        {
+                            return BLM.Transpose;
+                        }
+                        return BLM.Blizzard;
+                    }
+                }
+
+                // Before Fire4; Fire until 0 MP (w/ Firestarter), then Blizzard 3 and Blizzard/Blizzard4 until max MP.
+                if (level < BLM.Levels.Fire4)
+                {
+                    if (gauge.InAstralFire)
+                    {
+                        if (HasEffect(BLM.Buffs.Firestarter))
+                        {
+                            return BLM.Fire3;
+                        }
+                        if (currentMP < BLM.MP.AspectFire)
+                        {
+                            return BLM.Blizzard3;
+                        }
+                        return BLM.Fire;
+                    }
+                    if (gauge.InUmbralIce)
+                    {
+                        if (currentMP >= BLM.MP.MaxMP)
+                        {
+                            return BLM.Fire3;
+                        }
+                        if (level >= BLM.Levels.Blizzard4)
+                        {
+                            return BLM.Blizzard4;
+                        }
+                        return BLM.Blizzard;
+                    }
+                }
+
+                // Use polygot stacks if we don't need it for a future weave
+                if (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0))
+                {
+                    if (level >= BLM.Levels.Xenoglossy)
+                    {
+                        // Check leylines cooldown
+                        if (gauge.PolyglotStacks == 2 && GetCooldown(BLM.LeyLines).CooldownRemaining >= 20)
+                        {
+                            // Check triplecast cooldown
+                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) && GetCooldown(BLM.Triplecast).ChargeCooldownRemaining >= 20)
+                            {
+                                return BLM.Xenoglossy;
+                            }
+                            if (IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) && 
+                                GetRemainingCharges(BLM.Triplecast) == 0 ||
+                                GetCooldown(BLM.Triplecast).ChargeCooldownRemaining >= 20)
+                            {
+                                return BLM.Xenoglossy;
+                            }
+                        }
+                    }
+                    else if (level >= BLM.Levels.Foul)
+                    {
+                        if (gauge.PolyglotStacks == 1)
+                        {
+                            return BLM.Foul;
+                        }
+                    }
+                }
+
+                // Full rotation
+                if (gauge.InAstralFire)
+                {
+                    // Refresh AF
+                    if (gauge.ElementTimeRemaining <= 3000 && HasEffect(BLM.Buffs.Firestarter))
+                    {
+                        return BLM.Fire3;
+                    }
+                    if (gauge.ElementTimeRemaining <= 6000 && !HasEffect(BLM.Buffs.Firestarter) && currentMP >= BLM.MP.AspectFire)
+                    {
+                        if (level >= BLM.Levels.Paradox && gauge.IsParadoxActive)
+                        {
+                            return BLM.Paradox;
+                        }
+                        return BLM.Fire;
+                    }
+
+                    // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
+                    var pooledPolygotStacks = IsEnabled(CustomComboPreset.BlackSimplePoolingFeature) ? 1 : 0;
+                    if (gauge.PolyglotStacks > 0 && IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) &&
+                        level >= BLM.Levels.Amplifier && IsOffCooldown(BLM.Amplifier))
+                    {
+                        return BLM.Xenoglossy;
+                    }
+                    if (gauge.PolyglotStacks > pooledPolygotStacks && lastComboMove != BLM.Xenoglossy)
+                    {
+                        if (IsEnabled(CustomComboPreset.BlackSimpleBuffsLeylinesFeature) &&
+                            level >= BLM.Levels.LeyLines && IsOffCooldown(BLM.LeyLines))
+                        {
+                            return BLM.Xenoglossy;
+                        }
+                        if (IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) &&
+                            level >= BLM.Levels.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0)
+                        {
+                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) || GetRemainingCharges(BLM.Triplecast) > 1)
+                            {
+                                return BLM.Xenoglossy;
+                            }
+                        }
+                        if (IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) &&
+                            level >= BLM.Levels.Manafont && IsOffCooldown(BLM.Manafont) && currentMP < BLM.MP.Despair)
+                        {
+                            return BLM.Xenoglossy;
+                        }
+                    }
+
+                    // Blizzard3/Despair when below Fire MP
+                    if (currentMP < BLM.MP.AspectFire)
+                    {
+                        if (level >= BLM.Levels.Despair && currentMP >= BLM.MP.Despair)
+                        {
+                            return BLM.Despair;
+                        }
+                        return BLM.Blizzard3;
+                    }
+                    return BLM.Fire4;
+                }
+                if (gauge.InUmbralIce)
+                {
+                    // Use Paradox when available
+                    if (level >= BLM.Levels.Paradox && gauge.IsParadoxActive)
+                    {
+                        return BLM.Paradox;
+                    }
+
+                    // Fire3 when at max MP and with umbral hearts
+                    if (currentMP >= BLM.MP.MaxMP && gauge.UmbralHearts == 3)
+                    {
+                        return BLM.Fire3;
+                    }
+                    return BLM.Blizzard4;
+                }
             }
 
             return actionID;
