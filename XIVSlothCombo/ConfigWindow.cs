@@ -420,24 +420,8 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BARD
             if (preset == CustomComboPreset.BardSimpleRagingJaws)
-            {
-                var ragingJawsRenewTime = Service.Configuration.GetCustomConfigValue(BRD.Config.RagingJawsRenewTime);
+                ConfigWindowFunctions.DrawSliderFloat(0, 3, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Remaining time (In seconds)", ref ragingJawsRenewTime);
-
-                if (inputChanged)
-                {
-                    ragingJawsRenewTime = ragingJawsRenewTime < 3 ? 3 : ragingJawsRenewTime;
-
-                    Service.Configuration.SetCustomConfigValue(BRD.Config.RagingJawsRenewTime, ragingJawsRenewTime);
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
             #endregion
             // ====================================================================================
             #region DANCER
