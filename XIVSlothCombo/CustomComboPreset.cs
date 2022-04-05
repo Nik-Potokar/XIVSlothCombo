@@ -1369,7 +1369,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Redoublement Combo Plus", "Replaces Redoublement with Verflare/Verholy after Enchanted Redoublement, whichever is more appropriate.\nRequires Redoublement Combo.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageMeleeComboPlus = 13002,
 
-        [ConflictingCombos(RedMageSmartSingleTargetCombo)]
+        [ConflictingCombos(RedMageSmartSingleTargetCombo, RedMageJoltVerprocCombo)]
         [CustomComboInfo("Verproc into Jolt", "Replaces Verstone/Verfire with Jolt/Scorch when no proc is available.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageVerprocCombo = 13003,
 
@@ -1391,7 +1391,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Smart AoE Feature", "Replaces Verthunder II With Veraero II and impact depending on mana", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageSmartcastAoECombo = 13008,
 
-        [ConflictingCombos(RedMageVerprocComboPlus, RedMageVerprocOpenerFeature, RedMageVerprocCombo)]
+        [ConflictingCombos(RedMageVerprocComboPlus, RedMageVerprocOpenerFeature, RedMageVerprocCombo, RedMageJoltVerprocCombo)]
         [CustomComboInfo("Smart Single Target Feature", "Smart Single target feature Credit: PrincessRTFM", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageSmartSingleTargetCombo = 13009,
 
@@ -1433,6 +1433,10 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
         [CustomComboInfo("Simple opener", "Do the optimal opener. [lv90 only]", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         SimpleRedMageOpener = 13020,
+
+        [ConflictingCombos(RedMageSmartSingleTargetCombo, RedMageVerprocCombo)]
+        [CustomComboInfo("Jolt into Verproc", "Replaces Jolt with Verstone/Verfire, when proc is available and won't cause severe imbalance", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
+        RedMageJoltVerprocCombo = 13021,
 
         #endregion
         // ====================================================================================

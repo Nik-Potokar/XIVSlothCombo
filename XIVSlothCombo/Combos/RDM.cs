@@ -1110,6 +1110,27 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
+    internal class RedMageJoltVerprocCombo : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageJoltVerprocCombo;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if ((actionID == RDM.Jolt) || (actionID == RDM.Jolt2))
+            {
+                var gauge = GetJobGauge<RDMGauge>();
+                //If both are proc'd, use the one based on Mana
+                if ((HasEffect(RDM.Buffs.VerfireReady)) && (HasEffect(RDM.Buffs.VerstoneReady)))
+                {
+                    if (gauge.WhiteMana > gauge.BlackMana) return RDM.Verfire; else return RDM.Verstone;
+                }
+                //Avoiding Offbalance difference of 30, Proc adds 5, so 25
+                else if ((HasEffect(RDM.Buffs.VerfireReady)) && (gauge.BlackMana - gauge.WhiteMana) < 25) return RDM.Verfire;
+                else if ((HasEffect(RDM.Buffs.VerstoneReady)) && (gauge.WhiteMana - gauge.BlackMana) < 25) return RDM.Verstone;
+            }
+            return actionID;
+        }
+    }
 }
 
 
