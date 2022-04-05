@@ -74,6 +74,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const string
                 WarInfuriateRange = "WarInfuriateRange";
+            public const string
+                WarSurgingRefreshRange = "WarSurgingRefreshRange";
         }
     }
 
@@ -88,6 +90,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var stormseyeBuff = FindEffectAny(WAR.Buffs.SurgingTempest);
                 var gauge = GetJobGauge<WARGauge>().BeastGauge;
+                var surgingThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarSurgingRefreshRange);
 
                 if (IsEnabled(CustomComboPreset.WARRangedUptimeFeature) && level >= WAR.Levels.Tomahawk)
                 {
@@ -130,7 +133,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (HasEffectAny(WAR.Buffs.SurgingTempest) && gauge >= 90 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= WAR.Levels.InnerBeast)
                             return OriginalHook(WAR.InnerBeast);
-                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime < 15) && level >= WAR.Levels.StormsEye)
+                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime < surgingThreshold) && level >= WAR.Levels.StormsEye)
                             return WAR.StormsEye;
                         return WAR.StormsPath;
                     }
