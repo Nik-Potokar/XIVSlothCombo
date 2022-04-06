@@ -101,7 +101,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && gauge.Ammo == 0 && IsOffCooldown(GNB.Bloodfest) && level >= GNB.Levels.Bloodfest)
                             return GNB.Bloodfest;
-                        if (IsOffCooldown(GNB.NoMercy) && IsOffCooldown(GNB.GnashingFang) && gauge.Ammo == GNB.MaxCartridges(level) && level >= GNB.Levels.NoMercy)
+                        if (IsEnabled(CustomComboPreset.GunbreakerNoMercyonST) && IsOffCooldown(GNB.NoMercy) && IsOffCooldown(GNB.GnashingFang) && gauge.Ammo == GNB.MaxCartridges(level) && level >= GNB.Levels.NoMercy)
                             return GNB.NoMercy;
                         if (level >= GNB.Levels.RoughDivide &&
                             (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && GetRemainingCharges(GNB.RoughDivide) > 0 || // uses all stacks
