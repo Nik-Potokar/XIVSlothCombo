@@ -126,7 +126,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (comboTime > 0)
                 {
-                    if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && !HasEffect(WAR.Buffs.InnerRelease) && gauge <= 50)
+                    if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && !HasEffect(WAR.Buffs.InnerRelease) && gauge <= 50)
                         return WAR.Infuriate;
 
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
