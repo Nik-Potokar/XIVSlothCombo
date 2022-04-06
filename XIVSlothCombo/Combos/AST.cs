@@ -70,7 +70,10 @@ namespace XIVSlothComboPlugin.Combos
             Ewer = 917,
             Spire = 918,
             Horoscope = 1890,
-            HoroscopeHelios = 1891;
+            HoroscopeHelios = 1891,
+            AspectedBenefic = 835,
+            NeutralSect = 1892,
+            NeutralSectShield = 1921;
         }
 
         public static class Debuffs
@@ -92,7 +95,8 @@ namespace XIVSlothComboPlugin.Combos
                 CrownPlay = 70,
                 CelestialOpposition = 60,
                 CelestialIntersection = 74,
-                Horoscope = 76;
+                Horoscope = 76,
+                NeutralSect = 80;
         }
 
         public static class Config
@@ -135,9 +139,9 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == AST.CrownPlay)
             {
                 var gauge = GetJobGauge<ASTGauge>();
-                var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
+                /*var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
                 var lordofCrown = HasEffect(AST.Buffs.LordOfCrownsDrawn);
-                var minorArcanaCD = GetCooldown(AST.MinorArcana);
+                var minorArcanaCD = GetCooldown(AST.MinorArcana);*/
                 if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE)
                     return AST.MinorArcana;
             }
@@ -302,7 +306,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (horoscopeCD.CooldownRemaining == 0 && level >= AST.Levels.Horoscope)
                         return AST.Horoscope;
 
-                    if (!HasEffect(AST.Buffs.AspectedHelios) && HasEffect(AST.Buffs.Horoscope))
+                    if (!HasEffect(AST.Buffs.AspectedHelios) && HasEffect(AST.Buffs.Horoscope) || HasEffect(AST.Buffs.NeutralSect) && !HasEffect(AST.Buffs.NeutralSectShield))
                         return AST.AspectedHelios;
 
                     if (HasEffect(AST.Buffs.HoroscopeHelios))
@@ -553,16 +557,22 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == AST.Benefic2)
             {
+                var aspectedBeneficHoT = FindTargetEffect(AST.Buffs.AspectedBenefic);
+                var NeutralSectBuff = FindTargetEffect(AST.Buffs.NeutralSect);
+                var NeutralSectShield = FindTargetEffect(AST.Buffs.NeutralSectShield);
                 var customEssentialDignity = Service.Configuration.GetCustomIntValue(AST.Config.AstroEssentialDignity);
-                var essentialDignityCD = GetCooldown(AST.EssentialDignity);
-                var celestialIntersectionCD = GetCooldown(AST.CelestialIntersection);
 
-                if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && essentialDignityCD.CooldownRemaining == 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
+                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && (aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3) || (NeutralSectShield is null) && (NeutralSectBuff is not null))
+                    return AST.AspectedBenefic;
+
+
+                if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && GetCooldown(AST.EssentialDignity).RemainingCharges > 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
                     return AST.EssentialDignity;
 
-                if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) && celestialIntersectionCD.CooldownRemaining == 0 && level >= AST.Levels.CelestialIntersection)
+                if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) && GetCooldown(AST.CelestialIntersection).RemainingCharges > 0 && level >= AST.Levels.CelestialIntersection)
                     return AST.CelestialIntersection;
             }
+            
 
             return actionID;
         }
