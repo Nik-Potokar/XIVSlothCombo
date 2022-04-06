@@ -14,6 +14,7 @@ namespace XIVSlothComboPlugin.Combos
             SaltedEarth = 3639,
             AbyssalDrain = 3641,
             CarveAndSpit = 3643,
+            Delirium = 7390,
             Quietus = 7391,
             Bloodspiller = 7392,
             LowBlow = 7540,
@@ -27,12 +28,15 @@ namespace XIVSlothComboPlugin.Combos
             SaltAndDarkness = 25755,
             Shadowbringer = 25757,
             Plunge = 3640,
+            BloodWeapon = 3625,
             Unmend = 3624;
 
         public static class Buffs
         {
             public const ushort
                 BloodWeapon = 742,
+                Darkside = 751,
+                BlackestNight = 1178,
                 Delirium = 1972,
                 SaltedEarth = 749;
         }
@@ -71,6 +75,7 @@ namespace XIVSlothComboPlugin.Combos
     internal class DarkSouleaterCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkSouleaterCombo;
+        internal static bool inOpener = false;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -82,80 +87,174 @@ namespace XIVSlothComboPlugin.Combos
                 var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 var bloodgauge = GetJobGauge<DRKGauge>().Blood;
                 var shadowCooldown = GetCooldown(DRK.LivingShadow);
-                var gcdCooldown1 = GetCooldown(DRK.HardSlash);
-                var gcdCooldown2 = GetCooldown(DRK.SyphonStrike);
-                var gcdCooldown3 = GetCooldown(DRK.Souleater);
-                var darkSide = GetJobGauge<DRKGauge>().DarksideTimeRemaining;
                 var plungeCD = GetCooldown(DRK.Plunge);
                 var actionIDCD = GetCooldown(actionID);
-                var livingshadowCD = GetCooldown(DRK.LivingShadow);
-                var saltedCD = GetCooldown(DRK.SaltedEarth);
-                var carveCD = GetCooldown(DRK.CarveAndSpit);
-                if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                
+
+
+                if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && !incombat && level == 90)
                 {
-                    if (!InMeleeRange(true))
-                        return DRK.Unmend;
+                    if (HasEffectAny(DRK.Buffs.BloodWeapon) || HasEffect(DRK.Buffs.BlackestNight))
+                        inOpener = true;
                 }
-                if (IsEnabled(CustomComboPreset.DeliriumFeature))
+
+                /*if (!incombat)
                 {
-                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
-                        return DRK.Bloodspiller;
-                }
-                if (HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10 && deliriumTime.RemainingTime > 0 && IsEnabled(CustomComboPreset.DeliriumFeatureOption))
+                    if (IsEnabled(CustomComboPreset.DarkBloodWeaponOpener) && inOpener && HasEffect(DRK.Buffs.BlackestNight))
+                        return DRK.BloodWeapon;
+                    if (HasEffect(DRK.Buffs.BloodWeapon))
+                        return DRK.HardSlash;
+                }*/
+
+                if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && inOpener && incombat && level == 90)
                 {
-                    if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium)
-                        return DRK.Bloodspiller;
-                }
-                if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
-                {
-                    if (currentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                    if (lastComboMove == DRK.Souleater && GetRemainingCharges(DRK.Plunge) == 0)
                     {
-                        if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
-                            return DRK.EdgeOfShadow;
-                        if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
-                            return DRK.FloodOfDarkness;
-                        if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
-                            return DRK.EdgeOfDarkness;
+                        inOpener = false;
                     }
-                }
-                if (comboTime > 0)
-                {
-                    if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
+
+                    // oGCDs
+                    if (CanWeave(actionID))
+                    {
+                        if (GetBuffStacks(DRK.Buffs.Delirium) == 2)
+                        {
+                            if (IsOffCooldown(DRK.CarveAndSpit))
+                                return DRK.CarveAndSpit;
+                            if (IsOnCooldown(DRK.CarveAndSpit))
+                                return DRK.Plunge;
+                        }
+                        
+                        if (GetBuffStacks(DRK.Buffs.Delirium) == 1)
+                        {
+                            if (GetRemainingCharges(DRK.Shadowbringer) == 1)
+                                return DRK.Shadowbringer;
+                            if (GetRemainingCharges(DRK.Shadowbringer) == 0)
+                                return DRK.EdgeOfShadow;
+
+                        }
+
+                        if (lastComboMove == DRK.HardSlash)
+                        {
+                            if (gauge.Blood == 10 && HasEffect(DRK.Buffs.BloodWeapon) && IsOffCooldown(DRK.LivingShadow))
+                            {
+                                if (gauge.DarksideTimeRemaining == 0)
+                                    return DRK.EdgeOfShadow;
+                                if (gauge.DarksideTimeRemaining > 0)
+                                    return DRK.Delirium;
+                            }
+
+                            if (IsOnCooldown(DRK.LivingShadow) && GetBuffStacks(DRK.Buffs.Delirium) == 3)
+                            {
+                                if (GetRemainingCharges(DRK.Shadowbringer) == 2)
+                                    return DRK.Shadowbringer;
+                                if (GetRemainingCharges(DRK.Shadowbringer) == 1)
+                                    return DRK.EdgeOfShadow;
+                            }
+
+                            if (IsOnCooldown(DRK.Shadowbringer) && !HasEffect(DRK.Buffs.Delirium))
+                            {
+                                if (IsOffCooldown(DRK.SaltAndDarkness))
+                                    return DRK.SaltAndDarkness;
+                                if (IsOnCooldown(DRK.SaltAndDarkness))
+                                    return DRK.EdgeOfShadow;
+                            }
+
+                        }
+
+                        if (lastComboMove == DRK.Souleater)
+                        {
+                            if (IsOffCooldown(DRK.LivingShadow))
+                                return DRK.LivingShadow;
+                            if (IsOnCooldown(DRK.LivingShadow))
+                                return DRK.SaltedEarth;
+                        }
+
+                        if (lastComboMove == DRK.SyphonStrike && GetRemainingCharges(DRK.Shadowbringer) == 0)
+                        {
+                            if (GetRemainingCharges(DRK.Plunge) == 1)
+                                return DRK.Plunge;
+                            if (GetRemainingCharges(DRK.Plunge) == 0)
+                                return DRK.EdgeOfShadow;
+                        }
+                    }
+
+                    // GCDs
+                    if (lastComboMove == DRK.HardSlash)
+                    {
+                        if (GetBuffStacks(DRK.Buffs.Delirium) > 0 && GetRemainingCharges(DRK.Shadowbringer) < 2)
+                            return DRK.Bloodspiller;
                         return DRK.SyphonStrike;
+                    }
 
                     if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
                         return DRK.Souleater;
                 }
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown1.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
 
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown2.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                if ((IsEnabled(CustomComboPreset.DarkOpenerFeature) && !inOpener && incombat) || !IsEnabled(CustomComboPreset.DarkOpenerFeature))
                 {
-                    return DRK.LivingShadow;
-                }
+                    if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
+                    {
+                        if (!InMeleeRange(true))
+                            return DRK.Unmend;
+                    }
 
-                if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && (double)gcdCooldown3.CooldownRemaining > 0.8 && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
-                {
-                    return DRK.LivingShadow;
-                }
 
-                if (IsEnabled(CustomComboPreset.DarkBloodGaugeOvercapFeature) && level >= DRK.Levels.Bloodpiller)
-                {
-                    if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
-                        return DRK.Bloodspiller;
-                }
-                if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= DRK.Levels.Plunge)
-                {
-                    if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
-                        return DRK.Plunge;
-                }
-                // leaves 1 stack
-                if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= DRK.Levels.Plunge)
-                {
-                    if (!plungeCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && plungeCD.CooldownRemaining < 60)
-                        return DRK.Plunge;
+                    if (IsEnabled(CustomComboPreset.DeliriumFeature))
+                    {
+                        if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium && HasEffect(DRK.Buffs.Delirium))
+                            return DRK.Bloodspiller;
+                    }
+
+                    if (HasEffect(DRK.Buffs.Delirium) && deliriumTime.RemainingTime <= 10 && deliriumTime.RemainingTime > 0 && IsEnabled(CustomComboPreset.DeliriumFeatureOption))
+                    {
+                        if (level >= DRK.Levels.Bloodpiller && level >= DRK.Levels.Delirium)
+                            return DRK.Bloodspiller;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
+                    {
+                        if (currentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                        {
+                            if (level >= DRK.Levels.EdgeOfShadow && gcd.CooldownRemaining > 0.7)
+                                return DRK.EdgeOfShadow;
+                            if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                                return DRK.FloodOfDarkness;
+                            if (level >= DRK.Levels.EdgeOfDarkness && gcd.CooldownRemaining > 0.7)
+                                return DRK.EdgeOfDarkness;
+                        }
+                    }
+
+                    if (comboTime > 0)
+                    {
+                        if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
+                            return DRK.SyphonStrike;
+
+                        if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
+                            return DRK.Souleater;
+                    }
+
+                    if (bloodgauge >= 50 && !shadowCooldown.IsCooldown && CanWeave(actionID) && level >= DRK.Levels.LivingShadow && IsEnabled(CustomComboPreset.DRKLivingShadowFeature))
+                        return DRK.LivingShadow;
+
+
+
+                    if (IsEnabled(CustomComboPreset.DarkBloodGaugeOvercapFeature) && level >= DRK.Levels.Bloodpiller)
+                    {
+                        if (lastComboMove == DRK.Souleater && level >= DRK.Levels.Bloodpiller && bloodgauge >= 80)
+                            return DRK.Bloodspiller;
+                    }
+                    if (IsEnabled(CustomComboPreset.DarkPlungeFeature) && level >= DRK.Levels.Plunge)
+                    {
+                        if (plungeCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
+                            return DRK.Plunge;
+                    }
+                    // leaves 1 stack
+                    if (IsEnabled(CustomComboPreset.DarkPlungeFeatureOption) && level >= DRK.Levels.Plunge)
+                    {
+                        if (!plungeCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7 && plungeCD.CooldownRemaining < 60)
+                            return DRK.Plunge;
+                    }
                 }
 
                 return DRK.HardSlash;
