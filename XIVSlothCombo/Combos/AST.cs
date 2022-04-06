@@ -558,10 +558,13 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == AST.Benefic2)
             {
                 var aspectedBeneficHoT = FindTargetEffect(AST.Buffs.AspectedBenefic);
+                var NeutralSectBuff = FindTargetEffect(AST.Buffs.NeutralSect);
+                var NeutralSectShield = FindTargetEffect(AST.Buffs.NeutralSectShield);
                 var customEssentialDignity = Service.Configuration.GetCustomIntValue(AST.Config.AstroEssentialDignity);
 
-                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && (aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3) || HasEffect(AST.Buffs.NeutralSect) && !HasEffect(AST.Buffs.NeutralSectShield))
+                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && (aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3) || (NeutralSectShield is null) && (NeutralSectBuff is not null))
                     return AST.AspectedBenefic;
+
 
                 if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && GetCooldown(AST.EssentialDignity).RemainingCharges > 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
                     return AST.EssentialDignity;
