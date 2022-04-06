@@ -22,7 +22,7 @@ namespace XIVSlothComboPlugin.Combos
             Upheaval = 7387,
             LowBlow = 7540,
             Interject = 7538,
-            InnerRelease = 8768,
+            InnerRelease = 7389,
             RawIntuition = 3551,
             MythrilTempest = 16462,
             ChaoticCyclone = 16463,
@@ -307,6 +307,21 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !isZerking && !hasNascent && level >= WAR.Levels.Infuriate)
                     return OriginalHook(WAR.Infuriate);
+            }
+
+            return actionID;
+        }
+    }
+    internal class WarriorPrimalRendOnInnerRelease : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorPrimalRendOnInnerRelease;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is WAR.Berserk or WAR.InnerRelease)
+            {
+                if (HasEffect(WAR.Buffs.PrimalRendReady))
+                    return WAR.PrimalRend;
             }
 
             return actionID;

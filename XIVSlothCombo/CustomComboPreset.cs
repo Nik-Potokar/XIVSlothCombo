@@ -1820,6 +1820,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
         WarriorInfuriateFellCleave = 18018,
 
+        [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID)]
+        WarriorPrimalRendOnInnerRelease = 18019,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
