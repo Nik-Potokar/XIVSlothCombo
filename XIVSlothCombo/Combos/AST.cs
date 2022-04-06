@@ -135,9 +135,9 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == AST.CrownPlay)
             {
                 var gauge = GetJobGauge<ASTGauge>();
-                var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
+                /*var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
                 var lordofCrown = HasEffect(AST.Buffs.LordOfCrownsDrawn);
-                var minorArcanaCD = GetCooldown(AST.MinorArcana);
+                var minorArcanaCD = GetCooldown(AST.MinorArcana);*/
                 if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE)
                     return AST.MinorArcana;
             }
