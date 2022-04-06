@@ -582,7 +582,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SAGE
-            if (preset == CustomComboPreset.CustomValuesTest || preset == CustomComboPreset.SageDPSFeatureTest)
+            if (preset == CustomComboPreset.SageDPSFeatureAdvTest)
             {
                 var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
                 var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
@@ -607,8 +607,9 @@ namespace XIVSlothComboPlugin
                 ImGui.Spacing();
             }
 
-            if (preset == CustomComboPreset.SageLucidFeature)
+            if (preset == CustomComboPreset.SageLucidFeatureAdvTest)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGELucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
+
             #endregion
             // ====================================================================================
             #region SAMURAI

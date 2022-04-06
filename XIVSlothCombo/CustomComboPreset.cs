@@ -1509,13 +1509,20 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
         SagePhlegmaDyskrasiaFeature = 14004,
 
-        [ConflictingCombos(SageDPSFeatureTest)]
         [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
         SageDPSFeature = 14005,
 
         [ParentCombo(SageDPSFeature)]
+        [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
+        SageDPSFeatureAdvTest = 14009,
+
+        [ParentCombo(SageDPSFeature)]
         [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature when you have 8,000 mana or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
         SageLucidFeature = 14006,
+
+        [ParentCombo(SageLucidFeature)]
+        [CustomComboInfo("Fine Tune Lucid Dreaming", "Don't like 8000 MP? Change it!", SGE.JobID, 0, "", "Don't worry, we won't let you shit the bed. Back to DPS!")]
+        SageLucidFeatureAdvTest = 14010,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
         [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
@@ -1524,14 +1531,6 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(SageEgeiroFeature)]
         [CustomComboInfo("Egeiro into Swiftcast Feature", "Changes Egiero to Swiftcast when Swiftcast is available.", SGE.JobID, 0, "Raise to Raise", "Swaps your raise with WHM's raise.\nDoesn't work any more. You're welcome")]
         SageAlternateEgeiroFeature = 14008,
-
-        [ConflictingCombos(SageDPSFeature)]
-        [CustomComboInfo("Dosis DPS Feature (Testing)", "Identical to the Dosis DPS feature, but you can input some values to your liking.", SGE.JobID, 0, "", "WHM again, but with numbers!")]
-        SageDPSFeatureTest = 14009,
-
-        [ParentCombo(SageDPSFeatureTest)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature (Testing) when you have 8,000 mana or less.", SGE.JobID, 0, "", "Don't worry, we won't let you shit the bed. Back to DPS!")]
-        SageLucidFeatureTest = 14010,
 
         #endregion
         // ====================================================================================

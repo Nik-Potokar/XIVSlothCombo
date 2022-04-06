@@ -242,8 +242,24 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (HasEffect(SGE.Buffs.Eukrasia))
                             return EkDosisAtkID;
-                        if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 4))
-                            return SGE.Eukrasia;
+
+                        if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
+                        {
+                            //Advanced Test Options Enabled
+                            if (IsEnabled(CustomComboPreset.SageDPSFeatureAdvTest))
+                            {
+                                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
+                                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
+                                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+                                if ((DosisDebuffID is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((DosisDebuffID.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
+                                {
+                                    return SGE.Eukrasia;
+                                }
+                            }
+
+                            else //End Advanced Test Options. If it needs to be removed, leave the next line
+                                return SGE.Eukrasia;
+                        }
                     }
 
                     //Lucid should be usable outside of whatever is targetted
@@ -251,7 +267,15 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         var lucidDreaming = GetCooldown(SGE.LucidDreaming);
                         var actionIDCD = GetCooldown(actionID); //Should this be changed to CanWeave similar to SCH? Seems fine as is
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
+
+                        //Lucid Test If statement. If enabled, use value, else 8000
+                        int MinMP = 8000;
+                        if (IsEnabled(CustomComboPreset.SageLucidFeatureAdvTest))
+                        {
+                            MinMP = Service.Configuration.GetCustomIntValue("SGELucidDreamingFeature", 4000);
+                        }
+
+                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= MinMP && actionIDCD.CooldownRemaining > 0.2)
                             return SGE.LucidDreaming;
                     }
                 }
@@ -290,65 +314,10 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == SGE.Egeiro)
             {
                 var swiftCD = GetCooldown(SGE.Swiftcast);
-                if ((swiftCD.CooldownRemaining == 0)
-)
+                if ((swiftCD.CooldownRemaining == 0))
                     return SGE.Swiftcast;
             }
             return actionID;
         }
     }
-
-    internal class SageDPSFeatureTest : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageDPSFeatureTest;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SGE.Dosis1 || actionID == SGE.Dosis2 || actionID == SGE.Dosis3)
-            {
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var dosis3CD = GetCooldown(SGE.Dosis3);
-                var dosis1Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
-                var dosis2Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
-                var dosis3Debuff = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
-                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
-                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
-                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
-
-                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= SGE.Levels.Dosis3 && incombat)
-                {
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianDosis3;
-                    if ((dosis3Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((dosis3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
-                        return SGE.Eukrasia;
-                }
-
-                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= SGE.Levels.Dosis2 && level < SGE.Levels.Dosis3 && incombat)
-                {
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianDosis2;
-                    if ((dosis2Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((dosis2Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
-                        return SGE.Eukrasia;
-                }
-
-                if (IsEnabled(CustomComboPreset.SageDPSFeatureTest) && level >= SGE.Levels.Eukrasia && level < SGE.Levels.Dosis2 && incombat)
-                {
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianDosis1;
-                    if ((dosis1Debuff is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((dosis1Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
-                        return SGE.Eukrasia;
-                }
-                if (IsEnabled(CustomComboPreset.SageLucidFeatureTest))
-                {
-                    var lucidDreaming = GetCooldown(SGE.LucidDreaming);
-                    var actionIDCD = GetCooldown(actionID);
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2)
-                        return SGE.LucidDreaming;
-                }
-            }
-
-            return actionID;
-        }
-    }
-
 }
