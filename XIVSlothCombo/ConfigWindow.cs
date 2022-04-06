@@ -630,7 +630,7 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.WarriorInfuriateFellCleave)
                 ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
                 
-                            if (preset == CustomComboPreset.WarriorStormsPathCombo && enabled)
+            if (preset == CustomComboPreset.WarriorStormsPathCombo && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 30, WAR.Config.WarSurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
                 
             if (preset == CustomComboPreset.WarriorOnslaughtFeature && enabled)

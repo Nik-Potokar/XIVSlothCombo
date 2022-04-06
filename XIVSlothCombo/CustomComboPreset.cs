@@ -1836,13 +1836,16 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
         WarriorInfuriateFellCleave = 18018,
 
+        [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID)]
+        WarriorPrimalRendOnInnerRelease = 18019,
+        
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo when Nascent Chaos is not up.", WAR.JobID)]
-        WarriorIRonST = 18019,
+        WarriorIRonST = 18020,
 
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
-        WarriorInfuriateonST = 18020,
+        WarriorInfuriateonST = 18021,
 
         #endregion
         // ====================================================================================

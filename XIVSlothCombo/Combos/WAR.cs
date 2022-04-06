@@ -313,4 +313,19 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    internal class WarriorPrimalRendOnInnerRelease : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorPrimalRendOnInnerRelease;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is WAR.Berserk or WAR.InnerRelease)
+            {
+                if (level >= WAR.Levels.PrimalRend && HasEffect(WAR.Buffs.PrimalRendReady))
+                    return WAR.PrimalRend;
+            }
+
+            return actionID;
+        }
+    }
 }
