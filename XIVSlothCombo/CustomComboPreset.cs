@@ -668,6 +668,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DRK simple opener", "standard opener for dark knight", DRK.JobID, 0, "", "")]
         DarkKnightSimpleOpener = 5020,
 
+        [ParentCombo(DarkSouleaterCombo)]
+        [ConflictingCombos(DarkoGCDFeature, DarkShadowbringeroGCDFeature)]
+        [CustomComboInfo("DRK opener", "standard opener for dark knight", DRK.JobID, 0, "", "")]
+        DarkOpener = 5021,
+
         #endregion
         // ====================================================================================
         #region DRAGOON

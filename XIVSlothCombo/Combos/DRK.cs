@@ -75,17 +75,79 @@ namespace XIVSlothComboPlugin.Combos
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkSouleaterCombo;
 
+        private static bool opener = false;
+
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID == DRK.Souleater)
             {
-                var currentMp = LocalPlayer.CurrentMp;
+                var currentMP = LocalPlayer.CurrentMp;
                 var gauge = GetJobGauge<DRKGauge>();
                 var deliriumTime = FindEffect(DRK.Buffs.Delirium);
                 var bloodgauge = GetJobGauge<DRKGauge>().Blood;
                 var plungeCD = GetCooldown(DRK.Plunge);
-                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var shadowbringerCD = GetCooldown(DRK.Shadowbringer);
+                var deliriumStacks = HasCharges(DRK.Buffs.Delirium);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
+                if (IsEnabled(CustomComboPreset.DarkOpener) && !incombat && level == 90)
+                {
+                    if (HasEffectAny(DRK.Buffs.BloodWeapon))
+                        opener = true;
+                }
+
+                if (IsEnabled(CustomComboPreset.DarkOpener) && opener && incombat && level == 90)
+                {
+                    // oGCDs
+                    if (CanWeave(actionID))
+                    {
+                        if (lastComboMove == DRK.HardSlash)
+                        {
+                            if (!IsOffCooldown(DRK.Shadowbringer) && !HasEffectAny(DRK.Buffs.Delirium))
+                            {
+                                if (IsOffCooldown(DRK.SaltAndDarkness))
+                                    return DRK.SaltAndDarkness;
+                                if (!IsOffCooldown(DRK.SaltAndDarkness))
+                                    return DRK.EdgeOfShadow;
+                            }
+
+                            if (gauge.Blood == 10 && HasEffectAny(DRK.Buffs.BloodWeapon))
+                            {
+                                if (IsOffCooldown(DRK.LivingShadow))
+                                {
+                                    if (currentMP == 10000) //&& DRKGauge.DarksideTimeRemaining > 0; // && !HasEffectAny(DRK.Buffs.Darkside)) I can't figure out how to get the darkside buff/gauge
+                                        return DRK.EdgeOfShadow;
+                                    if (currentMP < 10000 && IsOffCooldown(DRK.Delirium))
+                                        return DRK.Delirium;
+                                }
+
+                                if (!IsOffCooldown(DRK.LivingShadow)) // && deliriumStacks == 3) No clue how to see the delirium active stacks, HasCharges doesn't work.
+                                {
+                                    if (shadowbringerCD.CooldownRemaining < 30)
+                                        return DRK.Shadowbringer;
+                                    if (LocalPlayer?.CurrentMp <= 10000)
+                                        return DRK.EdgeOfShadow;
+                                }
+                            }
+                        }
+
+                        if (lastComboMove == DRK.Souleater)
+                        {
+                            if (IsOffCooldown(DRK.Shadowbringer))
+                            {
+                                if (gauge.Blood == 50)
+                                    return DRK.LivingShadow;
+                                if (!IsOffCooldown(DRK.Delirium) && gauge.Blood == 0)
+                                    return OriginalHook(DRK.SaltedEarth);
+                            }
+
+                            if (!IsOffCooldown(DRK.Plunge))
+                            {
+                                opener = false;
+                            }
+                        }  // Standard opener is courtesy of DamolitionnStand
+                    }
+                }
                 // Uptime protection
                 if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
                 {
@@ -98,10 +160,10 @@ namespace XIVSlothComboPlugin.Combos
                 //If you turn the Bloodweapon opener feature off and bloodweapon feature on, you will have to use bloodweapon yourself the first time, but after that it'll appear on the main combo
                 if (IsOffCooldown(DRK.BloodWeapon))
                 {
-                    if (!inCombat && IsEnabled(CustomComboPreset.DarkKnightBloodweaponOpenerFeature))
+                    if (!incombat && IsEnabled(CustomComboPreset.DarkKnightBloodweaponOpenerFeature))
                         return DRK.BloodWeapon;
 
-                    if (inCombat && IsEnabled(CustomComboPreset.DarkKnightBloodweaponFeature))
+                    if (incombat && IsEnabled(CustomComboPreset.DarkKnightBloodweaponFeature))
                         return DRK.BloodWeapon;
                 }
 
@@ -117,7 +179,7 @@ namespace XIVSlothComboPlugin.Combos
                 // Adds mana overcap protection and Darkside uptime
                 if (IsEnabled(CustomComboPreset.DarkManaOvercapFeature))
                 {
-                    if (currentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                    if (currentMP > 8500 || gauge.DarksideTimeRemaining < 10)
                     {
                         if (level >= DRK.Levels.EdgeOfShadow && CanWeave(actionID))
                             return DRK.EdgeOfShadow;
@@ -481,64 +543,7 @@ namespace XIVSlothComboPlugin.Combos
             }
             return actionID;
         }
+
     }
 }
 
-
-//if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && !incombat && level == 90)
-//{
-//    if (HasEffectAny(DRK.Buffs.BloodWeapon))
-//        opener = true;
-//}
-
-//if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && opener && incombat && level == 90)
-//{
-//    // oGCDs
-//    if (GCDClipCheck())
-//    {
-//        if (lastComboMove == DRK.HardSlash)
-//        {
-//            if (!IsActionOffCooldown(DRK.Shadowbringer) && !HasEffectAny(DRK.Buffs.Delirium))
-//            {
-//                if (IsActionOffCooldown(DRK.SaltandDarkness))
-//                    return DRK.SaltandDarkness;
-//                if (!IsActionOffCooldown(DRK.SaltandDarkness))
-//                    return DRK.EdgeOfShadow;
-//            }
-
-//            if (gauge.Blood == 10 && HasEffectAny(DRK.Buffs.BloodWeapon))
-//            {
-//                if (IsActionOffCooldown(DRK.LivingShadow))
-//                {
-//                    if (LocalPlayer?.CurrentMp == 10000 && !HasEffectAny(DRK.Buffs.Darkside))
-//                        return DRK.EdgeOfShadow;
-//                    if (LocalPlayer?.CurrentMp < 10000 && IsActionOffCooldown(DRK.Delirium))
-//                        return DRK.Delirium;
-//                }
-
-//                if (!IsActionOffCooldown(DRK.LivingShadow) && deliriumStacks == 3)
-//                {
-//                    if (shadowbringerCD.CooldownRemaining < 30)
-//                        return DRK.Shadowbringer;
-//                    if (LocalPlayer?.CurrentMp <= 10000)
-//                        return DRK.EdgeOfShadow;
-//                }
-//            }
-//        }
-
-//        if (lastComboMove == DRK.Souleater)
-//        {
-//            if (IsActionOffCooldown(DRK.Shadowbringer))
-//            {
-//                if (gauge.Blood == 50)
-//                    return DRK.LivingShadow;
-//                if (!IsActionOffCooldown(DRK.Delirium) && gauge.Blood == 0)
-//                    return OriginalHook(DRK.SaltedEarth);
-//            }
-
-//            if (!IsActionOffCooldown(DRK.Plunge))
-//            {
-//                opener = false;
-//            }
-//        }
-// Courtesy of Damolitionn
