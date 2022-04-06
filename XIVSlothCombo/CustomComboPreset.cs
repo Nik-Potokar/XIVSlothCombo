@@ -182,6 +182,12 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianHeliosFeature)]
         [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID, 0)]
         AstrologianHoroscopeFeature = 1026,
+        
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID, 0)]
+        AspectedBeneficFeature = 1027,
+
+
 
         #endregion
         // ====================================================================================
