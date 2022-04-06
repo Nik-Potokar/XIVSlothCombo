@@ -1,5 +1,5 @@
 {
-  "Author": "attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz",
+  "Author": "attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz, Taurenkey, Augporto, grimgal",
   "Name": "XIVSlothCombo",
   "InternalName": "XIVSlothCombo",
   "DalamudApiLevel": 5,
@@ -8,5 +8,5 @@
   "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
   "IconUrl": "https://i.imgur.com/UeRukF8.png",
   "ImageUrls": [ "https://i.imgur.com/UeRukF8.png" ],
-  "Changelog": "Updates and features/fixes for AST, BLM, DRG, GNB, NIN, SGE and WAR. Please check the project's GitHub or Discord for a full changelog."
+  "Changelog": "Updates and features/fixes for Core Plugin, AST, BLM, DNC, DRG, GNB, RDM, RPR, SCH, SGE, WAR and WHM. Please check the project's GitHub or Discord for a full changelog."
 }

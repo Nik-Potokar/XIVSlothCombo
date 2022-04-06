@@ -167,7 +167,22 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianHeliosFeature)]
         [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID, 0)]
         AstrologianLazyLadyFeature = 1022,
-        
+
+        [CustomComboInfo("Simple Heal", "Single target healing", AST.JobID, 0)]
+        AstrologianSimpleSingleTargetHeal = 1023,
+
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID, 0)]
+        AstroEssentialDignity = 1024,
+
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID, 0)]
+        CelestialIntersectionFeature = 1025,
+
+        [ParentCombo(AstrologianHeliosFeature)]
+        [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID, 0)]
+        AstrologianHoroscopeFeature = 1026,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -709,7 +724,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Geirskogul and Nastrond Feature", "Includes Geirskogul and Nastrond in the rotation.", DRG.JobID, 13, "", "Let me chuck another dragon soul at them!")]
         DragoonGeirskogulNastrondFeature = 6503,
 
-        [ConflictingCombos(DragoonLitanyDiveFeature, DragoonLifeLitanyDiveFeature)]
+        [ConflictingCombos(DragoonLitanyDiveFeature, DragoonLanceDiveFeature, DragoonLifeLitanyDiveFeature)]
         [ParentCombo(DragoonSimple)]
         [CustomComboInfo("Dives Feature", "Single Weave Friendly, but not optimal: Includes Spineshatter Dive, Dragonfire Dive and Stardiver in the rotation.", DRG.JobID, 14, "", "Don't jump to your death!")]
         DragoonDiveFeature = 6504,
@@ -719,12 +734,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Dives under Lance Charge Feature", "Single Weave Friendly: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Lance Charge, and Stardiver while under Life of the Dragon.", DRG.JobID, 15, "", "Don't jump to your death!")]
         DragoonLanceDiveFeature = 6505,
 
-        [ConflictingCombos(DragoonDiveFeature, DragoonLifeLitanyDiveFeature)]
+        [ConflictingCombos(DragoonDiveFeature, DragoonLanceDiveFeature, DragoonLifeLitanyDiveFeature)]
         [ParentCombo(DragoonSimple)]
         [CustomComboInfo("Dives under Litany Feature", "Double Weaves Required: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 16, "", "Don't jump to your death!")]
         DragoonLitanyDiveFeature = 6506,
 
-        [ConflictingCombos(DragoonDiveFeature, DragoonLitanyDiveFeature)]
+        [ConflictingCombos(DragoonDiveFeature, DragoonLanceDiveFeature, DragoonLitanyDiveFeature)]
         [ParentCombo(DragoonSimple)]
         [CustomComboInfo("Dives under Litany and Life of the Dragon Feature", "Double Weaves Required: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 17, "", "Don't jump to your death!")]
         DragoonLifeLitanyDiveFeature = 6507,
@@ -770,17 +785,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Dives AoE Feature", "Includes Spineshatter Dive, Dragonfire Dive and Stardiver in the AoE rotation.", DRG.JobID, 27, "", "Don't jump to your death!")]
         DragoonAoEDiveFeature = 6603,
 
-        [ConflictingCombos(DragoonDiveFeature, DragoonLitanyDiveFeature, DragoonLifeLitanyDiveFeature)]
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives under Lance Charge Feature", "Single Weave Friendly: Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Lance Charge, and Stardiver while under Life of the Dragon.", DRG.JobID, 28, "", "Don't jump to your death!")]
+        [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELitanyDiveFeature, DragoonAoELifeLitanyDiveFeature)]
+        [ParentCombo(DragoonSimpleAoE)]
+        [CustomComboInfo("Dives under Lance Charge AoE Feature", "Single Weave Friendly: Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Lance Charge, and Stardiver while under Life of the Dragon.", DRG.JobID, 28, "", "Don't jump to your death!")]
         DragoonAoELanceDiveFeature = 6604,
 
-        [ConflictingCombos(DragoonAoELifeLitanyDiveFeature)]
+        [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELanceDiveFeature, DragoonAoELifeLitanyDiveFeature)]
         [ParentCombo(DragoonSimpleAoE)]
         [CustomComboInfo("Dives under Litany AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 29, "", "Don't jump to your death!")]
         DragoonAoELitanyDiveFeature = 6605,
 
-        [ConflictingCombos(DragoonAoELitanyDiveFeature)]
+        [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELanceDiveFeature, DragoonAoELitanyDiveFeature)]
         [ParentCombo(DragoonSimpleAoE)]
         [CustomComboInfo("Dives under Litany and Life of the Dragon AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 30, "", "Don't jump to your death!")]
         DragoonAoELifeLitanyDiveFeature = 6606,
@@ -824,11 +839,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, 0, "Fashing Gnang", "Why grandma, what big teeth you have!")]
         GunbreakerGnashingFangOnMain = 7001,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GunbreakerGnashingFangOnMain)]
         [CustomComboInfo("Sonic Break/Bow Shock/Blasting Zone on Main Combo", "Adds Sonic Break/Bow Shock/Blasting Zone on main combo when under No Mercy buff", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
         GunbreakerCDsOnMainComboFeature = 7002,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GunbreakerGnashingFangOnMain)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
