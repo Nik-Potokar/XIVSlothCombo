@@ -1828,11 +1828,11 @@ namespace XIVSlothComboPlugin
         WarriorInfuriateFellCleave = 18018,
 
         [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo", WAR.JobID)]
+        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo when Nascent Chaos is not up.", WAR.JobID)]
         WarriorIRonST = 18019,
 
         [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo", WAR.JobID)]
+        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18020,
 
         #endregion
