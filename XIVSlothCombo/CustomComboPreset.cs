@@ -167,7 +167,22 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianHeliosFeature)]
         [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID, 0)]
         AstrologianLazyLadyFeature = 1022,
-        
+
+        [CustomComboInfo("Simple Heal", "Single target healing", AST.JobID, 0)]
+        AstrologianSimpleSingleTargetHeal = 1023,
+
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID, 0)]
+        AstroEssentialDignity = 1024,
+
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID, 0)]
+        CelestialIntersectionFeature = 1025,
+
+        [ParentCombo(AstrologianHeliosFeature)]
+        [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID, 0)]
+        AstrologianHoroscopeFeature = 1026,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
