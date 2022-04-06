@@ -336,6 +336,13 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (IsEnabled(CustomComboPreset.WarriorSimpleFeature) && level >= WAR.Levels.Infuriate)
                 {
+                    // Check if we should enter opener
+                    if (usedInternalRelease && lastComboActionID == WAR.InnerRelease)
+                    {
+                        usedInternalRelease = false;
+                        internalReleaseSteps++;
+                    }
+
                     // 120s Party Buff Window
                     if (!inCombat ||
                         (lastComboActionID == WAR.InnerRelease && internalReleaseSteps >= 2))
@@ -346,13 +353,6 @@ namespace XIVSlothComboPlugin.Combos
                         usedStormsEye = false;
                         usedInternalRelease = false;
                         internalReleaseSteps = 0;
-                    }
-
-                    // Check if we should enter opener
-                    if (usedInternalRelease && lastComboActionID == WAR.InnerRelease)
-                    {
-                        usedInternalRelease = false;
-                        internalReleaseSteps++;
                     }
 
                     if (!inCombat && !InMeleeRange(true))
@@ -378,6 +378,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 inOpener = false;
                                 openerFinished = true;
+                                internalReleaseSteps = 0;
                             }
                         }
                     }
