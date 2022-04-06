@@ -5,14 +5,14 @@
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Nik-Potokar/XIVSlothCombo/main?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/commits/main)
 ![Discord](https://img.shields.io/discord/957680331056615506?color=5865F2&label=Discord&logo=Discord&logoColor=ffffff&style=for-the-badge)
 
-# Have an issue or suggestion? Please post them *[here](https://github.com/Nik-Potokar/XIVSlothCombo/issues)*. If something dosen't seem to be working please swap class or re-slot the skill.
+# Have an issue or suggestion? Please post them *[here](https://github.com/Nik-Potokar/XIVSlothCombo/issues)*. If something dosen't seem to be working, please change to another job and back, or re-slot the skill.
 
 
 ## Installation
 * Copy the Custom Repo Link
 
 `https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json`
-* Open dalamud settings ingame
+* Open dalamud settings in game
 * Paste the link into the Custom Plugin repositories
 * Install as normal from Dalamud Plugins window.
 
