@@ -995,7 +995,7 @@ namespace XIVSlothComboPlugin
         MachinistSimpleGadget = 8022,
 
         [ParentCombo(MachinistSimpleFeature)]
-        [CustomComboInfo("Simple Assembling", "Adds optimal reassemble uses to the feature.", MCH.JobID, 0, "Megablox", "It's like Lego bricks! But worse!")]
+        [CustomComboInfo("Simple Assembling", "Pairs reassemble uses with the following skills.\nBefore acquiring Drill it will be used with Clean Shot.", MCH.JobID, 0, "Megablox", "It's like Lego bricks! But worse!")]
         MachinistSimpleAssembling = 8023,
 
         [ParentCombo(MachinistSimpleFeature)]
@@ -1016,6 +1016,30 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Simple Machinist AOE", "Spread Shot turns into Scattergun when lvl 82 or higher, Both turn into Auto Crossbow when overheated\nand Bioblaster is used first whenever it is off cooldown.", MCH.JobID, 0, "Dungeon go zzzz", "AoE, but you're just not here. Go make a coffee.")]
         MachinistSpreadShotFeature = 8028,
+
+        [ParentCombo(MachinistSimpleAssembling)]
+        [CustomComboInfo("Drill","Use Reassemble with Drill when available.", MCH.JobID,0,"GigaDrillBreaker","The Drill that will pierce the heavens!")]
+        MachinistSimpleAssemblingDrill = 8029,
+
+        [ParentCombo(MachinistSimpleAssembling)]
+        [CustomComboInfo("Air Anchor", "Use Reassemble with Air Anchor when available.", MCH.JobID, 0, "Air Guitar", "Play the tunes!")]
+        MachinistSimpleAssemblingAirAnchor = 8030,
+
+        [ParentCombo(MachinistSimpleAssembling)]
+        [CustomComboInfo("Chain Saw", "Use Reassemble with Chain Saw when available.", MCH.JobID, 0, "Giga Sauce", "The secret to life.")]
+        MachinistSimpleAssemblingChainSaw = 8031,
+
+        [ParentCombo(MachinistSimpleAssemblingDrill)]
+        [CustomComboInfo("Only use Drill...", "...when you have max charges of reassemble.", MCH.JobID, 0, "GigaDrillBreaker MAX", "Mow pow in the pew!")]
+        MachinistSimpleAssemblingDrillMaxCharges = 8032,
+
+        [ParentCombo(MachinistSimpleAssemblingAirAnchor)]
+        [CustomComboInfo("Only use Air Anchor...", "...when you have max charges of reassemble.", MCH.JobID, 0, "GigaDrillBreaker MAX", "Mow pow in the pew!")]
+        MachinistSimpleAssemblingAirAnchorMaxCharges = 8033,
+
+        [ParentCombo(MachinistSimpleAssemblingChainSaw)]
+        [CustomComboInfo("Only use Chain Saw...", "...when you have max charges of reassemble.", MCH.JobID, 0, "GigaDrillBreaker MAX", "Mow pow in the pew!")]
+        MachinistSimpleAssemblingChainSawMaxCharges = 8034,
 
         #endregion
         // ====================================================================================
