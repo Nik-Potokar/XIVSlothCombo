@@ -95,6 +95,12 @@ namespace XIVSlothComboPlugin.Combos
                 //Role
                 LucidDreaming = 24;
         }
+
+        public static class Config
+        {
+            public const string
+                SGELucidDreamingFeature = "SGELucidDreamingFeature";
+        }
     }
 
     internal class SageKardiaFeature : CustomCombo
