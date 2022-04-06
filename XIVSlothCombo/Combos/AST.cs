@@ -9,7 +9,6 @@ namespace XIVSlothComboPlugin.Combos
 
         public const uint
             Benefic = 3594,
-            Benefic2 = 3610,
             Draw = 3590,
             Balance = 4401,
             Bole = 4404,
@@ -49,7 +48,12 @@ namespace XIVSlothComboPlugin.Combos
             // heals
             Helios = 3600,
             AspectedHelios = 3601,
-            CelestialOpposition = 16553;
+            CelestialOpposition = 16553,
+            Benefic2 = 3610,
+            EssentialDignity = 3614,
+            CelestialIntersection = 16556,
+            AspectedBenefic = 3595,
+            Horoscope = 16557;
 
         public static class Buffs
         {
@@ -64,7 +68,9 @@ namespace XIVSlothComboPlugin.Combos
             Arrow = 915,
             Spear = 916,
             Ewer = 917,
-            Spire = 918;
+            Spire = 918,
+            Horoscope = 1890,
+            HoroscopeHelios = 1891;
         }
 
         public static class Debuffs
@@ -78,17 +84,23 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
+                EssentialDignity = 15,
                 Benefic2 = 26,
                 MinorArcana = 50,
                 Draw = 30,
+                AspectedBenefic = 34,
                 CrownPlay = 70,
-                CelestialOpposition = 60;
+                CelestialOpposition = 60,
+                CelestialIntersection = 74,
+                Horoscope = 76;
         }
 
         public static class Config
         {
             public const string
                 ASTLucidDreamingFeature = "ASTLucidDreamingFeature";
+            public const string
+                AstroEssentialDignity = "ASTCustomEssentialDignity";
         }
     }
 
@@ -270,20 +282,33 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == AST.AspectedHelios)
             {
+                var heliosBuff = FindEffect(AST.Buffs.AspectedHelios);
+                var horoscopeCD = GetCooldown(AST.Horoscope);
+                var celestialOppositionCD = GetCooldown(AST.CelestialOpposition);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var gauge = GetJobGauge<ASTGauge>();
+
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLadyFeature))
                 {
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var gauge = GetJobGauge<ASTGauge>();
-
                     if (gauge.DrawnCrownCard == CardType.LADY && incombat && level >= AST.Levels.CrownPlay)
                         return AST.LadyOfCrown;
                 }
 
-                var celestialOppositionCD = GetCooldown(AST.CelestialOpposition);
                 if (IsEnabled(CustomComboPreset.AstrologianCelestialOppositionFeature) && celestialOppositionCD.CooldownRemaining == 0 && level >= AST.Levels.CelestialOpposition)
                     return AST.CelestialOpposition;
 
-                var heliosBuff = FindEffect(AST.Buffs.AspectedHelios);
+                if (IsEnabled(CustomComboPreset.AstrologianHoroscopeFeature))
+                {
+                    if (horoscopeCD.CooldownRemaining == 0 && level >= AST.Levels.Horoscope)
+                        return AST.Horoscope;
+
+                    if (!HasEffect(AST.Buffs.AspectedHelios) && HasEffect(AST.Buffs.Horoscope))
+                        return AST.AspectedHelios;
+
+                    if (HasEffect(AST.Buffs.HoroscopeHelios))
+                        return OriginalHook(AST.Horoscope);
+                }
+
                 if (HasEffect(AST.Buffs.AspectedHelios) && heliosBuff.RemainingTime > 2)
                     return AST.Helios;
             }
@@ -516,6 +541,29 @@ namespace XIVSlothComboPlugin.Combos
                         return AST.Combust1;
                 }
             }
+            return actionID;
+        }
+
+    }
+
+    internal class AstrologianSimpleSingleTargetHeal : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianSimpleSingleTargetHeal;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == AST.Benefic2)
+            {
+                var customEssentialDignity = Service.Configuration.GetCustomIntValue(AST.Config.AstroEssentialDignity);
+                var essentialDignityCD = GetCooldown(AST.EssentialDignity);
+                var celestialIntersectionCD = GetCooldown(AST.CelestialIntersection);
+
+                if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && essentialDignityCD.CooldownRemaining == 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
+                    return AST.EssentialDignity;
+
+                if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) && celestialIntersectionCD.CooldownRemaining == 0 && level >= AST.Levels.CelestialIntersection)
+                    return AST.CelestialIntersection;
+            }
+
             return actionID;
         }
 

@@ -302,6 +302,11 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>A value indicating if the effect exists.</returns>
         protected static bool HasEffect(ushort effectID)
             => FindEffect(effectID) is not null;
+        protected static float GetBuffStacks(ushort effectId)
+        {
+            Status? eff = FindEffect(effectId);
+            return eff?.StackCount ?? 0;
+        }
 
         /// <summary>
         /// Finds an effect on the player.
@@ -476,6 +481,8 @@ namespace XIVSlothComboPlugin.Combos
 
             return true;
         }
+
+        // Grabs current target HP %, including teammates.
         protected static double EnemyHealthPercentage()
         {
             if (CurrentTarget is null)

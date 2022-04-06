@@ -167,7 +167,22 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianHeliosFeature)]
         [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID, 0)]
         AstrologianLazyLadyFeature = 1022,
-        
+
+        [CustomComboInfo("Simple Heal", "Single target healing", AST.JobID, 0)]
+        AstrologianSimpleSingleTargetHeal = 1023,
+
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID, 0)]
+        AstroEssentialDignity = 1024,
+
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID, 0)]
+        CelestialIntersectionFeature = 1025,
+
+        [ParentCombo(AstrologianHeliosFeature)]
+        [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID, 0)]
+        AstrologianHoroscopeFeature = 1026,
+
         #endregion
         // ====================================================================================
         #region BLACK MAGE
@@ -632,6 +647,15 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkSouleaterCombo)]
         [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
         DarkBloodGaugeOvercapFeature = 5016,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Level 90 Dark Knight Opener", "Adds the Level 90 Dark Knight Opener to the Main Combo. \nOpener triggered by using The Blackest Night or Blood Weapon before combat.", DRK.JobID, 0)]
+        DarkOpenerFeature = 5017,
+
+        /*[ParentCombo(DarkOpenerFeature)]
+        [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
+        DarkBloodWeaponOpener = 5018,*/
+
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -807,11 +831,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, 0, "Fashing Gnang", "Why grandma, what big teeth you have!")]
         GunbreakerGnashingFangOnMain = 7001,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GunbreakerGnashingFangOnMain)]
         [CustomComboInfo("Sonic Break/Bow Shock/Blasting Zone on Main Combo", "Adds Sonic Break/Bow Shock/Blasting Zone on main combo when under No Mercy buff", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
         GunbreakerCDsOnMainComboFeature = 7002,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GunbreakerGnashingFangOnMain)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
@@ -1753,7 +1777,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region WARRIOR
 
-        [CustomComboInfo("Storms Path Combo", "All in one main combo feature adds Storm's Eye/Path", WAR.JobID, 0, "", "Follow the yellow-brick road.")]
+        [CustomComboInfo("Storms Path Combo", "All in one main combo feature adds Storm's Eye/Path. \nIf all sub options and Fell Cleave/Decimate Options are toggled will turn into a full one button rotation (Simple Warrior)", WAR.JobID, 0, "", "Follow the yellow-brick road.")]
         WarriorStormsPathCombo = 18000,
 
         [CustomComboInfo("Storms Eye Combo", "Replace Storms Eye with its combo chain", WAR.JobID, 0, "", "Ow! My fucking eye!")]
@@ -1762,9 +1786,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Overpower Combo", "Add combos to Overpower", WAR.JobID, 0, "Underpower", "Bet you wish you had damage like DRK right now, huh")]
         WarriorMythrilTempestCombo = 18002,
 
+        [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, 0, "", "Taming the beast... for now.")]
         WarriorGaugeOvercapFeature = 18003,
 
+        [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Inner Release Feature", "Replace Single target and AoE combo with Fell Cleave/Decimate during Inner Release", WAR.JobID, 0, "", "Unleash your deepest thoughts and feelings upon the party. They'll love it!")]
         WarriorInnerReleaseFeature = 18004,
 
@@ -1775,6 +1801,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest", WAR.JobID, 0, "", "I use this feature when I'm moving house.")]
         WarriorUpheavalMainComboFeature = 18007,
 
+        [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, 0, "", "Going back to our roots. Let's get Primal!")]
         WarriorPrimalRendFeature = 18008,
 
@@ -1782,30 +1809,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, 0, "Orange-y feature", "Orange flavour. Mm.")]
         WarriorOrogenyFeature = 18009,
 
+        [ParentCombo(WarriorStormsPathCombo)]
         [ConflictingCombos(WarriorSpenderOption)]
         [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, 0, "", "THE EYE OF THE TIGERRRRR")]
         WarriorInnerChaosOption = 18010,
 
+        [ParentCombo(WarriorStormsPathCombo)]
         [ConflictingCombos(WarriorInnerChaosOption)]
-        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used.", WAR.JobID, 0, "", "MORE CLEAVE!")]
+        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "MORE CLEAVE!")]
         WarriorSpenderOption = 18011,
 
-//        [ConflictingCombos(WarriorOnslaughtFeatureOption, WarriorOnslaughtFeatureOptionTwo)]
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff", WAR.JobID, 0, "", "Onslaught! Full Power!")]
         WarriorOnslaughtFeature = 18012,
-
-/*
-        [ConflictingCombos(WarriorOnslaughtFeature, WarriorOnslaughtFeatureOptionTwo)]
-        [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 1 stack)", WAR.JobID, 0, "", "Onslaught! But a bit less!")]
-        WarriorOnslaughtFeatureOption = 18013,
-
-        [ConflictingCombos(WarriorOnslaughtFeature, WarriorOnslaughtFeatureOption)]
-        [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Onslaught Option Two", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff (Leaves 2 stacks, only usable at 88 and above)", WAR.JobID, 0, "", "Did you really need three versions of this? Just hit the boss 4hed")]
-        WarriorOnslaughtFeatureOptionTwo = 18014,
-*/
 
         [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with Fell Cleave when under Inner Release buff.\nReplaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, 0, "Cleave of annoyance", "Infuriating stuff, if you ask me. Truly chaotic.")]
         WarriorInfuriateFeature = 18015,
@@ -1822,6 +1838,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID)]
         WarriorPrimalRendOnInnerRelease = 18019,
+        
+        [ParentCombo(WarriorStormsPathCombo)]
+        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo when Nascent Chaos is not up.", WAR.JobID)]
+        WarriorIRonST = 18020,
+
+        [ParentCombo(WarriorStormsPathCombo)]
+        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
+        WarriorInfuriateonST = 18021,
 
         #endregion
         // ====================================================================================
