@@ -320,7 +320,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is WAR.Berserk or WAR.InnerRelease)
             {
-                if (HasEffect(WAR.Buffs.PrimalRendReady))
+                if (level >= WAR.Levels.PrimalRend && HasEffect(WAR.Buffs.PrimalRendReady))
                     return WAR.PrimalRend;
             }
 
