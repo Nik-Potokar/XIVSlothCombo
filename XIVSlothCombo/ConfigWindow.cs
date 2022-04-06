@@ -558,6 +558,10 @@ namespace XIVSlothComboPlugin
             {
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
             }
+            if (preset == CustomComboPreset.AstAutoCardTarget && enabled)
+            {
+                ConfigWindowFunctions.DrawJobGridMultiChoice("KEKW");
+            }
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
