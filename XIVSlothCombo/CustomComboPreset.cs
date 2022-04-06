@@ -1804,14 +1804,18 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Simple Warrior", "Combo on one button", WAR.JobID)]
         WarriorSimpleFeature = 18019,
-        
-        [ParentCombo(CustomComboPreset.WarriorSimpleFeature)]
-        [CustomComboInfo("Simple Warrior Opener", "Opener for Warrior. The opener is started at the start of battle, or when Infuriate is used at 2 stacks.", WAR.JobID)]
-        WarriorSimpleOpenerFeature = 18020,
 
         [ParentCombo(CustomComboPreset.WarriorSimpleFeature)]
-        [CustomComboInfo("Simple Warrior Opener - Auto", "Automatically enters the opener when Infuriate is at 2 stacks.", WAR.JobID)]
-        WarriorSimpleAutoOpenerFeature = 18021,
+        [CustomComboInfo("Simple Warrior - Onslaught", "Use Onslaught to prevent overcapping in simple warrior.", WAR.JobID)]
+        WarriorSimpleOnslaughtFeature = 18020,
+
+        [ParentCombo(CustomComboPreset.WarriorSimpleFeature)]
+        [CustomComboInfo("Simple Warrior - Inner Release", "Include Inner Release in simple warrior.", WAR.JobID)]
+        WarriorSimpleInnerReleaseFeature = 18021,
+
+        [ParentCombo(CustomComboPreset.WarriorSimpleFeature)]
+        [CustomComboInfo("Simple Warrior Opener", "Opener for Warrior. The opener is started at the start of battle, or when Inner Release is used 2 times (2 min window).", WAR.JobID)]
+        WarriorSimpleOpenerFeature = 18022,
 
         #endregion
         // ====================================================================================

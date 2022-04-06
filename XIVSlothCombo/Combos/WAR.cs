@@ -319,6 +319,7 @@ namespace XIVSlothComboPlugin.Combos
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorSimpleFeature;
 
         internal static bool inOpener = false;
+        internal static bool openerFinished = false;
         internal static bool usedStormsEye = false;
         internal static bool usedInternalRelease = false;
         internal static byte internalReleaseSteps = 0;
@@ -336,21 +337,22 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.WarriorSimpleFeature) && level >= WAR.Levels.Infuriate)
                 {
                     // 120s Party Buff Window
-                    if ((!inCombat && inOpener) ||
-                        (!inOpener && IsOffCooldown(WAR.InnerRelease)) ||
-                        (lastComboActionID == WAR.InnerRelease && internalReleaseSteps == 2))
+                    if (!inCombat ||
+                        (lastComboActionID == WAR.InnerRelease && internalReleaseSteps >= 2))
                     {
                         step = 0;
                         inOpener = false;
+                        openerFinished = false;
                         usedStormsEye = false;
+                        usedInternalRelease = false;
                         internalReleaseSteps = 0;
                     }
 
                     // Check if we should enter opener
                     if (usedInternalRelease && lastComboActionID == WAR.InnerRelease)
                     {
-                        internalReleaseSteps++;
                         usedInternalRelease = false;
+                        internalReleaseSteps++;
                     }
 
                     if (!inCombat && !InMeleeRange(true))
@@ -358,22 +360,25 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.Tomahawk;
                     }
 
-                    if (inCombat && !inOpener)
+                    if (inCombat)
                     {
-                        inOpener = true;
-                    }
-
-                    if (inCombat && inOpener)
-                    {
-                        // Check if opener is over
-                        if (usedStormsEye && lastComboActionID == WAR.StormsEye)
+                        if (!inOpener && !openerFinished)
                         {
-                            usedStormsEye = false;
-                            step++;
+                            inOpener = true;
                         }
-                        if (step >= 2)
+                        if (inOpener)
                         {
-                            inOpener = false;
+                            // Check if opener is over
+                            if (usedStormsEye && lastComboActionID == WAR.StormsEye)
+                            {
+                                usedStormsEye = false;
+                                step++;
+                            }
+                            if (step >= 2)
+                            {
+                                inOpener = false;
+                                openerFinished = true;
+                            }
                         }
                     }
                 }
@@ -386,7 +391,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (!HasEffect(WAR.Buffs.NascentChaos))
                         {
-                            if (GetRemainingCharges(WAR.Infuriate) > 1)
+                            if (GetRemainingCharges(WAR.Infuriate) == 2)
                             {
                                 return WAR.Infuriate;
                             }
@@ -415,42 +420,50 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (!HasEffect(WAR.Buffs.NascentChaos))
                         {
-                            if (level >= WAR.Levels.InnerRelease)
+                            if (IsEnabled(CustomComboPreset.WarriorSimpleInnerReleaseFeature) || inOpener)
                             {
-                                if (IsOffCooldown(WAR.InnerRelease))
+                                if (level >= WAR.Levels.InnerRelease)
                                 {
-                                    usedInternalRelease = true;
-                                    return WAR.InnerRelease;
+                                    if (IsOffCooldown(WAR.InnerRelease))
+                                    {
+                                        usedInternalRelease = true;
+                                        return WAR.InnerRelease;
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                if (IsOffCooldown(WAR.Berserk))
+                                else
                                 {
-                                    usedInternalRelease = true;
-                                    return WAR.Berserk;
+                                    if (IsOffCooldown(WAR.Berserk))
+                                    {
+                                        usedInternalRelease = true;
+                                        return WAR.Berserk;
+                                    }
                                 }
                             }
                         }
 
                         if (level >= WAR.Levels.Onslaught)
                         {
-                            if (HasEffect(WAR.Buffs.InnerRelease) && GetRemainingCharges(WAR.Onslaught) > 0)
+                            if (inOpener)
                             {
-                                if (lastComboActionID != WAR.Onslaught)
+                                if (HasEffect(WAR.Buffs.InnerRelease) && GetRemainingCharges(WAR.Onslaught) > 0)
+                                {
+                                    if (lastComboActionID != WAR.Onslaught)
+                                    {
+                                        return WAR.Onslaught;
+                                    }
+                                }
+                            }
+                            else if (IsEnabled(CustomComboPreset.WarriorSimpleOnslaughtFeature))
+                            {
+                                uint onslaughtChargesTarget = 2;
+                                if (level < WAR.Levels.PrimalRend)
+                                {
+                                    onslaughtChargesTarget = 1;
+                                }
+                                if (GetRemainingCharges(WAR.Onslaught) > onslaughtChargesTarget)
                                 {
                                     return WAR.Onslaught;
                                 }
-                            }
-
-                            uint onslaughtChargesTarget = 2;
-                            if (level < WAR.Levels.PrimalRend)
-                            {
-                                onslaughtChargesTarget = 1;
-                            }
-                            if (GetRemainingCharges(WAR.Onslaught) > onslaughtChargesTarget)
-                            {
-                                return WAR.Onslaught;
                             }
                         }
                     }
