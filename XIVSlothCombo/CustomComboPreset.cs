@@ -664,6 +664,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("OGCD's on main combo", "Salted Earth + Carve and Spit + Shadowbringer + Salt and Darkness", DRK.JobID, 0, "", "")]
         DarkKnightogcdFeature = 5019,
 
+        [ConflictingCombos(DarkoGCDFeature, DarkShadowbringeroGCDFeature)]
+        [CustomComboInfo("DRK simple opener", "standard opener for dark knight", DRK.JobID, 0, "", "")]
+        DarkKnightSimpleOpener = 5020,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
