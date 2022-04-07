@@ -450,10 +450,11 @@ namespace XIVSlothComboPlugin.Combos
                         ? (uint)gauge.NextStep
                         : DNC.StandardFinish2;
 
-                // Simple ST Standard/Tech (activates dances when target is over 2% HP)
+                // Simple ST Standard/Tech (activates dances with no target, or when target is over 2% HP)
                 if (!HasTarget() || EnemyHealthPercentage() > 2)
                 {
-                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && !HasEffect(DNC.Buffs.TechnicalStep) && IsOffCooldown(DNC.StandardStep))
+                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(DNC.StandardStep) && ((!HasEffect(DNC.Buffs.TechnicalStep) && !HasEffect(DNC.Buffs.TechnicalFinish)) ||
+                        FindEffect(DNC.Buffs.TechnicalFinish).RemainingTime > 5))
                         return DNC.StandardStep;
 
                     if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(DNC.Buffs.StandardStep) && IsOffCooldown(DNC.TechnicalStep))
@@ -565,10 +566,11 @@ namespace XIVSlothComboPlugin.Combos
                         ? (uint)gauge.NextStep
                         : DNC.TechnicalFinish4;
 
-                // Simple AoE Standard/Tech (activates dances when target is over 5% HP)
+                // Simple AoE Standard/Tech (activates dances with no target, or when target is over 5% HP)
                 if (!HasTarget() || EnemyHealthPercentage() > 5)
                 {
-                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && !HasEffect(DNC.Buffs.TechnicalStep) && IsOffCooldown(DNC.StandardStep))
+                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(DNC.StandardStep) && ((!HasEffect(DNC.Buffs.TechnicalStep) && !HasEffect(DNC.Buffs.TechnicalFinish)) ||
+                        FindEffect(DNC.Buffs.TechnicalFinish).RemainingTime > 5))
                         return DNC.StandardStep;
 
                     if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) && !HasEffect(DNC.Buffs.StandardStep) && IsOffCooldown(DNC.TechnicalStep))
