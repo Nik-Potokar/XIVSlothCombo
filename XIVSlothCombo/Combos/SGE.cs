@@ -24,7 +24,7 @@ namespace XIVSlothComboPlugin.Combos
             EukrasianDiagnosis = 24291,
             EukrasianPrognosis = 24292,
 
-        // DPS
+            // DPS
             Dosis1 = 24283,
             Dosis2 = 24306,
             Dosis3 = 24312,
@@ -49,7 +49,6 @@ namespace XIVSlothComboPlugin.Combos
             Eukrasia = 24290,
             Rhizomata = 24309,
             
-
             // Role
             Egeiro = 24287,
             Swiftcast = 7561,
@@ -80,6 +79,7 @@ namespace XIVSlothComboPlugin.Combos
                 Dosis = 1,
                 Prognosis = 10,
                 Physis = 20,
+                LucidDreaming = 24,
                 Phlegma = 26,
                 Eukrasia = 30,
                 Soteria = 35,
@@ -100,16 +100,14 @@ namespace XIVSlothComboPlugin.Combos
                 Phlegma3 = 82,
                 Dosis3 = 82,
                 Krasis = 86,
-                Pneuma = 90,
-                //Role
-                LucidDreaming = 24;
+                Pneuma = 90;
+                
         }
 
         public static class Config
         {
             public const string
                 SGELucidDreamingFeature = "SGELucidDreamingFeature",
-
                 CustomZoe = "CustomZoe",
                 CustomHaima = "CustomHaima",
                 CustomKrasis = "CustomKrasis",
@@ -131,11 +129,13 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Soteria)
+            if (actionID is SGE.Soteria)
             {
                 var soteriaCD = GetCooldown(SGE.Soteria);
+
                 if (HasEffect(SGE.Buffs.Kardia) && !soteriaCD.IsCooldown)
                     return SGE.Soteria;
+
                 return SGE.Kardia;
             }
 
@@ -149,11 +149,8 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Taurochole || actionID == SGE.Druochole || actionID == SGE.Ixochole || actionID == SGE.Kerachole)
-            {
-                if (level >= SGE.Levels.Rhizomata && GetJobGauge<SGEGauge>().Addersgall == 0)
-                        return SGE.Rhizomata;
-            }
+            if ((actionID is SGE.Taurochole or SGE.Druochole or SGE.Ixochole or SGE.Kerachole) && level >= SGE.Levels.Rhizomata && GetJobGauge<SGEGauge>().Addersgall is 0)
+                return SGE.Rhizomata;
 
             return actionID;
         }
@@ -165,13 +162,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Taurochole)
+            if (actionID is SGE.Taurochole)
             {
                 var taurocholeCD = GetCooldown(SGE.Taurochole);
-                if (taurocholeCD.CooldownRemaining > 0 || level < SGE.Levels.Taurochole)
 
+                if (taurocholeCD.CooldownRemaining > 0 || level < SGE.Levels.Taurochole)
                     return SGE.Druochole;
             }
+
             return actionID;
         }
     }
@@ -182,17 +180,17 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Phlegma || actionID == SGE.Phlegma2 || actionID == SGE.Phlegma3)
+            if (actionID is SGE.Phlegma or SGE.Phlegma2 or SGE.Phlegma3)
             {
-                if (level >= SGE.Levels.Dosis3)
+                if (level >= SGE.Levels.Dosis3 && GetJobGauge<SGEGauge>().Addersting > 0)
                 {
-                    if (GetCooldown(SGE.Phlegma3).CooldownRemaining > 45 && GetJobGauge<SGEGauge>().Addersting > 0)
+                    if (GetCooldown(SGE.Phlegma3).CooldownRemaining > 45)
                         return OriginalHook(SGE.Toxikon);
                 }
 
                 if (level >= SGE.Levels.Toxikon)
                 {
-                    if (GetCooldown(SGE.Phlegma2).CooldownRemaining > 45 && GetJobGauge<SGEGauge>().Addersting > 0)
+                    if (GetCooldown(SGE.Phlegma2).CooldownRemaining > 45)
                         return OriginalHook(SGE.Toxikon);
                 }
 
@@ -208,7 +206,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Phlegma || actionID == SGE.Phlegma2 || actionID == SGE.Phlegma3)
+            if (actionID is SGE.Phlegma or SGE.Phlegma2 or SGE.Phlegma3)
             {
                 if (level >= SGE.Levels.Dosis3)
                 {
@@ -236,12 +234,12 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Dosis1 || actionID == SGE.Dosis2 || actionID == SGE.Dosis3)
+            if (actionID is SGE.Dosis1 or SGE.Dosis2 or SGE.Dosis3)
             {
                 if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
                     //If we're too low level to use Eukrasia, we can stop here.
-                    if ((CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) && (level >= SGE.Levels.Eukrasia))
+                    if ((CurrentTarget.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) && (level >= SGE.Levels.Eukrasia))
                     {
                         //Eukrasian Dosis vars
                         Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
@@ -312,7 +310,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Swiftcast)
+            if (actionID is SGE.Swiftcast)
             {
                 if (IsEnabled(CustomComboPreset.SageEgeiroFeature))
                 {
@@ -333,10 +331,11 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SGE.Egeiro)
+            if (actionID is SGE.Egeiro)
             {
                 var swiftCD = GetCooldown(SGE.Swiftcast);
-                if ((swiftCD.CooldownRemaining == 0))
+
+                if ((swiftCD.CooldownRemaining is 0))
                     return SGE.Swiftcast;
             }
             return actionID;
@@ -350,7 +349,6 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var zoeCD = GetCooldown(SGE.Zoe);
-            
             var HaimaCD = GetCooldown(SGE.Haima);
             var PepsisCD = GetCooldown(SGE.Pepsis);
             var KrasisCD = GetCooldown(SGE.Krasis);
@@ -359,12 +357,9 @@ namespace XIVSlothComboPlugin.Combos
             var DruocholeCD = GetCooldown(SGE.Druochole);
             var TaurocholeCD = GetCooldown(SGE.Taurochole);
             var Addersgall = GetJobGauge<SGEGauge>().Addersgall;
-
             var Kardia = FindEffect(SGE.Buffs.Kardia);
             var Kardion = FindTargetEffect(SGE.Buffs.Kardion);
             var EukrasianDiagnosis = FindTargetEffect(SGE.Buffs.EukrasianDiagnosis);
-
-            
             var CustomZoe = Service.Configuration.GetCustomIntValue(SGE.Config.CustomZoe);
             var CustomHaima = Service.Configuration.GetCustomIntValue(SGE.Config.CustomHaima);
             var CustomKrasis = Service.Configuration.GetCustomIntValue(SGE.Config.CustomKrasis);
@@ -374,40 +369,45 @@ namespace XIVSlothComboPlugin.Combos
             var CustomDruochole = Service.Configuration.GetCustomIntValue(SGE.Config.CustomDruochole);
             var CustomTaurochole = Service.Configuration.GetCustomIntValue(SGE.Config.CustomTaurochole);
 
-            if (actionID == SGE.Diagnosis )
+            if (actionID is SGE.Diagnosis )
             {
 
-                if (IsEnabled(CustomComboPreset.CustomDruocholeFeature) && DruocholeCD.CooldownRemaining == 0  &&  Addersgall >= 1 && level >= SGE.Levels.Druochole && EnemyHealthPercentage() <= CustomDruochole)
+                if (IsEnabled(CustomComboPreset.CustomDruocholeFeature) && DruocholeCD.CooldownRemaining is 0 && Addersgall >= 1 && level >= SGE.Levels.Druochole && EnemyHealthPercentage() <= CustomDruochole)
                     return SGE.Druochole;
 
-                if (IsEnabled(CustomComboPreset.CustomTaurocholeFeature) && TaurocholeCD.CooldownRemaining == 0  &&  Addersgall >= 1 && level >= SGE.Levels.Taurochole && EnemyHealthPercentage() <= CustomTaurochole)
+                if (IsEnabled(CustomComboPreset.CustomTaurocholeFeature) && TaurocholeCD.CooldownRemaining is 0 && Addersgall >= 1 && level >= SGE.Levels.Taurochole && EnemyHealthPercentage() <= CustomTaurochole)
                     return SGE.Taurochole;
 
-                if (IsEnabled(CustomComboPreset.RhizomataFeatureAoE) && RhizomataCD.CooldownRemaining == 0 && Addersgall == 0 && level >= SGE.Levels.Rhizomata)
+                if (IsEnabled(CustomComboPreset.RhizomataFeatureAoE) && RhizomataCD.CooldownRemaining is 0 && Addersgall is 0 && level >= SGE.Levels.Rhizomata)
                     return SGE.Rhizomata;
 
                 if (IsEnabled(CustomComboPreset.AutoApplyKardia) && (Kardion is null) && (Kardia is null))
                     return SGE.Kardia;
 
-                if (IsEnabled(CustomComboPreset.CustomSoteriaFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && SoteriaCD.CooldownRemaining == 0 && level >= SGE.Levels.Soteria && EnemyHealthPercentage() <= CustomSoteria)
-                    return SGE.Soteria;
+                if (CurrentTarget.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player)
+                {
 
-                if (IsEnabled(CustomComboPreset.CustomZoeFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && zoeCD.CooldownRemaining == 0 && level >= SGE.Levels.Zoe && EnemyHealthPercentage() <= CustomZoe)
-                    return SGE.Zoe;
+                    if (IsEnabled(CustomComboPreset.CustomSoteriaFeature) && SoteriaCD.CooldownRemaining is 0 && level >= SGE.Levels.Soteria && EnemyHealthPercentage() <= CustomSoteria)
+                        return SGE.Soteria;
 
-                if (IsEnabled(CustomComboPreset.CustomKrasisFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && KrasisCD.CooldownRemaining == 0 && level >= SGE.Levels.Krasis && EnemyHealthPercentage() <= CustomKrasis)
-                    return SGE.Krasis;
+                    if (IsEnabled(CustomComboPreset.CustomZoeFeature) && zoeCD.CooldownRemaining is 0 && level >= SGE.Levels.Zoe && EnemyHealthPercentage() <= CustomZoe)
+                        return SGE.Zoe;
 
-                if (IsEnabled(CustomComboPreset.CustomPepsisFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && PepsisCD.CooldownRemaining == 0 && level >= SGE.Levels.Pepsis && EnemyHealthPercentage() <= CustomPepsis && EukrasianDiagnosis is not null)
-                    return SGE.Pepsis;
+                    if (IsEnabled(CustomComboPreset.CustomKrasisFeature) && KrasisCD.CooldownRemaining is 0 && level >= SGE.Levels.Krasis && EnemyHealthPercentage() <= CustomKrasis)
+                        return SGE.Krasis;
 
-                if (IsEnabled(CustomComboPreset.CustomHaimaFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && HaimaCD.CooldownRemaining == 0  && level >= SGE.Levels.Haima && EnemyHealthPercentage() <= CustomHaima)
-                    return SGE.Haima;
+                    if (IsEnabled(CustomComboPreset.CustomPepsisFeature) && PepsisCD.CooldownRemaining is 0 && level >= SGE.Levels.Pepsis && EnemyHealthPercentage() <= CustomPepsis && EukrasianDiagnosis is not null)
+                        return SGE.Pepsis;
+
+                    if (IsEnabled(CustomComboPreset.CustomHaimaFeature) && HaimaCD.CooldownRemaining is 0 && level >= SGE.Levels.Haima && EnemyHealthPercentage() <= CustomHaima)
+                        return SGE.Haima;
+                }
                 
                 if (IsEnabled(CustomComboPreset.CustomEukrasianDiagnosisFeature) && EukrasianDiagnosis is null && EnemyHealthPercentage() <= CustomDiagnosis)
                 {
                     if (!HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.Eukrasia;
+
                     if (HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.EukrasianDiagnosis;
                 }
@@ -423,7 +423,6 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
 
-
             var HolosCD = GetCooldown(SGE.Holos);
             var PhysisCD = GetCooldown(SGE.Physis);
             var PepsisCD = GetCooldown(SGE.Pepsis);
@@ -432,26 +431,25 @@ namespace XIVSlothComboPlugin.Combos
             var IxocholeCD = GetCooldown(SGE.Ixochole);
             var RhizomataCD = GetCooldown(SGE.Rhizomata);
             var KeracholeCD = GetCooldown(SGE.Kerachole);
-            
             var Addersgall = GetJobGauge<SGEGauge>().Addersgall;
             var EukrasianPrognosis = FindEffect(SGE.Buffs.EukrasianPrognosis);
 
-            if (actionID == SGE.Prognosis)
+            if (actionID is SGE.Prognosis)
             {
-                if (IsEnabled(CustomComboPreset.RhizomataFeatureAoE) && RhizomataCD.CooldownRemaining == 0 && Addersgall == 0 && level >= SGE.Levels.Rhizomata)
+                if (IsEnabled(CustomComboPreset.RhizomataFeatureAoE) && RhizomataCD.CooldownRemaining is 0 && Addersgall is 0 && level >= SGE.Levels.Rhizomata)
                     return SGE.Rhizomata;
 
-                if (IsEnabled(CustomComboPreset.KeracholeFeature) && KeracholeCD.CooldownRemaining == 0 && Addersgall >= 1 && level >= SGE.Levels.Kerachole)
+                if (IsEnabled(CustomComboPreset.KeracholeFeature) && KeracholeCD.CooldownRemaining is 0 && Addersgall >= 1 && level >= SGE.Levels.Kerachole)
                     return SGE.Kerachole;
 
-                if (IsEnabled(CustomComboPreset.IxocholeFeature) && IxocholeCD.CooldownRemaining == 0 && Addersgall >= 1 &&  level >= SGE.Levels.Ixochole)
+                if (IsEnabled(CustomComboPreset.IxocholeFeature) && IxocholeCD.CooldownRemaining is 0 && Addersgall >= 1 &&  level >= SGE.Levels.Ixochole)
                     return SGE.Ixochole;
 
                 if (IsEnabled(CustomComboPreset.PhysisFeature))
                 {
-                    if (PhysisCD.CooldownRemaining == 0 && level >= SGE.Levels.Physis && level < SGE.Levels.Physis2)
+                    if (PhysisCD.CooldownRemaining is 0 && level >= SGE.Levels.Physis && level < SGE.Levels.Physis2)
                         return SGE.Physis;
-                    if (Physis2CD.CooldownRemaining == 0 && level >= SGE.Levels.Physis2)
+                    if (Physis2CD.CooldownRemaining is 0 && level >= SGE.Levels.Physis2)
                         return SGE.Physis2;
                 }
 
@@ -463,28 +461,17 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.EukrasianPrognosis;
                 }
 
-                if (IsEnabled(CustomComboPreset.HolosFeature) && HolosCD.CooldownRemaining == 0 && level >= SGE.Levels.Holos)
+                if (IsEnabled(CustomComboPreset.HolosFeature) && HolosCD.CooldownRemaining is 0 && level >= SGE.Levels.Holos)
                     return SGE.Holos;
 
-                if (IsEnabled(CustomComboPreset.PanhaimaFeature) && PanhaimaCD.CooldownRemaining == 0 && level >= SGE.Levels.Panhaima)
+                if (IsEnabled(CustomComboPreset.PanhaimaFeature) && PanhaimaCD.CooldownRemaining is 0 && level >= SGE.Levels.Panhaima)
                     return SGE.Panhaima;
 
-                if (IsEnabled(CustomComboPreset.PepsisFeature) && PepsisCD.CooldownRemaining == 0 && level >= SGE.Levels.Pepsis && EukrasianPrognosis is not null)
+                if (IsEnabled(CustomComboPreset.PepsisFeature) && PepsisCD.CooldownRemaining is 0 && level >= SGE.Levels.Pepsis && EukrasianPrognosis is not null)
                     return SGE.Pepsis;
 
             }
             return actionID;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 }
