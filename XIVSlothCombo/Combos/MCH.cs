@@ -439,7 +439,7 @@ namespace XIVSlothComboPlugin.Combos
                         IsEnabled(CustomComboPreset.MachinistSimpleWildCharge))
                 {
                     if (CombatEngageDuration().Minutes == 0 && GetRemainingCharges(MCH.Reassemble) == 0) return MCH.Wildfire;
-                    else if (CombatEngageDuration().Minutes > 0 && GetCooldownRemainingTime(MCH.ChainSaw) > 50 ) return MCH.Wildfire;
+                    else if (CombatEngageDuration().Minutes > 0 && (GetCooldownRemainingTime(MCH.ChainSaw) > 50 || level < MCH.Levels.ChainSaw) ) return MCH.Wildfire;
                 }     
 
                 if (gauge.IsOverheated && level >= MCH.Levels.HeatBlast)
@@ -472,7 +472,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && !HasEffect(MCH.Buffs.Reassembled) && IsEnabled(CustomComboPreset.MachinistSimpleAssemblingAirAnchor) &&
                         GetRemainingCharges(MCH.Reassemble) > 0)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingAirAnchorMaxCharges) && GetRemainingCharges(MCH.Reassemble) == 2) return MCH.Reassemble;
+                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingAirAnchorMaxCharges) && GetRemainingCharges(MCH.Reassemble) == GetMaxCharges(MCH.Reassemble)) return MCH.Reassemble;
                         else if (!IsEnabled(CustomComboPreset.MachinistSimpleAssemblingAirAnchorMaxCharges)) return MCH.Reassemble;
 
                     }
@@ -486,7 +486,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && IsEnabled(CustomComboPreset.MachinistSimpleAssemblingDrill) &&
                         !HasEffect(MCH.Buffs.Reassembled) && GetRemainingCharges(MCH.Reassemble) > 0)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingDrillMaxCharges) && GetRemainingCharges(MCH.Reassemble) == 2) return MCH.Reassemble;
+                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingDrillMaxCharges) && GetRemainingCharges(MCH.Reassemble) == GetMaxCharges(MCH.Reassemble)) return MCH.Reassemble;
                         else if (!IsEnabled(CustomComboPreset.MachinistSimpleAssemblingDrillMaxCharges)) return MCH.Reassemble;
                     }
                     return MCH.Drill;
@@ -497,7 +497,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && IsEnabled(CustomComboPreset.MachinistSimpleAssemblingChainSaw) && !HasEffect(MCH.Buffs.Reassembled) &&
                         GetRemainingCharges(MCH.Reassemble) > 0)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingChainSawMaxCharges) && GetRemainingCharges(MCH.Reassemble) == 2) return MCH.Reassemble;
+                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingChainSawMaxCharges) && GetRemainingCharges(MCH.Reassemble) == GetMaxCharges(MCH.Reassemble)) return MCH.Reassemble;
                         else if (!IsEnabled(CustomComboPreset.MachinistSimpleAssemblingChainSawMaxCharges)) return MCH.Reassemble;
                     }
                     return MCH.ChainSaw;
