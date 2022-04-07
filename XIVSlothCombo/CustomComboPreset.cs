@@ -187,6 +187,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID, 0)]
         AspectedBeneficFeature = 1027,
 
+        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+        [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID, 0)]
+        ExaltationFeature = 1028,
 
 
         #endregion

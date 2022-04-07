@@ -53,7 +53,8 @@ namespace XIVSlothComboPlugin.Combos
             EssentialDignity = 3614,
             CelestialIntersection = 16556,
             AspectedBenefic = 3595,
-            Horoscope = 16557;
+            Horoscope = 16557,
+            Exaltation = 25873;
 
         public static class Buffs
         {
@@ -96,7 +97,8 @@ namespace XIVSlothComboPlugin.Combos
                 CelestialOpposition = 60,
                 CelestialIntersection = 74,
                 Horoscope = 76,
-                NeutralSect = 80;
+                NeutralSect = 80,
+                Exaltation = 86;
         }
 
         public static class Config
@@ -561,13 +563,16 @@ namespace XIVSlothComboPlugin.Combos
                 var NeutralSectBuff = FindTargetEffect(AST.Buffs.NeutralSect);
                 var NeutralSectShield = FindTargetEffect(AST.Buffs.NeutralSectShield);
                 var customEssentialDignity = Service.Configuration.GetCustomIntValue(AST.Config.AstroEssentialDignity);
+                var exaltationCD = GetCooldown(AST.Exaltation);
 
                 if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && (aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3) || (NeutralSectShield is null) && (NeutralSectBuff is not null))
                     return AST.AspectedBenefic;
 
-
                 if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && GetCooldown(AST.EssentialDignity).RemainingCharges > 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
                     return AST.EssentialDignity;
+
+                if (IsEnabled(CustomComboPreset.ExaltationFeature) && exaltationCD.CooldownRemaining == 0 && level >= AST.Levels.Exaltation)
+                    return AST.Exaltation;
 
                 if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) && GetCooldown(AST.CelestialIntersection).RemainingCharges > 0 && level >= AST.Levels.CelestialIntersection)
                     return AST.CelestialIntersection;
