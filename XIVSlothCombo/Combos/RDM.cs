@@ -1151,14 +1151,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is RDM.Jolt or RDM.Jolt2 or RDM.Verfire or RDM.Verstone or RDM.Verthunder2 or RDM.Veraero2)
+            if (actionID is RDM.Verthunder or RDM.Veraero or RDM.Scatter or RDM.Verthunder3 or RDM.Veraero3 or RDM.Impact)
             {
                 var canWeave = CanWeave(actionID);
                 var castingSpell = LocalPlayer.IsCasting;
                 var inCombat = HasCondition(ConditionFlag.InCombat);
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(RDM.Config.RdmLucidMpThreshold);
 
-                if (!canWeave || !inCombat) // Reset following weave window or exit combat if enemy dies
+                if (!canWeave || !inCombat || IsOnCooldown(RDM.LucidDreaming) || lastComboMove == RDM.EnchantedRedoublement || lastComboMove == RDM.Verflare || lastComboMove == RDM.Verholy || lastComboMove == RDM.Scorch) // Reset following weave window or exit combat if enemy dies
                 {
                     showLucid = false;
                     return actionID;
