@@ -523,7 +523,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PALADIN
-            if (preset == CustomComboPreset.PaladinFightOrFlightMainComboFeatureTest)
+            if (preset == CustomComboPreset.PaladinFightOrFlightFeature)
             {
                 var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
                 var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
@@ -547,25 +547,25 @@ namespace XIVSlothComboPlugin
                 ImGui.Spacing();
             }
 
-            if (preset == CustomComboPreset.SkillCooldownRemaining)
-            {
-                var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
+            //if (preset == CustomComboPreset.SkillCooldownRemaining)
+            //{
+            //    var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
 
 
 
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Skill Cooldown remaining Time", ref SkillCooldownRemaining);
+            //    var inputChanged = false;
+            //    ImGui.PushItemWidth(75);
+            //    inputChanged |= ImGui.InputFloat("Input Skill Cooldown remaining Time", ref SkillCooldownRemaining);
 
-                if (inputChanged)
-                {
-                    Service.Configuration.SkillCooldownRemaining = SkillCooldownRemaining;
+            //    if (inputChanged)
+            //    {
+            //        Service.Configuration.SkillCooldownRemaining = SkillCooldownRemaining;
 
-                    Service.Configuration.Save();
-                }
+            //        Service.Configuration.Save();
+            //    }
 
-                ImGui.Spacing();
-            }
+            //    ImGui.Spacing();
+            //}
             #endregion
             // ====================================================================================
             #region REAPER
