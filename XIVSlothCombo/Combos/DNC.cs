@@ -569,7 +569,7 @@ namespace XIVSlothComboPlugin.Combos
                 // Simple AoE Standard/Tech (activates dances with no target, or when target is over 5% HP)
                 if (!HasTarget() || EnemyHealthPercentage() > 5)
                 {
-                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(DNC.StandardStep) && ((!HasEffect(DNC.Buffs.TechnicalStep) && !HasEffect(DNC.Buffs.TechnicalFinish)) ||
+                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) && IsOffCooldown(DNC.StandardStep) && ((!HasEffect(DNC.Buffs.TechnicalStep) && !HasEffect(DNC.Buffs.TechnicalFinish)) ||
                         FindEffect(DNC.Buffs.TechnicalFinish).RemainingTime > 5))
                         return DNC.StandardStep;
 
