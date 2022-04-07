@@ -630,11 +630,9 @@ namespace XIVSlothComboPlugin
         DarkStalwartSoulCombo = 5001,
 
         [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DeliriumFeatureOption)]
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "Delirium is what you have if you choose to play DRK.\nDoc's words, not mine")]
         DeliriumFeature = 5002,
 
-        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, 0, "", "Hey big spenderrrrr")]
         DRKOvercapFeature = 5003,
 
@@ -663,10 +661,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
         DarkPlungeFeatureOption = 5009,
 
-        [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DeliriumFeature)]
-        [CustomComboInfo("Delirium Feature Option", "Replaces Souleather with Bloodspiller when Delirium has 10sec or less remaining.", DRK.JobID, 0, "", "Delirium is what you have if you choose to play DRK.\nDoc's words, not mine")]
-        DeliriumFeatureOption = 5010,
+        [ParentCombo(DeliriumFeature)]
+        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
+        DelayedDeliriumFeatureOption = 5010,
 
         [ParentCombo(DarkSouleaterCombo)]
         [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID, 0, "Ranged DPS job now, duh", "Stubby little arms, huh")]
@@ -675,11 +672,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", DRK.JobID, 0, "Lower blow", "Blow, but low.")]
         DarkKnightInterruptFeature = 5012,
 
-        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "Even the un-cool kids got heals these days")]
         DRKStalwartabyssalDrainFeature = 5013,
 
-        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE Combo.", DRK.JobID, 0, "", "Wasn't this last expansion?")]
         DRKStalwartShadowbringerFeature = 5014,
 
@@ -696,21 +691,8 @@ namespace XIVSlothComboPlugin
         DarkOpenerFeature = 5017,
 
         [ParentCombo(DarkOpenerFeature)]
-        [CustomComboInfo("Bloodweapon on Opener", "Adds bloodweapon to the opener.", DRK.JobID, 0)]
-        DarkKnightBloodweaponOpenerFeature = 5018,
-
-
-        [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("Bloodweapon on combo", "Adds bloodweapon to the main combo", DRK.JobID, 0)]
-        DarkKnightBloodweaponFeature = 5019,
-
-        [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("oGCD's on main combo", "Adds Salted Earth, Carve and Spit, Salt and Darkness and Delirium to the combo. \nAlso pools Shadowbringers to use both stacks during 2 min buff alignment windows with overcap protection", DRK.JobID, 0)]
-        DarkKnightogcdFeature = 5020,
-
-        /*[ParentCombo(DarkOpenerFeature)]
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
-        DarkBloodWeaponOpener = 5018,*/
+        DarkBloodWeaponOpener = 5018,
 
         #endregion
         // ====================================================================================
