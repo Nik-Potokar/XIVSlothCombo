@@ -592,7 +592,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
 
                             // Go to Umbral Ice
-                            if (lastComboMove != BLM.Manafont && GetCooldown(BLM.Manafont).CooldownRemaining <= 116)
+                            if (lastComboMove != BLM.Manafont && GetCooldown(BLM.Manafont).CooldownRemaining <= 117)
                             {
                                 if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
                                 {
