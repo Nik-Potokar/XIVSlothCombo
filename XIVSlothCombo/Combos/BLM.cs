@@ -534,19 +534,9 @@ namespace XIVSlothComboPlugin.Combos
                                     return BLM.Swiftcast;
                                 }
 
-                                // Second Triplecast
-                                if (!HasEffect(BLM.Buffs.Triplecast) && !HasEffect(BLM.Buffs.Swiftcast) && 
-                                    IsOnCooldown(BLM.Swiftcast) && lastComboMove != BLM.Swiftcast &&
-                                    GetRemainingCharges(BLM.Triplecast) >= 1 && currentMP < BLM.MP.AspectFire)
-                                {
-                                    if (!IsEnabled(CustomComboPreset.BlackSimpleAltOpenerFeature))
-                                    {
-                                        return BLM.Triplecast;
-                                    }
-                                }
-
                                 // Manafont
-                                if (IsOffCooldown(BLM.Manafont))
+                                if (IsOffCooldown(BLM.Manafont) &&
+                                   (lastComboMove == BLM.Despair || lastComboMove == BLM.Fire))
                                 {
                                     if (level >= BLM.Levels.Despair)
                                     {
@@ -561,6 +551,17 @@ namespace XIVSlothComboPlugin.Combos
                                         {
                                             return BLM.Manafont;
                                         }
+                                    }
+                                }
+
+                                // Second Triplecast
+                                if (!HasEffect(BLM.Buffs.Triplecast) && !HasEffect(BLM.Buffs.Swiftcast) && 
+                                    IsOnCooldown(BLM.Swiftcast) && lastComboMove != BLM.Swiftcast &&
+                                    GetRemainingCharges(BLM.Triplecast) >= 1 && currentMP < BLM.MP.AspectFire)
+                                {
+                                    if (!IsEnabled(CustomComboPreset.BlackSimpleAltOpenerFeature))
+                                    {
+                                        return BLM.Triplecast;
                                     }
                                 }
 
@@ -584,16 +585,23 @@ namespace XIVSlothComboPlugin.Combos
 
                             // Cast Fire
                             if (level < BLM.Levels.Despair &&
-                                gauge.ElementTimeRemaining <= 4000 &&
+                                gauge.ElementTimeRemaining <= 6000 &&
                                 currentMP >= BLM.MP.AspectFire)
                             {
                                 return BLM.Fire;
                             }
 
                             // Go to Umbral Ice
-                            if (currentMP < BLM.MP.Despair && lastComboMove != BLM.Manafont && IsOnCooldown(BLM.Manafont))
+                            if (lastComboMove != BLM.Manafont && IsOnCooldown(BLM.Manafont))
                             {
-                                return BLM.Blizzard3;
+                                if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
+                                {
+                                    return BLM.Blizzard3;
+                                }
+                                if (level < BLM.Levels.Despair && currentMP < BLM.MP.AspectFire)
+                                {
+                                    return BLM.Blizzard3;
+                                }
                             }
 
                             return BLM.Fire4;
