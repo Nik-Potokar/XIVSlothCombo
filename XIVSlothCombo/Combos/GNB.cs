@@ -106,8 +106,8 @@ namespace XIVSlothComboPlugin.Combos
                             IsOffCooldown(GNB.NoMercy) && level < GNB.Levels.BurstStrike)) //no cartridges unlocked
                             return GNB.NoMercy;
                         if (level >= GNB.Levels.RoughDivide &&
-                            (IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && GetRemainingCharges(GNB.RoughDivide) > 0 || // uses all stacks
-                            IsEnabled(CustomComboPreset.GunbreakerRoughDivide1StackOption) && GetRemainingCharges(GNB.RoughDivide) > 1)) // leaves 1 stack
+                            ((IsEnabled(CustomComboPreset.GunbreakerRoughDivide2StackOption) && GetRemainingCharges(GNB.RoughDivide) > 0) || // uses all stacks
+                            (IsEnabled(CustomComboPreset.GunbreakerRoughDivide1StackOption) && GetRemainingCharges(GNB.RoughDivide) > 1))) // leaves 1 stack
                                 return GNB.RoughDivide;
                         if (IsEnabled(CustomComboPreset.GunbreakerCDsOnMainComboFeature) && level >= GNB.Levels.DangerZone && !HasEffect(GNB.Buffs.NoMercy) && IsOffCooldown(GNB.DangerZone) &&
                             ((IsOnCooldown(GNB.GnashingFang) && gauge.AmmoComboStep != 1 && GetCooldown(GNB.GnashingFang).CooldownRemaining > 20) || //Post Gnashing Fang
