@@ -227,6 +227,13 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+                {
+                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RoyalAuthority)
+                    {
+                        return PLD.RoyalAuthority;
+                    }
+                }
 
                 if (comboTime > 0)
                 {
@@ -241,6 +248,13 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && FightOrFlightCD.CooldownRemaining >= 2 && FightOrFlightCD.CooldownRemaining <= 50)
                         return PLD.Atonement;
                 }
+
+                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementTestFeature))
+                {
+                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
+                        return PLD.Atonement;
+                }
+
 
                 if (comboTime > 0)
                 {
