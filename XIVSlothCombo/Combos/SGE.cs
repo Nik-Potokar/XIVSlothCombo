@@ -21,8 +21,10 @@ namespace XIVSlothComboPlugin.Combos
             Haima = 24305,
             Panhaima = 24311,
             Holos = 24310,
+            EukrasianDiagnosis = 24291,
+            EukrasianPrognosis = 24292,
 
-            // DPS
+        // DPS
             Dosis1 = 24283,
             Dosis2 = 24306,
             Dosis3 = 24312,
@@ -46,6 +48,7 @@ namespace XIVSlothComboPlugin.Combos
             Kardia = 24285,
             Eukrasia = 24290,
             Rhizomata = 24309,
+            
 
             // Role
             Egeiro = 24287,
@@ -57,7 +60,10 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Kardia = 2604,
                 Eukrasia = 2606,
-                Swiftcast = 167;
+                Swiftcast = 167,
+                EukrasianDiagnosis = 2607,
+                Kardion = 2872,
+                EukrasianPrognosis = 2609;
         }
 
         public static class Debuffs
@@ -73,12 +79,15 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Dosis = 1,
                 Prognosis = 10,
+                Physis = 20,
                 Phlegma = 26,
                 Eukrasia = 30,
                 Soteria = 35,
                 Druochole = 45,
                 Kerachole = 50,
                 Ixochole = 52,
+                Zoe = 56,
+                Pepsis = 58,
                 Physis2 = 60,
                 Taurochole = 62,
                 Toxikon = 66,
@@ -99,8 +108,21 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                SGELucidDreamingFeature = "SGELucidDreamingFeature";
+                SGELucidDreamingFeature = "SGELucidDreamingFeature",
+
+                CustomZoe = "CustomZoe",
+                CustomHaima = "CustomHaima",
+                CustomKrasis = "CustomKrasis",
+                CustomPepsis = "CustomPepsis",
+                CustomSoteria = "CustomSoteria",
+                CustomIxochole = "CustomIxochole",
+                CustomDiagnosis = "CustomDiagnosis",
+                CustomKerachole = "CustomKerachole",
+                CustomRhizomata = "CustomRhizomata",
+                CustomDruochole = "CustomDruochole",
+                CustomTaurochole = "CustomTaurochole";
         }
+        
     }
 
     internal class SageKardiaFeature : CustomCombo
@@ -320,4 +342,149 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
+    internal class SageSingleTargetHeal : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageSingleTargetHealFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var zoeCD = GetCooldown(SGE.Zoe);
+            
+            var HaimaCD = GetCooldown(SGE.Haima);
+            var PepsisCD = GetCooldown(SGE.Pepsis);
+            var KrasisCD = GetCooldown(SGE.Krasis);
+            var SoteriaCD = GetCooldown(SGE.Soteria);
+            var RhizomataCD = GetCooldown(SGE.Rhizomata);
+            var DruocholeCD = GetCooldown(SGE.Druochole);
+            var TaurocholeCD = GetCooldown(SGE.Taurochole);
+            var Addersgall = GetJobGauge<SGEGauge>().Addersgall;
+
+            var Kardia = FindEffect(SGE.Buffs.Kardia);
+            var Kardion = FindTargetEffect(SGE.Buffs.Kardion);
+            var EukrasianDiagnosis = FindTargetEffect(SGE.Buffs.EukrasianDiagnosis);
+
+            
+            var CustomZoe = Service.Configuration.GetCustomIntValue(SGE.Config.CustomZoe);
+            var CustomHaima = Service.Configuration.GetCustomIntValue(SGE.Config.CustomHaima);
+            var CustomKrasis = Service.Configuration.GetCustomIntValue(SGE.Config.CustomKrasis);
+            var CustomPepsis = Service.Configuration.GetCustomIntValue(SGE.Config.CustomPepsis);
+            var CustomSoteria = Service.Configuration.GetCustomIntValue(SGE.Config.CustomSoteria);
+            var CustomDiagnosis = Service.Configuration.GetCustomIntValue(SGE.Config.CustomDiagnosis);
+            var CustomDruochole = Service.Configuration.GetCustomIntValue(SGE.Config.CustomDruochole);
+            var CustomTaurochole = Service.Configuration.GetCustomIntValue(SGE.Config.CustomTaurochole);
+
+            if (actionID == SGE.Diagnosis )
+            {
+
+                if (IsEnabled(CustomComboPreset.CustomDruocholeFeature) && DruocholeCD.CooldownRemaining == 0  &&  Addersgall >= 1 && level >= SGE.Levels.Druochole && EnemyHealthPercentage() <= CustomDruochole)
+                    return SGE.Druochole;
+
+                if (IsEnabled(CustomComboPreset.CustomTaurocholeFeature) && TaurocholeCD.CooldownRemaining == 0  &&  Addersgall >= 1 && level >= SGE.Levels.Taurochole && EnemyHealthPercentage() <= CustomTaurochole)
+                    return SGE.Taurochole;
+
+                if (IsEnabled(CustomComboPreset.RhizomataFeatureAoE) && RhizomataCD.CooldownRemaining == 0 && Addersgall == 0 && level >= SGE.Levels.Rhizomata)
+                    return SGE.Rhizomata;
+
+                if (IsEnabled(CustomComboPreset.AutoApplyKardia) && (Kardion is null) && (Kardia is null))
+                    return SGE.Kardia;
+
+                if (IsEnabled(CustomComboPreset.CustomSoteriaFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && SoteriaCD.CooldownRemaining == 0 && level >= SGE.Levels.Soteria && EnemyHealthPercentage() <= CustomSoteria)
+                    return SGE.Soteria;
+
+                if (IsEnabled(CustomComboPreset.CustomZoeFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && zoeCD.CooldownRemaining == 0 && level >= SGE.Levels.Zoe && EnemyHealthPercentage() <= CustomZoe)
+                    return SGE.Zoe;
+
+                if (IsEnabled(CustomComboPreset.CustomKrasisFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && KrasisCD.CooldownRemaining == 0 && level >= SGE.Levels.Krasis && EnemyHealthPercentage() <= CustomKrasis)
+                    return SGE.Krasis;
+
+                if (IsEnabled(CustomComboPreset.CustomPepsisFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && PepsisCD.CooldownRemaining == 0 && level >= SGE.Levels.Pepsis && EnemyHealthPercentage() <= CustomPepsis && EukrasianDiagnosis is not null)
+                    return SGE.Pepsis;
+
+                if (IsEnabled(CustomComboPreset.CustomHaimaFeature) && (CurrentTarget.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player) && HaimaCD.CooldownRemaining == 0  && level >= SGE.Levels.Haima && EnemyHealthPercentage() <= CustomHaima)
+                    return SGE.Haima;
+                
+                if (IsEnabled(CustomComboPreset.CustomEukrasianDiagnosisFeature) && EukrasianDiagnosis is null && EnemyHealthPercentage() <= CustomDiagnosis)
+                {
+                    if (!HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.Eukrasia;
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianDiagnosis;
+                }
+            }
+            return actionID;
+        }
+    }
+
+    internal class SageAoEHeal : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageAoEHealFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+
+
+            var HolosCD = GetCooldown(SGE.Holos);
+            var PhysisCD = GetCooldown(SGE.Physis);
+            var PepsisCD = GetCooldown(SGE.Pepsis);
+            var Physis2CD = GetCooldown(SGE.Physis2);
+            var PanhaimaCD = GetCooldown(SGE.Panhaima);
+            var IxocholeCD = GetCooldown(SGE.Ixochole);
+            var RhizomataCD = GetCooldown(SGE.Rhizomata);
+            var KeracholeCD = GetCooldown(SGE.Kerachole);
+            
+            var Addersgall = GetJobGauge<SGEGauge>().Addersgall;
+            var EukrasianPrognosis = FindEffect(SGE.Buffs.EukrasianPrognosis);
+
+            if (actionID == SGE.Prognosis)
+            {
+                if (IsEnabled(CustomComboPreset.RhizomataFeatureAoE) && RhizomataCD.CooldownRemaining == 0 && Addersgall == 0 && level >= SGE.Levels.Rhizomata)
+                    return SGE.Rhizomata;
+
+                if (IsEnabled(CustomComboPreset.KeracholeFeature) && KeracholeCD.CooldownRemaining == 0 && Addersgall >= 1 && level >= SGE.Levels.Kerachole)
+                    return SGE.Kerachole;
+
+                if (IsEnabled(CustomComboPreset.IxocholeFeature) && IxocholeCD.CooldownRemaining == 0 && Addersgall >= 1 &&  level >= SGE.Levels.Ixochole)
+                    return SGE.Ixochole;
+
+                if (IsEnabled(CustomComboPreset.PhysisFeature))
+                {
+                    if (PhysisCD.CooldownRemaining == 0 && level >= SGE.Levels.Physis && level < SGE.Levels.Physis2)
+                        return SGE.Physis;
+                    if (Physis2CD.CooldownRemaining == 0 && level >= SGE.Levels.Physis2)
+                        return SGE.Physis2;
+                }
+
+                if (IsEnabled(CustomComboPreset.EukrasianPrognosisFeature) && EukrasianPrognosis is null)
+                {
+                    if (!HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.Eukrasia;
+                    if (HasEffect(SGE.Buffs.Eukrasia))
+                        return SGE.EukrasianPrognosis;
+                }
+
+                if (IsEnabled(CustomComboPreset.HolosFeature) && HolosCD.CooldownRemaining == 0 && level >= SGE.Levels.Holos)
+                    return SGE.Holos;
+
+                if (IsEnabled(CustomComboPreset.PanhaimaFeature) && PanhaimaCD.CooldownRemaining == 0 && level >= SGE.Levels.Panhaima)
+                    return SGE.Panhaima;
+
+                if (IsEnabled(CustomComboPreset.PepsisFeature) && PepsisCD.CooldownRemaining == 0 && level >= SGE.Levels.Pepsis && EukrasianPrognosis is not null)
+                    return SGE.Pepsis;
+
+            }
+            return actionID;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
