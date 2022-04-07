@@ -295,7 +295,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (HasEffect(NIN.Buffs.Kassatsu))
                         return NIN.JinCombo;
-                    if (GetCooldown(NIN.Jin).RemainingCharges > 0)
+                    if (GetCooldown(NIN.Jin).RemainingCharges > 0 && level >= NIN.Levels.Jin)
                         return NIN.Jin;
                 }
 
