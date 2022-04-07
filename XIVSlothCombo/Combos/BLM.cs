@@ -800,7 +800,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return BLM.Blizzard4;
                         }
-                        if (currentMP >= BLM.MP.MaxMP)
+                        if (currentMP >= BLM.MP.MaxMP || gauge.UmbralHearts == 3)
                         {
                             return BLM.Fire3;
                         }
