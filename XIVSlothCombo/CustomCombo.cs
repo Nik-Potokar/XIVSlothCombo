@@ -307,6 +307,11 @@ namespace XIVSlothComboPlugin.Combos
             Status? eff = FindEffect(effectId);
             return eff?.StackCount ?? 0;
         }
+        protected static float GetBuffRemainingTime(ushort effectId)
+        {
+            Status? eff = FindEffect(effectId);
+            return eff?.RemainingTime ?? 0;
+        }
 
         /// <summary>
         /// Finds an effect on the player.
