@@ -269,6 +269,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Fire3 Opener", "Adds the Fire III Opener to Simple BLM.", BLM.JobID, 0, "", "")]
         BlackSimpleOpenerFeature = 2018,
 
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Fire3 Opener - 1 Triplecast", "Modifies the Simple Fire3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
+        BlackSimpleAltOpenerFeature = 2019,
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE
