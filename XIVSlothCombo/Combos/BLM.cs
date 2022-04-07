@@ -578,7 +578,7 @@ namespace XIVSlothComboPlugin.Combos
 
                             // Cast Despair
                             if (level >= BLM.Levels.Despair &&
-                                currentMP < BLM.MP.AspectFire && currentMP >= BLM.MP.Despair)
+                               (currentMP < BLM.MP.AspectFire || gauge.ElementTimeRemaining <= 4000) && currentMP >= BLM.MP.Despair)
                             {
                                 return BLM.Despair;
                             }
@@ -592,7 +592,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
 
                             // Go to Umbral Ice
-                            if (lastComboMove != BLM.Manafont && IsOnCooldown(BLM.Manafont))
+                            if (lastComboMove != BLM.Manafont && GetCooldown(BLM.Manafont).CooldownRemaining <= 116)
                             {
                                 if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
                                 {
