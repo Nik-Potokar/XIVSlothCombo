@@ -1126,6 +1126,9 @@ namespace XIVSlothComboPlugin.Combos
         {
             if ((actionID == RDM.Jolt) || (actionID == RDM.Jolt2))
             {
+                
+                if (lastComboMove is RDM.Verflare or RDM.Verholy or RDM.Scorch) return OriginalHook(actionID);
+
                 var gauge = GetJobGauge<RDMGauge>();
                 //If both are proc'd, use the one based on Mana
                 if ((HasEffect(RDM.Buffs.VerfireReady)) && (HasEffect(RDM.Buffs.VerstoneReady)))
