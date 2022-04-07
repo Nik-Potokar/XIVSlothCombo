@@ -422,6 +422,14 @@ namespace XIVSlothComboPlugin.Combos
             => !GetCooldown(actionID).IsCooldown;
 
         /// <summary>
+        /// Check if the Cooldown was just used.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>True or false.</returns>
+        protected static bool JustUsed(uint actionID)
+            => GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 2);
+
+        /// <summary>
         /// Gets a value indicating whether an action has any available charges.
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
