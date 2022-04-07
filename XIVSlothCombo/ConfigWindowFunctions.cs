@@ -56,22 +56,25 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
-        public static void DrawCheckboxSingle(string config, string checkBoxName, string checkboxDescription, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        public static void DrawRadioButton(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
         {
-            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.TankBlue;
-            var output = Service.Configuration.GetCustomBoolValue(config);
+            ImGui.Indent();
+            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
+            var output = Service.Configuration.GetCustomIntValue(config);
+            Dalamud.Logging.PluginLog.Debug(output.ToString());
             ImGui.PushItemWidth(itemWidth);
+            var enabled = output == outputValue ? true : false;
 
-            if (ImGui.Checkbox(checkBoxName, ref output))
+            if (ImGui.Checkbox(checkBoxName, ref enabled))
             {
-                Service.Configuration.SetCustomBoolValue(config, output);
+                Service.Configuration.SetCustomIntValue(config, outputValue);
                 Service.Configuration.Save();
 
             }
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
             ImGui.TextWrapped(checkboxDescription);
             ImGui.PopStyleColor();
-
+            ImGui.Unindent();
             ImGui.Spacing();
         }
 
