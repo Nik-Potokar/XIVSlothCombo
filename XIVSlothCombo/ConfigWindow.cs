@@ -610,6 +610,31 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.SageLucidFeatureAdvTest)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGELucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
 
+            if (preset == CustomComboPreset.CustomSoteriaFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomSoteria, "Set HP percentage value for Soteria to trigger");
+           
+            if (preset == CustomComboPreset.CustomZoeFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomZoe, "Set HP percentage value for Zoe to trigger");
+
+            if (preset == CustomComboPreset.CustomPepsisFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomPepsis, "Set HP percentage value for Pepsis to trigger");
+
+            if (preset == CustomComboPreset.CustomTaurocholeFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomTaurochole, "Set HP percentage value for Taurochole to trigger");
+
+            if (preset == CustomComboPreset.CustomHaimaFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomHaima, "Set HP percentage value for Haima to trigger");
+
+            if (preset == CustomComboPreset.CustomKrasisFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomKrasis, "Set HP percentage value for Krasis to trigger");
+
+            if (preset == CustomComboPreset.CustomDruocholeFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomDruochole, "Set HP percentage value for Druochole to trigger");
+            
+            if (preset == CustomComboPreset.CustomEukrasianDiagnosisFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomDiagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
+
+
             #endregion
             // ====================================================================================
             #region SAMURAI
