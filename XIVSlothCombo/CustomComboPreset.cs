@@ -398,11 +398,11 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(BardoGCDSingleTargetFeature)]
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Opener", "BETA - Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
+        [CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
         BardSimpleOpener = 3022,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Pooling", "BETA - Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
+        [CustomComboInfo("Simple Pooling", "Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
         BardSimplePooling = 3023,
 
         [ParentCombo(BardIronJawsFeature)]
@@ -410,7 +410,7 @@ namespace XIVSlothComboPlugin
         BardIronJawsApexFeature = 3024,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple RagingJaws", "BETA - Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
+        [CustomComboInfo("Simple RagingJaws", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
         BardSimpleRagingJaws = 3025,
 
         #endregion
