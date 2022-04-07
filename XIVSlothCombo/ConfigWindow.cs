@@ -112,15 +112,16 @@ namespace XIVSlothComboPlugin
 
 
             ImGui.NextColumn();
+            ImGui.PushStyleColor(ImGuiCol.Button, ImGuiColors.ParsedPurple);
+            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, ImGuiColors.HealerGreen);
             if (ImGui.Button("Click here to join our Discord Server!"))
             {
                 Util.OpenLink("https://discord.gg/xT7zyjzjtY");
             }
+            ImGui.PopStyleColor();
+            ImGui.PopStyleColor();
             ImGui.Columns(1);
             var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
-
-
-
 
 
             var hideChildren = Service.Configuration.HideChildren;
