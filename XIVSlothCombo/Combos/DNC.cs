@@ -450,10 +450,10 @@ namespace XIVSlothComboPlugin.Combos
                         ? (uint)gauge.NextStep
                         : DNC.StandardFinish2;
 
-                // Simple ST Standard/Tech (activates dances when target is over 5% HP)
-                if (!HasTarget() || EnemyHealthPercentage() > 5)
+                // Simple ST Standard/Tech (activates dances when target is over 2% HP)
+                if (!HasTarget() || EnemyHealthPercentage() > 2)
                 {
-                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && !HasEffect(DNC.Buffs.TechnicalStep) && IsOffCooldown(DNC.StandardStep) && FindEffect(DNC.Buffs.TechnicalFinish).RemainingTime <= 5)
+                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && !HasEffect(DNC.Buffs.TechnicalStep) && IsOffCooldown(DNC.StandardStep))
                         return DNC.StandardStep;
 
                     if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(DNC.Buffs.StandardStep) && IsOffCooldown(DNC.TechnicalStep))
