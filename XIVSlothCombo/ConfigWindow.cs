@@ -88,14 +88,13 @@ namespace XIVSlothComboPlugin
         }
         public override void Draw()
         {
+            ImGui.Columns(2, null, false);
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
 
-
-            ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!\nLink is on the GitHub page.");
-
-            var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
-
+            ImGui.NextColumn();
+            ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!");
+            ImGui.NextColumn();
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
             if (ImGui.Checkbox("Enable PvP Combos", ref showSecrets))
@@ -110,6 +109,18 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Adds PVP Combos To The Combo Setup Screen");
                 ImGui.EndTooltip();
             }
+
+
+            ImGui.NextColumn();
+            if (ImGui.Button("Click here to join our Discord Server!"))
+            {
+                Util.OpenLink("https://discord.gg/xT7zyjzjtY");
+            }
+            ImGui.Columns(1);
+            var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
+
+
+
 
 
             var hideChildren = Service.Configuration.HideChildren;
