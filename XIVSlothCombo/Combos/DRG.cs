@@ -240,9 +240,48 @@ namespace XIVSlothComboPlugin.Combos
                            ) return DRG.HighJump;
 
                         if (
-                            level >= DRG.Levels.Jump && level <= 73 &&
+                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
                             IsOffCooldown(DRG.Jump) && canWeave
                            ) return DRG.Jump;
+                    }
+                }
+
+                //Life Surge Plus Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonLifeSurgePlusFeature))
+                    {
+                        if (
+                            HasEffect(DRG.Buffs.LanceCharge) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
+                            lastComboMove == DRG.VorpalThrust &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.RightEye) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
+                            lastComboMove == DRG.VorpalThrust &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
+                            HasEffect(DRG.Buffs.EnhancedWheelingThrust) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
+                           ) return DRG.LifeSurge;
+
+                        if (
+                            HasEffect(DRG.Buffs.BattleLitany) &&
+                            HasEffect(DRG.Buffs.PowerSurge) &&
+                            !HasEffect(DRG.Buffs.LifeSurge) &&
+                            HasEffect(DRG.Buffs.SharperFangAndClaw) &&
+                            GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, 0.001)
+                           ) return DRG.LifeSurge;
                     }
                 }
 
@@ -323,7 +362,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsEnabled(CustomComboPreset.DragoonBuffsFeature))
                             {
-                                if (                                    
+                                if (
                                     level >= DRG.Levels.LanceCharge &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
                                     IsOffCooldown(DRG.LanceCharge) && canWeave
@@ -350,14 +389,36 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Wyrmwind Thrust Feature
+                        //Geirskogul and Nastrond Feature Part 1
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
+
+                            if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
                             {
                                 if (
-                                    gauge.FirstmindsFocusCount == 2 && canWeave
-                                   ) return DRG.WyrmwindThrust;
+                                    level >= DRG.Levels.Geirskogul &&
+                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
+                                    IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, 0.001)
+                                   ) return DRG.Geirskogul;
+                            }
+                        }
+
+                        //(High) Jump Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DragoonHighJumpFeature))
+                            {
+                                if (
+                                    level >= DRG.Levels.HighJump &&
+                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
+                                    IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 0.5)
+                                   ) return DRG.HighJump;
+
+                                if (
+                                    level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
+                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
+                                    IsOffCooldown(DRG.Jump) && CanWeave(actionID, 0.5)
+                                   ) return DRG.Jump;
                             }
                         }
 
@@ -400,43 +461,29 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Geirskogul and Nastrond Feature
+                        //Wyrmwind Thrust Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
+                            {
+                                if (
+                                    gauge.FirstmindsFocusCount == 2 && canWeave
+                                   ) return DRG.WyrmwindThrust;
+                            }
+                        }
+
+                        //Geirskogul and Nastrond Feature Part 2
                         if (canWeave)
                         {
 
                             if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
                             {
                                 if (
-                                    level >= DRG.Levels.Geirskogul &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, 0.001)
-                                   ) return DRG.Geirskogul;
-
-                                if (
                                     gauge.IsLOTDActive == true &&
                                     level >= DRG.Levels.Nastrond &&
                                     HasEffectAny(DRG.Buffs.PowerSurge) &&
                                     IsOffCooldown(DRG.Nastrond) && CanWeave(actionID, 0.001)
                                    ) return DRG.Nastrond;
-                            }
-                        }
-
-                        //(High) Jump Feature
-                        if (canWeave)
-                        {
-                            if (IsEnabled(CustomComboPreset.DragoonHighJumpFeature))
-                            {
-                                if (
-                                    level >= DRG.Levels.HighJump &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 0.5)
-                                   ) return DRG.HighJump;
-
-                                if (
-                                    level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
-                                    HasEffectAny(DRG.Buffs.PowerSurge) &&
-                                    IsOffCooldown(DRG.Jump) && CanWeave(actionID, 0.5)
-                                   ) return DRG.Jump;
                             }
                         }
 
@@ -626,7 +673,7 @@ namespace XIVSlothComboPlugin.Combos
                             else return DRG.TrueNorth;
                         }
 
-                            if (step == 2)
+                        if (step == 2)
                         {
                             if (lastComboMove == DRG.Disembowel) step++;
                             else return DRG.Disembowel;
@@ -782,14 +829,36 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Wyrmwind Thrust Feature
+                //Geirskogul and Nastrond Feature Part 1
                 if (canWeave)
                 {
-                    if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
+
+                    if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
                     {
                         if (
-                            gauge.FirstmindsFocusCount == 2 && canWeave
-                           ) return DRG.WyrmwindThrust;
+                            level >= DRG.Levels.Geirskogul &&
+                            HasEffectAny(DRG.Buffs.PowerSurge) &&
+                            IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, 0.001)
+                           ) return DRG.Geirskogul;
+                    }
+                }
+
+                //(High) Jump Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonHighJumpFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.HighJump &&
+                            HasEffectAny(DRG.Buffs.PowerSurge) &&
+                            IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 0.5)
+                           ) return DRG.HighJump;
+
+                        if (
+                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
+                            HasEffectAny(DRG.Buffs.PowerSurge) &&
+                            IsOffCooldown(DRG.Jump) && CanWeave(actionID, 0.5)
+                           ) return DRG.Jump;
                     }
                 }
 
@@ -834,43 +903,29 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Geirskogul and Nastrond Feature
+                //Wyrmwind Thrust Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
+                    {
+                        if (
+                            gauge.FirstmindsFocusCount == 2 && canWeave
+                           ) return DRG.WyrmwindThrust;
+                    }
+                }
+
+                //Geirskogul and Nastrond Feature Part 2
                 if (canWeave)
                 {
 
                     if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
                     {
                         if (
-                            level >= DRG.Levels.Geirskogul &&
-                            HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID, weaveTime: 0.001)
-                           ) return DRG.Geirskogul;
-
-                        if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.Nastrond &&
                             HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.Nastrond) && CanWeave(actionID, weaveTime: 0.001)
+                            IsOffCooldown(DRG.Nastrond) && CanWeave(actionID, 0.001)
                            ) return DRG.Nastrond;
-                    }
-                }
-
-                //(High) Jump Feature
-                if (canWeave)
-                {
-                    if (IsEnabled(CustomComboPreset.DragoonHighJumpFeature))
-                    {
-                        if (
-                            level >= DRG.Levels.HighJump &&
-                            HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 0.5)
-                           ) return DRG.HighJump;
-
-                        if (
-                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
-                            HasEffectAny(DRG.Buffs.PowerSurge) &&
-                            IsOffCooldown(DRG.Jump) && CanWeave(actionID, 0.5)
-                           ) return DRG.Jump;
                     }
                 }
 
@@ -1011,7 +1066,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if (comboTime > 0)
-                {               
+                {
                     if ((lastComboMove == DRG.TrueThrust || lastComboMove == DRG.RaidenThrust) && level >= DRG.Levels.Disembowel && (Disembowel == null || (Disembowel.RemainingTime < 10)))
                         return DRG.Disembowel;
 
@@ -1049,7 +1104,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             var canWeave = CanWeave(actionID);
             var gauge = GetJobGauge<DRGGauge>();
-            if (actionID == DRG.CoerthanTorment)           
+            if (actionID == DRG.CoerthanTorment)
             {
 
                 //Buffs AoE Feature
@@ -1081,14 +1136,33 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Wyrmwind Thrust AoE Feature
+                //Geirskogul and Nastrond AoE Feature Part 1
                 if (canWeave)
                 {
-                    if (IsEnabled(CustomComboPreset.DragoonAoEWyrmwindFeature))
+
+                    if (IsEnabled(CustomComboPreset.DragoonAoEGeirskogulNastrondFeature))
                     {
                         if (
-                            gauge.FirstmindsFocusCount == 2 && CanWeave(actionID)
-                           ) return DRG.WyrmwindThrust;
+                            level >= DRG.Levels.Geirskogul &&
+                            IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID)
+                           ) return DRG.Geirskogul;
+                    }
+                }
+
+                //(High) Jump AoE Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoEHighJumpFeature))
+                    {
+                        if (
+                            level >= DRG.Levels.HighJump &&
+                            IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 1)
+                           ) return DRG.HighJump;
+
+                        if (
+                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
+                            IsOffCooldown(DRG.Jump) && CanWeave(actionID, 1)
+                           ) return DRG.Jump;
                     }
                 }
 
@@ -1142,39 +1216,28 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Geirskogul and Nastrond AoE Feature
+                //Wyrmwind Thrust AoE Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DragoonAoEWyrmwindFeature))
+                    {
+                        if (
+                            gauge.FirstmindsFocusCount == 2 && CanWeave(actionID)
+                           ) return DRG.WyrmwindThrust;
+                    }
+                }
+
+                //Geirskogul and Nastrond AoE Feature Part 2
                 if (canWeave)
                 {
 
                     if (IsEnabled(CustomComboPreset.DragoonAoEGeirskogulNastrondFeature))
                     {
                         if (
-                            level >= DRG.Levels.Geirskogul &&
-                            IsOffCooldown(DRG.Geirskogul) && CanWeave(actionID)
-                           ) return DRG.Geirskogul;
-
-                        if (
                             gauge.IsLOTDActive == true &&
                             level >= DRG.Levels.Nastrond &&
                             IsOffCooldown(DRG.Nastrond) && CanWeave(actionID)
                            ) return DRG.Nastrond;
-                    }
-                }
-
-                //(High) Jump AoE Feature
-                if (canWeave)
-                {
-                    if (IsEnabled(CustomComboPreset.DragoonAoEHighJumpFeature))
-                    {
-                        if (
-                            level >= DRG.Levels.HighJump &&
-                            IsOffCooldown(DRG.HighJump) && CanWeave(actionID, 1)
-                           ) return DRG.HighJump;
-
-                        if (
-                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
-                            IsOffCooldown(DRG.Jump) && CanWeave(actionID, 1)
-                           ) return DRG.Jump;
                     }
                 }
 
@@ -1290,7 +1353,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 //Mirage AoE Feature
                 if (canWeave)
-                    {
+                {
                     if (IsEnabled(CustomComboPreset.DragoonAoEMirageFeature))
                     {
                         if (

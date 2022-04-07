@@ -390,6 +390,22 @@ namespace XIVSlothComboPlugin.Combos
             => Service.ComboCache.GetCooldown(actionID);
 
         /// <summary>
+        /// Gets the cooldown total remaining time.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>Total remaining time of the cooldown.</returns>
+        protected static float GetCooldownRemainingTime(uint actionID)
+            => Service.ComboCache.GetCooldown(actionID).CooldownRemaining;
+
+        /// <summary>
+        /// Gets the cooldown remaining time for the next charge.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>Remaining time for the next charge of the cooldown.</returns>
+        protected static float GetCooldownChargeRemainingTime(uint actionID)
+            => Service.ComboCache.GetCooldown(actionID).ChargeCooldownRemaining;
+
+        /// <summary>
         /// Gets a value indicating whether an action is on cooldown.
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>

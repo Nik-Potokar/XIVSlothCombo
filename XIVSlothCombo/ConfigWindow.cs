@@ -92,9 +92,7 @@ namespace XIVSlothComboPlugin
 
 
 
-            //Settings were reset many, many versions ago. This message is no longer relevant?
-            //ImGui.SameLine();
-            //ImGui.TextColored(ImGuiColors.DalamudRed, $" Notice! All Settings Have Been Reset!");
+            ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!\nLink is on the GitHub page.");
 
             var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
 
@@ -300,7 +298,7 @@ namespace XIVSlothComboPlugin
             ImGui.PopItemWidth();
 
 
-            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
             if (irlsloth && !string.IsNullOrEmpty(info.MemeDescription))
             {
                 ImGui.TextWrapped($"#{i}: {info.MemeDescription}");
