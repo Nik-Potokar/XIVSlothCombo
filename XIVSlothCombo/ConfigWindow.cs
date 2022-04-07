@@ -364,43 +364,9 @@ namespace XIVSlothComboPlugin
                     ImGui.Indent();
 
                     foreach (var (childPreset, childInfo) in children)
-                    {
-                        if (Service.Configuration.HideConflictedCombos)
-                        {
-                            //Presets that are contained within a ConflictedAttribute
-                            var conflictOriginals = Service.Configuration.GetConflicts(childPreset);
-
-                            //Presets with the ConflictedAttribute
-                            var conflictsSource = Service.Configuration.GetAllConflicts();
-
-                            if (conflictsSource.Where(x => x == childPreset || x == preset).Count() == 0 || conflictOriginals.Length == 0)
-                            {
-                                this.DrawPreset(childPreset, childInfo, ref i);
-                                continue;
-                            }
-                            if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
-                            {
-                                Service.Configuration.EnabledActions.Remove(preset);
-                                Service.Configuration.Save();
-                            }
-                            else
-                            {
-                                this.DrawPreset(childPreset, childInfo, ref i);
-                                continue;
-                            }
-
-                        }
-                        else
-                        {
-                            this.DrawPreset(childPreset, childInfo, ref i);
-                        }
-
-                        
-                    }
-                        
+                        this.DrawPreset(childPreset, childInfo, ref i);
 
                     ImGui.Unindent();
-
                 }
             }
 
