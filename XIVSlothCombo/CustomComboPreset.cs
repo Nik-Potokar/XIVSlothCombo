@@ -661,7 +661,7 @@ namespace XIVSlothComboPlugin
         DarkPlungeFeature = 5008,
 
         [ParentCombo(DeliriumFeature)]
-        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
+        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
         DelayedDeliriumFeatureOption = 5010,
 
         [ParentCombo(DarkSouleaterCombo)]
