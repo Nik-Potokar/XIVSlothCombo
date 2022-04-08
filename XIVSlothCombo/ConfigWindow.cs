@@ -170,7 +170,7 @@ namespace XIVSlothComboPlugin
 
 
 
-            ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
+            ImGui.BeginChild("scrolling", new Vector2(0, -30), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
@@ -222,8 +222,13 @@ namespace XIVSlothComboPlugin
             }
 
             ImGui.PopStyleVar();
-
             ImGui.EndChild();
+
+            
+            if (ImGui.Button("Got an issue? Click this button and report it!"))
+            {
+                Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
+            }
 
         }
 
@@ -380,7 +385,7 @@ namespace XIVSlothComboPlugin
                             }
                             if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
                             {
-                                Service.Configuration.EnabledActions.Remove(preset);
+                                Service.Configuration.EnabledActions.Remove(childPreset);
                                 Service.Configuration.Save();
                             }
                             else
