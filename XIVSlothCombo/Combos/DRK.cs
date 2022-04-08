@@ -17,6 +17,7 @@ namespace XIVSlothComboPlugin.Combos
             Delirium = 7390,
             Quietus = 7391,
             Bloodspiller = 7392,
+            BlackestNight = 7393,
             LowBlow = 7540,
             Interject = 7538,
             FloodOfDarkness = 16466,
@@ -54,6 +55,7 @@ namespace XIVSlothComboPlugin.Combos
                 Unleash = 6,
                 Souleater = 26,
                 FloodOfDarkness = 30,
+                BloodWeapon = 35,
                 EdgeOfDarkness = 40,
                 SaltedEarth = 52,
                 AbyssalDrain = 56,
@@ -335,6 +337,673 @@ namespace XIVSlothComboPlugin.Combos
 
         }
     }
+
+    internal class DarkSimple : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkSimple;
+        internal static bool inOpener = false;
+        internal static bool openerFinished = false;
+        internal static byte step = 0;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == DRK.Souleater)
+            {
+                var canWeave = CanWeave(actionID);
+                var currentMp = LocalPlayer.CurrentMp;
+                var gauge = GetJobGauge<DRKGauge>();
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+
+                if (IsEnabled(CustomComboPreset.DarkSimpleOpener) && level == 90)
+                {
+                    if (IsOnCooldown(DRK.BloodWeapon) || IsOnCooldown(DRK.BlackestNight))
+                    {
+                        inOpener = true;
+                    }
+
+                    if (!inOpener)
+                    {
+                        //Delirium Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleDelirium))
+                            {
+                                if (
+                                    level >= DRK.Levels.Delirium &&
+                                    IsOffCooldown(DRK.Delirium) && CanWeave(actionID, 0.3)
+                                   ) return DRK.Delirium;
+                            }
+                        }
+
+                        //Blood Weapon Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleBloodWeapon))
+                            {
+                                if (
+                                    level >= DRK.Levels.BloodWeapon &&
+                                    GetCooldownRemainingTime(DRK.Delirium) <= 60 &&
+                                    GetCooldownRemainingTime(DRK.Delirium) >= 50 &&
+                                    GetBuffStacks(DRK.Buffs.Delirium) <= 1 &&
+                                    IsOffCooldown(DRK.BloodWeapon) && canWeave
+                                   ) return DRK.BloodWeapon;
+                            }
+                        }
+
+                        //Living Shadow Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleLivingShadow))
+                            {
+                                if (
+                                    level >= DRK.Levels.LivingShadow &&
+                                    gauge.Blood >= 50 &&
+                                    IsOffCooldown(DRK.LivingShadow) && canWeave
+                                   ) return DRK.LivingShadow;
+                            }
+                        }
+
+                        //Shadowbringer Feature Part 1
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleShadowbringer))
+                            {
+                                if (
+                                    level >= DRK.Levels.Shadowbringer &&
+                                    GetRemainingCharges(DRK.Shadowbringer) > 1 &&
+                                    gauge.ShadowTimeRemaining > 0 && canWeave
+                                   ) return DRK.Shadowbringer;
+                            }
+                        }
+
+                        //Salted Earth Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleSaltedEarth))
+                            {
+                                if (
+                                    level >= DRK.Levels.SaltedEarth &&
+                                    IsOffCooldown(DRK.SaltedEarth) && canWeave
+                                   ) return DRK.SaltedEarth;
+                            }
+                        }
+
+                        //Salt and Darkness Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleSaltAndDarkness))
+                            {
+                                if (
+                                    level >= DRK.Levels.SaltAndDarkness &&
+                                    IsOffCooldown(DRK.SaltAndDarkness) &&
+                                    HasEffect(DRK.Buffs.SaltedEarth) && canWeave
+                                   ) return DRK.SaltAndDarkness;
+                            }
+                        }
+
+                        //Carve and Spit Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleCarveAndSpit))
+                            {
+                                if (
+                                    level >= DRK.Levels.CarveAndSpit &&
+                                    gauge.ShadowTimeRemaining > 0 &&
+                                    IsOffCooldown(DRK.CarveAndSpit) && canWeave
+                                   ) return DRK.CarveAndSpit;
+
+                                if (
+                                    level >= DRK.Levels.CarveAndSpit &&
+                                    GetCooldownRemainingTime(DRK.BloodWeapon) <= 60 &&
+                                    GetCooldownRemainingTime(DRK.BloodWeapon) >= 35 &&
+                                    IsOffCooldown(DRK.CarveAndSpit) && canWeave
+                                   ) return DRK.CarveAndSpit;
+                            }
+                        }
+
+                        //Plunge Feature
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimplePlunge))
+                            {
+                                if (
+                                    level >= DRK.Levels.Plunge &&
+                                    gauge.ShadowTimeRemaining > 0 &&
+                                    GetRemainingCharges(DRK.Plunge) > 0 && canWeave
+                                   ) return DRK.Plunge;
+
+                                if (
+                                    level >= DRK.Levels.Plunge &&
+                                    GetCooldownRemainingTime(DRK.BloodWeapon) <= 60 &&
+                                    GetCooldownRemainingTime(DRK.BloodWeapon) >= 35 &&
+                                    GetRemainingCharges(DRK.Plunge) > 0 && canWeave
+                                   ) return DRK.Plunge;
+                            }
+                        }
+
+                        //Shadowbringer Feature Part 2
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleShadowbringer))
+                            {
+                                if (
+                                    level >= DRK.Levels.Shadowbringer &&
+                                    GetRemainingCharges(DRK.Shadowbringer) == 1 &&
+                                    gauge.ShadowTimeRemaining > 0 && canWeave
+                                   ) return DRK.Shadowbringer;
+                            }
+                        }
+
+                        //Edge Feature
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleEdge))
+                            {
+                                if (
+                                    level >= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 3000 &&
+                                    gauge.ShadowTimeRemaining > 0 && canWeave
+                                   ) return DRK.EdgeOfShadow;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfDarkness &&
+                                    level <= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 3000 &&
+                                    gauge.ShadowTimeRemaining > 0 && canWeave
+                                   ) return DRK.EdgeOfDarkness;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfShadow &&
+                                    currentMp > 8500 && canWeave
+                                   ) return DRK.EdgeOfShadow;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfDarkness &&
+                                    level <= DRK.Levels.EdgeOfShadow &&
+                                    currentMp > 8500 && canWeave
+                                   ) return DRK.EdgeOfDarkness;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 3000 &&
+                                    gauge.DarksideTimeRemaining < 10 && canWeave
+                                   ) return DRK.EdgeOfShadow;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfDarkness &&
+                                    level <= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 3000 &&
+                                    gauge.DarksideTimeRemaining < 10 && canWeave
+                                   ) return DRK.EdgeOfDarkness;
+                            }
+                        }
+
+                        //Edge Mana Protection Feature
+                        {
+                            if (IsEnabled(CustomComboPreset.DarkSimpleEdgeProtection))
+                            {
+                                if (
+                                    level >= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 6000 &&
+                                    gauge.ShadowTimeRemaining > 0 && canWeave
+                                   ) return DRK.EdgeOfShadow;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfDarkness &&
+                                    level <= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 6000 &&
+                                    gauge.ShadowTimeRemaining > 0 && canWeave
+                                   ) return DRK.EdgeOfDarkness;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfShadow &&
+                                    currentMp > 8500 && canWeave
+                                   ) return DRK.EdgeOfShadow;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfDarkness &&
+                                    level <= DRK.Levels.EdgeOfShadow &&
+                                    currentMp > 8500 && canWeave
+                                   ) return DRK.EdgeOfDarkness;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 6000 &&
+                                    gauge.DarksideTimeRemaining < 10 && canWeave
+                                   ) return DRK.EdgeOfShadow;
+
+                                if (
+                                    level >= DRK.Levels.EdgeOfDarkness &&
+                                    level <= DRK.Levels.EdgeOfShadow &&
+                                    currentMp >= 6000 &&
+                                    gauge.DarksideTimeRemaining < 10 && canWeave
+                                   ) return DRK.EdgeOfDarkness;
+                            }
+                        }
+
+                        //Bloodspiller Feature
+                        if (IsEnabled(CustomComboPreset.DarkSimpleBloodspiller))
+                        {
+                            if (GetBuffStacks(DRK.Buffs.Delirium) > 0)
+                                return DRK.Bloodspiller;
+
+                            if (gauge.Blood >= 90)
+                                return DRK.Bloodspiller;
+                        }
+
+                        //1-2-3 Combo
+                        if (comboTime > 0)
+                        {
+                            if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
+                                return DRK.SyphonStrike;
+
+                            if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
+                                return DRK.Souleater;
+
+                            if (lastComboMove == DRK.Souleater)
+                                return DRK.HardSlash;
+                        }
+
+                        return DRK.HardSlash;
+
+                    }
+
+                        if (!inCombat && (inOpener || openerFinished))
+                    {
+                        inOpener = false;
+                        step = 0;
+                        openerFinished = false;
+
+                        return DRK.HardSlash;
+                    }
+
+                    if (inCombat && inOpener && !openerFinished)
+                    {
+                        if (step == 0)
+                        {
+                            if (lastComboMove == DRK.HardSlash) step++;
+                            else return DRK.HardSlash;
+                        }
+
+                        if (step == 1)
+                        {
+                            if (gauge.DarksideTimeRemaining > 0) step++;
+                            else return DRK.EdgeOfShadow;
+                        }
+
+                        if (step == 2)
+                        {
+                            if (IsOnCooldown(DRK.Delirium)) step++;
+                            else return DRK.Delirium;
+                        }
+
+                        if (step == 3)
+                        {
+                            if (lastComboMove == DRK.SyphonStrike) step++;
+                            else return DRK.SyphonStrike;
+                        }
+
+                        if (step == 4)
+                        {
+                            if (lastComboMove == DRK.Souleater) step++;
+                            else return DRK.Souleater;
+                        }
+
+                        if (step == 5)
+                        {
+                            if (IsOnCooldown(DRK.SaltedEarth)) step++;
+                            else return DRK.SaltedEarth;
+                        }
+
+                        if (step == 6)
+                        {
+                            if (IsOnCooldown(DRK.LivingShadow)) step++;
+                            if (gauge.Blood < 50) step++;
+                            return DRK.LivingShadow;
+                        }
+
+                        if (step == 7)
+                        {
+                            if (lastComboMove == DRK.HardSlash) step++;
+                            else return DRK.HardSlash;
+                        }
+
+                        if (step == 8)
+                        {
+                            if (GetRemainingCharges(DRK.Shadowbringer) is 0 or 1) step++;
+                            else return DRK.Shadowbringer;
+                        }
+
+                        if (step == 9)
+                        {
+                            if (gauge.DarksideTimeRemaining > 25000) step++;
+                            else return DRK.EdgeOfShadow;
+                        }
+
+                        if (step == 10)
+                        {
+                            if (GetBuffStacks(DRK.Buffs.Delirium) < 3) step++;
+                            else return DRK.Bloodspiller;
+                        }
+
+                        if (step == 11)
+                        {
+                            if (IsOnCooldown(DRK.CarveAndSpit)) step++;
+                            else return DRK.CarveAndSpit;
+                        }
+
+                        if (step == 12)
+                        {
+                            if (GetRemainingCharges(DRK.Plunge) is 0 or 1) step++;
+                            else return DRK.Plunge;
+                        }
+
+                        if (step == 13)
+                        {
+                            if (GetBuffStacks(DRK.Buffs.Delirium) < 2) step++;
+                            else return DRK.Bloodspiller;
+                        }
+
+                        if (step == 14)
+                        {
+                            if (GetRemainingCharges(DRK.Shadowbringer) == 0) step++;
+                            else return DRK.Shadowbringer;
+                        }
+
+                        if (step == 15)
+                        {
+                            if (gauge.DarksideTimeRemaining > 50000) step++;
+                            else return DRK.EdgeOfShadow;
+                        }
+
+                        if (step == 16)
+                        {
+                            if (GetBuffStacks(DRK.Buffs.Delirium) < 1) step++;
+                            else return DRK.Bloodspiller;
+                        }
+
+                        if (step == 17)
+                        {
+                            if (IsOnCooldown(DRK.SaltAndDarkness)) step++;
+                            else return DRK.SaltAndDarkness;
+                        }
+
+                        if (step == 18)
+                        {
+                            if (gauge.DarksideTimeRemaining == 60000) step++;
+                            if (currentMp < 6000) step++;
+                            else return DRK.EdgeOfShadow;
+                        }
+
+                        if (step == 19)
+                        {
+                            if (lastComboMove == DRK.SyphonStrike) step++;
+                            else return DRK.SyphonStrike;
+                        }
+
+                        if (step == 20)
+                        {
+                            if (gauge.DarksideTimeRemaining == 60000) step++;
+                            if (currentMp < 3000) step++;
+                            else return DRK.EdgeOfShadow;
+                        }
+
+                        if (step == 21)
+                        {
+                            if (GetRemainingCharges(DRK.Plunge) == 0) step++;
+                            else return DRK.Plunge;
+                        }
+
+                        openerFinished = true;
+                    }
+                }
+
+                //Delirium Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleDelirium))
+                    {
+                        if (
+                            level >= DRK.Levels.Delirium &&
+                            IsOffCooldown(DRK.Delirium) && CanWeave(actionID, 0.3)
+                           ) return DRK.Delirium;
+                    }
+                }
+
+                //Blood Weapon Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleBloodWeapon))
+                    {
+                        if (
+                            level >= DRK.Levels.BloodWeapon &&
+                            GetCooldownRemainingTime(DRK.Delirium) <= 60 &&
+                            GetCooldownRemainingTime(DRK.Delirium) >= 50 &&
+                            GetBuffStacks(DRK.Buffs.Delirium) <= 1 &&
+                            IsOffCooldown(DRK.BloodWeapon) && canWeave
+                           ) return DRK.BloodWeapon;
+                    }
+                }
+
+                //Living Shadow Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleLivingShadow))
+                    {
+                        if (
+                            level >= DRK.Levels.LivingShadow &&
+                            gauge.Blood >= 50 &&
+                            IsOffCooldown(DRK.LivingShadow) && canWeave
+                           ) return DRK.LivingShadow;
+                    }
+                }
+
+                //Shadowbringer Feature Part 1
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleShadowbringer))
+                    {
+                        if (
+                            level >= DRK.Levels.Shadowbringer &&
+                            GetRemainingCharges(DRK.Shadowbringer) > 1 &&
+                            gauge.ShadowTimeRemaining > 0 && canWeave
+                           ) return DRK.Shadowbringer;
+                    }
+                }
+
+                //Salted Earth Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleSaltedEarth))
+                    {
+                        if (
+                            level >= DRK.Levels.SaltedEarth &&
+                            IsOffCooldown(DRK.SaltedEarth) && canWeave
+                           ) return DRK.SaltedEarth;
+                    }
+                }
+
+                //Salt and Darkness Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleSaltAndDarkness))
+                    {
+                        if (
+                            level >= DRK.Levels.SaltAndDarkness &&
+                            IsOffCooldown(DRK.SaltAndDarkness) &&
+                            HasEffect(DRK.Buffs.SaltedEarth) && canWeave
+                           ) return DRK.SaltAndDarkness;
+                    }
+                }
+
+                //Carve and Spit Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleCarveAndSpit))
+                    {
+                        if (
+                            level >= DRK.Levels.CarveAndSpit &&
+                            gauge.ShadowTimeRemaining > 0 &&
+                            IsOffCooldown(DRK.CarveAndSpit) && canWeave
+                           ) return DRK.CarveAndSpit;
+
+                        if (
+                            level >= DRK.Levels.CarveAndSpit &&
+                            GetCooldownRemainingTime(DRK.BloodWeapon) <= 60 &&
+                            GetCooldownRemainingTime(DRK.BloodWeapon) >= 35 &&
+                            IsOffCooldown(DRK.CarveAndSpit) && canWeave
+                           ) return DRK.CarveAndSpit;
+                    }
+                }
+
+                //Plunge Feature
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimplePlunge))
+                    {
+                        if (
+                            level >= DRK.Levels.Plunge &&
+                            gauge.ShadowTimeRemaining > 0 &&
+                            GetRemainingCharges(DRK.Plunge) > 0 && canWeave
+                           ) return DRK.Plunge;
+
+                        if (
+                            level >= DRK.Levels.Plunge &&
+                            GetCooldownRemainingTime(DRK.BloodWeapon) <= 60 &&
+                            GetCooldownRemainingTime(DRK.BloodWeapon) >= 35 &&
+                            GetRemainingCharges(DRK.Plunge) > 0 && canWeave
+                           ) return DRK.Plunge;
+                    }
+                }
+
+                //Shadowbringer Feature Part 2
+                if (canWeave)
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleShadowbringer))
+                    {
+                        if (
+                            level >= DRK.Levels.Shadowbringer &&
+                            GetRemainingCharges(DRK.Shadowbringer) == 1 &&
+                            gauge.ShadowTimeRemaining > 0 && canWeave
+                           ) return DRK.Shadowbringer;
+                    }
+                }
+
+                //Edge Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleEdge))
+                    {
+                        if (
+                            level >= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 3000 &&
+                            gauge.ShadowTimeRemaining > 0 && canWeave
+                           ) return DRK.EdgeOfShadow;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfDarkness &&
+                            level <= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 3000 &&
+                            gauge.ShadowTimeRemaining > 0 && canWeave
+                           ) return DRK.EdgeOfDarkness;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfShadow &&
+                            currentMp > 8500 && canWeave
+                           ) return DRK.EdgeOfShadow;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfDarkness &&
+                            level <= DRK.Levels.EdgeOfShadow &&
+                            currentMp > 8500 && canWeave
+                           ) return DRK.EdgeOfDarkness;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 3000 &&
+                            gauge.DarksideTimeRemaining < 10 && canWeave
+                           ) return DRK.EdgeOfShadow;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfDarkness &&
+                            level <= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 3000 &&
+                            gauge.DarksideTimeRemaining < 10 && canWeave
+                           ) return DRK.EdgeOfDarkness;
+                    }
+                }
+
+                //Edge Mana Protection Feature
+                {
+                    if (IsEnabled(CustomComboPreset.DarkSimpleEdgeProtection))
+                    {
+                        if (
+                            level >= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 6000 &&
+                            gauge.ShadowTimeRemaining > 0 && canWeave
+                           ) return DRK.EdgeOfShadow;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfDarkness &&
+                            level <= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 6000 &&
+                            gauge.ShadowTimeRemaining > 0 && canWeave
+                           ) return DRK.EdgeOfDarkness;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfShadow &&
+                            currentMp > 8500 && canWeave
+                           ) return DRK.EdgeOfShadow;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfDarkness &&
+                            level <= DRK.Levels.EdgeOfShadow &&
+                            currentMp > 8500 && canWeave
+                           ) return DRK.EdgeOfDarkness;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 6000 &&
+                            gauge.DarksideTimeRemaining < 10 && canWeave
+                           ) return DRK.EdgeOfShadow;
+
+                        if (
+                            level >= DRK.Levels.EdgeOfDarkness &&
+                            level <= DRK.Levels.EdgeOfShadow &&
+                            currentMp >= 6000 &&
+                            gauge.DarksideTimeRemaining < 10 && canWeave
+                           ) return DRK.EdgeOfDarkness;
+                    }
+                }
+
+                //Bloodspiller Feature
+                if (IsEnabled(CustomComboPreset.DarkSimpleBloodspiller))
+                {
+                    if (GetBuffStacks(DRK.Buffs.Delirium) > 0)
+                        return DRK.Bloodspiller;
+
+                    if (gauge.Blood >= 90)
+                        return DRK.Bloodspiller;
+                }
+
+                //1-2-3 Combo
+                if (comboTime > 0)
+                {
+                    if (lastComboMove == DRK.HardSlash && level >= DRK.Levels.SyphonStrike)
+                        return DRK.SyphonStrike;
+
+                    if (lastComboMove == DRK.SyphonStrike && level >= DRK.Levels.Souleater)
+                        return DRK.Souleater;
+
+                    if (lastComboMove == DRK.Souleater)
+                        return DRK.HardSlash;
+                }
+
+                return DRK.HardSlash;
+            }
+
+            return actionID;
+        }
+    }
+
     internal class DarkKnightInterruptFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkKnightInterruptFeature;

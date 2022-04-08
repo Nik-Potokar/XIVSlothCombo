@@ -628,6 +628,7 @@ namespace XIVSlothComboPlugin
         #region DARK KNIGHT
 
         [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain.", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
+        [ConflictingCombos(DarkSimple)]
         DarkSouleaterCombo = 5000,
 
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, 0, "", "Ugly name for an ugly job")]
@@ -648,7 +649,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "Something about mana", "You're basically a black mage! Well done!")]
         DarkManaOvercapFeature = 5005,
 
-        [CustomComboInfo("oGCD Feature", "Adds Living Shadow > Salted Earth > Carve And Spit > Salt And Darkness to Carve And Spit and Abysal Drain", DRK.JobID, 0, "", "Just does your whole job for you, really")]
+        [CustomComboInfo("oGCD Feature", "Adds Blood Weapon > Delirium > Living Shadow > Salted Earth > Carve And Spit > Salt And Darkness to Carve And Spit and Abysal Drain", DRK.JobID, 0, "", "Just does your whole job for you, really")]
         DarkoGCDFeature = 5006,
 
         [ParentCombo(DarkoGCDFeature)]
@@ -697,6 +698,61 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkOpenerFeature)]
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
         DarkBloodWeaponOpener = 5018,
+
+        [CustomComboInfo("Simple Dark Knight.", "Unleash your inner Guts, all in one button.", DRK.JobID, 0)]
+        [ConflictingCombos(DarkSouleaterCombo)]
+        DarkSimple = 5019,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Opener", "REQUIRES DOUBLE WEAVES, LEVEL 90+ ONLY. Simple DRK Opener.", DRK.JobID, 0)]
+        DarkSimpleOpener = 5020,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Delirium Feature", "Includes Delirium to the rotation.", DRK.JobID, 0)]
+        DarkSimpleDelirium = 5021,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Bloodspiller Feature", "Includes Bloodspiller to the rotation, while under buffs, or when about to overcap.", DRK.JobID, 0)]
+        DarkSimpleBloodspiller = 5022,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Blood Weapon Feature", "Includes Blood Weapon to the rotation. The drift is optimal.", DRK.JobID, 0)]
+        DarkSimpleBloodWeapon = 5023,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Living Shadow Feature", "Includes Living Shadow to the rotation.", DRK.JobID, 0)]
+        DarkSimpleLivingShadow = 5024,
+
+        [ParentCombo(DarkSimple)]
+        [ConflictingCombos(DarkSimpleEdgeProtection)]
+        [CustomComboInfo("Simple Dark Knight Edge Feature", "Includes Edge of Shadow/Darkness to the rotation, while under buffs, or when about to overcap.", DRK.JobID, 0)]
+        DarkSimpleEdge = 5025,
+
+        [ParentCombo(DarkSimple)]
+        [ConflictingCombos(DarkSimpleEdge)]
+        [CustomComboInfo("Simple Dark Knight Edge Protection Feature", "Includes Edge of Shadow/Darkness to the rotation, while over buffs, or when about to overcap, while leaving enough mana to cast The Blackest Night if needed.", DRK.JobID, 0)]
+        DarkSimpleEdgeProtection = 5026,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Salted Earth Feature", "Includes Salted Earth to the rotation.", DRK.JobID, 0)]
+        DarkSimpleSaltedEarth = 5027,
+
+        [ParentCombo(DarkSimpleSaltedEarth)]
+        [CustomComboInfo("Simple Dark Knight Salt and Darkness Feature", "Includes Salt and Darkness to the rotation.", DRK.JobID, 0)]
+        DarkSimpleSaltAndDarkness = 5028,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Shadowbringer Feature", "Includes Shadowbringer to the rotation, while under buffs.", DRK.JobID, 0)]
+        DarkSimpleShadowbringer = 5029,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Carve and Spit Feature", "Includes Carve and Spit to the rotation.", DRK.JobID, 0)]
+        DarkSimpleCarveAndSpit = 5030,
+
+        [ParentCombo(DarkSimple)]
+        [CustomComboInfo("Simple Dark Knight Plunge Feature", "Includes Plunge to the rotation.", DRK.JobID, 0)]
+        DarkSimplePlunge = 5031,
+
 
         #endregion
         // ====================================================================================
