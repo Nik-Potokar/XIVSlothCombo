@@ -708,49 +708,49 @@ namespace XIVSlothComboPlugin
         DarkSimpleOpener = 5020,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Delirium Feature", "Includes Delirium to the rotation.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Delirium Feature", "Includes Delirium to the rotation.", DRK.JobID, 0)]
         DarkSimpleDelirium = 5021,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Bloodspiller Feature", "Includes Bloodspiller to the rotation, while under buffs, or when about to overcap.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Bloodspiller Feature", "Includes Bloodspiller to the rotation, while under buffs, or when about to overcap.", DRK.JobID, 0)]
         DarkSimpleBloodspiller = 5022,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Blood Weapon Feature", "Includes Blood Weapon to the rotation. The drift is optimal.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Blood Weapon Feature", "Includes Blood Weapon to the rotation. The drift is optimal.", DRK.JobID, 0)]
         DarkSimpleBloodWeapon = 5023,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Living Shadow Feature", "Includes Living Shadow to the rotation.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Living Shadow Feature", "Includes Living Shadow to the rotation.", DRK.JobID, 0)]
         DarkSimpleLivingShadow = 5024,
 
         [ParentCombo(DarkSimple)]
         [ConflictingCombos(DarkSimpleEdgeProtection)]
-        [CustomComboInfo("Simple Dark Knight Edge Feature", "Includes Edge of Shadow/Darkness to the rotation, while under buffs, or when about to overcap.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Edge of Shadow/Darkness Feature", "Includes Edge of Shadow/Darkness to the rotation, while under buffs, or when about to overcap.", DRK.JobID, 0)]
         DarkSimpleEdge = 5025,
 
         [ParentCombo(DarkSimple)]
         [ConflictingCombos(DarkSimpleEdge)]
-        [CustomComboInfo("Simple Dark Knight Edge Protection Feature", "Includes Edge of Shadow/Darkness to the rotation, while over buffs, or when about to overcap, while leaving enough mana to cast The Blackest Night if needed.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Edge of Shadow/Darkness MP Protection Feature", "Includes Edge of Shadow/Darkness to the rotation, while over buffs, or when about to overcap, while leaving enough mana to cast The Blackest Night if needed.", DRK.JobID, 0)]
         DarkSimpleEdgeProtection = 5026,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Salted Earth Feature", "Includes Salted Earth to the rotation.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Salted Earth Feature", "Includes Salted Earth to the rotation.", DRK.JobID, 0)]
         DarkSimpleSaltedEarth = 5027,
 
         [ParentCombo(DarkSimpleSaltedEarth)]
-        [CustomComboInfo("Simple Dark Knight Salt and Darkness Feature", "Includes Salt and Darkness to the rotation.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Salt and Darkness Feature", "Includes Salt and Darkness to the rotation.", DRK.JobID, 0)]
         DarkSimpleSaltAndDarkness = 5028,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Shadowbringer Feature", "Includes Shadowbringer to the rotation, while under buffs.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Shadowbringer Feature", "Includes Shadowbringer to the rotation, while under buffs.", DRK.JobID, 0)]
         DarkSimpleShadowbringer = 5029,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Carve and Spit Feature", "Includes Carve and Spit to the rotation.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Carve and Spit Feature", "Includes Carve and Spit to the rotation.", DRK.JobID, 0)]
         DarkSimpleCarveAndSpit = 5030,
 
         [ParentCombo(DarkSimple)]
-        [CustomComboInfo("Simple Dark Knight Plunge Feature", "Includes Plunge to the rotation.", DRK.JobID, 0)]
+        [CustomComboInfo("Simple Plunge Feature", "Includes Plunge to the rotation.", DRK.JobID, 0)]
         DarkSimplePlunge = 5031,
 
 
@@ -874,7 +874,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Geirskogul and Nastrond AoE Feature", "Includes Geirskogul and Nastrond in the AoE rotation.", DRG.JobID, 27, "", "Let me chuck another dragon soul at them!")]
         DragoonAoEGeirskogulNastrondFeature = 6602,
 
-        [ConflictingCombos(DragoonAoELitanyDiveFeature, DragoonAoELifeLitanyDiveFeature)]
+        [ConflictingCombos(DragoonAoELitanyDiveFeature, DragoonAoELanceDiveFeature, DragoonAoELifeLitanyDiveFeature)]
         [ParentCombo(DragoonSimpleAoE)]
         [CustomComboInfo("Dives AoE Feature", "Includes Spineshatter Dive, Dragonfire Dive and Stardiver in the AoE rotation.", DRG.JobID, 28, "", "Don't jump to your death!")]
         DragoonAoEDiveFeature = 6603,
