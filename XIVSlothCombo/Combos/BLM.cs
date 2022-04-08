@@ -338,12 +338,11 @@ namespace XIVSlothComboPlugin.Combos
                 var thunder2Debuff = TargetHasEffect(BLM.Debuffs.Thunder2);
                 var thunder2Timer = FindTargetEffect(BLM.Debuffs.Thunder2);
                 var currentMP = LocalPlayer.CurrentMp;
-//                var castingSpell = LocalPlayer.IsCasting;
                 var polyToStore = Service.Configuration.GetCustomIntValue(BLM.Config.BlmPolygotsStored);
 
                 if (IsEnabled(CustomComboPreset.BlackAoEFoulOption))
                 {
-                    if (gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && CanWeave(actionID) && lastComboMove == BLM.Foul/* && !castingSpell*/)
+                    if (gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && CanWeave(actionID) && lastComboMove == BLM.Foul)
                     {
                         return BLM.Manafont;
                     }
