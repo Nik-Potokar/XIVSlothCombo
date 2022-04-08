@@ -151,6 +151,24 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTooltip();
             }
 
+            float offset = (float)Service.Configuration.MeleeOffset;
+
+            var inputChangedeth = false;
+            inputChangedeth |= ImGui.InputFloat("Melee Distance Offset", ref offset);
+
+            if (inputChangedeth)
+            {
+                Service.Configuration.MeleeOffset = (double)offset;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
+                ImGui.EndTooltip();
+            }
+
             var slothIrl = isAprilFools ? Service.Configuration.AprilFoolsSlothIrl : false;
             if (isAprilFools)
             {
