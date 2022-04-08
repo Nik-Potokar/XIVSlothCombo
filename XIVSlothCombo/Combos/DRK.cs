@@ -75,6 +75,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const string
                 DrkKeepPlungeCharges = "DrkKeepPlungeCharges";
+            public const string
+                DrkMPManagement = "DrkMPManagement";
         }
     }
 
@@ -90,6 +92,7 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<DRKGauge>();
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var plungeChargesRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkKeepPlungeCharges);
+                var mpRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkMPManagement);
 
                 if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
                 {
@@ -208,6 +211,9 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.DelayedDeliriumFeatureOption) && HasEffect(DRK.Buffs.Delirium) && GetBuffRemainingTime(DRK.Buffs.Delirium) <= 10 && GetBuffRemainingTime(DRK.Buffs.Delirium) > 0 ||
                                 (GetBuffStacks(DRK.Buffs.Delirium) > 0 && IsNotEnabled(CustomComboPreset.DelayedDeliriumFeatureOption)))
                                 return DRK.Bloodspiller;
+                            //Blood management before Delirium + Blood Weapon
+                            if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && gauge.Blood >= 50 && (GetCooldownRemainingTime(DRK.Delirium) < 6 || GetCooldownRemainingTime(DRK.BloodWeapon) < 6))
+                                return DRK.Bloodspiller;
                         }
 
                         // oGCDs
@@ -217,7 +223,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (IsEnabled(CustomComboPreset.DarkBloodWeaponOption) && IsOffCooldown(DRK.BloodWeapon) && level >= DRK.Levels.BloodWeapon)
                                     return DRK.BloodWeapon;
-                                if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && IsOffCooldown(DRK.Delirium) && level >= DRK.Levels.Delirium)
+                                if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && IsOffCooldown(DRK.Delirium) && level >= DRK.Levels.Delirium && gauge.Blood < 50)
                                     return DRK.Delirium;
                                 
                                 if (level >= DRK.Levels.Shadowbringer)
@@ -229,7 +235,7 @@ namespace XIVSlothComboPlugin.Combos
                                 
                                 if (IsEnabled(CustomComboPreset.DarkCnSFeature) && IsOffCooldown(DRK.CarveAndSpit) && level >= DRK.Levels.CarveAndSpit)
                                     return DRK.CarveAndSpit;
-                                if (IsEnabled(CustomComboPreset.DarkEoSPoolOption) && gauge.ShadowTimeRemaining >= 1 && LocalPlayer.CurrentMp > 3000 && level >= DRK.Levels.EdgeOfDarkness)
+                                if (IsEnabled(CustomComboPreset.DarkEoSPoolOption) && gauge.ShadowTimeRemaining >= 1 && LocalPlayer.CurrentMp > (mpRemaining + 3000) && level >= DRK.Levels.EdgeOfDarkness)
                                     return OriginalHook(DRK.EdgeOfDarkness);
                                 if (IsEnabled(CustomComboPreset.DRKLivingShadowFeature) && gauge.Blood >= 50 && IsOffCooldown(DRK.LivingShadow) && level >= DRK.Levels.LivingShadow)
                                     return DRK.LivingShadow;

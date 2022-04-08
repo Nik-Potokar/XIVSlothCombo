@@ -697,7 +697,7 @@ namespace XIVSlothComboPlugin
         DarkPlungeBurstOption = 5019,
 
         [ParentCombo(DarkManaOvercapFeature)]
-        [CustomComboInfo("EoS Burst Option", "Uses all remaining blood gauge during even minute window bursts.", DRK.JobID, 0)]
+        [CustomComboInfo("EoS Burst Option", "Uses EoS until chosen MP limit is reached during even minute window bursts.", DRK.JobID, 0)]
         DarkEoSPoolOption = 5020,
 
         [ParentCombo(DarkSouleaterCombo)]
