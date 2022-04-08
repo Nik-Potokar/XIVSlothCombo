@@ -427,6 +427,9 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region BLACK MAGE
+            
+            if (preset == CustomComboPreset.BlackAoEFoulOption && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolygotsStored, "Number of Polygot charges to store.\n(2 = Only use Polygot with Manafont)");
 
             #endregion
             // ====================================================================================

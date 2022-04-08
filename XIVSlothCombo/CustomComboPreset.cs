@@ -273,6 +273,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Fire3 Opener - 1 Triplecast", "Modifies the Simple Fire3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
         BlackSimpleAltOpenerFeature = 2019,
 
+        [ParentCombo(BlackAoEComboFeature)]
+        [CustomComboInfo("Foul / Manafont to Flare Option", "Adds foul when available during Astral Fire. Weaves manafont after foul for additional Flare", BLM.JobID, 0, "", "")]
+        BlackAoEFoulOption = 2020,
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE
