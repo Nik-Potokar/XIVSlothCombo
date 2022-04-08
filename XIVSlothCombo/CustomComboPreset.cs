@@ -696,7 +696,7 @@ namespace XIVSlothComboPlugin
         DarkBloodWeaponOpener = 5018,
 
         [ParentCombo(DarkPlungeFeature)]
-        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during even minute window bursts.", DRK.JobID, 0)]
+        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
         DarkPlungeBurstOption = 5019,
 
         [ParentCombo(DarkManaOvercapFeature)]
