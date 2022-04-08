@@ -464,7 +464,8 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region DARK KNIGHT
-
+            if (preset == CustomComboPreset.DarkPlungeFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)");
             #endregion
             // ====================================================================================
             #region DRAGOON
@@ -472,7 +473,8 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region GUNBREAKER
-
+            if (preset == CustomComboPreset.GunbreakerRoughDivideFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, GNB.Config.GnbKeepRoughDivideCharges, "How many charges to keep ready? (0 = Use All)");
             #endregion
             // ====================================================================================
             #region MACHINIST

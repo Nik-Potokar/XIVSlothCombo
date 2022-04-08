@@ -91,7 +91,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (IsEnabled(CustomComboPreset.WarriorStormsPathCombo) && actionID == WAR.StormsPath)
             {
-                var stormseyeBuff = FindEffectAny(WAR.Buffs.SurgingTempest);
                 var gauge = GetJobGauge<WARGauge>().BeastGauge;
                 var surgingThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarSurgingRefreshRange);
                 var onslaughtChargesRemaining = Service.Configuration.GetCustomIntValue(WAR.Config.WarKeepOnslaughtCharges);
@@ -140,7 +139,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= WAR.Levels.InnerBeast && HasEffectAny(WAR.Buffs.SurgingTempest) && gauge >= 90)
                             return OriginalHook(WAR.InnerBeast);
-                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || stormseyeBuff.RemainingTime <= surgingThreshold) && level >= WAR.Levels.StormsEye)
+                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || GetBuffRemainingTime(WAR.Buffs.SurgingTempest) <= surgingThreshold) && level >= WAR.Levels.StormsEye)
                             return WAR.StormsEye;
                         return WAR.StormsPath;
                     }
