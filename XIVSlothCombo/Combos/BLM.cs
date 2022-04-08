@@ -347,7 +347,7 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Manafont;
                     }
 
-                    if ((gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && gauge.PolyglotStacks >= 1) || (GetCooldownRemainingTime(BLM.Manafont) >= 30 && gauge.PolyglotStacks > polyToStore))
+                    if ((gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && gauge.PolyglotStacks >= 1) || (IsOnCooldown(BLM.Manafont) && (GetCooldownRemainingTime(BLM.Manafont) >= 30 && gauge.PolyglotStacks > polyToStore)))
                     {
                         return BLM.Foul;
                     }
