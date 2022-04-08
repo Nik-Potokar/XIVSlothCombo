@@ -269,6 +269,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Fire3 Opener", "Adds the Fire III Opener to Simple BLM.", BLM.JobID, 0, "", "")]
         BlackSimpleOpenerFeature = 2018,
 
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Simple Fire3 Opener - 1 Triplecast", "Modifies the Simple Fire3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
+        BlackSimpleAltOpenerFeature = 2019,
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE
@@ -398,11 +402,11 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(BardoGCDSingleTargetFeature)]
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Opener", "BETA - Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
+        [CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
         BardSimpleOpener = 3022,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Pooling", "BETA - Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
+        [CustomComboInfo("Simple Pooling", "Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
         BardSimplePooling = 3023,
 
         [ParentCombo(BardIronJawsFeature)]
@@ -410,7 +414,7 @@ namespace XIVSlothComboPlugin
         BardIronJawsApexFeature = 3024,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple RagingJaws", "BETA - Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
+        [CustomComboInfo("Simple RagingJaws", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
         BardSimpleRagingJaws = 3025,
 
         #endregion
@@ -630,7 +634,6 @@ namespace XIVSlothComboPlugin
         DarkStalwartSoulCombo = 5001,
 
         [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DeliriumFeatureOption)]
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "Delirium is what you have if you choose to play DRK.\nDoc's words, not mine")]
         DeliriumFeature = 5002,
 
@@ -662,10 +665,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
         DarkPlungeFeatureOption = 5009,
 
-        [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DeliriumFeature)]
-        [CustomComboInfo("Delirium Feature Option", "Replaces Souleather with Bloodspiller when Delirium has 10sec or less remaining.", DRK.JobID, 0, "", "Delirium is what you have if you choose to play DRK.\nDoc's words, not mine")]
-        DeliriumFeatureOption = 5010,
+        [ParentCombo(DeliriumFeature)]
+        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
+        DelayedDeliriumFeatureOption = 5010,
 
         [ParentCombo(DarkSouleaterCombo)]
         [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID, 0, "Ranged DPS job now, duh", "Stubby little arms, huh")]
@@ -692,9 +694,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Level 90 Dark Knight Opener", "Adds the Level 90 Dark Knight Opener to the Main Combo. \nOpener triggered by using The Blackest Night or Blood Weapon before combat.", DRK.JobID, 0)]
         DarkOpenerFeature = 5017,
 
-        /*[ParentCombo(DarkOpenerFeature)]
+        [ParentCombo(DarkOpenerFeature)]
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
-        DarkBloodWeaponOpener = 5018,*/
+        DarkBloodWeaponOpener = 5018,
 
         #endregion
         // ====================================================================================
@@ -875,11 +877,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, 0, "Fashing Gnang", "Why grandma, what big teeth you have!")]
         GunbreakerGnashingFangOnMain = 7001,
 
-        [ParentCombo(GunbreakerGnashingFangOnMain)]
+        [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Sonic Break/Bow Shock/Blasting Zone on Main Combo", "Adds Sonic Break/Bow Shock/Blasting Zone on main combo when under No Mercy buff", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
         GunbreakerCDsOnMainComboFeature = 7002,
 
-        [ParentCombo(GunbreakerGnashingFangOnMain)]
+        [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
@@ -1255,30 +1257,30 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Goring Blade Combo", "Replace Goring Blade with its combo chain.", PLD.JobID, 0, "These aren't heals... huh?", "Just take the armour off and don a robe, we all know you're green on the inside.")]
         PaladinGoringBladeCombo = 11000,
 
-        [CustomComboInfo("Royal Authority Combo", "Replace Royal Authority/Rage of Halone with its combo chain.", PLD.JobID, 0, "", "Lmao, 'Authority'... If you say so, buddy.")]
+        [CustomComboInfo("Royal Authority Combo", "All-in-one main combo adds Royal Authority/Rage of Halone.\nToggle all sub-options on to make this a 1 button rotation", PLD.JobID, 0, "", "Lmao, 'Authority'... If you say so, buddy.")]
         PaladinRoyalAuthorityCombo = 11001,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinAtonementTestFeature)]
-        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 0, "", "Atonement for what? Picking the weakest Tank?")]
+        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath. \nDoes not drop last Atonement stack.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
         PaladinAtonementFeature = 11002,
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "Promenade feature", "Long walks on the promenade...")]
         PaladinProminenceCombo = 11003,
 
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Requiescat Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active \n And when Fight Or Flight is not Active.\nRequires said combos to be activated to work.", PLD.JobID, 0, "Auto-PLD", "Plays the whole job for you.\nJust stand there and take damage, right?")]
+        [ParentCombo(PaladinReqMainComboFeature)]
+        [CustomComboInfo("Holy Spirit Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active", PLD.JobID, 0, "Auto-PLD", "Plays the whole job for you.\nJust stand there and take damage, right?")]
         PaladinRequiescatFeature = 11004,
 
-        [ParentCombo(PaladinRequiescatFeature)]
-        [CustomComboInfo("Confiteor Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains \nand adds Faith/Truth/Valor Combo after Confiteor. \n Requiescat Feature Needs to be Enabled for this one to work!!!  ", PLD.JobID, 0, "Confetti Feature", "This is gonna be a nightmare to clean up.")]
+        [ParentCombo(PaladinReqMainComboFeature)]
+        [CustomComboInfo("Confiteor Combo Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains \nand adds Faith/Truth/Valor Combo after Confiteor.", PLD.JobID, 0, "Confetti Feature", "This is gonna be a nightmare to clean up.")]
         PaladinConfiteorFeature = 11005,
 
         [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, 0, "", "Two for the price of one!")]
         PaladinScornfulSpiritsFeature = 11006,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Royal Goring Option", "Insert Goring Blade into the main combo when appropriate.\nRequires Royal Authority Combo", PLD.JobID, 0, "", "")]
+        [CustomComboInfo("Goring Blade Feature", "Insert Goring Blade into the main combo when appropriate.", PLD.JobID, 0, "", "")]
         PaladinRoyalGoringOption = 11007,
 
         [CustomComboInfo("Standalone Holy Spirit Feature", "Replaces Holy Spirit with Confiteor and Confiteor combo", PLD.JobID, 0, "", "It's Christmas already?")]
@@ -1287,49 +1289,71 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Standalone Holy Circle Feature", "Replaces Holy Circle with Confiteor and Confiteor combo", PLD.JobID, 0, "", "This is MY circle.")]
         PaladinStandaloneHolyCircleFeature = 11009,
 
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinInterveneFeatureOption)]
-        [CustomComboInfo("Intervene Feature", "Adds intervene onto main combo whenever its available (Uses all stacks).", PLD.JobID, 0, "", "It looks like a gap-closer. It smells like a gap-closer...")]
+        [CustomComboInfo("Intervene Feature (All Stacks)", "Adds intervene onto main combo whenever its available (Uses all stacks).", PLD.JobID, 4, "", "It looks like a gap-closer. It smells like a gap-closer...")]
         PaladinInterveneFeature = 11010,
 
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinInterveneFeature)]
-        [CustomComboInfo("Intervene Option", "Adds intervene onto main combo whenever its available (Leaves 1 stack).", PLD.JobID, 0, "", "It must be a gap-closer!")]
+        [CustomComboInfo("Intervene Feature (Leaves 1 stack)", "Adds intervene onto main combo whenever its available (Leaves 1 stack).", PLD.JobID, 4, "", "It must be a gap-closer!")]
         PaladinInterveneFeatureOption = 11011,
 
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinRangedUptimeFeature2)]
-        [CustomComboInfo("Shield Lob Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Shield Lob when out of range.", PLD.JobID, 0, "", "Don't throw your shield, you're not Captain America.\nJust get close!")]
+        [CustomComboInfo("Uptime Feature", "Replace Main Combo with Shield Lob when out of range.", PLD.JobID, 4, "", "Don't throw your shield, you're not Captain America.\nJust get close!")]
         PaladinRangedUptimeFeature = 11012,
 
         [ParentCombo(PaladinFightOrFlightMainComboFeature)]
-        [ConflictingCombos(PaladinFightOrFlightMainComboFeatureTest)]
-        [CustomComboInfo("FoF Feature", "Adds FoF onto the main combo (Testing).", PLD.JobID, 0, "", "What is this, P3S?")]
+        [ConflictingCombos(PaladinFightOrFlightFeature)]
+        [CustomComboInfo("Fight or Flight", "Adds FoF onto the main combo (Testing).", PLD.JobID, 0, "", "What is this, P3S?")]
         PaladinFightOrFlightMainComboFeature = 11013,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Req Feature", "Adds Req onto the main combo (Testing).", PLD.JobID, 0, "", "Just defend 4hed")]
+        [CustomComboInfo("Requiescat Feature", "Adds Requiescat onto the main combo (Testing).", PLD.JobID, 2, "", "Just defend 4hed")]
         PaladinReqMainComboFeature = 11014,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinAtonementFeature, SkillCooldownRemaining)]
-        [CustomComboInfo("Atonement Drop Feature", "Drops Atonement to prevent Potency loss (Testing).", PLD.JobID, 0, "Anti-Atonement Missile", "Imagine worrying about potency loss when you play a job like this. Couldn't be me!")]
+        [ConflictingCombos(PaladinAtonementFeature/*, SkillCooldownRemaining*/)]
+        [CustomComboInfo("Atonement Drop Feature", "Drops Atonement to prevent Potency loss on lvl 90 rotation.", PLD.JobID, 1, "Anti-Atonement Missile", "Imagine worrying about potency loss when you play a job like this. Couldn't be me!")]
         PaladinAtonementTestFeature = 11015,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinRangedUptimeFeature)]
-        [CustomComboInfo("Holy Spirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Holy Spirit when out of range.", PLD.JobID, 0, "(Un)Holy Halone", "Who is Halone and why are they so angry?")]
+        [CustomComboInfo("Holy Spirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Holy Spirit when out of range.", PLD.JobID, 5, "(Un)Holy Halone", "Who is Halone and why are they so angry?")]
         PaladinRangedUptimeFeature2 = 11016,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinRangedUptimeFeature, PaladinFightOrFlightMainComboFeature)]
-        [CustomComboInfo("FoF Feature (Custom Values) ", "Adds FoF onto the main combo (Testing). You can Input your own gcd value (Value represtents percentage of your GCD, 1 = Full GCD).", PLD.JobID, 0, "", "This feature hurts my brain. Yours too, no doubt")]
-        PaladinFightOrFlightMainComboFeatureTest = 11017,
+        [CustomComboInfo("Fight or Flight Feature (Custom Values) ", "Adds FoF onto the main combo. You can input your own gcd value (Value represtents percentage of your GCD, 1 = Full GCD).\nIf unsure put low on 0.250 and high on 0.750.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
+        PaladinFightOrFlightFeature = 11017,
 
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinAtonementFeature, PaladinAtonementTestFeature)]
-        [CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
-        SkillCooldownRemaining = 11018,
+        //[ParentCombo(PaladinRoyalAuthorityCombo)]
+        //[ConflictingCombos(PaladinAtonementFeature, PaladinAtonementTestFeature)]
+        //[CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
+        //SkillCooldownRemaining = 11018,
 
         [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
         PaladinInterruptFeature = 11019,
+
+        [ParentCombo(PaladinProminenceCombo)]
+        [CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
+        PaladinHolyCircleFeature = 11020,
+
+        [ParentCombo(PaladinProminenceCombo)]
+        [CustomComboInfo("AoE Confiteor Feature", "Replaces AoE combo with Confiteor when Requiescat is active and appropiate.", PLD.JobID, 2, "", "")]
+        PaladinAoEConfiteorFeature = 11021,
+
+        [ParentCombo(PaladinProminenceCombo)]
+        [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.\nProbably not optimal at all.", PLD.JobID, 0, "", "")]
+        PaladinReqAoEComboFeature = 11022,
+
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [CustomComboInfo("Expiacion and Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
+        PaladinExpiacionScornFeature = 11023,
+
+        [ParentCombo(PaladinProminenceCombo)]
+        [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
+        PaladinAoEExpiacionScornFeature = 11024,
 
         #endregion
         // ====================================================================================
@@ -1555,7 +1579,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Jolt into Verproc", "Replaces Jolt with Verstone/Verfire, when proc is available and won't cause severe imbalance", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageJoltVerprocCombo = 13021,
 
-        [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to 2-sec spells when below threshold.", RDM.JobID, 0, "Jolt / Verfire / Verstone / Verthunder II / Veraero II -> Lucid Dreaming", "OOM? Git gud.")]
+        [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
         RedMageLucidOnJolt = 13022,
 
         #endregion
@@ -1600,6 +1624,86 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Egeiro into Swiftcast Feature", "Changes Egiero to Swiftcast when Swiftcast is available.", SGE.JobID, 0, "Raise to Raise", "Swaps your raise with WHM's raise.\nDoesn't work any more. You're welcome")]
         SageAlternateEgeiroFeature = 14008,
 
+        [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
+        [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
+        SageSingleTargetHealFeature = 14011,
+
+        [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
+        [CustomComboInfo("Sage AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 0)]
+        SageAoEHealFeature = 14012,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
+        AutoApplyKardia = 14013,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
+        CustomEukrasianDiagnosisFeature = 14014,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomSoteriaFeature = 14015,
+        
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomZoeFeature = 14016,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomPepsisFeature = 14017,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomTaurocholeFeature = 14018,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomHaimaFeature = 14019,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 0)]
+        RhizomataFeature = 14020,
+        
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomKrasisFeature = 14021,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
+        PhysisFeature = 14022,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
+        EukrasianPrognosisFeature = 14023,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
+        HolosFeature = 14024,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
+        PanhaimaFeature = 14025,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
+        PepsisFeature = 14026,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
+        IxocholeFeature = 14027,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
+        KeracholeFeature = 14028,
+
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+        RhizomataFeatureAoE = 14029,
+
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomDruocholeFeature = 14030,
+                
         #endregion
         // ====================================================================================
         #region SAMURAI

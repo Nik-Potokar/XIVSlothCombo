@@ -1146,14 +1146,33 @@ namespace XIVSlothComboPlugin.Combos
     internal class RedMageLucidOnJolt : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageLucidOnJolt;
+
+        internal static bool showLucid = false;
+
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is RDM.Jolt or RDM.Jolt2 or RDM.Verfire or RDM.Verstone or RDM.Verthunder2 or RDM.Veraero2)
+            if (actionID is RDM.Verthunder or RDM.Veraero or RDM.Scatter or RDM.Verthunder3 or RDM.Veraero3 or RDM.Impact)
             {
-                var needLucid = Service.Configuration.GetCustomIntValue(RDM.Config.RdmLucidMpThreshold);
+                var canWeave = CanWeave(actionID);
+                var castingSpell = LocalPlayer.IsCasting;
+                var inCombat = HasCondition(ConditionFlag.InCombat);
+                var lucidThreshold = Service.Configuration.GetCustomIntValue(RDM.Config.RdmLucidMpThreshold);
 
-                if (level >= RDM.Levels.LucidDreaming && IsOffCooldown(RDM.LucidDreaming) && LocalPlayer.CurrentMp <= needLucid && CanWeave(actionID))
+                if (!canWeave || !inCombat || IsOnCooldown(RDM.LucidDreaming) || lastComboMove == RDM.EnchantedRedoublement || lastComboMove == RDM.Verflare || lastComboMove == RDM.Verholy || lastComboMove == RDM.Scorch) // Reset following weave window or exit combat if enemy dies
+                {
+                    showLucid = false;
+                    return actionID;
+                }
+
+                if (level >= RDM.Levels.LucidDreaming && IsOffCooldown(RDM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
+                {
+                    showLucid = true;
+                }
+
+                if (showLucid && canWeave && !castingSpell) // Change abilities to Lucid Dreaming for entire weave window
+                {
                     return RDM.LucidDreaming;
+                }
             }
             return actionID;
         }

@@ -112,6 +112,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class PaladinRoyalAuthorityCombo : CustomCombo
     {
+
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinRoyalAuthorityCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -120,55 +121,64 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var goringBladeDebuffonTarget = TargetHasEffect(PLD.Debuffs.GoringBlade);
                 var goingBladeDebuffTimer = FindTargetEffect(PLD.Debuffs.GoringBlade);
-                var foF = HasEffect(PLD.Buffs.FightOrFlight);
-                var valorDebuff = TargetHasEffect(PLD.Debuffs.BladeOfValor);
-                var foFCD = GetCooldown(PLD.FightOrFlight);
-                var fastBladeCD = GetCooldown(PLD.FastBlade);
+                var FightOrFlight = HasEffect(PLD.Buffs.FightOrFlight);
+                var FightOrFlightCD = GetCooldown(PLD.FightOrFlight);
                 var reqCD = GetCooldown(PLD.Requiescat);
-                var requiescatBuff = HasEffect(PLD.Buffs.Requiescat);
                 var requiescat = FindEffect(PLD.Buffs.Requiescat);
                 var valorDebuffTimer = FindTargetEffect(PLD.Debuffs.BladeOfValor);
-                var valorDebuffonTarget = TargetHasEffect(PLD.Debuffs.BladeOfValor);
                 var interveneCD = GetCooldown(PLD.Intervene);
-                var actionIDCD = GetCooldown(actionID);
                 var riotcd = GetCooldown(actionID);
                 var customGCDHigh = Service.Configuration.CustomGCDValueHigh;
                 var customGCDLow = Service.Configuration.CustomGCDValueLow;
                 var fofremainingTime = FindEffect(PLD.Buffs.FightOrFlight);
 
-                if (IsEnabled(CustomComboPreset.PaladinFightOrFlightMainComboFeatureTest))
+                if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature))
                 {
-                    if (level >= PLD.Levels.FightOrFlight && lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < customGCDLow && riotcd.CooldownRemaining > customGCDHigh && !foFCD.IsCooldown)
+                    if (level >= PLD.Levels.FightOrFlight && lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < customGCDLow && riotcd.CooldownRemaining > customGCDHigh && !FightOrFlightCD.IsCooldown)
                         return PLD.FightOrFlight;
                 }
+
+                if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature))
+                {
+                    if (level >= PLD.Levels.Expiacion && IsOffCooldown(PLD.Expiacion) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade && CanWeave(actionID))
+                        return PLD.Expiacion;
+                    if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade && CanWeave(actionID))
+                        return PLD.CircleOfScorn;
+                }
+
                 if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= PLD.Levels.Requiescat)
                 {
                     if (HasEffect(PLD.Buffs.FightOrFlight) && fofremainingTime.RemainingTime < 17 && !reqCD.IsCooldown)
                         return PLD.Requiescat;
                 }
+
                 if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob)
                 {
                     if (!InMeleeRange(true))
                         return PLD.ShieldLob;
                 }
+
                 if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit)
                 {
                     if (!InMeleeRange(true))
                         return PLD.HolySpirit;
                 }
+
                 if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= PLD.Levels.Intervene)
                 {
-                    if (interveneCD.CooldownRemaining < 30 && actionIDCD.CooldownRemaining > 0.7)
+                    if (interveneCD.CooldownRemaining < 30 && CanWeave(actionID))
                         return PLD.Intervene;
                 }
+
                 if (IsEnabled(CustomComboPreset.PaladinInterveneFeatureOption) && level >= PLD.Levels.Intervene)
                 {
-                    if (!interveneCD.IsCooldown && actionIDCD.CooldownRemaining > 0.7)
+                    if (!interveneCD.IsCooldown && CanWeave(actionID))
                         return PLD.Intervene;
                 }
+
                 if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
                 {
-                    if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit && !foF)
+                    if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit && !FightOrFlight)
                     {
                         if (
                             level >= PLD.Levels.Confiteor &&
@@ -197,7 +207,7 @@ namespace XIVSlothComboPlugin.Combos
                         return PLD.BladeOfValor;
                     }
                 }
-
+                
                 if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption))
                 {
                     if ((lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime > 10 && level >= PLD.Levels.RoyalAuthority) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime > 10 && level >= PLD.Levels.RoyalAuthority))
@@ -225,30 +235,26 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-
                 if (comboTime > 0)
                 {
                     if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
                         return PLD.RiotBlade;
+                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RoyalAuthority)
+                        return PLD.RoyalAuthority;
+                    
                 }
-                if (IsEnabled(CustomComboPreset.SkillCooldownRemaining) && !IsEnabled(CustomComboPreset.PaladinAtonementFeature))
+                if (IsEnabled(CustomComboPreset.PaladinAtonementTestFeature))
                 {
-                    var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
-                    var fofCD = GetCooldown(PLD.FightOrFlight);
-                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && foFCD.CooldownRemaining >= SkillCooldownRemaining)
+                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && FightOrFlightCD.CooldownRemaining >= 2 && FightOrFlightCD.CooldownRemaining <= 50)
                         return PLD.Atonement;
                 }
-                if (IsEnabled(CustomComboPreset.PaladinAtonementTestFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementFeature))
-                {
-                    var fofCD = GetCooldown(PLD.FightOrFlight);
-                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && foFCD.CooldownRemaining >= 3)
-                        return PLD.Atonement;
-                }
+
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && !IsEnabled(CustomComboPreset.PaladinAtonementTestFeature))
                 {
                     if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
                         return PLD.Atonement;
                 }
+
 
                 if (comboTime > 0)
                 {
@@ -260,6 +266,7 @@ namespace XIVSlothComboPlugin.Combos
 
             return actionID;
         }
+
     }
 
     internal class PaladinProminenceCombo : CustomCombo
@@ -268,9 +275,24 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var reqCD = GetCooldown(PLD.Requiescat);
             if (actionID == PLD.Prominence)
             {
-                if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
+                if (IsEnabled(CustomComboPreset.PaladinReqAoEComboFeature) && level >= PLD.Levels.Requiescat)
+                {
+                    if (!reqCD.IsCooldown && CanWeave(actionID))
+                        return PLD.Requiescat;
+                }
+
+                if (IsEnabled(CustomComboPreset.PaladinAoEExpiacionScornFeature))
+                {
+                    if (level >= PLD.Levels.Expiacion && IsOffCooldown(PLD.Expiacion) && CanWeave(actionID))
+                        return PLD.Expiacion;
+                    if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn) && CanWeave(actionID))
+                        return PLD.CircleOfScorn;
+                }
+
+                if (IsEnabled(CustomComboPreset.PaladinHolyCircleFeature))
                 {
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle)
                     {
@@ -279,7 +301,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (
                             level >= PLD.Levels.Confiteor &&
                             (
-                                (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
+                                (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
                                 requiescat.StackCount == 1 ||
                                 LocalPlayer.CurrentMp <= 2000
                             )

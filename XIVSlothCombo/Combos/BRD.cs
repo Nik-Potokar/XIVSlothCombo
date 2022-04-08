@@ -109,6 +109,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             return value == Song.NONE;
         }
+
+        internal static bool SongIsWandererMinuet(Song value)
+        {
+            return value == Song.WANDERER;
+        }
     }
 
     // Replace Wanderer's Minuet with PP when in WM.
@@ -1019,9 +1024,9 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             // Do logic to determine first song
 
-                            if (minuetOffCooldown) return BRD.WanderersMinuet;
-                            if (balladOffCooldown) return BRD.MagesBallad;
-                            if (paeonOffCooldown) return BRD.ArmysPaeon;
+                            if (minuetOffCooldown || !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.ArmysPaeon)) ) return BRD.WanderersMinuet;
+                            if (balladOffCooldown || !(JustUsed(BRD.WanderersMinuet) || JustUsed(BRD.ArmysPaeon)) ) return BRD.MagesBallad;
+                            if (paeonOffCooldown  || !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.ArmysPaeon)) ) return BRD.ArmysPaeon;
                         }
 
                         if (gauge.Song == Song.WANDERER)
@@ -1060,8 +1065,8 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (level >= BRD.Levels.MagesBallad && IsOffCooldown(BRD.MagesBallad))
                             return BRD.MagesBallad;
-                        if (level >= BRD.Levels.WanderersMinuet && IsOffCooldown(BRD.WanderersMinuet))
-                            return BRD.WanderersMinuet;
+                        //if (level >= BRD.Levels.WanderersMinuet && IsOffCooldown(BRD.WanderersMinuet))
+                        //    return BRD.WanderersMinuet;
                         if (level >= BRD.Levels.ArmysPaeon && IsOffCooldown(BRD.ArmysPaeon))
                             return BRD.ArmysPaeon;
                     }
@@ -1071,7 +1076,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes) && GetCooldown(BRD.BattleVoice).CooldownRemaining < 5 )
                         return BRD.RagingStrikes;
-                    if (IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && Array.TrueForAll(gauge.Coda, BRD.SongIsNotNone) && IsOffCooldown(BRD.BattleVoice))
+                    if (IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && (Array.TrueForAll(gauge.Coda, BRD.SongIsNotNone) || Array.Exists(gauge.Coda,BRD.SongIsWandererMinuet) ) && IsOffCooldown(BRD.BattleVoice))
                     {
                         if (level >= BRD.Levels.RadiantFinale && IsOffCooldown(BRD.RadiantFinale))
                         {
@@ -1166,13 +1171,13 @@ namespace XIVSlothComboPlugin.Combos
 
                     DotRecast poisonRecast = delegate (int duration)
                     {
-                       return (venomous && venomousDuration.RemainingTime < duration) || (caustic && causticDuration.RemainingTime < duration);
+                        return (venomous && venomousDuration.RemainingTime < duration) || (caustic && causticDuration.RemainingTime < duration);
                     };
                     DotRecast windRecast = delegate (int duration)
                     {
                         return (windbite && windbiteDuration.RemainingTime < duration) || (stormbite && stormbiteDuration.RemainingTime < duration);
-                    };     
-                   
+                    };
+
                     var useIronJaws = (
                         (level >= BRD.Levels.IronJaws && poisonRecast(4)) ||
                         (level >= BRD.Levels.IronJaws && windRecast(4)) ||
@@ -1183,33 +1188,29 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level < BRD.Levels.BiteUpgrade)
                     {
-                        if (inCombat)
+                        if (useIronJaws)
                         {
-                            if (useIronJaws)
-                            {
-                                return BRD.IronJaws;
-                            }
+                            return BRD.IronJaws;
+                        }
 
-                            if (level < BRD.Levels.IronJaws)
-                            {
-                                if (venomous && venomousDuration.RemainingTime < 4)
-                                    return BRD.VenomousBite;
-                                if (windbite && windbiteDuration.RemainingTime < 4)
-                                    return BRD.Windbite;
-                            }
+                        if (level < BRD.Levels.IronJaws)
+                        {
+                            if (venomous && venomousDuration.RemainingTime < 4)
+                                return BRD.VenomousBite;
+                            if (windbite && windbiteDuration.RemainingTime < 4)
+                                return BRD.Windbite;
+                        }
 
-                            if (IsEnabled(CustomComboPreset.SimpleDoTOption))
-                            {
-                                if (level >= BRD.Levels.Windbite && !windbite)
-                                    return BRD.Windbite;
-                                if (level >= BRD.Levels.VenomousBite && !venomous)
-                                    return BRD.VenomousBite;
-                            }
+                        if (IsEnabled(CustomComboPreset.SimpleDoTOption))
+                        {
+                            if (level >= BRD.Levels.Windbite && !windbite)
+                                return BRD.Windbite;
+                            if (level >= BRD.Levels.VenomousBite && !venomous)
+                                return BRD.VenomousBite;
                         }
                     }
+                    else { 
 
-                    if (inCombat)
-                    {
                         if (useIronJaws)
                         {
                             return BRD.IronJaws;

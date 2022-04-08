@@ -102,7 +102,7 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.Tomahawk;
                 }
 
-                if (HasEffect(WAR.Buffs.SurgingTempest))
+                if (HasEffect(WAR.Buffs.SurgingTempest) && HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
                     if (CanWeave(actionID))
                     {
@@ -120,13 +120,13 @@ namespace XIVSlothComboPlugin.Combos
                     if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.InnerBeast) ||
                         (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.InnerChaos) ||
                         (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.InnerBeast &&
-                        (IsOffCooldown(WAR.InnerRelease) || GetCooldown(WAR.InnerRelease).CooldownRemaining > 35) || HasEffect(WAR.Buffs.NascentChaos)))
+                        (IsOffCooldown(WAR.InnerRelease) || GetCooldown(WAR.InnerRelease).CooldownRemaining > 35 || HasEffect(WAR.Buffs.NascentChaos))))
                             return OriginalHook(WAR.InnerBeast);
                 }
 
                 if (comboTime > 0)
                 {
-                    if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && !HasEffect(WAR.Buffs.InnerRelease) && gauge <= 50)
+                    if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && !HasEffect(WAR.Buffs.InnerRelease) && gauge <= 50 && CanWeave(actionID))
                         return WAR.Infuriate;
 
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)

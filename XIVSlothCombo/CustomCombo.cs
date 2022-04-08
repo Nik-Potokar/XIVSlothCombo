@@ -307,6 +307,11 @@ namespace XIVSlothComboPlugin.Combos
             Status? eff = FindEffect(effectId);
             return eff?.StackCount ?? 0;
         }
+        protected static float GetBuffRemainingTime(ushort effectId)
+        {
+            Status? eff = FindEffect(effectId);
+            return eff?.RemainingTime ?? 0;
+        }
 
         /// <summary>
         /// Finds an effect on the player.
@@ -420,6 +425,14 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>True or false.</returns>
         protected static bool IsOffCooldown(uint actionID)
             => !GetCooldown(actionID).IsCooldown;
+
+        /// <summary>
+        /// Check if the Cooldown was just used.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>True or false.</returns>
+        protected static bool JustUsed(uint actionID)
+            => GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
 
         /// <summary>
         /// Gets a value indicating whether an action has any available charges.
