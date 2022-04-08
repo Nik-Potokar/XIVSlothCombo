@@ -702,7 +702,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
         DarkBloodWeaponOpener = 5018,
 
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", DRK.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", DRK.JobID)]
         DarkKnightReprisalProtection = 5019,
 
         #endregion
@@ -952,7 +952,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
         GunbreakerGFStartonMain = 7019,
 
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", GNB.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", GNB.JobID)]
         GunbreakerReprisalProtection = 7020,
 
         #endregion
@@ -1365,7 +1365,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
 
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", PLD.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", PLD.JobID)]
         PaladinReprisalProtection = 11025,
 
         #endregion
@@ -2031,7 +2031,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
 
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", WAR.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", WAR.JobID)]
         WarriorReprisalProtection = 18022,
 
         #endregion
