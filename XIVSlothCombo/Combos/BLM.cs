@@ -340,7 +340,7 @@ namespace XIVSlothComboPlugin.Combos
                 var currentMP = LocalPlayer.CurrentMp;
                 var polyToStore = Service.Configuration.GetCustomIntValue(BLM.Config.BlmPolygotsStored);
 
-                if (IsEnabled(CustomComboPreset.BlackAoEFoulOption))
+                if (IsEnabled(CustomComboPreset.BlackAoEFoulOption) && level >= BLM.Levels.Manafont && level >= BLM.Levels.Foul)
                 {
                     if (gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && CanWeave(actionID) && lastComboMove == BLM.Foul)
                     {
