@@ -983,6 +983,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0)]
         GunbreakerCDsonNMFeature = 7022,
 
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
+        GunbreakerBSinNMFeature = 7023,
+        
         #endregion
         // ====================================================================================
         #region MACHINIST

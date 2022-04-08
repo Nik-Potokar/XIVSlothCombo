@@ -180,7 +180,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                             return GNB.Hypervelocity;
-                        if ((gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
+                        if (IsEnabled(CustomComboPreset.GunbreakerBSinNMFeature) && (gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
                             return GNB.BurstStrike;
                     }
 
