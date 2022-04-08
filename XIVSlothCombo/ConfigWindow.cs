@@ -617,8 +617,8 @@ namespace XIVSlothComboPlugin
                 ImGui.Spacing();
             }
 
-            if (preset == CustomComboPreset.SageLucidFeatureAdvTest)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGELucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.SageLucidFeature)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.CustomSGELucidDreaming, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.CustomSoteriaFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomSoteria, "Set HP percentage value for Soteria to trigger");

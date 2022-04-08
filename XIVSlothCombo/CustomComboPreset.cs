@@ -1589,32 +1589,33 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Soteria into Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 0, "Spoopy into Kpoopy", "Don't forget your danc- uh, heal partner!")]
         SageKardiaFeature = 14000,
 
-        [CustomComboInfo("Rhizomata Feature", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
+        [CustomComboInfo("Rhizomata Feature###SGENormal", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
         SageRhizomataFeature = 14001,
 
         [CustomComboInfo("Taurochole into Druochole Feature", "Replaces Taurochole with Druochole when Taurochole is on cooldown.", SGE.JobID, 0, "This for that", "They do the same thing, really. If you close your eyes.")]
         SageTauroDruoFeature = 14002,
 
-        [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
-        SagePhlegmaToxikonFeature = 14003,
+        [CustomComboInfo("Phlegma into X Feature", "Does nothing on it's own, must choose any/all sub-features!", SGE.JobID, 0, "", "Phlegmaballs.")]
+        SagePhlegmaFeature = 14031,
 
-        [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-        SagePhlegmaDyskrasiaFeature = 14004,
+            [ParentCombo(SagePhlegmaFeature)]
+            [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+            SagePhlegmaToxikonFeature = 14003,
+
+            [ParentCombo(SagePhlegmaFeature)]
+            [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            SagePhlegmaDyskrasiaFeature = 14004,
 
         [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
         SageDPSFeature = 14005,
 
-        [ParentCombo(SageDPSFeature)]
-        [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
-        SageDPSFeatureAdvTest = 14009,
+            [ParentCombo(SageDPSFeature)]
+            [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
+            SageDPSFeatureAdvTest = 14009,
 
-        [ParentCombo(SageDPSFeature)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature when you have 8,000 mana or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
-        SageLucidFeature = 14006,
-
-        [ParentCombo(SageLucidFeature)]
-        [CustomComboInfo("Fine Tune Lucid Dreaming", "Don't like 8000 MP? Change it!", SGE.JobID, 0, "", "Don't worry, we won't let you shit the bed. Back to DPS!")]
-        SageLucidFeatureAdvTest = 14010,
+            [ParentCombo(SageDPSFeature)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
+            SageLucidFeature = 14006,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
         [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
@@ -1661,7 +1662,7 @@ namespace XIVSlothComboPlugin
         CustomHaimaFeature = 14019,
 
         [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 0)]
+        [CustomComboInfo("Custom Rhizomata Feature###SGEST", "Adds Rhizomata when Addersgall is 0###SGEST", SGE.JobID, 0)]
         RhizomataFeature = 14020,
         
         [ParentCombo(SageSingleTargetHealFeature)]
@@ -1697,7 +1698,7 @@ namespace XIVSlothComboPlugin
         KeracholeFeature = 14028,
 
         [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+        [CustomComboInfo("Rhizomata Feature###SGEAOE", "Adds Rhizomata when Addersgall is 0###SGEAOE", SGE.JobID, 0)]
         RhizomataFeatureAoE = 14029,
 
         [ParentCombo(SageSingleTargetHealFeature)]
@@ -1839,7 +1840,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below set MP value.", SCH.JobID, 0, "", "Nobody's perfect. Maybe this'll help")]
         ScholarLucidDPSFeature = 16007,
 
-        [CustomComboInfo("SCH Extra DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID, 0, "", "People still use Ruin 2? Shouldn't you be healing or something?")]
+        [CustomComboInfo("SCH Extra DPS Feature", "Adds Bio DoT on Ruin II. Won't work below level 38", SCH.JobID, 0, "", "People still use Ruin 2? Shouldn't you be healing or something?")]
         SCHDPSAlternateFeature = 16003,
 
         #endregion
