@@ -720,7 +720,7 @@ namespace XIVSlothComboPlugin
         DarkBurstShBOption = 5024,
 
         [ParentCombo(DeliriumFeature)]
-        [CustomComboInfo("Delirium on CD", "Adds Delirium to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
+        [CustomComboInfo("Delirium on CD", "Adds Delirium to Main Combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0)]
         DarkDeliriumOnCD = 5025,
 
         [ParentCombo(DarkSouleaterCombo)]
