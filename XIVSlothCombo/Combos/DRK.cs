@@ -316,6 +316,7 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<DRKGauge>();
                 var livingshadowCD = GetCooldown(DRK.LivingShadow);
                 var saltedCD = GetCooldown(DRK.SaltedEarth);
+                var saltAndDarkCD = GetCooldown(DRK.SaltAndDarkness);
                 var actionIDCD = GetCooldown(actionID);
 
                 if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= DRK.Levels.LivingShadow)
@@ -324,9 +325,9 @@ namespace XIVSlothComboPlugin.Combos
                     return DRK.SaltedEarth;
                 if (!actionIDCD.IsCooldown && level >= DRK.Levels.CarveAndSpit)
                     return actionID;
-                if (HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
+                if (!saltAndDarkCD.IsCooldown && HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
                     return DRK.SaltAndDarkness;
-                if (IsEnabled(CustomComboPreset.DarkShadowbringeroGCDFeature) && shbCD.CooldownRemaining < 60)
+                if (IsEnabled(CustomComboPreset.DarkShadowbringeroGCDFeature) && shbCD.CooldownRemaining < 60 && level >= DRK.Levels.Shadowbringer && gauge.DarksideTimeRemaining > 0)
                     return DRK.Shadowbringer;
 
             }
