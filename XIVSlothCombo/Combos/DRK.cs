@@ -248,7 +248,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (level >= DRK.Levels.Plunge)
                                 {
                                     if ((IsEnabled(CustomComboPreset.DarkPlungeFeature) && GetRemainingCharges(DRK.Plunge) > plungeChargesRemaining && IsNotEnabled(CustomComboPreset.DarkPlungeBurstOption)) ||
-                                        (IsEnabled(CustomComboPreset.DarkPlungeBurstOption) && GetRemainingCharges(DRK.Plunge) > 0 && gauge.ShadowTimeRemaining > 0)) //burst feature
+                                        (IsEnabled(CustomComboPreset.DarkPlungeBurstOption) && GetRemainingCharges(DRK.Plunge) > 0 && (gauge.ShadowTimeRemaining > 1 || GetCooldownRemainingTime(DRK.Buffs.Delirium) > 10))) //burst feature
                                         return DRK.Plunge;
                                 }
 
