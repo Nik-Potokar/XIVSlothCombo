@@ -22,6 +22,7 @@ namespace XIVSlothComboPlugin.Combos
             Upheaval = 7387,
             LowBlow = 7540,
             Interject = 7538,
+            Reprisal = 7535,
             InnerRelease = 7389,
             RawIntuition = 3551,
             MythrilTempest = 16462,
@@ -44,7 +45,8 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const ushort
+                Reprisal = 1193;
         }
 
         public static class Levels
@@ -325,6 +327,22 @@ namespace XIVSlothComboPlugin.Combos
                     return WAR.PrimalRend;
             }
 
+            return actionID;
+        }
+    }
+    internal class WarriorReprisalProtection : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorReprisalProtection;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is WAR.Reprisal)
+            {
+                if (TargetHasEffect(WAR.Debuffs.Reprisal) && IsOffCooldown(WAR.Reprisal))
+                {
+                    return WAR.LowBlow;
+                }
+            }
             return actionID;
         }
     }

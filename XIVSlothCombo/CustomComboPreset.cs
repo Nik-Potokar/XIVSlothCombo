@@ -702,6 +702,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
         DarkBloodWeaponOpener = 5018,
 
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", DRK.JobID)]
+        DarkKnightReprisalProtection = 5019,
+
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -948,6 +951,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerGnashingFangOnMain)]
         [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
         GunbreakerGFStartonMain = 7019,
+
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", GNB.JobID)]
+        GunbreakerReprisalProtection = 7020,
 
         #endregion
         // ====================================================================================
@@ -1358,6 +1364,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
+
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", PLD.JobID)]
+        PaladinReprisalProtection = 11025,
 
         #endregion
         // ====================================================================================
@@ -2021,6 +2030,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
+
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Trust action, Engage", WAR.JobID)]
+        WarriorReprisalProtection = 18022,
 
         #endregion
         // ====================================================================================

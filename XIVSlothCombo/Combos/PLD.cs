@@ -22,6 +22,7 @@ namespace XIVSlothComboPlugin.Combos
             Requiescat = 7383,
             HolySpirit = 7384,
             Interject = 7538,
+            Reprisal = 7535,
             Prominence = 16457,
             HolyCircle = 16458,
             Confiteor = 16459,
@@ -45,7 +46,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
                 BladeOfValor = 2721,
-                GoringBlade = 725;
+                GoringBlade = 725,
+                Reprisal = 1193;
         }
 
         public static class Levels
@@ -475,6 +477,22 @@ namespace XIVSlothComboPlugin.Combos
                     return PLD.LowBlow;
             }
 
+            return actionID;
+        }
+    }
+    internal class PaladinReprisalProtection : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinReprisalProtection;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is PLD.Reprisal)
+            {
+                if (TargetHasEffect(PLD.Debuffs.Reprisal) && IsOffCooldown(PLD.Reprisal))
+                {
+                    return PLD.LowBlow;
+                }
+            }
             return actionID;
         }
     }

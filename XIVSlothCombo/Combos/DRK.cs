@@ -19,6 +19,7 @@ namespace XIVSlothComboPlugin.Combos
             Bloodspiller = 7392,
             LowBlow = 7540,
             Interject = 7538,
+            Reprisal = 7535,
             FloodOfDarkness = 16466,
             EdgeOfDarkness = 16467,
             StalwartSoul = 16468,
@@ -43,7 +44,8 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const ushort
+                Reprisal = 1193;
         }
 
         public static class Levels
@@ -350,6 +352,22 @@ namespace XIVSlothComboPlugin.Combos
                     return DRK.Interject;
             }
 
+            return actionID;
+        }
+    }
+    internal class DarkKnightReprisalProtection : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkKnightReprisalProtection;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is DRK.Reprisal)
+            {
+                if (TargetHasEffect(DRK.Debuffs.Reprisal) && IsOffCooldown(DRK.Reprisal))
+                {
+                    return DRK.LowBlow;
+                }
+            }
             return actionID;
         }
     }
