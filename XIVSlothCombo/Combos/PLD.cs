@@ -140,8 +140,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature))
                 {
-                    if (level >= PLD.Levels.Expiacion && IsOffCooldown(PLD.Expiacion) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade && CanWeave(actionID))
-                        return PLD.Expiacion;
+                    if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade && CanWeave(actionID))
+                        return OriginalHook(PLD.SpiritsWithin);
                     if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade && CanWeave(actionID))
                         return PLD.CircleOfScorn;
                 }
@@ -286,8 +286,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.PaladinAoEExpiacionScornFeature))
                 {
-                    if (level >= PLD.Levels.Expiacion && IsOffCooldown(PLD.Expiacion) && CanWeave(actionID))
-                        return PLD.Expiacion;
+                    if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin) && CanWeave(actionID))
+                        return OriginalHook(PLD.SpiritsWithin);
                     if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn) && CanWeave(actionID))
                         return PLD.CircleOfScorn;
                 }
