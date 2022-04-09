@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Numerics;
+
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
@@ -109,6 +110,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="comboTime">Combo timer.</param>
         /// <param name="newActionID">Replacement action ID.</param>
         /// <returns>True if the action has changed, otherwise false.</returns>
+
         public bool TryInvoke(uint actionID, byte level, uint lastComboMove, float comboTime, out uint newActionID)
         {
             newActionID = 0;
@@ -134,6 +136,7 @@ namespace XIVSlothComboPlugin.Combos
                 return false;
 
             newActionID = resultingActionID;
+
             return true;
         }
 
@@ -469,6 +472,15 @@ namespace XIVSlothComboPlugin.Combos
             => GetCooldown(actionID).CooldownRemaining > weaveTime;
 
         /// <summary>
+        /// Checks if the provided action ID has cooldown remaining enough to weave against it
+        /// at the later half of the gcd without causing clipping (aka Delayed Weaving)
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns>True or false.</returns>
+        protected static bool CanDelayedWeave(uint actionID)
+           => GetCooldown(actionID).CooldownRemaining < 1.250 && GetCooldown(actionID).CooldownRemaining > 0.6;
+
+        /// <summary>
         /// Get a job gauge.
         /// </summary>
         /// <typeparam name="T">Type of job gauge.</typeparam>
@@ -505,7 +517,7 @@ namespace XIVSlothComboPlugin.Combos
             if (distance == 0)
                 return true;
 
-            if (distance > 3)
+            if (distance > 3 + Service.Configuration.MeleeOffset)
                 return false;
 
             return true;

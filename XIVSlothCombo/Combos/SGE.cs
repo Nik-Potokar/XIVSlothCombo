@@ -73,17 +73,22 @@ namespace XIVSlothComboPlugin.Combos
             EukrasianDosis3 = 2616;
         }
 
-        public static class Levels
+        public static class Levels //Per 6.0 Patch https://na.finalfantasyxiv.com/jobguide/sage/
         {
-            public const ushort
+            public const byte
                 Dosis = 1,
+                Diagnosis = 2,
+                Kardia = 4,
                 Prognosis = 10,
+                Egeiro = 12,
                 Physis = 20,
                 LucidDreaming = 24,
                 Phlegma = 26,
-                Eukrasia = 30,
+                Eukrasia = 30, //includes Dosis, Diagnosis, & Prognosis
                 Soteria = 35,
+                Icarus = 40,
                 Druochole = 45,
+                Dyskrasia = 46,
                 Kerachole = 50,
                 Ixochole = 52,
                 Zoe = 56,
@@ -92,13 +97,15 @@ namespace XIVSlothComboPlugin.Combos
                 Taurochole = 62,
                 Toxikon = 66,
                 Haima = 70,
+                Dosis2 = 72, //includes Eukrasian Dosis 2 
                 Phlegma2 = 72,
-                Dosis2 = 72,
                 Rhizomata = 74,
                 Holos = 76,
                 Panhaima = 80,
+                Dosis3 = 82, //includes Eukrasian Dosis 3
+                Dyskrasia2 = 82,
                 Phlegma3 = 82,
-                Dosis3 = 82,
+                Toxikon2 = 82,
                 Krasis = 86,
                 Pneuma = 90;
                 
@@ -107,7 +114,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                SGELucidDreamingFeature = "SGELucidDreamingFeature",
+				//GUI Customization Storage Names
+                CustomSGELucidDreaming = "CustomSGELucidDreaming",
                 CustomZoe = "CustomZoe",
                 CustomHaima = "CustomHaima",
                 CustomKrasis = "CustomKrasis",
@@ -120,9 +128,10 @@ namespace XIVSlothComboPlugin.Combos
                 CustomDruochole = "CustomDruochole",
                 CustomTaurochole = "CustomTaurochole";
         }
-        
     }
 
+    //SageKardiaFeature
+    //Soteria becomes Kardia when Kardia's Buff is not active and Soteria is on cooldown.
     internal class SageKardiaFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageKardiaFeature;
@@ -143,19 +152,27 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+    //SageRhizomataFeature
+    //Replaces all Addersgal using Abilities (Taurochole/Druochole/Ixochole/Kerachole) with Rhizomata if out of stacks of Addersgall
+    //(Scholar speak: Replaces all Aetherflow abilities with Aetherflow when out)
     internal class SageRhizomataFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageRhizomataFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if ((actionID is SGE.Taurochole or SGE.Druochole or SGE.Ixochole or SGE.Kerachole) && level >= SGE.Levels.Rhizomata && GetJobGauge<SGEGauge>().Addersgall is 0)
-                return SGE.Rhizomata;
+            if (actionID is SGE.Taurochole or SGE.Druochole or SGE.Ixochole or SGE.Kerachole)
+            {
+                if (level >= SGE.Levels.Rhizomata && GetJobGauge<SGEGauge>().Addersgall == 0)
+                        return SGE.Rhizomata;
+            }
 
             return actionID;
         }
     }
-
+    //SageTauroDruoFeature
+    //Replaces Taurochole with Druocole when Taurochole is on cooldown or unavailable.
+    //(As of 6.0) Taurochole (single target massive insta heal w/ cooldown), Druochole (Single target insta heal)
     internal class SageTauroDruoFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageTauroDruoFeature;
@@ -174,7 +191,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class SagePhlegmaToxikonFeature : CustomCombo
+    //Phlegma Replacement Feature
+    //Can replace Zero Charges/Stacks of Phlegma with Toxikon (if you can use it) or Dyskrasia 
+    internal class SagePhlegmaFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaToxikonFeature;
 
@@ -182,52 +201,41 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is SGE.Phlegma or SGE.Phlegma2 or SGE.Phlegma3)
             {
-                if (level >= SGE.Levels.Dosis3 && GetJobGauge<SGEGauge>().Addersting > 0)
+                if ((IsEnabled(CustomComboPreset.SagePhlegmaToxikonFeature)   && level >= SGE.Levels.Toxikon)   || 
+                    (IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && level >= SGE.Levels.Dyskrasia))
+
                 {
-                    if (GetCooldown(SGE.Phlegma3).CooldownRemaining > 45)
-                        return OriginalHook(SGE.Toxikon);
+                    uint Phlegma; //Phlegma placeholder
+                    //Find which version of Phlegma based on player's level that we need to update with
+                    switch (level)
+                    {
+                        case >= (byte)SGE.Levels.Phlegma3: Phlegma = SGE.Phlegma3; break;
+                        case >= (byte)SGE.Levels.Phlegma2: Phlegma = SGE.Phlegma2; break;
+                        default : Phlegma = SGE.Phlegma; break;
                 }
 
-                if (level >= SGE.Levels.Toxikon)
-                {
-                    if (GetCooldown(SGE.Phlegma2).CooldownRemaining > 45)
-                        return OriginalHook(SGE.Toxikon);
+                    //Check for "out of Phlegma stacks" 
+                    if (GetCooldown(Phlegma).CooldownRemaining > 45) {
+                        //and if we have Adderstings to use for Toxikon
+                        //Has Priority over Dyskrasia
+                        if ( IsEnabled(CustomComboPreset.SagePhlegmaToxikonFeature) && (level >= SGE.Levels.Toxikon) && (GetJobGauge<SGEGauge>().Addersting > 0) )
+                        {
+                            return OriginalHook(SGE.Toxikon);  //OriginalHook used so game can use Toxikon 1 & 2
+                        }
+                        if ( IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && level >= SGE.Levels.Dyskrasia ) 
+                        {
+                            return OriginalHook(SGE.Dyskrasia); //OriginalHook used so game can use Dyskrasia 1 & 2
+                        }
+                    }
                 }
-
             }
-
             return actionID;
         }
     }
 
-    internal class SagePhlegmaDyskrasiaFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaDyskrasiaFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Phlegma or SGE.Phlegma2 or SGE.Phlegma3)
-            {
-                if (level >= SGE.Levels.Dosis3)
-                {
-                    if (GetCooldown(SGE.Phlegma3).CooldownRemaining > 45)
-                        return SGE.Dyskrasia2;
-                }
-
-                if (level >= SGE.Levels.Dosis2)
-                {
-                    if (GetCooldown(SGE.Phlegma2).CooldownRemaining > 45)
-                        return SGE.Dyskrasia;
-                }
-
-                if (GetCooldown(SGE.Phlegma).CooldownRemaining > 45)
-                    return SGE.Dyskrasia;
-            }
-
-            return actionID;
-        }
-    }
-
+    //SageDPSFeature
+    //Replaces Dosis with Eukrasia when the debuff on the target is < 3 seconds or not existing
+    //Lucid Dreaming optional
     internal class SageDPSFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageDPSFeature;
@@ -243,35 +251,34 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         //Eukrasian Dosis vars
                         Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
-                        uint EkDosisAtkID;
 
+                        //Find which version of Eukrasian Dosis we need 
                         switch (level)
                         {
-                            case >= (byte)SGE.Levels.Dosis3:
-                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);
-                                EkDosisAtkID = SGE.EukrasianDosis3;
+                            case >= SGE.Levels.Dosis3:
+                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);                                
                                 break;
-                            case >= (byte)SGE.Levels.Dosis2:
+                            case >= SGE.Levels.Dosis2:
                                 DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
-                                EkDosisAtkID = SGE.EukrasianDosis2;
                                 break;
                             default: //Ekrasia Dosis unlocks with Eukrasia, checked at the start
                                 DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
-                                EkDosisAtkID = SGE.EukrasianDosis1;
                                 break;
                         }
                         if (HasEffect(SGE.Buffs.Eukrasia))
-                            return EkDosisAtkID;
+                            return OriginalHook(SGE.Dosis1); //OriginalHook will autoselect the correct Dosis for us
 
+                        //Got our Debuff for our level, check for it and procede 
                         if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
                         {
-                            //Advanced Test Options Enabled
+                            //Advanced Test Options Enabled to procede with auto-Eukrasia
                             if (IsEnabled(CustomComboPreset.SageDPSFeatureAdvTest))
                             {
                                 var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
                                 var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
                                 var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
-                                if ((DosisDebuffID is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || ((DosisDebuffID.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
+                                if ((DosisDebuffID is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) || 
+                                    ((DosisDebuffID.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
                                 {
                                     return SGE.Eukrasia;
                                 }
@@ -286,16 +293,9 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.SageLucidFeature) && level >= SGE.Levels.LucidDreaming)
                     {
                         var lucidDreaming = GetCooldown(SGE.LucidDreaming);
-                        var actionIDCD = GetCooldown(actionID); //Should this be changed to CanWeave similar to SCH? Seems fine as is
-
-                        //Lucid Test If statement. If enabled, use value, else 8000
-                        int MinMP = 8000;
-                        if (IsEnabled(CustomComboPreset.SageLucidFeatureAdvTest))
-                        {
-                            MinMP = Service.Configuration.GetCustomIntValue("SGELucidDreamingFeature", 4000);
-                        }
-
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= MinMP && actionIDCD.CooldownRemaining > 0.2)
+                        //Get slider configuration
+                        int MinMP = Service.Configuration.GetCustomIntValue("CustomSGELucidDreaming", 8000);
+                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= MinMP && CanWeave(actionID))
                             return SGE.LucidDreaming;
                     }
                 }
@@ -304,6 +304,8 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+    //SageEgeiroFeature
+    //Swiftcast combos to Egeiro (Raise) while Swiftcast buff is active
     internal class SageEgeiroFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageEgeiroFeature;
@@ -320,11 +322,13 @@ namespace XIVSlothComboPlugin.Combos
 
                 return OriginalHook(SGE.Swiftcast);
             }
-
             return actionID;
         }
     }
 
+    //SageAlternateEgeiroFeature
+    //Egeiro (Raise) is replaced with Swiftcast at all times while not active or on cooldown
+    //Egeiro is basically your swiftcast button under this Option.
     internal class SageAlternateEgeiroFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageAlternateEgeiroFeature;
@@ -407,9 +411,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (!HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.Eukrasia;
-
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianDiagnosis;
+                    else return SGE.EukrasianDiagnosis;
                 }
             }
             return actionID;

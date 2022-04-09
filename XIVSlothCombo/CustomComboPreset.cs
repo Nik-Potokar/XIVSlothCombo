@@ -357,7 +357,7 @@ namespace XIVSlothComboPlugin
         BardAoEComboFeature = 3008,
 
         [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature)]
-        [CustomComboInfo("Simple Bard", "Adds every single target ability except DoTs to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
+        [CustomComboInfo("Simple Bard", "Adds every single target ability to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
         SimpleBardFeature = 3009,
 
         [ParentCombo(SimpleBardFeature)]
@@ -631,7 +631,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region DARK KNIGHT
 
-        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain.", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
+        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Dark Knight)", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
         DarkSouleaterCombo = 5000,
 
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, 0, "", "Ugly name for an ugly job")]
@@ -641,11 +641,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "Delirium is what you have if you choose to play DRK.\nDoc's words, not mine")]
         DeliriumFeature = 5002,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, 0, "", "Hey big spenderrrrr")]
         DRKOvercapFeature = 5003,
 
         [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "Trick everyone into thinking a party member is standing where they shouldn't be!")]
+        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "Trick everyone into thinking a party member is standing where they shouldn't be!")]
         DRKLivingShadowFeature = 5004,
 
         [ParentCombo(DarkSouleaterCombo)]
@@ -660,17 +661,11 @@ namespace XIVSlothComboPlugin
         DarkShadowbringeroGCDFeature = 5007,
 
         [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DarkPlungeFeatureOption)]
-        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available (Uses all stacks).", DRK.JobID, 0, "", "Take the plunge. All the way!")]
+        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available and Darkside is up.", DRK.JobID, 0, "", "Take the plunge. All the way!")]
         DarkPlungeFeature = 5008,
 
-        [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DarkPlungeFeature)]
-        [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
-        DarkPlungeFeatureOption = 5009,
-
         [ParentCombo(DeliriumFeature)]
-        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
+        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
         DelayedDeliriumFeatureOption = 5010,
 
         [ParentCombo(DarkSouleaterCombo)]
@@ -680,9 +675,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", DRK.JobID, 0, "Lower blow", "Blow, but low.")]
         DarkKnightInterruptFeature = 5012,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "Even the un-cool kids got heals these days")]
         DRKStalwartabyssalDrainFeature = 5013,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE Combo.", DRK.JobID, 0, "", "Wasn't this last expansion?")]
         DRKStalwartShadowbringerFeature = 5014,
 
@@ -701,9 +698,41 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkOpenerFeature)]
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
         DarkBloodWeaponOpener = 5018,
+        
+        [ParentCombo(DarkPlungeFeature)]
+        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
+        DarkPlungeBurstOption = 5019,
 
+        [ParentCombo(DarkManaOvercapFeature)]
+        [CustomComboInfo("EoS Burst Option", "Uses EoS until chosen MP limit is reached during even minute window bursts.", DRK.JobID, 0)]
+        DarkEoSPoolOption = 5020,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0)]
+        DarkSaltedEarthFeature = 5021,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on Main Combo while Darkside is up.", DRK.JobID, 0)]
+        DarkCnSFeature = 5022,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on Main Combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0)]
+        DarkShBFeature = 5023,
+
+        [ParentCombo(DarkShBFeature)]
+        [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID, 0)]
+        DarkBurstShBOption = 5024,
+
+        [ParentCombo(DeliriumFeature)]
+        [CustomComboInfo("Delirium on CD", "Adds Delirium to Main Combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0)]
+        DarkDeliriumOnCD = 5025,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkBloodWeaponOption = 5026,
+        
         [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", DRK.JobID)]
-        DarkKnightReprisalProtection = 5019,
+        DarkKnightReprisalProtection = 5030,
 
         #endregion
         // ====================================================================================
@@ -885,26 +914,24 @@ namespace XIVSlothComboPlugin
         GunbreakerGnashingFangOnMain = 7001,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
-        [CustomComboInfo("Sonic Break/Bow Shock/Blasting Zone on Main Combo", "Adds Sonic Break/Bow Shock/Blasting Zone on main combo when under No Mercy buff", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
+        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
         GunbreakerCDsOnMainComboFeature = 7002,
+
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
+        GunbreakerDZOnMainComboFeature = 7005,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
-        [ConflictingCombos(GunbreakerRoughDivide2StackOption)]
-        [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
-        GunbreakerRoughDivide1StackOption = 7004,
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
+        GunbreakerRoughDivideFeature = 7004,
 
         [ParentCombo(GunbreakerDemonSlaughterCombo)]
         [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
         GunbreakerBowShockFeature = 7017,
-        
-        [ConflictingCombos(GunbreakerRoughDivide1StackOption)]
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
-        [CustomComboInfo("Rough Divide Option (Uses all stacks)", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID, 0, "Divide... Rougher!", "Ayo pour two out for the homie Squall")]
-        GunbreakerRoughDivide2StackOption = 7005,
 
         [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "dEmOn SlAuGhTeR", "Demon Slaughter? Really? What is this, RPR?")]
         GunbreakerDemonSlaughterCombo = 7006,
@@ -952,9 +979,24 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
         GunbreakerGFStartonMain = 7019,
 
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", GNB.JobID)]
-        GunbreakerReprisalProtection = 7020,
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Bow Shock on Main Combo", "Adds Bow Shock to the Main Combo", GNB.JobID, 0)]
+        GunbreakerBSOnMainComboFeature = 7020,
 
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the Main Combo", GNB.JobID, 0)]
+        GunbreakerSBOnMainComboFeature = 7021,
+
+        [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0)]
+        GunbreakerCDsonNMFeature = 7022,
+
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
+        GunbreakerBSinNMFeature = 7023,
+        
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", GNB.JobID)]
+        GunbreakerReprisalProtection = 7030,
+        
         #endregion
         // ====================================================================================
         #region MACHINIST
@@ -1033,7 +1075,7 @@ namespace XIVSlothComboPlugin
         MachinistAutoBarrel = 8019,
 
         [ConflictingCombos(MachinistMainCombo)]
-        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!", MCH.JobID, 0, "", "Goodbye, brain!")]
+        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!\nMade to work optimally with a 2.5 GCD.", MCH.JobID, 0, "", "Goodbye, brain!")]
         MachinistSimpleFeature = 8020,
 
         [ParentCombo(MachinistSimpleFeature)]
@@ -1358,7 +1400,7 @@ namespace XIVSlothComboPlugin
         PaladinReqAoEComboFeature = 11022,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Expiacion and Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
+        [CustomComboInfo("Expiacion and Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinExpiacionScornFeature = 11023,
 
         [ParentCombo(PaladinProminenceCombo)]
@@ -1366,7 +1408,7 @@ namespace XIVSlothComboPlugin
         PaladinAoEExpiacionScornFeature = 11024,
 
         [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", PLD.JobID)]
-        PaladinReprisalProtection = 11025,
+        PaladinReprisalProtection = 11030,
 
         #endregion
         // ====================================================================================
@@ -1602,32 +1644,33 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Soteria into Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 0, "Spoopy into Kpoopy", "Don't forget your danc- uh, heal partner!")]
         SageKardiaFeature = 14000,
 
-        [CustomComboInfo("Rhizomata Feature", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
+        [CustomComboInfo("Rhizomata Feature###SGENormal", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
         SageRhizomataFeature = 14001,
 
         [CustomComboInfo("Taurochole into Druochole Feature", "Replaces Taurochole with Druochole when Taurochole is on cooldown.", SGE.JobID, 0, "This for that", "They do the same thing, really. If you close your eyes.")]
         SageTauroDruoFeature = 14002,
 
-        [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
-        SagePhlegmaToxikonFeature = 14003,
+        [CustomComboInfo("Phlegma into X Feature", "Does nothing on it's own, must choose any/all sub-features!", SGE.JobID, 0, "", "Phlegmaballs.")]
+        SagePhlegmaFeature = 14031,
 
-        [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-        SagePhlegmaDyskrasiaFeature = 14004,
+            [ParentCombo(SagePhlegmaFeature)]
+            [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+            SagePhlegmaToxikonFeature = 14003,
+
+            [ParentCombo(SagePhlegmaFeature)]
+            [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            SagePhlegmaDyskrasiaFeature = 14004,
 
         [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
         SageDPSFeature = 14005,
 
-        [ParentCombo(SageDPSFeature)]
-        [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
-        SageDPSFeatureAdvTest = 14009,
+            [ParentCombo(SageDPSFeature)]
+            [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
+            SageDPSFeatureAdvTest = 14009,
 
-        [ParentCombo(SageDPSFeature)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature when you have 8,000 mana or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
-        SageLucidFeature = 14006,
-
-        [ParentCombo(SageLucidFeature)]
-        [CustomComboInfo("Fine Tune Lucid Dreaming", "Don't like 8000 MP? Change it!", SGE.JobID, 0, "", "Don't worry, we won't let you shit the bed. Back to DPS!")]
-        SageLucidFeatureAdvTest = 14010,
+            [ParentCombo(SageDPSFeature)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
+            SageLucidFeature = 14006,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
         [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
@@ -1674,7 +1717,7 @@ namespace XIVSlothComboPlugin
         CustomHaimaFeature = 14019,
 
         [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 0)]
+        [CustomComboInfo("Custom Rhizomata Feature###SGEST", "Adds Rhizomata when Addersgall is 0###SGEST", SGE.JobID, 0)]
         RhizomataFeature = 14020,
         
         [ParentCombo(SageSingleTargetHealFeature)]
@@ -1710,7 +1753,7 @@ namespace XIVSlothComboPlugin
         KeracholeFeature = 14028,
 
         [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+        [CustomComboInfo("Rhizomata Feature###SGEAOE", "Adds Rhizomata when Addersgall is 0###SGEAOE", SGE.JobID, 0)]
         RhizomataFeatureAoE = 14029,
 
         [ParentCombo(SageSingleTargetHealFeature)]
@@ -1852,7 +1895,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below set MP value.", SCH.JobID, 0, "", "Nobody's perfect. Maybe this'll help")]
         ScholarLucidDPSFeature = 16007,
 
-        [CustomComboInfo("SCH Extra DPS Feature", "Adds Biolysis on Ruin II. Won't work below level 38", SCH.JobID, 0, "", "People still use Ruin 2? Shouldn't you be healing or something?")]
+        [CustomComboInfo("SCH Extra DPS Feature", "Adds Bio DoT on Ruin II. Won't work below level 38", SCH.JobID, 0, "", "People still use Ruin 2? Shouldn't you be healing or something?")]
         SCHDPSAlternateFeature = 16003,
 
         #endregion
@@ -2032,7 +2075,7 @@ namespace XIVSlothComboPlugin
         WarriorInfuriateonST = 18021,
 
         [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", WAR.JobID)]
-        WarriorReprisalProtection = 18022,
+        WarriorReprisalProtection = 18030,
 
         #endregion
         // ====================================================================================

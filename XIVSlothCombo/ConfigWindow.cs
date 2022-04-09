@@ -151,6 +151,24 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTooltip();
             }
 
+            float offset = (float)Service.Configuration.MeleeOffset;
+
+            var inputChangedeth = false;
+            inputChangedeth |= ImGui.InputFloat("Melee Distance Offset", ref offset);
+
+            if (inputChangedeth)
+            {
+                Service.Configuration.MeleeOffset = (double)offset;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
+                ImGui.EndTooltip();
+            }
+
             var slothIrl = isAprilFools ? Service.Configuration.AprilFoolsSlothIrl : false;
             if (isAprilFools)
             {
@@ -170,7 +188,7 @@ namespace XIVSlothComboPlugin
 
 
 
-            ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
+            ImGui.BeginChild("scrolling", new Vector2(0, -30), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
@@ -222,8 +240,13 @@ namespace XIVSlothComboPlugin
             }
 
             ImGui.PopStyleVar();
-
             ImGui.EndChild();
+
+            
+            if (ImGui.Button("Got an issue? Click this button and report it!"))
+            {
+                Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
+            }
 
         }
 
@@ -364,7 +387,41 @@ namespace XIVSlothComboPlugin
                     ImGui.Indent();
 
                     foreach (var (childPreset, childInfo) in children)
-                        this.DrawPreset(childPreset, childInfo, ref i);
+
+                    {
+                        if (Service.Configuration.HideConflictedCombos)
+                        {
+                            //Presets that are contained within a ConflictedAttribute
+                            var conflictOriginals = Service.Configuration.GetConflicts(childPreset);
+
+                            //Presets with the ConflictedAttribute
+                            var conflictsSource = Service.Configuration.GetAllConflicts();
+
+                            if (conflictsSource.Where(x => x == childPreset || x == preset).Count() == 0 || conflictOriginals.Length == 0)
+                            {
+                                this.DrawPreset(childPreset, childInfo, ref i);
+                                continue;
+                            }
+                            if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
+                            {
+                                Service.Configuration.EnabledActions.Remove(childPreset);
+                                Service.Configuration.Save();
+                            }
+                            else
+                            {
+                                this.DrawPreset(childPreset, childInfo, ref i);
+                                continue;
+                            }
+
+                        }
+                        else
+                        {
+                            this.DrawPreset(childPreset, childInfo, ref i);
+                        }
+
+                        
+                    }
+                        
 
                     ImGui.Unindent();
                 }
@@ -467,7 +524,10 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region DARK KNIGHT
-
+            if (preset == CustomComboPreset.DarkEoSPoolOption && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)");
+            if (preset == CustomComboPreset.DarkPlungeFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)");
             #endregion
             // ====================================================================================
             #region DRAGOON
@@ -475,7 +535,8 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region GUNBREAKER
-
+            if (preset == CustomComboPreset.GunbreakerRoughDivideFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, GNB.Config.GnbKeepRoughDivideCharges, "How many charges to keep ready? (0 = Use All)");
             #endregion
             // ====================================================================================
             #region MACHINIST
@@ -620,8 +681,8 @@ namespace XIVSlothComboPlugin
                 ImGui.Spacing();
             }
 
-            if (preset == CustomComboPreset.SageLucidFeatureAdvTest)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGELucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.SageLucidFeature)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.CustomSGELucidDreaming, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.CustomSoteriaFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomSoteria, "Set HP percentage value for Soteria to trigger");
