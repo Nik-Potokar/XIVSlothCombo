@@ -107,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && gauge.Ammo == 0 && IsOffCooldown(GNB.Bloodfest) && level >= GNB.Levels.Bloodfest)
+                        if (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && gauge.Ammo == 0 && IsOffCooldown(GNB.Bloodfest) && level >= GNB.Levels.Bloodfest)
                             return GNB.Bloodfest;
 
                         if (IsEnabled(CustomComboPreset.GunbreakerNoMercyonST) && level >= GNB.Levels.NoMercy && 
@@ -128,7 +128,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(GNB.Continuation);
                     }
                     // 60s window features
-                    if (HasEffect(GNB.Buffs.NoMercy))
+                    if (HasEffect(GNB.Buffs.NoMercy) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup))
                     {
                         if (level >= GNB.Levels.DoubleDown)
                         {
@@ -182,7 +182,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                             return GNB.Hypervelocity;
-                        if (IsEnabled(CustomComboPreset.GunbreakerBSinNMFeature) && (gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
+                        if (IsEnabled(CustomComboPreset.GunbreakerBSinNMFeature) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && (gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
                             return GNB.BurstStrike;
                     }
 
