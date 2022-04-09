@@ -627,7 +627,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region DARK KNIGHT
 
-        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain.", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
+        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Dark Knight)", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
         DarkSouleaterCombo = 5000,
 
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, 0, "", "Ugly name for an ugly job")]
@@ -637,11 +637,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "Delirium is what you have if you choose to play DRK.\nDoc's words, not mine")]
         DeliriumFeature = 5002,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, 0, "", "Hey big spenderrrrr")]
         DRKOvercapFeature = 5003,
 
         [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "Trick everyone into thinking a party member is standing where they shouldn't be!")]
+        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "Trick everyone into thinking a party member is standing where they shouldn't be!")]
         DRKLivingShadowFeature = 5004,
 
         [ParentCombo(DarkSouleaterCombo)]
@@ -656,17 +657,11 @@ namespace XIVSlothComboPlugin
         DarkShadowbringeroGCDFeature = 5007,
 
         [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DarkPlungeFeatureOption)]
-        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available (Uses all stacks).", DRK.JobID, 0, "", "Take the plunge. All the way!")]
+        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available and Darkside is up.", DRK.JobID, 0, "", "Take the plunge. All the way!")]
         DarkPlungeFeature = 5008,
 
-        [ParentCombo(DarkSouleaterCombo)]
-        [ConflictingCombos(DarkPlungeFeature)]
-        [CustomComboInfo("Plunge Option", "Adds Plunge onto main combo whenever its available (Leaves 1 stack).", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
-        DarkPlungeFeatureOption = 5009,
-
         [ParentCombo(DeliriumFeature)]
-        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
+        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0)]
         DelayedDeliriumFeatureOption = 5010,
 
         [ParentCombo(DarkSouleaterCombo)]
@@ -676,9 +671,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", DRK.JobID, 0, "Lower blow", "Blow, but low.")]
         DarkKnightInterruptFeature = 5012,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "Even the un-cool kids got heals these days")]
         DRKStalwartabyssalDrainFeature = 5013,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE Combo.", DRK.JobID, 0, "", "Wasn't this last expansion?")]
         DRKStalwartShadowbringerFeature = 5014,
 
@@ -697,6 +694,38 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkOpenerFeature)]
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
         DarkBloodWeaponOpener = 5018,
+
+        [ParentCombo(DarkPlungeFeature)]
+        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
+        DarkPlungeBurstOption = 5019,
+
+        [ParentCombo(DarkManaOvercapFeature)]
+        [CustomComboInfo("EoS Burst Option", "Uses EoS until chosen MP limit is reached during even minute window bursts.", DRK.JobID, 0)]
+        DarkEoSPoolOption = 5020,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0)]
+        DarkSaltedEarthFeature = 5021,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on Main Combo while Darkside is up.", DRK.JobID, 0)]
+        DarkCnSFeature = 5022,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on Main Combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0)]
+        DarkShBFeature = 5023,
+
+        [ParentCombo(DarkShBFeature)]
+        [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID, 0)]
+        DarkBurstShBOption = 5024,
+
+        [ParentCombo(DeliriumFeature)]
+        [CustomComboInfo("Delirium on CD", "Adds Delirium to Main Combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0)]
+        DarkDeliriumOnCD = 5025,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkBloodWeaponOption = 5026,
 
         #endregion
         // ====================================================================================
@@ -878,26 +907,24 @@ namespace XIVSlothComboPlugin
         GunbreakerGnashingFangOnMain = 7001,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
-        [CustomComboInfo("Sonic Break/Bow Shock/Blasting Zone on Main Combo", "Adds Sonic Break/Bow Shock/Blasting Zone on main combo when under No Mercy buff", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
+        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
         GunbreakerCDsOnMainComboFeature = 7002,
+
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
+        GunbreakerDZOnMainComboFeature = 7005,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
-        [ConflictingCombos(GunbreakerRoughDivide2StackOption)]
-        [CustomComboInfo("Rough Divide Option (Leaves 1 Stack)", "Adds Rough Divide onto main combo whenever it's available (Leaves 1 stack).", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
-        GunbreakerRoughDivide1StackOption = 7004,
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
+        GunbreakerRoughDivideFeature = 7004,
 
         [ParentCombo(GunbreakerDemonSlaughterCombo)]
         [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
         GunbreakerBowShockFeature = 7017,
-        
-        [ConflictingCombos(GunbreakerRoughDivide1StackOption)]
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
-        [CustomComboInfo("Rough Divide Option (Uses all stacks)", "Adds Rough Divide onto main combo whenever its available (Uses all stacks).", GNB.JobID, 0, "Divide... Rougher!", "Ayo pour two out for the homie Squall")]
-        GunbreakerRoughDivide2StackOption = 7005,
 
         [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "dEmOn SlAuGhTeR", "Demon Slaughter? Really? What is this, RPR?")]
         GunbreakerDemonSlaughterCombo = 7006,
@@ -945,6 +972,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
         GunbreakerGFStartonMain = 7019,
 
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Bow Shock on Main Combo", "Adds Bow Shock to the Main Combo", GNB.JobID, 0)]
+        GunbreakerBSOnMainComboFeature = 7020,
+
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the Main Combo", GNB.JobID, 0)]
+        GunbreakerSBOnMainComboFeature = 7021,
+
+        [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0)]
+        GunbreakerCDsonNMFeature = 7022,
+
+        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
+        GunbreakerBSinNMFeature = 7023,
+        
         #endregion
         // ====================================================================================
         #region MACHINIST

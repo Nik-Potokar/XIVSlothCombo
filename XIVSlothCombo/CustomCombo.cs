@@ -505,7 +505,7 @@ namespace XIVSlothComboPlugin.Combos
             if (distance == 0)
                 return true;
 
-            if (distance > 3)
+            if (distance > 3 + Service.Configuration.MeleeOffset)
                 return false;
 
             return true;
