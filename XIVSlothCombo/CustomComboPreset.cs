@@ -273,6 +273,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Fire3 Opener - 1 Triplecast", "Modifies the Simple Fire3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
         BlackSimpleAltOpenerFeature = 2019,
 
+        [ParentCombo(BlackAoEComboFeature)]
+        [CustomComboInfo("Foul / Manafont to Flare Option", "Adds foul when available during Astral Fire. Weaves manafont after foul for additional Flare", BLM.JobID, 0, "", "")]
+        BlackAoEFoulOption = 2020,
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE
@@ -694,7 +698,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkOpenerFeature)]
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
         DarkBloodWeaponOpener = 5018,
-
+        
         [ParentCombo(DarkPlungeFeature)]
         [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
         DarkPlungeBurstOption = 5019,
@@ -726,6 +730,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkSouleaterCombo)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
+        
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", DRK.JobID)]
+        DarkKnightReprisalProtection = 5030,
 
         #endregion
         // ====================================================================================
@@ -986,6 +993,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerCDsOnMainComboFeature)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
+        
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", GNB.JobID)]
+        GunbreakerReprisalProtection = 7030,
         
         #endregion
         // ====================================================================================
@@ -1396,6 +1406,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
+
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", PLD.JobID)]
+        PaladinReprisalProtection = 11030,
 
         #endregion
         // ====================================================================================
@@ -2060,6 +2073,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
+
+        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", WAR.JobID)]
+        WarriorReprisalProtection = 18030,
 
         #endregion
         // ====================================================================================

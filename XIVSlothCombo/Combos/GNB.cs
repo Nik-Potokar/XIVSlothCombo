@@ -14,6 +14,7 @@ namespace XIVSlothComboPlugin.Combos
         public const uint
             LowBlow = 7540,
             Interject = 7538,
+            Reprisal = 7535,
             KeenEdge = 16137,
             NoMercy = 16138,
             BrutalShell = 16139,
@@ -53,7 +54,8 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
                 BowShock = 1838,
-                SonicBreak = 1837;
+                SonicBreak = 1837,
+                Reprisal = 1193;
         }
 
         public static class Levels
@@ -372,6 +374,20 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    
+    internal class GunbreakerReprisalProtection : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerReprisalProtection;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is GNB.Reprisal)
+            {
+                if (TargetHasEffect(GNB.Debuffs.Reprisal) && IsOffCooldown(GNB.Reprisal))
+                {
+                    return GNB.LowBlow;
+                }
+            }
 
     internal class GunbreakerCDsonNMFeature : CustomCombo
     {
