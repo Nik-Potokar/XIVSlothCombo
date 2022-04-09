@@ -254,13 +254,13 @@ namespace XIVSlothComboPlugin.Combos
                                         if (IsOffCooldown(DRK.SaltedEarth) || (HasEffect(DRK.Buffs.SaltedEarth) && IsOffCooldown(DRK.SaltAndDarkness) && level >= DRK.Levels.SaltAndDarkness))
                                             return OriginalHook(DRK.SaltedEarth);
                                     }
-                                }
 
-                                if (level >= DRK.Levels.Plunge && IsEnabled(CustomComboPreset.DarkPlungeFeature))
-                                {
-                                    if ((GetRemainingCharges(DRK.Plunge) > plungeChargesRemaining && IsNotEnabled(CustomComboPreset.DarkPlungeBurstOption)) ||
-                                        (IsEnabled(CustomComboPreset.DarkPlungeBurstOption) && GetRemainingCharges(DRK.Plunge) > 0 && ((gauge.ShadowTimeRemaining > 1 && IsOnCooldown(DRK.Delirium)) || GetCooldownRemainingTime(DRK.Buffs.Delirium) > 50))) //burst feature
-                                        return DRK.Plunge;
+                                    if (level >= DRK.Levels.Plunge && IsEnabled(CustomComboPreset.DarkPlungeFeature))
+                                    {
+                                        if ((GetRemainingCharges(DRK.Plunge) > plungeChargesRemaining && IsNotEnabled(CustomComboPreset.DarkPlungeBurstOption)) ||
+                                            (IsEnabled(CustomComboPreset.DarkPlungeBurstOption) && GetRemainingCharges(DRK.Plunge) > 0 && gauge.ShadowTimeRemaining > 1 && IsOnCooldown(DRK.Delirium))) //burst feature
+                                            return DRK.Plunge;
+                                    }
                                 }
                             }
                         }
@@ -291,9 +291,8 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                     }
+                    return DRK.HardSlash;
                 }
-
-                return DRK.HardSlash;
             }
 
             return actionID;
