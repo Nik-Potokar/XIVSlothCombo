@@ -1023,7 +1023,7 @@ namespace XIVSlothComboPlugin
         MachinistAutoBarrel = 8019,
 
         [ConflictingCombos(MachinistMainCombo)]
-        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!", MCH.JobID, 0, "", "Goodbye, brain!")]
+        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!\nMade to work optimally with a 2.5 GCD.", MCH.JobID, 0, "", "Goodbye, brain!")]
         MachinistSimpleFeature = 8020,
 
         [ParentCombo(MachinistSimpleFeature)]
