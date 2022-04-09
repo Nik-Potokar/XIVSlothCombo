@@ -12,7 +12,8 @@ env:
   PUBLIC_NAME: XIVSlothCombo
   SOLUTION_NAME: XIVSlothCombo
   INTERNAL_NAME: XIVSlothCombo
-  RELEASE_DIR: XIVSlothCombo\bin\Release\XIVSlothCombo
+  VERSION: 3.0.9.2
+  RELEASE_DIR: $env:AppData\XIVLauncher\installedPlugins\XIVSlothCombo\${{ env.VERSION }}
   PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
   PR_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
 
