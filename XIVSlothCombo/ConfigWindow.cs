@@ -188,7 +188,7 @@ namespace XIVSlothComboPlugin
 
 
 
-            ImGui.BeginChild("scrolling", new Vector2(0, -1), true);
+            ImGui.BeginChild("scrolling", new Vector2(0, -30), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
@@ -240,8 +240,13 @@ namespace XIVSlothComboPlugin
             }
 
             ImGui.PopStyleVar();
-
             ImGui.EndChild();
+
+            
+            if (ImGui.Button("Got an issue? Click this button and report it!"))
+            {
+                Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
+            }
 
         }
 
@@ -382,7 +387,41 @@ namespace XIVSlothComboPlugin
                     ImGui.Indent();
 
                     foreach (var (childPreset, childInfo) in children)
-                        this.DrawPreset(childPreset, childInfo, ref i);
+
+                    {
+                        if (Service.Configuration.HideConflictedCombos)
+                        {
+                            //Presets that are contained within a ConflictedAttribute
+                            var conflictOriginals = Service.Configuration.GetConflicts(childPreset);
+
+                            //Presets with the ConflictedAttribute
+                            var conflictsSource = Service.Configuration.GetAllConflicts();
+
+                            if (conflictsSource.Where(x => x == childPreset || x == preset).Count() == 0 || conflictOriginals.Length == 0)
+                            {
+                                this.DrawPreset(childPreset, childInfo, ref i);
+                                continue;
+                            }
+                            if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
+                            {
+                                Service.Configuration.EnabledActions.Remove(childPreset);
+                                Service.Configuration.Save();
+                            }
+                            else
+                            {
+                                this.DrawPreset(childPreset, childInfo, ref i);
+                                continue;
+                            }
+
+                        }
+                        else
+                        {
+                            this.DrawPreset(childPreset, childInfo, ref i);
+                        }
+
+                        
+                    }
+                        
 
                     ImGui.Unindent();
                 }
