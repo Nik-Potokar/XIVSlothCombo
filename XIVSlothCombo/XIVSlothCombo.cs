@@ -16,6 +16,7 @@ namespace XIVSlothComboPlugin
 
         private readonly WindowSystem windowSystem;
         private readonly ConfigWindow configWindow;
+        private readonly GlobalSettings globals;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XIVComboExpandedPlugin"/> class.
@@ -38,8 +39,10 @@ namespace XIVSlothComboPlugin
             Service.IconReplacer = new IconReplacer();
 
             this.configWindow = new();
+            this.globals = new();
             this.windowSystem = new("XIVSlothCombo");
             this.windowSystem.AddWindow(this.configWindow);
+            this.windowSystem.AddWindow(this.globals);
 
             Service.Interface.UiBuilder.OpenConfigUi += this.OnOpenConfigUi;
             Service.Interface.UiBuilder.Draw += this.windowSystem.Draw;
@@ -68,6 +71,9 @@ namespace XIVSlothComboPlugin
 
         private void OnOpenConfigUi()
             => this.configWindow.IsOpen = true;
+
+        public void DrawGlobalWindow()
+            => this.globals.IsOpen = true;
 
         private void OnCommand(string command, string arguments)
         {

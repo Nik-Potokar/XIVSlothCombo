@@ -1,12 +1,12 @@
 ﻿using Dalamud.Interface.Colors;
+using Dalamud.Utility;
 using ImGuiNET;
+using ImGuiScene;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
-using XIVSlothComboPlugin;
+using Log = Dalamud.Logging.PluginLog;
 
 namespace XIVSlothComboPlugin.ConfigFunctions
 {
@@ -27,7 +27,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
-            
+
 
             if (inputChanged)
             {
@@ -44,8 +44,8 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 inputChanged = false;
             }
 
-            
-            
+
+
             ImGui.Spacing();
         }
 
@@ -103,12 +103,47 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Unindent();
             ImGui.Spacing();
         }
-
-        public static void DrawJobGrid(string config)
+        /// <summary>
+        /// Draws an image located inside the plugins images folder
+        /// </summary>
+        /// <param name="imageName">Name of the image. Must be locted inside the images folder.</param>
+        /// <param name="height">The output height of the image.</param>
+        /// <param name="width">The output width of the image.</param>
+        public static void DrawImage(string imageName, int height, int width)
         {
-            
+            var path = Path.Combine(Service.PluginFolder, "images", imageName);
+
+            if (File.Exists(path))
+            {
+                var slothImage = Service.Interface.UiBuilder.LoadImage(path);
+                if (slothImage != null)
+                {
+                    ImGui.Image(slothImage.ImGuiHandle, new Vector2(width, height));
+                }
+            }
         }
 
+        public async static Task DrawDownloadedImage(string directImgUrl, int height, int width)
+        {
+            if (!directImgUrl.IsNullOrEmpty())
+            {
+                byte[]? imageData = Service.Configuration.GetImageInCache(directImgUrl);
+                if (imageData == null)
+                {
+                    Log.Debug("IsNull");
+                    if (await ImageHandler.TryGetImage(directImgUrl))
+                    {
+                        imageData = Service.Configuration.GetImageInCache(directImgUrl);
+                    }
+                }
+
+                if (imageData != null)
+                {
+                    ImGui.Image(Service.Interface.UiBuilder.LoadImage(imageData).ImGuiHandle, new Vector2(width, height));
+                }
+
+            }
+        }
         public static int RoundOff(this int i, uint sliderIncrement)
         {
             double sliderAsDouble = Convert.ToDouble(sliderIncrement);

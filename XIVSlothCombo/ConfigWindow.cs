@@ -5,8 +5,10 @@ using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 using XIVSlothComboPlugin.ConfigFunctions;
@@ -88,13 +90,62 @@ namespace XIVSlothComboPlugin
         }
         public override void Draw()
         {
-            ImGui.Columns(2, null, false);
-            ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
+
+            if (ImGui.BeginTabBar("SlothBar"))
+            {
+                if (ImGui.BeginTabItem("Combos/Features"))
+                {
+                    DrawMainWindow();
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem("Settings"))
+                {
+                    DrawGlobalSettings();
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem("About Sloth Combo / Report an Issue"))
+                {
+                    DrawAboutUs();
+                    ImGui.EndTabItem();
+                }
+                ImGui.EndTabBar();
+            }
+
+            //ImGui.Dummy(new Vector2(0, 10));
+            
 
 
-            ImGui.NextColumn();
+
+        }
+
+        private void DrawAboutUs()
+        {
+            ImGui.BeginChild("about", new Vector2(0, -40), true);
+
+            ImGui.TextWrapped($@"Big Thanks to attick and daemitus for creating most of the original code, as well as Grammernatzi and PrincessRTFM for providing a lot of extra tweaks and inspiration. Please show them support for their original work! <3");
+            ImGui.TextWrapped("Brought to you with love and sloth, by: Aki, Iaotle, Codemned, damolitionn, k-kz, Taurenkey, Augporto, grimgal and many other contributors!");
             ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!");
-            ImGui.NextColumn();
+            ImGui.PushStyleColor(ImGuiCol.Button, ImGuiColors.ParsedPurple);
+            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, ImGuiColors.HealerGreen);
+            if (ImGui.Button("Click here to join our Discord Server!"))
+            {
+                Util.OpenLink("https://discord.gg/xT7zyjzjtY");
+            }
+            ImGui.PopStyleColor();
+            ImGui.PopStyleColor();
+            if (ImGui.Button("Got an issue? Click this button and report it!"))
+            {
+                Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
+            }
+            ImGui.EndChild();
+        }
+
+        private void DrawGlobalSettings()
+        {
+            ImGui.BeginChild("main", new Vector2(0, -40), true);
+            ImGui.Text("This tab allows you to customise your options when enabling features.");
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
             if (ImGui.Checkbox("Enable PvP Combos", ref showSecrets))
@@ -110,17 +161,6 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTooltip();
             }
 
-
-            ImGui.NextColumn();
-            ImGui.PushStyleColor(ImGuiCol.Button, ImGuiColors.ParsedPurple);
-            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, ImGuiColors.HealerGreen);
-            if (ImGui.Button("Click here to join our Discord Server!"))
-            {
-                Util.OpenLink("https://discord.gg/xT7zyjzjtY");
-            }
-            ImGui.PopStyleColor();
-            ImGui.PopStyleColor();
-            ImGui.Columns(1);
             var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
 
 
@@ -185,10 +225,14 @@ namespace XIVSlothComboPlugin
                 Service.Configuration.Save();
             }
 
+            ImGui.EndChild();
+        }
 
+        private void DrawMainWindow()
+        {
+            ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
+            ImGui.BeginChild("scrolling", new Vector2(0, -40), true);
 
-
-            ImGui.BeginChild("scrolling", new Vector2(0, -30), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
@@ -242,15 +286,10 @@ namespace XIVSlothComboPlugin
             ImGui.PopStyleVar();
             ImGui.EndChild();
 
-            
-            if (ImGui.Button("Got an issue? Click this button and report it!"))
-            {
-                Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
-            }
+
+
 
         }
-
-        
         private void DrawPreset(CustomComboPreset preset, CustomComboInfoAttribute info, ref int i)
         {
             var enabled = Service.Configuration.IsEnabled(preset);
@@ -375,7 +414,7 @@ namespace XIVSlothComboPlugin
             }
 
             DrawUserConfigs(preset, enabled);
-            
+
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
@@ -419,9 +458,9 @@ namespace XIVSlothComboPlugin
                             this.DrawPreset(childPreset, childInfo, ref i);
                         }
 
-                        
+
                     }
-                        
+
 
                     ImGui.Unindent();
                 }
@@ -477,14 +516,14 @@ namespace XIVSlothComboPlugin
             #region ASTROLOGIAN
             if (preset == CustomComboPreset.AstrologianLucidFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###AST", 150, SliderIncrements.Hundreds);
-           
+
             if (preset == CustomComboPreset.AstroEssentialDignity)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
 
             #endregion
             // ====================================================================================
             #region BLACK MAGE
-            
+
             if (preset == CustomComboPreset.BlackAoEFoulOption && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolygotsStored, "Number of Polygot charges to store.\n(2 = Only use Polygot with Manafont)");
 
@@ -586,16 +625,16 @@ namespace XIVSlothComboPlugin
             }
             if (preset == CustomComboPreset.NinSimpleTrickFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
-            
+
             if (preset == CustomComboPreset.NinjaHuraijinFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
-            
+
             if (preset == CustomComboPreset.NinAeolianMugFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
-            
+
             if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
-            
+
             #endregion
             // ====================================================================================
             #region PALADIN
@@ -649,10 +688,10 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region RED MAGE
-           
+
             if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.",300,100);
-                
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.", 300, 100);
+
             #endregion
             // ====================================================================================
             #region SAGE
@@ -686,7 +725,7 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.CustomSoteriaFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomSoteria, "Set HP percentage value for Soteria to trigger");
-           
+
             if (preset == CustomComboPreset.CustomZoeFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomZoe, "Set HP percentage value for Zoe to trigger");
 
@@ -704,7 +743,7 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.CustomDruocholeFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomDruochole, "Set HP percentage value for Druochole to trigger");
-            
+
             if (preset == CustomComboPreset.CustomEukrasianDiagnosisFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomDiagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
 
@@ -718,8 +757,8 @@ namespace XIVSlothComboPlugin
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work###SCH", 150, SliderIncrements.Hundreds);
-            
-            
+
+
             #endregion
             // ====================================================================================
             #region SUMMONER
@@ -729,10 +768,10 @@ namespace XIVSlothComboPlugin
             #region WARRIOR
             if (preset == CustomComboPreset.WarriorInfuriateFellCleave)
                 ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
-                
+
             if (preset == CustomComboPreset.WarriorStormsPathCombo && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 30, WAR.Config.WarSurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
-                
+
             if (preset == CustomComboPreset.WarriorOnslaughtFeature && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 2, WAR.Config.WarKeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
 
@@ -741,7 +780,7 @@ namespace XIVSlothComboPlugin
             #region WHITE MAGE
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###WHM", 150, SliderIncrements.Hundreds);
-            
+
             #endregion
             // ====================================================================================
             #region DOH
@@ -757,5 +796,6 @@ namespace XIVSlothComboPlugin
             #endregion
 
         }
+
     }
 }

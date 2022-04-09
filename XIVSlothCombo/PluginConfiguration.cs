@@ -4,6 +4,7 @@ using System.Linq;
 
 using Dalamud.Configuration;
 using Dalamud.Utility;
+using ImGuiScene;
 using Newtonsoft.Json;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
@@ -153,6 +154,9 @@ namespace XIVSlothComboPlugin
         public bool AprilFoolsSlothIrl { get; set; } = false;
 
         [JsonProperty]
+        public Dictionary<string, byte[]> ImageCache { get; set; } = new();
+
+        [JsonProperty]
         private static Dictionary<string,float> CustomConfigValues { get; set; } = new Dictionary<string,float>();
 
         [JsonProperty]
@@ -201,6 +205,19 @@ namespace XIVSlothComboPlugin
         public void SetCustomBoolValue(string config, bool value)
         {
             CustomBoolValues[config] = value;
+        }
+
+        public byte[]? GetImageInCache(string url)
+        {
+            byte[]? output;
+
+            if (!ImageCache.TryGetValue(url, out output)) return null;
+
+            return output;
+        }
+        public void SetImageInCache(string url, byte[] image)
+        {
+            ImageCache[url] = image;
         }
     }
 }
