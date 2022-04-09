@@ -337,7 +337,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is WAR.Reprisal)
             {
-                if (TargetHasEffectAny(WAR.Debuffs.Reprisal))
+                if (TargetHasEffectAny(WAR.Debuffs.Reprisal) && IsOffCooldown(WAR.Reprisal))
                     return WHM.Stone1;
             }
             return actionID;
