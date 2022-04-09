@@ -1240,14 +1240,6 @@ namespace XIVSlothComboPlugin.Combos
                             (HasEffect(BRD.Buffs.RadiantFinale) || level < BRD.Levels.RadiantFinale) && gauge.SoulVoice >= 80) return BRD.ApexArrow;
                     }
                 }
-                else
-                {
-                    if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
-                        return BRD.BlastArrow;
-
-                    if (level >= BRD.Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
-                        return BRD.ApexArrow;
-                }
 
                 if (HasEffect(BRD.Buffs.StraightShotReady))
                 {
