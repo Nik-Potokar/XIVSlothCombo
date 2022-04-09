@@ -1153,26 +1153,21 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is RDM.Verthunder or RDM.Veraero or RDM.Scatter or RDM.Verthunder3 or RDM.Veraero3 or RDM.Impact)
             {
-                var canWeave = CanWeave(actionID);
-                var castingSpell = LocalPlayer.IsCasting;
-                var inCombat = HasCondition(ConditionFlag.InCombat);
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(RDM.Config.RdmLucidMpThreshold);
 
-                if (!canWeave || !inCombat || IsOnCooldown(RDM.LucidDreaming) || lastComboMove == RDM.EnchantedRedoublement || lastComboMove == RDM.Verflare || lastComboMove == RDM.Verholy || lastComboMove == RDM.Scorch) // Reset following weave window or exit combat if enemy dies
-                {
-                    showLucid = false;
-                    return actionID;
-                }
-
-                if (level >= RDM.Levels.LucidDreaming && IsOffCooldown(RDM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
+                if (level >= RDM.Levels.LucidDreaming && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
                 {
                     showLucid = true;
                 }
 
-                if (showLucid && canWeave && !castingSpell) // Change abilities to Lucid Dreaming for entire weave window
+                if (showLucid && CanSpellWeave(actionID) && HasCondition(ConditionFlag.InCombat) && IsOffCooldown(RDM.LucidDreaming) 
+                    && lastComboMove != RDM.EnchantedRiposte && lastComboMove != RDM.EnchantedZwerchhau 
+                    && lastComboMove != RDM.EnchantedRedoublement && lastComboMove != RDM.Verflare 
+                    && lastComboMove != RDM.Verholy && lastComboMove != RDM.Scorch) // Change abilities to Lucid Dreaming for entire weave window
                 {
                     return RDM.LucidDreaming;
                 }
+                showLucid = false;
             }
             return actionID;
         }

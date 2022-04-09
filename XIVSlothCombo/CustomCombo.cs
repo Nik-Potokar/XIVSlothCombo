@@ -473,6 +473,24 @@ namespace XIVSlothComboPlugin.Combos
 
         /// <summary>
         /// Checks if the provided action ID has cooldown remaining enough to weave against it
+        /// without causing clipping and checks if you're casting a spell to make it mage friendly
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
+        /// <returns>True or false.</returns>
+        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.7)
+        {
+            var castingSpell = LocalPlayer.IsCasting;
+
+            if (GetCooldown(actionID).CooldownRemaining > weaveTime && !castingSpell)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if the provided action ID has cooldown remaining enough to weave against it
         /// at the later half of the gcd without causing clipping (aka Delayed Weaving)
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
