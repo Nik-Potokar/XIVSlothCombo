@@ -478,7 +478,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>True or false.</returns>
         protected static bool CanDelayedWeave(uint actionID)
-           => GetCooldown(actionID).CooldownRemaining < 0.850 && GetCooldown(actionID).CooldownRemaining > 0.6;
+           => GetCooldown(actionID).CooldownRemaining < 1.250 && GetCooldown(actionID).CooldownRemaining > 0.6;
 
         /// <summary>
         /// Get a job gauge.
