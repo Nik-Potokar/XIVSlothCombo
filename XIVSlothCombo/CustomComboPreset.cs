@@ -353,7 +353,7 @@ namespace XIVSlothComboPlugin
         BardAoEComboFeature = 3008,
 
         [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature)]
-        [CustomComboInfo("Simple Bard", "Adds every single target ability except DoTs to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
+        [CustomComboInfo("Simple Bard", "Adds every single target ability to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
         SimpleBardFeature = 3009,
 
         [ParentCombo(SimpleBardFeature)]
@@ -1065,7 +1065,7 @@ namespace XIVSlothComboPlugin
         MachinistAutoBarrel = 8019,
 
         [ConflictingCombos(MachinistMainCombo)]
-        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!", MCH.JobID, 0, "", "Goodbye, brain!")]
+        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!\nMade to work optimally with a 2.5 GCD.", MCH.JobID, 0, "", "Goodbye, brain!")]
         MachinistSimpleFeature = 8020,
 
         [ParentCombo(MachinistSimpleFeature)]

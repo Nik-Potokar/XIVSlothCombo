@@ -438,7 +438,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (canWeaveNormal && gauge.Heat >= 50 && !gauge.IsOverheated && openerFinished && IsOffCooldown(MCH.Wildfire) && level >= MCH.Levels.Wildfire &&
                         IsEnabled(CustomComboPreset.MachinistSimpleWildCharge))
                 {
-                    if (CombatEngageDuration().Minutes == 0 && GetRemainingCharges(MCH.Reassemble) == 0) return MCH.Wildfire;
+                    if (CombatEngageDuration().Minutes == 0 && GetRemainingCharges(MCH.Reassemble) == 0 && CanDelayedWeave(actionID) ) return MCH.Wildfire;
                     else if (CombatEngageDuration().Minutes > 0 && (GetCooldownRemainingTime(MCH.ChainSaw) > 50 || level < MCH.Levels.ChainSaw) ) return MCH.Wildfire;
                 }     
 
@@ -450,9 +450,9 @@ namespace XIVSlothComboPlugin.Combos
                         var ricochetCharges = GetRemainingCharges(MCH.Ricochet);
                         var usingReasmSoon = IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && GetRemainingCharges(MCH.Reassemble) > 0 && openerFinished &&
                             (
-                             (GetCooldownRemainingTime(MCH.Drill) < 2 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
-                             (GetCooldownRemainingTime(MCH.AirAnchor) < 2 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
-                             (GetCooldownRemainingTime(MCH.ChainSaw) < 2 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5))
+                             (GetCooldownRemainingTime(MCH.Drill) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
+                             (GetCooldownRemainingTime(MCH.AirAnchor) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
+                             (GetCooldownRemainingTime(MCH.ChainSaw) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5))
                             );
 
                         //var chargeLimit = openerFinished || level < MCH.Levels.Ricochet ? 0 : 1;
@@ -550,9 +550,9 @@ namespace XIVSlothComboPlugin.Combos
                     var ricochetCharges = GetRemainingCharges(MCH.Ricochet);
                     var usingReasmSoon = IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && GetRemainingCharges(MCH.Reassemble) > 0 && openerFinished &&
                         (
-                         (GetCooldownRemainingTime(MCH.Drill) < 2 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
-                         (GetCooldownRemainingTime(MCH.AirAnchor) < 2 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
-                         (GetCooldownRemainingTime(MCH.ChainSaw) < 2 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5))
+                         (GetCooldownRemainingTime(MCH.Drill) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
+                         (GetCooldownRemainingTime(MCH.AirAnchor) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
+                         (GetCooldownRemainingTime(MCH.ChainSaw) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5))
                         );
 
                     //var chargeLimit = openerFinished || level < MCH.Levels.Ricochet ? 0 : 1;
