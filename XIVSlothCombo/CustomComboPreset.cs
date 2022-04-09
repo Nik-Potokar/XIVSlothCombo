@@ -627,7 +627,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region DARK KNIGHT
 
-        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain.", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
+        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Dark Knight)", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
         DarkSouleaterCombo = 5000,
 
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, 0, "", "Ugly name for an ugly job")]
@@ -642,7 +642,7 @@ namespace XIVSlothComboPlugin
         DRKOvercapFeature = 5003,
 
         [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("Living Shadow Feature", "Living shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "Trick everyone into thinking a party member is standing where they shouldn't be!")]
+        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "Trick everyone into thinking a party member is standing where they shouldn't be!")]
         DRKLivingShadowFeature = 5004,
 
         [ParentCombo(DarkSouleaterCombo)]
