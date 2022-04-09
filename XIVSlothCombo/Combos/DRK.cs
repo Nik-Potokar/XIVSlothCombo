@@ -231,7 +231,7 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (IsEnabled(CustomComboPreset.DarkBloodWeaponOption) && IsOffCooldown(DRK.BloodWeapon) && level >= DRK.Levels.BloodWeapon)
                                         return DRK.BloodWeapon;
-                                    if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && IsOffCooldown(DRK.Delirium) && level >= DRK.Levels.Delirium && gauge.Blood < 50)
+                                    if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && IsOffCooldown(DRK.Delirium) && level >= DRK.Levels.Delirium)
                                         return DRK.Delirium;
                                 }
 
