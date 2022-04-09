@@ -1390,7 +1390,7 @@ namespace XIVSlothComboPlugin
         PaladinReqAoEComboFeature = 11022,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Expiacion and Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
+        [CustomComboInfo("Expiacion and Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinExpiacionScornFeature = 11023,
 
         [ParentCombo(PaladinProminenceCombo)]
