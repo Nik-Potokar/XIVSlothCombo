@@ -731,7 +731,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
         
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", DRK.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", DRK.JobID)]
         DarkKnightReprisalProtection = 5030,
 
         #endregion
@@ -994,7 +994,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
         
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", GNB.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", GNB.JobID)]
         GunbreakerReprisalProtection = 7030,
         
         #endregion
@@ -1407,7 +1407,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
 
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", PLD.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", PLD.JobID)]
         PaladinReprisalProtection = 11030,
 
         #endregion
@@ -2074,7 +2074,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
 
-        [CustomComboInfo("Double Reprisal Protection", "Replaces Reprisal with Low Blow when target already has the effect", WAR.JobID)]
+        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", WAR.JobID)]
         WarriorReprisalProtection = 18030,
 
         #endregion
