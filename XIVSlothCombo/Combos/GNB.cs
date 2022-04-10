@@ -110,7 +110,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && gauge.Ammo == 0 && IsOffCooldown(GNB.Bloodfest) && level >= GNB.Levels.Bloodfest)
                             return GNB.Bloodfest;
 
-                        if (IsEnabled(CustomComboPreset.GunbreakerNoMercyonST) && level >= GNB.Levels.NoMercy && 
+                        if (IsEnabled(CustomComboPreset.GunbreakerNoMercyonST) && CanDelayedWeave(actionID) && level >= GNB.Levels.NoMercy && 
                             ((IsOffCooldown(GNB.NoMercy) && IsOffCooldown(GNB.GnashingFang) && gauge.Ammo == GNB.MaxCartridges(level) && level >= GNB.Levels.BurstStrike) || //Cartridges unlocked
                             IsOffCooldown(GNB.NoMercy) && level < GNB.Levels.BurstStrike)) //no cartridges unlocked
                             return GNB.NoMercy;
@@ -224,7 +224,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var gauge = GetJobGauge<GNBGauge>();
 
-                if (IsOffCooldown(GNB.NoMercy) && IsOffCooldown(GNB.GnashingFang) && IsEnabled(CustomComboPreset.GunbreakerNoMercyonGF))
+                if (IsOffCooldown(GNB.NoMercy) &&CanDelayedWeave(actionID) && IsOffCooldown(GNB.GnashingFang) && IsEnabled(CustomComboPreset.GunbreakerNoMercyonGF))
                     return GNB.NoMercy;
 
                 if (HasEffect(GNB.Buffs.NoMercy) && IsOnCooldown(GNB.GnashingFang))
