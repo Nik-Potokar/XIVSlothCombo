@@ -86,6 +86,11 @@ namespace XIVSlothComboPlugin.Combos
                 BladeOfTruth = 90,
                 BladeOfValor = 90;
         }
+        public static class Config
+        {
+            public const string
+                PLDKeepInterveneCharges = "PLDKeepInterveneCharges";
+        }
     }
 
     internal class PaladinGoringBladeCombo : CustomCombo
@@ -125,57 +130,44 @@ namespace XIVSlothComboPlugin.Combos
                 var goingBladeDebuffTimer = FindTargetEffect(PLD.Debuffs.GoringBlade);
                 var FightOrFlight = HasEffect(PLD.Buffs.FightOrFlight);
                 var FightOrFlightCD = GetCooldown(PLD.FightOrFlight);
-                var reqCD = GetCooldown(PLD.Requiescat);
                 var requiescat = FindEffect(PLD.Buffs.Requiescat);
                 var valorDebuffTimer = FindTargetEffect(PLD.Debuffs.BladeOfValor);
-                var interveneCD = GetCooldown(PLD.Intervene);
-                var riotcd = GetCooldown(actionID);
-                var customGCDHigh = Service.Configuration.CustomGCDValueHigh;
-                var customGCDLow = Service.Configuration.CustomGCDValueLow;
-                var fofremainingTime = FindEffect(PLD.Buffs.FightOrFlight);
+                var interveneChargesRemaining = Service.Configuration.GetCustomIntValue(PLD.Config.PLDKeepInterveneCharges);
+
+                // Uptime Features
+                if (!InMeleeRange(true))
+                {
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob)
+                        return PLD.ShieldLob;
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit) 
+                        return PLD.HolySpirit;
+                }
 
                 if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature))
                 {
-                    if (level >= PLD.Levels.FightOrFlight && lastComboMove == PLD.FastBlade && riotcd.CooldownRemaining < customGCDLow && riotcd.CooldownRemaining > customGCDHigh && !FightOrFlightCD.IsCooldown)
+                    if (level >= PLD.Levels.FightOrFlight && lastComboMove == PLD.FastBlade && CanDelayedWeave(actionID) && IsOffCooldown(PLD.FightOrFlight))
                         return PLD.FightOrFlight;
                 }
 
-                if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature))
+                // oGCD features
+                if (CanWeave(actionID))
                 {
-                    if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade && CanWeave(actionID))
-                        return OriginalHook(PLD.SpiritsWithin);
-                    if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade && CanWeave(actionID))
-                        return PLD.CircleOfScorn;
+                    if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade)
+                    {
+                        if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin))
+                            return OriginalHook(PLD.SpiritsWithin);
+                        if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn))
+                            return PLD.CircleOfScorn;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= PLD.Levels.Intervene && GetRemainingCharges(PLD.Intervene) > interveneChargesRemaining)
+                        return PLD.Intervene;
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= PLD.Levels.Requiescat)
                 {
-                    if (HasEffect(PLD.Buffs.FightOrFlight) && fofremainingTime.RemainingTime < 17 && !reqCD.IsCooldown)
+                    if (HasEffect(PLD.Buffs.FightOrFlight) && GetBuffRemainingTime(PLD.Buffs.FightOrFlight) < 17 && IsOffCooldown(PLD.Requiescat))
                         return PLD.Requiescat;
-                }
-
-                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob)
-                {
-                    if (!InMeleeRange(true))
-                        return PLD.ShieldLob;
-                }
-
-                if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit)
-                {
-                    if (!InMeleeRange(true))
-                        return PLD.HolySpirit;
-                }
-
-                if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= PLD.Levels.Intervene)
-                {
-                    if (interveneCD.CooldownRemaining < 30 && CanWeave(actionID))
-                        return PLD.Intervene;
-                }
-
-                if (IsEnabled(CustomComboPreset.PaladinInterveneFeatureOption) && level >= PLD.Levels.Intervene)
-                {
-                    if (!interveneCD.IsCooldown && CanWeave(actionID))
-                        return PLD.Intervene;
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
@@ -212,21 +204,10 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption))
                 {
-                    if ((lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime > 10 && level >= PLD.Levels.RoyalAuthority) || (lastComboMove == PLD.RiotBlade && TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime > 10 && level >= PLD.Levels.RoyalAuthority))
-                        return PLD.RoyalAuthority;
-                    else
-                    if (
-                        level >= PLD.Levels.GoringBlade &&
-                        lastComboMove == PLD.RiotBlade &&
-                        (
-                            (!goringBladeDebuffonTarget) ||
+                    if (level >= PLD.Levels.GoringBlade && lastComboMove == PLD.RiotBlade && ((!goringBladeDebuffonTarget) ||
                             (TargetHasEffect(PLD.Debuffs.BladeOfValor) && valorDebuffTimer.RemainingTime < 5) ||
-                            (TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime < 5)
-                        )
-                    )
-                    {
+                            (TargetHasEffect(PLD.Debuffs.GoringBlade) && goingBladeDebuffTimer.RemainingTime < 5)))
                         return PLD.GoringBlade;
-                    }
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature))
@@ -237,14 +218,6 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (comboTime > 0)
-                {
-                    if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
-                        return PLD.RiotBlade;
-                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RoyalAuthority)
-                        return PLD.RoyalAuthority;
-                    
-                }
                 if (IsEnabled(CustomComboPreset.PaladinAtonementTestFeature))
                 {
                     if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && FightOrFlightCD.CooldownRemaining >= 2 && FightOrFlightCD.CooldownRemaining <= 50)
@@ -257,12 +230,18 @@ namespace XIVSlothComboPlugin.Combos
                         return PLD.Atonement;
                 }
 
-
                 if (comboTime > 0)
                 {
+                    if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
+                        return PLD.RiotBlade;
                     if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RageOfHalone)
-                        return PLD.RageOfHalone;
+                    {
+                        if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption) && level > PLD.Levels.GoringBlade)
+                    }
+                    return OriginalHook(PLD.RageOfHalone);
+
                 }
+
                 return PLD.FastBlade;
             }
 

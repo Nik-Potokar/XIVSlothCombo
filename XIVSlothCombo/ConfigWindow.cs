@@ -595,33 +595,12 @@ namespace XIVSlothComboPlugin
             
             if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
-            
+
             #endregion
             // ====================================================================================
             #region PALADIN
-            if (preset == CustomComboPreset.PaladinFightOrFlightFeature)
-            {
-                var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
-                var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
-
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
-
-
-
-
-                if (inputChanged)
-                {
-                    Service.Configuration.CustomGCDValueHigh = CustomGCDValueHigh;
-                    Service.Configuration.CustomGCDValueLow = CustomGCDValueLow;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
+            if (preset == CustomComboPreset.PaladinInterveneFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLDKeepInterveneCharges, "How many charges to keep ready? (0 = Use All)");
 
             //if (preset == CustomComboPreset.SkillCooldownRemaining)
             //{
@@ -649,7 +628,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region RED MAGE
-           
+
             if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.",300,100);
                 
