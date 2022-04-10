@@ -1172,6 +1172,27 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+
+    //RedMageSwiftVerraise
+    //Swiftcast combos to Verraise while Swiftcast buff is active
+    internal class RedMageSwiftVerraise : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageSwiftVerraise;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is RDM.Swiftcast)
+            {
+                if (IsEnabled(CustomComboPreset.RedMageSwiftVerraise))
+                {
+                    if (HasEffect(RDM.Buffs.Swiftcast))
+                        return RDM.Verraise;
+                }
+                return OriginalHook(RDM.Swiftcast);
+            }
+            return actionID;
+        }
+    }
 }
 
 
