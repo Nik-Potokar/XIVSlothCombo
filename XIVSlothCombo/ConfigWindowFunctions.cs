@@ -1,8 +1,8 @@
 ﻿using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ImGuiNET;
-using ImGuiScene;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -144,6 +144,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
             }
         }
+
         public static int RoundOff(this int i, uint sliderIncrement)
         {
             double sliderAsDouble = Convert.ToDouble(sliderIncrement);

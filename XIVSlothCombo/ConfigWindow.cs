@@ -139,7 +139,10 @@ namespace XIVSlothComboPlugin
             {
                 Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
             }
+            ConfigWindowFunctions.DrawPriorityList();
+
             ImGui.EndChild();
+
         }
 
         private void DrawGlobalSettings()
