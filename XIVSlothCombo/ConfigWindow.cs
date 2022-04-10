@@ -139,7 +139,7 @@ namespace XIVSlothComboPlugin
             {
                 Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
             }
-            ConfigWindowFunctions.DrawPriorityList();
+
 
             ImGui.EndChild();
 
@@ -188,10 +188,6 @@ namespace XIVSlothComboPlugin
 
             #endregion
 
-
-            var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
-
-
             #region SubCombos
 
 
@@ -230,6 +226,8 @@ namespace XIVSlothComboPlugin
             #endregion
 
             #region SpecialEvent
+
+            var isSpecialEvent = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
             var slothIrl = isSpecialEvent ? Service.Configuration.SpecialEvent : false;
             if (isSpecialEvent)
 
@@ -265,7 +263,8 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
                 ImGui.EndTooltip();
             }
-            
+
+            #endregion
 
             ImGui.EndChild();
         }

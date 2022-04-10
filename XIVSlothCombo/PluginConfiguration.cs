@@ -238,9 +238,12 @@ namespace XIVSlothComboPlugin
 
             return output;
         }
+
         public void SetImageInCache(string url, byte[] image)
         {
             ImageCache[url] = image;
+
+        }
 
         public bool[] GetCustomBoolArrayValue(string config)
         {

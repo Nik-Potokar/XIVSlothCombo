@@ -112,10 +112,6 @@ namespace XIVSlothComboPlugin.Combos
                 AstroEssentialDignity = "ASTCustomEssentialDignity";
         }
 
-        public static class Config
-        {
-
-        }
         public static class MeleeCardTargets
         {
             public const string

@@ -147,6 +147,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 }
 
             }
+        }
 
         public static void DrawJobGridMultiChoice(string config)
         {
