@@ -191,6 +191,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID, 0)]
         ExaltationFeature = 1028,
 
+        [TrustIncompatible]
+        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+        [CustomComboInfo("Auto-Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        AstAutoCardTarget = 1029,
+
+        [TrustIncompatible]
+        [ParentCombo(AstAutoCardTarget)]
+        [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
+        AstrologianTargetLock = 1030,
+
+        [TrustIncompatible]
+        [ParentCombo(AstAutoCardTarget)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for auto card target selection", AST.JobID)]
+        AstrologianTargetExtraFeature = 1031,
+
 
         #endregion
         // ====================================================================================

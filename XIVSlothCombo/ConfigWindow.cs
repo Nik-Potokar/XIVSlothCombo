@@ -30,7 +30,7 @@ namespace XIVSlothComboPlugin
         public ConfigWindow()
             : base("Sloth Combo Setup")
         {
-            var p = Service.Configuration.AprilFoolsSlothIrl;
+            var p = Service.Configuration.SpecialEvent;
 
             this.RespectCloseHotkey = true;
 
@@ -105,6 +105,7 @@ namespace XIVSlothComboPlugin
                     ImGui.EndTabItem();
                 }
 
+
                 if (ImGui.BeginTabItem("About Sloth Combo / Report an Issue"))
                 {
                     DrawAboutUs();
@@ -112,10 +113,9 @@ namespace XIVSlothComboPlugin
                 }
                 ImGui.EndTabBar();
             }
-
-            //ImGui.Dummy(new Vector2(0, 10));
             
 
+           
 
 
         }
@@ -150,8 +150,10 @@ namespace XIVSlothComboPlugin
             ImGui.BeginChild("main", new Vector2(0, -40), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
 
+            #region PvPCombos
+ 
             var showSecrets = Service.Configuration.EnableSecretCombos;
-            if (ImGui.Checkbox("Enable PvP Combos", ref showSecrets))
+            if (ImGui.Checkbox("Show PvP Combos", ref showSecrets))
             {
                 Service.Configuration.EnableSecretCombos = showSecrets;
                 Service.Configuration.Save();
@@ -163,8 +165,34 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Adds PVP Combos To The Combo Setup Screen");
                 ImGui.EndTooltip();
             }
+            ImGui.NextColumn();
+
+            #endregion
+
+            #region TrustIncompatibles
+
+            var showTrustIncompatible = Service.Configuration.EnableTrustIncompatibles;
+            if (ImGui.Checkbox("Show Trust Incompatible Combos", ref showTrustIncompatible))
+            {
+                Service.Configuration.EnableTrustIncompatibles = showTrustIncompatible;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("These features won't work in a trust run due to technical restraints.");
+                ImGui.EndTooltip();
+            }
+            ImGui.NextColumn();
+
+            #endregion
+
 
             var isAprilFools = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
+
+
+            #region SubCombos
 
 
             var hideChildren = Service.Configuration.HideChildren;
@@ -179,6 +207,11 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Hides all options a combo might have until you enable it.");
                 ImGui.EndTooltip();
             }
+            ImGui.NextColumn();
+
+            #endregion
+
+            #region Conflicting
 
             var hideConflicting = Service.Configuration.HideConflictedCombos;
             if (ImGui.Checkbox("Hide Conflicted Combos", ref hideConflicting))
@@ -193,6 +226,27 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Hides any combos that conflict with anything you have selected.");
                 ImGui.EndTooltip();
             }
+
+            #endregion
+
+            #region SpecialEvent
+            var slothIrl = isSpecialEvent ? Service.Configuration.SpecialEvent : false;
+            if (isSpecialEvent)
+
+            {
+
+                if (ImGui.Checkbox("Sloth Mode!?", ref slothIrl))
+                {
+                    Service.Configuration.SpecialEvent = slothIrl;
+                    Service.Configuration.Save();
+                }
+            }
+            else
+            {
+                Service.Configuration.SpecialEvent = false;
+                Service.Configuration.Save();
+            }
+
 
             float offset = (float)Service.Configuration.MeleeOffset;
 
@@ -211,22 +265,7 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
                 ImGui.EndTooltip();
             }
-
-            var slothIrl = isAprilFools ? Service.Configuration.AprilFoolsSlothIrl : false;
-            if (isAprilFools)
-            {
-
-                if (ImGui.Checkbox("Sloth Mode!?", ref slothIrl))
-                {
-                    Service.Configuration.AprilFoolsSlothIrl = slothIrl;
-                    Service.Configuration.Save();
-                }
-            }
-            else
-            {
-                Service.Configuration.AprilFoolsSlothIrl = false;
-                Service.Configuration.Save();
-            }
+            
 
             ImGui.EndChild();
         }
@@ -235,7 +274,6 @@ namespace XIVSlothComboPlugin
         {
             ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, -40), true);
-
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
@@ -297,12 +335,17 @@ namespace XIVSlothComboPlugin
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = Service.Configuration.IsSecret(preset);
+            var trust = Service.Configuration.IsTrustIncompatible(preset);
             var showSecrets = Service.Configuration.EnableSecretCombos;
+            var showTrusts = Service.Configuration.EnableTrustIncompatibles;
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
-            var irlsloth = Service.Configuration.AprilFoolsSlothIrl;
+            var irlsloth = Service.Configuration.SpecialEvent;
 
             if (secret && !showSecrets)
+                return;
+
+            if (trust && !showTrusts)
                 return;
 
             ImGui.PushItemWidth(200);
@@ -368,6 +411,24 @@ namespace XIVSlothComboPlugin
                 {
                     ImGui.BeginTooltip();
                     ImGui.TextUnformatted("This is a PVP Combo (Only Works in PVP Enabled Areas)");
+                    ImGui.EndTooltip();
+                }
+            }
+            if (trust)
+            {
+                ImGui.SameLine();
+                ImGui.Text("  ");
+                ImGui.SameLine();
+                ImGui.PushFont(UiBuilder.IconFont);
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+                ImGui.Text(FontAwesomeIcon.UserFriends.ToIconString());
+                ImGui.PopStyleColor();
+                ImGui.PopFont();
+
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.BeginTooltip();
+                    ImGui.TextUnformatted("This feature does not work in trust runs.");
                     ImGui.EndTooltip();
                 }
             }

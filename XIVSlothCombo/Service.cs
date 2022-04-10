@@ -5,6 +5,7 @@ using Dalamud.Game.ClientState.Buddy;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge;
 using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.Interface;
@@ -108,6 +109,7 @@ namespace XIVSlothComboPlugin
         internal static TargetManager TargetManager { get; private set; } = null!;
 
 
+
         /// <summary>
         /// Returns the Plugin Folder location
         /// </summary>
@@ -121,5 +123,12 @@ namespace XIVSlothComboPlugin
                 return Path.GetDirectoryName(path);
             }
         }
+
+        /// <summary>
+        /// Gets the Dalamud party list.
+        /// </summary>
+        [PluginService]
+        internal static PartyList PartyList { get; private set; } = null!;
+
     }
 }
