@@ -291,8 +291,8 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                     }
-                    return DRK.HardSlash;
                 }
+                return DRK.HardSlash;
             }
 
             return actionID;
