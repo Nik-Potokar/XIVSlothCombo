@@ -2085,6 +2085,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", WAR.JobID)]
         WarriorReprisalProtection = 18030,
 
+        [CustomComboInfo("Simple Mitigation", "Puts mitigation abilities on Rampart. Set priority using sliders.\n[0 = Disabled, Highest appears first.]\n**Shake It Off will only appear when all affected buffs have less than 2sec remaining.**", WAR.JobID)]
+        WarriorSimpleMitigation = 18040,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE

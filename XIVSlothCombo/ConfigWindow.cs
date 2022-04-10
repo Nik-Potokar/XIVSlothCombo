@@ -736,6 +736,21 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.WarriorOnslaughtFeature && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 2, WAR.Config.WarKeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
 
+            if (preset == CustomComboPreset.WarriorSimpleMitigation && enabled)
+                ConfigWindowFunctions.DrawSliderInt(1, 5, WAR.Config.WarRampartPriority, "Rampart");
+
+            if (preset == CustomComboPreset.WarriorSimpleMitigation && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, WAR.Config.WarReprisalPriority, "Reprisal");
+
+            if (preset == CustomComboPreset.WarriorSimpleMitigation && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, WAR.Config.WarVengeancePriority, "Vengeance");
+
+            if (preset == CustomComboPreset.WarriorSimpleMitigation && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, WAR.Config.WarBloodwhettingPriority, "Raw Intuition/Bloodwhetting");
+
+            if (preset == CustomComboPreset.WarriorSimpleMitigation && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, WAR.Config.WarShakeItOffPriority, "Shake It Off");
+
             #endregion
             // ====================================================================================
             #region WHITE MAGE

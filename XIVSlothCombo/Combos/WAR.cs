@@ -23,6 +23,9 @@ namespace XIVSlothComboPlugin.Combos
             LowBlow = 7540,
             Interject = 7538,
             Reprisal = 7535,
+            Rampart = 7531,
+            Vengeance = 44,
+            ShakeItOff = 7388,
             InnerRelease = 7389,
             RawIntuition = 3551,
             MythrilTempest = 16462,
@@ -40,6 +43,9 @@ namespace XIVSlothComboPlugin.Combos
                 SurgingTempest = 2677,
                 NascentChaos = 1897,
                 PrimalRendReady = 2624,
+                ThrillOfTheBattle = 87,
+                Vengeance = 89,
+                Bloodwhetting = 2678,
                 Berserk = 86;
         }
 
@@ -81,6 +87,16 @@ namespace XIVSlothComboPlugin.Combos
                 WarSurgingRefreshRange = "WarSurgingRefreshRange";
             public const string
                 WarKeepOnslaughtCharges = "WarKeepOnslaughtCharges";
+            public const string
+                WarRampartPriority = "WarRampartPriority";
+            public const string
+                WarReprisalPriority = "WarReprisalPriority";
+            public const string
+                WarVengeancePriority = "WarVengeancePriority";
+            public const string
+                WarBloodwhettingPriority = "WarBloodwhettingPriority";
+            public const string
+                WarShakeItOffPriority = "WarShakeItOffPriority";
         }
     }
 
@@ -339,6 +355,102 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (TargetHasEffectAny(WAR.Debuffs.Reprisal) && IsOffCooldown(WAR.Reprisal))
                     return WHM.Stone1;
+            }
+            return actionID;
+        }
+    }
+    internal class WarriorSimpleMitigation : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorSimpleMitigation;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            if (actionID is WAR.Rampart)
+            {
+                var hasPriority = WAR.Rampart;
+                var canShake = false;
+                var rampartPriority = Service.Configuration.GetCustomIntValue(WAR.Config.WarRampartPriority);
+                var reprisalPriority = Service.Configuration.GetCustomIntValue(WAR.Config.WarReprisalPriority);
+                var vengeancePriority = Service.Configuration.GetCustomIntValue(WAR.Config.WarVengeancePriority);
+                var bloodwhettingPriority = Service.Configuration.GetCustomIntValue(WAR.Config.WarBloodwhettingPriority);
+                var shakeitoffPriority = Service.Configuration.GetCustomIntValue(WAR.Config.WarShakeItOffPriority);
+
+                if (GetBuffRemainingTime(WAR.Buffs.ThrillOfTheBattle) <= 2 && GetBuffRemainingTime(WAR.Buffs.Vengeance) <= 2 && GetBuffRemainingTime(WAR.Buffs.Bloodwhetting) <= 2)
+                {
+                    canShake = true;
+                }
+
+                if (hasPriority == WAR.Rampart && IsOffCooldown(WAR.Rampart))
+                {
+                    if (rampartPriority < shakeitoffPriority && IsOffCooldown(WAR.ShakeItOff) && canShake) { hasPriority = WAR.ShakeItOff; }
+                    if (rampartPriority < bloodwhettingPriority && IsOffCooldown(WAR.RawIntuition)) { hasPriority = WAR.RawIntuition; }
+                    if (rampartPriority < vengeancePriority && IsOffCooldown(WAR.Vengeance)) { hasPriority = WAR.Vengeance; }
+                    if (rampartPriority < reprisalPriority && IsOffCooldown(WAR.Reprisal)) { hasPriority = WAR.Reprisal; }
+                }
+                if (hasPriority == WAR.Rampart && IsOnCooldown(WAR.Rampart) && reprisalPriority > 0)
+                {
+                    hasPriority = WAR.Reprisal; 
+                }
+                
+                if (hasPriority == WAR.Reprisal && IsOffCooldown(WAR.Reprisal))
+                {
+                    if (reprisalPriority < shakeitoffPriority && IsOffCooldown(WAR.ShakeItOff) && canShake) { hasPriority = WAR.ShakeItOff; }
+                    if (reprisalPriority < bloodwhettingPriority && IsOffCooldown(WAR.RawIntuition)) { hasPriority = WAR.RawIntuition; }
+                    if (reprisalPriority < vengeancePriority && IsOffCooldown(WAR.Vengeance)) { hasPriority = WAR.Vengeance; }
+                }
+                if (hasPriority == WAR.Reprisal && IsOnCooldown(WAR.Reprisal) && vengeancePriority > 0)
+                {
+                    hasPriority = WAR.Vengeance;
+                }
+
+                if (hasPriority == WAR.Vengeance && IsOffCooldown(WAR.Vengeance))
+                {
+                    if (vengeancePriority < shakeitoffPriority && IsOffCooldown(WAR.ShakeItOff) && canShake) { hasPriority = WAR.ShakeItOff; }
+                    if (vengeancePriority < bloodwhettingPriority && IsOffCooldown(WAR.RawIntuition)) { hasPriority = WAR.RawIntuition; }
+                }
+                if (hasPriority == WAR.Vengeance && IsOnCooldown(WAR.Vengeance) && bloodwhettingPriority > 0)
+                {
+                    hasPriority = WAR.RawIntuition;
+                }
+
+                if (hasPriority == WAR.RawIntuition && IsOffCooldown(WAR.RawIntuition))
+                {
+                    if (bloodwhettingPriority < shakeitoffPriority && IsOffCooldown(WAR.ShakeItOff) && canShake) { hasPriority = WAR.ShakeItOff; }
+                }
+                if (hasPriority == WAR.ShakeItOff && IsOnCooldown(WAR.ShakeItOff))
+                {
+                    hasPriority = WAR.Rampart;
+                }
+
+
+                if (IsOnCooldown(hasPriority))
+                {
+                    hasPriority = WAR.Rampart;
+
+                    if (hasPriority == WAR.Rampart)
+                    {
+                        if (GetCooldownRemainingTime(WAR.Rampart) > GetCooldownRemainingTime(WAR.ShakeItOff) && shakeitoffPriority > 0 && canShake) { hasPriority = WAR.ShakeItOff; }
+                        if (GetCooldownRemainingTime(WAR.Rampart) > GetCooldownRemainingTime(WAR.RawIntuition) && bloodwhettingPriority > 0) { hasPriority = WAR.RawIntuition; }
+                        if (GetCooldownRemainingTime(WAR.Rampart) > GetCooldownRemainingTime(WAR.Vengeance) && vengeancePriority > 0) { hasPriority = WAR.Vengeance; }
+                        if (GetCooldownRemainingTime(WAR.Rampart) > GetCooldownRemainingTime(WAR.Reprisal) && reprisalPriority > 0) { hasPriority = WAR.Reprisal; }
+                    }
+                    if (hasPriority == WAR.Reprisal)
+                    {
+                        if (GetCooldownRemainingTime(WAR.Reprisal) > GetCooldownRemainingTime(WAR.ShakeItOff) && shakeitoffPriority > 0 && canShake) { hasPriority = WAR.ShakeItOff; }
+                        if (GetCooldownRemainingTime(WAR.Reprisal) > GetCooldownRemainingTime(WAR.RawIntuition) && bloodwhettingPriority > 0) { hasPriority = WAR.RawIntuition; }
+                        if (GetCooldownRemainingTime(WAR.Reprisal) > GetCooldownRemainingTime(WAR.Vengeance) && vengeancePriority > 0) { hasPriority = WAR.Vengeance; }
+                    }
+                    if (hasPriority == WAR.Vengeance)
+                    {
+                        if (GetCooldownRemainingTime(WAR.Vengeance) > GetCooldownRemainingTime(WAR.ShakeItOff) && shakeitoffPriority > 0 && canShake) { hasPriority = WAR.ShakeItOff; }
+                        if (GetCooldownRemainingTime(WAR.Vengeance) > GetCooldownRemainingTime(WAR.RawIntuition) && bloodwhettingPriority > 0) { hasPriority = WAR.RawIntuition; }
+                    }
+                    if (hasPriority == WAR.RawIntuition)
+                    {
+                        if (GetCooldownRemainingTime(WAR.RawIntuition) > GetCooldownRemainingTime(WAR.ShakeItOff) && shakeitoffPriority > 0 && canShake) { hasPriority = WAR.ShakeItOff; }
+                    }
+                }
+                return OriginalHook(hasPriority);
             }
             return actionID;
         }
