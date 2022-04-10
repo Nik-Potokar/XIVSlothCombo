@@ -401,7 +401,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is DRK.Reprisal)
             {
-                if (TargetHasEffectAny(DRK.Debuffs.Reprisal))
+                if (TargetHasEffectAny(DRK.Debuffs.Reprisal) && IsOffCooldown(DRK.Reprisal))
                     return WHM.Stone1;
             }
             return actionID;

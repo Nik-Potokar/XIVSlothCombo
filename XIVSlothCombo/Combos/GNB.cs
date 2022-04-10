@@ -383,7 +383,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is GNB.Reprisal)
             {
-                if (TargetHasEffectAny(GNB.Debuffs.Reprisal))
+                if (TargetHasEffectAny(GNB.Debuffs.Reprisal) && IsOffCooldown(GNB.Reprisal))
                     return WHM.Stone1;
             }
             return actionID;
