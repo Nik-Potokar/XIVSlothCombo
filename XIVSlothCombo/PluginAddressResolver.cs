@@ -30,6 +30,7 @@ namespace XIVSlothComboPlugin
         /// </summary>
         public IntPtr IsActionIdReplaceable { get; private set; }
 
+
         /// <inheritdoc/>
         protected override void Setup64Bit(SigScanner scanner)
         {

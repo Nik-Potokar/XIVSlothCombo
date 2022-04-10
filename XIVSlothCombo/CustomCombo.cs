@@ -8,9 +8,6 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
-using System;
-using System.Linq;
-using System.Numerics;
 using System.Timers;
 using XIVSlothComboPlugin.Attributes;
 
@@ -326,8 +323,9 @@ namespace XIVSlothComboPlugin.Combos
         ///<param name="effectID">Status effect ID.</param>
         ///<param name="obj"></param>
         ///<return>Status object or null.</return>
-        protected static Status? FindEffectOnMember(ushort effectID, GameObject? obj) =>
-            Service.ComboCache.GetStatus(effectID, obj, null);
+        protected static Status? FindEffectOnMember(ushort effectID, GameObject? obj)
+            => Service.ComboCache.GetStatus(effectID, obj, null);
+
 
         /// <summary>
         /// Finds an effect on the player.
@@ -640,6 +638,7 @@ namespace XIVSlothComboPlugin.Combos
         protected static void SetTarget(GameObject? target) =>
             Service.TargetManager.Target = target;
 
+
         /// <summary>
         /// Checks if target is in appropriate range for targeting
         /// </summary>
@@ -656,9 +655,135 @@ namespace XIVSlothComboPlugin.Combos
         /// Attempts to target the given party member
         /// </summary>
         /// <param name="target"></param>
-        protected static void TargetPartyMember(PartyMember target)
+        protected unsafe static void TargetPartyMember(TargetType target)
         {
-            if (IsInRange(target.GameObject)) SetTarget(target.GameObject);
+            var t = GetTarget(target);
+            var o = PartyTargetingService.GetObjectID(t);
+            var p = Service.ObjectTable.Where(x => x.ObjectId == o).First();
+
+            if (IsInRange(p)) SetTarget(p);
+        }
+
+        protected static void TargetPartyMember(GameObject? target)
+        {
+            if (IsInRange(target)) SetTarget(target);
+        }
+
+        protected unsafe static GameObject? GetPartySlot(int slot)
+        {
+            try
+            {
+                FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* o;
+
+                switch (slot)
+                {
+                    case 2:
+                        o = GetTarget(TargetType.P2);
+                        break;
+                    case 3:
+                        o = GetTarget(TargetType.P3);
+                        break;
+                    case 4:
+                        o = GetTarget(TargetType.P4);
+                        break;
+                    case 5:
+                        o = GetTarget(TargetType.P5);
+                        break;
+                    case 6:
+                        o = GetTarget(TargetType.P6);
+                        break;
+                    case 7:
+                        o = GetTarget(TargetType.P7);
+                        break;
+                    default:
+                        o = GetTarget(TargetType.Self);
+                        break;
+
+                }
+
+                var i = PartyTargetingService.GetObjectID(o);
+                if (Service.ObjectTable.Where(x => x.ObjectId == i).Any())
+                    return Service.ObjectTable.Where(x => x.ObjectId == i).First();
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+            
+        }
+
+        protected unsafe static FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* GetTarget(TargetType target)
+        {
+            GameObject? o = null;
+
+            switch (target)
+            {
+                case TargetType.Target:
+                    o = Service.TargetManager.Target;
+                    break;
+                case TargetType.SoftTarget:
+                    o = Service.TargetManager.SoftTarget;
+                    break;
+                case TargetType.FocusTarget:
+                    o = Service.TargetManager.FocusTarget;
+                    break;
+                case TargetType.UITarget:
+                    return PartyTargetingService.UITarget;
+                case TargetType.FieldTarget:
+                    o = Service.TargetManager.MouseOverTarget;
+                    break;
+                case TargetType.TargetsTarget when Service.TargetManager.Target is { TargetObjectId: not 0xE0000000 }:
+                    o = Service.TargetManager.Target.TargetObject;
+                    break;
+                case TargetType.Self:
+                    o = Service.ClientState.LocalPlayer;
+                    break;
+                case TargetType.LastTarget:
+                    return PartyTargetingService.GetGameObjectFromPronounID(1006);
+                case TargetType.LastEnemy:
+                    return PartyTargetingService.GetGameObjectFromPronounID(1084);
+                case TargetType.LastAttacker:
+                    return PartyTargetingService.GetGameObjectFromPronounID(1008);
+                case TargetType.P2:
+                    return PartyTargetingService.GetGameObjectFromPronounID(44);
+                case TargetType.P3:
+                    return PartyTargetingService.GetGameObjectFromPronounID(45);
+                case TargetType.P4:
+                    return PartyTargetingService.GetGameObjectFromPronounID(46);
+                case TargetType.P5:
+                    return PartyTargetingService.GetGameObjectFromPronounID(47);
+                case TargetType.P6:
+                    return PartyTargetingService.GetGameObjectFromPronounID(48);
+                case TargetType.P7:
+                    return PartyTargetingService.GetGameObjectFromPronounID(49);
+                case TargetType.P8:
+                    return PartyTargetingService.GetGameObjectFromPronounID(50);
+            }
+
+            return o != null ? (FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject*)o.Address : null;
+        }
+
+        public enum TargetType
+        {
+            Target,
+            SoftTarget,
+            FocusTarget,
+            UITarget,
+            FieldTarget,
+            TargetsTarget,
+            Self,
+            LastTarget,
+            LastEnemy,
+            LastAttacker,
+            P2,
+            P3,
+            P4,
+            P5,
+            P6,
+            P7,
+            P8
         }
     }
 }

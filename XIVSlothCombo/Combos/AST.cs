@@ -1,8 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Party;
+using Dalamud.Game.ClientState.Objects.Types;
 using System.Linq;
-using System.Reflection;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -73,6 +72,12 @@ namespace XIVSlothComboPlugin.Combos
             Spear = 916,
             Ewer = 917,
             Spire = 918,
+            BalanceDamage = 1882,
+            BoleDamage = 1883,
+            ArrowDamage = 1884,
+            SpearDamage = 1885,
+            EwerDamage = 1886,
+            SpireDamage = 1887,
             Horoscope = 1890,
             HoroscopeHelios = 1891,
             AspectedBenefic = 835,
@@ -165,7 +170,7 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
     {
-        private bool GetTarget = false;
+        private new bool GetTarget = true;
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -182,7 +187,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (IsEnabled(CustomComboPreset.AstAutoCardTarget))
                     {
-                        if (GetTarget || (IsEnabled(CustomComboPreset.AstrologianTargetLock) && InCombat()))
+                        if (GetTarget || (IsEnabled(CustomComboPreset.AstrologianTargetLock)))
                             SetTarget();
                     }
 
@@ -190,7 +195,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 GetTarget = true;
-                return AST.Draw;
+                return OriginalHook(AST.Draw);
             }
 
             return actionID;
@@ -202,18 +207,26 @@ namespace XIVSlothComboPlugin.Combos
             if (gauge.DrawnCard.Equals(CardType.NONE)) return false;
             var cardDrawn = gauge.DrawnCard;
 
-            foreach (PartyMember member in GetPartyMembers())
+            //Checks for trusts then normal parties
+            int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
+            if (GetPartyMembers().Count() > 0) maxPartySize = GetPartyMembers().Count();
+            if (GetPartyMembers().Count() == 0 && Service.BuddyList.Length == 0) maxPartySize = 0;
+
+            for (int i = 2; i <= maxPartySize; i++)
             {
-                bool buffSet = false;
-                if (!IsInRange(member.GameObject)) continue;
+                GameObject? member = GetPartySlot(i);
 
-                string job = member.ClassJob.GameData.Name;
-                for (ushort p = AST.Buffs.Balance; p <= AST.Buffs.Spire; p++)
-                {
-                    if (FindEffectOnMember(p, member.GameObject) is not null) buffSet = true;
-                }
+                if (member == null) break;
+                string job = "";
+                if (member is BattleNpc) job = (member as BattleNpc).ClassJob.GameData.Name.ToString();
+                if (member is BattleChara) job = (member as BattleChara).ClassJob.GameData.Name.ToString();
 
-                if (buffSet) continue;
+                if (FindEffectOnMember(AST.Buffs.BalanceDamage, member) is not null) continue;
+                if (FindEffectOnMember(AST.Buffs.ArrowDamage, member) is not null) continue; 
+                if (FindEffectOnMember(AST.Buffs.BoleDamage, member) is not null) continue; 
+                if (FindEffectOnMember(AST.Buffs.EwerDamage, member) is not null) continue; 
+                if (FindEffectOnMember(AST.Buffs.SpireDamage, member) is not null) continue; 
+                if (FindEffectOnMember(AST.Buffs.SpearDamage, member) is not null) continue; 
 
                 if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                 {
@@ -223,7 +236,7 @@ namespace XIVSlothComboPlugin.Combos
                         GetTarget = false;
                         return true;
                     }
-                        
+
                 }
                 if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                 {
@@ -234,23 +247,24 @@ namespace XIVSlothComboPlugin.Combos
                         return true;
                     }
                 }
-
             }
 
             if (IsEnabled(CustomComboPreset.AstrologianTargetExtraFeature))
             {
-                foreach (PartyMember member in GetPartyMembers())
+                for (int i = 2; i <= maxPartySize; i++)
                 {
-                    bool buffSet = false;
-                    if (!IsInRange(member.GameObject)) continue;
+                    GameObject? member = GetPartySlot(i);
+                    if (member == null) break;
+                    string job = "";
+                    if (member is BattleNpc) job = (member as BattleNpc).ClassJob.GameData.Name.ToString();
+                    if (member is BattleChara) job = (member as BattleChara).ClassJob.GameData.Name.ToString();
 
-                    string job = member.ClassJob.GameData.Name;
-                    for (ushort p = AST.Buffs.Balance; p <= AST.Buffs.Spire; p++)
-                    {
-                        if (FindEffectOnMember(p, member.GameObject) is not null) buffSet = true;
-                    }
-
-                    if (buffSet) continue;
+                    if (FindEffectOnMember(AST.Buffs.BalanceDamage, member) is not null) continue; 
+                    if (FindEffectOnMember(AST.Buffs.ArrowDamage, member) is not null) continue; 
+                    if (FindEffectOnMember(AST.Buffs.BoleDamage, member) is not null) continue; 
+                    if (FindEffectOnMember(AST.Buffs.EwerDamage, member) is not null) continue; 
+                    if (FindEffectOnMember(AST.Buffs.SpireDamage, member) is not null) continue; 
+                    if (FindEffectOnMember(AST.Buffs.SpearDamage, member) is not null) continue; 
 
                     if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                     {
@@ -271,7 +285,6 @@ namespace XIVSlothComboPlugin.Combos
                             return true;
                         }
                     }
-
                 }
             }
 
@@ -714,7 +727,7 @@ namespace XIVSlothComboPlugin.Combos
                 var customEssentialDignity = Service.Configuration.GetCustomIntValue(AST.Config.AstroEssentialDignity);
                 var exaltationCD = GetCooldown(AST.Exaltation);
 
-                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && (aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3) || (NeutralSectShield is null) && (NeutralSectBuff is not null))
+                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3) || (NeutralSectShield is null)) && (NeutralSectBuff is not null))
                     return AST.AspectedBenefic;
 
                 if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && GetCooldown(AST.EssentialDignity).RemainingCharges > 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
@@ -726,7 +739,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) && GetCooldown(AST.CelestialIntersection).RemainingCharges > 0 && level >= AST.Levels.CelestialIntersection)
                     return AST.CelestialIntersection;
             }
-            
+
 
             return actionID;
         }

@@ -149,11 +149,140 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             }
         }
 
+        public static void DrawRoleGridMultiChoice(string config)
+        {
+            var values = Service.Configuration.GetCustomBoolArrayValue(config);
+
+            ImGui.Columns(5, $"{config}", false);
+
+            if (values.Length == 0) Array.Resize<bool>(ref values, 5);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+
+            if (ImGui.Checkbox($"Tanks###{config}0", ref values[0]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+
+            if (ImGui.Checkbox($"Healers###{config}1", ref values[1]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+
+            if (ImGui.Checkbox($"Melee###{config}2", ref values[2]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+
+            if (ImGui.Checkbox($"Ranged###{config}3", ref values[3]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+
+            if (ImGui.Checkbox($"Casters###{config}4", ref values[4]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Columns(1);
+            ImGui.PopStyleColor();
+            ImGui.Spacing();
+        }
+
+        public static void DrawRoleGridSingleChoice(string config)
+        {
+            var value = Service.Configuration.GetCustomIntValue(config);
+            bool[] values = new bool[20];
+
+            for (int i = 0; i <= 4; i++)
+            {
+                if (value == i) values[i] = true;
+                else
+                    values[i] = false;
+            }
+
+            ImGui.Columns(5, $"{config}", false);
+
+            if (values.Length == 0) Array.Resize<bool>(ref values, 5);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+
+            if (ImGui.Checkbox($"Tanks###{config}0", ref values[0]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 0);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+
+            if (ImGui.Checkbox($"Healers###{config}1", ref values[1]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 1);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+
+            if (ImGui.Checkbox($"Melee###{config}2", ref values[2]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 2);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+
+            if (ImGui.Checkbox($"Ranged###{config}3", ref values[3]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 3);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+
+            if (ImGui.Checkbox($"Casters###{config}4", ref values[4]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 4);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Columns(1);
+            ImGui.PopStyleColor();
+            ImGui.Spacing();
+        }
         public static void DrawJobGridMultiChoice(string config)
         {
             var values = Service.Configuration.GetCustomBoolArrayValue(config);
 
-            ImGui.Columns(5, null, false);
+            ImGui.Columns(5, $"{config}", false);
 
             if (values.Length == 0) Array.Resize<bool>(ref values, 20);
 
@@ -523,14 +652,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             double sliderAsDouble = Convert.ToDouble(sliderIncrement);
             return ((int)Math.Round(i / sliderAsDouble)) * (int)sliderIncrement;
         }
-
-        //public static float RoundOff(this float i, uint sliderIncrement)
-        //{
-        //    double sliderAsFloat = Convert.ToDouble(sliderIncrement);
-        //    double iAsFloat = Convert.ToDouble(i);
-
-        //    return Convert.ToSingle(Math.Round(iAsFloat / sliderAsFloat) * sliderIncrement);
-        //}
     }
 
     public static class SliderIncrements
