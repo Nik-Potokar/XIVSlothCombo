@@ -227,7 +227,7 @@ namespace XIVSlothComboPlugin.Combos
                             //oGCD Features
                             if (gauge.DarksideTimeRemaining > 1)
                             {
-                                if (IsEnabled(CustomComboPreset.DarkMainComboBuffsGroup))
+                                if (IsEnabled(CustomComboPreset.DarkMainComboBuffsGroup) && CanDelayedWeave(actionID))
                                 {
                                     if (IsEnabled(CustomComboPreset.DarkBloodWeaponOption) && IsOffCooldown(DRK.BloodWeapon) && level >= DRK.Levels.BloodWeapon)
                                         return DRK.BloodWeapon;
