@@ -283,7 +283,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<MNKGauge>();
-                var canWeave = CanWeave(actionID, 0.5);
+                var canWeave = CanWeave(actionID, 0.45);
 
                 var twinsnakeDuration = FindEffect(MNK.Buffs.DisciplinedFist);
                 var demolishDuration = FindTargetEffect(MNK.Debuffs.Demolish);
@@ -427,8 +427,8 @@ namespace XIVSlothComboPlugin.Combos
                             ((GetRemainingCharges(MNK.PerfectBalance) == 2) || 
                             (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
                             (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
-                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 4 && GetCooldownRemainingTime(MNK.Brotherhood) < 8) ||
-                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 10 && demolishDuration.RemainingTime > 10)))
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 10 && demolishDuration.RemainingTime > 10) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 4 && GetCooldownRemainingTime(MNK.Brotherhood) < 8)))
                         {
                             return MNK.PerfectBalance;
                         }
