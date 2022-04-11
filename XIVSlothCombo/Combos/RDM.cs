@@ -1174,7 +1174,11 @@ namespace XIVSlothComboPlugin.Combos
     }
 
     //RedMageSwiftVerraise
-    //Swiftcast combos to Verraise while Swiftcast buff is active
+    //Swiftcast combos to Verraise when:
+    //  Swiftcast is on cooldown.
+    //  Swiftcast is available, but we we have Dualcast (Dualcasting verraise)
+    //Using this variation other than the alternatefeature style, as verrise is level 63
+    //  and swiftcast is unlocked way earlier and in theory, on a hotbar somewhere
     internal class RedMageSwiftVerraise : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageSwiftVerraise;
@@ -1183,11 +1187,14 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is RDM.Swiftcast)
             {
-                if (IsEnabled(CustomComboPreset.RedMageSwiftVerraise))
+                if (IsEnabled(CustomComboPreset.RedMageSwiftVerraise) && (level >= RDM.Levels.Verraise))
                 {
-                    if (HasEffect(RDM.Buffs.Swiftcast))
-                        return RDM.Verraise;
-                }
+                    var swiftCD = GetCooldown(RDM.Swiftcast);
+                    if (
+                        (swiftCD.CooldownRemaining > 0) || //Condition 1: Swiftcast is on cooldown
+                        HasEffect(RDM.Buffs.Dualcast)     //Condition 2: Swiftcast is available, but we have DualCast
+                       ) return RDM.Verraise;
+                } //Don't meet level requirements and preset
                 return OriginalHook(RDM.Swiftcast);
             }
             return actionID;
