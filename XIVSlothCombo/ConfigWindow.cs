@@ -496,7 +496,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BARD
             if (preset == CustomComboPreset.BardSimpleRagingJaws)
-                ConfigWindowFunctions.DrawSliderFloat(0, 3, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
+                ConfigWindowFunctions.DrawSliderFloat(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
             #endregion
             // ====================================================================================
