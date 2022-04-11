@@ -337,63 +337,72 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (inCombat && inOpener && !openerFinished && level >= MNK.Levels.RiddleOfFire)
+                    if (inCombat && inOpener && !openerFinished)
                     {
-                        if (canWeave)
+                        if (level >= MNK.Levels.RiddleOfFire)
                         {
-                            // Delayed weave for Riddle of Fire specifically
-                            if (HasEffect(MNK.Buffs.CoerlForm) && !IsOnCooldown(MNK.RiddleOfFire) && 
-                                GetCooldown(actionID).CooldownRemaining < 0.9)
+                            if (canWeave)
                             {
-                                return MNK.RiddleOfFire;
+                                // Delayed weave for Riddle of Fire specifically
+                                if (HasEffect(MNK.Buffs.CoerlForm) && !IsOnCooldown(MNK.RiddleOfFire) &&
+                                    GetCooldown(actionID).CooldownRemaining < 0.9)
+                                {
+                                    return MNK.RiddleOfFire;
+                                }
+                                if (IsOnCooldown(MNK.RiddleOfFire) && GetCooldownRemainingTime(MNK.RiddleOfFire) <= 59)
+                                {
+                                    if (HasEffect(MNK.Buffs.RaptorForm))
+                                    {
+                                        if (level >= MNK.Levels.Brotherhood && !IsOnCooldown(MNK.Brotherhood))
+                                        {
+                                            return MNK.Brotherhood;
+                                        }
+                                        if (GetRemainingCharges(MNK.PerfectBalance) > 0 && !HasEffect(MNK.Buffs.PerfectBalance) &&
+                                            (lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) && OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
+                                        {
+                                            return MNK.PerfectBalance;
+                                        }
+                                    }
+                                    if (level >= MNK.Levels.RiddleOfWind && HasEffect(MNK.Buffs.PerfectBalance) && !IsOnCooldown(MNK.RiddleOfWind))
+                                    {
+                                        return MNK.RiddleOfWind;
+                                    }
+                                    if (level >= MNK.Levels.Meditation && gauge.Chakra == 5)
+                                    {
+                                        return OriginalHook(MNK.Meditation);
+                                    }
+                                }
                             }
-                            if (IsOnCooldown(MNK.RiddleOfFire) && GetCooldownRemainingTime(MNK.RiddleOfFire) <= 59)
+
+                            // Check for Masterful Blitz usage
+                            if (useBlitz && OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
                             {
-                                if (HasEffect(MNK.Buffs.RaptorForm))
-                                {
-                                    if (level >= MNK.Levels.Brotherhood && !IsOnCooldown(MNK.Brotherhood))
-                                    {
-                                        return MNK.Brotherhood;
-                                    }
-                                    if (GetRemainingCharges(MNK.PerfectBalance) > 0 && !HasEffect(MNK.Buffs.PerfectBalance) &&
-                                        (lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) && OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
-                                    {
-                                        return MNK.PerfectBalance;
-                                    }
-                                }
-                                if (level >= MNK.Levels.RiddleOfWind && HasEffect(MNK.Buffs.PerfectBalance) && !IsOnCooldown(MNK.RiddleOfWind))
-                                {
-                                    return MNK.RiddleOfWind;
-                                }
-                                if (level >= MNK.Levels.Meditation && gauge.Chakra == 5)
-                                {
-                                    return OriginalHook(MNK.Meditation);
-                                }
+                                useBlitz = false;
+                                blitzUsed++;
+                            }
+
+                            // Check if opener is over
+                            if (loopTwinSnakes && lastComboMove == MNK.TwinSnakes)
+                            {
+                                inOpener = false;
+                                openerFinished = true;
+
+                                blitzUsed = 0;
+                                useBlitz = false;
+                                loopTwinSnakes = false;
+                            }
+                            // End the opener with Twin Snakes
+                            if (blitzUsed >= 2 && (HasEffect(MNK.Buffs.RaptorForm) || HasEffect(MNK.Buffs.FormlessFist)))
+                            {
+                                loopTwinSnakes = true;
+                                return MNK.TwinSnakes;
                             }
                         }
-
-                        // Check for Masterful Blitz usage
-                        if (useBlitz && OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
+                        else
                         {
-                            useBlitz = false;
-                            blitzUsed++;
-                        }
-
-                        // Check if opener is over
-                        if (loopTwinSnakes && lastComboMove == MNK.TwinSnakes)
-                        {
+                            // Automatically exit opener if we don't have Riddle of Fire
                             inOpener = false;
                             openerFinished = true;
-
-                            blitzUsed = 0;
-                            useBlitz = false;
-                            loopTwinSnakes = false;
-                        }
-                        // End the opener with Twin Snakes
-                        if (blitzUsed >= 2 && (HasEffect(MNK.Buffs.RaptorForm) || HasEffect(MNK.Buffs.FormlessFist)))
-                        {
-                            loopTwinSnakes = true;
-                            return MNK.TwinSnakes;
                         }
                     }
                 }
