@@ -1321,8 +1321,7 @@ namespace XIVSlothComboPlugin
         PaladinRoyalAuthorityCombo = 11001,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinAtonementTestFeature)]
-        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath. \nDoes not drop last Atonement stack.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
+        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
         PaladinAtonementFeature = 11002,
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "Promenade feature", "Long walks on the promenade...")]
@@ -1350,18 +1349,12 @@ namespace XIVSlothComboPlugin
         PaladinStandaloneHolyCircleFeature = 11009,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinInterveneFeatureOption)]
-        [CustomComboInfo("Intervene Feature (All Stacks)", "Adds intervene onto main combo whenever its available (Uses all stacks).", PLD.JobID, 4, "", "It looks like a gap-closer. It smells like a gap-closer...")]
+        [CustomComboInfo("Intervene Feature", "Adds Intervene onto Main Combo whenever it's available.", PLD.JobID, 4, "", "It looks like a gap-closer. It smells like a gap-closer...")]
         PaladinInterveneFeature = 11010,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinInterveneFeature)]
-        [CustomComboInfo("Intervene Feature (Leaves 1 stack)", "Adds intervene onto main combo whenever its available (Leaves 1 stack).", PLD.JobID, 4, "", "It must be a gap-closer!")]
-        PaladinInterveneFeatureOption = 11011,
-
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinRangedUptimeFeature2)]
-        [CustomComboInfo("Uptime Feature", "Replace Main Combo with Shield Lob when out of range.", PLD.JobID, 4, "", "Don't throw your shield, you're not Captain America.\nJust get close!")]
+        [CustomComboInfo("Shield Lob Uptime Feature", "Replace Main Combo with Shield Lob when out of range.", PLD.JobID, 4, "", "Don't throw your shield, you're not Captain America.\nJust get close!")]
         PaladinRangedUptimeFeature = 11012,
 
         [ParentCombo(PaladinFightOrFlightMainComboFeature)]
@@ -1374,23 +1367,13 @@ namespace XIVSlothComboPlugin
         PaladinReqMainComboFeature = 11014,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinAtonementFeature/*, SkillCooldownRemaining*/)]
-        [CustomComboInfo("Atonement Drop Feature", "Drops Atonement to prevent Potency loss on lvl 90 rotation.", PLD.JobID, 1, "Anti-Atonement Missile", "Imagine worrying about potency loss when you play a job like this. Couldn't be me!")]
-        PaladinAtonementTestFeature = 11015,
-
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinRangedUptimeFeature)]
         [CustomComboInfo("Holy Spirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Holy Spirit when out of range.", PLD.JobID, 5, "(Un)Holy Halone", "Who is Halone and why are they so angry?")]
         PaladinRangedUptimeFeature2 = 11016,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Fight or Flight Feature (Custom Values) ", "Adds FoF onto the main combo. You can input your own gcd value (Value represtents percentage of your GCD, 1 = Full GCD).\nIf unsure put low on 0.250 and high on 0.750.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
+        [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
         PaladinFightOrFlightFeature = 11017,
-
-        //[ParentCombo(PaladinRoyalAuthorityCombo)]
-        //[ConflictingCombos(PaladinAtonementFeature, PaladinAtonementTestFeature)]
-        //[CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
-        //SkillCooldownRemaining = 11018,
 
         [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
         PaladinInterruptFeature = 11019,
@@ -1399,11 +1382,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
         PaladinHolyCircleFeature = 11020,
 
-        [ParentCombo(PaladinProminenceCombo)]
+        [ParentCombo(PaladinHolyCircleFeature)]
         [CustomComboInfo("AoE Confiteor Feature", "Replaces AoE combo with Confiteor when Requiescat is active and appropiate.", PLD.JobID, 2, "", "")]
         PaladinAoEConfiteorFeature = 11021,
 
-        [ParentCombo(PaladinProminenceCombo)]
+        [ParentCombo(PaladinHolyCircleFeature)]
         [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.\nProbably not optimal at all.", PLD.JobID, 0, "", "")]
         PaladinReqAoEComboFeature = 11022,
 
