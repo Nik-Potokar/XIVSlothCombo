@@ -142,10 +142,6 @@ namespace XIVSlothComboPlugin
 
         public float EnemyCurrentHp { get; set; } = 0;
 
-        public float CustomGCDValueHigh { get; set; } = 0;
-
-        public float CustomGCDValueLow { get; set; } = 0;
-
         public float SkillCooldownRemaining { get; set; } = 0;
 
         public int MudraPathSelection { get; set; } = 0;

@@ -20,8 +20,9 @@ namespace XIVSlothComboPlugin.Combos
             PerfectBalance = 69,
             TrueStrike = 54,
             LegSweep = 7863,
+            Meditation = 3546,
             HowlingFist = 25763,
-            Enlightenment = 25763,
+            Enlightenment = 16474,
             MasterfulBlitz = 25764,
             ElixirField = 3545,
             FlintStrike = 25882,
@@ -601,6 +602,24 @@ namespace XIVSlothComboPlugin.Combos
                     return MNK.Brotherhood;
 
                 return MNK.RiddleOfFire;
+            }
+            return actionID;
+        }
+    }
+    internal class MonkHowlingFistMeditationFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MonkHowlingFistMeditationFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == MNK.HowlingFist || actionID == MNK.Enlightenment)
+            {
+                var gauge = GetJobGauge<MNKGauge>();
+
+                if (gauge.Chakra < 5)
+                {
+                    return MNK.Meditation;
+                }
             }
             return actionID;
         }
