@@ -1146,7 +1146,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "I've had it with these MF snakes on this MF plane!")]
         MnkTwinSnakesFeature = 9011,
 
-        [ConflictingCombos(MnkSnapPunchCombo)]
+        [ConflictingCombos(MnkBootshineCombo)]
         [CustomComboInfo("Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, 0, "", "I presses the buttons, I does the deeps")]
         MnkBasicCombo = 9002,
 
@@ -1160,13 +1160,13 @@ namespace XIVSlothComboPlugin
         MonkHowlingFistMeditationFeature = 9005,
 
         [ConflictingCombos(MnkBasicCombo)]
-        [CustomComboInfo("Snap Punch Combo", "Replace Snap Punch with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk)", MNK.JobID, 0, "", "They call it 'basic' for a reason, you donkey")]
-        MnkSnapPunchCombo = 9006,
+        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk)", MNK.JobID, 0, "", "They call it 'basic' for a reason, you donkey")]
+        MnkBootshineCombo = 9006,
 
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterful Blitz when Perfect Balance Is Active", MNK.JobID, 0, "", "Try not to fall over, eh")]
         MnkPerfectBalancePlus = 9007,
 
-        [ParentCombo(MnkSnapPunchCombo)]
+        [ParentCombo(MnkBootshineCombo)]
         [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the Main Combo", MNK.JobID, 0, "", "It's maths, but for your Single Target combo!")]
         MonkMasterfulBlitzOnMainCombo = 9008,
 
@@ -1180,7 +1180,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Riddle me this, brotha'")]
         MnkRiddleOfFireBrotherhoodFeature = 9012,
 
-        [ParentCombo(MnkSnapPunchCombo)]
+        [ParentCombo(MnkBootshineCombo)]
         [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Been passed on for dance partner again? Don't worry, you have some buffs of your own.")]
         MnkCDsOnMainComboFeature = 9013,
 
@@ -1200,7 +1200,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the Main Combo.", MNK.JobID, 0, "", "")]
         MnkMeditationOnMainComboFeature = 9017,
 
-        [ParentCombo(MnkSnapPunchCombo)]
+        [ParentCombo(MnkBootshineCombo)]
         [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
 

@@ -266,9 +266,9 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    internal class MnkSnapPunchCombo : CustomCombo
+    internal class MnkBootshineCombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkSnapPunchCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkBootshineCombo;
 
         internal static bool inOpener = false;
         internal static bool openerFinished = false;
@@ -279,7 +279,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == MNK.SnapPunch)
+            if (actionID == MNK.Bootshine)
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<MNKGauge>();
@@ -516,8 +516,7 @@ namespace XIVSlothComboPlugin.Combos
                 // Monk Rotation
                 if (level >= MNK.Levels.TrueStrike && HasEffect(MNK.Buffs.RaptorForm))
                 {
-                    if ((!HasEffect(MNK.Buffs.DisciplinedFist) && level >= MNK.Levels.TwinSnakes) ||
-                        (twinsnakeDuration.RemainingTime < 5 && level >= MNK.Levels.TwinSnakes))
+                    if (level >= MNK.Levels.TwinSnakes && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime < 5))
                     {
                         return MNK.TwinSnakes;
                     }
@@ -525,8 +524,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (level >= MNK.Levels.SnapPunch && HasEffect(MNK.Buffs.CoerlForm))
                 {
-                    if ((!TargetHasEffect(MNK.Debuffs.Demolish) && level >= MNK.Levels.Demolish) ||
-                        (demolishDuration.RemainingTime < 5 && level >= MNK.Levels.Demolish))
+                    if (level >= MNK.Levels.Demolish && (!TargetHasEffect(MNK.Debuffs.Demolish) || demolishDuration.RemainingTime < 5))
                     {
                         return MNK.Demolish;
                     }
@@ -536,7 +534,6 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     return MNK.DragonKick;
                 }
-                return MNK.Bootshine;
             }
             return actionID;
         }
