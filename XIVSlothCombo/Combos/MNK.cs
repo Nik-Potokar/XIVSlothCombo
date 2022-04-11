@@ -294,7 +294,7 @@ namespace XIVSlothComboPlugin.Combos
                 var nadiNONE = gauge.Nadi == Nadi.NONE;
 
                 // Opener for MNK
-                if (IsEnabled(CustomComboPreset.MnkLunarSolarOpenerOnMainComboFeature) && level >= MNK.Levels.RiddleOfFire)
+                if (IsEnabled(CustomComboPreset.MnkLunarSolarOpenerOnMainComboFeature))
                 {
                     // Re-enter opener when Brotherhood is used
                     if (lastComboMove == MNK.Brotherhood)
@@ -310,7 +310,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return MNK.Meditation;
                         }
-                        if (!inCombat && !inOpener && !HasEffect(MNK.Buffs.FormlessFist) && comboTime <= 0)
+                        if (!inCombat && !inOpener && level >= MNK.Levels.FormShift && !HasEffect(MNK.Buffs.FormlessFist) && comboTime <= 0)
                         {
                             return MNK.FormShift;
                         }
@@ -337,7 +337,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (inCombat && inOpener && !openerFinished)
+                    if (inCombat && inOpener && !openerFinished && level >= MNK.Levels.RiddleOfFire)
                     {
                         if (canWeave)
                         {
@@ -432,7 +432,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return MNK.RiddleOfWind;
                     }
-                    if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5)
+                    if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && HasEffect(MNK.Buffs.DisciplinedFist))
                     {
                         return OriginalHook(MNK.Meditation);
                     }
