@@ -33,8 +33,7 @@ namespace XIVSlothComboPlugin.Combos
             Brotherhood = 7396,
             ForbiddenChakra = 3546,
             FormShift = 4262,
-            Thunderclap = 25762,
-            Meditation = 3546;
+            Thunderclap = 25762;
 
 
         public static class Buffs
@@ -87,7 +86,7 @@ namespace XIVSlothComboPlugin.Combos
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkAoECombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {         
+        {
             if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
                 var gauge = GetJobGauge<MNKGauge>();
@@ -424,8 +423,8 @@ namespace XIVSlothComboPlugin.Combos
                         // 3. During Brotherhood.
                         // 4. During Riddle of Fire after Demolish has been applied.
                         // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                        if ((lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) && 
-                            ((GetRemainingCharges(MNK.PerfectBalance) == 2) || 
+                        if ((lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) &&
+                            ((GetRemainingCharges(MNK.PerfectBalance) == 2) ||
                             (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
                             (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
                             (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 10 && demolishDuration.RemainingTime > 10) ||
@@ -586,7 +585,7 @@ namespace XIVSlothComboPlugin.Combos
     internal class MnkRiddleOfFireBrotherhoodFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkRiddleOfFireBrotherhoodFeature;
-        
+
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var RoFCD = GetCooldown(MNK.RiddleOfFire);
