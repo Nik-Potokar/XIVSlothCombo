@@ -6,8 +6,6 @@ using System.Reflection;
 using Dalamud.Hooking;
 using Dalamud.Logging;
 using XIVSlothComboPlugin.Combos;
-using GameObject = FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject;
-using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace XIVSlothComboPlugin
 {
@@ -21,7 +19,6 @@ namespace XIVSlothComboPlugin
         private readonly Hook<GetIconDelegate> getIconHook;
 
         private IntPtr actionManager = IntPtr.Zero;
-        private IntPtr module = IntPtr.Zero;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IconReplacer"/> class.

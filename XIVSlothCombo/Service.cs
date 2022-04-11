@@ -108,8 +108,7 @@ namespace XIVSlothComboPlugin
         [PluginService]
         internal static TargetManager TargetManager { get; private set; } = null!;
 
-        [PluginService]
-        internal static SigScanner SigScanner { get; private set; } = null!;
+
 
         /// <summary>
         /// Returns the Plugin Folder location

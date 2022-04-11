@@ -122,7 +122,7 @@ namespace XIVSlothComboPlugin
 
         private void DrawAboutUs()
         {
-            ImGui.BeginChild("about", new Vector2(0, 0), true);
+            ImGui.BeginChild("about", new Vector2(0, -40), true);
 
             ImGui.TextWrapped($@"Big Thanks to attick and daemitus for creating most of the original code, as well as Grammernatzi and PrincessRTFM for providing a lot of extra tweaks and inspiration. Please show them support for their original work! <3");
             ImGui.TextWrapped("Brought to you with love and sloth, by: Aki, Iaotle, Codemned, damolitionn, k-kz, Taurenkey, Augporto, grimgal and many other contributors!");
@@ -147,7 +147,7 @@ namespace XIVSlothComboPlugin
 
         private void DrawGlobalSettings()
         {
-            ImGui.BeginChild("main", new Vector2(0, 0), true);
+            ImGui.BeginChild("main", new Vector2(0, -40), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
 
             #region PvPCombos
@@ -171,20 +171,20 @@ namespace XIVSlothComboPlugin
 
             #region TrustIncompatibles
 
-            //var showTrustIncompatible = Service.Configuration.EnableTrustIncompatibles;
-            //if (ImGui.Checkbox("Show Trust Incompatible Combos", ref showTrustIncompatible))
-            //{
-            //    Service.Configuration.EnableTrustIncompatibles = showTrustIncompatible;
-            //    Service.Configuration.Save();
-            //}
+            var showTrustIncompatible = Service.Configuration.EnableTrustIncompatibles;
+            if (ImGui.Checkbox("Show Trust Incompatible Combos", ref showTrustIncompatible))
+            {
+                Service.Configuration.EnableTrustIncompatibles = showTrustIncompatible;
+                Service.Configuration.Save();
+            }
 
-            //if (ImGui.IsItemHovered())
-            //{
-            //    ImGui.BeginTooltip();
-            //    ImGui.TextUnformatted("These features won't work in a trust run due to technical restraints.");
-            //    ImGui.EndTooltip();
-            //}
-            //ImGui.NextColumn();
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("These features won't work in a trust run due to technical restraints.");
+                ImGui.EndTooltip();
+            }
+            ImGui.NextColumn();
 
             #endregion
 
@@ -272,7 +272,7 @@ namespace XIVSlothComboPlugin
         private void DrawMainWindow()
         {
             ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
-            ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
+            ImGui.BeginChild("scrolling", new Vector2(0, -40), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
@@ -582,9 +582,6 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.AstroEssentialDignity)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
-
-            if (preset == CustomComboPreset.AstAutoCardTarget)
-                ConfigWindowFunctions.DrawRoleGridSingleChoice("ASTTEST");
 
             #endregion
             // ====================================================================================

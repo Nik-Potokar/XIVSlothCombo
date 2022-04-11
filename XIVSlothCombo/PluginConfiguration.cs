@@ -305,52 +305,5 @@ namespace XIVSlothComboPlugin
                 _ => -1
             };
         }
-
-        public bool GetRoleGridValue(string config, byte jobID)
-        {
-            var index = JobIDToArrayIndex(jobID);
-            var array = GetCustomBoolArrayValue(config);
-
-            if (index == -1) return false;
-            if (array == Array.Empty<bool>()) return false;
-            return array[index];
-        }
-
-        private static int RoleIDToArrayIndex(byte key)
-        {
-            return key switch
-            {
-                PLD.JobID => 0,
-                PLD.ClassID => 0,
-                WAR.JobID => 1,
-                WAR.ClassID => 1,
-                DRK.JobID => 2,
-                GNB.JobID => 3,
-                WHM.JobID => 4,
-                WHM.ClassID => 4,
-                SCH.JobID => 5,
-                SCH.ClassID => 5,
-                AST.JobID => 6,
-                SGE.JobID => 7,
-                MNK.JobID => 8,
-                MNK.ClassID => 8,
-                DRG.JobID => 9,
-                DRG.ClassID => 9,
-                NIN.JobID => 10,
-                NIN.ClassID => 10,
-                SAM.JobID => 11,
-                RPR.JobID => 12,
-                BRD.JobID => 13,
-                BRD.ClassID => 13,
-                MCH.JobID => 14,
-                DNC.JobID => 15,
-                BLM.JobID => 16,
-                BLM.ClassID => 16,
-                SMN.JobID => 17,
-                RDM.JobID => 18,
-                BLU.JobID => 19,
-                _ => -1
-            };
-        }
     }
 }
