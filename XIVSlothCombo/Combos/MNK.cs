@@ -405,7 +405,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return MNK.RiddleOfFire;
                     }
-                    if (IsEnabled(CustomComboPreset.MonkPerfectBalanceFeature) &&
+                    if (IsEnabled(CustomComboPreset.MnkPerfectBalanceOnMainComboFeature) &&
                         level >= MNK.Levels.PerfectBalance && !HasEffect(MNK.Buffs.PerfectBalance) && OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
                     {
                         // Use Perfect Balance if:
@@ -414,12 +414,12 @@ namespace XIVSlothComboPlugin.Combos
                         // 3. During Brotherhood.
                         // 4. During Riddle of Fire after Demolish has been applied.
                         // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                        if ((lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) &&
-                        (GetRemainingCharges(MNK.PerfectBalance) == 2) ||
-                        (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
-                        (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
-                        (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 4 && GetCooldownRemainingTime(MNK.Brotherhood) < 8) ||
-                        (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 8 && demolishDuration.RemainingTime > 8))
+                        if ((lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) && 
+                            ((GetRemainingCharges(MNK.PerfectBalance) == 2) || 
+                            (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 4 && GetCooldownRemainingTime(MNK.Brotherhood) < 8) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 8 && demolishDuration.RemainingTime > 8)))
                         {
                             return MNK.PerfectBalance;
                         }
