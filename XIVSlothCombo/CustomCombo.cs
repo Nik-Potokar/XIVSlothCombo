@@ -333,6 +333,11 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>A value indicating if the effect exists.</returns>
         protected static bool TargetHasEffect(ushort effectID)
             => FindTargetEffect(effectID) is not null;
+        protected static float GetDebuffRemainingTime(ushort effectId)
+        {
+            Status? eff = FindTargetEffect(effectId);
+            return eff?.RemainingTime ?? 0;
+        }
 
         /// <summary>
         /// Finds an effect on the current target.
