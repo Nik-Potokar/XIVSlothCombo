@@ -310,7 +310,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return MNK.Meditation;
                         }
-                        if (!inCombat && !inOpener && !HasEffect(MNK.Buffs.FormlessFist))
+                        if (!inCombat && !inOpener && !HasEffect(MNK.Buffs.FormlessFist) && comboTime <= 0)
                         {
                             return MNK.FormShift;
                         }
@@ -341,16 +341,14 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (canWeave)
                         {
-                            if (HasEffect(MNK.Buffs.CoerlForm) && !IsOnCooldown(MNK.RiddleOfFire))
+                            // Delayed weave for Riddle of Fire specifically
+                            if (HasEffect(MNK.Buffs.CoerlForm) && !IsOnCooldown(MNK.RiddleOfFire) && 
+                                GetCooldown(actionID).CooldownRemaining < 0.9)
                             {
                                 return MNK.RiddleOfFire;
                             }
                             if (IsOnCooldown(MNK.RiddleOfFire) && GetCooldownRemainingTime(MNK.RiddleOfFire) <= 59)
                             {
-                                if (level >= MNK.Levels.Meditation && gauge.Chakra == 5)
-                                {
-                                    return OriginalHook(MNK.Meditation);
-                                }
                                 if (HasEffect(MNK.Buffs.RaptorForm))
                                 {
                                     if (level >= MNK.Levels.Brotherhood && !IsOnCooldown(MNK.Brotherhood))
@@ -366,6 +364,10 @@ namespace XIVSlothComboPlugin.Combos
                                 if (level >= MNK.Levels.RiddleOfWind && HasEffect(MNK.Buffs.PerfectBalance) && !IsOnCooldown(MNK.RiddleOfWind))
                                 {
                                     return MNK.RiddleOfWind;
+                                }
+                                if (level >= MNK.Levels.Meditation && gauge.Chakra == 5)
+                                {
+                                    return OriginalHook(MNK.Meditation);
                                 }
                             }
                         }
@@ -388,7 +390,7 @@ namespace XIVSlothComboPlugin.Combos
                             loopTwinSnakes = false;
                         }
                         // End the opener with Twin Snakes
-                        if (blitzUsed >= 2 && HasEffect(MNK.Buffs.RaptorForm))
+                        if (blitzUsed >= 2 && (HasEffect(MNK.Buffs.RaptorForm) || HasEffect(MNK.Buffs.FormlessFist)))
                         {
                             loopTwinSnakes = true;
                             return MNK.TwinSnakes;
@@ -442,12 +444,6 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     useBlitz = true;
                     return OriginalHook(MNK.MasterfulBlitz);
-                }
-
-                // Early Dragon Kick
-                if (level >= MNK.Levels.DragonKick && HasEffect(MNK.Buffs.OpoOpoForm) && !HasEffect(MNK.Buffs.LeadenFist))
-                {
-                    return MNK.DragonKick;
                 }
 
                 // Perfect Balance
@@ -527,10 +523,11 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     return MNK.SnapPunch;
                 }
-                if (HasEffect(MNK.Buffs.FormlessFist) && !HasEffect(MNK.Buffs.LeadenFist))
+                if (level >= MNK.Levels.DragonKick && (HasEffect(MNK.Buffs.OpoOpoForm) || HasEffect(MNK.Buffs.FormlessFist)) && !HasEffect(MNK.Buffs.LeadenFist))
                 {
                     return MNK.DragonKick;
                 }
+                return MNK.Bootshine;
             }
             return actionID;
         }
