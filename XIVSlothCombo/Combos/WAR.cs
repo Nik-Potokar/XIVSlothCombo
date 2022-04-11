@@ -125,7 +125,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
                             return WAR.Upheaval;
-                        if (IsEnabled(CustomComboPreset.WarriorIRonST) && IsOffCooldown(OriginalHook(WAR.Berserk)) && !HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.Berserk)
+                        if (IsEnabled(CustomComboPreset.WarriorIRonST) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(WAR.Berserk)) && !HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.Berserk)
                             return OriginalHook(WAR.Berserk);
                         if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= WAR.Levels.Onslaught && GetRemainingCharges(WAR.Onslaught) > onslaughtChargesRemaining)
                             return WAR.Onslaught;

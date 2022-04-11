@@ -227,7 +227,7 @@ namespace XIVSlothComboPlugin.Combos
                             //oGCD Features
                             if (gauge.DarksideTimeRemaining > 1)
                             {
-                                if (IsEnabled(CustomComboPreset.DarkMainComboBuffsGroup))
+                                if (IsEnabled(CustomComboPreset.DarkMainComboBuffsGroup) && CanDelayedWeave(actionID))
                                 {
                                     if (IsEnabled(CustomComboPreset.DarkBloodWeaponOption) && IsOffCooldown(DRK.BloodWeapon) && level >= DRK.Levels.BloodWeapon)
                                         return DRK.BloodWeapon;
@@ -291,8 +291,8 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                     }
-                    return DRK.HardSlash;
                 }
+                return DRK.HardSlash;
             }
 
             return actionID;
@@ -350,32 +350,23 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var gauge = GetJobGauge<DRKGauge>();
+
             if (actionID == DRK.CarveAndSpit || actionID == DRK.AbyssalDrain)
             {
-                var shbCD = GetCooldown(DRK.Shadowbringer);
-                var gauge = GetJobGauge<DRKGauge>();
-                var livingshadowCD = GetCooldown(DRK.LivingShadow);
-                var saltedCD = GetCooldown(DRK.SaltedEarth);
-                var saltAndDarkCD = GetCooldown(DRK.SaltAndDarkness);
-                var actionIDCD = GetCooldown(actionID);
-
-                if (gauge.Blood >= 50 && !livingshadowCD.IsCooldown && level >= DRK.Levels.LivingShadow)
+                if (gauge.Blood >= 50 && IsOffCooldown(DRK.LivingShadow) && level >= DRK.Levels.LivingShadow)
                     return DRK.LivingShadow;
-                if (!saltedCD.IsCooldown && level >= DRK.Levels.SaltedEarth)
+                if (IsOffCooldown(DRK.SaltedEarth) && level >= DRK.Levels.SaltedEarth)
                     return DRK.SaltedEarth;
-                if (!actionIDCD.IsCooldown && level >= DRK.Levels.CarveAndSpit)
-                    return actionID;
-                if (!saltAndDarkCD.IsCooldown && HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
+                if (IsOffCooldown(DRK.SaltAndDarkness) && HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
                     return DRK.SaltAndDarkness;
-                if (IsEnabled(CustomComboPreset.DarkShadowbringeroGCDFeature) && shbCD.CooldownRemaining < 60 && level >= DRK.Levels.Shadowbringer && gauge.DarksideTimeRemaining > 0)
+                if (IsEnabled(CustomComboPreset.DarkShadowbringeroGCDFeature) && GetCooldownRemainingTime(DRK.Shadowbringer) < 60 && level >= DRK.Levels.Shadowbringer && gauge.DarksideTimeRemaining > 0)
                     return DRK.Shadowbringer;
-
             }
-
             return actionID;
-
         }
     }
+
     internal class DarkKnightInterruptFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkKnightInterruptFeature;
