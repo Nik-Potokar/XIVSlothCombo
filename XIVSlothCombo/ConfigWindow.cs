@@ -81,8 +81,6 @@ namespace XIVSlothComboPlugin
                     .OrderBy(tpl => tpl.Info.Order).ToArray());
 
 
-
-
             this.SizeCondition = ImGuiCond.FirstUseEver;
             this.Size = new Vector2(740, 490);
         }
@@ -91,9 +89,8 @@ namespace XIVSlothComboPlugin
             ImGui.Columns(2, null, false);
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
-
             ImGui.NextColumn();
-            ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!");
+            ImGui.TextColored(ImGuiColors.DalamudRed, $"NOTICE: We are still updating some jobs for 6.1 compatibility.\nBe patient and check the discord for a full status report!");
             ImGui.NextColumn();
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
@@ -165,7 +162,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
+                ImGui.TextUnformatted("Offset of melee check distance for features that use it.\nFor those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
                 ImGui.EndTooltip();
             }
 
@@ -184,8 +181,6 @@ namespace XIVSlothComboPlugin
                 Service.Configuration.AprilFoolsSlothIrl = false;
                 Service.Configuration.Save();
             }
-
-
 
 
             ImGui.BeginChild("scrolling", new Vector2(0, -30), true);
