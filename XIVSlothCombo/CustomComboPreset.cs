@@ -1774,15 +1774,15 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SAMURAI
 
-        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+        //[ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID, 0, "Yakuza Combo", "Gang affiliation? Surely not.")]
         SamuraiYukikazeCombo = 15000,
 
-        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+        //[ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID, 0, "Geico Combo", "Fifteen minutes could save you 15% or more on car insurance!")]
         SamuraiGekkoCombo = 15001,
 
-        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+       // [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID, 0, "Cashman Combo", "Dolla dolla bill, y'all")]
         SamuraiKashaCombo = 15002,
 
@@ -2094,6 +2094,9 @@ namespace XIVSlothComboPlugin
         #endregion
         // ====================================================================================
         #region WHITE MAGE
+        
+        [CustomComboInfo("CDs on Glare/Stone", "Collection of CDs and spell features on Glare/Stone.", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
+        WHMCDsonMainComboGroup = 19099,
 
         [CustomComboInfo("Solace into Misery", "Replaces Afflatus Solace with Afflatus Misery when Misery is ready to be used", WHM.JobID, 0, "Misery", "I'd be miserable too if this were one of my DPS options.")]
         WhiteMageSolaceMiseryFeature = 19000,
@@ -2115,21 +2118,18 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID, 0, "Look up!", "It's this, but that.")]
         WHMAlternativeRaise = 19015,
 
-        [CustomComboInfo("DoT on Glare3 Feature", "Adds DoT on Glare3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
-        WHMDotMainComboFeature = 19005,
-
-        [ParentCombo(WHMDotMainComboFeature)]
+        [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]
         WHMLucidDreamingFeature = 19006,
 
         [CustomComboInfo("Medica Feature", "Replaces Medica2 whenever you are under Medica2 regen with Medica1", WHM.JobID, 0, "Big Brain AoE Heals", "God bless us all, eh")]
         WHMMedicaFeature = 19007,
 
-        [ParentCombo(WHMDotMainComboFeature)]
+        [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Presence Of Mind Feature", "Adds Presence of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "This would imply you're actually paying attention.")]
         WHMPresenceOfMindFeature = 19008,
 
-        [ParentCombo(WHMDotMainComboFeature)]
+        [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Assize Feature", "Adds Assize as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "Size 'em up, knock 'em down")]
         WHMAssizeFeature = 19009,
 
@@ -2144,9 +2144,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Misery Feature", "Changes Cure 2 into Afflatus Misery.", WHM.JobID, 0, "", "Cures? Who needs 'em?")]
         WhiteMageAfflatusMiseryCure2Feature = 19012,
 
-        [ParentCombo(WHMDotMainComboFeature)]
+        [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Remove DoT From Glare3 Feature", "Removes DoT from DPS feature", WHM.JobID, 0, "I'm an idiot", "Yes, one serving of less DPS, please.")]
-        WHMRemoveDotFromDPSFeature = 19013,
+        WHMDotMainComboFeature = 19013,
 
         [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature/Alternative Feature", WHM.JobID, 0, "", "I can hardly breathe as it is!")]
         WHMThinAirFeature = 19014,
