@@ -64,7 +64,7 @@ namespace XIVSlothComboPlugin.Combos
                 Bloodpiller = 62,
                 Quietus = 64,
                 Delirium = 68,
-                StalwartSoul = 72,
+                StalwartSoul = 40,
                 Shadow = 74,
                 EdgeOfShadow = 74,
                 LivingShadow = 80,
