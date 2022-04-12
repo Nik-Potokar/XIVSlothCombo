@@ -1810,12 +1810,16 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, 0, "Sticky-icky-shoten", "Wait, you guys use meditation?")]
         SamuraiIkishotenNamikiriFeature = 15014,
 
+        /*
         [ConflictingCombos(SamuraiYukikazeCombo, SamuraiGekkoCombo, SamuraiKashaCombo)]
         [CustomComboInfo("Simple Samurai Single Target", "Every sticker combo on one button (Hakaze).", SAM.JobID, 0, "Sleepy Samurai", "zzzz....wha?")]
         SamuraiSimpleSamuraiFeature = 15015,
+        */
 
+        /*
         [CustomComboInfo("Simple Samurai AoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, 0, "", "Hardly any buttons in the first place, but we got you. Lazy-ass.")]
         SamuraiSimpleSamuraiAoECombo = 15016,
+        */
 
         [CustomComboInfo("Kaiten Feature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID, 0, "", "MORE!")]
         SamuraiKaitenFeature1 = 15018,
