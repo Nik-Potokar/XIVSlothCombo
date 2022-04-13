@@ -657,21 +657,6 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    internal class SamuraiOgiNamikiriFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SamuraiOgiNamikiriFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SAM.OgiNamikiri)
-            {
-                if (HasEffect(SAM.Buffs.OgiNamikiriReady))
-                    return OriginalHook(SAM.OgiNamikiri);
-            }
-
-            return actionID;
-        }
-    }
 
 }
 
