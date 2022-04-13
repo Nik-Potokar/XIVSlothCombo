@@ -204,40 +204,20 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerFlourishFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerFlourishProcFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerFlourishingFanDanceFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is DNC.Flourish)
+            var canWeave = CanWeave(actionID);
+
+            // Fan Dance 3 & 4 on Flourish when relevant
+            if (actionID is DNC.Flourish && canWeave)
             {
-                var canWeave = CanWeave(actionID);
+                if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
+                    return DNC.FanDance3;
 
-                // Fan Dance Weave Option
-                if (IsEnabled(CustomComboPreset.DancerFlourishProcFanDanceWeaveOption) && canWeave)
-                {
-                    if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
-                        return DNC.FanDance3;
-
-                    if (HasEffect(DNC.Buffs.FourFoldFanDance))
-                        return DNC.FanDance4;
-                }
-
-                /* Removed for now (pre-testing) - seems GCD Proc Saver no longer necessary, code still updated just in case.
-           
-                if (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow))
-                    return DNC.Fountainfall;
-
-                if (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry))
-                    return DNC.ReverseCascade;
-
-                if (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow))
-                    return DNC.Bloodshower;
-
-                if (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry))
-                    return DNC.RisingWindmill;
-                */
-
-                return DNC.Flourish;
+                if (HasEffect(DNC.Buffs.FourFoldFanDance))
+                    return DNC.FanDance4;
             }
 
             return actionID;
@@ -524,9 +504,11 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= DNC.Levels.Fountain && lastComboMove is DNC.Cascade && comboTime < 2 && comboTime > 0)
                     return DNC.Fountain;
 
+                // Tillana
                 if (HasEffect(DNC.Buffs.FlourishingFinish))
                     return DNC.Tillana;
 
+                // Starfall Dance
                 if (HasEffect(DNC.Buffs.FlourishingStarfall))
                     return DNC.StarfallDance;
 
