@@ -1831,26 +1831,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Samurai Single Target", "Every sticker combo on one button (Hakaze).", SAM.JobID, 0, "Sleepy Samurai", "zzzz....wha?")]
         SamuraiSimpleSamuraiFeature = 15015,
         */
-
         /*
         [CustomComboInfo("Simple Samurai AoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, 0, "", "Hardly any buttons in the first place, but we got you. Lazy-ass.")]
         SamuraiSimpleSamuraiAoECombo = 15016,
         */
 
-        [CustomComboInfo("Kaiten Feature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID, 0, "", "MORE!")]
-        SamuraiKaitenFeature1 = 15018,
-
-        [CustomComboInfo("Kaiten Feature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID, 0, "", "MORE!!")]
-        SamuraiKaitenFeature2 = 15019,
-
-        [CustomComboInfo("Kaiten Feature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID, 0, "", "MORE!!!")]
-        SamuraiKaitenFeature3 = 15020,
-
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, 0, "Gyoza Feature", "Mm, tasty.")]
         SamuraiYatenFeature = 15021,
-
-        [CustomComboInfo("Kaiten Feature Option 4", "Adds Kaiten when above 20 gauge to OgiNamikiri and OgiNamikiri is ready.", SAM.JobID, 0, "", "MORE!!!!")]
-        SamuraiOgiNamikiriFeature = 15022,
 
         [ConflictingCombos(SamuraiOvercapFeature85)]
         [CustomComboInfo("Samurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, 0, "Wink emoji Overcap Feature 1", "Kinky.")]
@@ -1870,12 +1857,6 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Ikishoten on combos", "Adds Ikishoten to most Single Target/AoE combos when at or below 50 Kenki", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
         SamuraiIkishotenonmaincombo = 15027,
-
-        [ParentCombo(SamuraiIkishotenNamikiriFeature)]
-        [CustomComboInfo("Kaiten On Ikishoten", "Adds Kaiten to Ikishoten Namikiri Feature", SAM.JobID, 0, "", "MORE!!!!!")]
-        SamuraiIkishotenKaitenNamikiriFeature = 15028,
-
-
 
         #endregion
         // ====================================================================================
@@ -2145,7 +2126,7 @@ namespace XIVSlothComboPlugin
         WhiteMageAfflatusMiseryCure2Feature = 19012,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
-        [CustomComboInfo("Remove DoT From Glare3 Feature", "Removes DoT from DPS feature", WHM.JobID, 0, "I'm an idiot", "Yes, one serving of less DPS, please.")]
+        [CustomComboInfo("Adds DoT to Glare/Stone", "Adds DoT to DPS feature and refreshes it with 3 seconds remaining.", WHM.JobID, 0, "I'm an idiot", "Yes, one serving of less DPS, please.")]
         WHMDotMainComboFeature = 19013,
 
         [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature/Alternative Feature", WHM.JobID, 0, "", "I can hardly breathe as it is!")]
