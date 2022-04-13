@@ -170,7 +170,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
                 if (!furtherRuin)
-                    return OriginalHook(SMN.Ruin2);
+                    return SMN.Ruin3;
             }
             return actionID;
         }
