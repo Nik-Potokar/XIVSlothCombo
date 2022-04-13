@@ -204,10 +204,25 @@ namespace XIVSlothComboPlugin.Combos
                                 return WHM.LucidDreaming;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && level >= WHM.Levels.Aero1 && inCombat)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
                     {
-                        if (aero1Debuff.RemainingTime <= 3 || aero2Debuff.RemainingTime <= 3 || diaDebuff.RemainingTime <= 3)
-                            return OriginalHook(WHM.Aero1);
+                        if (level >= WHM.Levels.Aero1 && level < WHM.Levels.Aero2)
+                        {
+                            if ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3))
+                                return WHM.Aero1;
+                        }
+
+                        if (level >= WHM.Levels.Aero2 && level < WHM.Levels.Dia)
+                        {
+                            if ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3))
+                                return WHM.Aero2;
+                        }
+
+                        if (level >= WHM.Levels.Dia)
+                        {
+                            if ((diaDebuff is null) || (diaDebuff.RemainingTime <= 3))
+                                return WHM.Dia;
+                        }
                     }
                 }
 
