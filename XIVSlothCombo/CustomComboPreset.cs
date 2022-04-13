@@ -1,4 +1,4 @@
-using XIVSlothComboPlugin.Attributes;
+﻿using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
@@ -501,19 +501,21 @@ namespace XIVSlothComboPlugin
         "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.", DNC.JobID, 0, "", "")]
         DancerDanceComboCompatibility = 4025,
 
-
         // Flourishing Features Section
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuFlourishingFeatures = 4030,
 
+        /*
         [ParentCombo(DancerMenuFlourishingFeatures)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourish Proc Saver Feature", "Change Flourish into any available Feather-generating procs before using.", DNC.JobID, 0, "", "")]
         DancerFlourishProcFeature = 4031,
+        */
 
-        [ParentCombo(DancerFlourishProcFeature)]
-        [CustomComboInfo("Proc Saver Fan Dance Option", "Include Fan Dance 3 & 4 in the proc saver during weave-windows.", DNC.JobID, 0, "", "")]
+        [ParentCombo(DancerMenuFlourishingFeatures)]
+        [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
+        [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0, "", "")]
         DancerFlourishProcFanDanceWeaveOption = 4032,
 
 

@@ -1,4 +1,4 @@
-using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -59,8 +59,8 @@ namespace XIVSlothComboPlugin.Combos
                 TechnicalStep = 1819,
                 SilkenSymmetry = 2693,
                 SilkenFlow = 2694,
-                FlourishingSymmetry = 2693,
-                FlourishingFlow = 2694,
+                FlourishingSymmetry = 3017,
+                FlourishingFlow = 3018,
                 FlourishingFanDance = 1820,
                 FlourishingStarfall = 2700,
                 FlourishingFinish = 2698,
@@ -222,6 +222,8 @@ namespace XIVSlothComboPlugin.Combos
                         return DNC.FanDance4;
                 }
 
+                /* Removed for now (pre-testing) - seems GCD Proc Saver no longer necessary, code still updated just in case.
+           
                 if (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow))
                     return DNC.Fountainfall;
 
@@ -233,6 +235,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry))
                     return DNC.RisingWindmill;
+                */
 
                 return DNC.Flourish;
             }
@@ -382,11 +385,13 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.DancerDevilmentOnCombinedDanceFeature) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                 {
-                    if ((level >= DNC.Levels.Devilment && level < DNC.Levels.TechnicalStep) || (level >= DNC.Levels.TechnicalStep && techstepCD.IsCooldown))
+                    if ((level >= DNC.Levels.Devilment && level < DNC.Levels.TechnicalStep) ||
+                        (level >= DNC.Levels.TechnicalStep && techstepCD.IsCooldown))
                         return DNC.Devilment;
                 }
 
-                if (IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown && incombat && level >= DNC.Levels.Flourish && standardCD.IsCooldown)
+                if (IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown &&
+                    incombat && level >= DNC.Levels.Flourish && standardCD.IsCooldown)
                     return DNC.Flourish;
 
                 if (HasEffect(DNC.Buffs.FlourishingStarfall))
