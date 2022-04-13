@@ -93,24 +93,6 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class DragoonJumpFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonJumpFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == DRG.Jump)
-            {
-                if (HasEffect(DRG.Buffs.DiveReady))
-                    return DRG.MirageDive;
-
-                return OriginalHook(DRG.HighJump);
-            }
-
-            return actionID;
-        }
-    }
-
     internal class DragoonCoerthanTormentCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonCoerthanTormentCombo;
