@@ -5,15 +5,10 @@ using Dalamud.Game.ClientState.Buddy;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge;
 using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
-using Dalamud.Interface;
 using Dalamud.IoC;
 using Dalamud.Plugin;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace XIVSlothComboPlugin
 {

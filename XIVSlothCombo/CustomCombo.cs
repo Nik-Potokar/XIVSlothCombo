@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 using System.Numerics;
+
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
 using System;
@@ -13,6 +13,7 @@ using System.Linq;
 using System.Numerics;
 using System.Timers;
 using XIVSlothComboPlugin.Attributes;
+using System.Timers;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -478,7 +479,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>Number of charges.</returns>
         protected static ushort GetMaxCharges(uint actionID)
             => GetCooldown(actionID).MaxCharges;
-
+        
         /// <summary>
         /// Checks if the provided action ID has cooldown remaining enough to weave against it
         /// without causing clipping
@@ -486,8 +487,8 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanWeave(uint actionID, double weaveTime = 0.7)
-           => GetCooldown(actionID).CooldownRemaining > weaveTime;
+         protected static bool CanWeave(uint actionID, double weaveTime = 0.7)
+            => GetCooldown(actionID).CooldownRemaining > weaveTime;
 
         /// <summary>
         /// Checks if the provided action ID has cooldown remaining enough to weave against it

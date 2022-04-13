@@ -4,7 +4,6 @@ using System.Linq;
 
 using Dalamud.Configuration;
 using Dalamud.Utility;
-using ImGuiScene;
 using Newtonsoft.Json;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
@@ -20,7 +19,6 @@ namespace XIVSlothComboPlugin
         private static readonly HashSet<CustomComboPreset> SecretCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset[]> ConflictingCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset?> ParentCombos;  // child: parent
-        private static readonly HashSet<CustomComboPreset> TrustIncompatibles;
 
         static PluginConfiguration()
         {
@@ -37,11 +35,6 @@ namespace XIVSlothComboPlugin
                 .ToDictionary(
                     preset => preset,
                     preset => preset.GetAttribute<ParentComboAttribute>()?.ParentPreset);
-
-            TrustIncompatibles = Enum.GetValues<CustomComboPreset>()
-                .Where(preset => preset.GetAttribute<TrustIncompatibleAttribute>() != default)
-                .ToHashSet();
-
         }
 
         /// <summary>
@@ -66,12 +59,6 @@ namespace XIVSlothComboPlugin
         /// </summary>
         [JsonProperty("Debug")]
         public bool EnableSecretCombos { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets or sets a value indicating wheteher to allow and display trust incompatible combos.
-        /// </summary>
-        public bool EnableTrustIncompatibles { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether to hide combos which conflict with enabled presets.
@@ -122,14 +109,6 @@ namespace XIVSlothComboPlugin
             => SecretCombos.Contains(preset);
 
         /// <summary>
-        /// Gets a value indicating whether a preset is trust incompatible.
-        /// </summary>
-        /// <param name="preset">Preset to check.</param>
-        /// <returns>The boolean representation.</returns>
-        public bool IsTrustIncompatible(CustomComboPreset preset)
-            => TrustIncompatibles.Contains(preset);
-
-        /// <summary>
         /// Gets an array of conflicting combo presets.
         /// </summary>
         /// <param name="preset">Preset to check.</param>
@@ -167,10 +146,7 @@ namespace XIVSlothComboPlugin
 
         public int MudraPathSelection { get; set; } = 0;
 
-        public bool SpecialEvent { get; set; } = false;
-
-        [JsonProperty]
-        public Dictionary<string, byte[]> ImageCache { get; set; } = new();
+        public bool AprilFoolsSlothIrl { get; set; } = false;
 
         [JsonProperty]
         private static Dictionary<string,float> CustomConfigValues { get; set; } = new Dictionary<string,float>();
@@ -181,8 +157,6 @@ namespace XIVSlothComboPlugin
         [JsonProperty]
         private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
-        [JsonProperty]
-        private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
         public float GetCustomConfigValue(string config, float defaultMinValue = 0)
         {
             float configValue;
