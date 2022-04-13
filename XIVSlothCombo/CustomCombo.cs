@@ -346,6 +346,11 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>A value indicating if the effect exists.</returns>
         protected static bool TargetHasEffect(ushort effectID)
             => FindTargetEffect(effectID) is not null;
+        protected static float GetDebuffRemainingTime(ushort effectId)
+        {
+            Status? eff = FindTargetEffect(effectId);
+            return eff?.RemainingTime ?? 0;
+        }
 
         /// <summary>
         /// Finds an effect on the current target.
@@ -448,7 +453,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>True or false.</returns>
         protected static bool JustUsed(uint actionID)
-            => GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
+            => IsOnCooldown(actionID) && GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
 
         /// <summary>
         /// Gets a value indicating whether an action has any available charges.
@@ -483,6 +488,24 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>True or false.</returns>
         protected static bool CanWeave(uint actionID, double weaveTime = 0.7)
            => GetCooldown(actionID).CooldownRemaining > weaveTime;
+
+        /// <summary>
+        /// Checks if the provided action ID has cooldown remaining enough to weave against it
+        /// without causing clipping and checks if you're casting a spell to make it mage friendly
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
+        /// <returns>True or false.</returns>
+        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.7)
+        {
+            var castingSpell = LocalPlayer.IsCasting;
+
+            if (GetCooldown(actionID).CooldownRemaining > weaveTime && !castingSpell)
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Checks if the provided action ID has cooldown remaining enough to weave against it

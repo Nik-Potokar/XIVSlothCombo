@@ -83,14 +83,16 @@ namespace XIVSlothComboPlugin
                     .OrderBy(tpl => tpl.Info.Order).ToArray());
 
 
-
-
             this.SizeCondition = ImGuiCond.FirstUseEver;
             this.Size = new Vector2(740, 490);
         }
         public override void Draw()
         {
 
+            ImGui.NextColumn();
+            ImGui.TextColored(ImGuiColors.DalamudRed, $"NOTICE: We are still updating some jobs for 6.1 compatibility.\nBe patient and check the discord for a full status report!");
+            ImGui.NextColumn();
+            
             if (ImGui.BeginTabBar("SlothBar"))
             {
                 if (ImGui.BeginTabItem("Combos/Features"))
@@ -260,7 +262,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
+                ImGui.TextUnformatted("Offset of melee check distance for features that use it.\nFor those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
                 ImGui.EndTooltip();
             }
 
@@ -273,6 +275,10 @@ namespace XIVSlothComboPlugin
         {
             ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, -40), true);
+
+
+
+            ImGui.BeginChild("scrolling", new Vector2(0, -30), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
@@ -598,7 +604,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BARD
             if (preset == CustomComboPreset.BardSimpleRagingJaws)
-                ConfigWindowFunctions.DrawSliderFloat(0, 3, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
+                ConfigWindowFunctions.DrawSliderFloat(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
             #endregion
             // ====================================================================================
@@ -701,29 +707,11 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PALADIN
-            if (preset == CustomComboPreset.PaladinFightOrFlightFeature)
-            {
-                var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
-                var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
-
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
-
-
-
-
-                if (inputChanged)
-                {
-                    Service.Configuration.CustomGCDValueHigh = CustomGCDValueHigh;
-                    Service.Configuration.CustomGCDValueLow = CustomGCDValueLow;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
+            if (preset == CustomComboPreset.PaladinAtonementFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
+                    
+            if (preset == CustomComboPreset.PaladinInterveneFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLDKeepInterveneCharges, "How many charges to keep ready? (0 = Use All)");
 
             //if (preset == CustomComboPreset.SkillCooldownRemaining)
             //{

@@ -646,13 +646,21 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region DARK KNIGHT
 
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("Buffs on Main Combo", "Collection of Buffs to add to Main Combo", DRK.JobID)]
+        DarkMainComboBuffsGroup = 5098,
+
+        [ParentCombo(DarkSouleaterCombo)]
+        [CustomComboInfo("CDs on Main Combo", "Collection of CDs to add to Main Combo", DRK.JobID)]
+        DarkMainComboCDsGroup = 5099,
+
         [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Dark Knight)", DRK.JobID, 0, "Fetch me their souls!", "Heheheheheh")]
         DarkSouleaterCombo = 5000,
 
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, 0, "", "Ugly name for an ugly job")]
         DarkStalwartSoulCombo = 5001,
 
-        [ParentCombo(DarkSouleaterCombo)]
+        [ParentCombo(DarkMainComboBuffsGroup)]
         [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "Delirium is what you have if you choose to play DRK.\nDoc's words, not mine")]
         DeliriumFeature = 5002,
 
@@ -660,7 +668,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID, 0, "", "Hey big spenderrrrr")]
         DRKOvercapFeature = 5003,
 
-        [ParentCombo(DarkSouleaterCombo)]
+        [ParentCombo(DarkMainComboCDsGroup)]
         [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "Trick everyone into thinking a party member is standing where they shouldn't be!")]
         DRKLivingShadowFeature = 5004,
 
@@ -675,7 +683,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer to oGCD Feature ", DRK.JobID, 0, "", "Wasn't this last expansion?")]
         DarkShadowbringeroGCDFeature = 5007,
 
-        [ParentCombo(DarkSouleaterCombo)]
+        [ParentCombo(DarkMainComboCDsGroup)]
         [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available and Darkside is up.", DRK.JobID, 0, "", "Take the plunge. All the way!")]
         DarkPlungeFeature = 5008,
 
@@ -713,36 +721,36 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkOpenerFeature)]
         [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
         DarkBloodWeaponOpener = 5018,
-        
-        [ParentCombo(DarkPlungeFeature)]
-        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
-        DarkPlungeBurstOption = 5019,
+
+        [ParentCombo(DarkMainComboCDsGroup)]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on Main Combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0)]
+        DarkShBFeature = 5019,
 
         [ParentCombo(DarkManaOvercapFeature)]
         [CustomComboInfo("EoS Burst Option", "Uses EoS until chosen MP limit is reached during even minute window bursts.", DRK.JobID, 0)]
         DarkEoSPoolOption = 5020,
 
-        [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0)]
-        DarkSaltedEarthFeature = 5021,
+        [ParentCombo(DarkShBFeature)]
+        [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID, 0)]
+        DarkBurstShBOption = 5021,
 
-        [ParentCombo(DarkSouleaterCombo)]
+        [ParentCombo(DarkMainComboCDsGroup)]
         [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on Main Combo while Darkside is up.", DRK.JobID, 0)]
         DarkCnSFeature = 5022,
 
-        [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on Main Combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0)]
-        DarkShBFeature = 5023,
+        [ParentCombo(DarkPlungeFeature)]
+        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
+        DarkPlungeBurstOption = 5023,
 
-        [ParentCombo(DarkShBFeature)]
-        [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID, 0)]
-        DarkBurstShBOption = 5024,
+        [ParentCombo(DarkMainComboCDsGroup)]
+        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0)]
+        DarkSaltedEarthFeature = 5024,
 
         [ParentCombo(DeliriumFeature)]
         [CustomComboInfo("Delirium on CD", "Adds Delirium to Main Combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0)]
         DarkDeliriumOnCD = 5025,
 
-        [ParentCombo(DarkSouleaterCombo)]
+        [ParentCombo(DarkMainComboBuffsGroup)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
         
@@ -930,13 +938,13 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
-        GunbreakerCDsOnMainComboFeature = 7002,
+        GunbreakerMainComboCDsGroup = 7002,
 
-        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
         GunbreakerDZOnMainComboFeature = 7005,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
@@ -982,7 +990,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", GNB.JobID, 0, "Lower blow", "Blow, but low.")]
         GunbreakerInterruptFeature = 7016,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
         GunbreakerBloodfestonST = 7014,
 
@@ -994,24 +1002,24 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
         GunbreakerGFStartonMain = 7019,
 
-        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Bow Shock on Main Combo", "Adds Bow Shock to the Main Combo", GNB.JobID, 0)]
         GunbreakerBSOnMainComboFeature = 7020,
 
-        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the Main Combo", GNB.JobID, 0)]
         GunbreakerSBOnMainComboFeature = 7021,
 
         [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0)]
         GunbreakerCDsonNMFeature = 7022,
 
-        [ParentCombo(GunbreakerCDsOnMainComboFeature)]
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
         
         [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", GNB.JobID)]
         GunbreakerReprisalProtection = 7030,
-        
+
         #endregion
         // ====================================================================================
         #region MACHINIST
@@ -1161,7 +1169,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "I've had it with these MF snakes on this MF plane!")]
         MnkTwinSnakesFeature = 9011,
 
-        [ConflictingCombos(MnkBasicComboPlus)]
+        [ConflictingCombos(MnkBootshineCombo)]
         [CustomComboInfo("Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, 0, "", "I presses the buttons, I does the deeps")]
         MnkBasicCombo = 9002,
 
@@ -1175,15 +1183,15 @@ namespace XIVSlothComboPlugin
         MonkHowlingFistMeditationFeature = 9005,
 
         [ConflictingCombos(MnkBasicCombo)]
-        [CustomComboInfo("Basic Rotation Plus", "Basic Monk Combo on one button Plus (Only for Testing)", MNK.JobID, 0, "", "They call it 'basic' for a reason, you donkey")]
-        MnkBasicComboPlus = 9006,
+        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk)", MNK.JobID, 0, "", "They call it 'basic' for a reason, you donkey")]
+        MnkBootshineCombo = 9006,
 
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterful Blitz when Perfect Balance Is Active", MNK.JobID, 0, "", "Try not to fall over, eh")]
         MnkPerfectBalancePlus = 9007,
 
-        [ParentCombo(MnkBasicComboPlus)]
-        [CustomComboInfo("Masterful Blitz to Main Combo", "Adds all of (Optimal?) Blitz combos and Masterful Blitz on Main Combo", MNK.JobID, 0, "", "It's maths, but for your Single Target combo!")]
-        MonkMasterfullBlizOnMainCombo = 9008,
+        [ParentCombo(MnkBootshineCombo)]
+        [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the Main Combo", MNK.JobID, 0, "", "It's maths, but for your Single Target combo!")]
+        MonkMasterfulBlitzOnMainCombo = 9008,
 
         [ParentCombo(MnkAoECombo)]
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds all of (Optimal?) Blitz combos and Masterful Blitz on AoE Combo.", MNK.JobID, 0, "", "It's maths, but for your AoE combo!")]
@@ -1195,13 +1203,29 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Riddle me this, brotha'")]
         MnkRiddleOfFireBrotherhoodFeature = 9012,
 
-        [ParentCombo(MnkBasicComboPlus)]
-        [CustomComboInfo("Damage Buffs to Main Combo Feature", "Places Riddle of Fire and Brotherhood onto main combo when Perfect Balance is up.", MNK.JobID, 0, "", "Been passed on for dance partner again? Don't worry, you have some buffs of your own.")]
-        MnkMainComboBuffsFeature = 9013,
+        [ParentCombo(MnkBootshineCombo)]
+        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Been passed on for dance partner again? Don't worry, you have some buffs of your own.")]
+        MnkCDsOnMainComboFeature = 9013,
 
-        [ParentCombo(MnkBasicComboPlus)]
-        [CustomComboInfo("Riddle of Wind Main Combo Feature", "Places Riddle of Wind onto main combo after using Twin Snakes.", MNK.JobID, 0, "", "Easy, breezy.")]
-        MnkRiddleOfWindFeature = 9014,
+        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the Main Combo.", MNK.JobID, 0, "", "Easy, breezy.")]
+        MnkRiddleOfWindOnMainComboFeature = 9014,
+
+        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the Main Combo.", MNK.JobID, 0, "", "")]
+        MnkPerfectBalanceOnMainComboFeature = 9015,
+
+        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the Main Combo.", MNK.JobID, 0, "", "")]
+        MnkBrotherhoodOnMainComboFeature = 9016,
+
+        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the Main Combo.", MNK.JobID, 0, "", "")]
+        MnkMeditationOnMainComboFeature = 9017,
+
+        [ParentCombo(MnkBootshineCombo)]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.", MNK.JobID, 0, "", "")]
+        MnkLunarSolarOpenerOnMainComboFeature = 9018,
 
         #endregion
         // ====================================================================================
@@ -1328,8 +1352,7 @@ namespace XIVSlothComboPlugin
         PaladinRoyalAuthorityCombo = 11001,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinAtonementTestFeature)]
-        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath. \nDoes not drop last Atonement stack.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
+        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
         PaladinAtonementFeature = 11002,
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "Promenade feature", "Long walks on the promenade...")]
@@ -1357,18 +1380,12 @@ namespace XIVSlothComboPlugin
         PaladinStandaloneHolyCircleFeature = 11009,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinInterveneFeatureOption)]
-        [CustomComboInfo("Intervene Feature (All Stacks)", "Adds intervene onto main combo whenever its available (Uses all stacks).", PLD.JobID, 4, "", "It looks like a gap-closer. It smells like a gap-closer...")]
+        [CustomComboInfo("Intervene Feature", "Adds Intervene onto Main Combo whenever it's available.", PLD.JobID, 4, "", "It looks like a gap-closer. It smells like a gap-closer...")]
         PaladinInterveneFeature = 11010,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinInterveneFeature)]
-        [CustomComboInfo("Intervene Feature (Leaves 1 stack)", "Adds intervene onto main combo whenever its available (Leaves 1 stack).", PLD.JobID, 4, "", "It must be a gap-closer!")]
-        PaladinInterveneFeatureOption = 11011,
-
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinRangedUptimeFeature2)]
-        [CustomComboInfo("Uptime Feature", "Replace Main Combo with Shield Lob when out of range.", PLD.JobID, 4, "", "Don't throw your shield, you're not Captain America.\nJust get close!")]
+        [CustomComboInfo("Shield Lob Uptime Feature", "Replace Main Combo with Shield Lob when out of range.", PLD.JobID, 4, "", "Don't throw your shield, you're not Captain America.\nJust get close!")]
         PaladinRangedUptimeFeature = 11012,
 
         [ParentCombo(PaladinFightOrFlightMainComboFeature)]
@@ -1381,23 +1398,13 @@ namespace XIVSlothComboPlugin
         PaladinReqMainComboFeature = 11014,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [ConflictingCombos(PaladinAtonementFeature/*, SkillCooldownRemaining*/)]
-        [CustomComboInfo("Atonement Drop Feature", "Drops Atonement to prevent Potency loss on lvl 90 rotation.", PLD.JobID, 1, "Anti-Atonement Missile", "Imagine worrying about potency loss when you play a job like this. Couldn't be me!")]
-        PaladinAtonementTestFeature = 11015,
-
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
         [ConflictingCombos(PaladinRangedUptimeFeature)]
         [CustomComboInfo("Holy Spirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Holy Spirit when out of range.", PLD.JobID, 5, "(Un)Holy Halone", "Who is Halone and why are they so angry?")]
         PaladinRangedUptimeFeature2 = 11016,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Fight or Flight Feature (Custom Values) ", "Adds FoF onto the main combo. You can input your own gcd value (Value represtents percentage of your GCD, 1 = Full GCD).\nIf unsure put low on 0.250 and high on 0.750.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
+        [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
         PaladinFightOrFlightFeature = 11017,
-
-        //[ParentCombo(PaladinRoyalAuthorityCombo)]
-        //[ConflictingCombos(PaladinAtonementFeature, PaladinAtonementTestFeature)]
-        //[CustomComboInfo("Atonement Drop Feature (Custom Value Test)", "Drops Atonement to prevent Potency loss when FoF is about to expire.", PLD.JobID, 0, "", "Clumsy-ass dropped the Atonement again")]
-        //SkillCooldownRemaining = 11018,
 
         [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
         PaladinInterruptFeature = 11019,
@@ -1406,11 +1413,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
         PaladinHolyCircleFeature = 11020,
 
-        [ParentCombo(PaladinProminenceCombo)]
+        [ParentCombo(PaladinHolyCircleFeature)]
         [CustomComboInfo("AoE Confiteor Feature", "Replaces AoE combo with Confiteor when Requiescat is active and appropiate.", PLD.JobID, 2, "", "")]
         PaladinAoEConfiteorFeature = 11021,
 
-        [ParentCombo(PaladinProminenceCombo)]
+        [ParentCombo(PaladinHolyCircleFeature)]
         [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.\nProbably not optimal at all.", PLD.JobID, 0, "", "")]
         PaladinReqAoEComboFeature = 11022,
 
@@ -1651,6 +1658,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
         RedMageLucidOnJolt = 13022,
+
+        [CustomComboInfo("Swiftcast into Verraise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        RedMageSwiftVerraise = 13023,
 
         #endregion
         // ====================================================================================
