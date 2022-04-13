@@ -159,6 +159,22 @@ namespace XIVSlothComboPlugin.Combos
                 SMNLucidDreamingFeature = "SMNLucidDreamingFeature";
         }
     }
+    internal class SummonerRaiseFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerRaiseFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Swiftcast)
+            {
+                var swiftCD = GetCooldown(SMN.Swiftcast);
+                if (swiftCD.IsCooldown)
+                    return SMN.Resurrection;
+            }
+            return actionID;
+        }
+    }
+
 
     internal class SummonerSpecialRuinFeature : CustomCombo
     {

@@ -2005,6 +2005,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rekindle Feature", "Adds Rekindle onto the main Ruin1 or Ruin3 combo. Requires other features to work.", SMN.JobID, 0, "Tinderbox", "Remember making those fires in runescape? Yeah. That.")]
         SummonerRekindlePhoenix = 17026,
 
+        [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        SummonerRaiseFeature = 17027,
+
         #endregion
         // ====================================================================================
         #region WARRIOR
