@@ -272,9 +272,6 @@ namespace XIVSlothComboPlugin.Combos
 
         internal static bool inOpener = false;
         internal static bool openerFinished = false;
-
-        internal static int blitzUsed = 0;
-        internal static bool useBlitz = false;
         internal static bool loopTwinSnakes = false;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -283,7 +280,8 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<MNKGauge>();
-                var canWeave = CanWeave(actionID, 0.45);
+                var canWeave = CanWeave(actionID, 0.4);
+                var canWeaveChakra = CanWeave(actionID);
 
                 var twinsnakeDuration = FindEffect(MNK.Buffs.DisciplinedFist);
                 var demolishDuration = FindTargetEffect(MNK.Debuffs.Demolish);
@@ -301,7 +299,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         inOpener = true;
                         openerFinished = false;
-                        useBlitz = false;
+                        loopTwinSnakes = false;
                     }
 
                     if (!inCombat)
@@ -323,9 +321,6 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             inOpener = false;
                             openerFinished = false;
-
-                            blitzUsed = 0;
-                            useBlitz = false;
                             loopTwinSnakes = false;
                         }
                     }
@@ -341,6 +336,14 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (level >= MNK.Levels.RiddleOfFire)
                         {
+                            // Early exit out of opener
+                            if (IsOnCooldown(MNK.RiddleOfFire) && GetCooldownRemainingTime(MNK.RiddleOfFire) <= 30)
+                            {
+                                inOpener = false;
+                                openerFinished = true;
+                                loopTwinSnakes = false;
+                            }
+
                             if (canWeave)
                             {
                                 // Delayed weave for Riddle of Fire specifically
@@ -367,18 +370,11 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         return MNK.RiddleOfWind;
                                     }
-                                    if (level >= MNK.Levels.Meditation && gauge.Chakra == 5)
+                                    if (level >= MNK.Levels.Meditation && gauge.Chakra == 5 && canWeaveChakra)
                                     {
                                         return OriginalHook(MNK.Meditation);
                                     }
                                 }
-                            }
-
-                            // Check for Masterful Blitz usage
-                            if (useBlitz && OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
-                            {
-                                useBlitz = false;
-                                blitzUsed++;
                             }
 
                             // Check if opener is over
@@ -386,13 +382,11 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 inOpener = false;
                                 openerFinished = true;
-
-                                blitzUsed = 0;
-                                useBlitz = false;
                                 loopTwinSnakes = false;
                             }
-                            // End the opener with Twin Snakes
-                            if (blitzUsed >= 2 && (HasEffect(MNK.Buffs.RaptorForm) || HasEffect(MNK.Buffs.FormlessFist)))
+
+                            // End the opener with Twin Snakes when we have Formless Fist and Riddle of Fire is almost over
+                            if ((IsOnCooldown(MNK.RiddleOfFire) && GetCooldownRemainingTime(MNK.RiddleOfFire) <= 45) && HasEffect(MNK.Buffs.FormlessFist))
                             {
                                 loopTwinSnakes = true;
                                 return MNK.TwinSnakes;
@@ -441,7 +435,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return MNK.RiddleOfWind;
                     }
-                    if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && HasEffect(MNK.Buffs.DisciplinedFist))
+                    if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && HasEffect(MNK.Buffs.DisciplinedFist) && canWeaveChakra)
                     {
                         return OriginalHook(MNK.Meditation);
                     }
@@ -451,7 +445,6 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.MonkMasterfulBlitzOnMainCombo) &&
                     level >= MNK.Levels.MasterfulBlitz && !HasEffect(MNK.Buffs.PerfectBalance) && OriginalHook(MNK.MasterfulBlitz) != MNK.MasterfulBlitz)
                 {
-                    useBlitz = true;
                     return OriginalHook(MNK.MasterfulBlitz);
                 }
 
