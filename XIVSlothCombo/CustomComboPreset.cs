@@ -746,6 +746,10 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region DRAGOON
 
+        [ConflictingCombos(DragoonSimple)]
+        [CustomComboInfo("Jump + Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, 0, "Jump off map", "Oh no, muh double-weaves!")]
+        DragoonJumpFeature = 6000,
+
         [ConflictingCombos(DragoonSimpleAoE)]
         [CustomComboInfo("Coerthan Torment Combo", "Replace Coerthan Torment with its combo chain.", DRG.JobID, 1, "", "One combo!")]
         DragoonCoerthanTormentCombo = 6100,
