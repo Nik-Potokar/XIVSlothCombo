@@ -50,7 +50,7 @@
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="FFXIVClientStructs">
-		  <HintPath>..\FFXIVClientStructs\bin\Debug\FFXIVClientStructs.dll</HintPath>
+		  <HintPath>..\lib\FFXIVClientStructs\bin\Debug\FFXIVClientStructs.dll</HintPath>
 		</Reference>
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
