@@ -1,4 +1,4 @@
-namespace XIVSlothComboPlugin.Combos
+﻿namespace XIVSlothComboPlugin.Combos
 {
     internal static class PLD
     {
@@ -39,7 +39,8 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Requiescat = 1368,
                 SwordOath = 1902,
-                FightOrFlight = 76;
+                FightOrFlight = 76,
+                BladeOfFaithReady = 3019;
         }
 
         public static class Debuffs
