@@ -182,7 +182,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianHeliosFeature)]
         [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID, 0)]
         AstrologianHoroscopeFeature = 1026,
-        
+
         [ParentCombo(AstrologianSimpleSingleTargetHeal)]
         [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID, 0)]
         AspectedBeneficFeature = 1027,
@@ -753,7 +753,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkMainComboBuffsGroup)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
-        
+
         [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", DRK.JobID)]
         DarkKnightReprisalProtection = 5030,
 
@@ -1016,7 +1016,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
-        
+
         [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", GNB.JobID)]
         GunbreakerReprisalProtection = 7030,
 
@@ -1133,7 +1133,7 @@ namespace XIVSlothComboPlugin
         MachinistSpreadShotFeature = 8028,
 
         [ParentCombo(MachinistSimpleAssembling)]
-        [CustomComboInfo("Drill","Use Reassemble with Drill when available.", MCH.JobID,0,"GigaDrillBreaker","The Drill that will pierce the heavens!")]
+        [CustomComboInfo("Drill", "Use Reassemble with Drill when available.", MCH.JobID, 0, "GigaDrillBreaker", "The Drill that will pierce the heavens!")]
         MachinistSimpleAssemblingDrill = 8029,
 
         [ParentCombo(MachinistSimpleAssembling)]
@@ -1678,24 +1678,24 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Phlegma into X Feature", "Does nothing on it's own, must choose any/all sub-features!", SGE.JobID, 0, "", "Phlegmaballs.")]
         SagePhlegmaFeature = 14031,
 
-            [ParentCombo(SagePhlegmaFeature)]
-            [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
-            SagePhlegmaToxikonFeature = 14003,
+        [ParentCombo(SagePhlegmaFeature)]
+        [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+        SagePhlegmaToxikonFeature = 14003,
 
-            [ParentCombo(SagePhlegmaFeature)]
-            [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-            SagePhlegmaDyskrasiaFeature = 14004,
+        [ParentCombo(SagePhlegmaFeature)]
+        [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+        SagePhlegmaDyskrasiaFeature = 14004,
 
         [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
         SageDPSFeature = 14005,
 
-            [ParentCombo(SageDPSFeature)]
-            [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
-            SageDPSFeatureAdvTest = 14009,
+        [ParentCombo(SageDPSFeature)]
+        [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
+        SageDPSFeatureAdvTest = 14009,
 
-            [ParentCombo(SageDPSFeature)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
-            SageLucidFeature = 14006,
+        [ParentCombo(SageDPSFeature)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
+        SageLucidFeature = 14006,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
         [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
@@ -1724,7 +1724,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
         CustomSoteriaFeature = 14015,
-        
+
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
         CustomZoeFeature = 14016,
@@ -1744,7 +1744,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Custom Rhizomata Feature###SGEST", "Adds Rhizomata when Addersgall is 0###SGEST", SGE.JobID, 0)]
         RhizomataFeature = 14020,
-        
+
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
         CustomKrasisFeature = 14021,
@@ -1784,7 +1784,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
         CustomDruocholeFeature = 14030,
-                
+
         #endregion
         // ====================================================================================
         #region SAMURAI
@@ -2090,7 +2090,7 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID)]
         WarriorPrimalRendOnInnerRelease = 18019,
-        
+
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo when Nascent Chaos is not up.", WAR.JobID)]
         WarriorIRonST = 18020,
@@ -2198,74 +2198,77 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region PvP Combos
 
-        [SecretCustomCombo]
-        [CustomComboInfo("BurstShotFeature", "Adds Shadowbite/EmpyArrow/PitchPerfect(3stacks)/SideWinder(When Target is low hp)/ApexArrow when gauge is 100 all on one button combo.", BRDPvP.JobID)]
-        BurstShotFeaturePVP = 80000,
+        //[SecretCustomCombo]
+        //[CustomComboInfo("BurstShotFeature", "Adds Shadowbite/EmpyArrow/PitchPerfect(3stacks)/SideWinder(When Target is low hp)/ApexArrow when gauge is 100 all on one button combo.", BRDPvP.JobID)]
+        //BurstShotFeaturePVP = 80000,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("SongsFeature", "Replaces WanderersMinnuet and Peons song all on one button in an optimal order", BRDPvP.JobID)]
+        //SongsFeaturePVP = 80001,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("SouleaterComboFeature", "Adds EoS as oGCD onto main combo and Bloodspiller when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
+        //SouleaterComboFeature = 80002,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("StalwartSoulComboFeature", "Adds FoS as oGCD onto main combo and Quietus when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
+        //StalwartSoulComboFeature = 80003,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("StormsPathComboFeature", "Replaces Storm's Path Combo with FellCleave/IC when at 50 gauge or under IR", WARPVP.JobID)]
+        //StormsPathComboFeature = 80004,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("SteelCycloneFeature", "Replaces Steel Cyclone Combo with Decimate/CC when at 50 gauge or under IR", WARPVP.JobID)]
+        //SteelCycloneFeature = 80005,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("RoyalAuthorityComboFeature", "Adds HolySpirit To the main combo", PLDPVP.JobID)]
+        //RoyalAuthorityComboFeature = 80006,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("ProminenceComboFeature", "Adds HolyCircle to the main AoE Combo", PLDPVP.JobID)]
+        //ProminenceComboFeature = 80007,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("GnashingFangComboFeature", "Adds BowShock(When target is meleeRange) and Burststrike at 2 ammo gauge to the main combo", GNBPVP.JobID)]
+        //SolidBarrelComboFeature = 80008,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("DemonSlaughterComboFeature", "Adds BowShock(When target is meleeRange) and Fated Circle at 2 ammo gauge to the main AoE combo", GNBPVP.JobID)]
+        //DemonSlaughterComboFeature = 80009,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("HeatedCleanShotFeature", "Adds Gauss/Rico weave to maincombo", MCHPVP.JobID)]
+        //HeatedCleanShotFeature = 80010,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID)]
+        //WildfireBlankFeature = 80011,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
+        //InfernalSliceComboFeature = 80012,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("NightmareScytheComboFeature", "Adds Gluttony/GrimSwathe/Smite/EnshroudComboRotation on InfernalScytheCombo", RPRPVP.JobID)]
+        //NightmareScytheComboFeature = 80013,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("NinjaAeolianEdgePvpCombo", "Adds Cha/Assassinate/Smite on AeolianEdge combo", NINPVP.JobID)]
+        //NinjaAeolianEdgePvpCombo = 80014,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("MnkBootshinePvPFeature", "Adds Axekick/Smite/TornadoKick on main combo", MNKPVP.JobID)]
+        //MnkBootshinePvPFeature = 80015,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
+        //BlackEnochianPVPFeature = 80016,
 
         [SecretCustomCombo]
-        [CustomComboInfo("SongsFeature", "Replaces WanderersMinnuet and Peons song all on one button in an optimal order", BRDPvP.JobID)]
-        SongsFeaturePVP = 80001,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("SouleaterComboFeature", "Adds EoS as oGCD onto main combo and Bloodspiller when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
-        SouleaterComboFeature = 80002,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("StalwartSoulComboFeature", "Adds FoS as oGCD onto main combo and Quietus when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
-        StalwartSoulComboFeature = 80003,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("StormsPathComboFeature", "Replaces Storm's Path Combo with FellCleave/IC when at 50 gauge or under IR", WARPVP.JobID)]
-        StormsPathComboFeature = 80004,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("SteelCycloneFeature", "Replaces Steel Cyclone Combo with Decimate/CC when at 50 gauge or under IR", WARPVP.JobID)]
-        SteelCycloneFeature = 80005,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("RoyalAuthorityComboFeature", "Adds HolySpirit To the main combo", PLDPVP.JobID)]
-        RoyalAuthorityComboFeature = 80006,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("ProminenceComboFeature", "Adds HolyCircle to the main AoE Combo", PLDPVP.JobID)]
-        ProminenceComboFeature = 80007,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("GnashingFangComboFeature", "Adds BowShock(When target is meleeRange) and Burststrike at 2 ammo gauge to the main combo", GNBPVP.JobID)]
-        SolidBarrelComboFeature = 80008,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("DemonSlaughterComboFeature", "Adds BowShock(When target is meleeRange) and Fated Circle at 2 ammo gauge to the main AoE combo", GNBPVP.JobID)]
-        DemonSlaughterComboFeature = 80009,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("HeatedCleanShotFeature", "Adds Gauss/Rico weave to maincombo", MCHPVP.JobID)]
-        HeatedCleanShotFeature = 80010,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID)]
-        WildfireBlankFeature = 80011,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
-        InfernalSliceComboFeature = 80012,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("NightmareScytheComboFeature", "Adds Gluttony/GrimSwathe/Smite/EnshroudComboRotation on InfernalScytheCombo", RPRPVP.JobID)]
-        NightmareScytheComboFeature = 80013,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("NinjaAeolianEdgePvpCombo", "Adds Cha/Assassinate/Smite on AeolianEdge combo", NINPVP.JobID)]
-        NinjaAeolianEdgePvpCombo = 80014,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("MnkBootshinePvPFeature", "Adds Axekick/Smite/TornadoKick on main combo", MNKPVP.JobID)]
-        MnkBootshinePvPFeature = 80015,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
-        BlackEnochianPVPFeature = 80016,
-
+        [CustomComboInfo("Burst Mode", "", BRDPvP.JobID)]
+        BRDBurstMode = 80017,
 
         #endregion
     }

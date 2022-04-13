@@ -3,39 +3,37 @@
 	<PropertyGroup>
 		<Authors>attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz</Authors>
 		<Company>-</Company>
-		<Version>3.0.9.3</Version> <!-- This is the version that will be used when pushing to the repo.-->
+		<Version>3.0.9.0</Version>
+		<!-- This is the version that will be used when pushing to the repo.-->
 		<Description>XIVCombo for lazy players</Description>
 		<Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
 		<PackageProjectUrl></PackageProjectUrl>
+		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
-  <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <Platforms>x64</Platforms>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <NoWarn>CS1591</NoWarn>
-  </PropertyGroup>
-	<PropertyGroup Label="Documentation">
-		<DocumentationFile></DocumentationFile>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-	</PropertyGroup>
-	<ItemGroup>
-		<Content Include="..\res\akified.png" Link="images\akified.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
-	</ItemGroup>
+
 	<PropertyGroup>
 		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+		<DalamudPluginPath>$(appdata)\XIVLauncher\installedPlugins\XIVSlothCombo\$(version)</DalamudPluginPath>
 		<AssemblyName>XIVSlothCombo</AssemblyName>
 		<RootNamespace>XIVSlothCombo</RootNamespace>
 		<PackageId>XIVSlothCombo</PackageId>
 		<Product>XIVSlothCombo</Product>
 	</PropertyGroup>
 
-	<PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<Platforms>x64</Platforms>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<OutputPath>bin\Release</OutputPath>
+		<NoWarn>CS1591</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
 		<TargetFramework>net5.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
 		<Nullable>enable</Nullable>
@@ -52,29 +50,32 @@
 		<DocumentationFile></DocumentationFile>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
+
 	<ItemGroup>
-	  <Compile Remove="Images\**" />
-	  <EmbeddedResource Remove="Images\**" />
-	  <None Remove="Images\**" />
+		<Compile Remove="Images\**" />
+		<EmbeddedResource Remove="Images\**" />
+		<None Remove="Images\**" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<Optimize>True</Optimize>
 	</PropertyGroup>
+
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
+
 	<ItemGroup>
-	  <PackageReference Include="DalamudPackager" Version="2.1.5" />
+		<PackageReference Include="DalamudPackager" Version="2.1.5" />
 	</ItemGroup>
+
 	<ItemGroup>
-		<ProjectReference Include="..\lib\FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj" />
 		<Reference Include="Dalamud">
 			<HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="FFXIVClientStructs">
-		  <HintPath>..\FFXIVClientStructs\bin\Debug\FFXIVClientStructs.dll</HintPath>
+			<HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
 		</Reference>
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
@@ -82,6 +83,10 @@
 		</Reference>
 		<Reference Include="ImGui.NET">
 			<HintPath>$(DalamudLibPath)ImGui.NET.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ImGuiScene">
+			<HintPath>$(DalamudLibPath)ImGuiScene.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="Lumina">

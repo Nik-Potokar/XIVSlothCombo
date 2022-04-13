@@ -4,6 +4,7 @@ using System.Linq;
 
 using Dalamud.Configuration;
 using Dalamud.Utility;
+using ImGuiScene;
 using Newtonsoft.Json;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
@@ -19,6 +20,7 @@ namespace XIVSlothComboPlugin
         private static readonly HashSet<CustomComboPreset> SecretCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset[]> ConflictingCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset?> ParentCombos;  // child: parent
+        private static readonly HashSet<CustomComboPreset> TrustIncompatibles;
 
         static PluginConfiguration()
         {
@@ -35,6 +37,11 @@ namespace XIVSlothComboPlugin
                 .ToDictionary(
                     preset => preset,
                     preset => preset.GetAttribute<ParentComboAttribute>()?.ParentPreset);
+
+            TrustIncompatibles = Enum.GetValues<CustomComboPreset>()
+                .Where(preset => preset.GetAttribute<TrustIncompatibleAttribute>() != default)
+                .ToHashSet();
+
         }
 
         /// <summary>
@@ -59,6 +66,12 @@ namespace XIVSlothComboPlugin
         /// </summary>
         [JsonProperty("Debug")]
         public bool EnableSecretCombos { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets or sets a value indicating wheteher to allow and display trust incompatible combos.
+        /// </summary>
+        public bool EnableTrustIncompatibles { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether to hide combos which conflict with enabled presets.
@@ -109,6 +122,14 @@ namespace XIVSlothComboPlugin
             => SecretCombos.Contains(preset);
 
         /// <summary>
+        /// Gets a value indicating whether a preset is trust incompatible.
+        /// </summary>
+        /// <param name="preset">Preset to check.</param>
+        /// <returns>The boolean representation.</returns>
+        public bool IsTrustIncompatible(CustomComboPreset preset)
+            => TrustIncompatibles.Contains(preset);
+
+        /// <summary>
         /// Gets an array of conflicting combo presets.
         /// </summary>
         /// <param name="preset">Preset to check.</param>
@@ -142,14 +163,21 @@ namespace XIVSlothComboPlugin
 
         public float EnemyCurrentHp { get; set; } = 0;
 
+        public float CustomGCDValueHigh { get; set; } = 0;
+
+        public float CustomGCDValueLow { get; set; } = 0;
+
         public float SkillCooldownRemaining { get; set; } = 0;
 
         public int MudraPathSelection { get; set; } = 0;
 
-        public bool AprilFoolsSlothIrl { get; set; } = false;
+        public bool SpecialEvent { get; set; } = false;
 
         [JsonProperty]
-        private static Dictionary<string,float> CustomConfigValues { get; set; } = new Dictionary<string,float>();
+        public Dictionary<string, byte[]> ImageCache { get; set; } = new();
+
+        [JsonProperty]
+        private static Dictionary<string, float> CustomConfigValues { get; set; } = new Dictionary<string, float>();
 
         [JsonProperty]
         private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
@@ -157,6 +185,8 @@ namespace XIVSlothComboPlugin
         [JsonProperty]
         private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
+        [JsonProperty]
+        private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
         public float GetCustomConfigValue(string config, float defaultMinValue = 0)
         {
             float configValue;
@@ -240,6 +270,53 @@ namespace XIVSlothComboPlugin
         }
 
         private static int JobIDToArrayIndex(byte key)
+        {
+            return key switch
+            {
+                PLD.JobID => 0,
+                PLD.ClassID => 0,
+                WAR.JobID => 1,
+                WAR.ClassID => 1,
+                DRK.JobID => 2,
+                GNB.JobID => 3,
+                WHM.JobID => 4,
+                WHM.ClassID => 4,
+                SCH.JobID => 5,
+                SCH.ClassID => 5,
+                AST.JobID => 6,
+                SGE.JobID => 7,
+                MNK.JobID => 8,
+                MNK.ClassID => 8,
+                DRG.JobID => 9,
+                DRG.ClassID => 9,
+                NIN.JobID => 10,
+                NIN.ClassID => 10,
+                SAM.JobID => 11,
+                RPR.JobID => 12,
+                BRD.JobID => 13,
+                BRD.ClassID => 13,
+                MCH.JobID => 14,
+                DNC.JobID => 15,
+                BLM.JobID => 16,
+                BLM.ClassID => 16,
+                SMN.JobID => 17,
+                RDM.JobID => 18,
+                BLU.JobID => 19,
+                _ => -1
+            };
+        }
+
+        public bool GetRoleGridValue(string config, byte jobID)
+        {
+            var index = JobIDToArrayIndex(jobID);
+            var array = GetCustomBoolArrayValue(config);
+
+            if (index == -1) return false;
+            if (array == Array.Empty<bool>()) return false;
+            return array[index];
+        }
+
+        private static int RoleIDToArrayIndex(byte key)
         {
             return key switch
             {
