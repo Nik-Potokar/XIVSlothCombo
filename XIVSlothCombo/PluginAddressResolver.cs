@@ -33,7 +33,7 @@ namespace XIVSlothComboPlugin
         /// <inheritdoc/>
         protected override void Setup64Bit(SigScanner scanner)
         {
-            this.ComboTimer = scanner.GetStaticAddressFromSig("48 89 2D ?? ?? ?? ?? 85 C0 74 0F");
+            this.ComboTimer = scanner.GetStaticAddressFromSig("F3 0F 11 05 ?? ?? ?? ?? F3 0F 10 45 ?? E8");
 
             this.GetAdjustedActionId = scanner.ScanText("E8 ?? ?? ?? ?? 8B F8 3B DF");  // Client::Game::ActionManager.GetAdjustedActionId
 
