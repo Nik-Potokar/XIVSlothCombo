@@ -1209,7 +1209,7 @@ namespace XIVSlothComboPlugin
         MnkMeditationOnMainComboFeature = 9017,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. This requires at least a 1.94 GCD.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
 
         #endregion
