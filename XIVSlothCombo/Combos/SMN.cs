@@ -272,7 +272,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.SimpleSummoner))
                 {
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && bahaCD.CooldownRemaining >=55 && CanWeave(actionID) && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
                         return SMN.SearingLight;
 
                     // Egis
@@ -290,7 +290,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.SimpleSummonerOption2))
                 {
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && bahaCD.CooldownRemaining >=55 && CanWeave(actionID) && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
                         return SMN.SearingLight;
 
                     // Egis
@@ -436,7 +436,7 @@ namespace XIVSlothComboPlugin.Combos
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var buffCD = GetCooldown(SMN.SearingLight);
 
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && bahaCD.CooldownRemaining >=55 && CanWeave(actionID) && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
                         return SMN.SearingLight;
 
                     // Egis
@@ -582,7 +582,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.SimpleSummoner))
                 {
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && bahaCD.CooldownRemaining >=55 && CanWeave(actionID) && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
                         return SMN.SearingLight;
 
                     // Egis
@@ -600,7 +600,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.SimpleSummonerOption2))
                 {
-                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && !bahaCD.IsCooldown && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
+                    if (IsEnabled(CustomComboPreset.BuffOnSimpleSummoner) && gauge.IsBahamutReady && bahaCD.CooldownRemaining >=55 && CanWeave(actionID) && !buffCD.IsCooldown && incombat && level >= SMN.Levels.SearingLight)
                         return SMN.SearingLight;
 
                     // Egis
