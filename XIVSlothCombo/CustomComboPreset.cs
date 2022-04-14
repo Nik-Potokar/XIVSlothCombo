@@ -1,4 +1,4 @@
-using XIVSlothComboPlugin.Attributes;
+﻿using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
@@ -503,21 +503,16 @@ namespace XIVSlothComboPlugin
 
 
         // Flourishing Features Section
-        [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuFlourishingFeatures = 4030,
 
         [ParentCombo(DancerMenuFlourishingFeatures)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Flourish Proc Saver Feature", "Change Flourish into any available Feather-generating procs before using.", DNC.JobID, 0, "", "")]
-        DancerFlourishProcFeature = 4031,
-
-        [ParentCombo(DancerFlourishProcFeature)]
-        [CustomComboInfo("Proc Saver Fan Dance Option", "Include Fan Dance 3 & 4 in the proc saver during weave-windows.", DNC.JobID, 0, "", "")]
-        DancerFlourishProcFanDanceWeaveOption = 4032,
+        [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0, "", "")]
+        DancerFlourishingFanDanceFeature = 4032,
 
 
-        // Fan Dance Combo Features Section
+        // Fan Dance Combo Features Subsection
         [ParentCombo(DancerMenuFlourishingFeatures)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Fan Dance Combo Features", "Options for Fan Dance combos. Fan Dance 3 takes priority over Fan Dance 4.\nCollapsing this category disables the options inside.", DNC.JobID, 0, "", "")]
@@ -539,6 +534,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fan Dance 2 -> 4", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
         DancerFanDance2_4Combo = 4037,
 
+        // Devilment --> Starfall
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID, 0, "", "")]
         DancerDevilmentFeature = 4038,
@@ -562,7 +558,7 @@ namespace XIVSlothComboPlugin
         DancerSimpleTechnicalFeature = 4053,
 
         [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation (during Technical Finish).", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
         DancerSimpleDevilmentFeature = 4054,
 
         [ParentCombo(DancerSimpleFeature)]
@@ -604,7 +600,7 @@ namespace XIVSlothComboPlugin
         DancerSimpleAoETechnicalFeature = 4073,
 
         [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation (during Technical Finish).", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
         DancerSimpleAoEDevilmentFeature = 4074,
 
         [ParentCombo(DancerSimpleAoEFeature)]
@@ -1209,7 +1205,7 @@ namespace XIVSlothComboPlugin
         MnkMeditationOnMainComboFeature = 9017,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. This requires at least a 1.94 GCD.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
 
         #endregion
@@ -1774,15 +1770,15 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SAMURAI
 
-        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+        //[ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID, 0, "Yakuza Combo", "Gang affiliation? Surely not.")]
         SamuraiYukikazeCombo = 15000,
 
-        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+        //[ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID, 0, "Geico Combo", "Fifteen minutes could save you 15% or more on car insurance!")]
         SamuraiGekkoCombo = 15001,
 
-        [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+       // [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID, 0, "Cashman Combo", "Dolla dolla bill, y'all")]
         SamuraiKashaCombo = 15002,
 
@@ -1826,27 +1822,18 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, 0, "Sticky-icky-shoten", "Wait, you guys use meditation?")]
         SamuraiIkishotenNamikiriFeature = 15014,
 
+        /*
         [ConflictingCombos(SamuraiYukikazeCombo, SamuraiGekkoCombo, SamuraiKashaCombo)]
         [CustomComboInfo("Simple Samurai Single Target", "Every sticker combo on one button (Hakaze).", SAM.JobID, 0, "Sleepy Samurai", "zzzz....wha?")]
         SamuraiSimpleSamuraiFeature = 15015,
-
+        */
+        /*
         [CustomComboInfo("Simple Samurai AoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, 0, "", "Hardly any buttons in the first place, but we got you. Lazy-ass.")]
         SamuraiSimpleSamuraiAoECombo = 15016,
-
-        [CustomComboInfo("Kaiten Feature Option 1", "Adds Kaiten to Higanbana when it has < 5 seconds remaining.", SAM.JobID, 0, "", "MORE!")]
-        SamuraiKaitenFeature1 = 15018,
-
-        [CustomComboInfo("Kaiten Feature Option 2", "Adds Kaiten to Tenka Goken.", SAM.JobID, 0, "", "MORE!!")]
-        SamuraiKaitenFeature2 = 15019,
-
-        [CustomComboInfo("Kaiten Feature Option 3", "Adds Kaiten to Midare Setsugekka.", SAM.JobID, 0, "", "MORE!!!")]
-        SamuraiKaitenFeature3 = 15020,
+        */
 
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, 0, "Gyoza Feature", "Mm, tasty.")]
         SamuraiYatenFeature = 15021,
-
-        [CustomComboInfo("Kaiten Feature Option 4", "Adds Kaiten when above 20 gauge to OgiNamikiri and OgiNamikiri is ready.", SAM.JobID, 0, "", "MORE!!!!")]
-        SamuraiOgiNamikiriFeature = 15022,
 
         [ConflictingCombos(SamuraiOvercapFeature85)]
         [CustomComboInfo("Samurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, 0, "Wink emoji Overcap Feature 1", "Kinky.")]
@@ -1866,12 +1853,6 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Ikishoten on combos", "Adds Ikishoten to most Single Target/AoE combos when at or below 50 Kenki", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
         SamuraiIkishotenonmaincombo = 15027,
-
-        [ParentCombo(SamuraiIkishotenNamikiriFeature)]
-        [CustomComboInfo("Kaiten On Ikishoten", "Adds Kaiten to Ikishoten Namikiri Feature", SAM.JobID, 0, "", "MORE!!!!!")]
-        SamuraiIkishotenKaitenNamikiriFeature = 15028,
-
-
 
         #endregion
         // ====================================================================================
@@ -1912,7 +1893,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SUMMONER
 
-        [ConflictingCombos(SummonerMainComboFeature, SummonerRuinIVMobilityFeature)]
+        [ConflictingCombos(SummonerMainComboFeature)]
         [CustomComboInfo("Enable Single Target (Ruin1)", "Enables changing Single-Target Combo (Ruin I).", SMN.JobID, 0, "Ruin 420 Feature", "Ruination is come")]
         SummonerMainComboFeatureRuin1 = 16999,
 
@@ -1988,9 +1969,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         SummonerDemiAoESummonsFeature = 17020,
 
-        [ConflictingCombos(SummonerMainComboFeatureRuin1)]
-        [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I.\nWill break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, 0, "", "Don't you have enough mobility as it is?\nThis isn't Ranged DPS, y'know.")]
-        SummonerRuinIVMobilityFeature = 17021,
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin\nReturn of the godlike R3 mobility feature brought to you by Iaotle. Does the same thing as r3 mobility did before, which means you can enjoy having that R4 button on the right.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        SummonerSpecialRuinFeature = 17021,
 
         [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 0, "No Raising for me!", "Always slips swiftstream, sometimes")]
@@ -2009,6 +1989,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Rekindle Feature", "Adds Rekindle onto the main Ruin1 or Ruin3 combo. Requires other features to work.", SMN.JobID, 0, "Tinderbox", "Remember making those fires in runescape? Yeah. That.")]
         SummonerRekindlePhoenix = 17026,
+
+        [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        SummonerRaiseFeature = 17027,
 
         #endregion
         // ====================================================================================
@@ -2090,6 +2073,9 @@ namespace XIVSlothComboPlugin
         #endregion
         // ====================================================================================
         #region WHITE MAGE
+        
+        [CustomComboInfo("CDs on Glare/Stone", "Collection of CDs and spell features on Glare/Stone.", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
+        WHMCDsonMainComboGroup = 19099,
 
         [CustomComboInfo("Solace into Misery", "Replaces Afflatus Solace with Afflatus Misery when Misery is ready to be used", WHM.JobID, 0, "Misery", "I'd be miserable too if this were one of my DPS options.")]
         WhiteMageSolaceMiseryFeature = 19000,
@@ -2111,21 +2097,18 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID, 0, "Look up!", "It's this, but that.")]
         WHMAlternativeRaise = 19015,
 
-        [CustomComboInfo("DoT on Glare3 Feature", "Adds DoT on Glare3 when DoT is not preset on about to expire and when you are inCombat (You can still prepull Glare)", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
-        WHMDotMainComboFeature = 19005,
-
-        [ParentCombo(WHMDotMainComboFeature)]
+        [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]
         WHMLucidDreamingFeature = 19006,
 
         [CustomComboInfo("Medica Feature", "Replaces Medica2 whenever you are under Medica2 regen with Medica1", WHM.JobID, 0, "Big Brain AoE Heals", "God bless us all, eh")]
         WHMMedicaFeature = 19007,
 
-        [ParentCombo(WHMDotMainComboFeature)]
+        [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Presence Of Mind Feature", "Adds Presence of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "This would imply you're actually paying attention.")]
         WHMPresenceOfMindFeature = 19008,
 
-        [ParentCombo(WHMDotMainComboFeature)]
+        [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Assize Feature", "Adds Assize as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "Size 'em up, knock 'em down")]
         WHMAssizeFeature = 19009,
 
@@ -2140,9 +2123,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Misery Feature", "Changes Cure 2 into Afflatus Misery.", WHM.JobID, 0, "", "Cures? Who needs 'em?")]
         WhiteMageAfflatusMiseryCure2Feature = 19012,
 
-        [ParentCombo(WHMDotMainComboFeature)]
-        [CustomComboInfo("Remove DoT From Glare3 Feature", "Removes DoT from DPS feature", WHM.JobID, 0, "I'm an idiot", "Yes, one serving of less DPS, please.")]
-        WHMRemoveDotFromDPSFeature = 19013,
+        [ParentCombo(WHMCDsonMainComboGroup)]
+        [CustomComboInfo("Adds DoT to Glare/Stone", "Adds DoT to DPS feature and refreshes it with 3 seconds remaining.", WHM.JobID, 0, "I'm an idiot", "Yes, one serving of less DPS, please.")]
+        WHMDotMainComboFeature = 19013,
 
         [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature/Alternative Feature", WHM.JobID, 0, "", "I can hardly breathe as it is!")]
         WHMThinAirFeature = 19014,
