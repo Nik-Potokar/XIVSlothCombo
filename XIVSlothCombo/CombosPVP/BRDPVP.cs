@@ -37,10 +37,11 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute(actionID)) return PVPCommon.Recuperate;
-
+                
                 if (actionID == BRDPvP.PowerfulShot)
                 {
+                    if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute(actionID)) return PVPCommon.Recuperate;
+
                     if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3)
                         return OriginalHook(BRDPvP.EmpyrealArrow);
 
