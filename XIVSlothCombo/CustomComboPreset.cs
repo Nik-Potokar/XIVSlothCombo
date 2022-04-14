@@ -2223,14 +2223,6 @@ namespace XIVSlothComboPlugin
         //DemonSlaughterComboFeature = 80009,
 
         //[SecretCustomCombo]
-        //[CustomComboInfo("HeatedCleanShotFeature", "Adds Gauss/Rico weave to maincombo", MCHPVP.JobID)]
-        //HeatedCleanShotFeature = 80010,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID)]
-        //WildfireBlankFeature = 80011,
-
-        //[SecretCustomCombo]
         //[CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
         //InfernalSliceComboFeature = 80012,
 
@@ -2249,6 +2241,10 @@ namespace XIVSlothComboPlugin
         //[SecretCustomCombo]
         //[CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
         //BlackEnochianPVPFeature = 80016,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Trans-AM Mode", "More pow to the pewpew!", MCHPVP.JobID)]
+        MCHBlastChargeFeature = 80010,
 
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "", BRDPvP.JobID)]
