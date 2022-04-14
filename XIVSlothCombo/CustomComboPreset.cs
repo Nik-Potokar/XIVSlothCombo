@@ -2271,5 +2271,12 @@ namespace XIVSlothComboPlugin
         BRDBurstMode = 80017,
 
         #endregion
+        // ====================================================================================
+        #region PvPGlobals
+        [SecretCustomCombo]
+        [CustomComboInfo("Emergency Heals", "Uses Recuperate when your HP is under a certain threshold and you have the MP.", ADV.JobID)]
+        PVPEmergencyHeals = 900000,
+
+        #endregion
     }
 }

@@ -10,24 +10,24 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 23;
 
         public const uint
-            PowerfulShot = 0,
-            ApexArrow = 0,
-            SilentNocturne = 0,
-            EmpyrealArrow = 0,
+            PowerfulShot = 29391,
+            ApexArrow = 29393,
+            SilentNocturne = 29395,
+            EmpyrealArrow = 29398,
             RepellingShot = 0,
             WardensPaean = 0,
-            PitchPerfect = 0,
-            BlastArrow = 0,
+            PitchPerfect = 29392,
+            BlastArrow = 29394,
             FinalFantasia = 0;
 
 
         public static class Buffs
         {
             public const ushort
-                FrontlinersMarch = 0,
-                FrontlinersForte = 0,
-                Repertoire = 0,
-                BlastArrowReady = 0;
+                FrontlinersMarch = 3138,
+                FrontlinersForte = 3140,
+                Repertoire = 3137,
+                BlastArrowReady = 3142;
         }
 
 
@@ -56,7 +56,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     return OriginalHook(BRDPvP.PowerfulShot);
                 }
-
+                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals)) return PVPCommon.GlobalEmergencyHeals.Execute(actionID);
                 return actionID;
             }
         }

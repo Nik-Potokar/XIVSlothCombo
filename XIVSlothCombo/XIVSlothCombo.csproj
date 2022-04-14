@@ -14,6 +14,7 @@
 	<PropertyGroup>
 		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
 		<DalamudPluginPath>$(appdata)\XIVLauncher\installedPlugins\XIVSlothCombo\$(version)</DalamudPluginPath>
+		<DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\XIVSlothCombo\</DalamudDevPlugins>
 		<AssemblyName>XIVSlothCombo</AssemblyName>
 		<RootNamespace>XIVSlothCombo</RootNamespace>
 		<PackageId>XIVSlothCombo</PackageId>
@@ -42,7 +43,7 @@
 		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<OutputPath>$(DalamudPluginPath)</OutputPath>
+		<OutputPath>$(DalamudDevPlugins)</OutputPath>
 		<NoWarn>CS1591</NoWarn>
 	</PropertyGroup>
 
@@ -67,6 +68,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DalamudPackager" Version="2.1.5" />
+		<PackageReference Include="ILRepack" Version="2.0.18" />
 	</ItemGroup>
 
 	<ItemGroup>
