@@ -103,14 +103,17 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.Tomahawk;
                 }
 
+                if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
+                    return WAR.Infuriate;
+
                 if (HasEffect(WAR.Buffs.SurgingTempest) && HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
                     if (CanWeave(actionID))
                     {
+                        if (IsEnabled(CustomComboPreset.WarriorIRonST) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(WAR.Berserk)) && level >= WAR.Levels.Berserk)
+                            return OriginalHook(WAR.Berserk);
                         if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
                             return WAR.Upheaval;
-                        if (IsEnabled(CustomComboPreset.WarriorIRonST) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(WAR.Berserk)) && !HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.Berserk)
-                            return OriginalHook(WAR.Berserk);
                         if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= WAR.Levels.Onslaught && GetRemainingCharges(WAR.Onslaught) > onslaughtChargesRemaining)
                             return WAR.Onslaught;
                     }
@@ -127,9 +130,6 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (comboTime > 0)
                 {
-                    if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && !HasEffect(WAR.Buffs.InnerRelease) && gauge <= 50 && CanWeave(actionID))
-                        return WAR.Infuriate;
-
                     if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
                     {
                         if (gauge == 100 && IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= WAR.Levels.InnerBeast)

@@ -61,9 +61,14 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
+                Aero1 = 4,
+                PresenceOfMind = 30,
                 Cure2 = 30,
+                Aero2 = 46,
                 AfflatusSolace = 52,
+                Assize = 56,
                 ThinAir = 58,
+                Dia = 72,
                 AfflatusRapture = 76;
         }
 
@@ -176,9 +181,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class WHMDotMainComboFeature : CustomCombo
+        internal class WHMCDsonMainComboGroup : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMDotMainComboFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMCDsonMainComboGroup;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -188,48 +193,35 @@ namespace XIVSlothComboPlugin.Combos
                     var diaDebuff = FindTargetEffect(WHM.Debuffs.Dia);
                     var aero1Debuff = FindTargetEffect(WHM.Debuffs.Aero);
                     var aero2Debuff = FindTargetEffect(WHM.Debuffs.Aero2);
-                    var lucidDreaming = GetCooldown(WHM.LucidDreaming);
-                    var presenceofmindCD = GetCooldown(WHM.PresenceOfMind);
-                    var assizeCD = GetCooldown(WHM.Assize);
-                    var glare3 = GetCooldown(WHM.Glare3);
 
-                    if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature) && level >= 30)
+                    if (CanSpellWeave(actionID))
                     {
-                        if (!presenceofmindCD.IsCooldown && glare3.CooldownRemaining > 0.2)
-                            return WHM.PresenceOfMind;
-                    }
-                    if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= 56)
-                    {
-                        if (!assizeCD.IsCooldown && glare3.CooldownRemaining > 0.2)
-                            return WHM.Assize;
-                    }
-                    if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature))
-                    {
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && glare3.CooldownRemaining > 0.2)
-                            return WHM.LucidDreaming;
+                        if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature) && level >= WHM.Levels.PresenceOfMind && IsOffCooldown(WHM.PresenceOfMind))
+                                return WHM.PresenceOfMind;
+                        if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= WHM.Levels.Assize && IsOffCooldown(WHM.Assize))
+                                return WHM.Assize;
+                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= 8000)
+                                return WHM.LucidDreaming;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && !IsEnabled(CustomComboPreset.WHMRemoveDotFromDPSFeature) && level >= 4 && level <= 45 && inCombat)
+                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
                     {
-                        if ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3))
+                        if (level >= WHM.Levels.Aero1 && level < WHM.Levels.Aero2)
                         {
-                            return WHM.Aero1;
+                            if ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3))
+                                return WHM.Aero1;
                         }
-                    }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && !IsEnabled(CustomComboPreset.WHMRemoveDotFromDPSFeature) && level >= 46 && level <= 71 && inCombat)
-                    {
-                        if ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3))
+                        if (level >= WHM.Levels.Aero2 && level < WHM.Levels.Dia)
                         {
-                            return WHM.Aero2;
+                            if ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3))
+                                return WHM.Aero2;
                         }
-                    }
 
-                    if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && !IsEnabled(CustomComboPreset.WHMRemoveDotFromDPSFeature) && level >= 72 && inCombat)
-                    {
-                        if ((diaDebuff is null) || (diaDebuff.RemainingTime <= 3))
+                        if (level >= WHM.Levels.Dia)
                         {
-                            return WHM.Dia;
+                            if ((diaDebuff is null) || (diaDebuff.RemainingTime <= 3))
+                                return WHM.Dia;
                         }
                     }
                 }
@@ -253,7 +245,6 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= WHM.Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff.RemainingTime > 2)
                         return WHM.AfflatusRapture;
                     if (HasEffect(WHM.Buffs.Medica2) && medica2Buff.RemainingTime > 2)
-
                         return WHM.Medica1;
                 }
 
