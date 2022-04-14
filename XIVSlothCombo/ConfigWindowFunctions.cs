@@ -1,12 +1,12 @@
 ﻿using Dalamud.Interface.Colors;
+using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
-using XIVSlothComboPlugin;
+using Log = Dalamud.Logging.PluginLog;
 
 namespace XIVSlothComboPlugin.ConfigFunctions
 {
@@ -27,7 +27,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
-            
+
 
             if (inputChanged)
             {
@@ -44,8 +44,8 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 inputChanged = false;
             }
 
-            
-            
+
+
             ImGui.Spacing();
         }
 
@@ -73,6 +73,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
+
         /// <summary>
         /// Draws a checkbox intended to be linked to other checkboxes sharing the same config value.
         /// </summary>
@@ -87,13 +88,14 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
             var output = Service.Configuration.GetCustomIntValue(config);
-            Dalamud.Logging.PluginLog.Debug(output.ToString());
             ImGui.PushItemWidth(itemWidth);
             var enabled = output == outputValue ? true : false;
 
             if (ImGui.Checkbox(checkBoxName, ref enabled))
             {
+
                 Service.Configuration.SetCustomIntValue(config, outputValue);
+
                 Service.Configuration.Save();
 
             }
@@ -104,24 +106,552 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
-        public static void DrawJobGrid(string config)
+        /// <summary>
+        /// Draws an image located inside the plugins images folder
+        /// </summary>
+        /// <param name="imageName">Name of the image. Must be locted inside the images folder.</param>
+        /// <param name="height">The output height of the image.</param>
+        /// <param name="width">The output width of the image.</param>
+        public static void DrawImage(string imageName, int height, int width)
         {
-            
+            var path = Path.Combine(Service.PluginFolder, "images", imageName);
+
+            if (File.Exists(path))
+            {
+                var slothImage = Service.Interface.UiBuilder.LoadImage(path);
+                if (slothImage != null)
+                {
+                    ImGui.Image(slothImage.ImGuiHandle, new Vector2(width, height));
+                }
+            }
         }
 
+
+        public async static Task DrawDownloadedImage(string directImgUrl, int height, int width)
+        {
+            if (!directImgUrl.IsNullOrEmpty())
+            {
+                byte[]? imageData = Service.Configuration.GetImageInCache(directImgUrl);
+                if (imageData == null)
+                {
+                    Log.Debug("IsNull");
+                    if (await ImageHandler.TryGetImage(directImgUrl))
+                    {
+                        imageData = Service.Configuration.GetImageInCache(directImgUrl);
+                    }
+                }
+
+                if (imageData != null)
+                {
+                    ImGui.Image(Service.Interface.UiBuilder.LoadImage(imageData).ImGuiHandle, new Vector2(width, height));
+                }
+
+            }
+        }
+
+        public static void DrawRoleGridMultiChoice(string config)
+        {
+            var values = Service.Configuration.GetCustomBoolArrayValue(config);
+
+            ImGui.Columns(5, $"{config}", false);
+
+            if (values.Length == 0) Array.Resize<bool>(ref values, 5);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+
+            if (ImGui.Checkbox($"Tanks###{config}0", ref values[0]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+
+            if (ImGui.Checkbox($"Healers###{config}1", ref values[1]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+
+            if (ImGui.Checkbox($"Melee###{config}2", ref values[2]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+
+            if (ImGui.Checkbox($"Ranged###{config}3", ref values[3]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+
+            if (ImGui.Checkbox($"Casters###{config}4", ref values[4]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Columns(1);
+            ImGui.PopStyleColor();
+            ImGui.Spacing();
+        }
+
+        public static void DrawRoleGridSingleChoice(string config)
+        {
+            var value = Service.Configuration.GetCustomIntValue(config);
+            bool[] values = new bool[20];
+
+            for (int i = 0; i <= 4; i++)
+            {
+                if (value == i) values[i] = true;
+                else
+                    values[i] = false;
+            }
+
+            ImGui.Columns(5, $"{config}", false);
+
+            if (values.Length == 0) Array.Resize<bool>(ref values, 5);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+
+            if (ImGui.Checkbox($"Tanks###{config}0", ref values[0]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 0);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+
+            if (ImGui.Checkbox($"Healers###{config}1", ref values[1]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 1);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+
+            if (ImGui.Checkbox($"Melee###{config}2", ref values[2]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 2);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+
+            if (ImGui.Checkbox($"Ranged###{config}3", ref values[3]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 3);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+
+            if (ImGui.Checkbox($"Casters###{config}4", ref values[4]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 4);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Columns(1);
+            ImGui.PopStyleColor();
+            ImGui.Spacing();
+        }
+        public static void DrawJobGridMultiChoice(string config)
+        {
+            var values = Service.Configuration.GetCustomBoolArrayValue(config);
+
+            ImGui.Columns(5, $"{config}", false);
+
+            if (values.Length == 0) Array.Resize<bool>(ref values, 20);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+
+            if (ImGui.Checkbox($"Paladin###{config}0", ref values[0]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Warrior###{config}1", ref values[1]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Dark Knight###{config}2", ref values[2]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Gunbreaker###{config}3", ref values[3]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+            if (ImGui.Checkbox($"White Mage###{config}", ref values[4]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Scholar###{config}5", ref values[5]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Astrologian###{config}6", ref values[6]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Sage###{config}7", ref values[7]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+            if (ImGui.Checkbox($"Monk###{config}8", ref values[8]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Dragoon###{config}9", ref values[9]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Ninja###{config}10", ref values[10]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Samurai###{config}11", ref values[11]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Reaper###{config}12", ref values[12]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Bard###{config}13", ref values[13]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Machinist###{config}14", ref values[14]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Dancer###{config}15", ref values[15]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+            if (ImGui.Checkbox($"Black Mage###{config}16", ref values[16]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Summoner###{config}17", ref values[17]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Red Mage###{config}18", ref values[18]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+            if (ImGui.Checkbox($"Blue Mage###{config}19", ref values[19]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            ImGui.PopStyleColor();
+            ImGui.NextColumn();
+            ImGui.Columns(1);
+            ImGui.Spacing();
+
+        }
+
+        public static void DrawJobGridSingleChoice(string config)
+        {
+            var value = Service.Configuration.GetCustomIntValue(config);
+            bool[] values = new bool[20];
+
+            for (int i = 0; i <= 19; i++)
+            {
+                if (value == i) values[i] = true;
+                else
+                    values[i] = false;
+            }
+            ImGui.Columns(5, null, false);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+
+            if (ImGui.Checkbox($"Paladin###{config}0", ref values[0]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 0);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Warrior###{config}1", ref values[1]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 1);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Dark Knight###{config}2", ref values[2]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 2);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Gunbreaker###{config}3", ref values[3]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 3);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+            if (ImGui.Checkbox($"White Mage###{config}4", ref values[4]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 4);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Scholar###{config}5", ref values[5]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 5);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Astrologian###{config}6", ref values[6]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 6);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Sage###{config}7", ref values[7]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 7);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+            if (ImGui.Checkbox($"Monk###{config}8", ref values[8]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 8);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Dragoon###{config}9", ref values[9]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 9);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Ninja###{config}10", ref values[10]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 10);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Samurai###{config}11", ref values[11]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 11);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Reaper###{config}12", ref values[12]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 12);
+                Service.Configuration.Save();
+            }
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Bard###{config}13", ref values[13]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 13);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Machinist###{config}14", ref values[14]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 14);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Dancer###{config}15", ref values[15]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 15);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+            ImGui.NextColumn();
+
+
+            ImGui.PopStyleColor();
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+            if (ImGui.Checkbox($"Black Mage###{config}16", ref values[16]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 16);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Summoner###{config}17", ref values[17]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 17);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+
+            if (ImGui.Checkbox($"Red Mage###{config}18", ref values[18]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 18);
+                Service.Configuration.Save();
+            }
+            ImGui.NextColumn();
+            if (ImGui.Checkbox($"Blue Mage###{config}19", ref values[19]))
+            {
+                Service.Configuration.SetCustomIntValue(config, 19);
+                Service.Configuration.Save();
+            }
+            ImGui.PopStyleColor();
+            ImGui.NextColumn();
+            ImGui.Columns(1);
+            ImGui.Spacing();
+        }
         public static int RoundOff(this int i, uint sliderIncrement)
         {
             double sliderAsDouble = Convert.ToDouble(sliderIncrement);
             return ((int)Math.Round(i / sliderAsDouble)) * (int)sliderIncrement;
         }
-
-        //public static float RoundOff(this float i, uint sliderIncrement)
-        //{
-        //    double sliderAsFloat = Convert.ToDouble(sliderIncrement);
-        //    double iAsFloat = Convert.ToDouble(i);
-
-        //    return Convert.ToSingle(Math.Round(iAsFloat / sliderAsFloat) * sliderIncrement);
-        //}
     }
 
     public static class SliderIncrements
