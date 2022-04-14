@@ -114,10 +114,6 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTabBar();
             }
 
-
-
-
-
         }
 
         private void DrawAboutUs()
@@ -248,6 +244,7 @@ namespace XIVSlothComboPlugin
 
             float offset = (float)Service.Configuration.MeleeOffset;
 
+            ImGui.PushItemWidth(50);
             var inputChangedeth = false;
             inputChangedeth |= ImGui.InputFloat("Melee Distance Offset", ref offset);
 
@@ -583,8 +580,6 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.AstroEssentialDignity)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
 
-            if (preset == CustomComboPreset.AstAutoCardTarget)
-                ConfigWindowFunctions.DrawRoleGridSingleChoice("ASTTEST");
 
             #endregion
             // ====================================================================================
