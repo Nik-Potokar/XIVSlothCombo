@@ -76,7 +76,7 @@ namespace XIVSlothComboPlugin.Attributes
         {
             return key switch
             {
-                0 => "Adventurer",
+                0 => "All Jobs",
                 1 => "Gladiator",
                 2 => "Pugilist",
                 3 => "Marauder",
