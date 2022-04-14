@@ -1341,6 +1341,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Bunshin Feature", "Adds Bunshin and Phantom Kamaitachi to the combo.", NIN.JobID)]
         NinSimpleAoeBunshin = 10030,
 
+        [ParentCombo(NinSimpleSingleTarget)]
+        [CustomComboInfo("Add Mug", "Adds Mug to this Simple Feature.", NIN.JobID)]
+        NinSimpleMug = 10031,
+
         #endregion
         // ====================================================================================
         #region PALADIN
