@@ -41,17 +41,21 @@
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="DalamudPackager" Version="2.1.5" />
+	  <PackageReference Include="DalamudPackager" Version="2.1.6" />
+	  <PackageReference Include="ILRepack" Version="2.0.18" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\lib\FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj" />
+
 		<Reference Include="Dalamud">
 			<HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+		
 		<Reference Include="FFXIVClientStructs">
-		  <HintPath>..\FFXIVClientStructs\bin\Debug\FFXIVClientStructs.dll</HintPath>
+			<HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
+		
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
 			<Private>False</Private>

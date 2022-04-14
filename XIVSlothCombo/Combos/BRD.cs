@@ -1024,9 +1024,9 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             // Do logic to determine first song
 
-                            if (minuetOffCooldown || !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.ArmysPaeon)) ) return BRD.WanderersMinuet;
-                            if (balladOffCooldown || !(JustUsed(BRD.WanderersMinuet) || JustUsed(BRD.ArmysPaeon)) ) return BRD.MagesBallad;
-                            if (paeonOffCooldown  || !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.ArmysPaeon)) ) return BRD.ArmysPaeon;
+                            if (minuetOffCooldown && !(JustUsed(BRD.MagesBallad)        || JustUsed(BRD.ArmysPaeon)) )      return BRD.WanderersMinuet;
+                            if (balladOffCooldown && !(JustUsed(BRD.WanderersMinuet)    || JustUsed(BRD.ArmysPaeon)) )      return BRD.MagesBallad;
+                            if (paeonOffCooldown  && !(JustUsed(BRD.MagesBallad)        || JustUsed(BRD.WanderersMinuet)) ) return BRD.ArmysPaeon;
                         }
 
                         if (gauge.Song == Song.WANDERER)
@@ -1045,7 +1045,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (gauge.Song == Song.MAGE)
                         {
-                            // Move to Army's Paeon if < 9 seconds left on song
+                            // Move to Army's Paeon if < 12 seconds left on song
                             if (songTimerInSeconds < 12 && paeonOffCooldown)
                             {
                                 return BRD.ArmysPaeon;
@@ -1054,7 +1054,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (gauge.Song == Song.ARMY)
                         {
-                            // Move to Wanderer's Minuet if < 3 seconds left on song
+                            // Move to Wanderer's Minuet if < 3 seconds left on song or WM off CD
                             if (songTimerInSeconds < 3 || minuetOffCooldown)
                             {
                                 return BRD.WanderersMinuet;

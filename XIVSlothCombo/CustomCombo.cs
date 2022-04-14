@@ -333,6 +333,11 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>A value indicating if the effect exists.</returns>
         protected static bool TargetHasEffect(ushort effectID)
             => FindTargetEffect(effectID) is not null;
+        protected static float GetDebuffRemainingTime(ushort effectId)
+        {
+            Status? eff = FindTargetEffect(effectId);
+            return eff?.RemainingTime ?? 0;
+        }
 
         /// <summary>
         /// Finds an effect on the current target.
@@ -435,7 +440,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>True or false.</returns>
         protected static bool JustUsed(uint actionID)
-            => GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
+            => IsOnCooldown(actionID) && GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
 
         /// <summary>
         /// Gets a value indicating whether an action has any available charges.

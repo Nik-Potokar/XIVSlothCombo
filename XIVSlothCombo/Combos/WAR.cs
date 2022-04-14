@@ -157,7 +157,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.WarriorGaugeOvercapFeature) && level >= WAR.Levels.InnerBeast && HasEffectAny(WAR.Buffs.SurgingTempest) && gauge >= 90)
                             return OriginalHook(WAR.InnerBeast);
-                        if ((!HasEffectAny(WAR.Buffs.SurgingTempest) || GetBuffRemainingTime(WAR.Buffs.SurgingTempest) <= surgingThreshold) && level >= WAR.Levels.StormsEye)
+                        if ((GetBuffRemainingTime(WAR.Buffs.SurgingTempest) <= surgingThreshold) && level >= WAR.Levels.StormsEye)
                             return WAR.StormsEye;
                         return WAR.StormsPath;
                     }
