@@ -320,9 +320,6 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region BARD
 
-        [CustomComboInfo("Wanderer's into Pitch Perfect", "Replaces Wanderer's Minuet with Pitch Perfect while in WM.", BRD.JobID, 0, "Braindead Minuet", "Songs for idiots")]
-        BardWanderersPitchPerfectFeature = 3000,
-
         [ConflictingCombos(SimpleBardFeature)]
         [CustomComboInfo("Heavy Shot into Straight Shot", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID, 0, "This shot into that shot", "You're still using a bow? In this day and age?\nJust play MCH. They have guns, dude.")]
         BardStraightShotUpgradeFeature = 3001,
