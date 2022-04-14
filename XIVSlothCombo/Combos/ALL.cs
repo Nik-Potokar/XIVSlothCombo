@@ -1,4 +1,4 @@
-﻿/* namespace XIVSlothComboPlugin.Combos
+﻿ namespace XIVSlothComboPlugin.Combos
 {
     internal static class All
     {
@@ -37,7 +37,7 @@
                 Raise = 12;
         }
     }
-    internal class InterruptFeature : CustomCombo
+    /*internal class InterruptFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.InterruptFeature;
 
@@ -92,5 +92,6 @@
             return actionID;
         }
     }
+    */
 }
-*/
+
