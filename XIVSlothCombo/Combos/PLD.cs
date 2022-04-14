@@ -1,4 +1,4 @@
-namespace XIVSlothComboPlugin.Combos
+﻿namespace XIVSlothComboPlugin.Combos
 {
     internal static class PLD
     {
@@ -39,7 +39,8 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Requiescat = 1368,
                 SwordOath = 1902,
-                FightOrFlight = 76;
+                FightOrFlight = 76,
+                BladeOfFaithReady = 3019;
         }
 
         public static class Debuffs
@@ -101,14 +102,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.GoringBlade)
+            if (actionID is PLD.GoringBlade)
             {
                 if (comboTime > 0)
                 {
-                    if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
+                    if (lastComboMove is PLD.FastBlade && level >= PLD.Levels.RiotBlade)
                         return PLD.RiotBlade;
 
-                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.GoringBlade)
+                    if (lastComboMove is PLD.RiotBlade && level >= PLD.Levels.GoringBlade)
                         return PLD.GoringBlade;
                 }
 
@@ -126,7 +127,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.RageOfHalone || actionID == PLD.RoyalAuthority)
+            if (actionID is PLD.RageOfHalone or PLD.RoyalAuthority)
             {
                 var interveneChargesRemaining = Service.Configuration.GetCustomIntValue(PLD.Config.PLDKeepInterveneCharges);
                 var atonementUsage = Service.Configuration.GetCustomIntValue(PLD.Config.PLDAtonementCharges);
@@ -136,6 +137,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob)
                         return PLD.ShieldLob;
+
                     if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit) 
                         return PLD.HolySpirit;
                 }
@@ -147,6 +149,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin))
                             return OriginalHook(PLD.SpiritsWithin);
+
                         if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn))
                             return PLD.CircleOfScorn;
                     }
@@ -157,8 +160,9 @@ namespace XIVSlothComboPlugin.Combos
                     // Buffs
                     if (CanDelayedWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= PLD.Levels.FightOrFlight && lastComboMove == PLD.FastBlade && IsOffCooldown(PLD.FightOrFlight))
+                        if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= PLD.Levels.FightOrFlight && lastComboMove is PLD.FastBlade && IsOffCooldown(PLD.FightOrFlight))
                             return PLD.FightOrFlight;
+
                         if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= PLD.Levels.Requiescat && HasEffect(PLD.Buffs.FightOrFlight) && GetBuffRemainingTime(PLD.Buffs.FightOrFlight) < 17 && IsOffCooldown(PLD.Requiescat))
                             return PLD.Requiescat;
                     }
@@ -170,16 +174,18 @@ namespace XIVSlothComboPlugin.Combos
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit && !HasEffect(PLD.Buffs.FightOrFlight) && LocalPlayer.CurrentMp >= 1000)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor &&
-                           (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) == 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
+                           (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
                                 return PLD.Confiteor;
-                        return PLD.HolySpirit;
+                            return PLD.HolySpirit;
                     }
 
-                    if (lastComboMove == PLD.Confiteor && level >= PLD.Levels.BladeOfFaith)
+                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
                         return PLD.BladeOfFaith;
-                    if (lastComboMove == PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
+
+                    if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
                         return PLD.BladeOfTruth;
-                    if (lastComboMove == PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
+
+                    if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
                         return PLD.BladeOfValor;
                 }
 
@@ -192,14 +198,16 @@ namespace XIVSlothComboPlugin.Combos
                 // 1-2-3 Combo
                 if (comboTime > 0)
                 {
-                    if (lastComboMove == PLD.FastBlade && level >= PLD.Levels.RiotBlade)
+                    if (lastComboMove is PLD.FastBlade && level >= PLD.Levels.RiotBlade)
                         return PLD.RiotBlade;
-                    if (lastComboMove == PLD.RiotBlade && level >= PLD.Levels.RageOfHalone)
+
+                    if (lastComboMove is PLD.RiotBlade && level >= PLD.Levels.RageOfHalone)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption) && level > PLD.Levels.GoringBlade &&
-                            ((GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) > 0 && GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) < 5) || (FindTargetEffect(PLD.Debuffs.BladeOfValor) is null && GetDebuffRemainingTime(PLD.Debuffs.GoringBlade) < 5)))
+                            ((GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) > 0 && GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) < 5) ||
+                            (FindTargetEffect(PLD.Debuffs.BladeOfValor) is null && GetDebuffRemainingTime(PLD.Debuffs.GoringBlade) < 5)))
                                 return PLD.GoringBlade;
-                        return OriginalHook(PLD.RageOfHalone);
+                            return OriginalHook(PLD.RageOfHalone);
                     }
                 }                
 
@@ -218,16 +226,19 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var reqCD = GetCooldown(PLD.Requiescat);
-            if (actionID == PLD.Prominence)
+
+            if (actionID is PLD.Prominence)
             {
                 if (CanWeave(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.PaladinReqAoEComboFeature) && level >= PLD.Levels.Requiescat && IsOffCooldown(PLD.Requiescat))
                             return PLD.Requiescat;
+
                     if (IsEnabled(CustomComboPreset.PaladinAoEExpiacionScornFeature))
                     {
                         if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin))
                             return OriginalHook(PLD.SpiritsWithin);
+
                         if (level >= PLD.Levels.CircleOfScorn && IsOffCooldown(PLD.CircleOfScorn))
                             return PLD.CircleOfScorn;
                     }
@@ -236,7 +247,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.PaladinHolyCircleFeature) && HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle && LocalPlayer.CurrentMp >= 1000)
                 {
                     if (((IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && level >= PLD.Levels.Confiteor  &&
-                        GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3) || GetBuffStacks(PLD.Buffs.Requiescat) == 1 || LocalPlayer.CurrentMp <= 2000))
+                        GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3) || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
                         return PLD.Confiteor;
                     return PLD.HolyCircle;
 
@@ -244,17 +255,19 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature))
                 {
-                    if (lastComboMove == PLD.Confiteor && level >= PLD.Levels.BladeOfFaith)
+                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
                         return PLD.BladeOfFaith;
-                    if (lastComboMove == PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
+
+                    if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
                         return PLD.BladeOfTruth;
-                    if (lastComboMove == PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
+
+                    if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
                         return PLD.BladeOfValor;
                 }
 
                 if (comboTime > 0)
                 {
-                    if (lastComboMove == PLD.TotalEclipse && level >= PLD.Levels.Prominence)
+                    if (lastComboMove is PLD.TotalEclipse && level >= PLD.Levels.Prominence)
                         return PLD.Prominence;
                 }
 
@@ -271,7 +284,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.SpiritsWithin || actionID == PLD.CircleOfScorn)
+            if (actionID is PLD.SpiritsWithin or PLD.CircleOfScorn)
             {
                 if (level >= PLD.Levels.SpiritsWithin && level <= PLD.Levels.Expiacion)
                     return CalcBestAction(actionID, PLD.SpiritsWithin, PLD.CircleOfScorn);
@@ -294,40 +307,29 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.HolySpirit)
+            if (actionID is PLD.HolySpirit)
             {
                 if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit)
                 {
                     var requiescat = FindEffect(PLD.Buffs.Requiescat);
-                    if (
-                        level >= PLD.Levels.Confiteor &&
-                        (
-                            (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
-                            requiescat.StackCount == 1 ||
-                            LocalPlayer.CurrentMp <= 2000
-                        )
-                    )
-                    {
-                        return PLD.Confiteor;
-                    }
 
-                    return PLD.HolySpirit;
-                }
-                if (lastComboMove == PLD.Confiteor && level >= PLD.Levels.BladeOfFaith)
-                {
-                    return PLD.BladeOfFaith;
+                    if (level >= PLD.Levels.Confiteor &&
+                            ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
+                            requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
+                            return PLD.Confiteor;
+                        return PLD.HolySpirit;
                 }
 
-                if (lastComboMove == PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                {
+                if(HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
+                        return PLD.BladeOfFaith;
+
+                if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
                     return PLD.BladeOfTruth;
-                }
 
-                if (lastComboMove == PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                {
+                if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
                     return PLD.BladeOfValor;
-                }
             }
+
             return actionID;
         }
     }
@@ -337,41 +339,28 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.HolyCircle)
+            if (actionID is PLD.HolyCircle)
             {
                 if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle)
                 {
                     var requiescat = FindEffect(PLD.Buffs.Requiescat);
-                    if (
-                        level >= PLD.Levels.Confiteor &&
-                        (
-                            (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
-                            requiescat.StackCount == 1 ||
-                            LocalPlayer.CurrentMp <= 2000
-                        )
-                    )
-                    {
-                        return PLD.Confiteor;
-                    }
 
-                    return PLD.HolyCircle;
+                    if (level >= PLD.Levels.Confiteor &&((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
+                            requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
+                            return PLD.Confiteor;
+                        return PLD.HolyCircle;
                 }
 
-                if (lastComboMove == PLD.Confiteor && level >= PLD.Levels.BladeOfFaith)
-                {
+                if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
                     return PLD.BladeOfFaith;
-                }
 
-                if (lastComboMove == PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                {
+                if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
                     return PLD.BladeOfTruth;
-                }
 
-                if (lastComboMove == PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                {
+                if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
                     return PLD.BladeOfValor;
-                }
             }
+
             return actionID;
         }
     }
@@ -381,12 +370,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.ShieldBash)
+            if (actionID is PLD.ShieldBash)
             {
                 var interjectCD = GetCooldown(PLD.Interject);
                 var lowBlowCD = GetCooldown(PLD.LowBlow);
+
                 if (CanInterruptEnemy() && !interjectCD.IsCooldown)
                     return PLD.Interject;
+
                 if (!lowBlowCD.IsCooldown)
                     return PLD.LowBlow;
             }

@@ -1,4 +1,4 @@
-using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -57,8 +57,10 @@ namespace XIVSlothComboPlugin.Combos
                 FlourishingShower = 1817,
                 StandardStep = 1818,
                 TechnicalStep = 1819,
-                FlourishingSymmetry = 2693,
-                FlourishingFlow = 2694,
+                SilkenSymmetry = 2693,
+                SilkenFlow = 2694,
+                FlourishingSymmetry = 3017,
+                FlourishingFlow = 3018,
                 FlourishingFanDance = 1820,
                 FlourishingStarfall = 2700,
                 FlourishingFinish = 2698,
@@ -143,20 +145,20 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is DNC.FanDance1)
             {
                 // FD 1 -> 3
-                if (level >= DNC.Levels.FanDance3 && HasEffect(DNC.Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance1_3Combo))
+                if (HasEffect(DNC.Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance1_3Combo))
                     return DNC.FanDance3;
                 // FD 1 -> 4
-                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance1_4Combo))
+                if (HasEffect(DNC.Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance1_4Combo))
                     return DNC.FanDance4;
             }
 
             if (actionID is DNC.FanDance2)
             {
                 // FD 2 -> 3
-                if (level >= DNC.Levels.FanDance3 && HasEffect(DNC.Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance2_3Combo))
+                if (HasEffect(DNC.Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance2_3Combo))
                     return DNC.FanDance3;
                 // FD 2 -> 4
-                if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance2_4Combo))
+                if (HasEffect(DNC.Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DancerFanDance2_4Combo))
                     return DNC.FanDance4;
             }
 
@@ -202,37 +204,20 @@ namespace XIVSlothComboPlugin.Combos
 
     internal class DancerFlourishFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerFlourishProcFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerFlourishingFanDanceFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is DNC.Flourish)
+            var canWeave = CanWeave(actionID);
+
+            // Fan Dance 3 & 4 on Flourish when relevant
+            if (actionID is DNC.Flourish && canWeave)
             {
-                var canWeave = CanWeave(actionID);
+                if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
+                    return DNC.FanDance3;
 
-                // Fan Dance Weave Option
-                if (IsEnabled(CustomComboPreset.DancerFlourishProcFanDanceWeaveOption) && canWeave)
-                {
-                    if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
-                        return DNC.FanDance3;
-
-                    if (HasEffect(DNC.Buffs.FourFoldFanDance))
-                        return DNC.FanDance4;
-                }
-
-                if (HasEffect(DNC.Buffs.FlourishingFlow))
-                    return DNC.Fountainfall;
-
-                if (HasEffect(DNC.Buffs.FlourishingSymmetry))
-                    return DNC.ReverseCascade;
-
-                if (HasEffect(DNC.Buffs.FlourishingFlow))
-                    return DNC.Bloodshower;
-
-                if (HasEffect(DNC.Buffs.FlourishingSymmetry))
-                    return DNC.RisingWindmill;
-
-                return DNC.Flourish;
+                if (HasEffect(DNC.Buffs.FourFoldFanDance))
+                    return DNC.FanDance4;
             }
 
             return actionID;
@@ -276,11 +261,11 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // ST From Fountain
-                if (HasEffect(DNC.Buffs.FlourishingFlow))
+                if (level >= DNC.Levels.Fountainfall && (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow)))
                     return DNC.Fountainfall;
 
                 // ST From Cascade
-                if (HasEffect(DNC.Buffs.FlourishingSymmetry))
+                if (level >= DNC.Levels.ReverseCascade && (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry)))
                     return DNC.ReverseCascade;
 
                 // ST Cascade Combo
@@ -328,11 +313,11 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // AoE From Bladeshower
-                if (HasEffect(DNC.Buffs.FlourishingFlow))
+                if (level >= DNC.Levels.Bloodshower && (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow)))
                     return DNC.Bloodshower;
 
                 // AoE From Windmill
-                if (HasEffect(DNC.Buffs.FlourishingSymmetry))
+                if (level >= DNC.Levels.RisingWindmill && (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry)))
                     return DNC.RisingWindmill;
 
                 // AoE Windmill Combo
@@ -354,7 +339,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is DNC.Devilment)
             {
-                if (level >= DNC.Levels.StarfallDance && HasEffect(DNC.Buffs.FlourishingStarfall))
+                if (HasEffect(DNC.Buffs.FlourishingStarfall))
                     return DNC.StarfallDance;
             }
 
@@ -380,11 +365,13 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.DancerDevilmentOnCombinedDanceFeature) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                 {
-                    if ((level >= DNC.Levels.Devilment && level < DNC.Levels.TechnicalStep) || (level >= DNC.Levels.TechnicalStep && techstepCD.IsCooldown))
+                    if ((level >= DNC.Levels.Devilment && level < DNC.Levels.TechnicalStep) ||
+                        (level >= DNC.Levels.TechnicalStep && techstepCD.IsCooldown))
                         return DNC.Devilment;
                 }
 
-                if (IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown && incombat && level >= DNC.Levels.Flourish && standardCD.IsCooldown)
+                if (IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown &&
+                    incombat && level >= DNC.Levels.Flourish && standardCD.IsCooldown)
                     return DNC.Flourish;
 
                 if (HasEffect(DNC.Buffs.FlourishingStarfall))
@@ -462,9 +449,12 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Simple ST Devilment
-                if (IsEnabled(CustomComboPreset.DancerSimpleDevilmentFeature) && canWeave && level >= DNC.Levels.Devilment && (HasEffect(DNC.Buffs.TechnicalFinish) && IsOffCooldown(DNC.Devilment)))
-                    return DNC.Devilment;
-                
+                if (IsEnabled(CustomComboPreset.DancerSimpleDevilmentFeature) && canWeave && level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment))
+                {
+                    if (HasEffect(DNC.Buffs.TechnicalFinish) || (level < DNC.Levels.TechnicalStep))
+                        return DNC.Devilment;
+                }
+
                 // Simple ST Flourish
                 if (IsEnabled(CustomComboPreset.DancerSimpleFlourishFeature) && canWeave && level >= DNC.Levels.Flourish && IsOffCooldown(DNC.Flourish))
                     return DNC.Flourish;
@@ -492,7 +482,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     // Simple ST FD4 
-                    if (level >= DNC.Levels.FanDance4 && HasEffect(DNC.Buffs.FourFoldFanDance))
+                    if (HasEffect(DNC.Buffs.FourFoldFanDance))
                         return DNC.FanDance4;
                     
                     // Simple ST Panic Heals
@@ -514,16 +504,18 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= DNC.Levels.Fountain && lastComboMove is DNC.Cascade && comboTime < 2 && comboTime > 0)
                     return DNC.Fountain;
 
-                if (level >= DNC.Levels.Tillana && HasEffect(DNC.Buffs.FlourishingFinish))
+                // Tillana
+                if (HasEffect(DNC.Buffs.FlourishingFinish))
                     return DNC.Tillana;
 
-                if (level >= DNC.Levels.StarfallDance && HasEffect(DNC.Buffs.FlourishingStarfall))
+                // Starfall Dance
+                if (HasEffect(DNC.Buffs.FlourishingStarfall))
                     return DNC.StarfallDance;
 
-                if (level >= DNC.Levels.Fountainfall && HasEffect(DNC.Buffs.FlourishingFlow))
+                if (level >= DNC.Levels.Fountainfall && (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow)))
                     return DNC.Fountainfall;
 
-                if (level >= DNC.Levels.ReverseCascade && HasEffect(DNC.Buffs.FlourishingSymmetry))
+                if (level >= DNC.Levels.ReverseCascade && (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry)))
                     return DNC.ReverseCascade;
                 
                 if (level >= DNC.Levels.Fountain && lastComboMove is DNC.Cascade && comboTime > 0)
@@ -578,8 +570,12 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Simple AoE Tech Devilment
-                if (IsEnabled(CustomComboPreset.DancerSimpleAoEDevilmentFeature) && canWeave && level >= DNC.Levels.Devilment && (HasEffect(DNC.Buffs.TechnicalFinish) && IsOffCooldown(DNC.Devilment)))
-                    return DNC.Devilment;
+
+                if (IsEnabled(CustomComboPreset.DancerSimpleAoEDevilmentFeature) && canWeave && level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment))
+                {
+                    if (HasEffect(DNC.Buffs.TechnicalFinish) || (level < DNC.Levels.TechnicalStep))
+                        return DNC.Devilment;
+                }
 
                 // Simple AoE Flourish
                 if (IsEnabled(CustomComboPreset.DancerSimpleAoEFlourishFeature) && canWeave && level >= DNC.Levels.Flourish && IsOffCooldown(DNC.Flourish))
@@ -595,16 +591,20 @@ namespace XIVSlothComboPlugin.Combos
                     // Simple AoE Feathers
                     if (level >= DNC.Levels.FanDance1 && IsEnabled(CustomComboPreset.DancerSimpleAoEFeatherFeature))
                     {
-                        // Simple AoE FD3
-                        if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
-                            return DNC.FanDance3;
 
                         // Simple AoE Feather Pooling
                         var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleAoEFeatherPoolingFeature) && level >= DNC.Levels.TechnicalStep ? 3 : 0;
 
+                        // Simple AoE FD3
+                        if (HasEffect(DNC.Buffs.ThreeFoldFanDance) && level >= DNC.Levels.FanDance3)
+                            return DNC.FanDance3;
+
                         // Simple AoE Overcap & Burst
-                        if (gauge.Feathers > minFeathers || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Feathers > 0))
-                            return DNC.FanDance2;
+                        if (level >= DNC.Levels.FanDance2)
+                        {
+                            if (gauge.Feathers > minFeathers || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Feathers > 0))
+                                return DNC.FanDance2;
+                        }
                     }
 
                     // Simple AoE FD4 
@@ -636,10 +636,10 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= DNC.Levels.StarfallDance && HasEffect(DNC.Buffs.FlourishingStarfall))
                     return DNC.StarfallDance;
 
-                if (level >= DNC.Levels.Bloodshower && HasEffect(DNC.Buffs.FlourishingFlow))
+                if (level >= DNC.Levels.Bloodshower && (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow)))
                     return DNC.Bloodshower;
 
-                if (level >= DNC.Levels.RisingWindmill && HasEffect(DNC.Buffs.FlourishingSymmetry))
+                if (level >= DNC.Levels.RisingWindmill && (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry)))
                     return DNC.RisingWindmill;
 
                 if (level >= DNC.Levels.Bladeshower && lastComboMove is DNC.Windmill && comboTime > 0)
