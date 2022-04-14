@@ -1,4 +1,4 @@
-using XIVSlothComboPlugin.Attributes;
+﻿using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
@@ -503,21 +503,16 @@ namespace XIVSlothComboPlugin
 
 
         // Flourishing Features Section
-        [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuFlourishingFeatures = 4030,
 
         [ParentCombo(DancerMenuFlourishingFeatures)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Flourish Proc Saver Feature", "Change Flourish into any available Feather-generating procs before using.", DNC.JobID, 0, "", "")]
-        DancerFlourishProcFeature = 4031,
-
-        [ParentCombo(DancerFlourishProcFeature)]
-        [CustomComboInfo("Proc Saver Fan Dance Option", "Include Fan Dance 3 & 4 in the proc saver during weave-windows.", DNC.JobID, 0, "", "")]
-        DancerFlourishProcFanDanceWeaveOption = 4032,
+        [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0, "", "")]
+        DancerFlourishingFanDanceFeature = 4032,
 
 
-        // Fan Dance Combo Features Section
+        // Fan Dance Combo Features Subsection
         [ParentCombo(DancerMenuFlourishingFeatures)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Fan Dance Combo Features", "Options for Fan Dance combos. Fan Dance 3 takes priority over Fan Dance 4.\nCollapsing this category disables the options inside.", DNC.JobID, 0, "", "")]
@@ -539,6 +534,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fan Dance 2 -> 4", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
         DancerFanDance2_4Combo = 4037,
 
+        // Devilment --> Starfall
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID, 0, "", "")]
         DancerDevilmentFeature = 4038,
@@ -562,7 +558,7 @@ namespace XIVSlothComboPlugin
         DancerSimpleTechnicalFeature = 4053,
 
         [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation (during Technical Finish).", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
         DancerSimpleDevilmentFeature = 4054,
 
         [ParentCombo(DancerSimpleFeature)]
@@ -604,7 +600,7 @@ namespace XIVSlothComboPlugin
         DancerSimpleAoETechnicalFeature = 4073,
 
         [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation (during Technical Finish).", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
         DancerSimpleAoEDevilmentFeature = 4074,
 
         [ParentCombo(DancerSimpleAoEFeature)]
@@ -1897,7 +1893,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SUMMONER
 
-        [ConflictingCombos(SummonerMainComboFeature, SummonerRuinIVMobilityFeature)]
+        [ConflictingCombos(SummonerMainComboFeature)]
         [CustomComboInfo("Enable Single Target (Ruin1)", "Enables changing Single-Target Combo (Ruin I).", SMN.JobID, 0, "Ruin 420 Feature", "Ruination is come")]
         SummonerMainComboFeatureRuin1 = 16999,
 
@@ -1973,9 +1969,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DemiReminderAoEFeature", "Adds Only Demi Summons on TriDisaster (So you can still choose your Egis but never forget to summon Demis) ", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         SummonerDemiAoESummonsFeature = 17020,
 
-        [ConflictingCombos(SummonerMainComboFeatureRuin1)]
-        [CustomComboInfo("Ruin III mobility", "Allows you to cast Ruin III while Ruin IV is unavailable for mobility reasons. Shows up as Ruin I.\nWill break combos with Ruin I. Might break combos with Ruin IV.", SMN.JobID, 0, "", "Don't you have enough mobility as it is?\nThis isn't Ranged DPS, y'know.")]
-        SummonerRuinIVMobilityFeature = 17021,
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin\nReturn of the godlike R3 mobility feature brought to you by Iaotle. Does the same thing as r3 mobility did before, which means you can enjoy having that R4 button on the right.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        SummonerSpecialRuinFeature = 17021,
 
         [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 0, "No Raising for me!", "Always slips swiftstream, sometimes")]
@@ -1994,6 +1989,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Rekindle Feature", "Adds Rekindle onto the main Ruin1 or Ruin3 combo. Requires other features to work.", SMN.JobID, 0, "Tinderbox", "Remember making those fires in runescape? Yeah. That.")]
         SummonerRekindlePhoenix = 17026,
+
+        [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        SummonerRaiseFeature = 17027,
 
         #endregion
         // ====================================================================================

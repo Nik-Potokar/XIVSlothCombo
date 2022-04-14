@@ -159,6 +159,38 @@ namespace XIVSlothComboPlugin.Combos
                 SMNLucidDreamingFeature = "SMNLucidDreamingFeature";
         }
     }
+    internal class SummonerRaiseFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerRaiseFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Swiftcast)
+            {
+                var swiftCD = GetCooldown(SMN.Swiftcast);
+                if (swiftCD.IsCooldown)
+                    return SMN.Resurrection;
+            }
+            return actionID;
+        }
+    }
+
+
+    internal class SummonerSpecialRuinFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerSpecialRuinFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Ruin4)
+            {
+                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
+                if (!furtherRuin)
+                    return SMN.Ruin3;
+            }
+            return actionID;
+        }
+    }
 
     internal class SummonerEDFesterCombo : CustomCombo
     {
@@ -209,7 +241,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || (actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature)))
+            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || (actionID == SMN.Ruin))
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
@@ -513,29 +545,13 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    internal class SummonerRuinIVMobilityFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerRuinIVMobilityFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SMN.Ruin4)
-            {
-                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
-                if (!furtherRuin)
-                    return SMN.Ruin;
-            }
-
-            return actionID;
-        }
-    }
     internal class SummonerMainComboFeatureRuin1 : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerMainComboFeatureRuin1;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Ruin && !IsEnabled(CustomComboPreset.SummonerRuinIVMobilityFeature))
+            if (actionID == SMN.Ruin)
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
