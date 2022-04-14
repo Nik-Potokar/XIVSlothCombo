@@ -222,7 +222,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                     //Check for "out of Phlegma stacks" 
-                    if (GetCooldown(Phlegma).CooldownRemaining > 45) {
+                    if (GetCooldown(Phlegma).RemainingCharges == 0) {
                         //and if we have Adderstings to use for Toxikon
                         //Has Priority over Dyskrasia
                         if ( IsEnabled(CustomComboPreset.SagePhlegmaToxikonFeature) && (level >= SGE.Levels.Toxikon) && (GetJobGauge<SGEGauge>().Addersting > 0) )
