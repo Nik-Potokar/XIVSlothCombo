@@ -26,14 +26,14 @@ namespace XIVSlothComboPlugin
                 return actionID;
             }
 
-            public static uint Execute(uint actionID)
+            public static bool Execute(uint actionID)
             {
                 var jobMaxHp = LocalPlayer.MaxHp;
 
-                if (LocalPlayer.CurrentMp < 2500) return actionID;
-                if (LocalPlayer.CurrentHp > jobMaxHp - 15000) return actionID;
+                if (LocalPlayer.CurrentMp < 2500) return false;
+                if (LocalPlayer.CurrentHp > jobMaxHp - 15000) return false;
 
-                return PVPCommon.Recuperate;
+                return true;
 
             }
         }
