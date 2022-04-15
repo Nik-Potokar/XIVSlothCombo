@@ -133,7 +133,7 @@
                 var atonementUsage = Service.Configuration.GetCustomIntValue(PLD.Config.PLDAtonementCharges);
 
                 // Uptime Features
-                if (!InMeleeRange(true))
+                if (!InMeleeRange())
                 {
                     if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob)
                         return PLD.ShieldLob;

@@ -191,17 +191,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID, 0)]
         ExaltationFeature = 1028,
 
-        [TrustIncompatible]
         [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Auto-Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
         AstAutoCardTarget = 1029,
 
-        [TrustIncompatible]
         [ParentCombo(AstAutoCardTarget)]
         [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
         AstrologianTargetLock = 1030,
 
-        [TrustIncompatible]
         [ParentCombo(AstAutoCardTarget)]
         [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for auto card target selection", AST.JobID)]
         AstrologianTargetExtraFeature = 1031,
@@ -2247,8 +2244,12 @@ namespace XIVSlothComboPlugin
         MCHBlastChargeFeature = 80010,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "", BRDPvP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
         BRDBurstMode = 80017,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
+        RDMBurstMode = 80018,
 
         #endregion
         // ====================================================================================
@@ -2262,7 +2263,7 @@ namespace XIVSlothComboPlugin
         PVPEmergencyGuard = 90001,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Quick Purify", "Uses Purify when afflicted with any debuff.", ADV.JobID)]
+        [CustomComboInfo("Quick Purify", "Uses Purify when afflicted with any selected debuff.", ADV.JobID)]
         PVPQuickPurify = 90002,
 
         #endregion

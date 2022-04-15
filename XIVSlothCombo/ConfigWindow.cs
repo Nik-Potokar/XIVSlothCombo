@@ -859,6 +859,9 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.PVPEmergencyGuard)
                 ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyGuardThreshold, "Set the percentage to be at or under for the feature to kick in.");
 
+            if (preset == CustomComboPreset.PVPQuickPurify)
+                ConfigWindowFunctions.DrawPvPStatusMultiChoice(PVPCommon.Config.QuickPurifyStatuses);
+
             #endregion
 
         }

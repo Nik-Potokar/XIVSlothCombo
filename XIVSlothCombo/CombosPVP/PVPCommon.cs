@@ -15,7 +15,8 @@ namespace XIVSlothComboPlugin
         {
             public const string
                 EmergencyHealThreshold = "EmergencyHealThreshold",
-                EmergencyGuardThreshold = "EmergencyGuardThreshold";
+                EmergencyGuardThreshold = "EmergencyGuardThreshold",
+                QuickPurifyStatuses = "QuickPurifyStatuses";
         }
 
         internal class Debuffs
@@ -92,9 +93,40 @@ namespace XIVSlothComboPlugin
 
             public static bool Execute()
             {
-                
-                return true;
+                var selectedStatuses = Service.Configuration.GetCustomBoolArrayValue(Config.QuickPurifyStatuses);
 
+
+                if (selectedStatuses.Length == 0) return false;
+                if (GetCooldown(PVPCommon.Purify).IsCooldown) return false;
+                if (HasEffectAny(PVPCommon.Debuffs.Stun) && selectedStatuses[0]) return true;
+                if (HasEffectAny(PVPCommon.Debuffs.DeepFreeze) && selectedStatuses[1]) return true;
+                if (HasEffectAny(PVPCommon.Debuffs.HalfAsleep) && selectedStatuses[2]) return true;
+                if (HasEffectAny(PVPCommon.Debuffs.Sleep) && selectedStatuses[3]) return true;
+                if (HasEffectAny(PVPCommon.Debuffs.Bind) && selectedStatuses[4]) return true;
+                if (HasEffectAny(PVPCommon.Debuffs.Heavy) && selectedStatuses[5]) return true;
+                if (HasEffectAny(PVPCommon.Debuffs.Silence) && selectedStatuses[6]) return true;
+
+                return false;
+
+            }
+        }
+
+        internal class ExecutePVPGlobal : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; }
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                return actionID;
+            }
+
+            public static uint ExecuteGlobal(uint actionId)
+            {
+                if (IsEnabled(CustomComboPreset.PVPQuickPurify) && PVPCommon.QuickPurify.Execute()) return PVPCommon.Purify;
+                if (IsEnabled(CustomComboPreset.PVPEmergencyGuard) && PVPCommon.GlobalEmergencyGuard.Execute()) return PVPCommon.Guard;
+                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute()) return PVPCommon.Recuperate;
+
+                return actionId;
             }
         }
     }
