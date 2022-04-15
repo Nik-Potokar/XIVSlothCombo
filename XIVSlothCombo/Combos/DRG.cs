@@ -353,7 +353,7 @@ namespace XIVSlothComboPlugin.Combos
                         //Battle Litany Feature
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.DragoonLanceFeature))
+                            if (IsEnabled(CustomComboPreset.DragoonLitanyFeature))
                             {
                                 if (HasEffect(DRG.Buffs.PowerSurge) && canWeave)
                                 {
@@ -719,7 +719,7 @@ namespace XIVSlothComboPlugin.Combos
                 //Battle Litany Feature
                 if (canWeave)
                 {
-                    if (IsEnabled(CustomComboPreset.DragoonLanceFeature))
+                    if (IsEnabled(CustomComboPreset.DragoonLitanyFeature))
                     {
                         if (HasEffect(DRG.Buffs.PowerSurge) && canWeave)
                         {
