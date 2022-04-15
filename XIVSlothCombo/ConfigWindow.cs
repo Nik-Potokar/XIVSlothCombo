@@ -369,7 +369,7 @@ namespace XIVSlothComboPlugin
             }
             else
             {
-                if (ImGui.Checkbox(info.FancyName, ref enabled))
+                if (ImGui.Checkbox($"{info.FancyName}###{i}", ref enabled))
                 {
                     if (enabled)
                     {
@@ -853,6 +853,11 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PVP VALUES
+            if (preset == CustomComboPreset.PVPEmergencyHeals)
+                ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyHealThreshold, "Set the percentage to be at or under for the feature to kick in.\n100% is considered to start at 15,000 less than your max HP to prevent wastage.");
+
+            if (preset == CustomComboPreset.PVPEmergencyGuard)
+                ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyGuardThreshold, "Set the percentage to be at or under for the feature to kick in.");
 
             #endregion
 

@@ -51,7 +51,7 @@ namespace XIVSlothComboPlugin.Combos
                 var analysisStacks = GetRemainingCharges(MCHPVP.Analysis);
                 var bigDamageStacks = GetRemainingCharges(OriginalHook(MCHPVP.Drill));
 
-                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute(actionID)) return PVPCommon.Recuperate;
+                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute()) return PVPCommon.Recuperate;
 
                 if (canWeave && HasEffect(MCHPVP.Buffs.Overheated) && IsOffCooldown(MCHPVP.Wildfire))
                     return OriginalHook(MCHPVP.Wildfire);

@@ -1,6 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using Dalamud.Game.ClientState.Objects.Types;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -40,7 +40,8 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (actionID == BRDPvP.PowerfulShot)
                 {
-                    if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute(actionID)) return PVPCommon.Recuperate;
+                    if (IsEnabled(CustomComboPreset.PVPEmergencyGuard) && PVPCommon.GlobalEmergencyGuard.Execute()) return PVPCommon.Guard;
+                    if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute()) return PVPCommon.Recuperate;
 
                     if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3)
                         return OriginalHook(BRDPvP.EmpyrealArrow);
