@@ -2240,8 +2240,8 @@ namespace XIVSlothComboPlugin
         //BlackEnochianPVPFeature = 80016,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Trans-AM Mode", "More pow to the pewpew!", MCHPVP.JobID)]
-        MCHBlastChargeFeature = 80010,
+        [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
+        MCHBurstMode = 80010,
 
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
@@ -2250,6 +2250,10 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
         RDMBurstMode = 80018,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
+        WARBurstMode = 80019,
 
         #endregion
         // ====================================================================================
