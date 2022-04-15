@@ -90,7 +90,7 @@ namespace XIVSlothComboPlugin
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
             ImGui.NextColumn();
-            ImGui.TextColored(ImGuiColors.DalamudRed, $"NOTICE: We are still updating some jobs for 6.1 compatibility.\nBe patient and check the discord for a full status report!");
+            ImGui.TextColored(ImGuiColors.DalamudRed, $"NOTICE: v3.0.9.4 - [6.1 Compatibility Beta 1]\nWelcome to the first compatibility beta!\nPlease report any issues/concerns in the relevant dev chats.");
             ImGui.NextColumn();
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
@@ -150,6 +150,7 @@ namespace XIVSlothComboPlugin
 
             float offset = (float)Service.Configuration.MeleeOffset;
 
+            ImGui.PushItemWidth(75);
             var inputChangedeth = false;
             inputChangedeth |= ImGui.InputFloat("Melee Distance Offset", ref offset);
 

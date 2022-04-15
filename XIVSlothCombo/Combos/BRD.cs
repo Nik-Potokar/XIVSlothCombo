@@ -116,23 +116,6 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    // Replace Wanderer's Minuet with PP when in WM.
-    internal class BardWanderersPitchPerfectFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardWanderersPitchPerfectFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == BRD.WanderersMinuet)
-            {
-                if (GetJobGauge<BRDGauge>().Song == Song.WANDERER)
-                    return BRD.PitchPerfect;
-            }
-
-            return actionID;
-        }
-    }
-
     // Replace HS/BS with SS/RA when procced.
     internal class BardStraightShotUpgradeFeature : CustomCombo
     {
@@ -399,7 +382,7 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<BRDGauge>();
 
                 if (level >= BRD.Levels.WanderersMinuet && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
-                    return BRD.PitchPerfect;
+                    return OriginalHook(BRD.WanderersMinuet);
                 if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow))
                     return BRD.EmpyrealArrow;
                 if (level >= BRD.Levels.Bloodletter && IsOffCooldown(BRD.Bloodletter))
@@ -445,7 +428,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (canWeave)
                 {
                     if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
-                        return BRD.PitchPerfect;
+                        return OriginalHook(BRD.WanderersMinuet);
                     if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow))
                         return BRD.EmpyrealArrow;
                     if (level >= BRD.Levels.RainOfDeath && GetRemainingCharges(BRD.RainOfDeath) > 0)
@@ -500,7 +483,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
-                    return BRD.PitchPerfect;
+                    return OriginalHook(BRD.WanderersMinuet);
                 if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow))
                     return BRD.EmpyrealArrow;
                 if (level >= BRD.Levels.Bloodletter && IsOffCooldown(BRD.Bloodletter))
@@ -669,7 +652,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) < 2) && canWeave && !usedPitchPerfect )
                                 {
@@ -714,7 +697,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) < 2) && canWeave && !usedPitchPerfect)
                                 {
@@ -734,7 +717,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (!HasEffect(BRD.Buffs.StraightShotReady))
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
+                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return OriginalHook(BRD.WanderersMinuet);
                                     subStep++;
                                 }
                                 else return BRD.RefulgentArrow;
@@ -744,7 +727,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) < 1 ) && canWeave && !usedPitchPerfect)
                                 {
@@ -764,7 +747,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 6)
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
+                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return OriginalHook(BRD.WanderersMinuet);
                                     subStep++;
                                 }
                                 else
@@ -782,7 +765,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) == 0) && canWeave && !usedPitchPerfect)
                                 {
@@ -796,7 +779,7 @@ namespace XIVSlothComboPlugin.Combos
 
                                 if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 3)
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
+                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return OriginalHook(BRD.WanderersMinuet);
                                     subStep++;
                                 }
                                 else
@@ -813,7 +796,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (IsOffCooldown(BRD.EmpyrealArrow))
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
+                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return OriginalHook(BRD.WanderersMinuet);
                                     subStep++;
                                 }
                                 else
@@ -864,7 +847,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) < 2) && canWeave && !usedPitchPerfect)
                                 {
@@ -897,7 +880,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) < 1) && canWeave && !usedPitchPerfect)
                                 {
@@ -911,7 +894,7 @@ namespace XIVSlothComboPlugin.Combos
 
                                 if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 6)
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
+                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return OriginalHook(BRD.WanderersMinuet);
                                     subStep++;
                                 }
                                 else
@@ -929,7 +912,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) == 0) && canWeave && !usedPitchPerfect)
                                 {
@@ -943,7 +926,7 @@ namespace XIVSlothComboPlugin.Combos
 
                                 if (GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 3)
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
+                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return OriginalHook(BRD.WanderersMinuet);
                                     subStep++;
                                 }
                                 else
@@ -961,7 +944,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3 && canWeave)
                                 {
                                     usedPitchPerfect = true;
-                                    return BRD.PitchPerfect;
+                                    return OriginalHook(BRD.WanderersMinuet);
                                 }
                                 else if (!(GetRemainingCharges(BRD.Bloodletter) == 0) && canWeave && !usedPitchPerfect)
                                 {
@@ -975,7 +958,7 @@ namespace XIVSlothComboPlugin.Combos
 
                                 if (IsOffCooldown(BRD.EmpyrealArrow))
                                 {
-                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return BRD.PitchPerfect;
+                                    if (gauge.Song == Song.WANDERER && gauge.Repertoire == 3) return OriginalHook(BRD.WanderersMinuet);
                                     subStep++;
                                 }
                                 else
@@ -1034,7 +1017,7 @@ namespace XIVSlothComboPlugin.Combos
                             // Spend any repertoire before switching to next song
                             if (songTimerInSeconds < 3 && gauge.Repertoire > 0)
                             {
-                                return BRD.PitchPerfect;
+                                return OriginalHook(BRD.WanderersMinuet);
                             }
                             // Move to Mage's Ballad if < 3 seconds left on song
                             if (songTimerInSeconds < 3 && balladOffCooldown)
@@ -1097,7 +1080,7 @@ namespace XIVSlothComboPlugin.Combos
                             return BRD.EmpyrealArrow;
                         if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && 
                             (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 2)) )
-                            return BRD.PitchPerfect;
+                            return OriginalHook(BRD.WanderersMinuet);
                         if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder))
                             if (IsEnabled(CustomComboPreset.BardSimplePooling))
                             {
