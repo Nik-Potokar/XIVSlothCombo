@@ -404,7 +404,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == GNB.NoMercy)
             {
-                if (IsOnCooldown(GNB.NoMercy) && HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                if (IsOnCooldown(GNB.NoMercy) && InCombat())
                 {
                     if (IsOffCooldown(GNB.SonicBreak))
                         return GNB.SonicBreak;
