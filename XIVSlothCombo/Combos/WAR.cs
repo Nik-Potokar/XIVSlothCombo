@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
                     return WAR.Infuriate;
 
-                if (HasEffect(WAR.Buffs.SurgingTempest) && HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                if (HasEffect(WAR.Buffs.SurgingTempest) && InCombat())
                 {
                     if (CanWeave(actionID))
                     {
@@ -302,13 +302,10 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var rageGauge = GetJobGauge<WARGauge>();
                 var rageThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarInfuriateRange);
-                var isZerking = HasEffect(WAR.Buffs.InnerRelease);
                 var hasNascent = HasEffect(WAR.Buffs.NascentChaos);
 
-                if (!InCombat()) return actionID;
-
-                if (rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !isZerking && !hasNascent && level >= WAR.Levels.Infuriate)
-                    return OriginalHook(WAR.Infuriate);
+                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate)
+                        return OriginalHook(WAR.Infuriate);
             }
 
             return actionID;
