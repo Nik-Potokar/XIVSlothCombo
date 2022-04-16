@@ -1138,8 +1138,8 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region MONK
 
-        [CustomComboInfo("AoE Combo", "Replaces Arm Of The Destroyer/Shadow Of The Destroyer with the AoE combo chain.", MNK.JobID, 0, "", "Punching, but wide. It's like having extra hands!")]
-        MnkAoECombo = 9000,
+        [CustomComboInfo("Arm of the Destroyer Combo", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "Punching, but wide. It's like having extra hands!")]
+        MnkArmOfTheDestroyerCombo = 9000,
 
         [CustomComboInfo("Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 0, "", "Shine ya shoes, guv'na?")]
         MnkBootshineFeature = 9001,
@@ -1161,7 +1161,7 @@ namespace XIVSlothComboPlugin
         MonkHowlingFistMeditationFeature = 9005,
 
         [ConflictingCombos(MnkBasicCombo)]
-        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk)", MNK.JobID, 0, "", "They call it 'basic' for a reason, you donkey")]
+        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk).  Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, 0, "", "They call it 'basic' for a reason, you donkey")]
         MnkBootshineCombo = 9006,
 
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterful Blitz when Perfect Balance Is Active", MNK.JobID, 0, "", "Try not to fall over, eh")]
@@ -1171,7 +1171,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the Main Combo", MNK.JobID, 0, "", "It's maths, but for your Single Target combo!")]
         MonkMasterfulBlitzOnMainCombo = 9008,
 
-        [ParentCombo(MnkAoECombo)]
+        [ParentCombo(MnkArmOfTheDestroyerCombo)]
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds all of (Optimal?) Blitz combos and Masterful Blitz on AoE Combo.", MNK.JobID, 0, "", "It's maths, but for your AoE combo!")]
         MonkMasterfullBlizOnAoECombo = 9009,
 
@@ -1204,6 +1204,26 @@ namespace XIVSlothComboPlugin
         [ParentCombo(MnkBootshineCombo)]
         [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. This requires at least a 1.94 GCD.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
+
+        [ParentCombo(MnkArmOfTheDestroyerCombo)]
+        [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
+        MnkCDsOnAoEComboFeature = 9019,
+
+        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the AoE Combo.", MNK.JobID, 0, "", "")]
+        MnkRiddleOfWindOnAoEComboFeature = 9020,
+
+        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the AoE Combo.", MNK.JobID, 0, "", "")]
+        MnkPerfectBalanceOnAoEMainComboFeature = 9021,
+
+        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the AoE Combo.", MNK.JobID, 0, "", "")]
+        MnkBrotherhoodOnAoEComboFeature = 9022,
+
+        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
+        MnkMeditationOnAoEComboFeature = 9023,
 
         #endregion
         // ====================================================================================

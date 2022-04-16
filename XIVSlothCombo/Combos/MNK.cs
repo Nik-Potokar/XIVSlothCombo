@@ -79,11 +79,18 @@ namespace XIVSlothComboPlugin.Combos
                 RiddleOfWind = 72,
                 ShadowOfTheDestroyer = 82;
         }
+        public static class Config
+        {
+            public const string
+                MnkDemolishApply = "MnkDemolishApply";
+            public const string
+                MnkDisciplinedFistApply = "MnkDisciplinedFistApply";
+        }
     }
 
     internal class MnkAoECombo : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkAoECombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MnkArmOfTheDestroyerCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -92,7 +99,7 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<MNKGauge>();
                 var actionIDCD = GetCooldown(OriginalHook(actionID));
 
-                if (IsEnabled(CustomComboPreset.MonkForbiddenChakraFeature) && gauge.Chakra == 5 && actionIDCD.CooldownRemaining > 0.5 && HasBattleTarget(true) && level >= 40)
+                if (gauge.Chakra == 5 && actionIDCD.CooldownRemaining > 0.5 && HasBattleTarget(true) && level >= 40)
                 {
                     return OriginalHook(MNK.Enlightenment);
                 }
@@ -451,44 +458,44 @@ namespace XIVSlothComboPlugin.Combos
                 // Perfect Balance
                 if (HasEffect(MNK.Buffs.PerfectBalance))
                 {
-                    if (!inOpener && HasEffect(MNK.Buffs.RiddleOfFire) &&
-                        IsOnCooldown(MNK.Brotherhood) && GetCooldownRemainingTime(MNK.Brotherhood) < 8)
+                    if (!inOpener && HasEffect(MNK.Buffs.RiddleOfFire) && GetCooldownRemainingTime(MNK.Brotherhood) < 8)
                     {
                         switch (pbStacks.StackCount)
                         {
                             case 3:
-                                if (!HasEffect(MNK.Buffs.LeadenFist))
+                                if (HasEffect(MNK.Buffs.LeadenFist))
                                 {
-                                    return MNK.DragonKick;
+                                    return MNK.Bootshine;
                                 }
-                                return MNK.Bootshine;
+                                return MNK.DragonKick;
                             case 2:
                                 return MNK.Demolish;
                             case 1:
                                 return MNK.TwinSnakes;
                         }
                     }
-                    if (!nadiNONE && !lunarNadi)
+                    
+                    if (nadiNONE || !lunarNadi)
                     {
                         switch (pbStacks.StackCount)
                         {
                             case 3:
+                                if (HasEffect(MNK.Buffs.LeadenFist))
+                                {
+                                    return MNK.Bootshine;
+                                }
                                 return MNK.DragonKick;
                             case 2:
-                                return MNK.Bootshine;
-                            case 1:
+                                if (HasEffect(MNK.Buffs.LeadenFist))
+                                {
+                                    return MNK.Bootshine;
+                                }
                                 return MNK.DragonKick;
-                        }
-                    }
-                    if (nadiNONE)
-                    {
-                        switch (pbStacks.StackCount)
-                        {
-                            case 3:
-                                return MNK.DragonKick;
-                            case 2:
-                                return MNK.Bootshine;
                             case 1:
+                                if (HasEffect(MNK.Buffs.LeadenFist))
+                                {
+                                    return MNK.Bootshine;
+                                }
                                 return MNK.DragonKick;
                         }
                     }
@@ -499,6 +506,10 @@ namespace XIVSlothComboPlugin.Combos
                             case 3:
                                 return MNK.TwinSnakes;
                             case 2:
+                                if (HasEffect(MNK.Buffs.LeadenFist))
+                                {
+                                    return MNK.Bootshine;
+                                }
                                 return MNK.DragonKick;
                             case 1:
                                 return MNK.Demolish;
@@ -509,7 +520,7 @@ namespace XIVSlothComboPlugin.Combos
                 // Monk Rotation
                 if (level >= MNK.Levels.TrueStrike && HasEffect(MNK.Buffs.RaptorForm))
                 {
-                    if (level >= MNK.Levels.TwinSnakes && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime < 5))
+                    if (level >= MNK.Levels.TwinSnakes && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(MNK.Config.MnkDisciplinedFistApply)))
                     {
                         return MNK.TwinSnakes;
                     }
@@ -517,7 +528,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (level >= MNK.Levels.SnapPunch && HasEffect(MNK.Buffs.CoerlForm))
                 {
-                    if (level >= MNK.Levels.Demolish && (!TargetHasEffect(MNK.Debuffs.Demolish) || demolishDuration.RemainingTime < 5))
+                    if (level >= MNK.Levels.Demolish && (!TargetHasEffect(MNK.Debuffs.Demolish) || demolishDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(MNK.Config.MnkDemolishApply)))
                     {
                         return MNK.Demolish;
                     }
