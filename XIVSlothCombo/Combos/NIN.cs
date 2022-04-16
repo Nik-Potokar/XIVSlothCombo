@@ -109,7 +109,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const string
                 TrickCooldownRemaining = "TrickCooldownRemaining",
-                HutonRemainingTimer = "HutonRemainingTimer",
                 HutonRemainingArmorCrush = "HutonRemainingArmorCrush",
                 MugNinkiGauge = "MugNinkiGauge";
         }
