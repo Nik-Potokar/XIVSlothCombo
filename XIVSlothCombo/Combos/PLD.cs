@@ -87,10 +87,12 @@
                 BladeOfTruth = 90,
                 BladeOfValor = 90;
         }
+
         public static class Config
         {
             public const string
                 PLDKeepInterveneCharges = "PLDKeepInterveneCharges";
+
             public const string
                 PLDAtonementCharges = "PLDAtonementCharges";
         }
@@ -174,12 +176,13 @@
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit && !HasEffect(PLD.Buffs.FightOrFlight) && LocalPlayer.CurrentMp >= 1000)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor &&
-                           (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
+                            (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
                                 return PLD.Confiteor;
+
                             return PLD.HolySpirit;
                     }
 
-                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
+                    if (HasEffect(PLD.Buffs.BladeOfFaithReady))
                         return PLD.BladeOfFaith;
 
                     if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
@@ -207,6 +210,7 @@
                             ((GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) > 0 && GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) < 5) ||
                             (FindTargetEffect(PLD.Debuffs.BladeOfValor) is null && GetDebuffRemainingTime(PLD.Debuffs.GoringBlade) < 5)))
                                 return PLD.GoringBlade;
+
                             return OriginalHook(PLD.RageOfHalone);
                     }
                 }                
@@ -246,16 +250,17 @@
 
                 if (IsEnabled(CustomComboPreset.PaladinHolyCircleFeature) && HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle && LocalPlayer.CurrentMp >= 1000)
                 {
-                    if (((IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && level >= PLD.Levels.Confiteor  &&
-                        GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3) || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
-                        return PLD.Confiteor;
+                    if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && level >= PLD.Levels.Confiteor &&
+                        (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
+                            return PLD.Confiteor;
+
                     return PLD.HolyCircle;
 
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature))
                 {
-                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
+                    if (HasEffect(PLD.Buffs.BladeOfFaithReady))
                         return PLD.BladeOfFaith;
 
                     if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
@@ -317,10 +322,11 @@
                             ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
                             requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
                             return PLD.Confiteor;
+
                         return PLD.HolySpirit;
                 }
 
-                if(HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
+                if(HasEffect(PLD.Buffs.BladeOfFaithReady))
                         return PLD.BladeOfFaith;
 
                 if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
@@ -348,10 +354,11 @@
                     if (level >= PLD.Levels.Confiteor &&((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
                             requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
                             return PLD.Confiteor;
+
                         return PLD.HolyCircle;
                 }
 
-                if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
+                if (HasEffect(PLD.Buffs.BladeOfFaithReady))
                     return PLD.BladeOfFaith;
 
                 if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
