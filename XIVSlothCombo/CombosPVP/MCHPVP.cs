@@ -53,7 +53,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                if (globalAction != actionID) return globalAction; return PVPCommon.Recuperate;
+                if (globalAction != actionID) return globalAction;
 
                 if (canWeave && HasEffect(MCHPVP.Buffs.Overheated) && IsOffCooldown(MCHPVP.Wildfire))
                     return OriginalHook(MCHPVP.Wildfire);
@@ -62,7 +62,7 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(MCHPVP.HeatBlast);
 
                 if ((HasEffect(MCHPVP.Buffs.DrillPrimed) || HasEffect(MCHPVP.Buffs.ChainSawPrimed)) && 
-                    !HasEffect(MCHPVP.Buffs.Analysis) && analysisStacks > 0 && IsOnCooldown(MCHPVP.Wildfire))
+                    !HasEffect(MCHPVP.Buffs.Analysis) && analysisStacks > 0)
                     return OriginalHook(MCHPVP.Analysis);
 
                 if (HasEffect(MCHPVP.Buffs.Analysis) && HasEffect(MCHPVP.Buffs.DrillPrimed) && bigDamageStacks > 0)
