@@ -157,11 +157,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.MnkMeditationOnAoEComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && HasEffect(MNK.Buffs.DisciplinedFist) && canWeaveChakra)
                     {
-                        if (level >= MNK.Levels.Enlightenment)
-                        {
-                            return OriginalHook(MNK.Enlightenment);
-                        }
-                        return OriginalHook(MNK.Meditation);
+                        return level >= MNK.Levels.Enlightenment ? OriginalHook(MNK.Enlightenment) : OriginalHook(MNK.Meditation);
                     }
                 }
 
@@ -179,11 +175,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (pbStacks.StackCount > 0)
                         {
-                            if (level >= MNK.Levels.ShadowOfTheDestroyer)
-                            {
-                                return MNK.ShadowOfTheDestroyer;
-                            }
-                            return MNK.Rockbreaker;
+                            return level >= MNK.Levels.ShadowOfTheDestroyer ? MNK.ShadowOfTheDestroyer : MNK.Rockbreaker;
                         }
                     }
                     if (lunarNadi)
@@ -505,11 +497,7 @@ namespace XIVSlothComboPlugin.Combos
                         switch (pbStacks.StackCount)
                         {
                             case 3:
-                                if (HasEffect(MNK.Buffs.LeadenFist))
-                                {
-                                    return MNK.Bootshine;
-                                }
-                                return MNK.DragonKick;
+                                return HasEffect(MNK.Buffs.LeadenFist) ? MNK.Bootshine : MNK.DragonKick;
                             case 2:
                                 return MNK.Demolish;
                             case 1:
@@ -522,23 +510,11 @@ namespace XIVSlothComboPlugin.Combos
                         switch (pbStacks.StackCount)
                         {
                             case 3:
-                                if (HasEffect(MNK.Buffs.LeadenFist))
-                                {
-                                    return MNK.Bootshine;
-                                }
-                                return MNK.DragonKick;
+                                return HasEffect(MNK.Buffs.LeadenFist) ? MNK.Bootshine : MNK.DragonKick;
                             case 2:
-                                if (HasEffect(MNK.Buffs.LeadenFist))
-                                {
-                                    return MNK.Bootshine;
-                                }
-                                return MNK.DragonKick;
+                                return HasEffect(MNK.Buffs.LeadenFist) ? MNK.Bootshine : MNK.DragonKick;
                             case 1:
-                                if (HasEffect(MNK.Buffs.LeadenFist))
-                                {
-                                    return MNK.Bootshine;
-                                }
-                                return MNK.DragonKick;
+                                return HasEffect(MNK.Buffs.LeadenFist) ? MNK.Bootshine : MNK.DragonKick;
                         }
                     }
                     if (lunarNadi)
@@ -548,11 +524,7 @@ namespace XIVSlothComboPlugin.Combos
                             case 3:
                                 return MNK.TwinSnakes;
                             case 2:
-                                if (HasEffect(MNK.Buffs.LeadenFist))
-                                {
-                                    return MNK.Bootshine;
-                                }
-                                return MNK.DragonKick;
+                                return HasEffect(MNK.Buffs.LeadenFist) ? MNK.Bootshine : MNK.DragonKick;
                             case 1:
                                 return MNK.Demolish;
                         }
