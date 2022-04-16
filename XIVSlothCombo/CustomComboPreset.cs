@@ -1,4 +1,4 @@
-﻿using XIVSlothComboPlugin.Attributes;
+using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
@@ -1889,12 +1889,7 @@ namespace XIVSlothComboPlugin
         #endregion
         // ====================================================================================
         #region SUMMONER
-
-        [ConflictingCombos(SummonerMainComboFeature)]
-        [CustomComboInfo("Enable Single Target (Ruin1)", "Enables changing Single-Target Combo (Ruin I).", SMN.JobID, 0, "Ruin 420 Feature", "Ruination is come")]
-        SummonerMainComboFeatureRuin1 = 16999,
-
-        [ConflictingCombos(SummonerMainComboFeatureRuin1)]
+        
         [CustomComboInfo("Enable Single Target (RuinIII)", "Enables changing Single-Target Combo (Ruin III).", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
         SummonerMainComboFeature = 17000,
 
