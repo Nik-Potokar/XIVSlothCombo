@@ -195,7 +195,7 @@ namespace XIVSlothComboPlugin.Combos
     //Can replace Zero Charges/Stacks of Phlegma with Toxikon (if you can use it) or Dyskrasia 
     internal class SagePhlegmaFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaToxikonFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -205,8 +205,15 @@ namespace XIVSlothComboPlugin.Combos
                     (IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && level >= SGE.Levels.Dyskrasia))
 
                 {
+                    //If not targetting anything, use Dyskrasia Option if selected
+                    if (IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature))
+                    {
+                        if (!(HasTarget())) return OriginalHook(SGE.Dyskrasia);
+                    }
+
                     uint Phlegma; //Phlegma placeholder
                     //Find which version of Phlegma based on player's level that we need to update with
+                    //Phlegma unlocks before Dyskrasia & Toxikon (checked above), we'll always have P1 available
                     switch (level)
                     {
                         case >= (byte)SGE.Levels.Phlegma3: Phlegma = SGE.Phlegma3; break;
@@ -215,7 +222,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                     //Check for "out of Phlegma stacks" 
-                    if (GetCooldown(Phlegma).CooldownRemaining > 45) {
+                    if (GetCooldown(Phlegma).RemainingCharges == 0) {
                         //and if we have Adderstings to use for Toxikon
                         //Has Priority over Dyskrasia
                         if ( IsEnabled(CustomComboPreset.SagePhlegmaToxikonFeature) && (level >= SGE.Levels.Toxikon) && (GetJobGauge<SGEGauge>().Addersting > 0) )

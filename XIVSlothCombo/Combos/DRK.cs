@@ -92,7 +92,6 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == DRK.Souleater)
             {
                 var gauge = GetJobGauge<DRKGauge>();
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var plungeChargesRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkKeepPlungeCharges);
                 var mpRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkMPManagement);
 
@@ -102,7 +101,7 @@ namespace XIVSlothComboPlugin.Combos
                         return DRK.Unmend;
                 }
 
-                if (!incombat)
+                if (!InCombat())
                 {
                     if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && level == 90)
                     {
@@ -119,7 +118,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (incombat)
+                if (InCombat())
                 {
                     if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && inOpener && level == 90)
                     {
