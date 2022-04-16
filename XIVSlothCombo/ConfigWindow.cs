@@ -855,7 +855,28 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region PVP VALUES
             if (preset == CustomComboPreset.PVPEmergencyHeals)
-                ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyHealThreshold, "Set the percentage to be at or under for the feature to kick in.\n100% is considered to start at 15,000 less than your max HP to prevent wastage.");
+            {
+                var pc = Service.ClientState.LocalPlayer;
+                if (pc != null)
+                {
+                    var maxHP = Service.ClientState.LocalPlayer?.MaxHp <= 15000 ? 0 : Service.ClientState.LocalPlayer.MaxHp - 15000;
+                    if (maxHP > 0)
+                    {
+                        var setting = Service.Configuration.GetCustomIntValue(PVPCommon.Config.EmergencyHealThreshold);
+                        var hpThreshold = ((float)maxHP / 100 * setting);
+
+                        ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyHealThreshold, $"Set the percentage to be at or under for the feature to kick in.\n100% is considered to start at 15,000 less than your max HP to prevent wastage.\nHP Value to be at or under: {hpThreshold}");
+                    }
+                    else
+                    {
+                        ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyHealThreshold, "Set the percentage to be at or under for the feature to kick in.\n100% is considered to start at 15,000 less than your max HP to prevent wastage.");
+                    }
+                }
+                else
+                {
+                    ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyHealThreshold, "Set the percentage to be at or under for the feature to kick in.\n100% is considered to start at 15,000 less than your max HP to prevent wastage.");
+                }
+            }
 
             if (preset == CustomComboPreset.PVPEmergencyGuard)
                 ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyGuardThreshold, "Set the percentage to be at or under for the feature to kick in.");

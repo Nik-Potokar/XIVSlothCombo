@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XIVSlothComboPlugin;
-using XIVSlothComboPlugin.Combos;
+﻿using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
@@ -75,29 +69,31 @@ namespace XIVSlothComboPlugin
                 bool gokaLocked = HasEffect(NINPVP.Debuffs.SealedGokaMekkyaku);
                 bool hutonLocked = HasEffect(NINPVP.Debuffs.SealedHuton);
                 bool mudraMode = HasEffect(NINPVP.Buffs.ThreeMudra);
+                bool canWeave = CanWeave(actionID);
 
                 if (HasEffect(NINPVP.Buffs.Hidden))
                     return OriginalHook(NINPVP.Assassinate);
 
-                if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown)
-                    return NINPVP.Mug;
+                if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown && canWeave)
+                    return OriginalHook(NINPVP.Mug);
 
-                if (!GetCooldown(NINPVP.Bunshin).IsCooldown)
-                    return NINPVP.Bunshin;
+                if (!GetCooldown(NINPVP.Bunshin).IsCooldown && canWeave)
+                    return OriginalHook(NINPVP.Bunshin);
 
-                if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
+                if (threeMudrasCD.RemainingCharges > 0 && !mudraMode && canWeave)
                     return OriginalHook(NINPVP.ThreeMudra);
-
-                if (mudraMode && !raijuLocked)
-                    return OriginalHook(NINPVP.ForkedRaiju);
 
                 if (mudraMode && !hyoshoLocked)
                     return OriginalHook(NINPVP.HyoshoRanryu);
 
-                if (!InMeleeRange() && GetCooldown(NINPVP.FumaShuriken).RemainingCharges > 0)
-                    return OriginalHook(NINPVP.FumaShuriken);
+                if (mudraMode && !raijuLocked && bunshinStacks > 0)
+                    return OriginalHook(NINPVP.ForkedRaiju);
 
-                
+                if (mudraMode && !hutonLocked)
+                    return NINPVP.Huton;
+
+                if (fumaCD.RemainingCharges > 0)
+                    return OriginalHook(NINPVP.FumaShuriken);
 
             }
 
@@ -111,7 +107,7 @@ namespace XIVSlothComboPlugin
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            if (actionID is NINPVP.FumaShuriken)
+            if (actionID == NINPVP.FumaShuriken)
             {
                 uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
@@ -127,14 +123,15 @@ namespace XIVSlothComboPlugin
                 bool gokaLocked = HasEffect(NINPVP.Debuffs.SealedGokaMekkyaku);
                 bool hutonLocked = HasEffect(NINPVP.Debuffs.SealedHuton);
                 bool mudraMode = HasEffect(NINPVP.Buffs.ThreeMudra);
+                bool canWeave = CanWeave(actionID);
 
-                if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown)
+                if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown && canWeave)
                     return NINPVP.Mug;
 
-                if (!GetCooldown(NINPVP.Bunshin).IsCooldown)
+                if (!GetCooldown(NINPVP.Bunshin).IsCooldown && canWeave)
                     return NINPVP.Bunshin;
 
-                if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
+                if (threeMudrasCD.RemainingCharges > 0 && !mudraMode && canWeave)
                     return OriginalHook(NINPVP.ThreeMudra);
 
                 if (mudraMode && !dotonLocked)
@@ -143,13 +140,20 @@ namespace XIVSlothComboPlugin
                 if (mudraMode && !gokaLocked)
                     return OriginalHook(NINPVP.GokaMekkyaku);
 
-                if (lastComboActionID == NINPVP.GustSlash)
-                    return NINPVP.AeolianEdge;
+                if (fumaCD.RemainingCharges > 0)
+                    return OriginalHook(NINPVP.FumaShuriken);
 
-                if (lastComboActionID == NINPVP.SpinningEdge)
-                    return NINPVP.GustSlash;
+                if (InMeleeRange())
+                {
+                    if (lastComboActionID == NINPVP.GustSlash)
+                        return OriginalHook(NINPVP.AeolianEdge);
 
-                return NINPVP.SpinningEdge;
+                    if (lastComboActionID == NINPVP.SpinningEdge)
+                        return OriginalHook(NINPVP.GustSlash);
+
+
+                    return OriginalHook(NINPVP.SpinningEdge);
+                }
             }
 
             return actionID;

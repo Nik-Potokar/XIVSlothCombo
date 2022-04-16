@@ -62,7 +62,7 @@ namespace XIVSlothComboPlugin.Combos
                     return OriginalHook(MCHPVP.HeatBlast);
 
                 if ((HasEffect(MCHPVP.Buffs.DrillPrimed) || HasEffect(MCHPVP.Buffs.ChainSawPrimed)) && 
-                    !HasEffect(MCHPVP.Buffs.Analysis) && analysisStacks > 0 && IsOnCooldown(MCHPVP.Wildfire))
+                    !HasEffect(MCHPVP.Buffs.Analysis) && analysisStacks > 0)
                     return OriginalHook(MCHPVP.Analysis);
 
                 if (HasEffect(MCHPVP.Buffs.Analysis) && HasEffect(MCHPVP.Buffs.DrillPrimed) && bigDamageStacks > 0)

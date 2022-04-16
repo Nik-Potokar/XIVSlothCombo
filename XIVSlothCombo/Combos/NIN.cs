@@ -475,6 +475,22 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+    internal class NinHuraijinArmorCrush : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinHuraijinArmorCrush;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == NIN.Huraijin)
+            {
+                if (lastComboMove == NIN.GustSlash)
+                    return NIN.ArmorCrush;
+            }
+
+            return actionID;
+        }
+    }
+
 
     internal class NinjaHideMugFeature : CustomCombo
     {

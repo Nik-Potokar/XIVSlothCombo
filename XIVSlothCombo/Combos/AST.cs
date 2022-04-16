@@ -386,6 +386,7 @@ namespace XIVSlothComboPlugin.Combos
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
 
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
@@ -411,7 +412,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
                         return AST.LucidDreaming;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
@@ -500,6 +501,7 @@ namespace XIVSlothComboPlugin.Combos
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
 
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
@@ -530,7 +532,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && actionIDCD.CooldownRemaining > 0.2 && level >= 24)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && actionIDCD.CooldownRemaining > 0.2 && level >= 24)
                         return AST.LucidDreaming;
                 }
             }
@@ -572,7 +574,7 @@ namespace XIVSlothComboPlugin.Combos
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);
-
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
 
 
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
@@ -603,7 +605,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.2 && level >= 24)
                         return AST.LucidDreaming;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
@@ -655,7 +657,7 @@ namespace XIVSlothComboPlugin.Combos
                 var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
                 var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
                 var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
-
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
 
                 if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
@@ -681,7 +683,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= 24)
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= 8000 && fallmalefic.CooldownRemaining > 0.4 && level >= 24)
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.4 && level >= 24)
                         return AST.LucidDreaming;
                 }
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
