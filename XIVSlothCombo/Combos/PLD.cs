@@ -182,14 +182,8 @@
                             return PLD.HolySpirit;
                     }
 
-                    if (HasEffect(PLD.Buffs.BladeOfFaithReady))
-                        return PLD.BladeOfFaith;
-
-                    if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                        return PLD.BladeOfTruth;
-
-                    if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                        return PLD.BladeOfValor;
+                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth)
+                        return OriginalHook(PLD.Confiteor);
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
@@ -258,17 +252,9 @@
 
                 }
 
-                if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature))
-                {
-                    if (HasEffect(PLD.Buffs.BladeOfFaithReady))
-                        return PLD.BladeOfFaith;
-
-                    if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                        return PLD.BladeOfTruth;
-
-                    if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                        return PLD.BladeOfValor;
-                }
+                if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) &&
+                    (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
+                        return OriginalHook(PLD.Confiteor);
 
                 if (comboTime > 0)
                 {
@@ -326,14 +312,8 @@
                         return PLD.HolySpirit;
                 }
 
-                if(HasEffect(PLD.Buffs.BladeOfFaithReady))
-                        return PLD.BladeOfFaith;
-
-                if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                    return PLD.BladeOfTruth;
-
-                if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                    return PLD.BladeOfValor;
+                if (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth)
+                    return OriginalHook(PLD.Confiteor);
             }
 
             return actionID;
@@ -358,14 +338,8 @@
                         return PLD.HolyCircle;
                 }
 
-                if (HasEffect(PLD.Buffs.BladeOfFaithReady))
-                    return PLD.BladeOfFaith;
-
-                if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                    return PLD.BladeOfTruth;
-
-                if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                    return PLD.BladeOfValor;
+                if (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth)
+                        return OriginalHook(PLD.Confiteor);
             }
 
             return actionID;
