@@ -206,10 +206,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 {
                     //If not targetting anything, use Dyskrasia Option if selected
-                    if (IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature))
-                    {
-                        if (!(HasTarget())) return OriginalHook(SGE.Dyskrasia);
-                    }
+                    if ( IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && (!HasTarget()) ) return OriginalHook(SGE.Dyskrasia);
 
                     uint Phlegma; //Phlegma placeholder
                     //Find which version of Phlegma based on player's level that we need to update with
@@ -254,22 +251,37 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
                     //If we're too low level to use Eukrasia, we can stop here.
-                    if ((CurrentTarget.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) && (level >= SGE.Levels.Eukrasia))
+                    if (level >= SGE.Levels.Eukrasia)
                     {
-                        //Eukrasian Dosis vars
+                        //Presume current Target is hostile npc target
+                        var Ourtarget = CurrentTarget;
+                        //Check if we're not targetting a Hostile NPC, are we attempting ToT?
+                        if (CurrentTarget.ObjectKind is not Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
+                        {
+                            //If ToT is enabled, and if it's a BattleNPC, Return that target
+                            if ( (CurrentTarget.TargetObject.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) &&
+                                 IsEnabled(CustomComboPreset.SageDPSFeatureToT) )
+                                //Set Ourtarget as the Target of Target
+                                Ourtarget = CurrentTarget.TargetObject;
+                            //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
+                            else return actionID;
+                        }
+
+                        //Eukrasian Dosis var
                         Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
 
                         //Find which version of Eukrasian Dosis we need 
+                        //Tsusai Devnote: VS's code suggestion would use an older C# style, and might confuse a beginner...like me
                         switch (level)
                         {
-                            case >= SGE.Levels.Dosis3:
-                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);                                
+                            case >= SGE.Levels.Dosis3: //Using FindEffect b/c we have a custom Target variable
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis3, Ourtarget, LocalPlayer?.ObjectId); 
                                 break;
                             case >= SGE.Levels.Dosis2:
-                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis2, Ourtarget, LocalPlayer?.ObjectId);
                                 break;
                             default: //Ekrasia Dosis unlocks with Eukrasia, checked at the start
-                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis1, Ourtarget, LocalPlayer?.ObjectId);
                                 break;
                         }
                         if (HasEffect(SGE.Buffs.Eukrasia))
@@ -279,6 +291,7 @@ namespace XIVSlothComboPlugin.Combos
                         if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
                         {
                             //Advanced Test Options Enabled to procede with auto-Eukrasia
+                            //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
                             if (IsEnabled(CustomComboPreset.SageDPSFeatureAdvTest))
                             {
                                 var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
