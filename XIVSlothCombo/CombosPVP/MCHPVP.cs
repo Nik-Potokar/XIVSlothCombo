@@ -53,7 +53,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                if (globalAction != actionID) return globalAction; return PVPCommon.Recuperate;
+                if (globalAction != actionID) return globalAction;
 
                 if (canWeave && HasEffect(MCHPVP.Buffs.Overheated) && IsOffCooldown(MCHPVP.Wildfire))
                     return OriginalHook(MCHPVP.Wildfire);
