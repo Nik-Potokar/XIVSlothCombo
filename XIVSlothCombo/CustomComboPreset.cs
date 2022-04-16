@@ -2122,6 +2122,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature/Alternative Feature", WHM.JobID, 0, "", "I can hardly breathe as it is!")]
         WHMThinAirFeature = 19014,
 
+        [ParentCombo(WHMCDsonMainComboGroup)]
+        [CustomComboInfo("Lily Overcap Protection", "Adds Afflatus Rapture (AoE Heal) to glare when at 3 lilies.", WHM.JobID, 0, "Feed the blood lily!", "Burn out the bad! Burn out the bad!")]
+        WHMLilyOvercapFeature = 19016,
+
+        [ParentCombo(WHMCDsonMainComboGroup)]
+        [CustomComboInfo("Adds Afflatus Misery to Glare/Stone", "Adds Afflatus Misery to Glare when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
+        WHMAfflatusMiseryOGCDFeature = 19017,
+
         #endregion
         // ====================================================================================
         #region DOH
