@@ -241,7 +241,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Ruin3 || actionID == SMN.Ruin2 || actionID == SMN.Ruin)
+            if (actionID is SMN.Ruin3 or SMN.Ruin2 or SMN.Ruin)
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 var furtheRuin = FindEffect(SMN.Buffs.FurtherRuin);
@@ -418,7 +418,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Tridisaster || actionID == SMN.Outburst)
+            if (actionID is SMN.Tridisaster or SMN.Outburst)
             {
                 var gauge = GetJobGauge<SMNGauge>();
                 if (IsEnabled(CustomComboPreset.SimpleAoESummoner))
@@ -486,9 +486,9 @@ namespace XIVSlothComboPlugin.Combos
                         return SMN.Deathflare;
                     if (IsEnabled(CustomComboPreset.SummonerRekindlePhoenix) && level >= SMN.Levels.Phoenix && lastComboMove == SMN.BrandOfPurgatory && !rekindle.IsCooldown && CanWeave(actionID))
                         return SMN.Rekindle;
-                    if (level >= SMN.Levels.Bahamut && (lastComboMove == SMN.AstralFlare || lastComboMove == SMN.SummonBahamut) && !enkindleBahamut.IsCooldown && CanWeave(actionID))
+                    if (level >= SMN.Levels.Bahamut && lastComboMove is SMN.AstralFlare or SMN.SummonBahamut && !enkindleBahamut.IsCooldown && CanWeave(actionID))
                         return SMN.EnkindleBahamut;
-                    if (level > SMN.Levels.Phoenix && (lastComboMove == SMN.BrandOfPurgatory || lastComboMove == SMN.SummonPhoenix) && !enkindlePhoenix.IsCooldown && CanWeave(actionID))
+                    if (level > SMN.Levels.Phoenix && lastComboMove is SMN.BrandOfPurgatory or SMN.SummonPhoenix && !enkindlePhoenix.IsCooldown && CanWeave(actionID))
                         return SMN.EnkindlePhoenix;
                 }
 
