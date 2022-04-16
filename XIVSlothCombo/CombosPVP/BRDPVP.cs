@@ -14,11 +14,11 @@ namespace XIVSlothComboPlugin.Combos
             ApexArrow = 29393,
             SilentNocturne = 29395,
             EmpyrealArrow = 29398,
-            RepellingShot = 0,
-            WardensPaean = 0,
+            RepellingShot = 29399,
+            WardensPaean = 29400,
             PitchPerfect = 29392,
             BlastArrow = 29394,
-            FinalFantasia = 0;
+            FinalFantasia = 29401;
 
 
         public static class Buffs

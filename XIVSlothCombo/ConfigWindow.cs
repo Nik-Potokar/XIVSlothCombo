@@ -90,7 +90,6 @@ namespace XIVSlothComboPlugin
         }
         public override void Draw()
         {
-
             if (ImGui.BeginTabBar("SlothBar"))
             {
                 if (ImGui.BeginTabItem("Combos/Features"))
@@ -280,6 +279,8 @@ namespace XIVSlothComboPlugin
 
                 if (ImGui.CollapsingHeader(jobName))
                 {
+                    if (jobName == "All Jobs" && !Service.Configuration.EnableSecretCombos) ImGui.Text("This section currently only contains PVP features at present.");
+
                     foreach (var (preset, info) in this.groupedPresets[jobName])
                     {
                         if (Service.Configuration.HideConflictedCombos)

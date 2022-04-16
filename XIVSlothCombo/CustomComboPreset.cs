@@ -80,7 +80,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disabled", "This should not be used.", ADV.JobID)]
         Disabled = 99999,
 
-        #endregion
+#if DEBUG
+        [CustomComboInfo("DEBUG MODE", "OUTPUTS DEBUG INFO. PLEASE USE THE /XLDEV COMMAND AND OPEN THE LOG WINDOW AND SET LOG LEVEL TO DEBUG.", 0)]
+        DEBUG = 99998,
+#endif
+#endregion
         // ====================================================================================
         #region ADV
         #endregion
@@ -2254,6 +2258,14 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
         WARBurstMode = 80019,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
+        NINBurstMode = 80020,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
+        NINAoEBurstMode = 80021,
 
         #endregion
         // ====================================================================================
