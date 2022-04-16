@@ -127,7 +127,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.NinjaRangedUptimeFeature) && !HasEffect(NIN.Buffs.Mudra))
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return NIN.ThrowingDaggers;
                 }
                 if (IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && (HasEffect(NIN.Buffs.Mudra) || HasEffect(NIN.Buffs.Kassatsu)))

@@ -191,17 +191,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID, 0)]
         ExaltationFeature = 1028,
 
-        [TrustIncompatible]
         [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Auto-Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
         AstAutoCardTarget = 1029,
 
-        [TrustIncompatible]
         [ParentCombo(AstAutoCardTarget)]
         [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
         AstrologianTargetLock = 1030,
 
-        [TrustIncompatible]
         [ParentCombo(AstAutoCardTarget)]
         [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for auto card target selection", AST.JobID)]
         AstrologianTargetExtraFeature = 1031,
@@ -1666,7 +1663,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Soteria into Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 0, "Spoopy into Kpoopy", "Don't forget your danc- uh, heal partner!")]
         SageKardiaFeature = 14000,
 
-        [CustomComboInfo("Rhizomata Feature###SGENormal", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
+        [CustomComboInfo("Rhizomata Feature#", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
         SageRhizomataFeature = 14001,
 
         [CustomComboInfo("Taurochole into Druochole Feature", "Replaces Taurochole with Druochole when Taurochole is on cooldown.", SGE.JobID, 0, "This for that", "They do the same thing, really. If you close your eyes.")]
@@ -1739,7 +1736,7 @@ namespace XIVSlothComboPlugin
         CustomHaimaFeature = 14019,
 
         [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature###SGEST", "Adds Rhizomata when Addersgall is 0###SGEST", SGE.JobID, 0)]
+        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
         RhizomataFeature = 14020,
 
         [ParentCombo(SageSingleTargetHealFeature)]
@@ -1775,7 +1772,7 @@ namespace XIVSlothComboPlugin
         KeracholeFeature = 14028,
 
         [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature###SGEAOE", "Adds Rhizomata when Addersgall is 0###SGEAOE", SGE.JobID, 0)]
+        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
         RhizomataFeatureAoE = 14029,
 
         [ParentCombo(SageSingleTargetHealFeature)]
@@ -2243,19 +2240,35 @@ namespace XIVSlothComboPlugin
         //BlackEnochianPVPFeature = 80016,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Trans-AM Mode", "More pow to the pewpew!", MCHPVP.JobID)]
-        MCHBlastChargeFeature = 80010,
+        [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
+        MCHBurstMode = 80010,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "", BRDPvP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
         BRDBurstMode = 80017,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
+        RDMBurstMode = 80018,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
+        WARBurstMode = 80019,
 
         #endregion
         // ====================================================================================
         #region PvPGlobals
         [SecretCustomCombo]
         [CustomComboInfo("Emergency Heals", "Uses Recuperate when your HP is under a certain threshold and you have the MP.", ADV.JobID)]
-        PVPEmergencyHeals = 900000,
+        PVPEmergencyHeals = 90000,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Emergency Guard", "Uses Guard when your HP is under a certain threshold.", ADV.JobID)]
+        PVPEmergencyGuard = 90001,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Quick Purify", "Uses Purify when afflicted with any selected debuff.", ADV.JobID)]
+        PVPQuickPurify = 90002,
 
         #endregion
     }

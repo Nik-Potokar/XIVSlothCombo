@@ -149,6 +149,81 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             }
         }
 
+        public static void DrawPvPStatusMultiChoice(string config)
+        {
+            var values = Service.Configuration.GetCustomBoolArrayValue(config);
+
+            ImGui.Columns(7, $"{config}", false);
+
+            if (values.Length == 0) Array.Resize<bool>(ref values, 7);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPink);
+
+            if (ImGui.Checkbox($"Stun###{config}0", ref values[0]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+
+            if (ImGui.Checkbox($"Deep Freeze###{config}1", ref values[1]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+
+            if (ImGui.Checkbox($"Half Asleep###{config}2", ref values[2]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+
+            if (ImGui.Checkbox($"Sleep###{config}3", ref values[3]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+
+            if (ImGui.Checkbox($"Bind###{config}4", ref values[4]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+
+            if (ImGui.Checkbox($"Heavy###{config}5", ref values[5]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.NextColumn();
+
+
+            if (ImGui.Checkbox($"Silence###{config}6", ref values[6]))
+            {
+                Service.Configuration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Columns(1);
+            ImGui.PopStyleColor();
+            ImGui.Spacing();
+        }
+
         public static void DrawRoleGridMultiChoice(string config)
         {
             var values = Service.Configuration.GetCustomBoolArrayValue(config);

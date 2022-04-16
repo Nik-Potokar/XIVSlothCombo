@@ -41,7 +41,7 @@ namespace XIVSlothComboPlugin.Combos
     }
     internal class HeatedCleanShotFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCHBlastChargeFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCHBurstMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -51,7 +51,9 @@ namespace XIVSlothComboPlugin.Combos
                 var analysisStacks = GetRemainingCharges(MCHPVP.Analysis);
                 var bigDamageStacks = GetRemainingCharges(OriginalHook(MCHPVP.Drill));
 
-                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute(actionID)) return PVPCommon.Recuperate;
+                uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+
+                if (globalAction != actionID) return globalAction; return PVPCommon.Recuperate;
 
                 if (canWeave && HasEffect(MCHPVP.Buffs.Overheated) && IsOffCooldown(MCHPVP.Wildfire))
                     return OriginalHook(MCHPVP.Wildfire);

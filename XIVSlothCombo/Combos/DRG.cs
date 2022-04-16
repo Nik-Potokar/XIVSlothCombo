@@ -144,7 +144,7 @@ namespace XIVSlothComboPlugin.Combos
                 //Piercing Talon Uptime Feature
                 if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return DRG.PiercingTalon;
                 }
 
@@ -185,7 +185,7 @@ namespace XIVSlothComboPlugin.Combos
                 //Piercing Talon Uptime Feature
                 if (IsEnabled(CustomComboPreset.DragoonPiercingTalonFullFeature) && level >= DRG.Levels.PiercingTalon)
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return DRG.PiercingTalon;
                 }
 
@@ -225,7 +225,7 @@ namespace XIVSlothComboPlugin.Combos
                 //Piercing Talon Uptime Feature
                 if (IsEnabled(CustomComboPreset.DragoonPiercingTalonPlusFeature) && level >= DRG.Levels.PiercingTalon)
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return DRG.PiercingTalon;
                 }
 
@@ -619,7 +619,7 @@ namespace XIVSlothComboPlugin.Combos
                         //Piercing Talon Uptime Feature
                         if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
                         {
-                            if (!InMeleeRange(true))
+                            if (!InMeleeRange())
                                 return DRG.PiercingTalon;
                         }
 
@@ -1061,7 +1061,7 @@ namespace XIVSlothComboPlugin.Combos
                 //Piercing Talon Uptime Feature
                 if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return DRG.PiercingTalon;
                 }
 

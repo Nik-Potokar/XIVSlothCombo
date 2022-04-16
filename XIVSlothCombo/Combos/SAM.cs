@@ -649,9 +649,9 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == SAM.Gyoten)
             {
                 var gauge = GetJobGauge<SAMGauge>();
-                if (InMeleeRange(true) && gauge.Kenki >= 10)
+                if (InMeleeRange() && gauge.Kenki >= 10)
                     return SAM.Yaten;
-                if (InMeleeRange(false) && gauge.Kenki >= 10)
+                if (InMeleeRange() && gauge.Kenki >= 10)
                     return SAM.Gyoten;
             }
             return actionID;

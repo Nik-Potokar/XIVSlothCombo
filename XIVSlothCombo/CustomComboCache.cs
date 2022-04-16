@@ -74,6 +74,7 @@ namespace XIVSlothComboPlugin
 
             foreach (var status in chara.StatusList)
             {
+
                 if (status.StatusId == statusID && (!sourceID.HasValue || status.SourceID == 0 || status.SourceID == InvalidObjectID || status.SourceID == sourceID))
                     return this.statusCache[key] = status;
             }

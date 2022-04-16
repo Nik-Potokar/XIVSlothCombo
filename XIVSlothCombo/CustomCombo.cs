@@ -532,7 +532,7 @@ namespace XIVSlothComboPlugin.Combos
             if (CurrentTarget is null || LocalPlayer is null)
                 return 0;
 
-            if (CurrentTarget is not BattleChara chara || CurrentTarget.ObjectKind != Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
+            if (CurrentTarget is not BattleChara chara)
                 return 0;
 
             var position = new Vector2(chara.Position.X, chara.Position.Z);
@@ -545,10 +545,11 @@ namespace XIVSlothComboPlugin.Combos
         /// Gets a value indicating whether you are in melee range from the current target.
         /// </summary>
         /// <returns>Bool indicating whether you are in melee range.</returns>
-        protected static bool InMeleeRange(bool v)
+        protected static bool InMeleeRange()
         {
             var distance = GetTargetDistance();
 
+            Dalamud.Logging.PluginLog.Debug(distance.ToString());   
             if (distance == 0)
                 return true;
 
