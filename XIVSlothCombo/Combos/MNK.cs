@@ -96,83 +96,125 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == MNK.ArmOfTheDestroyer || actionID == MNK.ShadowOfTheDestroyer)
             {
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<MNKGauge>();
-                var actionIDCD = GetCooldown(OriginalHook(actionID));
+                var canWeave = CanWeave(actionID, 0.4);
+                var canWeaveChakra = CanWeave(actionID);
 
-                if (gauge.Chakra == 5 && actionIDCD.CooldownRemaining > 0.5 && HasBattleTarget(true) && level >= 40)
+                var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
+                var lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                var solarNadi = gauge.Nadi == Nadi.SOLAR;
+                var nadiNONE = gauge.Nadi == Nadi.NONE;
+
+                if (!inCombat)
                 {
-                    return OriginalHook(MNK.Enlightenment);
+                    if (gauge.Chakra < 5)
+                    {
+                        return MNK.Meditation;
+                    }
+                    if (level >= MNK.Levels.FormShift && !HasEffect(MNK.Buffs.FormlessFist) && comboTime <= 0)
+                    {
+                        return MNK.FormShift;
+                    }
+                    if (!InMeleeRange(true) && gauge.Chakra == 5 && HasEffect(MNK.Buffs.FormlessFist))
+                    {
+                        return MNK.Thunderclap;
+                    }
                 }
-                if (gauge.BlitzTimeRemaining > 0 && level >= 60)
-                    return OriginalHook(MNK.MasterfulBlitz);
 
+                // Buffs
+                if (inCombat && canWeave && IsEnabled(CustomComboPreset.MnkCDsOnAoEComboFeature))
+                {
+                    if (level >= MNK.Levels.RiddleOfFire && !IsOnCooldown(MNK.RiddleOfFire))
+                    {
+                        return MNK.RiddleOfFire;
+                    }
+                    if (IsEnabled(CustomComboPreset.MnkPerfectBalanceOnAoEComboFeature) &&
+                        level >= MNK.Levels.PerfectBalance && !HasEffect(MNK.Buffs.PerfectBalance) && OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
+                    {
+                        // Use Perfect Balance if:
+                        // 1. It's after Bootshine/Dragon Kick.
+                        // 2. At max stacks / before overcap.
+                        // 3. During Brotherhood.
+                        // 4. During Riddle of Fire.
+                        // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
+                        if (((GetRemainingCharges(MNK.PerfectBalance) == 2) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 10) ||
+                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 4 && GetCooldownRemainingTime(MNK.Brotherhood) < 8)))
+                        {
+                            return MNK.PerfectBalance;
+                        }
+                    }
+                    if (IsEnabled(CustomComboPreset.MnkBrotherhoodOnAoEComboFeature) && level >= MNK.Levels.Brotherhood && !IsOnCooldown(MNK.Brotherhood))
+                    {
+                        return MNK.Brotherhood;
+                    }
+                    if (IsEnabled(CustomComboPreset.MnkRiddleOfWindOnAoEComboFeature) && level >= MNK.Levels.RiddleOfWind && !IsOnCooldown(MNK.RiddleOfWind))
+                    {
+                        return MNK.RiddleOfWind;
+                    }
+                    if (IsEnabled(CustomComboPreset.MnkMeditationOnAoEComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && HasEffect(MNK.Buffs.DisciplinedFist) && canWeaveChakra)
+                    {
+                        if (level >= MNK.Levels.Enlightenment)
+                        {
+                            return OriginalHook(MNK.Enlightenment);
+                        }
+                        return OriginalHook(MNK.Meditation);
+                    }
+                }
+
+                // Masterful Blitz
+                if (IsEnabled(CustomComboPreset.MonkMasterfulBlitzOnAoECombo) &&
+                    level >= MNK.Levels.MasterfulBlitz && !HasEffect(MNK.Buffs.PerfectBalance) && OriginalHook(MNK.MasterfulBlitz) != MNK.MasterfulBlitz)
+                {
+                    return OriginalHook(MNK.MasterfulBlitz);
+                }
+
+                // Perfect Balance
+                if (HasEffect(MNK.Buffs.PerfectBalance))
+                {
+                    if (nadiNONE || !lunarNadi)
+                    {
+                        if (pbStacks.StackCount > 0)
+                        {
+                            if (level >= MNK.Levels.ShadowOfTheDestroyer)
+                            {
+                                return MNK.ShadowOfTheDestroyer;
+                            }
+                            return MNK.Rockbreaker;
+                        }
+                    }
+                    if (lunarNadi)
+                    {
+                        switch (pbStacks.StackCount)
+                        {
+                            case 3:
+                                return OriginalHook(MNK.ArmOfTheDestroyer);
+                            case 2:
+                                return MNK.FourPointFury;
+                            case 1:
+                                return MNK.Rockbreaker;
+                        }
+                    }
+                }
+
+                // Monk Rotation
                 if (HasEffect(MNK.Buffs.OpoOpoForm))
+                {
                     return OriginalHook(MNK.ArmOfTheDestroyer);
+                }
 
                 if (HasEffect(MNK.Buffs.RaptorForm) && level >= MNK.Levels.FourPointFury)
-                    return MNK.FourPointFury;
-
-                if (HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
-                    return MNK.Rockbreaker;
-
-                if (HasEffect(MNK.Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MonkMasterfullBlizOnAoECombo))
                 {
-                    var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
-                    var pbCD = GetCooldown(MNK.PerfectBalance);
-                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var solarNadi = gauge.Nadi == Nadi.SOLAR;
-                    var nadiNONE = gauge.Nadi == Nadi.NONE;
-                    // low level
-                    if (!nadiNONE && !lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level <= 81)
-                    {
-                        if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return MNK.Rockbreaker;
-                        if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return MNK.Rockbreaker;
-                        if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return MNK.Rockbreaker;
-
-                    }
-                    if (nadiNONE && HasEffect(MNK.Buffs.PerfectBalance) && level <= 81)
-                    {
-                        if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return MNK.Rockbreaker;
-                        if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return MNK.Rockbreaker;
-                        if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return MNK.Rockbreaker;
-                    }
-                    if (lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level >= 60)
-                    {
-                        if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return OriginalHook(MNK.ArmOfTheDestroyer);
-                        if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == OriginalHook(MNK.ArmOfTheDestroyer))
-                            return MNK.FourPointFury;
-                        if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance) && lastComboMove == MNK.FourPointFury)
-                            return MNK.Rockbreaker;
-                    }
-                    // highlevel
-                    if (!nadiNONE && !lunarNadi && HasEffect(MNK.Buffs.PerfectBalance) && level >= 82)
-                    {
-                        if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return OriginalHook(MNK.ArmOfTheDestroyer);
-                        if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return OriginalHook(MNK.ArmOfTheDestroyer);
-                        if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return OriginalHook(MNK.ArmOfTheDestroyer);
-                    }
-                    if (nadiNONE && HasEffect(MNK.Buffs.PerfectBalance) && level >= 82)
-                    {
-                        if (pbStacks.StackCount == 3 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return OriginalHook(MNK.ArmOfTheDestroyer);
-                        if (pbStacks.StackCount == 2 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return OriginalHook(MNK.ArmOfTheDestroyer);
-                        if (pbStacks.StackCount == 1 && HasEffect(MNK.Buffs.PerfectBalance))
-                            return OriginalHook(MNK.ArmOfTheDestroyer);
-                    }
-
+                    return MNK.FourPointFury;
                 }
 
+                if (HasEffect(MNK.Buffs.CoerlForm) && level >= MNK.Levels.Rockbreaker)
+                {
+                    return MNK.Rockbreaker;
+                }
             }
             return actionID;
         }
@@ -315,7 +357,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return MNK.Meditation;
                         }
-                        if (!inCombat && !inOpener && level >= MNK.Levels.FormShift && !HasEffect(MNK.Buffs.FormlessFist) && comboTime <= 0)
+                        if (!inOpener && level >= MNK.Levels.FormShift && !HasEffect(MNK.Buffs.FormlessFist) && comboTime <= 0)
                         {
                             return MNK.FormShift;
                         }

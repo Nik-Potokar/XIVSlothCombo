@@ -1172,8 +1172,8 @@ namespace XIVSlothComboPlugin
         MonkMasterfulBlitzOnMainCombo = 9008,
 
         [ParentCombo(MnkArmOfTheDestroyerCombo)]
-        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds all of (Optimal?) Blitz combos and Masterful Blitz on AoE Combo.", MNK.JobID, 0, "", "It's maths, but for your AoE combo!")]
-        MonkMasterfullBlizOnAoECombo = 9009,
+        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE Combo.", MNK.JobID, 0, "", "It's maths, but for your AoE combo!")]
+        MonkMasterfulBlitzOnAoECombo = 9009,
 
         [CustomComboInfo("Forbidden Chakra Feature", "Adds Forbidden Chakra/Enlightement to the Main/AoE feature combo. Testing Only for now!", MNK.JobID, 0, "But, wait!", "Mom said no! It's forbidden!")]
         MonkForbiddenChakraFeature = 9010,
@@ -1210,19 +1210,19 @@ namespace XIVSlothComboPlugin
         MnkCDsOnAoEComboFeature = 9019,
 
         [ParentCombo(MnkCDsOnAoEComboFeature)]
-        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Riddle of Wind on AoE Combo", "Adds Riddle of Wind to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkRiddleOfWindOnAoEComboFeature = 9020,
 
         [ParentCombo(MnkCDsOnAoEComboFeature)]
-        [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the AoE Combo.", MNK.JobID, 0, "", "")]
-        MnkPerfectBalanceOnAoEMainComboFeature = 9021,
+        [CustomComboInfo("Perfect Balance on AoE Combo", "Adds Perfect Balance to the AoE Combo.", MNK.JobID, 0, "", "")]
+        MnkPerfectBalanceOnAoEComboFeature = 9021,
 
         [ParentCombo(MnkCDsOnAoEComboFeature)]
-        [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Brotherhood on AoE Combo", "Adds Brotherhood to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkBrotherhoodOnAoEComboFeature = 9022,
 
         [ParentCombo(MnkCDsOnAoEComboFeature)]
-        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkMeditationOnAoEComboFeature = 9023,
 
         #endregion
