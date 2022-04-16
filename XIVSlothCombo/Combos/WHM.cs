@@ -193,6 +193,7 @@ namespace XIVSlothComboPlugin.Combos
                     var diaDebuff = FindTargetEffect(WHM.Debuffs.Dia);
                     var aero1Debuff = FindTargetEffect(WHM.Debuffs.Aero);
                     var aero2Debuff = FindTargetEffect(WHM.Debuffs.Aero2);
+                    var lucidThreshold = Service.Configuration.GetCustomIntValue(WHM.Config.WHMLucidDreamingFeature);
 
                     if (CanSpellWeave(actionID))
                     {
@@ -200,7 +201,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return WHM.PresenceOfMind;
                         if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= WHM.Levels.Assize && IsOffCooldown(WHM.Assize))
                                 return WHM.Assize;
-                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= 8000)
+                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold)
                                 return WHM.LucidDreaming;
                     }
 
