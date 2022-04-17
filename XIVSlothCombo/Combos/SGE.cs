@@ -414,7 +414,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Haima;
                 }
                 
-                if (IsEnabled(CustomComboPreset.CustomEukrasianDiagnosisFeature) && EukrasianDiagnosis is null && EnemyHealthPercentage() <= CustomDiagnosis)
+                if (IsEnabled(CustomComboPreset.CustomEukrasianDiagnosisFeature) && EukrasianDiagnosis is null && EnemyHealthPercentage() <= CustomDiagnosis && level >= SGE.Levels.Eukrasia)
                 {
                     if (!HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.Eukrasia;
@@ -462,7 +462,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Physis2;
                 }
 
-                if (IsEnabled(CustomComboPreset.EukrasianPrognosisFeature) && EukrasianPrognosis is null)
+                if (IsEnabled(CustomComboPreset.EukrasianPrognosisFeature) && EukrasianPrognosis is null && level >= SGE.Levels.Eukrasia)
                 {
                     if (!HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.Eukrasia;
