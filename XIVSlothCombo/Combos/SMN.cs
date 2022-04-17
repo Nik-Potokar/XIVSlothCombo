@@ -234,7 +234,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (InCombat())
                 {
-                    if (CanWeave(actionID))
+                    if (CanSpellWeave(actionID))
                     {
                         if (IsEnabled(CustomComboPreset.SearingLightonRuinFeature) && IsOffCooldown(SMN.SearingLight) && level >= SMN.Levels.SearingLight && gauge.IsBahamutReady && GetCooldownRemainingTime(SMN.SummonBahamut) >= 55)
                             return SMN.SearingLight;
@@ -257,7 +257,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return SMN.Swiftcast;
 
                         if ((IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor)) || //Garuda
-                            (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && CanWeave(actionID)) || //Titan
+                            (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && CanSpellWeave(actionID)) || //Titan
                             (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && ((gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor)) || (gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)))) //Ifrit
                             return OriginalHook(SMN.AstralFlow);
 
@@ -295,7 +295,7 @@ namespace XIVSlothComboPlugin.Combos
                             (gauge.IsPhoenixReady && !HasEffect(SMN.Buffs.SearingLight) && level >= SMN.Levels.Phoenix))) //Phoenix Phase
                                 return OriginalHook(SMN.Aethercharge);
 
-                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanWeave(actionID))
+                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanSpellWeave(actionID))
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.AstralFlow && (level < SMN.Levels.Bahamut || lastComboMove == SMN.AstralImpulse || lastComboMove == SMN.FountainOfFire))
                                 return OriginalHook(SMN.AstralFlow);
@@ -325,7 +325,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (InCombat())
                 {
-                    if (CanWeave(actionID))
+                    if (CanSpellWeave(actionID))
                     {
                         if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) && IsOffCooldown(SMN.SearingLight) && level >= SMN.Levels.SearingLight && gauge.IsBahamutReady && GetCooldownRemainingTime(SMN.SummonBahamut) >= 55)
                             return SMN.SearingLight;
@@ -342,7 +342,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
                         if ((IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor)) || //Garuda
-                            (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazCata && CanWeave(actionID)) || //Titan
+                            (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazCata && CanSpellWeave(actionID)) || //Titan
                             (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && ((gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor)) || (gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)))) //Ifrit
                                 return OriginalHook(SMN.AstralFlow);
 
@@ -369,7 +369,7 @@ namespace XIVSlothComboPlugin.Combos
                             (gauge.IsPhoenixReady && !HasEffect(SMN.Buffs.SearingLight) && level >= SMN.Levels.Phoenix))) //Phoenix Phase
                                 return OriginalHook(SMN.Aethercharge);
 
-                        if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanWeave(actionID))
+                        if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.AstralFlow && (level < SMN.Levels.Bahamut || lastComboMove == SMN.AstralFlare || lastComboMove == SMN.BrandOfPurgatory))
                                 return OriginalHook(SMN.AstralFlow);
