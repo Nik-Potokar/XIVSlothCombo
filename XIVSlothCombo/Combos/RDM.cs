@@ -1119,6 +1119,10 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+    //RedMageJoltVerprocCombo
+    //Simple Single Target Combo. Shoves the Verfire/Verstone onto Jolt's button
+    //Gives a user 3 sets of buttons for single target casting, Jolt+Procs, VerAero, VerThunder.
+    //If Fire and Stone are both ready, use the one that is the lowest, while maintaining gauge balance
     internal class RedMageJoltVerprocCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageJoltVerprocCombo;
@@ -1130,14 +1134,14 @@ namespace XIVSlothComboPlugin.Combos
                 if (lastComboMove is RDM.Verflare or RDM.Verholy or RDM.Scorch) return OriginalHook(actionID);
 
                 var gauge = GetJobGauge<RDMGauge>();
-                //If both are proc'd, use the one based on Mana
-                if ((HasEffect(RDM.Buffs.VerfireReady)) && (HasEffect(RDM.Buffs.VerstoneReady)))
+                //If both are proc'd, use the one based on mana-gauge
+                if ( HasEffect(RDM.Buffs.VerfireReady) && HasEffect(RDM.Buffs.VerstoneReady) )
                 {
                     if (gauge.WhiteMana > gauge.BlackMana) return RDM.Verfire; else return RDM.Verstone;
                 }
                 //Avoiding Offbalance difference of 30, Proc adds 5, so 25
-                else if ((HasEffect(RDM.Buffs.VerfireReady)) && (gauge.BlackMana - gauge.WhiteMana) < 25) return RDM.Verfire;
-                else if ((HasEffect(RDM.Buffs.VerstoneReady)) && (gauge.WhiteMana - gauge.BlackMana) < 25) return RDM.Verstone;
+                else if ( HasEffect(RDM.Buffs.VerfireReady)  && (gauge.BlackMana - gauge.WhiteMana) < 25) return RDM.Verfire;
+                else if ( HasEffect(RDM.Buffs.VerstoneReady) && (gauge.WhiteMana - gauge.BlackMana) < 25) return RDM.Verstone;
             }
             return actionID;
         }
@@ -1182,21 +1186,15 @@ namespace XIVSlothComboPlugin.Combos
     internal class RedMageSwiftVerraise : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageSwiftVerraise;
-
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is RDM.Swiftcast)
+            if ( (actionID is RDM.Swiftcast) && (level >= RDM.Levels.Verraise) )
             {
-                if (IsEnabled(CustomComboPreset.RedMageSwiftVerraise) && (level >= RDM.Levels.Verraise))
-                {
-                    var swiftCD = GetCooldown(RDM.Swiftcast);
-                    if (
-                        (swiftCD.CooldownRemaining > 0) || //Condition 1: Swiftcast is on cooldown
-                        HasEffect(RDM.Buffs.Dualcast)     //Condition 2: Swiftcast is available, but we have DualCast
-                       ) return RDM.Verraise;
-                } //Don't meet level requirements and preset
-                return OriginalHook(RDM.Swiftcast);
-            }
+                if (
+                    (GetCooldown(RDM.Swiftcast).CooldownRemaining > 0) || //Condition 1: Swiftcast is on cooldown
+                    HasEffect(RDM.Buffs.Dualcast)                         //Condition 2: Swiftcast is available, but we have DualCast
+                   ) return RDM.Verraise;
+            }//Else we just exit normally and return SwiftCast
             return actionID;
         }
     }
