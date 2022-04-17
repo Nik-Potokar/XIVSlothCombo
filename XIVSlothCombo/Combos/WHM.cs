@@ -19,6 +19,8 @@ namespace XIVSlothComboPlugin.Combos
             AfflatusMisery = 16535,
             Medica1 = 124,
             Medica2 = 133,
+            Tetragammaton = 3570,
+            DivineBenison = 7432,
 
             // dps
             Glare1 = 16533,
@@ -46,7 +48,8 @@ namespace XIVSlothComboPlugin.Combos
             Swiftcast = 167,
             Medica2 = 150,
             PresenceOfMind = 157,
-            ThinAir = 1217;
+            ThinAir = 1217,
+            DivineBenison = 1218;
         }
 
         public static class Debuffs
@@ -68,6 +71,8 @@ namespace XIVSlothComboPlugin.Combos
                 AfflatusSolace = 52,
                 Assize = 56,
                 ThinAir = 58,
+                Tetragammaton = 60,
+                DivineBenison = 66,
                 Dia = 72,
                 AfflatusMisery = 74,
                 AfflatusRapture = 76;
@@ -283,6 +288,25 @@ namespace XIVSlothComboPlugin.Combos
                 if (!swiftCD.IsCooldown)
                     return WHM.Swiftcast;
             }
+            return actionID;
+        }
+    }
+    internal class WHMTetraFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMTetraFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == WHM.Cure2)
+            {
+                if (level >= WHM.Levels.Tetragammaton && IsOffCooldown(WHM.Tetragammaton) && CanSpellWeave(actionID,0.1))
+                    return WHM.Tetragammaton;
+                if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison)
+                    && IsEnabled(CustomComboPreset.WHMBenisonFeature) && CanSpellWeave(actionID,0.1)
+                    && GetCooldownRemainingTime(WHM.Tetragammaton) <= 59) // Note: Added this check to try and prevent double-weave clipping.
+                    return WHM.DivineBenison;
+            }
+
             return actionID;
         }
     }

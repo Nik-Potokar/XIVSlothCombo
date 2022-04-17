@@ -2157,6 +2157,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Adds Afflatus Misery to Glare/Stone", "Adds Afflatus Misery to Glare when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
         WHMAfflatusMiseryOGCDFeature = 19017,
 
+        [CustomComboInfo("oGCD Heals/Shields", "Adds Tetragammaton to Cure II.\nNote: Due to very small weaving window, there may be some GCD clipping.", WHM.JobID, 0, "Longest word ever.", "Buffalo buffalo buffalo buffalo Buffalo buffalo buffalo.")]
+        WHMTetraFeature = 19018,
+
+        [ParentCombo(WHMTetraFeature)]
+        [CustomComboInfo("Add Devine Benison to Cure II", "Adds Devine Benison to Cure II when target is not under the effect.", WHM.JobID, 0, "oGCD Shield? Why not?!", "Tsun-tsun")]
+        WHMBenisonFeature = 19019,
+
         #endregion
         // ====================================================================================
         #region DOH
