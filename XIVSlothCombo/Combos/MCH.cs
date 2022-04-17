@@ -264,7 +264,7 @@ namespace XIVSlothComboPlugin.Combos
                         return MCH.Hypercharge;
                 }
 
-                if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && canWeave && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated))
+                if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && canWeave && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated) && (HasCharges(MCH.Ricochet) || HasCharges(MCH.GaussRound)))
                 {
                     var gaussCharges = GetRemainingCharges(MCH.GaussRound);
                     var ricochetCharges = GetRemainingCharges(MCH.Ricochet);
