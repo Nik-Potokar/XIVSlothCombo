@@ -103,9 +103,14 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (!InCombat())
                 {
+                    if (inOpener && (!HasEffect(DRK.Buffs.BloodWeapon) || !HasEffect(DRK.Buffs.BlackestNight)))
+                    {
+                        inOpener = false;
+                    }
+
                     if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && level == 90)
                     {
-                        if (HasEffectAny(DRK.Buffs.BloodWeapon) || HasEffect(DRK.Buffs.BlackestNight))
+                        if (HasEffect(DRK.Buffs.BloodWeapon) || HasEffect(DRK.Buffs.BlackestNight))
                             inOpener = true;
                     }
 
@@ -116,6 +121,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && inOpener && HasEffect(DRK.Buffs.BlackestNight))
                             return DRK.BloodWeapon;
                     }
+
                 }
 
                 if (InCombat())
