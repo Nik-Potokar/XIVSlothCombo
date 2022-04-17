@@ -583,14 +583,11 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.NinSimpleTrickFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
             
-            if (preset == CustomComboPreset.NinjaHuraijinFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
-            
             if (preset == CustomComboPreset.NinAeolianMugFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
             
             if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+                ConfigWindowFunctions.DrawSliderInt(0, 30, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
 
             #endregion
             // ====================================================================================

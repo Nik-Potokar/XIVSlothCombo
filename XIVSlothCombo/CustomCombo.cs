@@ -499,9 +499,9 @@ namespace XIVSlothComboPlugin.Combos
         /// without causing clipping and checks if you're casting a spell to make it mage friendly
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
-        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
+        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.5.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.7)
+        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.5)
         {
             var castingSpell = LocalPlayer.IsCasting;
 

@@ -109,7 +109,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const string
                 TrickCooldownRemaining = "TrickCooldownRemaining",
-                HutonRemainingTimer = "HutonRemainingTimer",
                 HutonRemainingArmorCrush = "HutonRemainingArmorCrush",
                 MugNinkiGauge = "MugNinkiGauge";
         }
@@ -142,8 +141,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.NinjaHuraijinFeature) && level >= NIN.Levels.Huraijin)
                 {
                     var gauge = GetJobGauge<NINGauge>();
-                    var timer = Service.Configuration.GetCustomIntValue(NIN.Config.HutonRemainingTimer);
-                    if (gauge.HutonTimer <= timer)
+                    if (gauge.HutonTimer <= 0)
                         return NIN.Huraijin;
                 }
 
