@@ -50,12 +50,14 @@ namespace XIVSlothComboPlugin.Combos
             SecondWind = 7541,
             Bloodbath = 7542,
             LegSweep = 7863,
-            Feint = 7549;
+            Feint = 7549,
+            TrueNorth = 7546;
 
 
         public static class Buffs // Buff IDs
         {
             public const ushort
+                TrueNorth = 1250,
                 SoulReaver = 2587,
                 ImmortalSacrifice = 2592,
                 EnhancedGibbet = 2588,
@@ -82,6 +84,7 @@ namespace XIVSlothComboPlugin.Combos
                 LegSweep = 10,
                 ShadowOfDeath = 10,
                 Bloodbath = 12,
+                Harpe = 15,
                 HellsIngress = 20,
                 HellsEgress = 20,
                 Feint = 22,
@@ -89,14 +92,23 @@ namespace XIVSlothComboPlugin.Combos
                 InfernalSlice = 30,
                 WhorlOfDeath = 35,
                 NightmareScythe = 45,
+                TrueNorth = 50,
+                BloodStalk = 50,
+                GrimSwathe = 55,
                 SoulSlice = 60,
                 SoulScythe = 65,
                 SoulReaver = 70,
+                Gibbet = 70,
+                Gallows = 70,
+                Guillotine = 70,
+                ArcaneCircle = 72,
                 Regress = 74,
                 Gluttony = 76,
                 Enshroud = 80,
                 Soulsow = 82,
                 HarvestMoon = 82,
+                LemuresSlice = 86,
+                LemuresScythe = 86,
                 PlentifulHarvest = 88,
                 Communio = 90;
 
@@ -110,32 +122,34 @@ namespace XIVSlothComboPlugin.Combos
                 RPRSoulGaugeThreshold = "RPRSoulGaugeThreshold"; // Soul Gauge Overcap Threshold
         }
     }
-    internal class ReaperSliceCombo : CustomCombo
+    internal class ReaperSliceCombo : CustomCombo // Slice Combo Feature
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperSliceCombo;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is RPR.Slice)
+            if (actionID is RPR.Slice) // Replaces Slice
             {
                 var gauge = GetJobGauge<RPRGauge>();
                 var enshrouded = HasEffect(RPR.Buffs.Enshrouded);
                 var soulReaver = HasEffect(RPR.Buffs.SoulReaver);
+                var enhancedHarpe = HasEffect(RPR.Buffs.EnhancedHarpe);
+                var soulsow = HasEffect(RPR.Buffs.Soulsow);
                 var soulSliceCooldown = GetCooldown(RPR.SoulSlice);
                 var soulSliceCharges = Service.Configuration.GetCustomIntValue(RPR.Config.RPRSoulSliceCharges);
                 var soulGaugeThreshold = Service.Configuration.GetCustomIntValue(RPR.Config.RPRSoulGaugeThreshold);
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 // Ranged actions
-                // Ranged Filler Option
-                if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && !InMeleeRange(true))
+                if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && !InMeleeRange(true)) // Ranged Filler Option
                 {
-                    // Communio Override
-                    if (enshrouded && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio)
+                    if (enshrouded && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio) // Communio Override
                         return RPR.Communio;
 
-                    if (IsEnabled(CustomComboPreset.) && level >= RPR.Levels.HarvestMoon && HasEffect(RPR.Buffs.Soulsow))
+                    if (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonFeature) && level >= RPR.Levels.HarvestMoon && soulsow) // Harpe Harvest Moon Feature
                     {
-                        if ((IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonEnhancedOption) && HasEffect(RPR.Buffs.EnhancedHarpe)) || (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonCombatOption) && !HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat)))
+                        if ((IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonEnhancedOption) && enhancedHarpe) || // Enhanced Harpe Option
+                           (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonOpenerOption) && !inCombat)) // Harpe Opener Option
                             return RPR.Harpe;
 
                         return RPR.HarvestMoon;
@@ -144,23 +158,20 @@ namespace XIVSlothComboPlugin.Combos
                     return RPR.Harpe;
                 }
 
-                // Melee-range actions
-                // Stun Option
-                if (IsEnabled(CustomComboPreset.ReaperStunOption))
+                // Melee actions
+                if (IsEnabled(CustomComboPreset.ReaperStunOption)) // Stun Option
                 {
                     if (level >= RPR.Levels.LegSweep && CanInterruptEnemy() && IsOffCooldown(RPR.LegSweep))
                         return RPR.LegSweep;
                 }
 
-                // Soul Slice Overcap Option
-                if (IsEnabled(CustomComboPreset.ReaperSoulSliceOvercapOption) && level >= RPR.Levels.SoulSlice) // Define this in ccp.cs
+                if (IsEnabled(CustomComboPreset.ReaperSoulSliceOvercapOption) && level >= RPR.Levels.SoulSlice) // Soul Slice Overcap Option
                 {
                     if (!enshrouded && !soulReaver && GetRemainingCharges(RPR.SoulSlice) > soulSliceCharges && gauge.Soul <= soulGaugeThreshold)
                         return RPR.SoulSlice;
                 }
 
-                // Base 1-2-3 Combo
-                if (comboTime > 0)
+                if (comboTime > 0) // Base 1-2-3 Combo
                 {
                     if (level >= RPR.Levels.WaxingSlice && lastComboMove is RPR.Slice)
                         return RPR.WaxingSlice;
