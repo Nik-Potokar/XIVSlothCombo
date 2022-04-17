@@ -342,9 +342,9 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
                         if ((IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor)) || //Garuda
-                            (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && CanWeave(actionID)) || //Titan
+                            (IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazCata && CanWeave(actionID)) || //Titan
                             (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && ((gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor)) || (gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)))) //Ifrit
-                            return OriginalHook(SMN.AstralFlow);
+                                return OriginalHook(SMN.AstralFlow);
 
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(SMN.PreciousBrilliance);
@@ -367,7 +367,7 @@ namespace XIVSlothComboPlugin.Combos
                             (level >= SMN.Levels.Aethercharge && level < SMN.Levels.Bahamut || //Pre Bahamut Phase
                             (gauge.IsBahamutReady && IsOffCooldown(SMN.SearingLight) && level >= SMN.Levels.Bahamut) || //Bahamut Phase
                             (gauge.IsPhoenixReady && !HasEffect(SMN.Buffs.SearingLight) && level >= SMN.Levels.Phoenix))) //Phoenix Phase
-                            return OriginalHook(SMN.Aethercharge);
+                                return OriginalHook(SMN.Aethercharge);
 
                         if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanWeave(actionID))
                         {
@@ -381,8 +381,6 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature) && level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
                         return SMN.Ruin4;
                 }
-
-
             }
 
             return actionID;

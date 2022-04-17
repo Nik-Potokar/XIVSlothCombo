@@ -1989,7 +1989,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
         SummonerEgiAttacksAOEFeature = 17025,
         
-
         [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
