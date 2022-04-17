@@ -625,7 +625,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 usedStraightShotReady = false;
 
-                                if (HasEffect(BRD.Buffs.RadiantFinale) || Array.TrueForAll(gauge.Coda, BRD.SongIsNone) || level < BRD.Levels.RadiantFinale) subStep++;
+                                if (HasEffect(BRD.Buffs.RadiantFinale) || Array.TrueForAll(gauge.Coda, BRD.SongIsNone) || level < BRD.Levels.RadiantFinale || IsOnCooldown(BRD.RadiantFinale)) subStep++;
                                 else return BRD.RadiantFinale;
                             }
                             if (subStep == 7)
