@@ -135,14 +135,11 @@
                 var atonementUsage = Service.Configuration.GetCustomIntValue(PLD.Config.PLDAtonementCharges);
 
                 // Uptime Features
-                if (!InMeleeRange(true))
+                if (!InMeleeRange(true) && !(HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
                 {
-                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob &&
-                        !(HasEffect(PLD.Buffs.Requiescat) ||HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob && !HasEffect(PLD.Buffs.Requiescat))
                         return PLD.ShieldLob;
-
-                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit &&
-                        !(HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit)
                         return PLD.HolySpirit;
                 }
 
