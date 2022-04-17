@@ -137,10 +137,12 @@
                 // Uptime Features
                 if (!InMeleeRange(true))
                 {
-                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob)
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob &&
+                        !(HasEffect(PLD.Buffs.Requiescat) ||HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
                         return PLD.ShieldLob;
 
-                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit) 
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit &&
+                        !(HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
                         return PLD.HolySpirit;
                 }
 
