@@ -702,12 +702,15 @@ namespace XIVSlothComboPlugin
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work###SCH", 150, SliderIncrements.Hundreds);
-            
-            
+
+
             #endregion
             // ====================================================================================
             #region SUMMONER
-
+            if (preset == CustomComboPreset.EgisOnRuinFeature)
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice,"Titan","Summons Titan first, Garuda second, Ifrit third", 1);
+            if (preset == CustomComboPreset.EgisOnRuinFeature)
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
             #endregion
             // ====================================================================================
             #region WARRIOR
