@@ -2242,12 +2242,12 @@ namespace XIVSlothComboPlugin
         DemonSlaughterComboFeature = 80009,
 
         [SecretCustomCombo]
-        [CustomComboInfo("AutoPurifyFeature", "PVP", MCHPVP.JobID)]
-        PurifyFeature =  80010,
+        [CustomComboInfo("AutoPurifyFeature", "Adds Purify to main combo", MCHPVP.JobID)]
+        AutoPurifyFeature = 80010,
         
         [SecretCustomCombo]
-        [CustomComboInfo("AutoHealFeature", "PVP", MCHPVP.JobID)]
-        PurifyFeature =  80011,
+        [CustomComboInfo("AutoHealFeature", "Adds Recupirate to main combo", MCHPVP.JobID)]
+        AutoHealFeature = 80011,
 
         [SecretCustomCombo]
         [CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
