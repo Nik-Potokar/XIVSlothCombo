@@ -687,7 +687,10 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SAMURAI
-
+            if (preset == CustomComboPreset.SamuraiOvercapFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(75, 90, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+            if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
+                ConfigWindowFunctions.DrawSliderInt(75, 90, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
             #endregion
             // ====================================================================================
             #region MONK
@@ -714,7 +717,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region WARRIOR
-            if (preset == CustomComboPreset.WarriorInfuriateFellCleave)
+            if (preset == CustomComboPreset.WarriorInfuriateFellCleave && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
                 
             if (preset == CustomComboPreset.WarriorStormsPathCombo && enabled)
