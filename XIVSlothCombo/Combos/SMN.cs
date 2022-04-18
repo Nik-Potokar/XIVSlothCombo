@@ -377,10 +377,16 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
                         {
-                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.AstralFlow && (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralFlare or SMN.BrandOfPurgatory))
+                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.AstralFlow && (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralFlare))
                                 return OriginalHook(SMN.AstralFlow);
                             if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) && level >= SMN.Levels.Bahamut && lastComboMove is SMN.AstralFlare or SMN.BrandOfPurgatory)
                                 return OriginalHook(SMN.EnkindleBahamut);
+                        }
+                        
+                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleFeature))
+                        {
+                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.Phoenix && lastComboMove is SMN.BrandOfPurgatory)
+                                return OriginalHook(SMN.AstralFlow);
                         }
                     }
 
