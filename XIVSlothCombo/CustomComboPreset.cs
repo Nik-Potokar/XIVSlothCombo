@@ -1678,7 +1678,7 @@ namespace XIVSlothComboPlugin
 
             [ParentCombo(SageDPSFeature)]
             [ConflictingCombos(SageDPSFeatureAdvTest)]
-            [CustomComboInfo("[TEST] ToT Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
+            [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
             SageDPSFeatureToT = 14032,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
