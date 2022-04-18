@@ -309,7 +309,6 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.Phoenix && lastComboMove is SMN.FountainOfFire)
                                 return OriginalHook(SMN.AstralFlow);
                         }
-                            
                     }
                     
                     if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature) && level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
