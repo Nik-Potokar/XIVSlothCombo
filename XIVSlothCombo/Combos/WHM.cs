@@ -305,8 +305,7 @@ namespace XIVSlothComboPlugin.Combos
             var tetraHP = Service.Configuration.GetCustomIntValue(WHM.Config.WHMogcdHealsShieldsFeature);
 
             //Sets benisonStacks to the current charges when higher
-            if (GetCooldown(WHM.DivineBenison).RemainingCharges > benisonStacks || GetCooldown(WHM.DivineBenison).RemainingCharges == 2)
-            { benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges; }
+            benisonStacks = System.Math.Max(benisonStacks, GetCooldown(WHM.DivineBenison).RemainingCharges);
 
             //Checks for a drop in the number of stacks to indicate it has been used
             if (GetCooldown(WHM.DivineBenison).RemainingCharges < benisonStacks)
