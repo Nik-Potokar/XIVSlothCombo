@@ -305,7 +305,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleFeature))
                         {
-                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.Phoenix && lastComboMove is SMN.FountainOfFire)
+                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.FountainOfFire)
                                 return OriginalHook(SMN.AstralFlow);
                         }
                     }
@@ -385,7 +385,7 @@ namespace XIVSlothComboPlugin.Combos
                         
                         if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleFeature))
                         {
-                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.Phoenix && lastComboMove is SMN.BrandOfPurgatory)
+                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.BrandOfPurgatory)
                                 return OriginalHook(SMN.AstralFlow);
                         }
                     }
