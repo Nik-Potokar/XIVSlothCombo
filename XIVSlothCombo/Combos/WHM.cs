@@ -19,7 +19,7 @@ namespace XIVSlothComboPlugin.Combos
             AfflatusMisery = 16535,
             Medica1 = 124,
             Medica2 = 133,
-            Tetragammaton = 3570,
+            Tetragrammaton = 3570,
             DivineBenison = 7432,
 
             // dps
@@ -71,7 +71,7 @@ namespace XIVSlothComboPlugin.Combos
                 AfflatusSolace = 52,
                 Assize = 56,
                 ThinAir = 58,
-                Tetragammaton = 60,
+                Tetragrammaton = 60,
                 DivineBenison = 66,
                 Dia = 72,
                 AfflatusMisery = 74,
@@ -327,10 +327,10 @@ namespace XIVSlothComboPlugin.Combos
 
             if (actionID == WHM.Cure2)
             {
-                if (level >= WHM.Levels.Tetragammaton && IsOffCooldown(WHM.Tetragammaton) && EnemyHealthPercentage() <= tetraHP)
+                if (level >= WHM.Levels.Tetragrammaton && IsOffCooldown(WHM.Tetragrammaton) && EnemyHealthPercentage() <= tetraHP)
                 {
-                    if (IsEnabled(CustomComboPreset.WHMTetraOnOGCDOption) && CanSpellWeave(actionID)) { return WHM.Tetragammaton; }
-                    if (IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)) { return WHM.Tetragammaton; }
+                    if (IsEnabled(CustomComboPreset.WHMTetraOnOGCDOption) && CanSpellWeave(actionID)) { return WHM.Tetragrammaton; }
+                    if (IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)) { return WHM.Tetragrammaton; }
                 }
                 if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison) && benisonUsed == false)
                 {

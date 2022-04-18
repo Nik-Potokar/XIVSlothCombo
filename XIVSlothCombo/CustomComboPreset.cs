@@ -2169,11 +2169,11 @@ namespace XIVSlothComboPlugin
         WHMogcdHealsShieldsFeature = 19018,
 
         [ParentCombo(WHMogcdHealsShieldsFeature)]
-        [CustomComboInfo("Use Tetragammaton on oGCD.", "Only shows Tetragammaton during oGCD weave window when HP conditions are met.", WHM.JobID, 0, "Longest word ever.", "Buffalo buffalo buffalo buffalo Buffalo buffalo buffalo.")]
+        [CustomComboInfo("Use Tetragrammaton on oGCD.", "Only shows Tetragrammaton during oGCD weave window when HP conditions are met.", WHM.JobID, 0, "Longest word ever.", "Buffalo buffalo buffalo buffalo Buffalo buffalo buffalo.")]
         WHMTetraOnOGCDOption = 19019,
 
         [ParentCombo(WHMogcdHealsShieldsFeature)]
-        [CustomComboInfo("Use Tetragammaton on GCD.", "Shows Tetragammaton when HP conditions are met.", WHM.JobID, 0, "Clip it! Clip it good!", "Clip it up! Into shape!")]
+        [CustomComboInfo("Use Tetragrammaton on GCD.", "Shows Tetragrammaton when HP conditions are met.", WHM.JobID, 0, "Clip it! Clip it good!", "Clip it up! Into shape!")]
         WHMTetraOnGCDOption = 19020,
 
         [ParentCombo(WHMogcdHealsShieldsFeature)]
