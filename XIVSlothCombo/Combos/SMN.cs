@@ -299,8 +299,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.AstralFlow && (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralImpulse))
                                 return OriginalHook(SMN.AstralFlow);
-                            if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) && (level >= SMN.Levels.Bahamut && lastComboMove is SMN.AstralImpulse ||
-                                level >= SMN.Levels.Phoenix && lastComboMove is SMN.FountainOfFire))
+                            if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) && level >= SMN.Levels.Bahamut && lastComboMove is SMN.AstralImpulse or SMN.FountainOfFire)
                                 return OriginalHook(SMN.EnkindleBahamut); 
                         }
 
