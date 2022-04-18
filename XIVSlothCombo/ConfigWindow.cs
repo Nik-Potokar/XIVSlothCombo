@@ -532,7 +532,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region GUNBREAKER
             if (preset == CustomComboPreset.GunbreakerRoughDivideFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 1, GNB.Config.GnbKeepRoughDivideCharges, "How many charges to keep ready? (0 = Use All)###GNB");
+                ConfigWindowFunctions.DrawSliderInt(0, 1, GNB.Config.GnbKeepRoughDivideCharges, "How many charges to keep ready? (0 = Use All)");
             #endregion
             // ====================================================================================
             #region MACHINIST
@@ -620,12 +620,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region REAPER
-            if (preset is CustomComboPreset.ReaperSoulSliceOvercapOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 1, RPR.Config.RPRSoulSliceCharges, "How many charges to keep ready? (0 = Use All)###RPR");
-                
-            if (preset is CustomComboPreset.ReaperSoulSliceOvercapOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(50, 100, RPR.Config.RPRSoulGaugeThreshold, "Set a threshold for the Soul Gauge Overcap Option.###RPR", 150, SliderIncrements.Tens);
-                
+
             #endregion
             // ====================================================================================
             #region RED MAGE
@@ -707,6 +702,7 @@ namespace XIVSlothComboPlugin
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work###SCH", 150, SliderIncrements.Hundreds);
+
 
             #endregion
             // ====================================================================================
