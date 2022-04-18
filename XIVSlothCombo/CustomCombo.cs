@@ -504,8 +504,9 @@ namespace XIVSlothComboPlugin.Combos
         protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.5)
         {
             var castingSpell = LocalPlayer.IsCasting;
+            var castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
 
-            if (GetCooldown(actionID).CooldownRemaining > weaveTime && !castingSpell)
+            if ((GetCooldown(actionID).CooldownRemaining > weaveTime && !castingSpell) || (castingSpell && castTimeRemaining <= 0.5))
             {
                 return true;
             }
@@ -629,5 +630,6 @@ namespace XIVSlothComboPlugin.Combos
                 return chara.IsCastInterruptible;
             return false;
         }
+
     }
 }

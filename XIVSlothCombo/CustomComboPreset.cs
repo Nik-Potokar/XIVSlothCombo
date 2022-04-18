@@ -2157,12 +2157,24 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Adds Afflatus Misery to Glare/Stone", "Adds Afflatus Misery to Glare when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
         WHMAfflatusMiseryOGCDFeature = 19017,
 
-        [CustomComboInfo("oGCD Heals/Shields", "Adds Tetragammaton to Cure II.\nNote: Due to very small weaving window, there may be some GCD clipping.", WHM.JobID, 0, "Longest word ever.", "Buffalo buffalo buffalo buffalo Buffalo buffalo buffalo.")]
-        WHMTetraFeature = 19018,
+        [CustomComboInfo("oGCD Heals/Shields", "Adds oGCD Healing and Shields to Cure II", WHM.JobID, 0, "To benediction, or to not benediction.", "That is the question. Whether 'tis nobler... NM, you dead.")]
+        WHMogcdHealsShieldsFeature = 19018,
 
-        [ParentCombo(WHMTetraFeature)]
-        [CustomComboInfo("Add Devine Benison to Cure II", "Adds Devine Benison to Cure II when target is not under the effect.", WHM.JobID, 0, "oGCD Shield? Why not?!", "Tsun-tsun")]
-        WHMBenisonFeature = 19019,
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Tetragammaton on oGCD.", "Only shows Tetragammaton during oGCD weave window when HP conditions are met.", WHM.JobID, 0, "Longest word ever.", "Buffalo buffalo buffalo buffalo Buffalo buffalo buffalo.")]
+        WHMTetraOnOGCDOption = 19019,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Tetragammaton on GCD.", "Shows Tetragammaton when HP conditions are met.", WHM.JobID, 0, "Clip it! Clip it good!", "Clip it up! Into shape!")]
+        WHMTetraOnGCDOption = 19020,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Devine Benison on oGCD", "Only shows Devine Benison during oGCD weave window when target is not already under the effect.", WHM.JobID, 0, "oGCD Shield? Why not?!", "Tsun-tsun")]
+        WHMBenisonOGCDOption = 19021,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Devine Benison on GCD", "Shows Devine Benison when target is not already under the effect.", WHM.JobID, 0, "It's dangerous to go alone.", "Take this.")]
+        WHMBenisonGCDOption = 19022,
 
         #endregion
         // ====================================================================================

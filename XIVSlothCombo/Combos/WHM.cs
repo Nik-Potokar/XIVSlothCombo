@@ -81,7 +81,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                WHMLucidDreamingFeature = "WHMLucidDreamingFeature";
+                WHMLucidDreamingFeature = "WHMLucidDreamingFeature",
+                WHMogcdHealsShieldsFeature = "WHMogcdHealsShieldsFeature";
         }
     }
 
@@ -291,20 +292,51 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    internal class WHMTetraFeature : CustomCombo
+    internal class WHMogcdHealsShieldsFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMTetraFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMogcdHealsShieldsFeature;
+
+        internal static bool benisonUsed = false;
+        internal static ushort benisonStacks = 0;
+        internal static float benisonReleaseTime = 0;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var tetraHP = Service.Configuration.GetCustomIntValue(WHM.Config.WHMogcdHealsShieldsFeature);
+
+            //Sets benisonStacks to the current charges when higher
+            if (GetCooldown(WHM.DivineBenison).RemainingCharges > benisonStacks || GetCooldown(WHM.DivineBenison).RemainingCharges == 2)
+            { benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges; }
+
+            //Checks for a drop in the number of stacks to indicate it has been used
+            if (GetCooldown(WHM.DivineBenison).RemainingCharges < benisonStacks)
+            {
+                benisonUsed = true;
+                benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges;
+                benisonReleaseTime = GetCooldownChargeRemainingTime(WHM.DivineBenison) - 2; // Sets release time to 2 seconds later
+                if (benisonReleaseTime < 0) { benisonReleaseTime = benisonReleaseTime + 30; } // If time is set negative, then adds the recharge time (30sec) to new limit
+            }
+
+            //Checks for when charge remaining time is lower than benisonReleaseTime to allow the next use.
+            //Ensures there is less than 5 seconds difference incase the timer cycles back from 0 to 30
+            if (GetCooldownChargeRemainingTime(WHM.DivineBenison) <= benisonReleaseTime && (benisonReleaseTime - GetCooldownChargeRemainingTime(WHM.DivineBenison) < 5)  && benisonUsed == true)
+            { 
+                benisonUsed = false;
+                benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges;
+            }
+
             if (actionID == WHM.Cure2)
             {
-                if (level >= WHM.Levels.Tetragammaton && IsOffCooldown(WHM.Tetragammaton) && CanSpellWeave(actionID,0.1))
-                    return WHM.Tetragammaton;
-                if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison)
-                    && IsEnabled(CustomComboPreset.WHMBenisonFeature) && CanSpellWeave(actionID,0.1)
-                    && GetCooldownRemainingTime(WHM.Tetragammaton) <= 59) // Note: Added this check to try and prevent double-weave clipping.
-                    return WHM.DivineBenison;
+                if (level >= WHM.Levels.Tetragammaton && IsOffCooldown(WHM.Tetragammaton) && EnemyHealthPercentage() <= tetraHP)
+                {
+                    if (IsEnabled(CustomComboPreset.WHMTetraOnOGCDOption) && CanSpellWeave(actionID)) { return WHM.Tetragammaton; }
+                    if (IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)) { return WHM.Tetragammaton; }
+                }
+                if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison) && benisonUsed == false)
+                {
+                    if (IsEnabled(CustomComboPreset.WHMBenisonOGCDOption) && CanSpellWeave(actionID)) { return WHM.DivineBenison; }
+                    if (IsEnabled(CustomComboPreset.WHMBenisonGCDOption)) { return WHM.DivineBenison; }
+                }
             }
 
             return actionID;
