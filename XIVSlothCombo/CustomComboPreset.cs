@@ -2242,12 +2242,8 @@ namespace XIVSlothComboPlugin
         DemonSlaughterComboFeature = 80009,
 
         [SecretCustomCombo]
-        [CustomComboInfo("HeatedCleanShotFeature", "Adds Gauss/Rico weave to maincombo", MCHPVP.JobID)]
-        HeatedCleanShotFeature = 80010,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID)]
-        WildfireBlankFeature = 80011,
+        [CustomComboInfo("PurifyFeature", "PVP", MCHPVP.JobID)]
+        PurifyFeature =  80010,
 
         [SecretCustomCombo]
         [CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
