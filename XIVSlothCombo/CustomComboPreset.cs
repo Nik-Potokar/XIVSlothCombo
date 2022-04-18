@@ -1910,14 +1910,14 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SUMMONER
         
-        [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
+        [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
         SummonerMainComboFeature = 17000,
 
         [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 0, "", "Can't deal with dungeons on your own? Fear not.")]
         SummonerAOEComboFeature = 17001,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
-        [CustomComboInfo("Demi Attacks on Main Combo", "Adds Astral Flow/Enkindle to the Main Combo.", SMN.JobID, 0, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
+        [CustomComboInfo("Demi Attacks on Main Combo", "Adds Astral Flow to the Main Combo.", SMN.JobID, 0, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
         SummonerSingleTargetDemiFeature = 17002,
 
         [ParentCombo(SummonerDemiAoESummonsFeature)]
@@ -2011,6 +2011,10 @@ namespace XIVSlothComboPlugin
         
         [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
+        
+        [ParentCombo(SummonerDemiSummonsFeature)]
+        [CustomComboInfo("Adds Rekindle to Main Combo", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
+        SummonerSingleTargetRekindleFeature = 17028,
 
         #endregion
         // ====================================================================================
