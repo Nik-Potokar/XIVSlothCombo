@@ -2013,11 +2013,11 @@ namespace XIVSlothComboPlugin
         SummonerRaiseFeature = 17027,
         
         [ParentCombo(SummonerDemiSummonsFeature)]
-        [CustomComboInfo("Adds Rekindle to Main Combo", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
+        [CustomComboInfo("Adds Rekindle to Main Combo", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerSingleTargetRekindleFeature = 17028,
         
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Adds Rekindle to AOE Combo", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
+        [CustomComboInfo("Adds Rekindle to AOE Combo", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleFeature = 17029,
 
         #endregion
