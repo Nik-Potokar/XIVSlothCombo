@@ -45,9 +45,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
     
-    internal class PurifyFeature : CustomCombo
+    internal class AutoPurifyFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PurifyFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AutoPurifyFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -58,6 +58,25 @@ namespace XIVSlothComboPlugin.Combos
                 if ((HasEffectAny(MCHPVP.Debuffs.Stun) || HasEffectAny(MCHPVP.Debuffs.Heavy) || HasEffectAny(MCHPVP.Debuffs.Bind) || HasEffectAny(MCHPVP.Debuffs.Silence) || HasEffectAny(MCHPVP.Debuffs.Sleep) || HasEffectAny(MCHPVP.Debuffs.HalfAsleep) || HasEffectAny(MCHPVP.Debuffs.DeepFreeze)) && IsOffCooldown(MCHPVP.Purify))
                 {
                     return MCHPVP.Purify;
+                }
+            }
+
+            return actionID;
+        }
+    }
+        internal class AutoHealFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AutoHealFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == MCHPVP.BlastCharge)
+            {
+                var actionIDCD = GetCooldown(actionID);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                if (LocalPlayer.CurrentMp >= 2500 && (LocalPlayer.MaxHp - LocalPlayer.CurrentHp > 15000) && IsOffCooldown(MCHPVP.Recuperate))
+                {
+                    return MCHPVP.Recuperate;
                 }
             }
 
