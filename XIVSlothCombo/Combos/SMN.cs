@@ -371,8 +371,8 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(SMN.Aethercharge)) &&
                             (level >= SMN.Levels.Aethercharge && level < SMN.Levels.Bahamut || //Pre Bahamut Phase
-                            gauge.IsBahamutReady && IsOffCooldown(SMN.SearingLight) && level >= SMN.Levels.Bahamut || //Bahamut Phase
-                            gauge.IsPhoenixReady && !HasEffect(SMN.Buffs.SearingLight) && level >= SMN.Levels.Phoenix)) //Phoenix Phase
+                            gauge.IsBahamutReady && level >= SMN.Levels.Bahamut || //Bahamut Phase
+                            gauge.IsPhoenixReady && level >= SMN.Levels.Phoenix)) //Phoenix Phase
                             return OriginalHook(SMN.Aethercharge);
 
                         if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
