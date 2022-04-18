@@ -43,6 +43,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
+                Medicated = 49,
                 NoMercy = 1831,
                 ReadyToRip = 1842,
                 ReadyToTear = 1843,
@@ -184,11 +185,11 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(GNB.GnashingFang);
                     }
 
-                    if (HasEffect(GNB.Buffs.NoMercy) && gauge.AmmoComboStep == 0)
+                    if (HasEffect(GNB.Buffs.NoMercy) && HasEffect(GNB.Buffs.Medicated) && gauge.AmmoComboStep == 0)
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                             return GNB.Hypervelocity;
-                        if (IsEnabled(CustomComboPreset.GunbreakerBSinNMFeature) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && (gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike)
+                        if (IsEnabled(CustomComboPreset.GunbreakerBSinNMFeature) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && (gauge.Ammo != 0) && level >= GNB.Levels.BurstStrike && IsOnCooldown(GNB.GnashingFang))
                             return GNB.BurstStrike;
                     }
 
@@ -279,7 +280,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if ((gauge.AmmoComboStep == 0 && IsOffCooldown(GNB.GnashingFang)) || gauge.AmmoComboStep is 1 or 2)
                     return OriginalHook(GNB.GnashingFang);
-                if (HasEffect(GNB.Buffs.NoMercy) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF) && gauge.AmmoComboStep == 0)
+                if (HasEffect(GNB.Buffs.NoMercy) && HasEffect(GNB.Buffs.Medicated) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF) && gauge.AmmoComboStep == 0)
                 {
                     if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
                         return GNB.Hypervelocity;

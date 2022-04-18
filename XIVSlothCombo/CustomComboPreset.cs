@@ -2062,6 +2062,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff", WAR.JobID, 0, "", "Onslaught! Full Power!")]
         WarriorOnslaughtFeature = 18012,
 
+        [ParentCombo(WarriorMythrilTempestCombo)]
+        [CustomComboInfo("Infuriate AOE Feature", "Adds Infuriate to AOE Combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0)]
+        WarriorInfuriateOnAOE = 18013,
+
+        [ParentCombo(WarriorMythrilTempestCombo)]
+        [CustomComboInfo("Inner Release AOE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0)]
+        WarriorIRonAOE = 18014,
+        
         [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with Fell Cleave when under Inner Release buff.\nReplaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, 0, "Cleave of annoyance", "Infuriating stuff, if you ask me. Truly chaotic.")]
         WarriorInfuriateFeature = 18015,
 
@@ -2079,7 +2087,7 @@ namespace XIVSlothComboPlugin
         WarriorPrimalRendOnInnerRelease = 18019,
         
         [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo when Nascent Chaos is not up.", WAR.JobID)]
+        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo.", WAR.JobID)]
         WarriorIRonST = 18020,
 
         [ParentCombo(WarriorStormsPathCombo)]
