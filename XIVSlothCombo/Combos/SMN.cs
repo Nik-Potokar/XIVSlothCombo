@@ -303,7 +303,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(SMN.EnkindleBahamut); 
                         }
 
-                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleFeature))
+                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption))
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.FountainOfFire)
                                 return OriginalHook(SMN.AstralFlow);
@@ -383,7 +383,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(SMN.EnkindleBahamut);
                         }
                         
-                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleFeature))
+                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.BrandOfPurgatory)
                                 return OriginalHook(SMN.AstralFlow);
