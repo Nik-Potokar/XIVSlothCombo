@@ -103,14 +103,16 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                         return MCH.HeatBlast;
-                    if (HasCharges(MCH.GaussRound) || HasCharges(MCH.Ricochet)
+
+                    if (HasCharges(MCH.GaussRound) || HasCharges(MCH.Ricochet))
                     {
                         if (level < MCH.Levels.Ricochet)
                             return MCH.GaussRound;
+
                         if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
                             return MCH.GaussRound;
-                        else
                             return MCH.Ricochet;
+                    }
                 }
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
@@ -194,17 +196,21 @@ namespace XIVSlothComboPlugin.Combos
                 var heat = GetJobGauge<MCHGauge>().Heat;
                 if (IsEnabled(CustomComboPreset.MachinistAutoBarrel) && heat < 50 && IsOffCooldown(MCH.BarrelStabilizer) && level >= 66)
                     return MCH.BarrelStabilizer;
+
                 if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire && heat >= 50 && IsEnabled(CustomComboPreset.MachinistWildfireFeature))
                     return MCH.Wildfire;
+
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
-                if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+
+                if (heatBlastCD.CooldownRemaining < 0.7) // Prioritize Heat Blast
                     return MCH.HeatBlast;
+
                 if (level <= 49)
                     return MCH.GaussRound;
+
                 if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
                     return MCH.GaussRound;
-                else
                     return MCH.Ricochet;
             }
 
