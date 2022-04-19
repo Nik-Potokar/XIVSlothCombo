@@ -133,6 +133,7 @@
             {
                 var interveneChargesRemaining = Service.Configuration.GetCustomIntValue(PLD.Config.PLDKeepInterveneCharges);
                 var atonementUsage = Service.Configuration.GetCustomIntValue(PLD.Config.PLDAtonementCharges);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 // Uptime Features
                 if (!InMeleeRange(true) && !(HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
@@ -146,7 +147,7 @@
                 // oGCD features
                 if (CanWeave(actionID))
                 {
-                    if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade)
+                    if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && incombat && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade)
                     {
                         if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin))
                             return OriginalHook(PLD.SpiritsWithin);
@@ -187,7 +188,7 @@
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
                 {
-                    if ((GetCooldownRemainingTime(PLD.Requiescat) > 5 && GetCooldownRemainingTime(PLD.Requiescat) <= 45 && GetBuffStacks(PLD.Buffs.SwordOath) > (3-atonementUsage)) || HasEffect(PLD.Buffs.Requiescat))
+                    if ((GetCooldownRemainingTime(PLD.Requiescat) > 5 && GetCooldownRemainingTime(PLD.Requiescat) <= 45 && GetBuffStacks(PLD.Buffs.SwordOath) > (3-atonementUsage)) || HasEffect(PLD.Buffs.Requiescat) && GetCooldownRemainingTime(PLD.FightOrFlight) <= 49)
                         return PLD.Atonement;
                 }
 
@@ -222,7 +223,7 @@
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var reqCD = GetCooldown(PLD.Requiescat);
+            var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
             if (actionID is PLD.Prominence)
             {
@@ -231,7 +232,7 @@
                     if (IsEnabled(CustomComboPreset.PaladinReqAoEComboFeature) && level >= PLD.Levels.Requiescat && IsOffCooldown(PLD.Requiescat))
                             return PLD.Requiescat;
 
-                    if (IsEnabled(CustomComboPreset.PaladinAoEExpiacionScornFeature))
+                    if (IsEnabled(CustomComboPreset.PaladinAoEExpiacionScornFeature) && incombat)
                     {
                         if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin))
                             return OriginalHook(PLD.SpiritsWithin);
