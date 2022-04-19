@@ -1915,7 +1915,10 @@ namespace XIVSlothComboPlugin
         #endregion
         // ====================================================================================
         #region SUMMONER
-        
+
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin\nReturn of the godlike R3 mobility feature brought to you by Iaotle. Does the same thing as r3 mobility did before, which means you can enjoy having that R4 button on the right.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        SummonerSpecialRuinFeature = 17030,
+
         [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
         SummonerMainComboFeature = 17000,
 
@@ -1930,7 +1933,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 0, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [ParentCombo(EgisOnRuinFeature)]
         [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 0, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
