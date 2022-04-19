@@ -99,20 +99,17 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= MCH.Levels.BarrelStabilizer && heat < 20 && GetCooldown(actionID).CooldownRemaining > 0.7 && IsOffCooldown(MCH.BarrelStabilizer))
                         return MCH.BarrelStabilizer;
                 }
-                if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated && level >= MCH.Levels.HeatBlast)
+
+                if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
                     if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
                         return MCH.HeatBlast;
-
-                    if (HasCharges(MCH.GaussRound) || HasCharges(MCH.Ricochet))
-                    {
-                        if (level < MCH.Levels.Ricochet)
-                            return MCH.GaussRound;
-
-                        if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
-                            return MCH.GaussRound;
-                            return MCH.Ricochet;
-                    }
+                    if (level <= 49)
+                        return MCH.GaussRound;
+                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                        return MCH.GaussRound;
+                    else
+                        return MCH.Ricochet;
                 }
                 if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
                 {
