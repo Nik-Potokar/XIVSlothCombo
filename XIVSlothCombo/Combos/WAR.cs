@@ -312,7 +312,7 @@ namespace XIVSlothComboPlugin.Combos
                 var rageThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarInfuriateRange);
                 var hasNascent = HasEffect(WAR.Buffs.NascentChaos);
 
-                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate)
+                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate && CanWeave(actionID))
                         return OriginalHook(WAR.Infuriate);
             }
 
