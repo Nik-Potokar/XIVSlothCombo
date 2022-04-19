@@ -688,9 +688,9 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SAMURAI
             if (preset == CustomComboPreset.SamuraiOvercapFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
             if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
             #endregion
             // ====================================================================================
             #region MONK
