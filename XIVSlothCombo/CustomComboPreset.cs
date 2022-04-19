@@ -1688,12 +1688,18 @@ namespace XIVSlothComboPlugin
         SageDPSFeature = 14005,
 
             [ParentCombo(SageDPSFeature)]
+            [ConflictingCombos(SageDPSFeatureToT)]
             [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
             SageDPSFeatureAdvTest = 14009,
 
             [ParentCombo(SageDPSFeature)]
             [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
             SageLucidFeature = 14006,
+
+            [ParentCombo(SageDPSFeature)]
+            [ConflictingCombos(SageDPSFeatureAdvTest)]
+            [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
+            SageDPSFeatureToT = 14032,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
         [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
