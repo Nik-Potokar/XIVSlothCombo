@@ -182,7 +182,6 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-
     internal class SummonerSpecialRuinFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerSpecialRuinFeature;
@@ -198,7 +197,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-
+    
     internal class SummonerEDFesterCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerEDFesterCombo;
@@ -265,10 +264,6 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    // fixed so I don't have to have shit enabled that I don't want
-                    if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                        return OriginalHook(SMN.Gemshine);
-
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnRuinFeature))
                     {
@@ -282,7 +277,8 @@ namespace XIVSlothComboPlugin.Combos
                             IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)) //Ifrit
                             return OriginalHook(SMN.AstralFlow);
 
-
+                        if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
+                            return OriginalHook(SMN.Gemshine);
 
                         if (gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
                         {
@@ -364,12 +360,6 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    // ditto
-
-                    if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                        return OriginalHook(SMN.PreciousBrilliance);
-
-
                     // Egis
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
@@ -378,6 +368,8 @@ namespace XIVSlothComboPlugin.Combos
                             IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)) //Ifrit
                             return OriginalHook(SMN.AstralFlow);
 
+                        if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
+                            return OriginalHook(SMN.PreciousBrilliance);
 
                         if (gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
                         {
@@ -432,7 +424,7 @@ namespace XIVSlothComboPlugin.Combos
             var gauge = GetJobGauge<SMNGauge>();
             if (actionID is SMN.Ruin or SMN.Ruin2 or SMN.Ruin3 or SMN.DreadwyrmTrance or SMN.AstralFlow or SMN.EnkindleBahamut or SMN.SearingLight or SMN.RadiantAegis or SMN.Outburst or SMN.Tridisaster or SMN.PreciousBrilliance or SMN.Gemshine)
             {
-                if (!Service.BuddyList.PetBuddyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0)
+                if (!HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0)
                     return SMN.SummonCarbuncle;
             }
 
