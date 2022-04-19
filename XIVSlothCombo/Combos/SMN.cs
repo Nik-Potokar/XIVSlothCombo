@@ -182,6 +182,23 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+
+    internal class SummonerSpecialRuinFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerSpecialRuinFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Ruin4)
+            {
+                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
+                if (!furtherRuin)
+                    return SMN.Ruin3;
+            }
+            return actionID;
+        }
+    }
+
     internal class SummonerEDFesterCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerEDFesterCombo;
@@ -248,6 +265,10 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
+                    // fixed so I don't have to have shit enabled that I don't want
+                    if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
+                        return OriginalHook(SMN.Gemshine);
+
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnRuinFeature))
                     {
@@ -261,8 +282,7 @@ namespace XIVSlothComboPlugin.Combos
                             IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)) //Ifrit
                             return OriginalHook(SMN.AstralFlow);
 
-                        if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                            return OriginalHook(SMN.Gemshine);
+
 
                         if (gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
                         {
@@ -303,7 +323,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(SMN.EnkindleBahamut); 
                         }
 
-                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleFeature))
+                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption))
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.FountainOfFire)
                                 return OriginalHook(SMN.AstralFlow);
@@ -344,6 +364,12 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
+                    // ditto
+
+                    if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
+                        return OriginalHook(SMN.PreciousBrilliance);
+
+
                     // Egis
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
@@ -352,8 +378,6 @@ namespace XIVSlothComboPlugin.Combos
                             IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)) //Ifrit
                             return OriginalHook(SMN.AstralFlow);
 
-                        if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                            return OriginalHook(SMN.PreciousBrilliance);
 
                         if (gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
                         {
@@ -383,7 +407,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(SMN.EnkindleBahamut);
                         }
                         
-                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleFeature))
+                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.BrandOfPurgatory)
                                 return OriginalHook(SMN.AstralFlow);

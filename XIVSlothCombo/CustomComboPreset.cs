@@ -500,6 +500,7 @@ namespace XIVSlothComboPlugin
 
 
         // Flourishing Features Section
+        [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuFlourishingFeatures = 4030,
 
@@ -1958,7 +1959,10 @@ namespace XIVSlothComboPlugin
         #endregion
         // ====================================================================================
         #region SUMMONER
-        
+
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin\nReturn of the godlike R3 mobility feature brought to you by Iaotle. Does the same thing as r3 mobility did before, which means you can enjoy having that R4 button on the right.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        SummonerSpecialRuinFeature = 17030,
+
         [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
         SummonerMainComboFeature = 17000,
 
@@ -1973,7 +1977,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 0, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [ParentCombo(EgisOnRuinFeature)]
         [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 0, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
@@ -2062,12 +2065,12 @@ namespace XIVSlothComboPlugin
         SummonerRaiseFeature = 17027,
         
         [ParentCombo(SummonerDemiSummonsFeature)]
-        [CustomComboInfo("Adds Rekindle to Main Combo", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
-        SummonerSingleTargetRekindleFeature = 17028,
+        [CustomComboInfo("Rekindle on Main Combo option", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        SummonerSingleTargetRekindleOption = 17028,
         
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Adds Rekindle to AOE Combo", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
-        SummonerAOETargetRekindleFeature = 17029,
+        [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        SummonerAOETargetRekindleOption = 17029,
 
         #endregion
         // ====================================================================================
