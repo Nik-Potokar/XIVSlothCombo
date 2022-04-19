@@ -1808,7 +1808,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "Okeh Combo", "Okeh")]
         SamuraiOkaCombo = 15004,
 
-        [CustomComboInfo("Ikishoten on Combos", "Adds Ikishoten to Single Target/AoE combos when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten to Single Target/AoE combos when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
         SamuraiIkishotenonmaincombo = 15005,
 
         [ConflictingCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
@@ -1852,11 +1853,11 @@ namespace XIVSlothComboPlugin
         TenkaGokenAOEFeature = 15016,
 
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Yukikaze Combo to Main Combo", "Adds Yukikaze Combo to Main Combo.", SAM.JobID, 0)]
+        [CustomComboInfo("Yukikaze Combo to Main Combo", "Adds Yukikaze Combo to Main Combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID, 0)]
         YukionST = 15017,
 
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Kasha Combo to Main Combo", "Adds Kasha Combo to Main Combo.", SAM.JobID, 0)]
+        [CustomComboInfo("Kasha Combo to Main Combo", "Adds Kasha Combo to Main Combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID, 0)]
         KashaonST = 15018,
 
         [ParentCombo(SamuraiGekkoCombo)]
@@ -1913,7 +1914,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SamuraiOgiNamikiriSTFeature)]
         [CustomComboInfo("Ogi Namikiri Burst Feature", "Saves Ogi Namikiri for even minute burst windows.", SAM.JobID, 0)]
         OgiNamikiriinBurstFeature = 15033,
-        
+
+        [ParentCombo(SeneionST)]
+        [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.", SAM.JobID, 0)]
+        SeneiBurstFeature = 15034,
+
 
         #endregion
         // ====================================================================================
