@@ -280,7 +280,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(SMN.Gemshine);
 
-                        if (gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
+                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsonMainFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
                         {
                             if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= SMN.Levels.SummonRuby)
                                 return OriginalHook(SMN.SummonRuby);
