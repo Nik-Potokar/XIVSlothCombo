@@ -857,6 +857,9 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###WHM", 150, SliderIncrements.Hundreds);
 
+            if (preset == CustomComboPreset.WHMogcdHealsShieldsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, WHM.Config.WHMogcdHealsShieldsFeature, "Set HP% of target to use Tetragrammaton###WHM");
+
             #endregion
             // ====================================================================================
             #region DOH
