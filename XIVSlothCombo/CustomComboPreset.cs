@@ -84,7 +84,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DEBUG MODE", "OUTPUTS DEBUG INFO. PLEASE USE THE /XLDEV COMMAND AND OPEN THE LOG WINDOW AND SET LOG LEVEL TO DEBUG.", 0)]
         DEBUG = 99998,
 #endif
-#endregion
+        #endregion
         // ====================================================================================
         #region ADV
         #endregion
@@ -102,6 +102,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ASTROLOGIAN
 
+        [ConflictingCombos(AstrologianAutoDrawFeature,AstrologianDpsAoEFeature)]
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 0, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
         AstrologianCardsOnDrawFeaturelikewhat = 1000,
 
@@ -133,12 +134,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 0, "HELIOSCOPTER", "HELIOSCOPTER HELIOSCOPTER")]
         AstrologianHeliosFeature = 1010,
 
+        [ConflictingCombos(AstrologianCardsOnDrawFeaturelikewhat)]
         [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature", AST.JobID, 0, "Kaiba Feature", "You just activated my trap card!")]
         AstrologianAutoDrawFeature = 1011,
 
         [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, 0, "Kaiba 2, Electric Boogaloo", "It's a trap!")]
         AstrologianAutoCrownDrawFeature = 1012,
 
+        [ConflictingCombos(AstrologianCardsOnDrawFeaturelikewhat)]
         [CustomComboInfo("AoE DPS Feature", "Adds AutoDraws/Astrodyne to the AoE Gravity combo", AST.JobID, 0, "A bowlful of cards", "Oops! All AoE!")]
         AstrologianDpsAoEFeature = 1013,
 

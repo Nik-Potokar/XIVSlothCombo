@@ -34,25 +34,28 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (LocalPlayer.TargetObject is BattleChara chara)
+                if (InCombat())
                 {
-                    foreach (var status in chara.StatusList)
+                    if (LocalPlayer.TargetObject is BattleChara chara)
                     {
-                        Dalamud.Logging.PluginLog.Debug($"TARGET STATUS CHECK: {chara.Name} -> {status.StatusId}");
+                        foreach (var status in chara.StatusList)
+                        {
+                            Dalamud.Logging.PluginLog.Debug($"TARGET STATUS CHECK: {chara.Name} -> {status.StatusId}");
+                        }
                     }
-                }
-                foreach (var status in (LocalPlayer as BattleChara).StatusList)
-                {
-                    Dalamud.Logging.PluginLog.Debug($"SELF STATUS CHECK: {LocalPlayer.Name} -> {status.StatusId}");
-                }
+                    foreach (var status in (LocalPlayer as BattleChara).StatusList)
+                    {
+                        Dalamud.Logging.PluginLog.Debug($"SELF STATUS CHECK: {LocalPlayer.Name} -> {status.StatusId}");
+                    }
 
-                Dalamud.Logging.PluginLog.Debug($"TARGET OBJECT KIND: {LocalPlayer.TargetObject?.ObjectKind}");
-                Dalamud.Logging.PluginLog.Debug($"PLAYER OBJECT KIND: {LocalPlayer.ObjectKind}");
-                Dalamud.Logging.PluginLog.Debug($"TARGET IS BATTLE CHARA: {LocalPlayer.TargetObject is BattleChara}");
-                Dalamud.Logging.PluginLog.Debug($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
-                Dalamud.Logging.PluginLog.Debug($"IN MELEE RANGE: {InMeleeRange()}");
-                Dalamud.Logging.PluginLog.Debug($"LAST COMBO MOVE: {lastComboActionID}");
-
+                    Dalamud.Logging.PluginLog.Debug($"TARGET OBJECT KIND: {LocalPlayer.TargetObject?.ObjectKind}");
+                    Dalamud.Logging.PluginLog.Debug($"PLAYER OBJECT KIND: {LocalPlayer.ObjectKind}");
+                    Dalamud.Logging.PluginLog.Debug($"TARGET IS BATTLE CHARA: {LocalPlayer.TargetObject is BattleChara}");
+                    Dalamud.Logging.PluginLog.Debug($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
+                    Dalamud.Logging.PluginLog.Debug($"IN MELEE RANGE: {InMeleeRange()}");
+                    Dalamud.Logging.PluginLog.Debug($"LAST COMBO MOVE: {lastComboActionID}");
+                    Dalamud.Logging.PluginLog.Debug($"IN PVP ZONE: {Service.ClientState.IsPvP}");
+                }
                 return actionID;
             }
         }

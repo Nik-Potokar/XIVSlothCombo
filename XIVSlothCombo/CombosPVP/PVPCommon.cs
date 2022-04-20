@@ -39,7 +39,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (TargetHasEffect(BRDPvP.Buffs.Repertoire)) { }
+                if (Execute() && Service.ClientState.IsPvP) return PVPCommon.Recuperate;
                 return actionID;
             }
 
@@ -66,6 +66,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
+                if (Execute() && Service.ClientState.IsPvP) return PVPCommon.Guard;
                 return actionID;
             }
 
@@ -90,6 +91,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
+                if (Execute() && Service.ClientState.IsPvP) return PVPCommon.Purify;
                 return actionID;
             }
 
@@ -113,24 +115,6 @@ namespace XIVSlothComboPlugin
             }
         }
 
-        internal class ExecutePVPGlobal : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; }
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {
-                return actionID;
-            }
-
-            public static uint ExecuteGlobal(uint actionId)
-            {
-                if (IsEnabled(CustomComboPreset.PVPQuickPurify) && PVPCommon.QuickPurify.Execute()) return PVPCommon.Purify;
-                if (IsEnabled(CustomComboPreset.PVPEmergencyGuard) && PVPCommon.GlobalEmergencyGuard.Execute()) return PVPCommon.Guard;
-                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute()) return PVPCommon.Recuperate;
-
-                return actionId;
-            }
-        }
     }
 
 }
