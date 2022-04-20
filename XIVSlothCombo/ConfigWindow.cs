@@ -119,6 +119,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.11.0\n- with love from Team Sloth.");
             ImGui.TextWrapped($@"Big Thanks to attick and daemitus for creating most of the original code, as well as Grammernatzi and PrincessRTFM for providing a lot of extra tweaks and inspiration. Please show them support for their original work! <3");
             ImGui.TextWrapped("Brought to you with love and sloth, by: Aki, Iaotle, Codemned, damolitionn, k-kz, Taurenkey, Augporto, grimgal and many other contributors!");
             ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!");
@@ -687,8 +688,10 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.NinSimpleTrickFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
 
+            /*
             if (preset == CustomComboPreset.NinjaHuraijinFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
+            */
 
             if (preset == CustomComboPreset.NinAeolianMugFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
