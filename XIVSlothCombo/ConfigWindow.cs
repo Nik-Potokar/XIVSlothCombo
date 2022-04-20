@@ -707,9 +707,9 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SUMMONER
-            if (preset == CustomComboPreset.EgisOnRuinFeature)
+            if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice,"Titan","Summons Titan first, Garuda second, Ifrit third", 1);
-            if (preset == CustomComboPreset.EgisOnRuinFeature)
+            if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
             #endregion
             // ====================================================================================
