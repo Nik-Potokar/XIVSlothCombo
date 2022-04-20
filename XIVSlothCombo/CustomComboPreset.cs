@@ -1917,10 +1917,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SUMMONER
 
-        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin\nReturn of the godlike R3 mobility feature brought to you by Iaotle. Does the same thing as r3 mobility did before, which means you can enjoy having that R4 button on the right.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
-        SummonerSpecialRuinFeature = 17030,
-
-        [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
+        [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin, or Ruin II.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
         SummonerMainComboFeature = 17000,
 
         [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 0, "", "Can't deal with dungeons on your own? Fear not.")]
@@ -1937,13 +1934,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 0, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
-        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin III/Tri-disaster.", SMN.JobID, 0, "Slipstream", "2 Fast 2 Furious")]
+        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Slipstream", "2 Fast 2 Furious")]
         SummonerGarudaUniqueFeature = 17005,
 
-        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin III/Tri-disaster.", SMN.JobID, 0, "Fists of Fury", "Show MNK how it's done, will ya?")]
+        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Fists of Fury", "Show MNK how it's done, will ya?")]
         SummonerIfritUniqueFeature = 17006,
 
-        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin III/Tri-disaster.", SMN.JobID, 0, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
+        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
         SummonerTitanUniqueFeature = 17007,
 
         [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks.", SMN.JobID, 0, "Festering", "Festering? Go take a shower, bro")]
@@ -1965,7 +1962,7 @@ namespace XIVSlothComboPlugin
         SummonerRuin4ToTridisasterFeature = 17012,
 
         [ParentCombo(SummonerEDFesterCombo)]
-        [CustomComboInfo("Ruin IV Fester/PainFlare Feature", "Change Fester/PainFlare into Ruin IV when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
+        [CustomComboInfo("Ruin IV Fester/PainFlare Feature", "Change Fester/PainFlare into Ruin4 when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
         SummonerFesterPainflareRuinFeature = 17013,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -1973,50 +1970,54 @@ namespace XIVSlothComboPlugin
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons on Ruin Feature", "Adds Egi Summons to Ruin.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons combo Features", "Adds Egi Summons to Ruin.", SMN.JobID, 0)]
         EgisOnRuinFeature = 17015,
+        
+        [ParentCombo(EgisOnRuinFeature)]
+        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 0)]
+        SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 0, "", "We'll play the game for you. Shush, now")]
-        SummonerESAOEFeature = 17016,
+        SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo.", SMN.JobID, 0, "My eyes!", "I can't see!")]
-        SearingLightonRuinFeature = 17017,
+        SearingLightonRuinFeature = 17018,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 0, "Our Eyes!", "Yay, we're all legally blind!")]
-        BuffOnSimpleAoESummoner = 17018,
+        BuffOnSimpleAoESummoner = 17019,
 
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 0, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
-        SummonerDemiSummonsFeature = 17019,
+        SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
-        SummonerDemiAoESummonsFeature = 17020,
+        SummonerDemiAoESummonsFeature = 17021,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
-        EgisOnAOEFeature = 17021,
+        EgisOnAOEFeature = 17022,
         
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 0, "No Raising for me!", "Always slips swiftstream, sometimes")]
-        SummonerSwiftcastFeatureGaruda = 17022,
+        SummonerSwiftcastFeatureGaruda = 17023,
 
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
         [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 0, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
-        SummonerSwiftcastFeatureIfrit = 17023,
+        SummonerSwiftcastFeatureIfrit = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
         [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain for Searing Light/2 min windows.", SMN.JobID, 0)]
-        SummonerEDPoolonMainFeature = 17024,
+        SummonerEDPoolonMainFeature = 17025,
 
         [ParentCombo(EgisOnAOEFeature)]
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
-        SummonerEgiAttacksAOEFeature = 17025,
+        SummonerEgiAttacksAOEFeature = 17026,
         
         [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
@@ -2028,6 +2029,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleOption = 17029,
+        
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        SummonerSpecialRuinFeature = 17030,
 
         #endregion
         // ====================================================================================
