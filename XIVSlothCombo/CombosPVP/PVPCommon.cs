@@ -28,7 +28,8 @@ namespace XIVSlothComboPlugin
                 HalfAsleep = 3022,
                 Sleep = 1348,
                 DeepFreeze = 3219,
-                Heavy = 1344;
+                Heavy = 1344,
+                Unguarded = 3021;
         }
 
 
@@ -37,7 +38,7 @@ namespace XIVSlothComboPlugin
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PVPEmergencyHeals;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {   
+            {
                 if (TargetHasEffect(BRDPvP.Buffs.Repertoire)) { }
                 return actionID;
             }
@@ -74,6 +75,7 @@ namespace XIVSlothComboPlugin
                 var threshold = Service.Configuration.GetCustomIntValue(PVPCommon.Config.EmergencyGuardThreshold);
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
+                if (HasEffectAny(PVPCommon.Debuffs.Unguarded)) return false;
                 if (GetCooldown(PVPCommon.Guard).IsCooldown) return false;
                 if (remainingPercentage * 100 > threshold) return false;
 
