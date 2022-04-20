@@ -1076,7 +1076,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabalizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 heat and is off cooldown", MCH.JobID, 0, "Hot Cross Bow", "Now multi-purpose!")]
         MachinistAutoBarrel = 8019,
 
-        [ConflictingCombos(MachinistMainCombo)]
+        [ConflictingCombos(MachinistMainCombo, MachinistHeatblastGaussRicochetFeature)]
         [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!\nMade to work optimally with a 2.5 GCD.", MCH.JobID, 0, "", "Goodbye, brain!")]
         MachinistSimpleFeature = 8020,
 

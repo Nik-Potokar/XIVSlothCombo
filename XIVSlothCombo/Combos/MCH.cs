@@ -102,7 +102,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
-                    if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+                    if (heatBlastCD.CooldownRemaining < 0.7 && level >= MCH.Levels.HeatBlast ) // prioritize heatblast
                         return MCH.HeatBlast;
                     if (level <= 49)
                         return MCH.GaussRound;
@@ -200,7 +200,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
 
-                if (heatBlastCD.CooldownRemaining < 0.7) // Prioritize Heat Blast
+                if (heatBlastCD.CooldownRemaining < 0.7 && level >= MCH.Levels.HeatBlast) // Prioritize Heat Blast
                     return MCH.HeatBlast;
 
                 if (level <= 49)
@@ -355,7 +355,7 @@ namespace XIVSlothComboPlugin.Combos
                     return MCH.BarrelStabilizer;
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
-                if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+                if (heatBlastCD.CooldownRemaining < 0.7 && level >= MCH.Levels.AutoCrossbow) // prioritize autocrossbow
                     return MCH.AutoCrossbow;
                 if (level <= 49)
                     return MCH.GaussRound;
