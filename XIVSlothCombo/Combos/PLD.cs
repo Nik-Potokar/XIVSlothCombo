@@ -136,7 +136,7 @@
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 // Uptime Features
-                if (!InMeleeRange(true) && !(HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
+                if (!InMeleeRange() && !(HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
                 {
                     if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob && !HasEffect(PLD.Buffs.Requiescat))
                         return PLD.ShieldLob;

@@ -99,7 +99,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.WARRangedUptimeFeature) && level >= WAR.Levels.Tomahawk)
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return WAR.Tomahawk;
                 }
 

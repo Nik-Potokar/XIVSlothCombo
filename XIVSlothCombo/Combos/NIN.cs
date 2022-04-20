@@ -126,7 +126,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.NinjaRangedUptimeFeature) && !HasEffect(NIN.Buffs.Mudra))
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return NIN.ThrowingDaggers;
                 }
                 if (IsEnabled(CustomComboPreset.NinjaGCDNinjutsuFeature) && (HasEffect(NIN.Buffs.Mudra) || HasEffect(NIN.Buffs.Kassatsu)))
@@ -234,6 +234,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= 60 && gauge.HutonTimer == 0 && !HasEffect(NIN.Buffs.Mudra))
                     return NIN.Huraijin;
 
+                if (level >= NIN.Levels.Mug && IsEnabled(CustomComboPreset.NinSimpleMug))
+                {
+                    var mugCD = GetCooldown(NIN.Mug);
+                    if (actionIDCD.IsCooldown && !mugCD.IsCooldown && gauge.Ninki <= 60)
+                        return OriginalHook(NIN.Mug);
+                }
 
                 if ((!GetCooldown(NIN.TrickAttack).IsCooldown || GetCooldown(NIN.TrickAttack).CooldownRemaining <= trickCDThreshold) && (!HasEffect(NIN.Buffs.Kassatsu) || (HasEffect(NIN.Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NinSimpleTrickKassatsuFeature))) && level >= 45 && IsEnabled(CustomComboPreset.NinSimpleTrickFeature))
                 {
@@ -253,7 +259,8 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(NIN.Ninjutsu);
                 }
 
-                if (!GetCooldown(NIN.Kassatsu).IsCooldown && !HasEffect(NIN.Buffs.Mudra) && level >= 50)
+
+                if (!GetCooldown(NIN.Kassatsu).IsCooldown && CanWeave(actionID) && !HasEffect(NIN.Buffs.Mudra) && level >= 50)
                     return NIN.Kassatsu;
 
 
@@ -307,18 +314,13 @@ namespace XIVSlothComboPlugin.Combos
                     return NIN.Bhavacakra;
 
 
-                if (level >= 40)
+                if (level >= NIN.Levels.Assassinate)
                 {
                     var assasinateCD = GetCooldown(OriginalHook(NIN.Assassinate));
                     if (actionIDCD.IsCooldown && !assasinateCD.IsCooldown)
                         return OriginalHook(NIN.Assassinate);
                 }
-                if (level >= 15)
-                {
-                    var mugCD = GetCooldown(NIN.Mug);
-                    if (actionIDCD.IsCooldown && !mugCD.IsCooldown && gauge.Ninki <= 60)
-                        return OriginalHook(NIN.Mug);
-                }
+
 
                 if (comboTime > 0f)
                 {
@@ -394,7 +396,7 @@ namespace XIVSlothComboPlugin.Combos
 
 
 
-                if ((jutsuCharges > 1 || HasEffect(NIN.Buffs.Mudra) || HasEffect(NIN.Buffs.Kassatsu) || (!GetCooldown(NIN.Kassatsu).IsCooldown) && level >= NIN.Levels.Kassatsu) && IsEnabled(CustomComboPreset.NinSimpleAoeMudras))
+                if ((jutsuCharges > 0 || HasEffect(NIN.Buffs.Mudra) || HasEffect(NIN.Buffs.Kassatsu) || (!GetCooldown(NIN.Kassatsu).IsCooldown) && level >= NIN.Levels.Kassatsu) && IsEnabled(CustomComboPreset.NinSimpleAoeMudras))
                 {
                     if (!GetCooldown(NIN.Kassatsu).IsCooldown && !HasEffect(NIN.Buffs.Mudra) && level >= NIN.Levels.Kassatsu)
                     {
@@ -465,6 +467,22 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 return NIN.SpinningEdge;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class NinHuraijinArmorCrush : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NinHuraijinArmorCrush;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == NIN.Huraijin)
+            {
+                if (lastComboMove == NIN.GustSlash)
+                    return NIN.ArmorCrush;
             }
 
             return actionID;
