@@ -218,7 +218,7 @@ namespace XIVSlothComboPlugin.Combos
                     //CHECK_GLARE3_USE_RESET
                     if (usedGlare3 == true && GetCooldownRemainingTime(WHM.Glare3) < 1) usedGlare3 = false; // Resets block to allow CHECK_GLARE3_USE
                     //BYPASS_COUNTER_WHEN_DISABLED
-                    if (IsNotEnabled(CustomComboPreset.WHMNoSwiftOpenerOption)) glare3Count = 3;
+                    if (IsNotEnabled(CustomComboPreset.WHMNoSwiftOpenerOption) || level < WHM.Levels.Glare3) glare3Count = 3;
 
                     if (CanSpellWeave(actionID) && glare3Count >= 3)
                     {
