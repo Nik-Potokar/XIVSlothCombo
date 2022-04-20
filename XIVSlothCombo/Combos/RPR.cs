@@ -163,7 +163,7 @@ namespace XIVSlothComboPlugin.Combos
                 var enemyHP = EnemyHealthPercentage();
                 var distance = GetTargetDistance();
 
-                if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && !InMeleeRange(true))
+                if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && !InMeleeRange())
                 {
                     if (HasEffect(RPR.Buffs.Enshrouded) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio)
                         return RPR.Communio;
