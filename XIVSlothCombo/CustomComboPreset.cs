@@ -1917,9 +1917,6 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SUMMONER
 
-        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin\nReturn of the godlike R3 mobility feature brought to you by Iaotle. Does the same thing as r3 mobility did before, which means you can enjoy having that R4 button on the right.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
-        SummonerSpecialRuinFeature = 17030,
-
         [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin, or Ruin II.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
         SummonerMainComboFeature = 17000,
 
@@ -2028,6 +2025,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleOption = 17029,
+        
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        SummonerSpecialRuinFeature = 17030,
 
         #endregion
         // ====================================================================================
