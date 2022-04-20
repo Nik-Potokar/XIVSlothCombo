@@ -212,7 +212,7 @@ namespace XIVSlothComboPlugin.Combos
                     //CHECK_GLARE3_USE
                     if (inCombat && usedGlare3 == false && lastComboMove == WHM.Glare3 && GetCooldownRemainingTime(WHM.Glare3) > 1)
                     {
-                        usedGlare3 = true; // Registers that Glare3 was used and blocks further incrementation of holdOGCD
+                        usedGlare3 = true; // Registers that Glare3 was used and blocks further incrementation of glare3Count
                         glare3Count++; // Increments Glare3 counter
                     }
                     //CHECK_GLARE3_USE_RESET
