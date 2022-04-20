@@ -182,6 +182,22 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+    internal class SummonerSpecialRuinFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerSpecialRuinFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SMN.Ruin4)
+            {
+                var furtherRuin = HasEffect(SMN.Buffs.FurtherRuin);
+                if (!furtherRuin)
+                    return SMN.Ruin3;
+            }
+            return actionID;
+        }
+    }
+    
     internal class SummonerEDFesterCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerEDFesterCombo;
@@ -264,7 +280,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(SMN.Gemshine);
 
-                        if (gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
+                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsonMainFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
                         {
                             if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= SMN.Levels.SummonRuby)
                                 return OriginalHook(SMN.SummonRuby);
@@ -408,7 +424,7 @@ namespace XIVSlothComboPlugin.Combos
             var gauge = GetJobGauge<SMNGauge>();
             if (actionID is SMN.Ruin or SMN.Ruin2 or SMN.Ruin3 or SMN.DreadwyrmTrance or SMN.AstralFlow or SMN.EnkindleBahamut or SMN.SearingLight or SMN.RadiantAegis or SMN.Outburst or SMN.Tridisaster or SMN.PreciousBrilliance or SMN.Gemshine)
             {
-                if (!Service.BuddyList.PetBuddyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0)
+                if (!HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0)
                     return SMN.SummonCarbuncle;
             }
 

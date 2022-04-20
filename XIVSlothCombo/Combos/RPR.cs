@@ -150,60 +150,70 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is RPR.Slice)
             {
                 var gauge = GetJobGauge<RPRGauge>();
-                var actionIDCD = GetCooldown(RPR.SoulSlice);
+                var enhancedHarpe = HasEffect(RPR.Buffs.EnhancedHarpe);
+                var enshrouded = HasEffect(RPR.Buffs.Enshrouded);
+                var enshroudedTimer = FindEffect(RPR.Buffs.Enshrouded);
+                var soulScytheReady = IsOffCooldown(RPR.SoulScythe);
+                var soulReaver = HasEffect(RPR.Buffs.SoulReaver);
+                var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
+                var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
+                var soulsow = HasEffect(RPR.Buffs.Soulsow);
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var playerHP = PlayerHealthPercentageHp();
+                var enemyHP = EnemyHealthPercentage();
                 var distance = GetTargetDistance();
 
-                if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && distance > 3)
+                if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && !InMeleeRange(true))
                 {
-
                     if (HasEffect(RPR.Buffs.Enshrouded) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio)
                         return RPR.Communio;
 
-                    if (level >= RPR.Levels.HarvestMoon && HasEffect(RPR.Buffs.Soulsow)) 
+                    if (level >= RPR.Levels.HarvestMoon && soulsow)
                     {
-                        if ((IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonEnhancedOption) && HasEffect(RPR.Buffs.EnhancedHarpe)) || (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonCombatOption) && !HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat)))
+                        if ((IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonEnhancedOption) && enhancedHarpe) || (IsEnabled(CustomComboPreset.ReaperHarpeHarvestMoonCombatOption) && !inCombat))
                             return RPR.Harpe;
 
                         return RPR.HarvestMoon;
                     }
+
                     return RPR.Harpe;
                 }
 
                 if (IsEnabled(CustomComboPreset.ReaperStunOption) && level >= RPR.Levels.LegSweep && CanInterruptEnemy() && IsOffCooldown(RPR.LegSweep))
                     return RPR.LegSweep;
 
-                if (IsEnabled(CustomComboPreset.ReaperSoulSliceFeature) && !HasEffect(RPR.Buffs.Enshrouded) && !HasEffectAny(RPR.Buffs.SoulReaver) && level >= RPR.Levels.SoulSlice && gauge.Soul <= 50 && !actionIDCD.IsCooldown && TargetHasEffect(RPR.Debuffs.DeathsDesign))
+                if (IsEnabled(CustomComboPreset.ReaperSoulSliceFeature) && !enshrouded && !soulReaver && level >= RPR.Levels.SoulSlice && gauge.Soul <= 50 && !GetCooldown(RPR.SoulSlice).IsCooldown && deathsDesign)
                     return RPR.SoulSlice;
 
-                if (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && level >= RPR.Levels.ShadowOfDeath && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10) && EnemyHealthPercentage() > 5)
+                if (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && level >= RPR.Levels.ShadowOfDeath && !(deathsDesignTimer?.RemainingTime > 3) && !soulReaver && !(enshroudedTimer?.RemainingTime <= 10) && enemyHP > 5)
                     return RPR.ShadowOfDeath;
 
                 if (IsEnabled(CustomComboPreset.ReaperComboHealsOption))
                 {
-                    if (level >= RPR.Levels.Bloodbath && PlayerHealthPercentageHp() < 65 && IsOffCooldown(RPR.Bloodbath))
+                    if (level >= RPR.Levels.Bloodbath && playerHP < 65 && IsOffCooldown(RPR.Bloodbath))
                         return RPR.Bloodbath;
 
-                    if (level >= RPR.Levels.SecondWind && PlayerHealthPercentageHp() < 40 && IsOffCooldown(RPR.SecondWind))
+                    if (level >= RPR.Levels.SecondWind && playerHP < 40 && IsOffCooldown(RPR.SecondWind))
                         return RPR.SecondWind;
                 }
 
-                if (IsEnabled(CustomComboPreset.ReaperLemureFeature) && HasEffect(RPR.Buffs.Enshrouded) && gauge.VoidShroud >= 2)
+                if (IsEnabled(CustomComboPreset.ReaperLemureFeature) && enshrouded && gauge.VoidShroud >= 2)
                         return OriginalHook(RPR.BloodStalk);
 
-                if (IsEnabled(CustomComboPreset.ReaperComboCommunioFeature) && HasEffect(RPR.Buffs.Enshrouded) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio)
+                if (IsEnabled(CustomComboPreset.ReaperComboCommunioFeature) && enshrouded && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio)
                         return RPR.Communio;
 
-                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsFeature) && (soulReaver || enshrouded))
                 {
-                    if ((HasEffect(RPR.Buffs.EnhancedGallows) && !HasEffect(RPR.Buffs.Enshrouded) && IsEnabled(CustomComboPreset.ReaperGibbetGallowsOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && HasEffect(RPR.Buffs.Enshrouded)))
+                    if ((HasEffect(RPR.Buffs.EnhancedGallows) && !enshrouded && IsEnabled(CustomComboPreset.ReaperGibbetGallowsOption)) || (HasEffect(RPR.Buffs.EnhancedCrossReaping) && enshrouded))
                         return OriginalHook(RPR.Gallows);
 
                     return OriginalHook(RPR.Gibbet);
                 }
 
-                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsInverseFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                if (IsEnabled(CustomComboPreset.ReaperGibbetGallowsInverseFeature) && (soulReaver || enshrouded))
                 {
-                    if ((HasEffect(RPR.Buffs.EnhancedGibbet) && !HasEffect(RPR.Buffs.Enshrouded)) || (HasEffect(RPR.Buffs.EnhancedVoidReaping) && HasEffect(RPR.Buffs.Enshrouded)))
+                    if ((HasEffect(RPR.Buffs.EnhancedGibbet) && !enshrouded) || (HasEffect(RPR.Buffs.EnhancedVoidReaping) && enshrouded))
                         return OriginalHook(RPR.Gibbet);
 
                     return OriginalHook(RPR.Gallows);
@@ -228,18 +238,23 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is RPR.SpinningScythe)
             {
-                var gauge = GetJobGauge<RPRGauge>();
                 var aoecombo = 0;
+                var gauge = GetJobGauge<RPRGauge>();
+                var enshrouded = HasEffect(RPR.Buffs.Enshrouded);
+                var enshroudedTimer = FindEffect(RPR.Buffs.Enshrouded);
+                var soulScytheReady = IsOffCooldown(RPR.SoulScythe);
+                var soulReaver = HasEffect(RPR.Buffs.SoulReaver);
+                var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
+                var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
+                var enemyHP = EnemyHealthPercentage();
 
-                if (IsEnabled(CustomComboPreset.ReaperSoulScytheFeature) && !HasEffect(RPR.Buffs.Enshrouded) && !HasEffect(RPR.Buffs.SoulReaver) && level >= RPR.Levels.SoulScythe && gauge.Soul <= 50 && IsOffCooldown(RPR.SoulScythe) && TargetHasEffect(RPR.Debuffs.DeathsDesign))
+                if (IsEnabled(CustomComboPreset.ReaperSoulScytheFeature) && !enshrouded && !soulReaver
+                    && level >= RPR.Levels.SoulScythe && gauge.Soul <= 50 && soulScytheReady && deathsDesign)
                     return RPR.SoulScythe;
 
-                if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 3) && !HasEffect(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10) && EnemyHealthPercentage() > 5)
+                if (comboTime > 0 && IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(deathsDesignTimer?.RemainingTime > 3) && !soulReaver && !(enshroudedTimer?.RemainingTime <= 10) && enemyHP > 5)
                 {
-                    var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
-                    var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
-
-                    if ((lastComboMove is RPR.SpinningScythe) && ((!deathsDesign || deathsDesignTimer.RemainingTime <= 3) && level >= RPR.Levels.WhorlOfDeath))
+                    if ((lastComboMove is RPR.SpinningScythe) && (!deathsDesign || deathsDesignTimer.RemainingTime <= 3 && level >= RPR.Levels.WhorlOfDeath))
                     {
                         if (level >= RPR.Levels.NightmareScythe)
                         {
@@ -249,7 +264,7 @@ namespace XIVSlothComboPlugin.Combos
                         return RPR.WhorlOfDeath;
                     }
 
-                    if ((aoecombo is 1) || ((lastComboMove is RPR.SpinningScythe && deathsDesignTimer.RemainingTime >= 4) && level >= RPR.Levels.NightmareScythe))
+                    if ((aoecombo is 1) || (lastComboMove is RPR.SpinningScythe && deathsDesignTimer.RemainingTime >= 4 && level >= RPR.Levels.NightmareScythe))
                     {
                         if (aoecombo is 1)
                         {
@@ -260,17 +275,10 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(FindTargetEffect(RPR.Debuffs.DeathsDesign)?.RemainingTime > 4) && !HasEffectAny(RPR.Buffs.SoulReaver) && !(FindEffect(RPR.Buffs.Enshrouded)?.RemainingTime <= 10) && EnemyHealthPercentage() > 5)
-                {
-                    //var deathsDesign = TargetHasEffect(RPR.Debuffs.DeathsDesign);
-                    //var deathsDesignTimer = FindTargetEffect(RPR.Debuffs.DeathsDesign);
-                    //var soulReaverBuff = HasEffectAny(RPR.Buffs.SoulReaver);
-
-                    //if (((!deathsDesign && !soulReaverBuff) || (deathsDesignTimer.RemainingTime < 4 && !soulReaverBuff)) && level >= RPR.Levels.WhorlOfDeath)
+                if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && !(deathsDesignTimer?.RemainingTime > 4) && !soulReaver && !(enshroudedTimer?.RemainingTime <= 10) && enemyHP > 5)
                     return RPR.WhorlOfDeath;
-                }
 
-                if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && EnemyHealthPercentage() > 5)
+                if (comboTime > 0 && !IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && enemyHP > 5 && !enshrouded && !soulReaver)
                 {
                     if (lastComboMove is RPR.SpinningScythe && level >= RPR.Levels.NightmareScythe)
                         return RPR.NightmareScythe;
@@ -278,17 +286,17 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature))
                 {
-                    if (HasEffect(RPR.Buffs.Enshrouded) && gauge.VoidShroud >= 2)
+                    if (enshrouded && gauge.VoidShroud >= 2)
                         return OriginalHook(RPR.GrimSwathe);
                 }
 
                 if (IsEnabled(CustomComboPreset.ReaperComboCommunioFeature))
                 {
-                    if (HasEffect(RPR.Buffs.Enshrouded) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio)
+                    if (enshrouded && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= RPR.Levels.Communio)
                         return RPR.Communio;
                 }
 
-                if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature) && (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Enshrouded)))
+                if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature) && (soulReaver || enshrouded))
                     return OriginalHook(RPR.Guillotine);
 
                 if (lastComboMove is RPR.SpinningScythe)
