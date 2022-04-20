@@ -97,7 +97,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (IsEnabled(CustomComboPreset.GunbreakerRangedUptimeFeature))
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return GNB.LightningShot;
                 }
                 

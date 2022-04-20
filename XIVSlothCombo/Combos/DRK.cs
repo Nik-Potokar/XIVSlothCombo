@@ -97,7 +97,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
                 {
-                    if (!InMeleeRange(true))
+                    if (!InMeleeRange())
                         return DRK.Unmend;
                 }
 
