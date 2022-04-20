@@ -1998,7 +1998,7 @@ namespace XIVSlothComboPlugin
         EgisOnRuinFeature = 17015,
         
         [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 1)]
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2027,12 +2027,12 @@ namespace XIVSlothComboPlugin
         
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
-        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 0, "No Raising for me!", "Always slips swiftstream, sometimes")]
+        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 1, "No Raising for me!", "Always slips swiftstream, sometimes")]
         SummonerSwiftcastFeatureGaruda = 17023,
 
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
-        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 0, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
+        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 1, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
         SummonerSwiftcastFeatureIfrit = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
