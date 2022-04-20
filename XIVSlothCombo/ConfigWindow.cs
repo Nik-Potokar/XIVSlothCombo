@@ -90,7 +90,7 @@ namespace XIVSlothComboPlugin
             ImGui.Text("This window allows you to enable and disable custom combos to your liking.");
 
             ImGui.NextColumn();
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.10.3\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.10.5\n- with love from Team Sloth.");
             ImGui.NextColumn();
 
             var showSecrets = Service.Configuration.EnableSecretCombos;
