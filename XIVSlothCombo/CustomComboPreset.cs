@@ -1954,7 +1954,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 0, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 0, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
+        [ParentCombo(EgisOnRuinFeature)]
+        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
         [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Slipstream", "2 Fast 2 Furious")]
@@ -1993,7 +1994,7 @@ namespace XIVSlothComboPlugin
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Adds Egi Summons to Ruin.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 0)]
         EgisOnRuinFeature = 17015,
         
         [ParentCombo(EgisOnRuinFeature)]
