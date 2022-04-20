@@ -620,7 +620,7 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.ContreSixte;
                 }
 
-                if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 && InMeleeRange(true))
+                if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 && InMeleeRange())
                     return RDM.Engagement;
 
                 if (lastComboMove is RDM.Scorch && level >= RDM.Levels.Resolution)
@@ -853,7 +853,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 &&
-                    InMeleeRange(true) && level >= RDM.Levels.Engagement)
+                    InMeleeRange() && level >= RDM.Levels.Engagement)
                     return RDM.Engagement;
 
                 if ((lastComboMove is RDM.Riposte or RDM.EnchantedRiposte) && gauge.WhiteMana >= 30 && gauge.BlackMana >= 30)
@@ -874,7 +874,7 @@ namespace XIVSlothComboPlugin.Combos
                         return RDM.EnchantedRiposte;
                 }
                     
-                if (InMeleeRange(true) && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 &&
+                if (InMeleeRange() && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 &&
                     lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch && !HasEffect(RDM.Buffs.Dualcast))
                     return RDM.EnchantedRiposte;
                 
@@ -1081,7 +1081,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 && lastComboMove == RDM.Moulinet)
                         return RDM.EnchantedMoulinet;
 
-                    if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && InMeleeRange(true))
+                    if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && InMeleeRange())
                         return RDM.EnchantedMoulinet;
                 }
 
@@ -1132,7 +1132,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if(actionID is RDM.Corpsacorps)
             {
-                if (InMeleeRange(true) && HasCharges(RDM.Displacement) && level >= RDM.Levels.Displacement)
+                if (InMeleeRange() && HasCharges(RDM.Displacement) && level >= RDM.Levels.Displacement)
                     return RDM.Displacement;
             }
             return actionID;
