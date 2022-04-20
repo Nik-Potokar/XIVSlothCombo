@@ -69,6 +69,7 @@ namespace XIVSlothComboPlugin.Combos
                 Assize = 56,
                 ThinAir = 58,
                 Dia = 72,
+                AfflatusMisery = 74,
                 AfflatusRapture = 76;
         }
 
@@ -193,16 +194,17 @@ namespace XIVSlothComboPlugin.Combos
                     var diaDebuff = FindTargetEffect(WHM.Debuffs.Dia);
                     var aero1Debuff = FindTargetEffect(WHM.Debuffs.Aero);
                     var aero2Debuff = FindTargetEffect(WHM.Debuffs.Aero2);
-                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(WHM.Config.WHMLucidDreamingFeature);
+                    var lucidThreshold = Service.Configuration.GetCustomIntValue(WHM.Config.WHMLucidDreamingFeature);
+                    var gauge = GetJobGauge<WHMGauge>();
 
                     if (CanSpellWeave(actionID))
                     {
                         if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature) && level >= WHM.Levels.PresenceOfMind && IsOffCooldown(WHM.PresenceOfMind))
-                                return WHM.PresenceOfMind;
+                            return WHM.PresenceOfMind;
                         if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= WHM.Levels.Assize && IsOffCooldown(WHM.Assize))
-                                return WHM.Assize;
-                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidMPThreshold)
-                                return WHM.LucidDreaming;
+                            return WHM.Assize;
+                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold)
+                            return WHM.LucidDreaming;
                     }
 
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
@@ -225,6 +227,12 @@ namespace XIVSlothComboPlugin.Combos
                                 return WHM.Dia;
                         }
                     }
+
+                    if (IsEnabled(CustomComboPreset.WHMLilyOvercapFeature) && level >= WHM.Levels.AfflatusRapture && ((gauge.Lily == 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
+                                return WHM.AfflatusRapture;
+
+                    if (IsEnabled(CustomComboPreset.WHMAfflatusMiseryOGCDFeature) && level >= WHM.Levels.AfflatusMisery && gauge.BloodLily >= 3)
+                                return WHM.AfflatusMisery;
                 }
 
                 return actionID;

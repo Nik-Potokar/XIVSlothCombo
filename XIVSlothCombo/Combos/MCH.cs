@@ -99,9 +99,10 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= MCH.Levels.BarrelStabilizer && heat < 20 && GetCooldown(actionID).CooldownRemaining > 0.7 && IsOffCooldown(MCH.BarrelStabilizer))
                         return MCH.BarrelStabilizer;
                 }
+
                 if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
                 {
-                    if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+                    if (heatBlastCD.CooldownRemaining < 0.7 && level >= MCH.Levels.HeatBlast ) // prioritize heatblast
                         return MCH.HeatBlast;
                     if (level <= 49)
                         return MCH.GaussRound;
@@ -192,17 +193,21 @@ namespace XIVSlothComboPlugin.Combos
                 var heat = GetJobGauge<MCHGauge>().Heat;
                 if (IsEnabled(CustomComboPreset.MachinistAutoBarrel) && heat < 50 && IsOffCooldown(MCH.BarrelStabilizer) && level >= 66)
                     return MCH.BarrelStabilizer;
+
                 if (!wildfireCD.IsCooldown && level >= MCH.Levels.Wildfire && heat >= 50 && IsEnabled(CustomComboPreset.MachinistWildfireFeature))
                     return MCH.Wildfire;
+
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
-                if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+
+                if (heatBlastCD.CooldownRemaining < 0.7 && level >= MCH.Levels.HeatBlast) // Prioritize Heat Blast
                     return MCH.HeatBlast;
+
                 if (level <= 49)
                     return MCH.GaussRound;
+
                 if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
                     return MCH.GaussRound;
-                else
                     return MCH.Ricochet;
             }
 
@@ -264,7 +269,7 @@ namespace XIVSlothComboPlugin.Combos
                         return MCH.Hypercharge;
                 }
 
-                if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && canWeave && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated))
+                if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && canWeave && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated) && (HasCharges(MCH.Ricochet) || HasCharges(MCH.GaussRound)))
                 {
                     var gaussCharges = GetRemainingCharges(MCH.GaussRound);
                     var ricochetCharges = GetRemainingCharges(MCH.Ricochet);
@@ -350,7 +355,7 @@ namespace XIVSlothComboPlugin.Combos
                     return MCH.BarrelStabilizer;
                 if (!gauge.IsOverheated && level >= MCH.Levels.Hypercharge)
                     return MCH.Hypercharge;
-                if (heatBlastCD.CooldownRemaining < 0.7) // prioritize heatblast
+                if (heatBlastCD.CooldownRemaining < 0.7 && level >= MCH.Levels.AutoCrossbow) // prioritize autocrossbow
                     return MCH.AutoCrossbow;
                 if (level <= 49)
                     return MCH.GaussRound;

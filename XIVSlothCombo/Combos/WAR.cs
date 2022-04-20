@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
                     return WAR.Infuriate;
 
-                if (HasEffect(WAR.Buffs.SurgingTempest) && HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                if (HasEffect(WAR.Buffs.SurgingTempest) && InCombat())
                 {
                     if (CanWeave(actionID))
                     {
@@ -190,18 +190,26 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
 
+                    if (IsEnabled(CustomComboPreset.WarriorInfuriateOnAOE) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
+                        return WAR.Infuriate;
+
                     if (HasEffect(WAR.Buffs.SurgingTempest))
                     {
-                        if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && IsOffCooldown(WAR.Orogeny) && CanWeave(actionID) && level >= WAR.Levels.Orogeny && HasEffect(WAR.Buffs.SurgingTempest))
-                            return WAR.Orogeny;
+                        if (CanWeave(actionID))
+                        {
+                            if (IsEnabled(CustomComboPreset.WarriorIRonAOE) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(WAR.Berserk)) && level >= WAR.Levels.Berserk)
+                                return OriginalHook(WAR.Berserk);
+                            if (IsEnabled(CustomComboPreset.WarriorOrogenyFeature) && IsOffCooldown(WAR.Orogeny) && level >= WAR.Levels.Orogeny && HasEffect(WAR.Buffs.SurgingTempest))
+                                return WAR.Orogeny;
+                        }
+
                         if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= WAR.Levels.PrimalRend)
                             return OriginalHook(WAR.PrimalRend);
+                        if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.SteelCyclone) ||
+                            (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.SteelCyclone) ||
+                            (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.ChaoticCyclone))
+                                return OriginalHook(WAR.SteelCyclone);
                     }
-
-                    if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.SteelCyclone && HasEffect(WAR.Buffs.SurgingTempest)) ||
-                        (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.SteelCyclone) ||
-                        (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.ChaoticCyclone))
-                            return OriginalHook(WAR.SteelCyclone);
 
                     if (comboTime > 0)
                     {
@@ -302,13 +310,10 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var rageGauge = GetJobGauge<WARGauge>();
                 var rageThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarInfuriateRange);
-                var isZerking = HasEffect(WAR.Buffs.InnerRelease);
                 var hasNascent = HasEffect(WAR.Buffs.NascentChaos);
 
-                if (!InCombat()) return actionID;
-
-                if (rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !isZerking && !hasNascent && level >= WAR.Levels.Infuriate)
-                    return OriginalHook(WAR.Infuriate);
+                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate)
+                        return OriginalHook(WAR.Infuriate);
             }
 
             return actionID;

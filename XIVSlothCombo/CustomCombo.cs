@@ -61,6 +61,10 @@ namespace XIVSlothComboPlugin.Combos
         /// Gets the job ID associated with this combo.
         /// </summary>
         protected byte JobID { get; }
+        protected Vector2 Position { get; set; }
+        protected float PlayerSpeed { get; set; }
+        protected uint MovingCounter { get; set; }
+        protected bool IsMoving { get; set; }
 
         /// <summary>
         /// Function that keeps getting called by the timer set up in the constructor,
@@ -114,6 +118,20 @@ namespace XIVSlothComboPlugin.Combos
         public bool TryInvoke(uint actionID, byte level, uint lastComboMove, float comboTime, out uint newActionID)
         {
             newActionID = 0;
+
+            // Movement
+            if (this.MovingCounter == 0)
+            {
+                Vector2 newPosition = LocalPlayer is null ? Vector2.Zero : new Vector2(LocalPlayer.Position.X, LocalPlayer.Position.Z);
+                this.PlayerSpeed = Vector2.Distance(newPosition, this.Position);
+                this.IsMoving = this.PlayerSpeed > 0;
+                this.Position = LocalPlayer is null ? Vector2.Zero : newPosition;
+                // refreshes every 50 dalamud ticks for a more accurate representation of speed, otherwise it'll report 0.
+                this.MovingCounter = 50;
+            }
+
+            if (this.MovingCounter > 0)
+                this.MovingCounter--;
 
             if (!IsEnabled(this.Preset))
                 return false;
@@ -493,9 +511,9 @@ namespace XIVSlothComboPlugin.Combos
         /// without causing clipping and checks if you're casting a spell to make it mage friendly
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
-        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
+        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.5.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.7)
+        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.5)
         {
             var castingSpell = LocalPlayer.IsCasting;
 

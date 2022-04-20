@@ -135,7 +135,6 @@ namespace XIVSlothComboPlugin
                 Util.OpenLink("https://github.com/Nik-Potokar/XIVSlothCombo/issues");
             }
 
-
             ImGui.EndChild();
 
         }
@@ -242,8 +241,8 @@ namespace XIVSlothComboPlugin
 
 
             float offset = (float)Service.Configuration.MeleeOffset;
-
-            ImGui.PushItemWidth(50);
+            ImGui.PushItemWidth(75);
+            
             var inputChangedeth = false;
             inputChangedeth |= ImGui.InputFloat("Melee Distance Offset", ref offset);
 
@@ -695,7 +694,7 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
 
             if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+                ConfigWindowFunctions.DrawSliderInt(0, 30, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
 
             #endregion
             // ====================================================================================
@@ -816,6 +815,15 @@ namespace XIVSlothComboPlugin
 
             #endregion
             // ====================================================================================
+            #region MONK
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
+
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
+
+            #endregion
+            // ====================================================================================
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work###SCH", 150, SliderIncrements.Hundreds);
@@ -824,7 +832,10 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SUMMONER
-
+            if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice,"Titan","Summons Titan first, Garuda second, Ifrit third", 1);
+            if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
             #endregion
             // ====================================================================================
             #region WARRIOR

@@ -87,10 +87,12 @@
                 BladeOfTruth = 90,
                 BladeOfValor = 90;
         }
+
         public static class Config
         {
             public const string
                 PLDKeepInterveneCharges = "PLDKeepInterveneCharges";
+
             public const string
                 PLDAtonementCharges = "PLDAtonementCharges";
         }
@@ -131,21 +133,21 @@
             {
                 var interveneChargesRemaining = Service.Configuration.GetCustomIntValue(PLD.Config.PLDKeepInterveneCharges);
                 var atonementUsage = Service.Configuration.GetCustomIntValue(PLD.Config.PLDAtonementCharges);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 // Uptime Features
-                if (!InMeleeRange())
+                if (!InMeleeRange(true) && !(HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
                 {
-                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob)
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= PLD.Levels.ShieldLob && !HasEffect(PLD.Buffs.Requiescat))
                         return PLD.ShieldLob;
-
-                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit) 
+                    if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature2) && level >= PLD.Levels.HolySpirit)
                         return PLD.HolySpirit;
                 }
 
                 // oGCD features
                 if (CanWeave(actionID))
                 {
-                    if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade)
+                    if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && incombat && lastComboMove != PLD.FastBlade && lastComboMove != PLD.RiotBlade)
                     {
                         if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin))
                             return OriginalHook(PLD.SpiritsWithin);
@@ -174,24 +176,19 @@
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit && !HasEffect(PLD.Buffs.FightOrFlight) && LocalPlayer.CurrentMp >= 1000)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor &&
-                           (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
+                            (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
                                 return PLD.Confiteor;
+
                             return PLD.HolySpirit;
                     }
 
-                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
-                        return PLD.BladeOfFaith;
-
-                    if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                        return PLD.BladeOfTruth;
-
-                    if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                        return PLD.BladeOfValor;
+                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth)
+                        return OriginalHook(PLD.Confiteor);
                 }
 
                 if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
                 {
-                    if ((GetCooldownRemainingTime(PLD.FightOrFlight) > 0 && GetCooldownRemainingTime(PLD.FightOrFlight) <= 50 && GetBuffStacks(PLD.Buffs.SwordOath) >= -1*(atonementUsage -3)) || HasEffect(PLD.Buffs.Requiescat))
+                    if ((GetCooldownRemainingTime(PLD.Requiescat) > 5 && GetCooldownRemainingTime(PLD.Requiescat) <= 45 && GetBuffStacks(PLD.Buffs.SwordOath) > (3-atonementUsage)) || HasEffect(PLD.Buffs.Requiescat) && GetCooldownRemainingTime(PLD.FightOrFlight) <= 49)
                         return PLD.Atonement;
                 }
 
@@ -207,6 +204,7 @@
                             ((GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) > 0 && GetDebuffRemainingTime(PLD.Debuffs.BladeOfValor) < 5) ||
                             (FindTargetEffect(PLD.Debuffs.BladeOfValor) is null && GetDebuffRemainingTime(PLD.Debuffs.GoringBlade) < 5)))
                                 return PLD.GoringBlade;
+
                             return OriginalHook(PLD.RageOfHalone);
                     }
                 }                
@@ -225,7 +223,7 @@
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var reqCD = GetCooldown(PLD.Requiescat);
+            var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
             if (actionID is PLD.Prominence)
             {
@@ -234,7 +232,7 @@
                     if (IsEnabled(CustomComboPreset.PaladinReqAoEComboFeature) && level >= PLD.Levels.Requiescat && IsOffCooldown(PLD.Requiescat))
                             return PLD.Requiescat;
 
-                    if (IsEnabled(CustomComboPreset.PaladinAoEExpiacionScornFeature))
+                    if (IsEnabled(CustomComboPreset.PaladinAoEExpiacionScornFeature) && incombat)
                     {
                         if (level >= PLD.Levels.SpiritsWithin && IsOffCooldown(PLD.SpiritsWithin))
                             return OriginalHook(PLD.SpiritsWithin);
@@ -246,24 +244,17 @@
 
                 if (IsEnabled(CustomComboPreset.PaladinHolyCircleFeature) && HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle && LocalPlayer.CurrentMp >= 1000)
                 {
-                    if (((IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && level >= PLD.Levels.Confiteor  &&
-                        GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3) || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
-                        return PLD.Confiteor;
+                    if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && level >= PLD.Levels.Confiteor &&
+                        (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
+                            return PLD.Confiteor;
+
                     return PLD.HolyCircle;
 
                 }
 
-                if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature))
-                {
-                    if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
-                        return PLD.BladeOfFaith;
-
-                    if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                        return PLD.BladeOfTruth;
-
-                    if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                        return PLD.BladeOfValor;
-                }
+                if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) &&
+                    (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth))
+                        return OriginalHook(PLD.Confiteor);
 
                 if (comboTime > 0)
                 {
@@ -317,17 +308,12 @@
                             ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
                             requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
                             return PLD.Confiteor;
+
                         return PLD.HolySpirit;
                 }
 
-                if(HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
-                        return PLD.BladeOfFaith;
-
-                if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                    return PLD.BladeOfTruth;
-
-                if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                    return PLD.BladeOfValor;
+                if (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth)
+                    return OriginalHook(PLD.Confiteor);
             }
 
             return actionID;
@@ -348,17 +334,12 @@
                     if (level >= PLD.Levels.Confiteor &&((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
                             requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
                             return PLD.Confiteor;
+
                         return PLD.HolyCircle;
                 }
 
-                if (HasEffect(PLD.Buffs.BladeOfFaithReady) && level >= PLD.Levels.BladeOfFaith)
-                    return PLD.BladeOfFaith;
-
-                if (lastComboMove is PLD.BladeOfFaith && level >= PLD.Levels.BladeOfTruth)
-                    return PLD.BladeOfTruth;
-
-                if (lastComboMove is PLD.BladeOfTruth && level >= PLD.Levels.BladeOfValor)
-                    return PLD.BladeOfValor;
+                if (HasEffect(PLD.Buffs.BladeOfFaithReady) || lastComboMove is PLD.BladeOfFaith || lastComboMove is PLD.BladeOfTruth)
+                        return OriginalHook(PLD.Confiteor);
             }
 
             return actionID;

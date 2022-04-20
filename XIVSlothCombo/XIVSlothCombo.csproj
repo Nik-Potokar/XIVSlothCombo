@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
 		<Authors>attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz</Authors>
 		<Company>-</Company>
-		<Version>3.0.9.0</Version>
+		<Version>3.0.10.5</Version>
 		<!-- This is the version that will be used when pushing to the repo.-->
 		<Description>XIVCombo for lazy players</Description>
 		<Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
@@ -67,43 +68,47 @@
 	</ItemGroup>
 
 	<ItemGroup>
-
-	  <PackageReference Include="DalamudPackager" Version="2.1.6" />
-	  <PackageReference Include="ILRepack" Version="2.0.18" />
+		<PackageReference Include="DalamudPackager" Version="2.1.6" />
+		<PackageReference Include="ILRepack" Version="2.0.18" />
 	</ItemGroup>
 
 	<ItemGroup>
-
 		<Reference Include="Dalamud">
 			<HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
-		
+
 		<Reference Include="FFXIVClientStructs">
 			<HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
 			<Private>False</Private>
 
 		</Reference>
-		
+
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+
 		<Reference Include="ImGui.NET">
 			<HintPath>$(DalamudLibPath)ImGui.NET.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+
 		<Reference Include="ImGuiScene">
 			<HintPath>$(DalamudLibPath)ImGuiScene.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+
 		<Reference Include="Lumina">
 			<HintPath>$(DalamudLibPath)Lumina.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+
 		<Reference Include="Lumina.Excel">
 			<HintPath>$(DalamudLibPath)Lumina.Excel.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
+
 	</ItemGroup>
+
 </Project>

@@ -92,7 +92,6 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == DRK.Souleater)
             {
                 var gauge = GetJobGauge<DRKGauge>();
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var plungeChargesRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkKeepPlungeCharges);
                 var mpRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkMPManagement);
 
@@ -102,11 +101,16 @@ namespace XIVSlothComboPlugin.Combos
                         return DRK.Unmend;
                 }
 
-                if (!incombat)
+                if (!InCombat())
                 {
+                    if (inOpener && (!HasEffect(DRK.Buffs.BloodWeapon) || !HasEffect(DRK.Buffs.BlackestNight)))
+                    {
+                        inOpener = false;
+                    }
+
                     if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && level == 90)
                     {
-                        if (HasEffectAny(DRK.Buffs.BloodWeapon) || HasEffect(DRK.Buffs.BlackestNight))
+                        if (HasEffect(DRK.Buffs.BloodWeapon) || HasEffect(DRK.Buffs.BlackestNight))
                             inOpener = true;
                     }
 
@@ -117,9 +121,10 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && inOpener && HasEffect(DRK.Buffs.BlackestNight))
                             return DRK.BloodWeapon;
                     }
+
                 }
 
-                if (incombat)
+                if (InCombat())
                 {
                     if (IsEnabled(CustomComboPreset.DarkOpenerFeature) && inOpener && level == 90)
                     {

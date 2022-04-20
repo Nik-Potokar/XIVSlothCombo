@@ -195,7 +195,7 @@ namespace XIVSlothComboPlugin.Combos
     //Can replace Zero Charges/Stacks of Phlegma with Toxikon (if you can use it) or Dyskrasia 
     internal class SagePhlegmaFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaToxikonFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SagePhlegmaFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -205,8 +205,12 @@ namespace XIVSlothComboPlugin.Combos
                     (IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && level >= SGE.Levels.Dyskrasia))
 
                 {
+                    //If not targetting anything, use Dyskrasia Option if selected
+                    if ( IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && (!HasTarget()) ) return OriginalHook(SGE.Dyskrasia);
+
                     uint Phlegma; //Phlegma placeholder
                     //Find which version of Phlegma based on player's level that we need to update with
+                    //Phlegma unlocks before Dyskrasia & Toxikon (checked above), we'll always have P1 available
                     switch (level)
                     {
                         case >= (byte)SGE.Levels.Phlegma3: Phlegma = SGE.Phlegma3; break;
@@ -215,7 +219,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                     //Check for "out of Phlegma stacks" 
-                    if (GetCooldown(Phlegma).CooldownRemaining > 45) {
+                    if (GetCooldown(Phlegma).RemainingCharges == 0) {
                         //and if we have Adderstings to use for Toxikon
                         //Has Priority over Dyskrasia
                         if ( IsEnabled(CustomComboPreset.SagePhlegmaToxikonFeature) && (level >= SGE.Levels.Toxikon) && (GetJobGauge<SGEGauge>().Addersting > 0) )
@@ -247,22 +251,37 @@ namespace XIVSlothComboPlugin.Combos
                 if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
                     //If we're too low level to use Eukrasia, we can stop here.
-                    if ((CurrentTarget.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) && (level >= SGE.Levels.Eukrasia))
+                    if (level >= SGE.Levels.Eukrasia)
                     {
-                        //Eukrasian Dosis vars
+                        //Presume current Target is hostile npc target
+                        var Ourtarget = CurrentTarget;
+                        //Check if we're not targetting a Hostile NPC, are we attempting ToT?
+                        if (CurrentTarget.ObjectKind is not Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
+                        {
+                            //If ToT is enabled, and if it's a BattleNPC, Return that target
+                            if ( (CurrentTarget.TargetObject.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) &&
+                                 IsEnabled(CustomComboPreset.SageDPSFeatureToT) )
+                                //Set Ourtarget as the Target of Target
+                                Ourtarget = CurrentTarget.TargetObject;
+                            //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
+                            else return actionID;
+                        }
+
+                        //Eukrasian Dosis var
                         Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
 
                         //Find which version of Eukrasian Dosis we need 
+                        //Tsusai Devnote: VS's code suggestion would use an older C# style, and might confuse a beginner...like me
                         switch (level)
                         {
-                            case >= SGE.Levels.Dosis3:
-                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis3);                                
+                            case >= SGE.Levels.Dosis3: //Using FindEffect b/c we have a custom Target variable
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis3, Ourtarget, LocalPlayer?.ObjectId); 
                                 break;
                             case >= SGE.Levels.Dosis2:
-                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis2);
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis2, Ourtarget, LocalPlayer?.ObjectId);
                                 break;
                             default: //Ekrasia Dosis unlocks with Eukrasia, checked at the start
-                                DosisDebuffID = FindTargetEffect(SGE.Debuffs.EukrasianDosis1);
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis1, Ourtarget, LocalPlayer?.ObjectId);
                                 break;
                         }
                         if (HasEffect(SGE.Buffs.Eukrasia))
@@ -272,6 +291,7 @@ namespace XIVSlothComboPlugin.Combos
                         if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
                         {
                             //Advanced Test Options Enabled to procede with auto-Eukrasia
+                            //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
                             if (IsEnabled(CustomComboPreset.SageDPSFeatureAdvTest))
                             {
                                 var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
@@ -407,7 +427,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Haima;
                 }
                 
-                if (IsEnabled(CustomComboPreset.CustomEukrasianDiagnosisFeature) && EukrasianDiagnosis is null && EnemyHealthPercentage() <= CustomDiagnosis)
+                if (IsEnabled(CustomComboPreset.CustomEukrasianDiagnosisFeature) && EukrasianDiagnosis is null && EnemyHealthPercentage() <= CustomDiagnosis && level >= SGE.Levels.Eukrasia)
                 {
                     if (!HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.Eukrasia;
@@ -455,7 +475,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SGE.Physis2;
                 }
 
-                if (IsEnabled(CustomComboPreset.EukrasianPrognosisFeature) && EukrasianPrognosis is null)
+                if (IsEnabled(CustomComboPreset.EukrasianPrognosisFeature) && EukrasianPrognosis is null && level >= SGE.Levels.Eukrasia)
                 {
                     if (!HasEffect(SGE.Buffs.Eukrasia))
                         return SGE.Eukrasia;
