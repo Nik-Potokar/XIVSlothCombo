@@ -204,8 +204,12 @@ namespace XIVSlothComboPlugin
         AstrologianTargetLock = 1030,
 
         [ParentCombo(AstAutoCardTarget)]
-        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for auto card target selection", AST.JobID)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
         AstrologianTargetExtraFeature = 1031,
+
+        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+        [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
+        AstRedrawFeature = 1032,
 
 
         #endregion
