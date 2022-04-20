@@ -1,85 +1,71 @@
-using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using XIVSlothComboPlugin.Combos;
 
-namespace XIVSlothComboPlugin.Combos
+namespace XIVSlothComboPlugin
 {
     internal static class WARPVP
     {
         public const byte ClassID = 3;
         public const byte JobID = 21;
-
-        public const uint
-            HeavySwing = 8758,
-            Maim = 8761,
-            StormsPath = 8762,
-            FellCleave = 8763,
-            Decimate = 17695,
-            MythrilTempest = 18904,
-            SteelCyclone = 18905;
- 
-
-        public static class Buffs
+        internal const uint
+            HeavySwing = 29074,
+            Maim = 29075,
+            StormsPath = 29076,
+            PrimalRend = 29084,
+            Onslaught = 29079,
+            Orogeny = 29080,
+            Blota = 29081,
+            Bloodwhetting = 29082;
+            
+        internal class Buffs
         {
-            public const ushort
-                InnerRelease = 1303,
-                NascentChaos = 1992;
-
-        }
-
-        public static class Debuffs
-        {
-            // public const short placeholder = 0;
-        }
-
-        public static class Levels
-        {
-            public const byte
-                Maim = 4,
-                StormsPath = 26,
-                MythrilTempest = 40,
-                StormsEye = 50,
-                FellCleave = 54,
-                Decimate = 60,
-                MythrilTempestTrait = 74,
-                NascentFlash = 76,
-                InnerChaos = 80,
-                PrimalRend = 90;
+            internal const ushort
+                NascentChaos = 1992,
+                InnerRelease = 1303;
         }
     }
-    internal class StormsPathComboFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.StormsPathComboFeature;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+    internal class WARBurstMode : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WARBurstMode;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            if (actionID == WARPVP.HeavySwing || actionID == WARPVP.Maim || actionID == WARPVP.StormsPath)
+            if (actionID == WARPVP.HeavySwing)
             {
-                var gauge = GetJobGauge<WARGauge>();
-                if (gauge.BeastGauge >= 50 || HasEffect(WARPVP.Buffs.InnerRelease) || HasEffect(WARPVP.Buffs.NascentChaos))
+                uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+
+                if (globalAction != actionID) return globalAction;
+
+                if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown)
+                    return OriginalHook(WARPVP.Bloodwhetting);
+
+                if (!InMeleeRange() && !GetCooldown(WARPVP.Blota).IsCooldown)
+                    return OriginalHook(WARPVP.Blota);
+
+                if (!GetCooldown(WARPVP.PrimalRend).IsCooldown)
+                    return OriginalHook(WARPVP.PrimalRend);
+
+                if (!GetCooldown(WARPVP.Onslaught).IsCooldown)
+                    return OriginalHook(WARPVP.Onslaught);
+
+                if (InMeleeRange())
                 {
-                    return OriginalHook(WARPVP.FellCleave);
+                    if (HasEffect(WARPVP.Buffs.NascentChaos))
+                        return OriginalHook(WARPVP.Bloodwhetting);
+
+                    if (!GetCooldown(WARPVP.Orogeny).IsCooldown)
+                        return OriginalHook(WARPVP.Orogeny);
+
+                    return OriginalHook(WARPVP.HeavySwing);
                 }
             }
 
             return actionID;
         }
     }
-    internal class SteelCycloneFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SteelCycloneFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WARPVP.SteelCyclone || actionID == WARPVP.MythrilTempest)
-            {
-                var gauge = GetJobGauge<WARGauge>();
-                if (gauge.BeastGauge >= 50 || HasEffect(WARPVP.Buffs.InnerRelease) || HasEffect(WARPVP.Buffs.NascentChaos))
-                {
-                    return OriginalHook(WARPVP.Decimate);
-                }
-            }
-
-            return actionID;
-        }
-    }
-
 }
