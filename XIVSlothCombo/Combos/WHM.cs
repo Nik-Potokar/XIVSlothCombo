@@ -75,7 +75,8 @@ namespace XIVSlothComboPlugin.Combos
                 DivineBenison = 66,
                 Dia = 72,
                 AfflatusMisery = 74,
-                AfflatusRapture = 76;
+                AfflatusRapture = 76,
+                Glare3 = 82;
         }
 
         public static class Config
@@ -191,6 +192,8 @@ namespace XIVSlothComboPlugin.Combos
         internal class WHMCDsonMainComboGroup : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMCDsonMainComboGroup;
+            internal static uint glare3Count = 0;
+            internal static bool usedGlare3 = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -203,7 +206,21 @@ namespace XIVSlothComboPlugin.Combos
                     var lucidThreshold = Service.Configuration.GetCustomIntValue(WHM.Config.WHMLucidDreamingFeature);
                     var gauge = GetJobGauge<WHMGauge>();
 
-                    if (CanSpellWeave(actionID))
+                    //WHM_NO_SWIFT_OPENER_MACHINE
+                    //COUNTER_RESET
+                    if (!inCombat) glare3Count = 0; // Resets counter
+                    //CHECK_GLARE3_USE
+                    if (inCombat && usedGlare3 == false && lastComboMove == WHM.Glare3 && GetCooldownRemainingTime(WHM.Glare3) > 1)
+                    {
+                        usedGlare3 = true; // Registers that Glare3 was used and blocks further incrementation of holdOGCD
+                        glare3Count++; // Increments Glare3 counter
+                    }
+                    //CHECK_GLARE3_USE_RESET
+                    if (usedGlare3 == true && GetCooldownRemainingTime(WHM.Glare3) < 1) usedGlare3 = false; // Resets block to allow CHECK_GLARE3_USE
+                    //BYPASS_COUNTER_WHEN_DISABLED
+                    if (IsNotEnabled(CustomComboPreset.WHMNoSwiftOpenerOption)) glare3Count = 3;
+
+                    if (CanSpellWeave(actionID) && glare3Count >= 3)
                     {
                         if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature) && level >= WHM.Levels.PresenceOfMind && IsOffCooldown(WHM.PresenceOfMind))
                             return WHM.PresenceOfMind;
@@ -237,7 +254,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.WHMLilyOvercapFeature) && level >= WHM.Levels.AfflatusRapture && ((gauge.Lily == 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
                                 return WHM.AfflatusRapture;
 
-                    if (IsEnabled(CustomComboPreset.WHMAfflatusMiseryOGCDFeature) && level >= WHM.Levels.AfflatusMisery && gauge.BloodLily >= 3)
+                    if (IsEnabled(CustomComboPreset.WHMAfflatusMiseryOGCDFeature) && level >= WHM.Levels.AfflatusMisery && gauge.BloodLily >= 3 && glare3Count >= 3)
                                 return WHM.AfflatusMisery;
                 }
 

@@ -2228,6 +2228,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Use Devine Benison on GCD", "Shows Devine Benison when target is not already under the effect.", WHM.JobID, 0, "It's dangerous to go alone.", "Take this.")]
         WHMBenisonGCDOption = 19022,
 
+        [ParentCombo(WHMCDsonMainComboGroup)]
+        [CustomComboInfo("No Swift Opener Option", "Delays all oGCDs until after 3rd Glare 3 cast.", WHM.JobID, 0, "Cover me, Porkins.", "Almost there... Almost there...")]
+        WHMNoSwiftOpenerOption = 19023,
+
         #endregion
         // ====================================================================================
         #region DOH
