@@ -1867,7 +1867,7 @@ namespace XIVSlothComboPlugin
         SamuraiShoha2Feature = 15013,
 
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Gyoten Uptime Feature", "Replace Main Combo with Gyoten when you are out of range and above 10 Kenki.", SAM.JobID, 0)]
+        [CustomComboInfo("Enpi Uptime Feature", "Replace Main Combo with Enpi when you are out of range.", SAM.JobID, 0)]
         SamuraiRangedUptimeFeature = 15014,
 
         [ParentCombo(SamuraiMangetsuCombo)]
@@ -1875,7 +1875,7 @@ namespace XIVSlothComboPlugin
         SamuraiOkaFeature = 15015,
 
         [ParentCombo(SamuraiMangetsuCombo)]
-        [CustomComboInfo("Tenka Goken on Mangetsu Combo", "Adds Tenka Goken and Kaeshi: Goken when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0)]
+        [CustomComboInfo("Iaijutsu on Mangetsu Combo", "Adds Tenka Goken and Midare: Setsugekka and their relevant Kaeshi when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0)]
         TenkaGokenAOEFeature = 15016,
 
         [ParentCombo(SamuraiGekkoCombo)]
