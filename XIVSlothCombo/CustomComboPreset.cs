@@ -80,7 +80,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disabled", "This should not be used.", ADV.JobID)]
         Disabled = 99999,
 
-        #endregion
+#if DEBUG
+        [CustomComboInfo("DEBUG MODE", "OUTPUTS DEBUG INFO. PLEASE USE THE /XLDEV COMMAND AND OPEN THE LOG WINDOW AND SET LOG LEVEL TO DEBUG.", 0)]
+        DEBUG = 99998,
+#endif
+#endregion
         // ====================================================================================
         #region ADV
         #endregion
@@ -182,7 +186,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianHeliosFeature)]
         [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID, 0)]
         AstrologianHoroscopeFeature = 1026,
-        
+
         [ParentCombo(AstrologianSimpleSingleTargetHeal)]
         [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID, 0)]
         AspectedBeneficFeature = 1027,
@@ -190,6 +194,18 @@ namespace XIVSlothComboPlugin
         [ParentCombo(AstrologianSimpleSingleTargetHeal)]
         [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID, 0)]
         ExaltationFeature = 1028,
+
+        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        AstAutoCardTarget = 1029,
+
+        [ParentCombo(AstAutoCardTarget)]
+        [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
+        AstrologianTargetLock = 1030,
+
+        [ParentCombo(AstAutoCardTarget)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for auto card target selection", AST.JobID)]
+        AstrologianTargetExtraFeature = 1031,
 
 
         #endregion
@@ -732,7 +748,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkMainComboBuffsGroup)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
-        
+
         [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", DRK.JobID)]
         DarkKnightReprisalProtection = 5030,
 
@@ -995,7 +1011,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
-        
+
         [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", GNB.JobID)]
         GunbreakerReprisalProtection = 7030,
 
@@ -1112,7 +1128,7 @@ namespace XIVSlothComboPlugin
         MachinistSpreadShotFeature = 8028,
 
         [ParentCombo(MachinistSimpleAssembling)]
-        [CustomComboInfo("Drill","Use Reassemble with Drill when available.", MCH.JobID,0,"GigaDrillBreaker","The Drill that will pierce the heavens!")]
+        [CustomComboInfo("Drill", "Use Reassemble with Drill when available.", MCH.JobID, 0, "GigaDrillBreaker", "The Drill that will pierce the heavens!")]
         MachinistSimpleAssemblingDrill = 8029,
 
         [ParentCombo(MachinistSimpleAssembling)]
@@ -1231,11 +1247,11 @@ namespace XIVSlothComboPlugin
         #region NINJA
 
         [ConflictingCombos(NinSimpleSingleTarget)]
-        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID, 0, "One, Two, Three", "It's a Ninja's life for me")]
+        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID, 3, "One, Two, Three", "It's a Ninja's life for me")]
         NinjaArmorCrushCombo = 10000,
 
         [ConflictingCombos(NinSimpleSingleTarget)]
-        [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID, 0, "Edgy Edge Combo", "Knife go stab")]
+        [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID, 2, "Edgy Edge Combo", "Knife go stab")]
         NinjaAeolianEdgeCombo = 10001,
 
         //[CustomComboInfo("Simple AoE", "Replaces Death Blossom with the AoE rotation.", NIN.JobID)]
@@ -1244,76 +1260,76 @@ namespace XIVSlothComboPlugin
         //[CustomComboInfo("Dream to Assassinate", "Replace Dream Within a Dream with Assassinate when Assassinate Ready.", NIN.JobID)]
         //NinjaAssassinateFeature = 10003,
 
-        [CustomComboInfo("Kassatsu to Trick", "Replaces Kassatsu with Trick Attack while Suiton or Hidden is up.\nCooldown tracking plugin recommended.", NIN.JobID, 0, "Katsu Curry to Trick", "This is how we eat at a restaurant and don't pay the bill.\nRUN!")]
+        [CustomComboInfo("Kassatsu to Trick", "Replaces Kassatsu with Trick Attack while Suiton or Hidden is up.\nCooldown tracking plugin recommended.", NIN.JobID, 4, "Katsu Curry to Trick", "This is how we eat at a restaurant and don't pay the bill.\nRUN!")]
         NinjaKassatsuTrickFeature = 10004,
 
-        [CustomComboInfo("Ten Chi Jin to Meisui", "Replaces Ten Chi Jin (the move) with Meisui while Suiton is up.\nCooldown tracking plugin recommended.", NIN.JobID, 0, "Ten Chin Scratches to Chop-Suey", "Does something, probably.\nHow do you deal with all these attack names?")]
+        [CustomComboInfo("Ten Chi Jin to Meisui", "Replaces Ten Chi Jin (the move) with Meisui while Suiton is up.\nCooldown tracking plugin recommended.", NIN.JobID, 5, "Ten Chin Scratches to Chop-Suey", "Does something, probably.\nHow do you deal with all these attack names?")]
         NinjaTCJMeisuiFeature = 10005,
 
-        [CustomComboInfo("Kassatsu Chi/Jin Feature", "Replaces Chi with Jin while Kassatsu is up if you have Enhanced Kassatsu.", NIN.JobID, 0, "", "Swaps your Katsu curry with a Chi Chin-scratch.")]
+        [CustomComboInfo("Kassatsu Chi/Jin Feature", "Replaces Chi with Jin while Kassatsu is up if you have Enhanced Kassatsu.", NIN.JobID, 6, "", "Swaps your Katsu curry with a Chi Chin-scratch.")]
         NinjaKassatsuChiJinFeature = 10006,
 
-        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat.", NIN.JobID, 0, "Stand and Deliver", "John Cena is a thief, now?")]
+        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat.", NIN.JobID, 7, "Stand and Deliver", "John Cena is a thief, now?")]
         NinjaHideMugFeature = 10007,
 
-        [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID, 0, "Hand signs and all that", "Do the Naruto thing, I think.\nIdk I don't watch anime, sorry")]
+        [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID, 8, "Hand signs and all that", "Do the Naruto thing, I think.\nIdk I don't watch anime, sorry")]
         NinjaNinjutsuFeature = 10008,
 
         [ConflictingCombos(NinSimpleSingleTarget)]
-        [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, 0, "Full-on Sign Language", "NOW you're really communicating with the party.")]
+        [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, 9, "Full-on Sign Language", "NOW you're really communicating with the party.")]
         NinjaGCDNinjutsuFeature = 10009,
 
-        [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, 0, "Pikachu / Raichu Feature", "Does something? Maybe? Evolutions? Combos? Probably.")]
+        [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, 10, "Pikachu / Raichu Feature", "Does something? Maybe? Evolutions? Combos? Probably.")]
         NinjaHuraijinRaijuFeature = 10010,
 
         [ParentCombo(NinjaHuraijinRaijuFeature)]
-        [CustomComboInfo("Huraijin / Raiju Feature Option 1", "Replaces Huraijin with Fleeting Raiju when available.", NIN.JobID, 0, "Pikachu / Raichu Option 1", "Does the same thing probably, who knows.")]
+        [CustomComboInfo("Huraijin / Raiju Feature Option 1", "Replaces Huraijin with Fleeting Raiju when available.", NIN.JobID, 11, "Pikachu / Raichu Option 1", "Does the same thing probably, who knows.")]
         NinjaHuraijinRaijuFeature1 = 10011,
 
         [ParentCombo(NinjaHuraijinRaijuFeature)]
-        [CustomComboInfo("Huraijin / Raiju Feature Option 2", "Replaces Huraijin with Forked Raiju when available.", NIN.JobID, 0, "Pikachu / Raichu Option 2", "What we DO know, is that all NIN mains just slam their heads on the keyboard to do combos, anyway.")]
+        [CustomComboInfo("Huraijin / Raiju Feature Option 2", "Replaces Huraijin with Forked Raiju when available.", NIN.JobID, 12, "Pikachu / Raichu Option 2", "What we DO know, is that all NIN mains just slam their heads on the keyboard to do combos, anyway.")]
         NinjaHuraijinRaijuFeature2 = 10012,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Armor Crush Feature", "Adds Armor Crush onto main combo.", NIN.JobID, 0, "", "Act like you can crush armor with your kitchen knives or whatever.")]
+        [CustomComboInfo("Armor Crush Feature", "Adds Armor Crush onto main combo.", NIN.JobID, 13, "", "Act like you can crush armor with your kitchen knives or whatever.")]
         NinjaArmorCrushOnMainCombo = 10013,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Raiju Feature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID, 0, "Raichu Feature", "Thunderbolt!")]
+        [CustomComboInfo("Raiju Feature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID, 14, "Raichu Feature", "Thunderbolt!")]
         NinjaFleetingRaijuFeature = 10014,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, 0, "", "Smells like a hurricane. No idea.")]
+        [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, 15, "", "Smells like a hurricane. No idea.")]
         NinjaHuraijinFeature = 10015,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("BunshinOnMainCombo", "Adds Bunshin whenever its off cd and you have gauge for it on main combo.", NIN.JobID, 0, "What do you call a Viera that's been cut off at the knees?", "Bun-shin KEK")]
+        [CustomComboInfo("BunshinOnMainCombo", "Adds Bunshin whenever its off cd and you have gauge for it on main combo.", NIN.JobID, 16, "What do you call a Viera that's been cut off at the knees?", "Bun-shin KEK")]
         NinjaBunshinFeature = 10016,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, 0, "BAKLAVA!", "BAKLAVA!")]
+        [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, 17, "BAKLAVA!", "BAKLAVA!")]
         NinjaBhavacakraFeature = 10017,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is out of range.", NIN.JobID, 0, "", "Would probably make more sense for NIN to be a Ranged DPS, anyway.")]
+        [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID, 18, "", "Would probably make more sense for NIN to be a Ranged DPS, anyway.")]
         NinjaRangedUptimeFeature = 10018,
 
-        [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID, 0, "Simple Murder", "Murder, made simple. For the everyday user.")]
+        [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID, 19, "Simple Murder", "Murder, made simple. For the everyday user.")]
         NinjaSimpleMudras = 10020,
 
         [ParentCombo(NinjaTCJMeisuiFeature)]
-        [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID, 0, "", "Does literally nothing. Ever")]
+        [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID, 20, "", "Does literally nothing. Ever")]
         NinTCJFeature = 10021,
 
         [ConflictingCombos(NinjaArmorCrushCombo, NinjaAeolianEdgeCombo, NinjaGCDNinjutsuFeature)]
-        [CustomComboInfo("Simple Ninja Single Target", "Turns Spinning Edge into a one-button full single target rotation.\nUses Ninjitsus, applies Trick Attack and uses Armor Crush to upkeep Huton buff.\nConflicts with a lot of features. Please only use this and the AoE version and disable all other Ninja features.", NIN.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Ninja Single Target", "Turns Spinning Edge into a one-button full single target rotation.\nUses Ninjitsus, applies Trick Attack and uses Armor Crush to upkeep Huton buff.", NIN.JobID, 0, "", "")]
         NinSimpleSingleTarget = 10022,
 
-        [CustomComboInfo("Simple Ninja AoE", "Turns Death Blossom into a one-button full AoE rotation.\nApplies Doton but will only use Ninjitsus if under the effect of Kassatsu or have 2 charges to ensure more Doton uptime.", NIN.JobID, 0, "Dote-on AoE", "Uses /dote on every target.")]
+        [CustomComboInfo("Simple Ninja AoE", "Turns Death Blossom into a one-button full AoE rotation.", NIN.JobID, 1, "Dote-on AoE", "Uses /dote on every target.")]
         NinSimpleAoE = 10023,
 
         [ParentCombo(NinSimpleSingleTarget)]
-        [CustomComboInfo("Include Trick Attack", "Add or disable Trick Attack as part of the feature.", NIN.JobID, 0, "Surprise!", "It's like the Uno Reverse card of XIV!")]
+        [CustomComboInfo("Include Trick Attack", "Add or disable Trick Attack as part of the feature.", NIN.JobID, 1, "Surprise!", "It's like the Uno Reverse card of XIV!")]
         NinSimpleTrickFeature = 10024,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
@@ -1339,6 +1355,13 @@ namespace XIVSlothComboPlugin
         [ParentCombo(NinSimpleAoE)]
         [CustomComboInfo("Bunshin Feature", "Adds Bunshin and Phantom Kamaitachi to the combo.", NIN.JobID)]
         NinSimpleAoeBunshin = 10030,
+
+        [ParentCombo(NinSimpleSingleTarget)]
+        [CustomComboInfo("Add Mug", "Adds Mug to this Simple Feature.", NIN.JobID, 2)]
+        NinSimpleMug = 10031,
+
+        [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash", NIN.JobID, 8)]
+        NinHuraijinArmorCrush = 10032,
 
         #endregion
         // ====================================================================================
@@ -1668,7 +1691,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Soteria into Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 0, "Spoopy into Kpoopy", "Don't forget your danc- uh, heal partner!")]
         SageKardiaFeature = 14000,
 
-        [CustomComboInfo("Rhizomata Feature###SGENormal", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
+        [CustomComboInfo("Rhizomata Feature#", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
         SageRhizomataFeature = 14001,
 
         [CustomComboInfo("Taurochole into Druochole Feature", "Replaces Taurochole with Druochole when Taurochole is on cooldown.", SGE.JobID, 0, "This for that", "They do the same thing, really. If you close your eyes.")]
@@ -1677,13 +1700,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Phlegma into X Feature", "Does nothing on it's own, must choose any/all sub-features!", SGE.JobID, 0, "", "Phlegmaballs.")]
         SagePhlegmaFeature = 14031,
 
-            [ParentCombo(SagePhlegmaFeature)]
-            [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
-            SagePhlegmaToxikonFeature = 14003,
+        [ParentCombo(SagePhlegmaFeature)]
+        [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+        SagePhlegmaToxikonFeature = 14003,
 
-            [ParentCombo(SagePhlegmaFeature)]
-            [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-            SagePhlegmaDyskrasiaFeature = 14004,
+        [ParentCombo(SagePhlegmaFeature)]
+        [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+        SagePhlegmaDyskrasiaFeature = 14004,
 
         [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
         SageDPSFeature = 14005,
@@ -1693,9 +1716,9 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
             SageDPSFeatureAdvTest = 14009,
 
-            [ParentCombo(SageDPSFeature)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
-            SageLucidFeature = 14006,
+        [ParentCombo(SageDPSFeature)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
+        SageLucidFeature = 14006,
 
             [ParentCombo(SageDPSFeature)]
             [ConflictingCombos(SageDPSFeatureAdvTest)]
@@ -1729,7 +1752,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
         CustomSoteriaFeature = 14015,
-        
+
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
         CustomZoeFeature = 14016,
@@ -1747,9 +1770,9 @@ namespace XIVSlothComboPlugin
         CustomHaimaFeature = 14019,
 
         [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature###SGEST", "Adds Rhizomata when Addersgall is 0###SGEST", SGE.JobID, 0)]
+        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
         RhizomataFeature = 14020,
-        
+
         [ParentCombo(SageSingleTargetHealFeature)]
         [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
         CustomKrasisFeature = 14021,
@@ -1783,7 +1806,7 @@ namespace XIVSlothComboPlugin
         KeracholeFeature = 14028,
 
         [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature###SGEAOE", "Adds Rhizomata when Addersgall is 0###SGEAOE", SGE.JobID, 0)]
+        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
         RhizomataFeatureAoE = 14029,
 
         [ParentCombo(SageSingleTargetHealFeature)]
@@ -2149,7 +2172,7 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID)]
         WarriorPrimalRendOnInnerRelease = 18019,
-        
+
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo.", WAR.JobID)]
         WarriorIRonST = 18020,
@@ -2265,74 +2288,115 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region PvP Combos
 
-        [SecretCustomCombo]
-        [CustomComboInfo("BurstShotFeature", "Adds Shadowbite/EmpyArrow/PitchPerfect(3stacks)/SideWinder(When Target is low hp)/ApexArrow when gauge is 100 all on one button combo.", BRDPvP.JobID)]
-        BurstShotFeaturePVP = 80000,
+        //[SecretCustomCombo]
+        //[CustomComboInfo("BurstShotFeature", "Adds Shadowbite/EmpyArrow/PitchPerfect(3stacks)/SideWinder(When Target is low hp)/ApexArrow when gauge is 100 all on one button combo.", BRDPvP.JobID)]
+        //BurstShotFeaturePVP = 80000,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("SongsFeature", "Replaces WanderersMinnuet and Peons song all on one button in an optimal order", BRDPvP.JobID)]
+        //SongsFeaturePVP = 80001,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("SouleaterComboFeature", "Adds EoS as oGCD onto main combo and Bloodspiller when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
+        //SouleaterComboFeature = 80002,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("StalwartSoulComboFeature", "Adds FoS as oGCD onto main combo and Quietus when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
+        //StalwartSoulComboFeature = 80003,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("StormsPathComboFeature", "Replaces Storm's Path Combo with FellCleave/IC when at 50 gauge or under IR", WARPVP.JobID)]
+        //StormsPathComboFeature = 80004,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("SteelCycloneFeature", "Replaces Steel Cyclone Combo with Decimate/CC when at 50 gauge or under IR", WARPVP.JobID)]
+        //SteelCycloneFeature = 80005,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("RoyalAuthorityComboFeature", "Adds HolySpirit To the main combo", PLDPVP.JobID)]
+        //RoyalAuthorityComboFeature = 80006,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("ProminenceComboFeature", "Adds HolyCircle to the main AoE Combo", PLDPVP.JobID)]
+        //ProminenceComboFeature = 80007,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("GnashingFangComboFeature", "Adds BowShock(When target is meleeRange) and Burststrike at 2 ammo gauge to the main combo", GNBPVP.JobID)]
+        //SolidBarrelComboFeature = 80008,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("DemonSlaughterComboFeature", "Adds BowShock(When target is meleeRange) and Fated Circle at 2 ammo gauge to the main AoE combo", GNBPVP.JobID)]
+        //DemonSlaughterComboFeature = 80009,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
+        //InfernalSliceComboFeature = 80012,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("NightmareScytheComboFeature", "Adds Gluttony/GrimSwathe/Smite/EnshroudComboRotation on InfernalScytheCombo", RPRPVP.JobID)]
+        //NightmareScytheComboFeature = 80013,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("NinjaAeolianEdgePvpCombo", "Adds Cha/Assassinate/Smite on AeolianEdge combo", NINPVP.JobID)]
+        //NinjaAeolianEdgePvpCombo = 80014,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("MnkBootshinePvPFeature", "Adds Axekick/Smite/TornadoKick on main combo", MNKPVP.JobID)]
+        //MnkBootshinePvPFeature = 80015,
+
+        //[SecretCustomCombo]
+        //[CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
+        //BlackEnochianPVPFeature = 80016,
 
         [SecretCustomCombo]
-        [CustomComboInfo("SongsFeature", "Replaces WanderersMinnuet and Peons song all on one button in an optimal order", BRDPvP.JobID)]
-        SongsFeaturePVP = 80001,
+        [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
+        MCHBurstMode = 80010,
+        
+        [SecretCustomCombo]
+        [ParentCombo(MCHBurstMode)]
+        [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
+        MCHAltDrill = 80011,
 
         [SecretCustomCombo]
-        [CustomComboInfo("SouleaterComboFeature", "Adds EoS as oGCD onto main combo and Bloodspiller when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
-        SouleaterComboFeature = 80002,
+        [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
+        BRDBurstMode = 80017,
 
         [SecretCustomCombo]
-        [CustomComboInfo("StalwartSoulComboFeature", "Adds FoS as oGCD onto main combo and Quietus when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
-        StalwartSoulComboFeature = 80003,
+        [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
+        RDMBurstMode = 80018,
 
         [SecretCustomCombo]
-        [CustomComboInfo("StormsPathComboFeature", "Replaces Storm's Path Combo with FellCleave/IC when at 50 gauge or under IR", WARPVP.JobID)]
-        StormsPathComboFeature = 80004,
+        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
+        WARBurstMode = 80019,
+
+        [ConflictingCombos(NINAoEBurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
+        NINBurstMode = 80020,
+
+        [ConflictingCombos(NINBurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
+        NINAoEBurstMode = 80021,
 
         [SecretCustomCombo]
-        [CustomComboInfo("SteelCycloneFeature", "Replaces Steel Cyclone Combo with Decimate/CC when at 50 gauge or under IR", WARPVP.JobID)]
-        SteelCycloneFeature = 80005,
+        [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
+        SGEBurstMode = 80022,
+
+        #endregion
+        // ====================================================================================
+        #region PvPGlobals
+        [SecretCustomCombo]
+        [CustomComboInfo("Emergency Heals", "Uses Recuperate when your HP is under a certain threshold and you have the MP.", ADV.JobID)]
+        PVPEmergencyHeals = 90000,
 
         [SecretCustomCombo]
-        [CustomComboInfo("RoyalAuthorityComboFeature", "Adds HolySpirit To the main combo", PLDPVP.JobID)]
-        RoyalAuthorityComboFeature = 80006,
+        [CustomComboInfo("Emergency Guard", "Uses Guard when your HP is under a certain threshold.", ADV.JobID)]
+        PVPEmergencyGuard = 90001,
 
         [SecretCustomCombo]
-        [CustomComboInfo("ProminenceComboFeature", "Adds HolyCircle to the main AoE Combo", PLDPVP.JobID)]
-        ProminenceComboFeature = 80007,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("GnashingFangComboFeature", "Adds BowShock(When target is meleeRange) and Burststrike at 2 ammo gauge to the main combo", GNBPVP.JobID)]
-        SolidBarrelComboFeature = 80008,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("DemonSlaughterComboFeature", "Adds BowShock(When target is meleeRange) and Fated Circle at 2 ammo gauge to the main AoE combo", GNBPVP.JobID)]
-        DemonSlaughterComboFeature = 80009,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("HeatedCleanShotFeature", "Adds Gauss/Rico weave to maincombo", MCHPVP.JobID)]
-        HeatedCleanShotFeature = 80010,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("WildfireBlankFeature", "Adds Blank To Wildfire if you are in melee Range", MCHPVP.JobID)]
-        WildfireBlankFeature = 80011,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
-        InfernalSliceComboFeature = 80012,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("NightmareScytheComboFeature", "Adds Gluttony/GrimSwathe/Smite/EnshroudComboRotation on InfernalScytheCombo", RPRPVP.JobID)]
-        NightmareScytheComboFeature = 80013,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("NinjaAeolianEdgePvpCombo", "Adds Cha/Assassinate/Smite on AeolianEdge combo", NINPVP.JobID)]
-        NinjaAeolianEdgePvpCombo = 80014,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("MnkBootshinePvPFeature", "Adds Axekick/Smite/TornadoKick on main combo", MNKPVP.JobID)]
-        MnkBootshinePvPFeature = 80015,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
-        BlackEnochianPVPFeature = 80016,
-
+        [CustomComboInfo("Quick Purify", "Uses Purify when afflicted with any selected debuff.", ADV.JobID)]
+        PVPQuickPurify = 90002,
 
         #endregion
     }
