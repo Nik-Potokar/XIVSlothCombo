@@ -258,8 +258,9 @@ namespace XIVSlothComboPlugin.Combos
                         //Get our Target, override with Target of Target if needed
                         GameObject? OurTarget = IsEnabled(CustomComboPreset.SageDPSFeatureToT) ? CurrentTarget.TargetObject : CurrentTarget;
 
-                        //Check for null and not a BattleNPC, bail
-                        if (OurTarget?.ObjectKind is not ObjectKind.BattleNpc) return actionID;
+                        //If Null or not a BattleNPC Enemy, bail (Subkind checking for chocobo ToT support)
+                        if ((OurTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy) return actionID;
+
 
                         //Eukrasian Dosis var
                         Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
