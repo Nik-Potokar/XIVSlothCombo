@@ -279,13 +279,13 @@ namespace XIVSlothComboPlugin.Combos
 
                             //Delayed Delirium
                             if (IsEnabled(CustomComboPreset.DelayedDeliriumFeatureOption) &&
-                                ((gauge.ShadowTimeRemaining > 1 && GetBuffRemainingTime(DRK.Buffs.Delirium) <= 10 && GetBuffRemainingTime(DRK.Buffs.Delirium) > 0) || 
+                                ((gauge.ShadowTimeRemaining > 1 && GetBuffRemainingTime(DRK.Buffs.Delirium) <= 10 && GetBuffRemainingTime(DRK.Buffs.Delirium) > 0) ||
                                 (HasEffect(DRK.Buffs.Delirium) && GetCooldownRemainingTime(DRK.LivingShadow) > 50)))
-                   
+
                                 return DRK.Bloodspiller;
 
                             //Blood management before Delirium
-                            if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && ((gauge.Blood >= 50 && GetCooldownRemainingTime(DRK.BloodWeapon) < 6 && GetCooldownRemainingTime(DRK.Delirium) > 0) || (IsOffCooldown(DRK.Delirium) && gauge.Blood >=50)))
+                            if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && ((gauge.Blood >= 50 && GetCooldownRemainingTime(DRK.BloodWeapon) < 6 && GetCooldownRemainingTime(DRK.Delirium) > 0) || (IsOffCooldown(DRK.Delirium) && gauge.Blood >= 50)))
                                 return DRK.Bloodspiller;
                         }
 

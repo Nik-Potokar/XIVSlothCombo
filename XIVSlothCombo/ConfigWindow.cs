@@ -119,7 +119,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.11.0\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.11.1\n- with love from Team Sloth.");
             ImGui.TextWrapped($@"Big Thanks to attick and daemitus for creating most of the original code, as well as Grammernatzi and PrincessRTFM for providing a lot of extra tweaks and inspiration. Please show them support for their original work! <3");
             ImGui.TextWrapped("Brought to you with love and sloth, by: Aki, Iaotle, Codemned, damolitionn, k-kz, Taurenkey, Augporto, grimgal and many other contributors!");
             ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!");
@@ -597,7 +597,10 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BARD
             if (preset == CustomComboPreset.BardSimpleRagingJaws)
-                ConfigWindowFunctions.DrawSliderFloat(0, 3, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
+                ConfigWindowFunctions.DrawSliderInt(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
+
+            if (preset == CustomComboPreset.BardSimpleNoWasteMode)
+                ConfigWindowFunctions.DrawSliderInt(1, 5, BRD.Config.NoWasteHPPercentage, "Remaining target HP percentage");
 
             #endregion
             // ====================================================================================
@@ -688,10 +691,10 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.NinSimpleTrickFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
 
-            /*
+            
             if (preset == CustomComboPreset.NinjaHuraijinFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
-            */
+            
 
             if (preset == CustomComboPreset.NinAeolianMugFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
@@ -702,29 +705,11 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PALADIN
-            if (preset == CustomComboPreset.PaladinFightOrFlightFeature)
-            {
-                var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
-                var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
+            if (preset == CustomComboPreset.PaladinAtonementFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
 
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
-
-
-
-
-                if (inputChanged)
-                {
-                    Service.Configuration.CustomGCDValueHigh = CustomGCDValueHigh;
-                    Service.Configuration.CustomGCDValueLow = CustomGCDValueLow;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
+            if (preset == CustomComboPreset.PaladinInterveneFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLDKeepInterveneCharges, "How many charges to keep ready? (0 = Use All)");
 
             //if (preset == CustomComboPreset.SkillCooldownRemaining)
             //{
