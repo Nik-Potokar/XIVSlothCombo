@@ -50,32 +50,33 @@ namespace XIVSlothComboPlugin.Combos
                 var canWeave = CanWeave(actionID); 
                 var analysisStacks = GetRemainingCharges(MCHPVP.Analysis);
                 var bigDamageStacks = GetRemainingCharges(OriginalHook(MCHPVP.Drill));
+                var overheated = HasEffect(MCHPVP.Buffs.Overheated);
 
-                uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                if (globalAction != actionID) return globalAction;
+                //if (globalAction != actionID) return globalAction;
 
                 if (canWeave && HasEffect(MCHPVP.Buffs.Overheated) && IsOffCooldown(MCHPVP.Wildfire))
                     return OriginalHook(MCHPVP.Wildfire);
 
-                if (HasEffect(MCHPVP.Buffs.Overheated))
+                if (overheated)
                     return OriginalHook(MCHPVP.HeatBlast);
 
                 if ((HasEffect(MCHPVP.Buffs.DrillPrimed) || HasEffect(MCHPVP.Buffs.ChainSawPrimed)) && 
                     !HasEffect(MCHPVP.Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHAltDrill)
-                    || IsOnCooldown(MCHPVP.Wildfire)))
+                    || IsOnCooldown(MCHPVP.Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
                     return OriginalHook(MCHPVP.Analysis);
 
                 if (HasEffect(MCHPVP.Buffs.Analysis) && HasEffect(MCHPVP.Buffs.DrillPrimed) && bigDamageStacks > 0)
                     return OriginalHook(MCHPVP.Drill);
 
-                if (HasEffect(MCHPVP.Buffs.BioblasterPrimed) && bigDamageStacks > 0)
+                if (HasEffect(MCHPVP.Buffs.BioblasterPrimed) && bigDamageStacks > 0 && GetTargetDistance() <= 12)
                     return OriginalHook(MCHPVP.BioBlaster);
 
                 if (HasEffect(MCHPVP.Buffs.AirAnchorPrimed) && bigDamageStacks > 0)
                     return OriginalHook(MCHPVP.AirAnchor);
 
-                if (HasEffect(MCHPVP.Buffs.ChainSawPrimed) && bigDamageStacks > 0)
+                if (HasEffect(MCHPVP.Buffs.Analysis) && HasEffect(MCHPVP.Buffs.ChainSawPrimed) && bigDamageStacks > 0)
                     return OriginalHook(MCHPVP.ChainSaw);
 
 

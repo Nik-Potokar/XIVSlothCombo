@@ -97,7 +97,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                RagingJawsRenewTime = "ragingJawsRenewTime";
+                RagingJawsRenewTime = "ragingJawsRenewTime",
+                NoWasteHPPercentage = "noWasteHpPercentage";
         }
 
         internal static bool SongIsNotNone(Song value)
@@ -990,7 +991,8 @@ namespace XIVSlothComboPlugin.Combos
                     return BRD.HeadGraze;
                 }
                 
-                var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleRaidMode) ? true : CustomCombo.EnemyHealthPercentage() > 1;
+                var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleNoWasteMode) ?
+                    CustomCombo.EnemyHealthPercentage() > Service.Configuration.GetCustomFloatValue(BRD.Config.NoWasteHPPercentage) : true;
 
                 if (IsEnabled(CustomComboPreset.SimpleSongOption) && canWeave && isEnemyHealthHigh)
                 {
@@ -1150,7 +1152,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     var ragingStrikesDuration = FindEffect(BRD.Buffs.RagingStrikes);
 
-                    var ragingJawsRenewTime = Service.Configuration.GetCustomConfigValue(BRD.Config.RagingJawsRenewTime);
+                    var ragingJawsRenewTime = Service.Configuration.GetCustomFloatValue(BRD.Config.RagingJawsRenewTime);
 
                     DotRecast poisonRecast = delegate (int duration)
                     {

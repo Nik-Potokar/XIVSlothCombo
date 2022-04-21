@@ -84,7 +84,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("DEBUG MODE", "OUTPUTS DEBUG INFO. PLEASE USE THE /XLDEV COMMAND AND OPEN THE LOG WINDOW AND SET LOG LEVEL TO DEBUG.", 0)]
         DEBUG = 99998,
 #endif
-#endregion
+        #endregion
         // ====================================================================================
         #region ADV
         #endregion
@@ -102,6 +102,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ASTROLOGIAN
 
+        [ConflictingCombos(AstrologianAutoDrawFeature,AstrologianDpsAoEFeature)]
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 0, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
         AstrologianCardsOnDrawFeaturelikewhat = 1000,
 
@@ -133,12 +134,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 0, "HELIOSCOPTER", "HELIOSCOPTER HELIOSCOPTER")]
         AstrologianHeliosFeature = 1010,
 
+        [ConflictingCombos(AstrologianCardsOnDrawFeaturelikewhat)]
         [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature", AST.JobID, 0, "Kaiba Feature", "You just activated my trap card!")]
         AstrologianAutoDrawFeature = 1011,
 
         [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, 0, "Kaiba 2, Electric Boogaloo", "It's a trap!")]
         AstrologianAutoCrownDrawFeature = 1012,
 
+        [ConflictingCombos(AstrologianCardsOnDrawFeaturelikewhat)]
         [CustomComboInfo("AoE DPS Feature", "Adds AutoDraws/Astrodyne to the AoE Gravity combo", AST.JobID, 0, "A bowlful of cards", "Oops! All AoE!")]
         AstrologianDpsAoEFeature = 1013,
 
@@ -204,8 +207,12 @@ namespace XIVSlothComboPlugin
         AstrologianTargetLock = 1030,
 
         [ParentCombo(AstAutoCardTarget)]
-        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for auto card target selection", AST.JobID)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
         AstrologianTargetExtraFeature = 1031,
+
+        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+        [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
+        AstRedrawFeature = 1032,
 
 
         #endregion
@@ -407,8 +414,8 @@ namespace XIVSlothComboPlugin
         BardSimpleBuffsRadiantFeature = 3018,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Raid Mode", "Removes enemy health checking on mobs for buffs, dots and songs.", BRD.JobID, 0, "But Muh Parse", "Just slings all the shit, all the time!")]
-        BardSimpleRaidMode = 3019,
+        [CustomComboInfo("Simple No Waste Mode", "Adds enemy health checking on mobs for buffs, dots and songs.\nThey will not be reapplied if less than specified.", BRD.JobID, 0, "But Muh Parse", "Just slings all the shit, all the time!")]
+        BardSimpleNoWasteMode = 3019,
 
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, 0, "Simple Interr-", "Excuse me, I wa-")]
@@ -645,6 +652,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Buffs on Main Combo", "Collection of Buffs to add to Main Combo", DRK.JobID)]
         DarkMainComboBuffsGroup = 5098,
 
+        [ConflictingCombos(DarkoGCDFeature)]
         [ParentCombo(DarkSouleaterCombo)]
         [CustomComboInfo("CDs on Main Combo", "Collection of CDs to add to Main Combo", DRK.JobID)]
         DarkMainComboCDsGroup = 5099,
@@ -671,6 +679,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "Something about mana", "You're basically a black mage! Well done!")]
         DarkManaOvercapFeature = 5005,
 
+        [ConflictingCombos(DarkMainComboCDsGroup)]
         [CustomComboInfo("oGCD Feature", "Adds Living Shadow > Salted Earth > Carve And Spit > Salt And Darkness to Carve And Spit and Abysal Drain", DRK.JobID, 0, "", "Just does your whole job for you, really")]
         DarkoGCDFeature = 5006,
 
@@ -1192,9 +1201,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE Combo.", MNK.JobID, 0, "", "It's maths, but for your AoE combo!")]
         MonkMasterfulBlitzOnAoECombo = 9009,
 
-        [CustomComboInfo("Forbidden Chakra Feature", "Adds Forbidden Chakra/Enlightement to the Main/AoE feature combo. Testing Only for now!", MNK.JobID, 0, "But, wait!", "Mom said no! It's forbidden!")]
-        MonkForbiddenChakraFeature = 9010,
-
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Riddle me this, brotha'")]
         MnkRiddleOfFireBrotherhoodFeature = 9012,
 
@@ -1214,12 +1220,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the Main Combo.", MNK.JobID, 0, "", "")]
         MnkBrotherhoodOnMainComboFeature = 9016,
 
-        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [ParentCombo(MnkBootshineCombo)]
         [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the Main Combo.", MNK.JobID, 0, "", "")]
         MnkMeditationOnMainComboFeature = 9017,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. This requires at least a 1.94 GCD.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. A 1.93 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
 
         [ParentCombo(MnkArmOfTheDestroyerCombo)]
@@ -1238,7 +1244,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Brotherhood on AoE Combo", "Adds Brotherhood to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkBrotherhoodOnAoEComboFeature = 9022,
 
-        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [ParentCombo(MnkArmOfTheDestroyerCombo)]
         [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkMeditationOnAoEComboFeature = 9023,
 
@@ -1737,81 +1743,84 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
         SageSingleTargetHealFeature = 14011,
 
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
+            AutoApplyKardia = 14013,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
+            CustomEukrasianDiagnosisFeature = 14014,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomSoteriaFeature = 14015,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomZoeFeature = 14016,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomPepsisFeature = 14017,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomTaurocholeFeature = 14018,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomHaimaFeature = 14019,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+            RhizomataFeature = 14020,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomKrasisFeature = 14021,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomDruocholeFeature = 14030,
+
         [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
         [CustomComboInfo("Sage AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 0)]
         SageAoEHealFeature = 14012,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
-        AutoApplyKardia = 14013,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
+            PhysisFeature = 14022,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
-        CustomEukrasianDiagnosisFeature = 14014,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
+            EukrasianPrognosisFeature = 14023,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomSoteriaFeature = 14015,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
+            HolosFeature = 14024,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomZoeFeature = 14016,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
+            PanhaimaFeature = 14025,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomPepsisFeature = 14017,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
+            PepsisFeature = 14026,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomTaurocholeFeature = 14018,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
+            IxocholeFeature = 14027,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomHaimaFeature = 14019,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
+            KeracholeFeature = 14028,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeature = 14020,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+            RhizomataFeatureAoE = 14029,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomKrasisFeature = 14021,
+        //20220420: Last ID Used is 14032
 
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
-        PhysisFeature = 14022,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
-        EukrasianPrognosisFeature = 14023,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
-        HolosFeature = 14024,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
-        PanhaimaFeature = 14025,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
-        PepsisFeature = 14026,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
-        IxocholeFeature = 14027,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
-        KeracholeFeature = 14028,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeatureAoE = 14029,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomDruocholeFeature = 14030,
 
         #endregion
         // ====================================================================================
@@ -1954,7 +1963,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 0, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 0, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
+        [ParentCombo(EgisOnRuinFeature)]
+        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
         [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Slipstream", "2 Fast 2 Furious")]
@@ -1993,11 +2003,11 @@ namespace XIVSlothComboPlugin
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Adds Egi Summons to Ruin.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 0)]
         EgisOnRuinFeature = 17015,
         
         [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 1)]
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2026,12 +2036,12 @@ namespace XIVSlothComboPlugin
         
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
-        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 0, "No Raising for me!", "Always slips swiftstream, sometimes")]
+        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 1, "No Raising for me!", "Always slips swiftstream, sometimes")]
         SummonerSwiftcastFeatureGaruda = 17023,
 
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
-        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 0, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
+        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 1, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
         SummonerSwiftcastFeatureIfrit = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
