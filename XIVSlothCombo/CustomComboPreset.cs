@@ -1201,9 +1201,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE Combo.", MNK.JobID, 0, "", "It's maths, but for your AoE combo!")]
         MonkMasterfulBlitzOnAoECombo = 9009,
 
-        [CustomComboInfo("Forbidden Chakra Feature", "Adds Forbidden Chakra/Enlightement to the Main/AoE feature combo. Testing Only for now!", MNK.JobID, 0, "But, wait!", "Mom said no! It's forbidden!")]
-        MonkForbiddenChakraFeature = 9010,
-
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Riddle me this, brotha'")]
         MnkRiddleOfFireBrotherhoodFeature = 9012,
 
@@ -1223,12 +1220,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the Main Combo.", MNK.JobID, 0, "", "")]
         MnkBrotherhoodOnMainComboFeature = 9016,
 
-        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [ParentCombo(MnkBootshineCombo)]
         [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the Main Combo.", MNK.JobID, 0, "", "")]
         MnkMeditationOnMainComboFeature = 9017,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. This requires at least a 1.94 GCD.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. A 1.93 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
 
         [ParentCombo(MnkArmOfTheDestroyerCombo)]
@@ -1247,7 +1244,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Brotherhood on AoE Combo", "Adds Brotherhood to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkBrotherhoodOnAoEComboFeature = 9022,
 
-        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [ParentCombo(MnkArmOfTheDestroyerCombo)]
         [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkMeditationOnAoEComboFeature = 9023,
 
