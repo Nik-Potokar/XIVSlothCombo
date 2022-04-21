@@ -2229,7 +2229,7 @@ namespace XIVSlothComboPlugin
         WHMBenisonGCDOption = 19022,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
-        [CustomComboInfo("No Swift Opener Option", "Delays all oGCDs until after 3rd Glare 3 cast.", WHM.JobID, 0, "Cover me, Porkins.", "Almost there... Almost there...")]
+        [CustomComboInfo("No Swift Opener Option", "Delays all oGCDs until after 3rd Glare 3 cast.\n>> Glare III ONLY <<", WHM.JobID, 0, "Cover me, Porkins.", "Almost there... Almost there...")]
         WHMNoSwiftOpenerOption = 19023,
 
         #endregion
