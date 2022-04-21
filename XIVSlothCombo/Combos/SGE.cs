@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Enums;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -258,7 +259,7 @@ namespace XIVSlothComboPlugin.Combos
                         GameObject? OurTarget = IsEnabled(CustomComboPreset.SageDPSFeatureToT) ? CurrentTarget.TargetObject : CurrentTarget;
 
                         //Check for null and not a BattleNPC, bail
-                        if (OurTarget?.ObjectKind is not Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) return actionID;
+                        if (OurTarget?.ObjectKind is not ObjectKind.BattleNpc) return actionID;
 
                         //Eukrasian Dosis var
                         Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
@@ -401,7 +402,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.AutoApplyKardia) && (Kardion is null) && (Kardia is null))
                     return SGE.Kardia;
 
-                if (CurrentTarget?.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player)
+                if (CurrentTarget?.ObjectKind is ObjectKind.Player)
                 {
 
                     if (IsEnabled(CustomComboPreset.CustomSoteriaFeature) && SoteriaCD.CooldownRemaining is 0 && level >= SGE.Levels.Soteria && EnemyHealthPercentage() <= CustomSoteria)
