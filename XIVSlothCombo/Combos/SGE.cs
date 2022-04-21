@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -253,19 +254,11 @@ namespace XIVSlothComboPlugin.Combos
                     //If we're too low level to use Eukrasia, we can stop here.
                     if (level >= SGE.Levels.Eukrasia)
                     {
-                        //Presume current Target is hostile npc target
-                        var Ourtarget = CurrentTarget;
-                        //Check if we're not targetting a Hostile NPC, are we attempting ToT?
-                        if (CurrentTarget.ObjectKind is not Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
-                        {
-                            //If ToT is enabled, and if it's a BattleNPC, Return that target
-                            if ( (CurrentTarget.TargetObject.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) &&
-                                 IsEnabled(CustomComboPreset.SageDPSFeatureToT) )
-                                //Set Ourtarget as the Target of Target
-                                Ourtarget = CurrentTarget.TargetObject;
-                            //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
-                            else return actionID;
-                        }
+                        //Get our Target, override with Target of Target if needed
+                        GameObject? OurTarget = IsEnabled(CustomComboPreset.SageDPSFeatureToT) ? CurrentTarget.TargetObject : CurrentTarget;
+
+                        //Check for null and not a BattleNPC, bail
+                        if (OurTarget?.ObjectKind is not Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc) return actionID;
 
                         //Eukrasian Dosis var
                         Dalamud.Game.ClientState.Statuses.Status? DosisDebuffID;
@@ -275,13 +268,13 @@ namespace XIVSlothComboPlugin.Combos
                         switch (level)
                         {
                             case >= SGE.Levels.Dosis3: //Using FindEffect b/c we have a custom Target variable
-                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis3, Ourtarget, LocalPlayer?.ObjectId); 
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis3, OurTarget, LocalPlayer?.ObjectId); 
                                 break;
                             case >= SGE.Levels.Dosis2:
-                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis2, Ourtarget, LocalPlayer?.ObjectId);
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis2, OurTarget, LocalPlayer?.ObjectId);
                                 break;
                             default: //Ekrasia Dosis unlocks with Eukrasia, checked at the start
-                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis1, Ourtarget, LocalPlayer?.ObjectId);
+                                DosisDebuffID = FindEffect(SGE.Debuffs.EukrasianDosis1, OurTarget, LocalPlayer?.ObjectId);
                                 break;
                         }
                         if (HasEffect(SGE.Buffs.Eukrasia))
@@ -408,7 +401,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.AutoApplyKardia) && (Kardion is null) && (Kardia is null))
                     return SGE.Kardia;
 
-                if (CurrentTarget.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player)
+                if (CurrentTarget?.ObjectKind is Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Player)
                 {
 
                     if (IsEnabled(CustomComboPreset.CustomSoteriaFeature) && SoteriaCD.CooldownRemaining is 0 && level >= SGE.Levels.Soteria && EnemyHealthPercentage() <= CustomSoteria)
