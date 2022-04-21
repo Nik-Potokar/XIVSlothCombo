@@ -599,6 +599,9 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.BardSimpleRagingJaws)
                 ConfigWindowFunctions.DrawSliderFloat(0, 3, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
+            if (preset == CustomComboPreset.BardSimpleNoWasteMode)
+                ConfigWindowFunctions.DrawSliderInt(1, 5, BRD.Config.NoWasteHPPercentage, "Remaining target HP percentage");
+
             #endregion
             // ====================================================================================
             #region DANCER

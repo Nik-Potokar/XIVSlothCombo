@@ -407,8 +407,8 @@ namespace XIVSlothComboPlugin
         BardSimpleBuffsRadiantFeature = 3018,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Raid Mode", "Removes enemy health checking on mobs for buffs, dots and songs.", BRD.JobID, 0, "But Muh Parse", "Just slings all the shit, all the time!")]
-        BardSimpleRaidMode = 3019,
+        [CustomComboInfo("Simple No Waste Mode", "Adds enemy health checking on mobs for buffs, dots and songs.\nThey will not be reapplied if less than specified.", BRD.JobID, 0, "But Muh Parse", "Just slings all the shit, all the time!")]
+        BardSimpleNoWasteMode = 3019,
 
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, 0, "Simple Interr-", "Excuse me, I wa-")]
