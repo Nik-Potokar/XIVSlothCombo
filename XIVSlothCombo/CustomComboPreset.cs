@@ -1743,81 +1743,84 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
         SageSingleTargetHealFeature = 14011,
 
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
+            AutoApplyKardia = 14013,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
+            CustomEukrasianDiagnosisFeature = 14014,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomSoteriaFeature = 14015,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomZoeFeature = 14016,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomPepsisFeature = 14017,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomTaurocholeFeature = 14018,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomHaimaFeature = 14019,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+            RhizomataFeature = 14020,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomKrasisFeature = 14021,
+
+            [ParentCombo(SageSingleTargetHealFeature)]
+            [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+            CustomDruocholeFeature = 14030,
+
         [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
         [CustomComboInfo("Sage AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 0)]
         SageAoEHealFeature = 14012,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
-        AutoApplyKardia = 14013,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
+            PhysisFeature = 14022,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
-        CustomEukrasianDiagnosisFeature = 14014,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
+            EukrasianPrognosisFeature = 14023,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomSoteriaFeature = 14015,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
+            HolosFeature = 14024,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomZoeFeature = 14016,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
+            PanhaimaFeature = 14025,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomPepsisFeature = 14017,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
+            PepsisFeature = 14026,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomTaurocholeFeature = 14018,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
+            IxocholeFeature = 14027,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomHaimaFeature = 14019,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
+            KeracholeFeature = 14028,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeature = 14020,
+            [ParentCombo(SageAoEHealFeature)]
+            [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+            RhizomataFeatureAoE = 14029,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomKrasisFeature = 14021,
+        //20220420: Last ID Used is 14032
 
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
-        PhysisFeature = 14022,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
-        EukrasianPrognosisFeature = 14023,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
-        HolosFeature = 14024,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
-        PanhaimaFeature = 14025,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
-        PepsisFeature = 14026,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
-        IxocholeFeature = 14027,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
-        KeracholeFeature = 14028,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeatureAoE = 14029,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomDruocholeFeature = 14030,
 
         #endregion
         // ====================================================================================
