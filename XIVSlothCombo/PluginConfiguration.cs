@@ -173,7 +173,7 @@ namespace XIVSlothComboPlugin
         public Dictionary<string, byte[]> ImageCache { get; set; } = new();
 
         [JsonProperty]
-        private static Dictionary<string, float> CustomConfigValues { get; set; } = new Dictionary<string, float>();
+        private static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
 
         [JsonProperty]
         private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
@@ -183,18 +183,18 @@ namespace XIVSlothComboPlugin
 
         [JsonProperty]
         private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
-        public float GetCustomConfigValue(string config, float defaultMinValue = 0)
+        public float GetCustomFloatValue(string config, float defaultMinValue = 0)
         {
             float configValue;
 
-            if (!CustomConfigValues.TryGetValue(config, out configValue)) return defaultMinValue;
+            if (!CustomFloatValues.TryGetValue(config, out configValue)) return defaultMinValue;
 
             return configValue;
         }
 
-        public void SetCustomConfigValue(string config, float value)
+        public void SetCustomFloatValue(string config, float value)
         {
-            CustomConfigValues[config] = value;
+            CustomFloatValues[config] = value;
         }
 
         public int GetCustomIntValue(string config, int defaultMinVal = 0)

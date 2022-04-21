@@ -440,7 +440,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 }
 
-                if (canWeaveNormal && gauge.Heat >= 50 && !gauge.IsOverheated && openerFinished && IsOffCooldown(MCH.Wildfire) && level >= MCH.Levels.Wildfire &&
+                if (canWeaveNormal && gauge.Heat >= 50 && openerFinished && IsOffCooldown(MCH.Wildfire) && level >= MCH.Levels.Wildfire &&
                         IsEnabled(CustomComboPreset.MachinistSimpleWildCharge))
                 {
                     if (CombatEngageDuration().Minutes == 0 && GetRemainingCharges(MCH.Reassemble) == 0 && CanDelayedWeave(actionID) ) return MCH.Wildfire;
