@@ -652,6 +652,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Buffs on Main Combo", "Collection of Buffs to add to Main Combo", DRK.JobID)]
         DarkMainComboBuffsGroup = 5098,
 
+        [ConflictingCombos(DarkoGCDFeature)]
         [ParentCombo(DarkSouleaterCombo)]
         [CustomComboInfo("CDs on Main Combo", "Collection of CDs to add to Main Combo", DRK.JobID)]
         DarkMainComboCDsGroup = 5099,
@@ -678,6 +679,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "Something about mana", "You're basically a black mage! Well done!")]
         DarkManaOvercapFeature = 5005,
 
+        [ConflictingCombos(DarkMainComboCDsGroup)]
         [CustomComboInfo("oGCD Feature", "Adds Living Shadow > Salted Earth > Carve And Spit > Salt And Darkness to Carve And Spit and Abysal Drain", DRK.JobID, 0, "", "Just does your whole job for you, really")]
         DarkoGCDFeature = 5006,
 
