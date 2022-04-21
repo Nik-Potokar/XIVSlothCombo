@@ -1934,16 +1934,20 @@ namespace XIVSlothComboPlugin
         MeikyoShisuionST = 15031,
 
         [ParentCombo(MeikyoShisuionST)]
-        [CustomComboInfo("Meikyo Shisui Burst Feature", "Saves Meikyo Shisui for burst windows.", SAM.JobID, 0)]
+        [CustomComboInfo("Meikyo Shisui Burst Feature", "Saves Meikyo Shisui for burst windows.\nIf you don't activate the opener or die, Meikyo Shisui will instead be used on CD.", SAM.JobID, 0)]
         MeikyoShisuiBurstFeature = 15032,
 
         [ParentCombo(SamuraiOgiNamikiriSTFeature)]
-        [CustomComboInfo("Ogi Namikiri Burst Feature", "Saves Ogi Namikiri for even minute burst windows.", SAM.JobID, 0)]
+        [CustomComboInfo("Ogi Namikiri Burst Feature", "Saves Ogi Namikiri for even minute burst windows.\nIf you don't activate the opener or die, Ogi Namikiri will instead be used on CD.", SAM.JobID, 0)]
         OgiNamikiriinBurstFeature = 15033,
 
         [ParentCombo(SeneionST)]
-        [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.", SAM.JobID, 0)]
+        [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.\nIf you don't activate the opener or die, Senei will instead be used on CD.", SAM.JobID, 0)]
         SeneiBurstFeature = 15034,
+
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("Filler Combo Feature", "Adds selected Filler Combos to Main Combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.", SAM.JobID, 0)]
+        SamuraiFillersonMainCombo = 15035,
 
 
         #endregion

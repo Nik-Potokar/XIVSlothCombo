@@ -819,6 +819,13 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
             if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+            //Fillers
+            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
+            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs", 2);
+            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs", 3);
             #endregion
             // ====================================================================================
             #region MONK
