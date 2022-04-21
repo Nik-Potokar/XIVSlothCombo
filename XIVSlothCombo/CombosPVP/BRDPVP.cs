@@ -40,9 +40,9 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (actionID == BRDPvP.PowerfulShot)
                 {
-                    uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+                    //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                    if (globalAction != actionID) return globalAction;
+                    //if (globalAction != actionID) return globalAction;
 
                     if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3)
                         return OriginalHook(BRDPvP.EmpyrealArrow);
