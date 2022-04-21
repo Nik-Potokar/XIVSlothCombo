@@ -1963,7 +1963,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 0, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 0, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
+        [ParentCombo(EgisOnRuinFeature)]
+        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
         [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Slipstream", "2 Fast 2 Furious")]
@@ -2002,11 +2003,11 @@ namespace XIVSlothComboPlugin
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Adds Egi Summons to Ruin.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 0)]
         EgisOnRuinFeature = 17015,
         
         [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 1)]
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2035,12 +2036,12 @@ namespace XIVSlothComboPlugin
         
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
-        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 0, "No Raising for me!", "Always slips swiftstream, sometimes")]
+        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 1, "No Raising for me!", "Always slips swiftstream, sometimes")]
         SummonerSwiftcastFeatureGaruda = 17023,
 
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
-        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 0, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
+        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 1, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
         SummonerSwiftcastFeatureIfrit = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
