@@ -54,7 +54,9 @@ namespace XIVSlothComboPlugin.Combos
                     Dalamud.Logging.PluginLog.Debug($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
                     Dalamud.Logging.PluginLog.Debug($"IN MELEE RANGE: {InMeleeRange()}");
                     Dalamud.Logging.PluginLog.Debug($"LAST COMBO MOVE: {lastComboActionID}");
-                    Dalamud.Logging.PluginLog.Debug($"IN PVP ZONE: {Service.ClientState.IsPvP}");
+                    Dalamud.Logging.PluginLog.Debug($"IN PVP ZONE: {InPvP()}");
+                    Dalamud.Logging.PluginLog.Debug($"ZONE: {Service.ClientState.TerritoryType}");
+
                 }
                 return actionID;
             }

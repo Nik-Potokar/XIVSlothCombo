@@ -803,5 +803,8 @@ namespace XIVSlothComboPlugin.Combos
             P7,
             P8
         }
+
+        protected static bool InPvP()
+            => Service.ClientState.IsPvP || Service.ClientState.TerritoryType == 250;
     }
 }

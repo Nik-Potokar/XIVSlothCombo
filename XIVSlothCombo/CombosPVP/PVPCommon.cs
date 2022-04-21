@@ -39,7 +39,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && Service.ClientState.IsPvP) return PVPCommon.Recuperate;
+                if (Execute() && InPvP()) return PVPCommon.Recuperate;
                 return actionID;
             }
 
@@ -66,7 +66,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && Service.ClientState.IsPvP) return PVPCommon.Guard;
+                if (Execute() && InPvP()) return PVPCommon.Guard;
                 return actionID;
             }
 
@@ -91,7 +91,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && Service.ClientState.IsPvP) return PVPCommon.Purify;
+                if (Execute() && InPvP()) return PVPCommon.Purify;
                 return actionID;
             }
 
