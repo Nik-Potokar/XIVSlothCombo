@@ -76,7 +76,7 @@ namespace XIVSlothComboPlugin
                 var threshold = Service.Configuration.GetCustomIntValue(PVPCommon.Config.EmergencyGuardThreshold);
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
-                if (HasEffectAny(PVPCommon.Debuffs.Unguarded)) return false;
+                if (HasEffectAny(PVPCommon.Debuffs.Unguarded) || HasEffect(WARPVP.Buffs.InnerRelease)) return false;
                 if (GetCooldown(PVPCommon.Guard).IsCooldown) return false;
                 if (remainingPercentage * 100 > threshold) return false;
 
