@@ -702,29 +702,11 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PALADIN
-            if (preset == CustomComboPreset.PaladinFightOrFlightFeature)
-            {
-                var CustomGCDValueHigh = Service.Configuration.CustomGCDValueHigh;
-                var CustomGCDValueLow = Service.Configuration.CustomGCDValueLow;
+            if (preset == CustomComboPreset.PaladinAtonementFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
 
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value Low", ref CustomGCDValueHigh);
-                inputChanged |= ImGui.InputFloat("Input Custom GCD Value For a Skill to be used in-between the GCD Value High", ref CustomGCDValueLow);
-
-
-
-
-                if (inputChanged)
-                {
-                    Service.Configuration.CustomGCDValueHigh = CustomGCDValueHigh;
-                    Service.Configuration.CustomGCDValueLow = CustomGCDValueLow;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
+            if (preset == CustomComboPreset.PaladinInterveneFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLDKeepInterveneCharges, "How many charges to keep ready? (0 = Use All)");
 
             //if (preset == CustomComboPreset.SkillCooldownRemaining)
             //{
