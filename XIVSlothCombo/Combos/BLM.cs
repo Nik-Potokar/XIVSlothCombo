@@ -342,7 +342,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.BlackAoEFoulOption) && level >= BLM.Levels.Manafont && level >= BLM.Levels.Foul)
                 {
-                    if (gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && CanWeave(actionID) && lastComboMove == BLM.Foul)
+                    if (gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && CanSpellWeave(actionID) && lastComboMove == BLM.Foul)
                     {
                         return BLM.Manafont;
                     }
@@ -480,7 +480,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<BLMGauge>();
-                var canWeave = CanWeave(actionID, 0.6);
+                var canWeave = CanSpellWeave(actionID);
                 var currentMP = LocalPlayer.CurrentMp;
 
                 // Opener for BLM
@@ -488,7 +488,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.BlackSimpleOpenerFeature) && level >= BLM.Levels.Foul)
                 {
                     // Only enable sharpcast if it's available
-                    if (!inOpener && !HasEffect(BLM.Buffs.Sharpcast) && (GetRemainingCharges(BLM.Sharpcast) >= 1))
+                    if ((!inOpener || (openerFinished && CanSpellWeave(actionID))) && !HasEffect(BLM.Buffs.Sharpcast) && (GetRemainingCharges(BLM.Sharpcast) >= 1))
                     {
                         return BLM.Sharpcast;
                     }
