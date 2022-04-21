@@ -364,7 +364,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, 0, "Robin Hood Feature", "Steal from Lolorito and give to Garlemald, I guess?\nGood on ya.")]
         BardApexFeature = 3005,
 
-        [ConflictingCombos(SimpleBardFeature, BardSimpleOpener)]
+        [ConflictingCombos(SimpleBardFeature)]
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, 0, "oGCD's spilling everywhere", "The Algorithm between the lines. Trademark")]
         BardoGCDSingleTargetFeature = 3006,
 
@@ -424,10 +424,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disable Apex Arrow", "Removes Apex Arrow from Simple Bard and AoE Feature.", BRD.JobID, 0, "Disable Apex Legends", "Removing features? You? Surely not")]
         BardRemoveApexArrowFeature = 3021,
 
-        [ConflictingCombos(BardoGCDSingleTargetFeature)]
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
-        BardSimpleOpener = 3022,
+        //[ConflictingCombos(BardoGCDSingleTargetFeature)]
+        //[ParentCombo(SimpleBardFeature)]
+        //[CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
+        //BardSimpleOpener = 3022,
 
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple Pooling", "Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
@@ -440,6 +440,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple RagingJaws", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
         BardSimpleRagingJaws = 3025,
+
+        [ParentCombo(SimpleDoTOption)]
+        [CustomComboInfo("Opener Only", "Until the first auto-refresh you can dot new targets automatically.", BRD.JobID, 0, "", "")]
+        BardSimpleDotOpener = 3026,
 
         #endregion
         // ====================================================================================
@@ -1045,6 +1049,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf Air Anchor is on cooldown and you use Reassemble, Chainsaw will be added to main combo instead.", MCH.JobID, 0, "A bit of everything feature", "Don't rub your last two brain-cells together! We got you!")]
         MachinistDrillAirOnMainCombo = 8005,
 
+        [ConflictingCombos(MachinistSimpleFeature)]
         [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge.", MCH.JobID, 0, "So-called 'Heat Blast'", "Basically a large hair-dryer.")]
         MachinistHeatblastGaussRicochetFeature = 8006,
 
