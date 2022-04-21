@@ -56,9 +56,9 @@ namespace XIVSlothComboPlugin
         {
             if (actionID is RDMPVP.Verstone or RDMPVP.Verfire)
             {
-                uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                if (globalAction != actionID) return globalAction;
+                //if (globalAction != actionID) return globalAction;
 
                 if (!GetCooldown(RDMPVP.Frazzle).IsCooldown && HasEffect(RDMPVP.Buffs.BlackShift))
                     return OriginalHook(RDMPVP.Frazzle);

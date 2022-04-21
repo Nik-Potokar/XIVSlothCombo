@@ -28,7 +28,8 @@ namespace XIVSlothComboPlugin
                 HalfAsleep = 3022,
                 Sleep = 1348,
                 DeepFreeze = 3219,
-                Heavy = 1344;
+                Heavy = 1344,
+                Unguarded = 3021;
         }
 
 
@@ -37,8 +38,8 @@ namespace XIVSlothComboPlugin
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PVPEmergencyHeals;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {   
-                if (TargetHasEffect(BRDPvP.Buffs.Repertoire)) { }
+            {
+                if (Execute() && InPvP()) return PVPCommon.Recuperate;
                 return actionID;
             }
 
@@ -65,6 +66,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
+                if (Execute() && InPvP()) return PVPCommon.Guard;
                 return actionID;
             }
 
@@ -74,6 +76,7 @@ namespace XIVSlothComboPlugin
                 var threshold = Service.Configuration.GetCustomIntValue(PVPCommon.Config.EmergencyGuardThreshold);
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
+                if (HasEffectAny(PVPCommon.Debuffs.Unguarded) || HasEffect(WARPVP.Buffs.InnerRelease)) return false;
                 if (GetCooldown(PVPCommon.Guard).IsCooldown) return false;
                 if (remainingPercentage * 100 > threshold) return false;
 
@@ -88,6 +91,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
+                if (Execute() && InPvP()) return PVPCommon.Purify;
                 return actionID;
             }
 
@@ -111,24 +115,6 @@ namespace XIVSlothComboPlugin
             }
         }
 
-        internal class ExecutePVPGlobal : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; }
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {
-                return actionID;
-            }
-
-            public static uint ExecuteGlobal(uint actionId)
-            {
-                if (IsEnabled(CustomComboPreset.PVPQuickPurify) && PVPCommon.QuickPurify.Execute()) return PVPCommon.Purify;
-                if (IsEnabled(CustomComboPreset.PVPEmergencyGuard) && PVPCommon.GlobalEmergencyGuard.Execute()) return PVPCommon.Guard;
-                if (IsEnabled(CustomComboPreset.PVPEmergencyHeals) && PVPCommon.GlobalEmergencyHeals.Execute()) return PVPCommon.Recuperate;
-
-                return actionId;
-            }
-        }
     }
 
 }

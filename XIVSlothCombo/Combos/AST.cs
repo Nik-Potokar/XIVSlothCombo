@@ -1,4 +1,4 @@
-using Dalamud.Game.ClientState.JobGauge.Enums;
+﻿using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using System.Linq;
@@ -36,6 +36,7 @@ namespace XIVSlothComboPlugin.Combos
             LadyOfCrown = 7445,
             Divination = 16552,
             Lightspeed = 3606,
+            Redraw = 3593,
 
             // aoes
             Gravity = 3615,
@@ -82,7 +83,8 @@ namespace XIVSlothComboPlugin.Combos
             HoroscopeHelios = 1891,
             AspectedBenefic = 835,
             NeutralSect = 1892,
-            NeutralSectShield = 1921;
+            NeutralSectShield = 1921,
+            ClarifyingDraw = 2713;
         }
 
         public static class Debuffs
@@ -166,6 +168,56 @@ namespace XIVSlothComboPlugin.Combos
                 Sage = "sage",
                 Conjurer = "conjurer";
         }
+
+        public static class MeleeCardTargetsCN
+        {
+            public const string
+                Monk = "武僧",
+                Dragoon = "龙骑士",
+                Ninja = "忍者",
+                Reaper = "钐镰客",
+                Samurai = "武士",
+                Pugilist = "格斗家",
+                Lancer = "枪术师",
+                Rogue = "双剑师";
+        }
+
+        public static class RangedCardTargetsCN
+        {
+            public const string
+                Bard = "吟游诗人",
+                Machinist = "机工士",
+                Dancer = "舞者",
+                RedMage = "赤魔法师",
+                BlackMage = "黑魔法师",
+                Summoner = "召唤师",
+                BlueMage = "青魔法师",
+                Archer = "弓箭手",
+                Thaumaturge = "咒术师",
+                Arcanist = "秘术师";
+
+        }
+
+        public static class TankCardTargetsCN
+        {
+            public const string
+                Paladin = "骑士",
+                Warrior = "战士",
+                DarkKnight = "暗黑骑士",
+                Gunbreaker = "绝枪战士",
+                Gladiator = "剑术师",
+                Marauder = "斧术师";
+        }
+
+        public static class HealerCardTargetsCN
+        {
+            public const string
+                WhiteMage = "白魔法师",
+                Astrologian = "占星术士",
+                Scholar = "学者",
+                Sage = "贤者",
+                Conjurer = "幻术师";
+        }
     }
 
     internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
@@ -179,12 +231,18 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var gauge = GetJobGauge<ASTGauge>();
                 var haveCard = HasEffect(AST.Buffs.Balance) || HasEffect(AST.Buffs.Bole) || HasEffect(AST.Buffs.Arrow) || HasEffect(AST.Buffs.Spear) || HasEffect(AST.Buffs.Ewer) || HasEffect(AST.Buffs.Spire);
+                var cardDrawn = gauge.DrawnCard;
 
                 if (!gauge.ContainsSeal(SealType.NONE) && IsEnabled(CustomComboPreset.AstrologianAstrodyneOnPlayFeature) && (gauge.DrawnCard != CardType.NONE || GetCooldown(AST.Draw).CooldownRemaining > 30))
                     return AST.Astrodyne;
 
                 if (haveCard)
                 {
+                    if (HasEffect(AST.Buffs.ClarifyingDraw) && IsEnabled(CustomComboPreset.AstRedrawFeature))
+                    {
+                        if ((cardDrawn == CardType.BALANCE && gauge.Seals.Contains(SealType.SUN)) || (cardDrawn == CardType.ARROW && gauge.Seals.Contains(SealType.MOON)) || (cardDrawn == CardType.SPEAR && gauge.Seals.Contains(SealType.CELESTIAL)) || (cardDrawn == CardType.BOLE && gauge.Seals.Contains(SealType.SUN)) || (cardDrawn == CardType.EWER && gauge.Seals.Contains(SealType.MOON)) || (cardDrawn == CardType.SPIRE && gauge.Seals.Contains(SealType.CELESTIAL)))
+                            return AST.Redraw;
+                    }
                     if (IsEnabled(CustomComboPreset.AstAutoCardTarget))
                     {
                         if (GetTarget || (IsEnabled(CustomComboPreset.AstrologianTargetLock)))
@@ -230,7 +288,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                 {
-                    if (typeof(AST.MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                    if (typeof(AST.MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                     {
                         TargetPartyMember(member);
                         GetTarget = false;
@@ -240,7 +298,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                 {
-                    if (typeof(AST.RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                    if (typeof(AST.RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                     {
                         TargetPartyMember(member);
                         GetTarget = false;
@@ -268,7 +326,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                     {
-                        if (typeof(AST.TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(AST.TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetPartyMember(member);
                             GetTarget = false;
@@ -278,7 +336,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                     {
-                        if (typeof(AST.HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(AST.HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetPartyMember(member);
                             GetTarget = false;

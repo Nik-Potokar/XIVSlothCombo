@@ -59,14 +59,14 @@ namespace XIVSlothComboPlugin.ConfigFunctions
         /// <param name="itemWidth">How long the slider should be.</param>
         public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
-            var output = Service.Configuration.GetCustomConfigValue(config, minValue);
+            var output = Service.Configuration.GetCustomFloatValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
 
             if (inputChanged)
             {
-                Service.Configuration.SetCustomConfigValue(config, output);
+                Service.Configuration.SetCustomFloatValue(config, output);
                 Service.Configuration.Save();
             }
 
