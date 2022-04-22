@@ -39,7 +39,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && InPvP()) return PVPCommon.Recuperate;
+                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return PVPCommon.Recuperate;
                 return actionID;
             }
 
@@ -66,7 +66,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && InPvP()) return PVPCommon.Guard;
+                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return PVPCommon.Guard;
                 return actionID;
             }
 
@@ -91,7 +91,7 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && InPvP()) return PVPCommon.Purify;
+                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return PVPCommon.Purify;
                 return actionID;
             }
 

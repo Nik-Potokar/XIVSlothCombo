@@ -342,7 +342,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.BlackAoEFoulOption) && level >= BLM.Levels.Manafont && level >= BLM.Levels.Foul)
                 {
-                    if (gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && CanWeave(actionID) && lastComboMove == BLM.Foul)
+                    if (gauge.InAstralFire && currentMP <= 100 && IsOffCooldown(BLM.Manafont) && CanSpellWeave(actionID) && lastComboMove == BLM.Foul)
                     {
                         return BLM.Manafont;
                     }
@@ -480,7 +480,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<BLMGauge>();
-                var canWeave = CanWeave(actionID, 0.6);
+                var canWeave = CanSpellWeave(actionID);
                 var currentMP = LocalPlayer.CurrentMp;
 
                 // Opener for BLM
@@ -488,7 +488,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.BlackSimpleOpenerFeature) && level >= BLM.Levels.Foul)
                 {
                     // Only enable sharpcast if it's available
-                    if (!inOpener && !HasEffect(BLM.Buffs.Sharpcast) && (GetRemainingCharges(BLM.Sharpcast) >= 1))
+                    if ((!inOpener || (openerFinished && CanSpellWeave(actionID))) && !HasEffect(BLM.Buffs.Sharpcast) && (GetRemainingCharges(BLM.Sharpcast) >= 1))
                     {
                         return BLM.Sharpcast;
                     }
@@ -609,20 +609,14 @@ namespace XIVSlothComboPlugin.Combos
                                 return BLM.Fire;
                             }
 
-                            // Go to Umbral Ice
-                            if (lastComboMove != BLM.Manafont && GetCooldown(BLM.Manafont).CooldownRemaining <= 117)
+                            // Cast Fire 4
+                            if (currentMP >= BLM.MP.AspectFire || lastComboMove == BLM.Manafont)
                             {
-                                if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
-                                {
-                                    return BLM.Blizzard3;
-                                }
-                                if (level < BLM.Levels.Despair && currentMP < BLM.MP.AspectFire)
-                                {
-                                    return BLM.Blizzard3;
-                                }
+                                return BLM.Fire4;
                             }
 
-                            return BLM.Fire4;
+                            // Go to Umbral Ice
+                            return BLM.Blizzard3;
                         }
                         
                         if (gauge.InUmbralIce)
@@ -797,7 +791,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (gauge.InUmbralIce)
                     {
-                        if (currentMP >= BLM.MP.MaxMP)
+                        if (currentMP >= BLM.MP.MaxMP - BLM.MP.AspectThunder)
                         {
                             return BLM.Transpose;
                         }

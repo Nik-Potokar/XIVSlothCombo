@@ -1,5 +1,5 @@
 {
-    "Author": "attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz, Taurenkey, Augporto, grimgal",
+    "Author": "Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal",
     "Name": "XIVSlothCombo",
     "InternalName": "XIVSlothCombo",
     "DalamudApiLevel": 6,
@@ -8,5 +8,5 @@
     "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
     "IconUrl": "https://i.imgur.com/UeRukF8.png",
     "ImageUrls": [ "https://i.imgur.com/UeRukF8.png" ],
-    "Changelog": "Features, Fixes & Enhancements for Framework, Globals-PvP, AST, BRD, DRK, MCH, MCH-PvP, MNK, PLD, SGE, SMN and WAR. Please check the project's GitHub or Discord for a full changelog."
+    "Changelog": "Features, Fixes & Enhancements for Framework, Globals-PvP, AST, BLM, BRD, BRD-PvP, DRK, SGE and WHM. Please check the project's GitHub or Discord for a full changelog."
 }

@@ -364,7 +364,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, 0, "Robin Hood Feature", "Steal from Lolorito and give to Garlemald, I guess?\nGood on ya.")]
         BardApexFeature = 3005,
 
-        [ConflictingCombos(SimpleBardFeature, BardSimpleOpener)]
+        [ConflictingCombos(SimpleBardFeature)]
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, 0, "oGCD's spilling everywhere", "The Algorithm between the lines. Trademark")]
         BardoGCDSingleTargetFeature = 3006,
 
@@ -381,11 +381,11 @@ namespace XIVSlothComboPlugin
         SimpleBardFeature = 3009,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Bard DoT Option", "This option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID, 0, "", "If you don't look at the DoTs, they don't exist.")]
+        [CustomComboInfo("Simple Bard DoTs", "This option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID, 0, "", "If you don't look at the DoTs, they don't exist.")]
         SimpleDoTOption = 3010,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Bard Song Option", "This option adds the bards songs to the Simple Bard feature.", BRD.JobID, 0, "Sing-song", "Look, a raid contribution feature!\nShame nobody will thank you for it")]
+        [CustomComboInfo("Simple Bard Songs", "This option adds the bards songs to the Simple Bard feature.", BRD.JobID, 0, "Sing-song", "Look, a raid contribution feature!\nShame nobody will thank you for it")]
         SimpleSongOption = 3011,
 
         [ParentCombo(BardoGCDAoEFeature)]
@@ -402,14 +402,14 @@ namespace XIVSlothComboPlugin
         BardSimpleAoEFeature = 3015,
 
         [ParentCombo(BardSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "Wow. You're performing to a crowd now, huh")]
+        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "Wow. You're performing to a crowd now, huh")]
         SimpleAoESongOption = 3016,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Buffs Feature", "Adds buffs onto the Simple Bard feature.", BRD.JobID, 0, "", "Buff for me, buff for you.")]
+        [CustomComboInfo("Simple Buffs", "Adds buffs onto the Simple Bard feature.", BRD.JobID, 0, "", "Buff for me, buff for you.")]
         BardSimpleBuffsFeature = 3017,
 
-        [ParentCombo(SimpleBardFeature)]
+        [ParentCombo(BardSimpleBuffsFeature)]
         [CustomComboInfo("Simple Buffs - Radiant", "Adds Radiant Finale to the Simple Buffs feature.", BRD.JobID, 0, "", "Nothing radiant about it, if you ask me.")]
         BardSimpleBuffsRadiantFeature = 3018,
 
@@ -424,10 +424,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disable Apex Arrow", "Removes Apex Arrow from Simple Bard and AoE Feature.", BRD.JobID, 0, "Disable Apex Legends", "Removing features? You? Surely not")]
         BardRemoveApexArrowFeature = 3021,
 
-        [ConflictingCombos(BardoGCDSingleTargetFeature)]
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
-        BardSimpleOpener = 3022,
+        //[ConflictingCombos(BardoGCDSingleTargetFeature)]
+        //[ParentCombo(SimpleBardFeature)]
+        //[CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
+        //BardSimpleOpener = 3022,
 
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple Pooling", "Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
@@ -440,6 +440,14 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple RagingJaws", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
         BardSimpleRagingJaws = 3025,
+
+        [ParentCombo(SimpleDoTOption)]
+        [CustomComboInfo("Opener Only", "Until the first auto-refresh you can dot new targets automatically.", BRD.JobID, 0, "", "")]
+        BardSimpleDotOpener = 3026,
+
+        [ParentCombo(SimpleAoESongOption)]
+        [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
+        SimpleAoESongOptionExcludeWM = 3027,
 
         #endregion
         // ====================================================================================
@@ -1045,6 +1053,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf Air Anchor is on cooldown and you use Reassemble, Chainsaw will be added to main combo instead.", MCH.JobID, 0, "A bit of everything feature", "Don't rub your last two brain-cells together! We got you!")]
         MachinistDrillAirOnMainCombo = 8005,
 
+        [ConflictingCombos(MachinistSimpleFeature)]
         [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge.", MCH.JobID, 0, "So-called 'Heat Blast'", "Basically a large hair-dryer.")]
         MachinistHeatblastGaussRicochetFeature = 8006,
 
@@ -2218,6 +2227,29 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Adds Afflatus Misery to Glare/Stone", "Adds Afflatus Misery to Glare when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
         WHMAfflatusMiseryOGCDFeature = 19017,
+
+        [CustomComboInfo("oGCD Heals/Shields", "Adds oGCD Healing and Shields to Cure II", WHM.JobID, 0, "To benediction, or to not benediction.", "That is the question. Whether 'tis nobler... NM, you dead.")]
+        WHMogcdHealsShieldsFeature = 19018,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Tetragrammaton on oGCD.", "Only shows Tetragrammaton during oGCD weave window when HP conditions are met.", WHM.JobID, 0, "Longest word ever.", "Buffalo buffalo buffalo buffalo Buffalo buffalo buffalo.")]
+        WHMTetraOnOGCDOption = 19019,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Tetragrammaton on GCD.", "Shows Tetragrammaton when HP conditions are met.", WHM.JobID, 0, "Clip it! Clip it good!", "Clip it up! Into shape!")]
+        WHMTetraOnGCDOption = 19020,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Devine Benison on oGCD", "Only shows Devine Benison during oGCD weave window when target is not already under the effect.", WHM.JobID, 0, "oGCD Shield? Why not?!", "Tsun-tsun")]
+        WHMBenisonOGCDOption = 19021,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Use Devine Benison on GCD", "Shows Devine Benison when target is not already under the effect.", WHM.JobID, 0, "It's dangerous to go alone.", "Take this.")]
+        WHMBenisonGCDOption = 19022,
+
+        [ParentCombo(WHMCDsonMainComboGroup)]
+        [CustomComboInfo("No Swift Opener Option", "Delays all oGCDs until after 3rd Glare 3 cast.\n>> Glare III ONLY <<", WHM.JobID, 0, "Cover me, Porkins.", "Almost there... Almost there...")]
+        WHMNoSwiftOpenerOption = 19023,
 
         #endregion
         // ====================================================================================
