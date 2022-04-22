@@ -409,6 +409,21 @@ namespace XIVSlothComboPlugin.Combos
                 var soulVoice = gauge.SoulVoice;
                 var canWeave = CanWeave(actionID);
 
+                if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && canWeave)
+                {
+                    var songTimerInSeconds = gauge.SongTimer / 1000;
+
+                    if (songTimerInSeconds < 3 || gauge.Song == Song.NONE)
+                    {
+                        if (level >= BRD.Levels.WanderersMinuet && IsOffCooldown(BRD.WanderersMinuet) && !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.ArmysPaeon)))
+                            return BRD.WanderersMinuet;
+                        if (level >= BRD.Levels.MagesBallad && IsOffCooldown(BRD.MagesBallad) && !(JustUsed(BRD.WanderersMinuet) || JustUsed(BRD.ArmysPaeon)))
+                            return BRD.MagesBallad;
+                        if (level >= BRD.Levels.ArmysPaeon && IsOffCooldown(BRD.ArmysPaeon) && !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.WanderersMinuet)))
+                            return BRD.ArmysPaeon;
+                    }
+                }
+
                 if (canWeave)
                 {
                     if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && gauge.Repertoire == 3)
@@ -428,20 +443,6 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= BRD.Levels.BlastArrow && HasEffect(BRD.Buffs.BlastArrowReady))
                     return BRD.BlastArrow;
 
-                if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && canWeave)
-                {
-                    var songTimerInSeconds = gauge.SongTimer / 1000;
-
-                    if ( songTimerInSeconds < 3 || gauge.Song == Song.NONE )
-                    {
-                        if (level >= BRD.Levels.WanderersMinuet && IsOffCooldown(BRD.WanderersMinuet))
-                            return BRD.WanderersMinuet;
-                        if (level >= BRD.Levels.MagesBallad && IsOffCooldown(BRD.MagesBallad))
-                            return BRD.MagesBallad;
-                        if (level >= BRD.Levels.ArmysPaeon && IsOffCooldown(BRD.ArmysPaeon))
-                            return BRD.ArmysPaeon;
-                    }
-                }
             }
 
             return actionID;
