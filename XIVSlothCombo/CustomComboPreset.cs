@@ -402,7 +402,7 @@ namespace XIVSlothComboPlugin
         BardSimpleAoEFeature = 3015,
 
         [ParentCombo(BardSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "Wow. You're performing to a crowd now, huh")]
+        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "Wow. You're performing to a crowd now, huh")]
         SimpleAoESongOption = 3016,
 
         [ParentCombo(SimpleBardFeature)]
@@ -444,6 +444,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SimpleDoTOption)]
         [CustomComboInfo("Opener Only", "Until the first auto-refresh you can dot new targets automatically.", BRD.JobID, 0, "", "")]
         BardSimpleDotOpener = 3026,
+
+        [ParentCombo(SimpleAoESongOption)]
+        [CustomComboInfo("Exclude Wanderer`s Minuet", "Dont use Wanderer`s Minuet.", BRD.JobID, 0, "", "")]
+        SimpleAoESongOptionExcludeWM = 3027,
 
         #endregion
         // ====================================================================================

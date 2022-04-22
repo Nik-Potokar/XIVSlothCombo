@@ -415,11 +415,14 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (songTimerInSeconds < 3 || gauge.Song == Song.NONE)
                     {
-                        if (level >= BRD.Levels.WanderersMinuet && IsOffCooldown(BRD.WanderersMinuet) && !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.ArmysPaeon)))
+                        if (level >= BRD.Levels.WanderersMinuet && 
+                            IsOffCooldown(BRD.WanderersMinuet) && !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.ArmysPaeon)) && !IsEnabled(CustomComboPreset.SimpleAoESongOptionExcludeWM))
                             return BRD.WanderersMinuet;
-                        if (level >= BRD.Levels.MagesBallad && IsOffCooldown(BRD.MagesBallad) && !(JustUsed(BRD.WanderersMinuet) || JustUsed(BRD.ArmysPaeon)))
+                        if (level >= BRD.Levels.MagesBallad &&
+                            IsOffCooldown(BRD.MagesBallad) && !(JustUsed(BRD.WanderersMinuet) || JustUsed(BRD.ArmysPaeon)))
                             return BRD.MagesBallad;
-                        if (level >= BRD.Levels.ArmysPaeon && IsOffCooldown(BRD.ArmysPaeon) && !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.WanderersMinuet)))
+                        if (level >= BRD.Levels.ArmysPaeon &&
+                            IsOffCooldown(BRD.ArmysPaeon) && !(JustUsed(BRD.MagesBallad) || JustUsed(BRD.WanderersMinuet)))
                             return BRD.ArmysPaeon;
                     }
                 }
