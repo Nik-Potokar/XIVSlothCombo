@@ -37,6 +37,7 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 BloodWeapon = 742,
                 Darkside = 751,
+                DarkArts = 752,
                 BlackestNight = 1178,
                 Delirium = 1972,
                 SaltedEarth = 749;
@@ -173,7 +174,7 @@ namespace XIVSlothComboPlugin.Combos
 
                                 if (IsOnCooldown(DRK.Shadowbringer) && !HasEffect(DRK.Buffs.Delirium))
                                 {
-                                    if (IsOffCooldown(DRK.SaltAndDarkness))
+                                    if (IsOffCooldown(DRK.SaltAndDarkness) && IsOnCooldown(DRK.SaltedEarth) && HasEffect(DRK.Buffs.SaltedEarth))
                                         return DRK.SaltAndDarkness;
                                     if (IsOnCooldown(DRK.SaltAndDarkness))
                                         return DRK.EdgeOfShadow;
@@ -185,7 +186,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (IsOffCooldown(DRK.LivingShadow))
                                     return DRK.LivingShadow;
-                                if (IsOnCooldown(DRK.LivingShadow))
+                                if (IsOnCooldown(DRK.LivingShadow) && !HasEffect(DRK.Buffs.SaltedEarth) && IsOffCooldown(DRK.SaltedEarth))
                                     return DRK.SaltedEarth;
                             }
 
@@ -222,7 +223,7 @@ namespace XIVSlothComboPlugin.Combos
                                     return OriginalHook(DRK.EdgeOfDarkness);
                                 if (LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
                                 {
-                                    if (level >= DRK.Levels.EdgeOfDarkness)
+                                    if (HasEffect(DRK.Buffs.DarkArts) ||level >= DRK.Levels.EdgeOfDarkness)
                                         return OriginalHook(DRK.EdgeOfDarkness);
                                     if (level >= DRK.Levels.FloodOfDarkness && level < DRK.Levels.EdgeOfDarkness)
                                         return DRK.FloodOfDarkness;
@@ -256,7 +257,7 @@ namespace XIVSlothComboPlugin.Combos
 
                                     if (IsEnabled(CustomComboPreset.DarkSaltedEarthFeature) && level >= DRK.Levels.SaltedEarth)
                                     {
-                                        if (IsOffCooldown(DRK.SaltedEarth) || (HasEffect(DRK.Buffs.SaltedEarth) && IsOffCooldown(DRK.SaltAndDarkness) && level >= DRK.Levels.SaltAndDarkness))
+                                        if ((IsOffCooldown(DRK.SaltedEarth) && !HasEffect(DRK.Buffs.SaltedEarth)) || (HasEffect(DRK.Buffs.SaltedEarth) && IsOffCooldown(DRK.SaltAndDarkness) && IsOnCooldown(DRK.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness))
                                             return OriginalHook(DRK.SaltedEarth);
                                     }
 
