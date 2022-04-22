@@ -96,7 +96,7 @@ namespace XIVSlothComboPlugin.Combos
                 var plungeChargesRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkKeepPlungeCharges);
                 var mpRemaining = Service.Configuration.GetCustomIntValue(DRK.Config.DrkMPManagement);
 
-                if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend)
+                if (IsEnabled(CustomComboPreset.DarkRangedUptimeFeature) && level >= DRK.Levels.Unmend && !inOpener)
                 {
                     if (!InMeleeRange())
                         return DRK.Unmend;
