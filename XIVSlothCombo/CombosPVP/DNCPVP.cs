@@ -58,7 +58,7 @@ namespace XIVSlothComboPlugin
                 if (canWeave)
                 {
                     // Curing Waltz Burst Option
-                    if (IsEnabled(CustomComboPreset.DNCCuringWaltzOption) && curingWaltzReady && HP <= 50) // Add slider to this next
+                    if (IsEnabled(CustomComboPreset.DNCCuringWaltzOption) && curingWaltzReady && HP <= 60) // Add slider to this next
                         return OriginalHook(DNCPVP.CuringWaltz);
 
                     // Fan Dance weaved on Main Combo
