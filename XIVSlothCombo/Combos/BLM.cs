@@ -609,20 +609,14 @@ namespace XIVSlothComboPlugin.Combos
                                 return BLM.Fire;
                             }
 
-                            // Go to Umbral Ice
-                            if (lastComboMove != BLM.Manafont && GetCooldown(BLM.Manafont).CooldownRemaining <= 117)
+                            // Cast Fire 4
+                            if (currentMP >= BLM.MP.AspectFire || lastComboMove == BLM.Manafont)
                             {
-                                if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
-                                {
-                                    return BLM.Blizzard3;
-                                }
-                                if (level < BLM.Levels.Despair && currentMP < BLM.MP.AspectFire)
-                                {
-                                    return BLM.Blizzard3;
-                                }
+                                return BLM.Fire4;
                             }
 
-                            return BLM.Fire4;
+                            // Go to Umbral Ice
+                            return BLM.Blizzard3;
                         }
                         
                         if (gauge.InUmbralIce)
@@ -797,7 +791,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (gauge.InUmbralIce)
                     {
-                        if (currentMP >= BLM.MP.MaxMP)
+                        if (currentMP >= BLM.MP.MaxMP - BLM.MP.AspectThunder)
                         {
                             return BLM.Transpose;
                         }
