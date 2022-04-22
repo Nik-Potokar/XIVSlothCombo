@@ -472,6 +472,7 @@ namespace XIVSlothComboPlugin.Combos
         protected static bool JustUsed(uint actionID)
            => IsOnCooldown(actionID) && GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
 
+
         /// <summary>
         /// Gets a value indicating whether an action has any available charges.
         /// </summary>
@@ -511,16 +512,16 @@ namespace XIVSlothComboPlugin.Combos
         /// without causing clipping and checks if you're casting a spell to make it mage friendly
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
-        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.5.</param>
+        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.6.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.5)
+        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.6)
         {
-            var castingSpell = LocalPlayer.IsCasting;
+            var castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
 
-            if (GetCooldown(actionID).CooldownRemaining > weaveTime && !castingSpell)
-            {
+            if (GetCooldown(actionID).CooldownRemaining > weaveTime && // Prevent GCD delay
+                (castTimeRemaining <= 0.5 && // Show in last 0.5sec of cast so game can queue ability
+                GetCooldown(actionID).CooldownRemaining - castTimeRemaining - weaveTime >= 0)) // Don't show if spell is still casting in weave window
                 return true;
-            }
             return false;
         }
 

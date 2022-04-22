@@ -40,12 +40,16 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (actionID == BRDPvP.PowerfulShot)
                 {
+                    var canWeave = CanWeave(actionID);
                     //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
                     //if (globalAction != actionID) return globalAction;
 
-                    if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3)
+                    if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3 && canWeave)
                         return OriginalHook(BRDPvP.EmpyrealArrow);
+
+                    if (!GetCooldown(BRDPvP.SilentNocturne).IsCooldown && canWeave)
+                        return OriginalHook(BRDPvP.SilentNocturne);
 
                     if (HasEffect(BRDPvP.Buffs.BlastArrowReady))
                         return OriginalHook(BRDPvP.BlastArrow);
@@ -56,8 +60,6 @@ namespace XIVSlothComboPlugin.Combos
                     if (!GetCooldown(BRDPvP.ApexArrow).IsCooldown)
                         return OriginalHook(BRDPvP.ApexArrow);
 
-                    if (!GetCooldown(BRDPvP.SilentNocturne).IsCooldown)
-                        return OriginalHook(BRDPvP.SilentNocturne);
 
                     return OriginalHook(BRDPvP.PowerfulShot);
                 }
