@@ -787,8 +787,8 @@ namespace XIVSlothComboPlugin.Combos
                 var customEssentialDignity = Service.Configuration.GetCustomIntValue(AST.Config.AstroEssentialDignity);
                 var exaltationCD = GetCooldown(AST.Exaltation);
 
-                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3) || (NeutralSectShield is null)) && (NeutralSectBuff is not null))
-                    return AST.AspectedBenefic;
+                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)) || ((NeutralSectShield is null) && (NeutralSectBuff is not null)))
+                        return AST.AspectedBenefic;
 
                 if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && GetCooldown(AST.EssentialDignity).RemainingCharges > 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
                     return AST.EssentialDignity;
