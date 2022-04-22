@@ -405,23 +405,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BRD.Ladonsbite || actionID == BRD.QuickNock)
             {
-                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-
-                if (inCombat && (lastComboMove == BRD.Ladonsbite || lastComboMove == BRD.QuickNock))
-                {
-                    SimpleBardFeature.openerFinished = true;
-                    SimpleBardFeature.inOpener = true;
-                }
-
-                if (!inCombat)
-                {
-                    SimpleBardFeature.inOpener = false;
-                    SimpleBardFeature.step = 0;
-                    SimpleBardFeature.subStep = 0;
-                    SimpleBardFeature.usedStraightShotReady = false;
-                    SimpleBardFeature.openerFinished = false;
-                }
-
                 var gauge = GetJobGauge<BRDGauge>();
                 var soulVoice = gauge.SoulVoice;
                 var canWeave = CanWeave(actionID);
@@ -447,7 +430,9 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && canWeave)
                 {
-                    if ((gauge.SongTimer < 1 || gauge.Song == Song.ARMY) && IsOnCooldown(actionID))
+                    var songTimerInSeconds = gauge.SongTimer / 1000;
+
+                    if (songTimerInSeconds < 3 )
                     {
                         if (level >= BRD.Levels.WanderersMinuet && IsOffCooldown(BRD.WanderersMinuet))
                             return BRD.WanderersMinuet;
@@ -561,11 +546,12 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SimpleSongOption) && canWeave && isEnemyHealthHigh)
                 {
+                    var songTimerInSeconds = gauge.SongTimer / 1000;
+
                     // Limit optimisation to only when you are high enough to benefit from it.
                     if (level >= BRD.Levels.WanderersMinuet)
                     {
-                        // 43s of Wanderer's Minute, ~36s of Mage's Ballad, and ~43s of Army Peon
-                        var songTimerInSeconds = gauge.SongTimer / 1000;
+                        // 43s of Wanderer's Minute, ~36s of Mage's Ballad, and ~43s of Army Peon    
                         var minuetOffCooldown = IsOffCooldown(BRD.WanderersMinuet);
                         var balladOffCooldown = IsOffCooldown(BRD.MagesBallad);
                         var paeonOffCooldown = IsOffCooldown(BRD.ArmysPaeon);
@@ -615,7 +601,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
                     }
-                    else if (gauge.SongTimer < 1 || gauge.Song == Song.ARMY)
+                    else if ( songTimerInSeconds < 3 )
                     {
                         if (level >= BRD.Levels.MagesBallad && IsOffCooldown(BRD.MagesBallad))
                             return BRD.MagesBallad;
