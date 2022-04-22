@@ -255,11 +255,19 @@ namespace XIVSlothComboPlugin.Combos
                     //If we're too low level to use Eukrasia, we can stop here.
                     if (level >= SGE.Levels.Eukrasia)
                     {
-                        //Get our Target, override with Target of Target if needed
-                        GameObject? OurTarget = IsEnabled(CustomComboPreset.SageDPSFeatureToT) ? CurrentTarget.TargetObject : CurrentTarget;
-
-                        //If Null or not a BattleNPC Enemy, bail (Subkind checking for chocobo ToT support)
-                        if ((OurTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy) return actionID;
+                        var OurTarget = CurrentTarget;
+                        //Check if our Target is there and not an enemy
+                        if ((OurTarget is not null) && ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy))
+                        {
+                            //If ToT is enabled, Check if ToT is not null
+                            if ((IsEnabled(CustomComboPreset.SageDPSFeatureToT)) &&
+                                (CurrentTarget.TargetObject is not null) &&
+                                ((CurrentTarget.TargetObject as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy))
+                                //Set Ourtarget as the Target of Target
+                                OurTarget = CurrentTarget.TargetObject;
+                            //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
+                            else return actionID;
+                        }
 
 
                         //Eukrasian Dosis var
