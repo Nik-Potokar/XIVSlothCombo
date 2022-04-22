@@ -446,7 +446,7 @@ namespace XIVSlothComboPlugin
         BardSimpleDotOpener = 3026,
 
         [ParentCombo(SimpleAoESongOption)]
-        [CustomComboInfo("Exclude Wanderer`s Minuet", "Dont use Wanderer`s Minuet.", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
         SimpleAoESongOptionExcludeWM = 3027,
 
         #endregion
