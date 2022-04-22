@@ -761,8 +761,10 @@ namespace XIVSlothComboPlugin.Combos
                         if (level < BRD.Levels.IronJaws)
                         {
                             if (windbite && windbiteDuration.RemainingTime < 4)
+                            {
                                 openerFinished = true;
                                 return BRD.Windbite;
+                            }
                             if (venomous && venomousDuration.RemainingTime < 4)
                             {
                                 openerFinished = true;
