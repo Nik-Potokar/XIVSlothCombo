@@ -110,7 +110,7 @@ namespace XIVSlothComboPlugin
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug("Can't Download 2");
+                    Log.Debug(ex,"Can't Download 2");
                     return;
                 }
 
