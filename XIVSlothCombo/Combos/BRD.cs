@@ -432,7 +432,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var songTimerInSeconds = gauge.SongTimer / 1000;
 
-                    if (songTimerInSeconds < 3 )
+                    if ( songTimerInSeconds < 3 || gauge.Song == Song.NONE )
                     {
                         if (level >= BRD.Levels.WanderersMinuet && IsOffCooldown(BRD.WanderersMinuet))
                             return BRD.WanderersMinuet;
