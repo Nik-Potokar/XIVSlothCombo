@@ -37,9 +37,9 @@ namespace XIVSlothComboPlugin
         {
             if (actionID == WARPVP.HeavySwing)
             {
-                uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                if (globalAction != actionID) return globalAction;
+                //if (globalAction != actionID) return globalAction;
 
                 if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown)
                     return OriginalHook(WARPVP.Bloodwhetting);

@@ -55,9 +55,9 @@ namespace XIVSlothComboPlugin
         {
             if (actionID is NINPVP.SpinningEdge or NINPVP.AeolianEdge or NINPVP.GustSlash)
             {
-                uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                if (globalAction != actionID) return globalAction;
+                //if (globalAction != actionID) return globalAction;
 
                 var threeMudrasCD = GetCooldown(NINPVP.ThreeMudra);
                 var fumaCD = GetCooldown(NINPVP.FumaShuriken);
@@ -109,9 +109,9 @@ namespace XIVSlothComboPlugin
         {
             if (actionID == NINPVP.FumaShuriken)
             {
-                uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                if (globalAction != actionID) return globalAction;
+                //if (globalAction != actionID) return globalAction;
 
                 var threeMudrasCD = GetCooldown(NINPVP.ThreeMudra);
                 var fumaCD = GetCooldown(NINPVP.FumaShuriken);

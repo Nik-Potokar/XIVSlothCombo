@@ -273,12 +273,19 @@ namespace XIVSlothComboPlugin.Combos
                         //Delirium Features
                         if (level >= DRK.Levels.Delirium && IsEnabled(CustomComboPreset.DeliriumFeature) && IsEnabled(CustomComboPreset.DarkMainComboCDsGroup))
                         {
-                            if (IsEnabled(CustomComboPreset.DelayedDeliriumFeatureOption) && 
-                                ((gauge.ShadowTimeRemaining > 1 && GetBuffRemainingTime(DRK.Buffs.Delirium) <= 10 && GetBuffRemainingTime(DRK.Buffs.Delirium) > 0) || (HasEffect(DRK.Buffs.Delirium) && GetCooldownRemainingTime(DRK.LivingShadow) >50)) || //Delayed Delirium Conditions
-                                (GetBuffStacks(DRK.Buffs.Delirium) > 0 && IsNotEnabled(CustomComboPreset.DelayedDeliriumFeatureOption))) //regular delirium
+                            //Regular Delirium
+                            if (GetBuffStacks(DRK.Buffs.Delirium) > 0 && (level < DRK.Levels.LivingShadow || IsNotEnabled(CustomComboPreset.DelayedDeliriumFeatureOption)))
                                 return DRK.Bloodspiller;
+
+                            //Delayed Delirium
+                            if (IsEnabled(CustomComboPreset.DelayedDeliriumFeatureOption) &&
+                                ((gauge.ShadowTimeRemaining > 1 && GetBuffRemainingTime(DRK.Buffs.Delirium) <= 10 && GetBuffRemainingTime(DRK.Buffs.Delirium) > 0) ||
+                                (HasEffect(DRK.Buffs.Delirium) && GetCooldownRemainingTime(DRK.LivingShadow) > 50)))
+
+                                return DRK.Bloodspiller;
+
                             //Blood management before Delirium
-                            if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && ((gauge.Blood >= 50 && GetCooldownRemainingTime(DRK.BloodWeapon) < 6 && GetCooldownRemainingTime(DRK.Delirium) > 0) || (IsOffCooldown(DRK.Delirium) && gauge.Blood >=50)))
+                            if (IsEnabled(CustomComboPreset.DarkDeliriumOnCD) && ((gauge.Blood >= 50 && GetCooldownRemainingTime(DRK.BloodWeapon) < 6 && GetCooldownRemainingTime(DRK.Delirium) > 0) || (IsOffCooldown(DRK.Delirium) && gauge.Blood >= 50)))
                                 return DRK.Bloodspiller;
                         }
 
