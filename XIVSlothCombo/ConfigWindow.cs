@@ -5,10 +5,8 @@ using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 using XIVSlothComboPlugin.ConfigFunctions;
@@ -92,7 +90,7 @@ namespace XIVSlothComboPlugin
         {
             if (ImGui.BeginTabBar("SlothBar"))
             {
-                if (ImGui.BeginTabItem("Combos/Features"))
+                if (ImGui.BeginTabItem("Features & Options"))
                 {
                     DrawMainWindow();
                     ImGui.EndTabItem();
@@ -105,7 +103,7 @@ namespace XIVSlothComboPlugin
                 }
 
 
-                if (ImGui.BeginTabItem("About Sloth Combo / Report an Issue"))
+                if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
                 {
                     DrawAboutUs();
                     ImGui.EndTabItem();
@@ -119,10 +117,9 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.11.1\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.11.2\n- with love from Team Sloth.");
             ImGui.TextWrapped($@"Big Thanks to attick and daemitus for creating most of the original code, as well as Grammernatzi and PrincessRTFM for providing a lot of extra tweaks and inspiration. Please show them support for their original work! <3");
             ImGui.TextWrapped("Brought to you with love and sloth, by: Aki, Iaotle, Codemned, damolitionn, k-kz, Taurenkey, Augporto, grimgal and many other contributors!");
-            ImGui.TextColored(ImGuiColors.ParsedPurple, $"NEW: We now have a shiny new Discord server! Come and say hi!");
             ImGui.PushStyleColor(ImGuiCol.Button, ImGuiColors.ParsedPurple);
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, ImGuiColors.HealerGreen);
             if (ImGui.Button("Click here to join our Discord Server!"))
