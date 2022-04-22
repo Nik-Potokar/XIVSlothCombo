@@ -32,6 +32,7 @@ namespace XIVSlothComboPlugin
                 .Where(t => !t.IsAbstract && t.BaseType == typeof(CustomCombo))
                 .Select(t => Activator.CreateInstance(t))
                 .Cast<CustomCombo>()
+                .OrderBy(x => x.Preset)
                 .ToList();
 
             this.getIconHook = new Hook<GetIconDelegate>(Service.Address.GetAdjustedActionId, this.GetIconDetour);
