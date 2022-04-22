@@ -808,9 +808,9 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
                 ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs", 2);
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. Will use Yaten into Enpi as part of filler. Hakaze will be delayed by half a GCD after Enpi.", 2);
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs", 3);
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. Will use Yaten into Enpi as part of filler. Hakaze will be delayed by half a GCD after Enpi.", 3);
             #endregion
             // ====================================================================================
             #region MONK

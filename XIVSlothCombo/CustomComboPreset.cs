@@ -1953,7 +1953,7 @@ namespace XIVSlothComboPlugin
         SeneiBurstFeature = 15034,
 
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Filler Combo Feature", "Adds selected Filler Combos to Main Combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.", SAM.JobID, 0)]
+        [CustomComboInfo("Filler Combo Feature", "Adds selected Filler Combos to Main Combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.\nWill disable if you die or if you don't activate the opener.", SAM.JobID, 0)]
         SamuraiFillersonMainCombo = 15035,
 
 
