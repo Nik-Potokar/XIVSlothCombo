@@ -522,12 +522,11 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Monk Rotation
-                if ((level >= MNK.Levels.DragonKick && (HasEffect(MNK.Buffs.OpoOpoForm)) || 
-                    (HasEffect(MNK.Buffs.FormlessFist)) && !HasEffect(MNK.Buffs.LeadenFist) && CombatEngageDuration().Seconds < 3 && CombatEngageDuration().Minutes < 1))
+                if ((level >= MNK.Levels.DragonKick && HasEffect(MNK.Buffs.OpoOpoForm)) || 
+                    (HasEffect(MNK.Buffs.FormlessFist)) && !HasEffect(MNK.Buffs.LeadenFist))
                 {
-                    return MNK.DragonKick;
+                    return HasEffect(MNK.Buffs.LeadenFist) ? MNK.Bootshine : MNK.DragonKick;
                 }
-
                 if (level >= MNK.Levels.TrueStrike && HasEffect(MNK.Buffs.RaptorForm))
                 {
                     if (level >= MNK.Levels.TwinSnakes && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(MNK.Config.MnkDisciplinedFistApply)))
@@ -543,10 +542,6 @@ namespace XIVSlothComboPlugin.Combos
                         return MNK.Demolish;
                     }
                     return MNK.SnapPunch;
-                }
-                if (level >= MNK.Levels.DragonKick && (HasEffect(MNK.Buffs.OpoOpoForm) || HasEffect(MNK.Buffs.FormlessFist)) && !HasEffect(MNK.Buffs.LeadenFist))
-                {
-                    return MNK.DragonKick;
                 }
             }
             return actionID;
