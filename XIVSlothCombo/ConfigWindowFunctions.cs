@@ -26,7 +26,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             var output = Service.Configuration.GetCustomIntValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
+            inputChanged |= ImGui.SliderInt($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
 
             if (inputChanged)
@@ -62,7 +62,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             var output = Service.Configuration.GetCustomFloatValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
+            inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
             if (inputChanged)
             {
@@ -91,7 +91,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.PushItemWidth(itemWidth);
             var enabled = output == outputValue ? true : false;
 
-            if (ImGui.Checkbox(checkBoxName, ref enabled))
+            if (ImGui.Checkbox($"{checkBoxName}###{config}", ref enabled))
             {
 
                 Service.Configuration.SetCustomIntValue(config, outputValue);
