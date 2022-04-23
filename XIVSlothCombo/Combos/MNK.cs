@@ -509,11 +509,11 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (canSolar)
                     {
-                        if (!raptorChakra && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime < 4))
+                        if (!raptorChakra && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= 2.5))
                         {
                             return MNK.TwinSnakes;
                         }
-                        if (!coeurlChakra && (demolishDuration.RemainingTime < 4 || !TargetHasEffect(MNK.Debuffs.Demolish)))
+                        if (!coeurlChakra && (demolishDuration.RemainingTime <= 2.5 || !TargetHasEffect(MNK.Debuffs.Demolish)))
                         {
                             return MNK.Demolish;
                         }
