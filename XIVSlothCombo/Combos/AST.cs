@@ -218,6 +218,56 @@ namespace XIVSlothComboPlugin.Combos
                 Sage = "贤者",
                 Conjurer = "幻术师";
         }
+
+        public static class MeleeCardTargetsJP
+        {
+            public const string
+                Monk = "モンク",
+                Dragoon = "竜騎士",
+                Ninja = "忍者",
+                Reaper = "リーパー",
+                Samurai = "侍",
+                Pugilist = "格闘士",
+                Lancer = "槍術士",
+                Rogue = "双剣士";
+        }
+
+        public static class RangedCardTargetsJP
+        {
+            public const string
+                Bard = "吟遊詩人",
+                Machinist = "機工士",
+                Dancer = "踊り子",
+                RedMage = "赤魔道士",
+                BlackMage = "黒魔道士",
+                Summoner = "召喚士",
+                BlueMage = "青魔道士",
+                Archer = "弓術士",
+                Thaumaturge = "呪術士",
+                Arcanist = "巴術士";
+
+        }
+
+        public static class TankCardTargetsJP
+        {
+            public const string
+                Paladin = "ナイト",
+                Warrior = "戦士",
+                DarkKnight = "暗黒騎士",
+                Gunbreaker = "ガンブレイカー",
+                Gladiator = "剣術士",
+                Marauder = "斧術士";
+        }
+
+        public static class HealerCardTargetsJP
+        {
+            public const string
+                WhiteMage = "白魔道士",
+                Astrologian = "占星術師",
+                Scholar = "学者",
+                Sage = "賢者",
+                Conjurer = "幻術士";
+        }
     }
 
     internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
@@ -288,7 +338,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                 {
-                    if (typeof(AST.MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                    if (typeof(AST.MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                     {
                         TargetPartyMember(member);
                         GetTarget = false;
@@ -298,7 +348,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                 {
-                    if (typeof(AST.RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                    if (typeof(AST.RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                     {
                         TargetPartyMember(member);
                         GetTarget = false;
@@ -326,7 +376,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                     {
-                        if (typeof(AST.TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(AST.TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetPartyMember(member);
                             GetTarget = false;
@@ -336,7 +386,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                     {
-                        if (typeof(AST.HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(AST.HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetPartyMember(member);
                             GetTarget = false;
