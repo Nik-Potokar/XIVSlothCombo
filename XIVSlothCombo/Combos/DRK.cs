@@ -211,7 +211,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (CanWeave(actionID))
                 {
-                    if (IsEnabled(CustomComboPreset.DarkManaOvercapAoEFeature) && level >= DRK.Levels.FloodOfDarkness && (LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10))
+                    if (IsEnabled(CustomComboPreset.DarkManaOvercapAoEFeature) && level >= DRK.Levels.FloodOfDarkness && (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10))
                             return OriginalHook(DRK.FloodOfDarkness);
                     if (gauge.DarksideTimeRemaining > 0)
                     {
