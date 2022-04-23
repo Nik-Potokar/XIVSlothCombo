@@ -464,7 +464,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     if (IsEnabled(CustomComboPreset.MnkBrotherhoodOnMainComboFeature) && canWeave && level >= MNK.Levels.Brotherhood &&
-                       !IsOnCooldown(MNK.Brotherhood) && IsOnCooldown(MNK.RiddleOfFire))
+                       !IsOnCooldown(MNK.Brotherhood) && IsOnCooldown(MNK.RiddleOfFire) && (lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick))
                     {
                         return MNK.Brotherhood;
                     }
@@ -475,7 +475,7 @@ namespace XIVSlothComboPlugin.Combos
                         return MNK.RiddleOfWind;
                     }
 
-                    if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && 
+                    if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && canWeave && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && 
                         HasEffect(MNK.Buffs.DisciplinedFist) && IsOnCooldown(MNK.RiddleOfFire) && lastComboMove != MNK.RiddleOfFire)
                     {
                         return OriginalHook(MNK.Meditation);
