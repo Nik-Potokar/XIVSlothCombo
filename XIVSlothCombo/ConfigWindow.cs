@@ -561,8 +561,6 @@ namespace XIVSlothComboPlugin
         /// <param name="enabled">If it's enabled or not</param>
         private void DrawUserConfigs(CustomComboPreset preset, bool enabled)
         {
-            //WARNING: IF USING SAME DESCRIPTION FOR YOUR SLIDER AS ANOTHER SLIDER, PLEASE ENSURE YOU USE APPEND ### PLUS AN ID FOR THE SLIDER EG. ###MYSLIDER OR ###THISSLIDER.
-
             if (!enabled) return;
 
             // ====================================================================================
@@ -576,7 +574,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region ASTROLOGIAN
             if (preset == CustomComboPreset.AstrologianLucidFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###AST", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.AstroEssentialDignity)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
@@ -770,7 +768,7 @@ namespace XIVSlothComboPlugin
             }
 
             if (preset == CustomComboPreset.SageLucidFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.CustomSGELucidDreaming, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.CustomSGELucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.CustomSoteriaFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomSoteria, "Set HP percentage value for Soteria to trigger");
@@ -814,7 +812,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work###SCH", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
 
             #endregion
@@ -840,7 +838,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region WHITE MAGE
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###WHM", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================
