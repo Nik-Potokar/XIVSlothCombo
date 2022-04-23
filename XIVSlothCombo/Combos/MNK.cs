@@ -325,7 +325,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<MNKGauge>();
-                var canWeave = CanWeave(actionID, 0.4);
+                var canWeave = CanWeave(actionID, 0.5);
                 var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
 
                 var twinsnakeDuration = FindEffect(MNK.Buffs.DisciplinedFist);
@@ -476,7 +476,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && 
-                        HasEffect(MNK.Buffs.DisciplinedFist) && IsOnCooldown(MNK.RiddleOfFire))
+                        HasEffect(MNK.Buffs.DisciplinedFist) && IsOnCooldown(MNK.RiddleOfFire) && lastComboMove != MNK.RiddleOfFire)
                     {
                         return OriginalHook(MNK.Meditation);
                     }
