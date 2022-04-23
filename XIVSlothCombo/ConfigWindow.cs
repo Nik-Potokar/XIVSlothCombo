@@ -622,6 +622,10 @@ namespace XIVSlothComboPlugin
 
 
             }
+
+            if (preset == CustomComboPreset.DNCCuringWaltzOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###DNC", 150, SliderIncrements.Ones);
+
             #endregion
             // ====================================================================================
             #region DARK KNIGHT

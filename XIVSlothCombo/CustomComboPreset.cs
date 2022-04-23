@@ -2347,40 +2347,74 @@ namespace XIVSlothComboPlugin
         //[CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
         //BlackEnochianPVPFeature = 80016,
 
+        // MCH
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
         MCHBurstMode = 80010,
         
-        [SecretCustomCombo]
-        [ParentCombo(MCHBurstMode)]
-        [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
-        MCHAltDrill = 80011,
-
+            [SecretCustomCombo]
+            [ParentCombo(MCHBurstMode)]
+            [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
+            MCHAltDrill = 80011,
+        
+        // BRD
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
-        BRDBurstMode = 80017,
+        BRDBurstMode = 80020,
 
+        // RDM
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
-        RDMBurstMode = 80018,
+        RDMBurstMode = 80030,
 
+        // WAR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
-        WARBurstMode = 80019,
+        WARBurstMode = 80040,
 
+        // NIN
         [ConflictingCombos(NINAoEBurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
-        NINBurstMode = 80020,
+        NINBurstMode = 80050,
 
         [ConflictingCombos(NINBurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
-        NINAoEBurstMode = 80021,
+        NINAoEBurstMode = 80051,
 
+        // SGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
-        SGEBurstMode = 80022,
+        SGEBurstMode = 80060,
+
+        // DNC
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Fountain Combo into an all-in-one damage button.", DNC.JobID)]
+        DNCBurstMode = 80070,
+
+            [SecretCustomCombo]
+            [ParentCombo(DNCBurstMode)]
+            [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
+            DNCHoningDanceOption = 80071,
+
+            [SecretCustomCombo]
+            [ParentCombo(DNCBurstMode)]
+            [CustomComboInfo("Curing Waltz Burst Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
+            DNCCuringWaltzOption = 80072,
+
+            /*
+            [SecretCustomCombo] // I'm probably gonna remove this entirely
+            [ParentCombo(DNCBurstMode)]
+            [CustomComboInfo("En Avant Overcap Protection", "Adds En Avant to the main combo when you hit maximum stacks.\nNOT OPTIMAL, THIS MAY GET YOU KILLED", DNC.JobID)]
+            DNCEnAvantOvercapOption = 80073,
+            */
+        /*
+        // RPR
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.", RPR.JobID)]
+        RPRBurstMode = 80080,
+        */
 
         #endregion
         // ====================================================================================
