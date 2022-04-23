@@ -40,7 +40,7 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (actionID == BRDPvP.PowerfulShot)
                 {
-                    var canWeave = CanWeave(actionID);
+                    var canWeave = CanWeave(actionID, 0.5);
                     //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
                     //if (globalAction != actionID) return globalAction;
