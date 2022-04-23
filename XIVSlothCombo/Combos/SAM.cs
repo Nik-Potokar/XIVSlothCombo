@@ -114,14 +114,11 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var SamKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(SAM.Config.SamKenkiOvercapAmount);
 
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && CanWeave(actionID))
-                {
-                    if (level >= SAM.Levels.Shinten)
+                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && CanWeave(actionID) && level >= SAM.Levels.Shinten)
                         return SAM.Shinten;
-                }
-                
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Yukikaze;
+
                 if (comboTime > 0)
                 {
                     if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Yukikaze)
@@ -499,16 +496,8 @@ namespace XIVSlothComboPlugin.Combos
 
             if (actionID == SAM.Kasha)
             {
-                if (CanWeave(actionID))
-                {
-
-                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && CanWeave(actionID))
-                    {
-                        if (level >= SAM.Levels.Shinten)
-                            return SAM.Shinten;
-                    }
-                }
-
+                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && CanWeave(actionID) && level >= SAM.Levels.Shinten)
+                    return SAM.Shinten;
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Kasha;
 
@@ -686,8 +675,8 @@ namespace XIVSlothComboPlugin.Combos
                     return SAM.Senei;
                 if (gauge.MeditationStacks >= 3 && level >= SAM.Levels.Shoha)
                     return SAM.Shoha;
-
             }
+
             return actionID;
         }
     }
@@ -706,6 +695,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.SamuraiShoha2Feature) && gauge.MeditationStacks == 3 && level >= SAM.Levels.Shoha2)
                     return SAM.Shoha2;
             }
+
             return actionID;
         }
     }
@@ -732,6 +722,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 return SAM.Ikishoten;
             }
+
             return actionID;
         }
     }
@@ -753,9 +744,9 @@ namespace XIVSlothComboPlugin.Combos
                         return SAM.Gyoten;
                 }
             }
+
             return actionID;
         }
     }
-
 }
 
