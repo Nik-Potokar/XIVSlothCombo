@@ -102,14 +102,14 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ASTROLOGIAN
 
-        [ConflictingCombos(AstrologianAutoDrawFeature,AstrologianDpsAoEFeature)]
+
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 0, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
         AstrologianCardsOnDrawFeaturelikewhat = 1000,
 
         [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 0, "Bestow Royalty", "This one's for the Lords and Ladies, lemme get a HYEEEAAAAAH!")]
         AstrologianCrownPlayFeature = 1001,
 
-        [CustomComboInfo("Benefic 2 to Benefic Level Sync", "Changes Benefic 2 to Benefic when below level 26 in synced content.", AST.JobID, 0, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
+        [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 0, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
         AstrologianBeneficFeature = 1002,
 
         [ConflictingCombos(AstrologianAlternateAscendFeature)]
@@ -134,14 +134,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 0, "HELIOSCOPTER", "HELIOSCOPTER HELIOSCOPTER")]
         AstrologianHeliosFeature = 1010,
 
-        [ConflictingCombos(AstrologianCardsOnDrawFeaturelikewhat)]
+        [ConflictingCombos(AstAutoCardTarget)]
         [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature", AST.JobID, 0, "Kaiba Feature", "You just activated my trap card!")]
         AstrologianAutoDrawFeature = 1011,
 
         [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, 0, "Kaiba 2, Electric Boogaloo", "It's a trap!")]
         AstrologianAutoCrownDrawFeature = 1012,
 
-        [ConflictingCombos(AstrologianCardsOnDrawFeaturelikewhat)]
+        [ConflictingCombos(AstAutoCardTarget)]
         [CustomComboInfo("AoE DPS Feature", "Adds AutoDraws/Astrodyne to the AoE Gravity combo", AST.JobID, 0, "A bowlful of cards", "Oops! All AoE!")]
         AstrologianDpsAoEFeature = 1013,
 
@@ -198,6 +198,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID, 0)]
         ExaltationFeature = 1028,
 
+        [ConflictingCombos(AstrologianAutoDrawFeature, AstrologianDpsAoEFeature)]
         [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
         [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
         AstAutoCardTarget = 1029,
@@ -1726,19 +1727,19 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
         SageDPSFeature = 14005,
 
-            [ParentCombo(SageDPSFeature)]
-            [ConflictingCombos(SageDPSFeatureToT)]
-            [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
-            SageDPSFeatureAdvTest = 14009,
+        [ParentCombo(SageDPSFeature)]
+        [ConflictingCombos(SageDPSFeatureToT)]
+        [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
+        SageDPSFeatureAdvTest = 14009,
 
         [ParentCombo(SageDPSFeature)]
         [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
         SageLucidFeature = 14006,
 
-            [ParentCombo(SageDPSFeature)]
-            [ConflictingCombos(SageDPSFeatureAdvTest)]
-            [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
-            SageDPSFeatureToT = 14032,
+        [ParentCombo(SageDPSFeature)]
+        [ConflictingCombos(SageDPSFeatureAdvTest)]
+        [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
+        SageDPSFeatureToT = 14032,
 
         [ConflictingCombos(SageAlternateEgeiroFeature)]
         [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
@@ -1752,81 +1753,81 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
         SageSingleTargetHealFeature = 14011,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
-            AutoApplyKardia = 14013,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
+        AutoApplyKardia = 14013,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
-            CustomEukrasianDiagnosisFeature = 14014,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
+        CustomEukrasianDiagnosisFeature = 14014,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-            CustomSoteriaFeature = 14015,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomSoteriaFeature = 14015,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-            CustomZoeFeature = 14016,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomZoeFeature = 14016,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-            CustomPepsisFeature = 14017,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomPepsisFeature = 14017,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-            CustomTaurocholeFeature = 14018,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomTaurocholeFeature = 14018,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-            CustomHaimaFeature = 14019,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomHaimaFeature = 14019,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-            RhizomataFeature = 14020,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+        RhizomataFeature = 14020,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-            CustomKrasisFeature = 14021,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomKrasisFeature = 14021,
 
-            [ParentCombo(SageSingleTargetHealFeature)]
-            [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-            CustomDruocholeFeature = 14030,
+        [ParentCombo(SageSingleTargetHealFeature)]
+        [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
+        CustomDruocholeFeature = 14030,
 
         [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
         [CustomComboInfo("Sage AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 0)]
         SageAoEHealFeature = 14012,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
-            PhysisFeature = 14022,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
+        PhysisFeature = 14022,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
-            EukrasianPrognosisFeature = 14023,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
+        EukrasianPrognosisFeature = 14023,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
-            HolosFeature = 14024,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
+        HolosFeature = 14024,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
-            PanhaimaFeature = 14025,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
+        PanhaimaFeature = 14025,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
-            PepsisFeature = 14026,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
+        PepsisFeature = 14026,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
-            IxocholeFeature = 14027,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
+        IxocholeFeature = 14027,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
-            KeracholeFeature = 14028,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
+        KeracholeFeature = 14028,
 
-            [ParentCombo(SageAoEHealFeature)]
-            [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-            RhizomataFeatureAoE = 14029,
+        [ParentCombo(SageAoEHealFeature)]
+        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
+        RhizomataFeatureAoE = 14029,
 
         //20220420: Last ID Used is 14032
 
@@ -1843,7 +1844,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID, 0, "Geico Combo", "Fifteen minutes could save you 15% or more on car insurance!")]
         SamuraiGekkoCombo = 15001,
 
-       // [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+        // [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID, 0, "Cashman Combo", "Dolla dolla bill, y'all")]
         SamuraiKashaCombo = 15002,
 
@@ -2008,13 +2009,13 @@ namespace XIVSlothComboPlugin
         SummonerFesterPainflareRuinFeature = 17013,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID,0)]
+        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID, 0)]
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 0)]
         EgisOnRuinFeature = 17015,
-        
+
         [ParentCombo(EgisOnRuinFeature)]
         [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 1)]
         SummonerEgiSummonsonMainFeature = 17016,
@@ -2042,7 +2043,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         EgisOnAOEFeature = 17022,
-        
+
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
         [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 1, "No Raising for me!", "Always slips swiftstream, sometimes")]
@@ -2060,18 +2061,18 @@ namespace XIVSlothComboPlugin
         [ParentCombo(EgisOnAOEFeature)]
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
         SummonerEgiAttacksAOEFeature = 17026,
-        
+
         [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
-        
+
         [ParentCombo(SummonerDemiSummonsFeature)]
         [CustomComboInfo("Rekindle on Main Combo option", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerSingleTargetRekindleOption = 17028,
-        
+
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleOption = 17029,
-        
+
         [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
         SummonerSpecialRuinFeature = 17030,
 
@@ -2132,7 +2133,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorMythrilTempestCombo)]
         [CustomComboInfo("Inner Release AOE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0)]
         WarriorIRonAOE = 18014,
-        
+
         [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with Fell Cleave when under Inner Release buff.\nReplaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, 0, "Cleave of annoyance", "Infuriating stuff, if you ask me. Truly chaotic.")]
         WarriorInfuriateFeature = 18015,
 
@@ -2163,7 +2164,7 @@ namespace XIVSlothComboPlugin
         #endregion
         // ====================================================================================
         #region WHITE MAGE
-        
+
         [CustomComboInfo("CDs on Glare/Stone", "Collection of CDs and spell features on Glare/Stone.", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
         WHMCDsonMainComboGroup = 19099,
 
@@ -2351,12 +2352,12 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
         MCHBurstMode = 80010,
-        
-            [SecretCustomCombo]
-            [ParentCombo(MCHBurstMode)]
-            [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
-            MCHAltDrill = 80011,
-        
+
+        [SecretCustomCombo]
+        [ParentCombo(MCHBurstMode)]
+        [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
+        MCHAltDrill = 80011,
+
         // BRD
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
@@ -2393,22 +2394,22 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Mode", "Turns Fountain Combo into an all-in-one damage button.", DNC.JobID)]
         DNCBurstMode = 80070,
 
-            [SecretCustomCombo]
-            [ParentCombo(DNCBurstMode)]
-            [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
-            DNCHoningDanceOption = 80071,
+        [SecretCustomCombo]
+        [ParentCombo(DNCBurstMode)]
+        [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
+        DNCHoningDanceOption = 80071,
 
-            [SecretCustomCombo]
-            [ParentCombo(DNCBurstMode)]
-            [CustomComboInfo("Curing Waltz Burst Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
-            DNCCuringWaltzOption = 80072,
+        [SecretCustomCombo]
+        [ParentCombo(DNCBurstMode)]
+        [CustomComboInfo("Curing Waltz Burst Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
+        DNCCuringWaltzOption = 80072,
 
-            /*
-            [SecretCustomCombo] // I'm probably gonna remove this entirely
-            [ParentCombo(DNCBurstMode)]
-            [CustomComboInfo("En Avant Overcap Protection", "Adds En Avant to the main combo when you hit maximum stacks.\nNOT OPTIMAL, THIS MAY GET YOU KILLED", DNC.JobID)]
-            DNCEnAvantOvercapOption = 80073,
-            */
+        /*
+        [SecretCustomCombo] // I'm probably gonna remove this entirely
+        [ParentCombo(DNCBurstMode)]
+        [CustomComboInfo("En Avant Overcap Protection", "Adds En Avant to the main combo when you hit maximum stacks.\nNOT OPTIMAL, THIS MAY GET YOU KILLED", DNC.JobID)]
+        DNCEnAvantOvercapOption = 80073,
+        */
         /*
         // RPR
         [SecretCustomCombo]
