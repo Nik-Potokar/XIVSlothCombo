@@ -34,6 +34,11 @@ namespace XIVSlothComboPlugin
                 Acclaim = 3163,
                 HoningOvation = 3164;
         }
+        public static class Config
+        {
+            public const string
+                DNCWaltzThreshold = "DNCWaltzThreshold";
+        }
     }
 
     internal class DNCBurstMode : CustomCombo // Burst Mode
@@ -51,30 +56,41 @@ namespace XIVSlothComboPlugin
                 var enAvantCharges = GetCooldown(DNCPVP.EnAvant).RemainingCharges;
                 bool curingWaltzReady = !GetCooldown(DNCPVP.CuringWaltz).IsCooldown;
                 bool honingDanceReady = !GetCooldown(DNCPVP.HoningDance).IsCooldown;
-                // var acclaimStacks = FindEffect(DNCPVP.Buffs.Acclaim).StackCount;
+                var acclaimStacks = GetBuffStacks(DNCPVP.Buffs.Acclaim);
                 bool canWeave = CanWeave(actionID);
+                var distance = GetTargetDistance();
+                var HPThreshold = Service.Configuration.GetCustomIntValue(DNCPVP.Config.DNCWaltzThreshold);
                 var HP = PlayerHealthPercentageHp();
+
+                if (IsEnabled(CustomComboPreset.DNCHoningDanceOption) && honingDanceReady && HasTarget() && distance <= 5)
+                {
+                    if (HasEffect(DNCPVP.Buffs.Acclaim) && acclaimStacks < 4)
+                        return WHM.Assize;
+
+                    return DNCPVP.HoningDance;
+                }
 
                 if (canWeave)
                 {
                     // Curing Waltz Burst Option
-                    if (IsEnabled(CustomComboPreset.DNCCuringWaltzOption) && curingWaltzReady && HP <= 60) // Add slider to this next
+                    if (IsEnabled(CustomComboPreset.DNCCuringWaltzOption) && curingWaltzReady && HP <= HPThreshold) // Add slider to this next
                         return OriginalHook(DNCPVP.CuringWaltz);
 
                     // Fan Dance weaved on Main Combo
-                    if (IsOffCooldown(DNCPVP.FanDance))
+                    if (IsOffCooldown(DNCPVP.FanDance) && distance < 13) // 2y below max to avoid waste?
                         return OriginalHook(DNCPVP.FanDance);
                 }
 
                 // Starfall Dance on Main Combo
-                if (!starfallDance && starfallDanceReady)
+                if (!starfallDance && starfallDanceReady && distance < 20) // 5y below max to avoid waste?
                     return OriginalHook(DNCPVP.StarfallDance);
 
+                /*
                 // En Avant Overcap Protection Option
-                if (IsEnabled(CustomComboPreset.DNCEnAvantOvercapOption) && !enAvant && enAvantCharges == 4) // Probably just remove this altogether it's stupid
+                if (IsEnabled(CustomComboPreset.DNCEnAvantOvercapOption) && !enAvant && enAvantCharges == 4) // Probably just remove this altogether it's stupid. Good to test with though, I guess?
                     return OriginalHook(DNCPVP.EnAvant);
+                */
 
-                return OriginalHook(DNCPVP.Cascade);
             }
 
             return actionID;
