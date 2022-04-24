@@ -1842,16 +1842,16 @@ namespace XIVSlothComboPlugin
         SamuraiRangedUptimeFeature = 15004,
 
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Yukikaze Combo to Main Combo", "Adds Yukikaze Combo to Main Combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID, 0)]
+        [CustomComboInfo("Yukikaze Combo on Main Combo", "Adds Yukikaze Combo to Main Combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID, 0)]
         YukionST = 15005,
 
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Kasha Combo to Main Combo", "Adds Kasha Combo to Main Combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID, 0)]
+        [CustomComboInfo("Kasha Combo on Main Combo", "Adds Kasha Combo to Main Combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID, 0)]
         KashaonST = 15006,
 
         [ConflictingCombos(SamuraiYatenFeature)]
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Level 90 Samurai Feature", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation.", SAM.JobID, 0)]
+        [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation.", SAM.JobID, 0)]
         SamuraiOpenerFeature = 15007,
 
         [ConflictingCombos(SamuraiYatenFeature)]
