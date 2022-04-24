@@ -146,10 +146,19 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var gauge = GetJobGauge<WHMGauge>();
+            var tetraHP = Service.Configuration.GetCustomIntValue(WHM.Config.WHMogcdHealsShieldsFeature);
+
 
             if (actionID == WHM.Cure2)
             {
-                if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryCure2Feature) && gauge.BloodLily == 3)
+                if (IsEnabled(CustomComboPreset.WHMPrioritizeoGCDHealsShields) && IsEnabled(CustomComboPreset.WHMBenisonGCDOption) //Is the priority option enabled
+                    && level >= WHM.Levels.DivineBenison && !TargetHasEffectAny(WHM.Buffs.DivineBenison) && HasCharges(WHM.DivineBenison) //Can I use Divine Benison
+                     && (GetCooldown(WHM.DivineBenison).RemainingCharges == 2 || GetCooldown(WHM.DivineBenison).ChargeCooldownRemaining <= 29)) //Did I just use Divine Benison
+                    return actionID;
+                if (IsEnabled(CustomComboPreset.WHMPrioritizeoGCDHealsShields) && IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)
+                    && IsOffCooldown(WHM.Tetragrammaton) && level >= WHM.Levels.Tetragrammaton && EnemyHealthPercentage() <= tetraHP)
+                    return actionID;
+                else if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryCure2Feature) && gauge.BloodLily == 3)
                     return WHM.AfflatusMisery;
                 if (level >= WHM.Levels.AfflatusSolace && gauge.Lily > 0)
                     return WHM.AfflatusSolace;
@@ -313,45 +322,22 @@ namespace XIVSlothComboPlugin.Combos
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMogcdHealsShieldsFeature;
 
-        internal static bool benisonUsed = false;
-        internal static ushort benisonStacks = 0;
-        internal static float benisonReleaseTime = 0;
-
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var tetraHP = Service.Configuration.GetCustomIntValue(WHM.Config.WHMogcdHealsShieldsFeature);
 
-            //Sets benisonStacks to the current charges when higher
-            benisonStacks = System.Math.Max(benisonStacks, GetCooldown(WHM.DivineBenison).RemainingCharges);
-
-            //Checks for a drop in the number of stacks to indicate it has been used
-            if (GetCooldown(WHM.DivineBenison).RemainingCharges < benisonStacks)
-            {
-                benisonUsed = true;
-                benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges;
-                benisonReleaseTime = GetCooldownChargeRemainingTime(WHM.DivineBenison) - 2; // Sets release time to 2 seconds later
-                if (benisonReleaseTime < 0) { benisonReleaseTime = benisonReleaseTime + 30; } // If time is set negative, then adds the recharge time (30sec) to new limit
-            }
-
-            //Checks for when charge remaining time is lower than benisonReleaseTime to allow the next use.
-            //Ensures there is less than 5 seconds difference incase the timer cycles back from 0 to 30
-            if (GetCooldownChargeRemainingTime(WHM.DivineBenison) <= benisonReleaseTime && (benisonReleaseTime - GetCooldownChargeRemainingTime(WHM.DivineBenison) < 5)  && benisonUsed == true)
-            { 
-                benisonUsed = false;
-                benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges;
-            }
-
             if (actionID == WHM.Cure2)
             {
+                if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison)
+                    && (GetCooldown(WHM.DivineBenison).RemainingCharges == 2 || GetCooldown(WHM.DivineBenison).ChargeCooldownRemaining <= 29))
+                {
+                    if (IsEnabled(CustomComboPreset.WHMBenisonOGCDOption) && CanSpellWeave(actionID)) { return WHM.DivineBenison; }
+                    if (IsEnabled(CustomComboPreset.WHMBenisonGCDOption)) { return WHM.DivineBenison; }
+                }
                 if (level >= WHM.Levels.Tetragrammaton && IsOffCooldown(WHM.Tetragrammaton) && EnemyHealthPercentage() <= tetraHP)
                 {
                     if (IsEnabled(CustomComboPreset.WHMTetraOnOGCDOption) && CanSpellWeave(actionID)) { return WHM.Tetragrammaton; }
                     if (IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)) { return WHM.Tetragrammaton; }
-                }
-                if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison) && benisonUsed == false)
-                {
-                    if (IsEnabled(CustomComboPreset.WHMBenisonOGCDOption) && CanSpellWeave(actionID)) { return WHM.DivineBenison; }
-                    if (IsEnabled(CustomComboPreset.WHMBenisonGCDOption)) { return WHM.DivineBenison; }
                 }
             }
 

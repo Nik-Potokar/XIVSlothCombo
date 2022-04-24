@@ -2219,6 +2219,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Adds Afflatus Misery to Glare/Stone", "Adds Afflatus Misery to Glare when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
         WHMAfflatusMiseryOGCDFeature = 19017,
 
+        [ParentCombo(WhiteMageAfflatusFeature)]
         [CustomComboInfo("oGCD Heals/Shields", "Adds oGCD Healing and Shields to Cure II", WHM.JobID, 0, "To benediction, or to not benediction.", "That is the question. Whether 'tis nobler... NM, you dead.")]
         WHMogcdHealsShieldsFeature = 19018,
 
@@ -2241,6 +2242,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("No Swift Opener Option", "Delays all oGCDs until after 3rd Glare 3 cast.\n>> Glare III ONLY <<", WHM.JobID, 0, "Cover me, Porkins.", "Almost there... Almost there...")]
         WHMNoSwiftOpenerOption = 19023,
+
+        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [CustomComboInfo("Prioritize oGCD Heals/Shields on Cure II when available.", "Displays oGCD Heals/Shields over Afflatus.\n(Only applies to GCD options for Tetragrammaton and Divine Benison)", WHM.JobID, 0, "That, not this.", "Shields over flowers.")]
+        WHMPrioritizeoGCDHealsShields = 19024,
 
         #endregion
         // ====================================================================================
