@@ -290,7 +290,13 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (HasEffect(AST.Buffs.ClarifyingDraw) && IsEnabled(CustomComboPreset.AstRedrawFeature))
                     {
-                        if ((cardDrawn == CardType.BALANCE && gauge.Seals.Contains(SealType.SUN)) || (cardDrawn == CardType.ARROW && gauge.Seals.Contains(SealType.MOON)) || (cardDrawn == CardType.SPEAR && gauge.Seals.Contains(SealType.CELESTIAL)) || (cardDrawn == CardType.BOLE && gauge.Seals.Contains(SealType.SUN)) || (cardDrawn == CardType.EWER && gauge.Seals.Contains(SealType.MOON)) || (cardDrawn == CardType.SPIRE && gauge.Seals.Contains(SealType.CELESTIAL)))
+                        if ((cardDrawn == CardType.BALANCE && gauge.Seals.Contains(SealType.SUN)) ||
+                            (cardDrawn == CardType.ARROW && gauge.Seals.Contains(SealType.MOON)) ||
+                            (cardDrawn == CardType.SPEAR && gauge.Seals.Contains(SealType.CELESTIAL)) ||
+                            (cardDrawn == CardType.BOLE && gauge.Seals.Contains(SealType.SUN)) ||
+                            (cardDrawn == CardType.EWER && gauge.Seals.Contains(SealType.MOON)) ||
+                            (cardDrawn == CardType.SPIRE && gauge.Seals.Contains(SealType.CELESTIAL)))
+
                             return AST.Redraw;
                     }
                     if (IsEnabled(CustomComboPreset.AstAutoCardTarget))
@@ -300,6 +306,16 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     return OriginalHook(AST.Play);
+                }
+
+                if (!GetTarget && (IsEnabled(CustomComboPreset.AstReFocusFeature) || IsEnabled(CustomComboPreset.AstReTargetFeature)))
+                {
+                    if (IsEnabled(CustomComboPreset.AstReTargetFeature))
+                        TargetObject(TargetType.LastTarget);
+                    
+
+                    if (IsEnabled(CustomComboPreset.AstReFocusFeature))
+                        TargetObject(TargetType.FocusTarget);
                 }
 
                 GetTarget = true;
@@ -317,8 +333,8 @@ namespace XIVSlothComboPlugin.Combos
 
             //Checks for trusts then normal parties
             int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
-            if (GetPartyMembers().Count() > 0) maxPartySize = GetPartyMembers().Count();
-            if (GetPartyMembers().Count() == 0 && Service.BuddyList.Length == 0) maxPartySize = 0;
+            if (GetPartyMembers().Length > 0) maxPartySize = GetPartyMembers().Length;
+            if (GetPartyMembers().Length == 0 && Service.BuddyList.Length == 0) maxPartySize = 0;
 
             for (int i = 2; i <= maxPartySize; i++)
             {
@@ -340,7 +356,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (typeof(AST.MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                     {
-                        TargetPartyMember(member);
+                        TargetObject(member);
                         GetTarget = false;
                         return true;
                     }
@@ -350,7 +366,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (typeof(AST.RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                     {
-                        TargetPartyMember(member);
+                        TargetObject(member);
                         GetTarget = false;
                         return true;
                     }
@@ -359,7 +375,7 @@ namespace XIVSlothComboPlugin.Combos
 
             if (IsEnabled(CustomComboPreset.AstrologianTargetExtraFeature))
             {
-                for (int i = 2; i <= maxPartySize; i++)
+                for (int i = 1; i <= maxPartySize; i++)
                 {
                     GameObject? member = GetPartySlot(i);
                     if (member == null) break;
@@ -378,7 +394,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (typeof(AST.TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
-                            TargetPartyMember(member);
+                            TargetObject(member);
                             GetTarget = false;
                             return true;
                         }
@@ -388,12 +404,14 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (typeof(AST.HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
-                            TargetPartyMember(member);
+                            TargetObject(member);
                             GetTarget = false;
                             return true;
                         }
+                        
                     }
                 }
+
             }
 
             return false;
@@ -605,7 +623,6 @@ namespace XIVSlothComboPlugin.Combos
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<ASTGauge>();
                 var lucidDreaming = GetCooldown(AST.LucidDreaming);
-                var gravityCD = GetCooldown(AST.Gravity);
                 var minorarcanaCD = GetCooldown(AST.MinorArcana);
                 var drawCD = GetCooldown(AST.Draw);
                 var actionIDCD = GetCooldown(actionID);

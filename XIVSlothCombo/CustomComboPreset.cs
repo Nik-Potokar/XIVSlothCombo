@@ -215,6 +215,16 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
         AstRedrawFeature = 1032,
 
+        [ConflictingCombos(AstReFocusFeature)]
+        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+        [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously selected target.", AST.JobID)]
+        AstReTargetFeature = 1033,
+
+        [ConflictingCombos(AstReTargetFeature)]
+        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+        [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
+        AstReFocusFeature = 1034,
+
 
         #endregion
         // ====================================================================================
@@ -2421,16 +2431,20 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region PvPGlobals
         [SecretCustomCombo]
-        [CustomComboInfo("Emergency Heals", "Uses Recuperate when your HP is under a certain threshold and you have the MP.", ADV.JobID)]
+        [CustomComboInfo("Emergency Heals", "Uses Recuperate when your HP is under a certain threshold and you have the MP.", ADV.JobID, 1)]
         PVPEmergencyHeals = 90000,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Emergency Guard", "Uses Guard when your HP is under a certain threshold.", ADV.JobID)]
+        [CustomComboInfo("Emergency Guard", "Uses Guard when your HP is under a certain threshold.", ADV.JobID, 2)]
         PVPEmergencyGuard = 90001,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Quick Purify", "Uses Purify when afflicted with any selected debuff.", ADV.JobID)]
+        [CustomComboInfo("Quick Purify", "Uses Purify when afflicted with any selected debuff.", ADV.JobID, 4)]
         PVPQuickPurify = 90002,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Prevent Mash Cancelling", "Stops you cancelling your guard if you're mashing buttons", ADV.JobID, 3)]
+        PVPMashCancel = 90003,
 
         #endregion
     }
