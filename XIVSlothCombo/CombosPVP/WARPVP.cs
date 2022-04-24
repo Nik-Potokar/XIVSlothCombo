@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XIVSlothComboPlugin.Combos;
+﻿using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
@@ -37,10 +32,6 @@ namespace XIVSlothComboPlugin
         {
             if (actionID == WARPVP.HeavySwing)
             {
-                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
-
-                //if (globalAction != actionID) return globalAction;
-
                 if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown)
                     return OriginalHook(WARPVP.Bloodwhetting);
 
