@@ -258,8 +258,8 @@ namespace XIVSlothComboPlugin.Combos
                     return DRK.LivingShadow;
                 if (IsOffCooldown(DRK.SaltedEarth) && level >= DRK.Levels.SaltedEarth)
                     return DRK.SaltedEarth;
-                if (IsOffCooldown(DRK.CarveAndSpit))
-                    return DRK.CarveAndSpit;
+                if (IsOffCooldown(DRK.CarveAndSpit) && level >= DRK.Levels.AbyssalDrain)
+                    return actionID;
                 if (IsOffCooldown(DRK.SaltAndDarkness) && HasEffect(DRK.Buffs.SaltedEarth) && level >= DRK.Levels.SaltAndDarkness)
                     return DRK.SaltAndDarkness;
                 if (IsEnabled(CustomComboPreset.DarkShadowbringeroGCDFeature) && GetCooldownRemainingTime(DRK.Shadowbringer) < 60 && level >= DRK.Levels.Shadowbringer && gauge.DarksideTimeRemaining > 0)
