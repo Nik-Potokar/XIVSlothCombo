@@ -1834,7 +1834,7 @@ namespace XIVSlothComboPlugin
         SamuraiOvercapFeatureAoe = 15002,
 
         //Main Combo Features
-        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID, 0, "Geico Combo", "Fifteen minutes could save you 15% or more on car insurance!")]
+        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.\nIf all sub options are selected will turn into a full one button rotation (Simple Samurai)", SAM.JobID, 0, "Geico Combo", "Fifteen minutes could save you 15% or more on car insurance!")]
         SamuraiGekkoCombo = 15003,
 
         [ParentCombo(SamuraiGekkoCombo)]
