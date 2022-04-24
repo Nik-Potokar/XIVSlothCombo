@@ -182,12 +182,20 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (GetBuffStacks(SAM.Buffs.MeikyoShisui) == 3 && (oneSeal || twoSeal || threeSeal))
                                 return SAM.Hagakure;
-
                         }
                     }
-
+                    //Prep for Opener
                     if (meikyoBuff && IsOnCooldown(SAM.MeikyoShisui) && gauge.Sen == Sen.NONE)
                         return SAM.Gekko;
+
+                    //Stops waste if you use Iaijutsu or Ogi and you've got a Kaeshi ready
+                    if (!inOpener)
+                    {
+                        if (IsEnabled(CustomComboPreset.SamuraiOgiNamikiriSTFeature) && gauge.Kaeshi == Kaeshi.NAMIKIRI)
+                            return OriginalHook(SAM.OgiNamikiri);
+                        if (IsEnabled(CustomComboPreset.IaijutsuSTFeature) && (gauge.Kaeshi == Kaeshi.GOKEN || gauge.Kaeshi == Kaeshi.SETSUGEKKA))
+                            return OriginalHook(SAM.TsubameGaeshi);
+                    }
                 }
 
                 if (InCombat())
