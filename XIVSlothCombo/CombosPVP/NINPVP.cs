@@ -55,10 +55,6 @@ namespace XIVSlothComboPlugin
         {
             if (actionID is NINPVP.SpinningEdge or NINPVP.AeolianEdge or NINPVP.GustSlash)
             {
-                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
-
-                //if (globalAction != actionID) return globalAction;
-
                 var threeMudrasCD = GetCooldown(NINPVP.ThreeMudra);
                 var fumaCD = GetCooldown(NINPVP.FumaShuriken);
                 var bunshinStacks = HasEffect(NINPVP.Buffs.Bunshin) ? GetBuffStacks(NINPVP.Buffs.Bunshin) : 0;
@@ -74,23 +70,29 @@ namespace XIVSlothComboPlugin
                 if (HasEffect(NINPVP.Buffs.Hidden))
                     return OriginalHook(NINPVP.Assassinate);
 
-                if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown && canWeave)
-                    return OriginalHook(NINPVP.Mug);
+                if (canWeave)
+                {
+                    if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown)
+                        return OriginalHook(NINPVP.Mug);
 
-                if (!GetCooldown(NINPVP.Bunshin).IsCooldown && canWeave)
-                    return OriginalHook(NINPVP.Bunshin);
+                    if (!GetCooldown(NINPVP.Bunshin).IsCooldown)
+                        return OriginalHook(NINPVP.Bunshin);
 
-                if (threeMudrasCD.RemainingCharges > 0 && !mudraMode && canWeave)
-                    return OriginalHook(NINPVP.ThreeMudra);
+                    if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
+                        return OriginalHook(NINPVP.ThreeMudra);
+                }
 
-                if (mudraMode && !hyoshoLocked)
-                    return OriginalHook(NINPVP.HyoshoRanryu);
+                if (mudraMode)
+                {
+                    if (!hyoshoLocked)
+                        return OriginalHook(NINPVP.HyoshoRanryu);
 
-                if (mudraMode && !raijuLocked && bunshinStacks > 0)
-                    return OriginalHook(NINPVP.ForkedRaiju);
+                    if (!raijuLocked && bunshinStacks > 0)
+                        return OriginalHook(NINPVP.ForkedRaiju);
 
-                if (mudraMode && !hutonLocked)
-                    return NINPVP.Huton;
+                    if (!hutonLocked)
+                        return NINPVP.Huton;
+                }
 
                 if (fumaCD.RemainingCharges > 0)
                     return OriginalHook(NINPVP.FumaShuriken);
@@ -109,10 +111,6 @@ namespace XIVSlothComboPlugin
         {
             if (actionID == NINPVP.FumaShuriken)
             {
-                //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
-
-                //if (globalAction != actionID) return globalAction;
-
                 var threeMudrasCD = GetCooldown(NINPVP.ThreeMudra);
                 var fumaCD = GetCooldown(NINPVP.FumaShuriken);
                 var bunshinStacks = HasEffect(NINPVP.Buffs.Bunshin) ? GetBuffStacks(NINPVP.Buffs.Bunshin) : 0;
@@ -125,20 +123,26 @@ namespace XIVSlothComboPlugin
                 bool mudraMode = HasEffect(NINPVP.Buffs.ThreeMudra);
                 bool canWeave = CanWeave(actionID);
 
-                if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown && canWeave)
-                    return NINPVP.Mug;
+                if (canWeave)
+                {
+                    if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown)
+                        return NINPVP.Mug;
 
-                if (!GetCooldown(NINPVP.Bunshin).IsCooldown && canWeave)
-                    return NINPVP.Bunshin;
+                    if (!GetCooldown(NINPVP.Bunshin).IsCooldown)
+                        return NINPVP.Bunshin;
 
-                if (threeMudrasCD.RemainingCharges > 0 && !mudraMode && canWeave)
-                    return OriginalHook(NINPVP.ThreeMudra);
+                    if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
+                        return OriginalHook(NINPVP.ThreeMudra);
+                }
 
-                if (mudraMode && !dotonLocked)
-                    return OriginalHook(NINPVP.Doton);
+                if (mudraMode)
+                {
+                    if (!dotonLocked)
+                        return OriginalHook(NINPVP.Doton);
 
-                if (mudraMode && !gokaLocked)
-                    return OriginalHook(NINPVP.GokaMekkyaku);
+                    if (!gokaLocked)
+                        return OriginalHook(NINPVP.GokaMekkyaku);
+                }
 
                 if (fumaCD.RemainingCharges > 0)
                     return OriginalHook(NINPVP.FumaShuriken);
@@ -150,7 +154,6 @@ namespace XIVSlothComboPlugin
 
                     if (lastComboActionID == NINPVP.SpinningEdge)
                         return OriginalHook(NINPVP.GustSlash);
-
 
                     return OriginalHook(NINPVP.SpinningEdge);
                 }

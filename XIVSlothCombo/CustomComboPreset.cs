@@ -364,7 +364,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, 0, "Robin Hood Feature", "Steal from Lolorito and give to Garlemald, I guess?\nGood on ya.")]
         BardApexFeature = 3005,
 
-        [ConflictingCombos(SimpleBardFeature, BardSimpleOpener)]
+        [ConflictingCombos(SimpleBardFeature)]
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, 0, "oGCD's spilling everywhere", "The Algorithm between the lines. Trademark")]
         BardoGCDSingleTargetFeature = 3006,
 
@@ -381,11 +381,11 @@ namespace XIVSlothComboPlugin
         SimpleBardFeature = 3009,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Bard DoT Option", "This option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID, 0, "", "If you don't look at the DoTs, they don't exist.")]
+        [CustomComboInfo("Simple Bard DoTs", "This option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID, 0, "", "If you don't look at the DoTs, they don't exist.")]
         SimpleDoTOption = 3010,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Bard Song Option", "This option adds the bards songs to the Simple Bard feature.", BRD.JobID, 0, "Sing-song", "Look, a raid contribution feature!\nShame nobody will thank you for it")]
+        [CustomComboInfo("Simple Bard Songs", "This option adds the bards songs to the Simple Bard feature.", BRD.JobID, 0, "Sing-song", "Look, a raid contribution feature!\nShame nobody will thank you for it")]
         SimpleSongOption = 3011,
 
         [ParentCombo(BardoGCDAoEFeature)]
@@ -402,14 +402,14 @@ namespace XIVSlothComboPlugin
         BardSimpleAoEFeature = 3015,
 
         [ParentCombo(BardSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Bard Song Option", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "Wow. You're performing to a crowd now, huh")]
+        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "Wow. You're performing to a crowd now, huh")]
         SimpleAoESongOption = 3016,
 
         [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Buffs Feature", "Adds buffs onto the Simple Bard feature.", BRD.JobID, 0, "", "Buff for me, buff for you.")]
+        [CustomComboInfo("Simple Buffs", "Adds buffs onto the Simple Bard feature.", BRD.JobID, 0, "", "Buff for me, buff for you.")]
         BardSimpleBuffsFeature = 3017,
 
-        [ParentCombo(SimpleBardFeature)]
+        [ParentCombo(BardSimpleBuffsFeature)]
         [CustomComboInfo("Simple Buffs - Radiant", "Adds Radiant Finale to the Simple Buffs feature.", BRD.JobID, 0, "", "Nothing radiant about it, if you ask me.")]
         BardSimpleBuffsRadiantFeature = 3018,
 
@@ -424,10 +424,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disable Apex Arrow", "Removes Apex Arrow from Simple Bard and AoE Feature.", BRD.JobID, 0, "Disable Apex Legends", "Removing features? You? Surely not")]
         BardRemoveApexArrowFeature = 3021,
 
-        [ConflictingCombos(BardoGCDSingleTargetFeature)]
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
-        BardSimpleOpener = 3022,
+        //[ConflictingCombos(BardoGCDSingleTargetFeature)]
+        //[ParentCombo(SimpleBardFeature)]
+        //[CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
+        //BardSimpleOpener = 3022,
 
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple Pooling", "Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
@@ -440,6 +440,14 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SimpleBardFeature)]
         [CustomComboInfo("Simple RagingJaws", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
         BardSimpleRagingJaws = 3025,
+
+        [ParentCombo(SimpleDoTOption)]
+        [CustomComboInfo("Opener Only", "Until the first auto-refresh you can dot new targets automatically.", BRD.JobID, 0, "", "")]
+        BardSimpleDotOpener = 3026,
+
+        [ParentCombo(SimpleAoESongOption)]
+        [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
+        SimpleAoESongOptionExcludeWM = 3027,
 
         #endregion
         // ====================================================================================
@@ -717,14 +725,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkSouleaterCombo)]
         [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher", DRK.JobID, 0, "", "Take the plunge. Or, just dip your toes in. Whatever.")]
         DarkBloodGaugeOvercapFeature = 5016,
-
-        [ParentCombo(DarkSouleaterCombo)]
-        [CustomComboInfo("Level 90 Dark Knight Opener", "Adds the Level 90 Dark Knight Opener to the Main Combo. \nOpener triggered by using The Blackest Night or Blood Weapon before combat.", DRK.JobID, 0)]
-        DarkOpenerFeature = 5017,
-
-        [ParentCombo(DarkOpenerFeature)]
-        [CustomComboInfo("Blood Weapon out of Combat Feature", "If TBN is used outside of combat, turns the main combo into Blood Weapon in preparation for the opener.", DRK.JobID, 0)]
-        DarkBloodWeaponOpener = 5018,
 
         [ParentCombo(DarkMainComboCDsGroup)]
         [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on Main Combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0)]
@@ -1045,6 +1045,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Drill/Air/Chain Saw Feature On Main Combo", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf Air Anchor is on cooldown and you use Reassemble, Chainsaw will be added to main combo instead.", MCH.JobID, 0, "A bit of everything feature", "Don't rub your last two brain-cells together! We got you!")]
         MachinistDrillAirOnMainCombo = 8005,
 
+        [ConflictingCombos(MachinistSimpleFeature)]
         [CustomComboInfo("Single Button Heat Blast", "Switches Heat Blast to Hypercharge.", MCH.JobID, 0, "So-called 'Heat Blast'", "Basically a large hair-dryer.")]
         MachinistHeatblastGaussRicochetFeature = 8006,
 
@@ -2343,40 +2344,74 @@ namespace XIVSlothComboPlugin
         //[CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
         //BlackEnochianPVPFeature = 80016,
 
+        // MCH
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
         MCHBurstMode = 80010,
         
-        [SecretCustomCombo]
-        [ParentCombo(MCHBurstMode)]
-        [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
-        MCHAltDrill = 80011,
-
+            [SecretCustomCombo]
+            [ParentCombo(MCHBurstMode)]
+            [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
+            MCHAltDrill = 80011,
+        
+        // BRD
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
-        BRDBurstMode = 80017,
+        BRDBurstMode = 80020,
 
+        // RDM
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
-        RDMBurstMode = 80018,
+        RDMBurstMode = 80030,
 
+        // WAR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
-        WARBurstMode = 80019,
+        WARBurstMode = 80040,
 
+        // NIN
         [ConflictingCombos(NINAoEBurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
-        NINBurstMode = 80020,
+        NINBurstMode = 80050,
 
         [ConflictingCombos(NINBurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
-        NINAoEBurstMode = 80021,
+        NINAoEBurstMode = 80051,
 
+        // SGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
-        SGEBurstMode = 80022,
+        SGEBurstMode = 80060,
+
+        // DNC
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Fountain Combo into an all-in-one damage button.", DNC.JobID)]
+        DNCBurstMode = 80070,
+
+            [SecretCustomCombo]
+            [ParentCombo(DNCBurstMode)]
+            [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
+            DNCHoningDanceOption = 80071,
+
+            [SecretCustomCombo]
+            [ParentCombo(DNCBurstMode)]
+            [CustomComboInfo("Curing Waltz Burst Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
+            DNCCuringWaltzOption = 80072,
+
+            /*
+            [SecretCustomCombo] // I'm probably gonna remove this entirely
+            [ParentCombo(DNCBurstMode)]
+            [CustomComboInfo("En Avant Overcap Protection", "Adds En Avant to the main combo when you hit maximum stacks.\nNOT OPTIMAL, THIS MAY GET YOU KILLED", DNC.JobID)]
+            DNCEnAvantOvercapOption = 80073,
+            */
+        /*
+        // RPR
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.", RPR.JobID)]
+        RPRBurstMode = 80080,
+        */
 
         #endregion
         // ====================================================================================

@@ -1,7 +1,3 @@
-using Dalamud.Game.ClientState.JobGauge.Enums;
-using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Objects.Types;
-
 namespace XIVSlothComboPlugin.Combos
 {
     internal static class BRDPvP
@@ -20,7 +16,6 @@ namespace XIVSlothComboPlugin.Combos
             BlastArrow = 29394,
             FinalFantasia = 29401;
 
-
         public static class Buffs
         {
             public const ushort
@@ -29,7 +24,6 @@ namespace XIVSlothComboPlugin.Combos
                 Repertoire = 3137,
                 BlastArrowReady = 3142;
         }
-
 
         internal class BurstShotFeaturePVP : CustomCombo
         {
@@ -40,12 +34,17 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (actionID == BRDPvP.PowerfulShot)
                 {
+                    var canWeave = CanWeave(actionID, 0.5);
                     //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
-                    //if (globalAction != actionID) return globalAction;
+                    if (canWeave)
+                    {
+                        if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3)
+                            return OriginalHook(BRDPvP.EmpyrealArrow);
 
-                    if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3)
-                        return OriginalHook(BRDPvP.EmpyrealArrow);
+                        if (!GetCooldown(BRDPvP.SilentNocturne).IsCooldown)
+                            return OriginalHook(BRDPvP.SilentNocturne);
+                    }
 
                     if (HasEffect(BRDPvP.Buffs.BlastArrowReady))
                         return OriginalHook(BRDPvP.BlastArrow);
@@ -56,9 +55,6 @@ namespace XIVSlothComboPlugin.Combos
                     if (!GetCooldown(BRDPvP.ApexArrow).IsCooldown)
                         return OriginalHook(BRDPvP.ApexArrow);
 
-                    if (!GetCooldown(BRDPvP.SilentNocturne).IsCooldown)
-                        return OriginalHook(BRDPvP.SilentNocturne);
-
                     return OriginalHook(BRDPvP.PowerfulShot);
                 }
                 
@@ -66,5 +62,4 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
     }
-    
 }
