@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Numerics;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
@@ -8,6 +5,9 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
+using System;
+using System.Linq;
+using System.Numerics;
 using System.Timers;
 using XIVSlothComboPlugin.Attributes;
 
@@ -644,7 +644,7 @@ namespace XIVSlothComboPlugin.Combos
             return false;
         }
 
-        
+
         /// <summary>
         /// Gets the party list
         /// </summary>
@@ -792,6 +792,13 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         protected static bool InPvP()
-            => Service.ClientState.IsPvP || Service.ClientState.TerritoryType == 250;
+            => Service.ClientState.IsPvP ||
+            Service.ClientState.TerritoryType == 250 || //Wolves Den
+            Service.ClientState.TerritoryType == 376 || //Borderland Ruins
+            Service.ClientState.TerritoryType == 431 || //Seal Rock
+            Service.ClientState.TerritoryType == 554 || //Fields of Glory
+            Service.ClientState.TerritoryType == 888 || //Onsal Hakair
+            Service.ClientState.TerritoryType == 729 || //Astragalos
+            Service.ClientState.TerritoryType == 791;   //Hidden Gorge
     }
 }
