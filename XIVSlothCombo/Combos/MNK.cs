@@ -434,51 +434,66 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Buffs
-                if (inCombat && !inOpener && IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature))
+                if (inCombat && !inOpener)
                 {
-                    if (IsEnabled(CustomComboPreset.MnkPerfectBalanceOnMainComboFeature) && canWeave && !HasEffect(MNK.Buffs.FormlessFist) &&
-                        level >= MNK.Levels.PerfectBalance && !HasEffect(MNK.Buffs.PerfectBalance) && HasEffect(MNK.Buffs.DisciplinedFist) &&
-                        OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
+                    if (IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature))
                     {
-                        // Use Perfect Balance if:
-                        // 1. It's after Bootshine/Dragon Kick.
-                        // 2. At max stacks / before overcap.
-                        // 3. During Brotherhood.
-                        // 4. During Riddle of Fire after Demolish has been applied.
-                        // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                        if ((lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) &&
-                            ((GetRemainingCharges(MNK.PerfectBalance) == 2) ||
-                            (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
-                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
-                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 3 && GetCooldownRemainingTime(MNK.Brotherhood) > 40) ||
-                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime > 6) ||
-                            (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 3 && GetCooldownRemainingTime(MNK.Brotherhood) < 10)))
+                        if (canWeave)
                         {
-                            return MNK.PerfectBalance;
+                            if (IsEnabled(CustomComboPreset.MnkPerfectBalanceOnMainComboFeature) && !HasEffect(MNK.Buffs.FormlessFist) &&
+                                level >= MNK.Levels.PerfectBalance && !HasEffect(MNK.Buffs.PerfectBalance) && HasEffect(MNK.Buffs.DisciplinedFist) &&
+                                OriginalHook(MNK.MasterfulBlitz) == MNK.MasterfulBlitz)
+                            {
+                                // Use Perfect Balance if:
+                                // 1. It's after Bootshine/Dragon Kick.
+                                // 2. At max stacks / before overcap.
+                                // 3. During Brotherhood.
+                                // 4. During Riddle of Fire after Demolish has been applied.
+                                // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
+                                if ((lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick) &&
+                                    ((GetRemainingCharges(MNK.PerfectBalance) == 2) ||
+                                    (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
+                                    (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
+                                    (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 3 && GetCooldownRemainingTime(MNK.Brotherhood) > 40) ||
+                                    (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime > 6) ||
+                                    (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 3 && GetCooldownRemainingTime(MNK.Brotherhood) < 10)))
+                                {
+                                    return MNK.PerfectBalance;
+                                }
+                            }
+                        }
+
+                        if (canDelayedWeave)
+                        {
+                            if (level >= MNK.Levels.RiddleOfFire && !IsOnCooldown(MNK.RiddleOfFire) && HasEffect(MNK.Buffs.DisciplinedFist))
+                            {
+                                return MNK.RiddleOfFire;
+                            }
+                        }
+
+                        if (canWeave)
+                        {
+                            if (IsEnabled(CustomComboPreset.MnkBrotherhoodOnMainComboFeature) && level >= MNK.Levels.Brotherhood &&
+                               !IsOnCooldown(MNK.Brotherhood) && IsOnCooldown(MNK.RiddleOfFire) && (lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick))
+                            {
+                                return MNK.Brotherhood;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MnkRiddleOfWindOnMainComboFeature) && level >= MNK.Levels.RiddleOfWind &&
+                               !IsOnCooldown(MNK.RiddleOfWind) && IsOnCooldown(MNK.RiddleOfFire) && IsOnCooldown(MNK.Brotherhood))
+                            {
+                                return MNK.RiddleOfWind;
+                            }
                         }
                     }
 
-                    if (level >= MNK.Levels.RiddleOfFire && !IsOnCooldown(MNK.RiddleOfFire) && canDelayedWeave && HasEffect(MNK.Buffs.DisciplinedFist))
+                    if (canWeave)
                     {
-                        return MNK.RiddleOfFire;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MnkBrotherhoodOnMainComboFeature) && canWeave && level >= MNK.Levels.Brotherhood &&
-                       !IsOnCooldown(MNK.Brotherhood) && IsOnCooldown(MNK.RiddleOfFire) && (lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick))
-                    {
-                        return MNK.Brotherhood;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MnkRiddleOfWindOnMainComboFeature) && canWeave && level >= MNK.Levels.RiddleOfWind &&
-                       !IsOnCooldown(MNK.RiddleOfWind) && IsOnCooldown(MNK.RiddleOfFire) && IsOnCooldown(MNK.Brotherhood))
-                    {
-                        return MNK.RiddleOfWind;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && canWeave && level >= MNK.Levels.Meditation && gauge.Chakra == 5 && 
-                        HasEffect(MNK.Buffs.DisciplinedFist) && IsOnCooldown(MNK.RiddleOfFire) && lastComboMove != MNK.RiddleOfFire)
-                    {
-                        return OriginalHook(MNK.Meditation);
+                        if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= MNK.Levels.Meditation && gauge.Chakra == 5 &&
+                            HasEffect(MNK.Buffs.DisciplinedFist) && IsOnCooldown(MNK.RiddleOfFire) && lastComboMove != MNK.RiddleOfFire)
+                        {
+                            return OriginalHook(MNK.Meditation);
+                        }
                     }
                 }
 
