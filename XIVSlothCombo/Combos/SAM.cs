@@ -625,16 +625,18 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var gauge = GetJobGauge<SAMGauge>();
+
             if (actionID == SAM.MeikyoShisui)
             {
-                if (HasEffect(SAM.Buffs.MeikyoShisui) && IsEnabled(CustomComboPreset.SamuraiJinpuShifuFeature))
+                if (HasEffect(SAM.Buffs.MeikyoShisui))
                 {
-                    if (!HasEffect(SAM.Buffs.Fugetsu) && level >= SAM.Levels.Gekko)
+                    if (!HasEffect(SAM.Buffs.Fugetsu) || gauge.Sen.HasFlag(Sen.GETSU) == false)
                         return SAM.Gekko;
-
-                    if (!HasEffect(SAM.Buffs.Fuka) && level >= SAM.Levels.Kasha)
+                    if (!HasEffect(SAM.Buffs.Fuka) || gauge.Sen.HasFlag(Sen.KA) == false)
                         return SAM.Kasha;
-
+                    if (gauge.Sen.HasFlag(Sen.SETSU) == false)
+                        return SAM.Yukikaze;
                 }
 
                 return SAM.MeikyoShisui;
