@@ -153,6 +153,7 @@ namespace XIVSlothComboPlugin.Combos
                 var threeSeal = OriginalHook(SAM.Iaijutsu) == SAM.Setsugekka;
                 var meikyostacks = GetBuffStacks(SAM.Buffs.MeikyoShisui);
                 var SamFillerCombo = Service.Configuration.GetCustomIntValue(SAM.Config.SamFillerCombo);
+                bool openerReady = GetRemainingCharges(SAM.MeikyoShisui) == 1 && IsOffCooldown(SAM.Senei) && IsOffCooldown(SAM.Ikishoten) && GetRemainingCharges(SAM.TsubameGaeshi) == 2;
 
                 if (IsEnabled(CustomComboPreset.SamuraiRangedUptimeFeature) && level >= SAM.Levels.Enpi && !inEvenFiller && !inOddFiller)
                 {
@@ -168,7 +169,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level == 90 && IsEnabled(CustomComboPreset.SamuraiOpenerFeature))
                     {
-                        if (meikyoBuff)
+                        if (meikyoBuff && openerReady)
                         {
                             if (!inOpener)
                             {
@@ -181,10 +182,12 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (GetBuffStacks(SAM.Buffs.MeikyoShisui) == 3 && (oneSeal || twoSeal || threeSeal))
                                 return SAM.Hagakure;
-                            if (meikyoBuff && IsOnCooldown(SAM.MeikyoShisui) && gauge.Sen == Sen.NONE)
-                                return SAM.Gekko;
+
                         }
                     }
+
+                    if (meikyoBuff && IsOnCooldown(SAM.MeikyoShisui) && gauge.Sen == Sen.NONE)
+                        return SAM.Gekko;
                 }
 
                 if (InCombat())

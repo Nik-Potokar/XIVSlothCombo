@@ -1851,7 +1851,7 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(SamuraiYatenFeature)]
         [ParentCombo(SamuraiGekkoCombo)]
-        [CustomComboInfo("Level 90 Samurai Feature", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui.", SAM.JobID, 0)]
+        [CustomComboInfo("Level 90 Samurai Feature", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation.", SAM.JobID, 0)]
         SamuraiOpenerFeature = 15007,
 
         [ConflictingCombos(SamuraiYatenFeature)]
@@ -1926,6 +1926,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Shoha 2 on Mangetsu Combo", "Adds Shoha 2 when you have 3 meditation stacks to Mangetsu combo.", SAM.JobID, 0)]
         SamuraiShoha2AOEFeature = 15024,
 
+        [ConflictingCombos(SamuraiGurenFeature)]
         [ParentCombo(SamuraiMangetsuCombo)]
         [CustomComboInfo("Guren on Mangetsu Combo", "Adds Guren when it's off CD and you have 25 Kenki to Mangetsu combo.", SAM.JobID, 0)]
         SamuraiGurenAOEFeature = 15025,
