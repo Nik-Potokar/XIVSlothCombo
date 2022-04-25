@@ -5,6 +5,8 @@
         public const byte JobID = 99;
 
         public const uint
+            SecondWind = 7541,
+            Addle = 7560,
             Swiftcast = 7561,
             Resurrection = 173,
             Raise = 125,
@@ -27,17 +29,22 @@
         public static class Debuffs
         {
             public const ushort
+                Addle = 1203,
                 Reprisal = 1193;
         }
 
         public static class Levels
         {
             public const byte
+                SecondWind = 8,
+                Addle = 8,
                 LowBlow = 12,
                 Raise = 12,
                 Interject = 18;
         }
     }
+
+    //Tank Features
     internal class AllTankInterruptFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankInterruptFeature;
@@ -68,6 +75,22 @@
             {
                 if (TargetHasEffectAny(All.Debuffs.Reprisal) && IsOffCooldown(All.Reprisal))
                     return WHM.Stone1;
+            }
+            return actionID;
+        }
+    }
+
+    //Caster Features
+    internal class AllCasterAddleFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterAddleFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is All.Addle)
+            {
+                if (TargetHasEffectAny(All.Debuffs.Addle) && IsOffCooldown(All.Addle))
+                    return WAR.FellCleave;
             }
             return actionID;
         }

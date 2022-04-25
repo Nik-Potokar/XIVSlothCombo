@@ -45,7 +45,6 @@ namespace XIVSlothComboPlugin.Combos
             Soulsow = 24387,
             HarvestMoon = 24388,
             // Role
-            SecondWind = 7541,
             Bloodbath = 7542,
             LegSweep = 7863,
             Feint = 7549;
@@ -76,7 +75,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 WaxingSlice = 5,
-                SecondWind = 8,
                 LegSweep = 10,
                 ShadowOfDeath = 10,
                 Bloodbath = 12,
@@ -193,8 +191,8 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= RPR.Levels.Bloodbath && playerHP < 65 && IsOffCooldown(RPR.Bloodbath))
                         return RPR.Bloodbath;
 
-                    if (level >= RPR.Levels.SecondWind && playerHP < 40 && IsOffCooldown(RPR.SecondWind))
-                        return RPR.SecondWind;
+                    if (level >= All.Levels.SecondWind && playerHP < 40 && IsOffCooldown(All.SecondWind))
+                        return All.SecondWind;
                 }
 
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature) && enshrouded && gauge.VoidShroud >= 2)

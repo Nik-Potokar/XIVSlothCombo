@@ -44,7 +44,6 @@ namespace XIVSlothComboPlugin.Combos
             Improvisation = 16014,
             CuringWaltz = 16015,
             // Role
-            SecondWind = 7541,
             Peloton = 7557,
             HeadGraze = 7551;
 
@@ -79,7 +78,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 Fountain = 2,
-                SecondWind = 8,
                 StandardStep = 15,
                 ReverseCascade = 20,
                 Peloton = 20,
@@ -437,7 +435,7 @@ namespace XIVSlothComboPlugin.Combos
                 var devilmentReady = level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment);
                 var improvisationReady = level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation);
                 var curingWaltzReady = level >= DNC.Levels.CuringWaltz && IsOffCooldown(DNC.CuringWaltz);
-                var secondWindReady = level >= DNC.Levels.SecondWind && IsOffCooldown(DNC.SecondWind);
+                var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(DNC.HeadGraze) && level >= DNC.Levels.HeadGraze;
 
                 // Simple ST Interrupt
@@ -514,7 +512,7 @@ namespace XIVSlothComboPlugin.Combos
                             return DNC.CuringWaltz;
 
                         if (PlayerHealthPercentageHp() < 50 && secondWindReady)
-                            return DNC.SecondWind;
+                            return All.SecondWind;
                     }
                     
                     // Simple ST Improvisation
@@ -568,7 +566,7 @@ namespace XIVSlothComboPlugin.Combos
                 var devilmentReady = level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment);
                 var improvisationReady = level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation);
                 var curingWaltzReady = level >= DNC.Levels.CuringWaltz && IsOffCooldown(DNC.CuringWaltz);
-                var secondWindReady = level >= DNC.Levels.SecondWind && IsOffCooldown(DNC.SecondWind);
+                var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(DNC.HeadGraze) && level >= DNC.Levels.HeadGraze;
                 
                 // Simple AoE Interrupt
@@ -649,7 +647,7 @@ namespace XIVSlothComboPlugin.Combos
                             return DNC.CuringWaltz;
 
                         if (PlayerHealthPercentageHp() < 50 && secondWindReady)
-                            return DNC.SecondWind;
+                            return All.SecondWind;
                     }
 
                     // Simple AoE Improvisation

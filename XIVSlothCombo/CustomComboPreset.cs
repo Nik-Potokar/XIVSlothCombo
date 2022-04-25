@@ -90,7 +90,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #region GLOBAL FEATURES
-
+        //Tank Features
         [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllTankFeatures = 100099,
 
@@ -99,8 +99,17 @@ namespace XIVSlothComboPlugin
         AllTankInterruptFeature = 100000,
 
         [ParentCombo(AllTankFeatures)]
-        [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone.", ADV.JobID)]
+        [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
         AllTankReprisalFeature = 100001,
+
+        //Magical Ranged Features
+        [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged (Casters).\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllCasterFeatures = 100098,
+
+        [ParentCombo(AllCasterFeatures)]
+        [CustomComboInfo("Magical Ranged: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
+        AllCasterAddleFeature = 100011,
+        
 
         #endregion
 
@@ -723,9 +732,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID, 0, "Ranged DPS job now, duh", "Stubby little arms, huh")]
         DarkRangedUptimeFeature = 5011,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", DRK.JobID, 0, "Lower blow", "Blow, but low.")]
-        DarkKnightInterruptFeature = 5012,
-
         [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "Even the un-cool kids got heals these days")]
         DRKStalwartabyssalDrainFeature = 5013,
@@ -773,9 +779,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkMainComboBuffsGroup)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", DRK.JobID)]
-        DarkKnightReprisalProtection = 5030,
 
         #endregion
         // ====================================================================================
@@ -1007,9 +1010,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
         GunbreakerRangedUptimeFeature = 7015,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", GNB.JobID, 0, "Lower blow", "Blow, but low.")]
-        GunbreakerInterruptFeature = 7016,
-
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
         GunbreakerBloodfestonST = 7014,
@@ -1036,9 +1036,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", GNB.JobID)]
-        GunbreakerReprisalProtection = 7030,
 
         #endregion
         // ====================================================================================
@@ -1451,9 +1448,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
         PaladinFightOrFlightFeature = 11017,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
-        PaladinInterruptFeature = 11019,
-
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
         PaladinHolyCircleFeature = 11020,
@@ -1473,9 +1467,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", PLD.JobID)]
-        PaladinReprisalProtection = 11030,
 
         #endregion
         // ====================================================================================
@@ -2216,9 +2207,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "Tomahawk!", "You heard me! Tomahawk! Ka-chow!")]
         WARRangedUptimeFeature = 18016,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", WAR.JobID, 0, "", "That's a low blow to my bro-bro, bro.")]
-        WarriorInterruptFeature = 18017,
-
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
         WarriorInfuriateFellCleave = 18018,
 
@@ -2232,9 +2220,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", WAR.JobID)]
-        WarriorReprisalProtection = 18030,
 
         #endregion
         // ====================================================================================
