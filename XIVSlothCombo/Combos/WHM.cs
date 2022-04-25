@@ -13,7 +13,6 @@ namespace XIVSlothComboPlugin.Combos
             Cure2 = 135,
             AfflatusSolace = 16531,
             AfflatusRapture = 16534,
-            LucidDreaming = 7562,
             Raise = 125,
             Swiftcast = 7561,
             AfflatusMisery = 16535,
@@ -236,8 +235,8 @@ namespace XIVSlothComboPlugin.Combos
                             return WHM.PresenceOfMind;
                         if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= WHM.Levels.Assize && IsOffCooldown(WHM.Assize))
                             return WHM.Assize;
-                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold)
-                            return WHM.LucidDreaming;
+                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                            return All.LucidDreaming;
                     }
 
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)

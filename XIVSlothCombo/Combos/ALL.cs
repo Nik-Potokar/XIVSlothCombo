@@ -6,6 +6,7 @@
 
         public const uint
             Swiftcast = 7561,
+            LucidDreaming = 7562,
             Resurrection = 173,
             Verraise = 7523,
             Raise = 125,
@@ -23,6 +24,7 @@
         {
             public const ushort
                 Weakness = 43,
+                LucidDreaming = 1204,
                 Swiftcast = 167;
         }
 
@@ -35,6 +37,7 @@
         public static class Levels
         {
             public const byte
+                LucidDreaming = 14,
                 Raise = 12;
         }
     }
