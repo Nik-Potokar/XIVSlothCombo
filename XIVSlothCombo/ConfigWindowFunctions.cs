@@ -89,16 +89,12 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.PushItemWidth(itemWidth);
             var enabled = output == outputValue;
 
-            var rng = new Random().Next(10000, 99999);
-
             if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
             {
-
                 Service.Configuration.SetCustomIntValue(config, outputValue);
-
                 Service.Configuration.Save();
-
             }
+
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
             ImGui.TextWrapped(checkboxDescription);
             ImGui.PopStyleColor();
