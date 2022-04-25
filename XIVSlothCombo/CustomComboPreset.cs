@@ -88,17 +88,60 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ADV
         #endregion
-        /*
-        #region GLOBAL FEATURES
-        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
-        InterruptFeature = 90000,
 
-        [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
-        [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", All.JobID)]
-        DoMSwiftcastFeature = 90001,
+        #region GLOBAL FEATURES
+        //Tank Features
+        [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllTankFeatures = 100099,
+
+            [ParentCombo(AllTankFeatures)]
+            [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
+            AllTankInterruptFeature = 100000,
+
+            [ParentCombo(AllTankFeatures)]
+            [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
+            AllTankReprisalFeature = 100001,
+
+        //Healer Features
+        [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllHealerFeatures = 100098,
+
+            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SageEgeiroFeature, WHMRaiseFeature)]
+            [ParentCombo(AllHealerFeatures)]
+            [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
+            AllHealerRaiseFeature = 100010,
+
+        //Magical Ranged Features
+        [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllCasterFeatures = 100097,
+
+            [ParentCombo(AllCasterFeatures)]
+            [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
+            AllCasterAddleFeature = 100020,
+
+            [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
+            [ParentCombo(AllCasterFeatures)]
+            [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
+            AllCasterRaiseFeature = 100021,
+
+        //Melee Features
+        [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllMeleeFeatures = 100096,
+
+            [ParentCombo(AllMeleeFeatures)]
+            [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
+            AllMeleeFeintFeature = 100030,
+
+        //Ranged Physical Features
+        [CustomComboInfo("Global Physical Ranged Features", "Features and options involving shared role actions for Physical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllRangedPhysicalFeatures = 100095,
+
+            [ParentCombo(AllRangedPhysicalFeatures)]
+            [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
+            AllRangedPhysicalMitigationFeature = 100040,
 
         #endregion
-        */
+
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -112,13 +155,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 0, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
         AstrologianBeneficFeature = 1002,
 
-        [ConflictingCombos(AstrologianAlternateAscendFeature)]
-        [CustomComboInfo("AST Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("AST Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
         AstrologianAscendFeature = 1003,
-
-        [ConflictingCombos(AstrologianAscendFeature)]
-        [CustomComboInfo("AST Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available", AST.JobID, 0, "Rez-bot-0003", "Same same, but different!")]
-        AstrologianAlternateAscendFeature = 1019,
 
         [ConflictingCombos(AstrologianAlternateDpsFeature, CustomValuesTest)]
         [CustomComboInfo("DPS Feature(On Malefic)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, 0, "Green DPS? Look no further", "Adds fatter deeps to your combo. Just pick another job already...")]
@@ -327,9 +366,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(BluFinalSting)]
         [CustomComboInfo("Off CD Primal Additions", "Adds any Primals that are off CD to the Final Sting Combo. \nPrimals Used: Feather Rain, Shock Strike, Glass Dance, J Kick, Rose of Destruction. ", BLU.JobID)]
         BluPrimals = 70003,
-
-        [CustomComboInfo("Swiftcasted Angel Whisper", "Turns Angel Whisper to Swiftcast when Swiftcast and Angel Whisper are available. \nSpells required: Angel Whisper ", BLU.JobID)]
-        BluRez = 70004,
 
         [CustomComboInfo("Ram's Voice into Ultravibration", "Turns Ultravibration into Ram's Voice if Deep Freeze isn't on the target. Will swiftcast Ultravibration if available. \nSpells Required: Ram's Voice, Ultravibration. ", BLU.JobID)]
         BluUltravibrate = 70005,
@@ -718,9 +754,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID, 0, "Ranged DPS job now, duh", "Stubby little arms, huh")]
         DarkRangedUptimeFeature = 5011,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", DRK.JobID, 0, "Lower blow", "Blow, but low.")]
-        DarkKnightInterruptFeature = 5012,
-
         [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "Even the un-cool kids got heals these days")]
         DRKStalwartabyssalDrainFeature = 5013,
@@ -768,9 +801,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkMainComboBuffsGroup)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", DRK.JobID)]
-        DarkKnightReprisalProtection = 5030,
 
         #endregion
         // ====================================================================================
@@ -1002,9 +1032,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
         GunbreakerRangedUptimeFeature = 7015,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", GNB.JobID, 0, "Lower blow", "Blow, but low.")]
-        GunbreakerInterruptFeature = 7016,
-
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
         GunbreakerBloodfestonST = 7014,
@@ -1031,9 +1058,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", GNB.JobID)]
-        GunbreakerReprisalProtection = 7030,
 
         #endregion
         // ====================================================================================
@@ -1446,9 +1470,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
         PaladinFightOrFlightFeature = 11017,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
-        PaladinInterruptFeature = 11019,
-
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
         PaladinHolyCircleFeature = 11020,
@@ -1468,9 +1489,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", PLD.JobID)]
-        PaladinReprisalProtection = 11030,
 
         #endregion
         // ====================================================================================
@@ -1699,7 +1717,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
         RedMageLucidOnJolt = 13022,
 
-        [CustomComboInfo("Swiftcast into Verraise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        [CustomComboInfo("RDM Alternative Raise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RedMageSwiftVerraise = 13023,
 
         #endregion
@@ -1743,13 +1761,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
         SageDPSFeatureToT = 14032,
 
-        [ConflictingCombos(SageAlternateEgeiroFeature)]
-        [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("SGE Alternative Raise Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
         SageEgeiroFeature = 14007,
-
-        [ConflictingCombos(SageEgeiroFeature)]
-        [CustomComboInfo("Egeiro into Swiftcast Feature", "Changes Egiero to Swiftcast when Swiftcast is available.", SGE.JobID, 0, "Raise to Raise", "Swaps your raise with WHM's raise.\nDoesn't work any more. You're welcome")]
-        SageAlternateEgeiroFeature = 14008,
 
         [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
         [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
@@ -2000,13 +2014,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("ED Aetherflow", "Change Energy Drain into Aetherflow when you have no more Aetherflow stacks.", SCH.JobID, 0, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
         ScholarEnergyDrainFeature = 16001,
 
-        [ConflictingCombos(SCHAlternateRaiseFeature)]
-        [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("SCH Alternative Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
         SchRaiseFeature = 16002,
-
-        [ConflictingCombos(SchRaiseFeature)]
-        [CustomComboInfo("SCH Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available.", SCH.JobID, 0, "", "Well, this raise stuff and Peloton Extreme, I guess.")]
-        SCHAlternateRaiseFeature = 16008,
 
         [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID, 0, "", "You're really gonna forget? Really?")]
         ScholarFairyFeature = 16004,
@@ -2132,7 +2142,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
         SummonerEgiAttacksAOEFeature = 17026,
 
-        [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        [ConflictingCombos(AllCasterRaiseFeature)]
+        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
@@ -2211,9 +2222,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "Tomahawk!", "You heard me! Tomahawk! Ka-chow!")]
         WARRangedUptimeFeature = 18016,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", WAR.JobID, 0, "", "That's a low blow to my bro-bro, bro.")]
-        WarriorInterruptFeature = 18017,
-
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
         WarriorInfuriateFellCleave = 18018,
 
@@ -2227,9 +2235,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", WAR.JobID)]
-        WarriorReprisalProtection = 18030,
 
         #endregion
         // ====================================================================================
@@ -2250,13 +2255,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, 0, "Inflatus Feature", "Pumps you full of air. Boing!")]
         WhiteMageAfflatusFeature = 19003,
 
-        [ConflictingCombos(WHMAlternativeRaise)]
-        [CustomComboInfo("WHM Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("WHM Alternative Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
         WHMRaiseFeature = 19004,
-
-        [ConflictingCombos(WHMRaiseFeature)]
-        [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID, 0, "Look up!", "It's this, but that.")]
-        WHMAlternativeRaise = 19015,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]

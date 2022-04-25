@@ -28,16 +28,17 @@ namespace XIVSlothComboPlugin.Combos
             RookOverdrive = 7415,
             AutomatonQueen = 16501,
             QueenOverdrive = 16502,
+            Tactician = 16889,
             ChainSaw = 25788,
             BioBlaster = 16499,
             BarrelStabilizer = 7414,
-            Wildfire = 2878,
-            HeadGraze = 7551;
+            Wildfire = 2878;
 
         public static class Buffs
         {
             public const ushort
                 Reassembled = 851,
+                Tactician = 1951,
                 Wildfire = 1946;
         }
 
@@ -52,7 +53,6 @@ namespace XIVSlothComboPlugin.Combos
                 SlugShot = 2,
                 Hotshot = 4,
                 GaussRound = 15,
-                HeadGraze = 24,
                 CleanShot = 26,
                 Hypercharge = 30,
                 HeatBlast = 35,
@@ -63,6 +63,7 @@ namespace XIVSlothComboPlugin.Combos
                 AirAnchor = 76,
                 AutoCrossbow = 52,
                 HeatedSplitShot = 54,
+                Tactician = 56,
                 HeatedSlugshot = 60,
                 HeatedCleanShot = 64,
                 BioBlaster = 72,
@@ -393,9 +394,9 @@ namespace XIVSlothComboPlugin.Combos
                         GetCooldown(MCH.Wildfire).CooldownRemaining < 8)
                     return MCH.BarrelStabilizer;
 
-                if (canWeaveNormal && IsEnabled(CustomComboPreset.MachinistSimpleInterrupt) && CanInterruptEnemy() && IsOffCooldown(MCH.HeadGraze))
+                if (canWeaveNormal && IsEnabled(CustomComboPreset.MachinistSimpleInterrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                 {
-                    return MCH.HeadGraze;
+                    return All.HeadGraze;
                 }
 
                 if (canWeaveNormal && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MachinistSimpleGadget))

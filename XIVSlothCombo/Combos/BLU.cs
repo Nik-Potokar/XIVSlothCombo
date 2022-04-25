@@ -7,8 +7,6 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 36;
 
         public const uint
-            Addle = 7560,
-            Swiftcast = 7561,
             RoseOfDestruction = 23275,
             ShockStrike = 11429,
             FeatherRain = 11426,
@@ -41,7 +39,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
-                Swiftcast = 167,
                 MoonFlute = 1718,
                 Bristle = 1716,
                 Tingle = 2492,
@@ -55,7 +52,6 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Slow = 9,
                 Bind = 13,
-                Addle = 1203,
                 SongOfTorment = 273,
                 DeepFreeze = 1731,
                 Offguard = 1717,
@@ -122,10 +118,10 @@ namespace XIVSlothComboPlugin.Combos
                     return BLU.RoseOfDestruction;
                 if (!GetCooldown(BLU.FeatherRain).IsCooldown)
                     return BLU.FeatherRain;
-                if (!HasEffect(BLU.Buffs.Bristle) && !GetCooldown(BLU.Swiftcast).IsCooldown)
+                if (!HasEffect(BLU.Buffs.Bristle) && !GetCooldown(All.Swiftcast).IsCooldown)
                     return BLU.Bristle;
-                if (!GetCooldown(BLU.Swiftcast).IsCooldown)
-                    return BLU.Swiftcast;
+                if (!GetCooldown(All.Swiftcast).IsCooldown)
+                    return All.Swiftcast;
                 if (!GetCooldown(BLU.GlassDance).IsCooldown)
                     return BLU.GlassDance;
                 if (GetCooldown(BLU.Surpanakha).CooldownRemaining < 95)
@@ -171,27 +167,9 @@ namespace XIVSlothComboPlugin.Combos
                     return BLU.ShockStrike;
                 if (!HasEffect(BLU.Buffs.Whistle))
                     return BLU.Whistle;
-                if (!GetCooldown(BLU.Swiftcast).IsCooldown)
-                    return BLU.Swiftcast;
+                if (!GetCooldown(All.Swiftcast).IsCooldown)
+                    return All.Swiftcast;
                 return BLU.FinalSting;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class BluRez : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluRez;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == BLU.AngelWhisper)
-            {
-                var swiftCD = GetCooldown(BLU.Swiftcast);
-                var angelCD = GetCooldown(BLU.AngelWhisper);
-                if (!swiftCD.IsCooldown && !angelCD.IsCooldown)
-                    return BLU.Swiftcast;
             }
 
             return actionID;
@@ -207,7 +185,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == BLU.Ultravibration)
             {
                 var freezeDebuff = FindTargetEffect(BLU.Debuffs.DeepFreeze);
-                var swiftCD = GetCooldown(BLU.Swiftcast);
+                var swiftCD = GetCooldown(All.Swiftcast);
                 var ultraCD = GetCooldown(BLU.Ultravibration);
 
                 if (freezeDebuff is null && !ultraCD.IsCooldown)
@@ -215,7 +193,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (freezeDebuff is not null)
                 {
                     if (!swiftCD.IsCooldown)
-                        return BLU.Swiftcast;
+                        return All.Swiftcast;
                     return BLU.Ultravibration;
                 }
             }
@@ -259,11 +237,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BLU.MagicHammer)
             {
-                var addleCD = GetCooldown(BLU.Addle);
+                var addleCD = GetCooldown(All.Addle);
                 var hammerCD = GetCooldown(BLU.MagicHammer);
 
-                if (hammerCD.IsCooldown&& !addleCD.IsCooldown && !TargetHasEffect(BLU.Debuffs.Addle) && !TargetHasEffect(BLU.Debuffs.Conked))
-                    return BLU.Addle;
+                if (hammerCD.IsCooldown&& !addleCD.IsCooldown && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(BLU.Debuffs.Conked))
+                    return All.Addle;
             }
 
             return actionID;

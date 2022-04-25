@@ -41,14 +41,12 @@ namespace XIVSlothComboPlugin.Combos
 
             //Buffs
             Acceleration = 7518,
-            Swiftcast = 7561,
             Manafication = 7521,
             Embolden = 7520;
 
         public static class Buffs
         {
             public const ushort
-                Swiftcast = 167,
                 VerfireReady = 1234,
                 VerstoneReady = 1235,
                 Dualcast = 1249,
@@ -71,7 +69,6 @@ namespace XIVSlothComboPlugin.Combos
                 Veraero2 = 22,
                 Verraise = 64,
                 Zwerchhau = 35,
-                Swiftcast = 18,
                 Displacement = 40,
                 Acceleration = 50,
                 Redoublement = 50,
@@ -106,7 +103,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var swiftcast = HasEffect(RDM.Buffs.Swiftcast);
+            var swiftcast = HasEffect(All.Buffs.Swiftcast);
             var dualcast = HasEffect(RDM.Buffs.Dualcast);
             var chainspell = HasEffect(RDM.Buffs.Chainspell);
             var canWeave = CanWeave(actionID);
@@ -246,7 +243,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(All.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero3)
                         return RDM.Veraero3;
                 }
 
@@ -258,7 +255,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero && level < RDM.Levels.Veraero3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(All.Buffs.Swiftcast)) && level >= RDM.Levels.Veraero && level < RDM.Levels.Veraero3)
                         return RDM.Veraero;
                 }
 
@@ -287,7 +284,7 @@ namespace XIVSlothComboPlugin.Combos
                 // Thunder 3
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(All.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder3)
                         return RDM.Verthunder3;
                 }
 
@@ -299,7 +296,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocComboPlus))
                 {
-                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(RDM.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
+                    if ((HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Chainspell) || HasEffect(All.Buffs.Swiftcast)) && level >= RDM.Levels.Verthunder && level < RDM.Levels.Verthunder3)
                         return RDM.Verthunder;
                 }
 
@@ -367,7 +364,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 var accelBuff = HasEffect(RDM.Buffs.Acceleration);
                 var dualcastBuff = HasEffect(RDM.Buffs.Dualcast);
-                var swiftcastBuff = HasEffect(RDM.Buffs.Swiftcast);
+                var swiftcastBuff = HasEffect(All.Buffs.Swiftcast);
                 var gauge = GetJobGauge<RDMGauge>();
                 int black = gauge.BlackMana;
                 int white = gauge.WhiteMana;
@@ -481,7 +478,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID is RDM.Verstone or RDM.Verfire)
                 {
 
-                    bool fastCasting = HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast);
+                    bool fastCasting = HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast);
                     bool accelerated = HasEffect(RDM.Buffs.Acceleration);
                     bool isFinishing1 = gauge.ManaStacks == 3;
                     bool isFinishing2 = comboTime > 0 && lastComboMove is RDM.Verholy or RDM.Verflare;
@@ -732,8 +729,8 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (step == 1)
                         {
-                            if (IsOnCooldown(RDM.Swiftcast)) step++;
-                            else return RDM.Swiftcast;
+                            if (IsOnCooldown(All.Swiftcast)) step++;
+                            else return All.Swiftcast;
                         }
 
                         if (step == 2)
@@ -892,9 +889,9 @@ namespace XIVSlothComboPlugin.Combos
                         if (!HasEffect(RDM.Buffs.Acceleration) && HasCharges(RDM.Acceleration) && level >= RDM.Levels.Acceleration)
                             return RDM.Acceleration;
 
-                        if (!IsEnabled(CustomComboPreset.SimpleRedMageAccelOnlyFishing) && !HasEffect(RDM.Buffs.Swiftcast) &&
-                            IsOffCooldown(RDM.Swiftcast) && level >= RDM.Levels.Swiftcast)
-                            return RDM.Swiftcast;
+                        if (!IsEnabled(CustomComboPreset.SimpleRedMageAccelOnlyFishing) && !HasEffect(All.Buffs.Swiftcast) &&
+                            IsOffCooldown(All.Swiftcast) && level >= All.Levels.Swiftcast)
+                            return All.Swiftcast;
                     }
                 }
 
@@ -921,7 +918,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                 }
 
-                bool fastCasting = HasEffect(RDM.Buffs.Dualcast) || HasEffect(RDM.Buffs.Swiftcast);
+                bool fastCasting = HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast);
                 bool accelerated = HasEffect(RDM.Buffs.Acceleration);
                 bool isFinishing1 = gauge.ManaStacks == 3;
                 bool isFinishing2 = comboTime > 0 && lastComboMove is RDM.Verholy or RDM.Verflare;
@@ -1042,7 +1039,7 @@ namespace XIVSlothComboPlugin.Combos
                 IMBALANCE_DIFF_MAX = 30;
                 var accelBuff = HasEffect(RDM.Buffs.Acceleration);
                 var dualcastBuff = HasEffect(RDM.Buffs.Dualcast);
-                var swiftcastBuff = HasEffect(RDM.Buffs.Swiftcast);
+                var swiftcastBuff = HasEffect(All.Buffs.Swiftcast);
                 var gauge = GetJobGauge<RDMGauge>();
                 int black = gauge.BlackMana;
                 int white = gauge.WhiteMana;
@@ -1210,9 +1207,9 @@ namespace XIVSlothComboPlugin.Combos
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageSwiftVerraise;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is RDM.Swiftcast && level >= RDM.Levels.Verraise)
+            if (actionID is All.Swiftcast && level >= RDM.Levels.Verraise)
             {
-                if (GetCooldown(RDM.Swiftcast).CooldownRemaining > 0 ||   // Condition 1: Swiftcast is on cooldown
+                if (GetCooldown(All.Swiftcast).CooldownRemaining > 0 ||   // Condition 1: Swiftcast is on cooldown
                     HasEffect(RDM.Buffs.Dualcast))                        // Condition 2: Swiftcast is available, but we have DualCast)
                     return RDM.Verraise;
             }

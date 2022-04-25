@@ -52,15 +52,15 @@ namespace XIVSlothComboPlugin.Combos
             Rhizomata = 24309,
 
             // Role
+            Swiftcast = 756,
             Egeiro = 24287,
-            Swiftcast = 7561;
+            LucidDreaming = 7562;
 
         public static class Buffs
         {
             public const ushort
                 Kardia = 2604,
                 Eukrasia = 2606,
-                Swiftcast = 167,
                 EukrasianDiagnosis = 2607,
                 Kardion = 2872,
                 EukrasianPrognosis = 2609;
@@ -108,13 +108,12 @@ namespace XIVSlothComboPlugin.Combos
                 Toxikon2 = 82,
                 Krasis = 86,
                 Pneuma = 90;
-                
         }
 
         public static class Config
         {
             public const string
-				//GUI Customization Storage Names
+				        //GUI Customization Storage Names
                 CustomSGELucidDreaming = "CustomSGELucidDreaming",
                 CustomZoe = "CustomZoe",
                 CustomHaima = "CustomHaima",
@@ -325,35 +324,15 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is SGE.Swiftcast)
+            if (actionID is All.Swiftcast)
             {
                 if (IsEnabled(CustomComboPreset.SageEgeiroFeature))
                 {
-                    if (HasEffect(SGE.Buffs.Swiftcast))
+                    if (HasEffect(All.Buffs.Swiftcast))
                         return SGE.Egeiro;
                 }
 
-                return OriginalHook(SGE.Swiftcast);
-            }
-            return actionID;
-        }
-    }
-
-    //SageAlternateEgeiroFeature
-    //Egeiro (Raise) is replaced with Swiftcast at all times while not active or on cooldown
-    //Egeiro is basically your swiftcast button under this Option.
-    internal class SageAlternateEgeiroFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageAlternateEgeiroFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Egeiro)
-            {
-                var swiftCD = GetCooldown(SGE.Swiftcast);
-
-                if ((swiftCD.CooldownRemaining is 0))
-                    return SGE.Swiftcast;
+                return OriginalHook(All.Swiftcast);
             }
             return actionID;
         }

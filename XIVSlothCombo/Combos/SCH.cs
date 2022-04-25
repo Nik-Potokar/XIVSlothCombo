@@ -46,14 +46,14 @@ namespace XIVSlothComboPlugin.Combos
             ChainStratagem = 7436,
 
             // Role
-            Swiftcast = 7561,
             Resurrection = 173,
-            Esuna = 5768;
+            Esuna = 5768,
+            LucidDreaming = 7562;
 
         public static class Buffs
         {
             public const ushort
-            Swiftcast = 167;
+            Placeholder = 1;
         }
 
         public static class Debuffs
@@ -148,35 +148,19 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SCH.Swiftcast)
+                if (actionID == All.Swiftcast)
                 {
                     if (IsEnabled(CustomComboPreset.SchRaiseFeature))
                     {
-                        if (HasEffect(SCH.Buffs.Swiftcast))
+                        if (HasEffect(All.Buffs.Swiftcast))
                             return SCH.Resurrection;
                     }
 
-                    return OriginalHook(SCH.Swiftcast);
+                    return OriginalHook(All.Swiftcast);
                 }
 
                 return actionID;
             }
-        }
-    }
-    internal class SCHAlternateRaiseFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCHAlternateRaiseFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SCH.Resurrection)
-            {
-                var swiftCD = GetCooldown(SCH.Swiftcast);
-                if ((swiftCD.CooldownRemaining == 0)
-)
-                    return SCH.Swiftcast;
-            }
-            return actionID;
         }
     }
 

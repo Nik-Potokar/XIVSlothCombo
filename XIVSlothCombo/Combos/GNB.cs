@@ -12,9 +12,6 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         public const uint
-            LowBlow = 7540,
-            Interject = 7538,
-            Reprisal = 7535,
             KeenEdge = 16137,
             NoMercy = 16138,
             BrutalShell = 16139,
@@ -43,7 +40,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
-                Medicated = 49,
                 NoMercy = 1831,
                 ReadyToRip = 1842,
                 ReadyToTear = 1843,
@@ -55,8 +51,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
                 BowShock = 1838,
-                SonicBreak = 1837,
-                Reprisal = 1193;
+                SonicBreak = 1837;
         }
 
         public static class Levels
@@ -197,7 +192,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(GNB.GnashingFang);
                     }
 
-                    if ((HasEffect(GNB.Buffs.NoMercy)|| HasEffect(GNB.Buffs.Medicated)) && gauge.AmmoComboStep == 0 && level >= GNB.Levels.BurstStrike)
+                    if ((HasEffect(GNB.Buffs.NoMercy)|| HasEffect(All.Buffs.Medicated)) && gauge.AmmoComboStep == 0 && level >= GNB.Levels.BurstStrike)
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                             return GNB.Hypervelocity;
@@ -293,7 +288,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if ((gauge.AmmoComboStep == 0 && IsOffCooldown(GNB.GnashingFang)) || gauge.AmmoComboStep is 1 or 2)
                     return OriginalHook(GNB.GnashingFang);
-                if (HasEffect(GNB.Buffs.NoMercy) && HasEffect(GNB.Buffs.Medicated) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF) && gauge.AmmoComboStep == 0)
+                if (HasEffect(GNB.Buffs.NoMercy) && HasEffect(All.Buffs.Medicated) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF) && gauge.AmmoComboStep == 0)
                 {
                     if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
                         return GNB.Hypervelocity;
@@ -372,59 +367,6 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
                 if (gauge == 0 && level >= GNB.Levels.Bloodfest)
                     return GNB.Bloodfest;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class GunbreakerInterruptFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerInterruptFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == GNB.LowBlow)
-            {
-                var interjectCD = GetCooldown(GNB.Interject);
-                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
-                    return GNB.Interject;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class GunbreakerReprisalProtection : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerReprisalProtection;
-
-        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-        {
-            if (actionID is GNB.Reprisal)
-            {
-                if (TargetHasEffectAny(GNB.Debuffs.Reprisal) && IsOffCooldown(GNB.Reprisal))
-                    return WHM.Stone1;
-            }
-            return actionID;
-        }
-    }
-
-    internal class GunbreakerCDsonNMFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerCDsonNMFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == GNB.NoMercy)
-            {
-                if (IsOnCooldown(GNB.NoMercy) && InCombat())
-                {
-                    if (IsOffCooldown(GNB.SonicBreak))
-                        return GNB.SonicBreak;
-                    if (IsOffCooldown(GNB.BowShock))
-                        return GNB.BowShock;
-                }
             }
 
             return actionID;
