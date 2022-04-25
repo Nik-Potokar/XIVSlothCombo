@@ -106,6 +106,10 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
                     return WAR.Infuriate;
 
+                //Sub Storm's Eye level check
+                if (IsEnabled(CustomComboPreset.WarriorIRonST) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(WAR.Berserk)) && level >= WAR.Levels.Berserk && level < WAR.Levels.StormsEye && InCombat())
+                    return OriginalHook(WAR.Berserk);
+
                 if (HasEffect(WAR.Buffs.SurgingTempest) && InCombat())
                 {
                     if (CanWeave(actionID))
@@ -193,7 +197,11 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.WarriorInfuriateOnAOE) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
                         return WAR.Infuriate;
 
-                    if (HasEffect(WAR.Buffs.SurgingTempest))
+                    //Sub Mythril Tempest level check
+                    if (IsEnabled(CustomComboPreset.WarriorIRonAOE) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(WAR.Berserk)) && level >= WAR.Levels.Berserk && level < WAR.Levels.MythrilTempest && InCombat())
+                        return OriginalHook(WAR.Berserk);
+
+                    if (HasEffect(WAR.Buffs.SurgingTempest) && InCombat())
                     {
                         if (CanWeave(actionID))
                         {
