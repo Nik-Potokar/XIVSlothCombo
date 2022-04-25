@@ -89,7 +89,9 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.PushItemWidth(itemWidth);
             var enabled = output == outputValue;
 
-            if (ImGui.Checkbox($"{checkBoxName}###{config}", ref enabled))
+            var rng = new Random().Next(10000, 99999);
+
+            if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
             {
 
                 Service.Configuration.SetCustomIntValue(config, outputValue);
