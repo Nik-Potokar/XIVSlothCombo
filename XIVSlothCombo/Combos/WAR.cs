@@ -319,8 +319,10 @@ namespace XIVSlothComboPlugin.Combos
                 var rageGauge = GetJobGauge<WARGauge>();
                 var rageThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarInfuriateRange);
                 var hasNascent = HasEffect(WAR.Buffs.NascentChaos);
+                var hasInnerRelease = HasEffect(WAR.Buffs.InnerRelease);
 
-                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate && CanWeave(actionID))
+                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate
+                    && ((!hasInnerRelease) || IsNotEnabled(CustomComboPreset.WarriorUseInnerReleaseFirst)))
                         return OriginalHook(WAR.Infuriate);
             }
 

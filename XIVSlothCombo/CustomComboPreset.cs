@@ -2231,6 +2231,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", WAR.JobID)]
         WarriorReprisalProtection = 18030,
 
+        [ParentCombo(WarriorInfuriateFellCleave)]
+        [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
+        WarriorUseInnerReleaseFirst = 18022,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
