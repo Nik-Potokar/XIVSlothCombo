@@ -160,7 +160,7 @@
                         return PLD.Intervene;
 
                     // Buffs
-                    if (CanDelayedWeave(actionID))
+                    if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.6)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= PLD.Levels.FightOrFlight && lastComboMove is PLD.FastBlade && IsOffCooldown(PLD.FightOrFlight))
                             return PLD.FightOrFlight;
