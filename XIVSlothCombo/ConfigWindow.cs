@@ -810,7 +810,17 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SAMURAI
-
+            if (preset == CustomComboPreset.SamuraiOvercapFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+            if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+            //Fillers
+            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
+            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
+            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
+                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
             #endregion
             // ====================================================================================
             #region MONK
@@ -837,7 +847,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region WARRIOR
-            if (preset == CustomComboPreset.WarriorInfuriateFellCleave)
+            if (preset == CustomComboPreset.WarriorInfuriateFellCleave && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 50, WAR.Config.WarInfuriateRange, "Set how much rage to be at or under to use this feature.");
 
             if (preset == CustomComboPreset.WarriorStormsPathCombo && enabled)

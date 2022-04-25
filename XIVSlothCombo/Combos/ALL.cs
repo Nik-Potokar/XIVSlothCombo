@@ -22,6 +22,7 @@
         public static class Buffs
         {
             public const ushort
+                Weakness = 43,
                 Swiftcast = 167;
         }
 

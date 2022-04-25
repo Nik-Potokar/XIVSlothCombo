@@ -376,7 +376,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready", BRD.JobID, 0, "", "C-C-C-Combo!")]
         BardAoEComboFeature = 3008,
 
-        [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature, BardIronJawsApexFeature)]
+        [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature)]
         [CustomComboInfo("Simple Bard", "Adds every single target ability to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
         SimpleBardFeature = 3009,
 
@@ -1827,89 +1827,157 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SAMURAI
 
-        //[ConflictingCombos(SamuraiSimpleSamuraiFeature)]
+        [CustomComboInfo("Samurai Overcap Feature", "Adds Shinten onto main combo when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 1", "Kinky.")]
+        SamuraiOvercapFeature = 15001,
+
+        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Guren>Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 3", "Kinkier")]
+        SamuraiOvercapFeatureAoe = 15002,
+
+        //Main Combo Features
+        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.\nIf all sub options are selected will turn into a full one button rotation (Simple Samurai)", SAM.JobID, 0, "Geico Combo", "Fifteen minutes could save you 15% or more on car insurance!")]
+        SamuraiGekkoCombo = 15003,
+
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("Enpi Uptime Feature", "Replace Main Combo with Enpi when you are out of range.", SAM.JobID, 0)]
+        SamuraiRangedUptimeFeature = 15004,
+
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("Yukikaze Combo on Main Combo", "Adds Yukikaze Combo to Main Combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID, 0)]
+        YukionST = 15005,
+
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("Kasha Combo on Main Combo", "Adds Kasha Combo to Main Combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID, 0)]
+        KashaonST = 15006,
+
+        [ConflictingCombos(SamuraiYatenFeature)]
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation.", SAM.JobID, 0)]
+        SamuraiOpenerFeature = 15007,
+
+        [ConflictingCombos(SamuraiYatenFeature)]
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("Filler Combo Feature", "Adds selected Filler Combos to Main Combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.\nWill disable if you die or if you don't activate the opener.", SAM.JobID, 0)]
+        SamuraiFillersonMainCombo = 15008,
+
+        [ParentCombo(SamuraiGekkoCombo)]
+        [CustomComboInfo("CDs on Main Combo", "Collection of CD features on Main Combo.", SAM.JobID, 0)]
+        SamuraiGekkoCDs = 15099,
+
+        [ParentCombo(SamuraiGekkoCDs)]
+        [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten to Single Target/AoE combos when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
+        SamuraiIkishotenonmaincombo = 15009,
+
+        [ParentCombo(SamuraiGekkoCDs)]
+        [CustomComboInfo("Iaijutsu on Main Combo", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka when ready and when you're not moving to Main Combo.", SAM.JobID, 0)]
+        IaijutsuSTFeature = 15010,
+
+        [ParentCombo(SamuraiGekkoCDs)]
+        [CustomComboInfo("Ogi Namikiri on Main Combo", "Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to Main Combo.", SAM.JobID, 0)]
+        SamuraiOgiNamikiriSTFeature = 15011,
+            
+        [ParentCombo(SamuraiOgiNamikiriSTFeature)]
+        [CustomComboInfo("Ogi Namikiri Burst Feature", "Saves Ogi Namikiri for even minute burst windows.\nIf you don't activate the opener or die, Ogi Namikiri will instead be used on CD.", SAM.JobID, 0)]
+        OgiNamikiriinBurstFeature = 15012,
+
+        [ParentCombo(SamuraiGekkoCDs)]
+        [CustomComboInfo("Meikyo Shisui on Main Combo", "Adds Meikyo Shisui to Main Combo when off cooldown.", SAM.JobID, 0)]
+        MeikyoShisuionST = 15013,
+
+        [ParentCombo(MeikyoShisuionST)]
+        [CustomComboInfo("Meikyo Shisui Burst Feature", "Saves Meikyo Shisui for burst windows.\nIf you don't activate the opener or die, Meikyo Shisui will instead be used on CD.", SAM.JobID, 0)]
+        MeikyoShisuiBurstFeature = 15014,
+
+        [ParentCombo(SamuraiGekkoCDs)]
+        [CustomComboInfo("Shoha on Main Combo", "Adds Shoha to Main Combo when there are three meditation stacks.", SAM.JobID, 0)]
+        SamuraiShohaSTFeature = 15015,
+
+        [ConflictingCombos(SamuraiSeneiFeature)]
+        [ParentCombo(SamuraiGekkoCDs)]
+        [CustomComboInfo("Senei on Main Combo", "Adds Senei to Main Combo when off cooldown and above 25 Kenki.", SAM.JobID, 0)]
+        SeneionST = 15016,
+
+        [ParentCombo(SeneionST)]
+        [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.\nIf you don't activate the opener or die, Senei will instead be used on CD.", SAM.JobID, 0)]
+        SeneiBurstFeature = 15017,
+
         [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID, 0, "Yakuza Combo", "Gang affiliation? Surely not.")]
-        SamuraiYukikazeCombo = 15000,
+        SamuraiYukikazeCombo = 15018,
 
-        //[ConflictingCombos(SamuraiSimpleSamuraiFeature)]
-        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID, 0, "Geico Combo", "Fifteen minutes could save you 15% or more on car insurance!")]
-        SamuraiGekkoCombo = 15001,
-
-       // [ConflictingCombos(SamuraiSimpleSamuraiFeature)]
         [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID, 0, "Cashman Combo", "Dolla dolla bill, y'all")]
-        SamuraiKashaCombo = 15002,
+        SamuraiKashaCombo = 15019,
 
-        [CustomComboInfo("Mangetsu Combo", "Replace Mangetsu with its combo chain.", SAM.JobID, 0, "Mangetout Combo", "EAT IT ALL!")]
-        SamuraiMangetsuCombo = 15003,
+        //AOE Combo Features
+        [CustomComboInfo("Mangetsu Combo", "Replace Mangetsu with its combo chain.\nIf all sub options are toggled will turn into a full one button AOE rotation.", SAM.JobID, 0, "Mangetout Combo", "EAT IT ALL!")]
+        SamuraiMangetsuCombo = 15020,
+
+        [ParentCombo(SamuraiMangetsuCombo)]
+        [CustomComboInfo("Oka to Mangetsu Combo", "Adds Oka combo after Mangetsu combo loop. \n Will add Oka if needed during Meikyo Shisui.", SAM.JobID, 0)]
+        SamuraiOkaFeature = 15021,
+
+        [ParentCombo(SamuraiMangetsuCombo)]
+        [CustomComboInfo("Iaijutsu on Mangetsu Combo", "Adds Tenka Goken and Midare: Setsugekka and their relevant Kaeshi when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0)]
+        TenkaGokenAOEFeature = 15022,
+
+        [ParentCombo(SamuraiMangetsuCombo)]
+        [CustomComboInfo("Ogi Namikiri on Mangetsu Combo", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0)]
+        SamuraiOgiNamikiriAOEFeature = 15023,
+
+        [ParentCombo(SamuraiMangetsuCombo)]
+        [CustomComboInfo("Shoha 2 on Mangetsu Combo", "Adds Shoha 2 when you have 3 meditation stacks to Mangetsu combo.", SAM.JobID, 0)]
+        SamuraiShoha2AOEFeature = 15024,
+
+        [ConflictingCombos(SamuraiGurenFeature)]
+        [ParentCombo(SamuraiMangetsuCombo)]
+        [CustomComboInfo("Guren on Mangetsu Combo", "Adds Guren when it's off CD and you have 25 Kenki to Mangetsu combo.", SAM.JobID, 0)]
+        SamuraiGurenAOEFeature = 15025,
 
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "Okeh Combo", "Okeh")]
-        SamuraiOkaCombo = 15004,
+        SamuraiOkaCombo = 15026,
 
+        //CD Features
         [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu or Shifu depending on what is needed.", SAM.JobID, 0, "Jumpup/Sitdown", "Work those glutes.")]
-        SamuraiJinpuShifuFeature = 15005,
+        SamuraiJinpuShifuFeature = 15027,
 
-        [ConflictingCombos(SamuraiIaijutsuTsubameGaeshiFeature)]
-        [CustomComboInfo("Tsubame-gaeshi to Iaijutsu", "Replace Tsubame-gaeshi with Iaijutsu when Sen is empty.", SAM.JobID, 0, "", "You don't know the difference between this one and that one?")]
-        SamuraiTsubameGaeshiIaijutsuFeature = 15006,
+        //Iaijutsu Features
+        [CustomComboInfo("Iaijutsu Features", "Collection of Iaijutsu Features.", SAM.JobID, 0, "", "You don't know the difference between this one and that one?")]
+        SamuraiIaijutsuFeature = 15028,
 
-        [ConflictingCombos(SamuraiIaijutsuShohaFeature)]
-        [CustomComboInfo("Tsubame-gaeshi to Shoha", "Replace Tsubame-gaeshi with Shoha when meditation is 3.", SAM.JobID, 0, "", "Don't worry, neither do we.")]
-        SamuraiTsubameGaeshiShohaFeature = 15007,
+        [ParentCombo(SamuraiIaijutsuFeature)]
+        [CustomComboInfo("Iaijutsu to Tsubame-Gaeshi", "Replace Iaijutsu with  Tsubame-gaeshi when Sen is empty.", SAM.JobID, 0, "", "You don't know the difference between this one and that one?")]
+        SamuraiIaijutsuTsubameGaeshiFeature = 15029,
 
-        [ConflictingCombos(SamuraiTsubameGaeshiIaijutsuFeature)]
-        [CustomComboInfo("Iaijutsu to Tsubame-gaeshi", "Replace Iaijutsu with Tsubame-gaeshi when Sen is not empty.", SAM.JobID, 0, "", "Wait, there's more?")]
-        SamuraiIaijutsuTsubameGaeshiFeature = 15008,
+        [ParentCombo(SamuraiIaijutsuFeature)]
+        [CustomComboInfo("Iaijutsu to Shoha", "Replace Iaijutsu with Shoha when meditation is 3.", SAM.JobID, 0, "", "Don't worry, neither do we.")]
+        SamuraiIaijutsuShohaFeature = 15030,
 
-        [ConflictingCombos(SamuraiTsubameGaeshiShohaFeature)]
-        [CustomComboInfo("Iaijutsu to Shoha", "Replace Iaijutsu with Shoha when meditation is 3.", SAM.JobID, 0, "", "You WHAT?!")]
-        SamuraiIaijutsuShohaFeature = 15009,
+        [ParentCombo(SamuraiIaijutsuFeature)]
+        [CustomComboInfo("Iaijutsu to Ogi Namikiri", "Replace Iaijutsu with Ogi Namikiri and Kaeshi: Namikiri when buffed with Ogi Namikiri Ready.", SAM.JobID, 0, "", "Don't worry, neither do we.")]
+        SamuraiIaijutsuOgiFeature = 15031,
 
-        [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID, 0, "", "Kicks you in the shins if Senei is on cooldown")]
-        SamuraiSeneiFeature = 15010,
-
+        //Shinten Features
         [CustomComboInfo("Shinten to Shoha", "Replace Hissatsu: Shinten with Shoha when Meditation is full.", SAM.JobID, 0, "", "Kicks you in the shins if Shoha is on cooldown")]
-        SamuraiShohaFeature = 15011,
+        SamuraiShohaFeature = 15032,
 
-        [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID, 0, "", "Hey Kyutie!")]
-        SamuraiGurenFeature = 15012,
+        [ConflictingCombos(SeneionST)]
+        [ParentCombo(SamuraiShohaFeature)]
+        [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID, 0, "", "Kicks you in the shins if Senei is on cooldown")]
+        SamuraiSeneiFeature = 15033,
 
+        //Kyuten Features
         [CustomComboInfo("Kyuten to Shoha II", "Replace Hissatsu: Kyuten with Shoha II when Meditation is full.", SAM.JobID, 0, "", "Hey Kyutie 2, Electric Boogaloo!")]
-        SamuraiShoha2Feature = 15013,
+        SamuraiShoha2Feature = 15034,
 
-        [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, 0, "Sticky-icky-shoten", "Wait, you guys use meditation?")]
-        SamuraiIkishotenNamikiriFeature = 15014,
+        [ConflictingCombos(SamuraiGurenAOEFeature)]
+        [ParentCombo(SamuraiShoha2Feature)]
+        [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID, 0, "", "Hey Kyutie!")]
+        SamuraiGurenFeature = 15035,
 
-        /*
-        [ConflictingCombos(SamuraiYukikazeCombo, SamuraiGekkoCombo, SamuraiKashaCombo)]
-        [CustomComboInfo("Simple Samurai Single Target", "Every sticker combo on one button (Hakaze).", SAM.JobID, 0, "Sleepy Samurai", "zzzz....wha?")]
-        SamuraiSimpleSamuraiFeature = 15015,
-        */
-        /*
-        [CustomComboInfo("Simple Samurai AoE", "Both AoE Combos on same button (On Oka). Big thanks to Stein121", SAM.JobID, 0, "", "Hardly any buttons in the first place, but we got you. Lazy-ass.")]
-        SamuraiSimpleSamuraiAoECombo = 15016,
-        */
-
+        [ConflictingCombos(SamuraiOpenerFeature, SamuraiFillersonMainCombo)]
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID, 0, "Gyoza Feature", "Mm, tasty.")]
-        SamuraiYatenFeature = 15021,
-
-        [ConflictingCombos(SamuraiOvercapFeature85)]
-        [CustomComboInfo("Samurai Overcap Feature 1", "Adds Senei>Shinten onto main combo at 75 or more Kenki", SAM.JobID, 0, "Wink emoji Overcap Feature 1", "Kinky.")]
-        SamuraiOvercapFeature75 = 15023,
-
-        [ConflictingCombos(SamuraiOvercapFeature75)]
-        [CustomComboInfo("Samurai Overcap Feature 2", "Adds Senei>Shinten onto main combo at 85 or more Kenki", SAM.JobID, 0, "Wink emoji Overcap Feature 2", "Even more kinky.")]
-        SamuraiOvercapFeature85 = 15024,
-
-        [ConflictingCombos(SamuraiOvercapFeatureAoe85)]
-        [CustomComboInfo("Samurai AoE Overcap Feature 1", "Adds Guren>Kyuten onto main AoE combos at 75 or more Kenki", SAM.JobID, 0, "Wink emoji Overcap Feature 3", "Kinkier")]
-        SamuraiOvercapFeatureAoe75 = 15025,
-
-        [ConflictingCombos(SamuraiOvercapFeatureAoe75)]
-        [CustomComboInfo("Samurai AoE Overcap Feature 2", "Adds Guren>Kyuten onto main AoE combos at 85 or more Kenki", SAM.JobID, 0, "Wink emoji Overcap Feature 4", "Kinkiest")]
-        SamuraiOvercapFeatureAoe85 = 15026,
-
-        [CustomComboInfo("Ikishoten on combos", "Adds Ikishoten to most Single Target/AoE combos when at or below 50 Kenki", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
-        SamuraiIkishotenonmaincombo = 15027,
+        SamuraiYatenFeature = 15036,
+        
+        [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, 0, "Sticky-icky-shoten", "Wait, you guys use meditation?")]
+        SamuraiIkishotenNamikiriFeature = 150367,
 
         #endregion
         // ====================================================================================
