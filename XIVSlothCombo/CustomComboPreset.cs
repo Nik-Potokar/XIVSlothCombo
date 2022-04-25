@@ -88,17 +88,22 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ADV
         #endregion
-        /*
-        #region GLOBAL FEATURES
-        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
-        InterruptFeature = 90000,
 
-        [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
-        [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", All.JobID)]
-        DoMSwiftcastFeature = 90001,
+        #region GLOBAL FEATURES
+
+        [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllTankFeatures = 100099,
+
+        [ParentCombo(AllTankFeatures)]
+        [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
+        AllTankInterruptFeature = 100000,
+
+        [ParentCombo(AllTankFeatures)]
+        [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone.", ADV.JobID)]
+        AllTankReprisalFeature = 100001,
 
         #endregion
-        */
+
         // ====================================================================================
         #region ASTROLOGIAN
 

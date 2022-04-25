@@ -7,11 +7,8 @@
         public const uint
             Swiftcast = 7561,
             Resurrection = 173,
-            Verraise = 7523,
             Raise = 125,
             Reprisal = 7535,
-            Ascend = 3603,
-            Egeiro = 24287,
             SolidReason = 232,
             AgelessWords = 215,
             WiseToTheWorldMIN = 26521,
@@ -23,6 +20,7 @@
         {
             public const ushort
                 Weakness = 43,
+                Medicated = 49,
                 Swiftcast = 167;
         }
 
@@ -35,27 +33,47 @@
         public static class Levels
         {
             public const byte
-                Raise = 12;
+                LowBlow = 12,
+                Raise = 12,
+                Interject = 18;
         }
     }
-    /*internal class InterruptFeature : CustomCombo
+    internal class AllTankInterruptFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.InterruptFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankInterruptFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == All.LowBlow)
+            if (actionID is All.LowBlow or PLD.ShieldBash)
             {
-                var interjectCD = GetCooldown(All.Interject);
-                var lowBlowCD = GetCooldown(All.LowBlow);
-                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
+                if (IsOffCooldown(All.LowBlow) && level >= All.Levels.LowBlow)
+                    return All.LowBlow;
+                if (CanInterruptEnemy() && IsOffCooldown(All.Interject) && level >= All.Levels.Interject)
                     return All.Interject;
+                if (actionID == PLD.ShieldBash && IsOnCooldown(All.LowBlow))
+                    return actionID;
             }
 
             return actionID;
         }
     }
 
+    internal class AllTankReprisalFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankReprisalFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is All.Reprisal)
+            {
+                if (TargetHasEffectAny(All.Debuffs.Reprisal) && IsOffCooldown(All.Reprisal))
+                    return WHM.Stone1;
+            }
+            return actionID;
+        }
+    }
+
+    /*
     internal class DoMSwiftcastFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DoMSwiftcastFeature;
