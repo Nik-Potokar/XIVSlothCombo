@@ -16,31 +16,50 @@
             WiseToTheWorldMIN = 26521,
             WiseToTheWorldBTN = 26522,
             LowBlow = 7540,
-            Interject = 7538;
+            Bloodbath = 7542,
+            HeadGraze = 7551,
+            FootGraze = 7553,
+            LegGraze = 7554,
+            Feint = 7549,
+            Interject = 7538,
+            Peloton = 7557,
+            LegSweep = 7863;
 
         public static class Buffs
         {
             public const ushort
                 Weakness = 43,
                 Medicated = 49,
-                Swiftcast = 167;
+                Bloodbath = 84,
+                Swiftcast = 167,
+                Peloton = 1199;
         }
 
         public static class Debuffs
         {
             public const ushort
+                Bind = 13,
+                Heavy = 14,
                 Addle = 1203,
-                Reprisal = 1193;
+                Reprisal = 1193,
+                Feint = 1195;
         }
 
         public static class Levels
         {
             public const byte
+                LegGraze = 6,
                 SecondWind = 8,
                 Addle = 8,
+                FootGraze = 10,
+                LegSweep = 10,
                 LowBlow = 12,
+                Bloodbath = 12,
                 Raise = 12,
-                Interject = 18;
+                Interject = 18,
+                Peloton = 20,
+                Feint = 22,
+                HeadGraze = 24;
         }
     }
 
@@ -76,6 +95,7 @@
                 if (TargetHasEffectAny(All.Debuffs.Reprisal) && IsOffCooldown(All.Reprisal))
                     return WHM.Stone1;
             }
+
             return actionID;
         }
     }
@@ -92,6 +112,41 @@
                 if (TargetHasEffectAny(All.Debuffs.Addle) && IsOffCooldown(All.Addle))
                     return WAR.FellCleave;
             }
+
+            return actionID;
+        }
+    }
+
+    //Melee DPS Features
+    internal class AllMeleeFeintFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllMeleeFeintFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is All.Feint)
+            {
+                if (TargetHasEffectAny(All.Debuffs.Feint) && IsOffCooldown(All.Feint))
+                    return BLM.Fire;
+            }
+
+            return actionID;
+        }
+    }
+
+    //Ranged Physical Features
+    internal class AllRangedPhysicalMitigationFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllRangedPhysicalMitigationFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba)
+            {
+                if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician) || HasEffectAny(DNC.Buffs.ShieldSamba)))
+                    return DRG.Stardiver;
+            }
+
             return actionID;
         }
     }
@@ -119,21 +174,6 @@
         }
     }
 
-    internal class AllTankReprisalFeature : CustomCombo
-    {
-        protected override CustomComboPreset Preset => CustomComboPreset.AllTankReprisalFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == All.Reprisal)
-            {
-                if (TargetHasEffectAny(All.Debuffs.Reprisal))
-                    return WHM.Stone1;
-            }
-
-            return actionID;
-        }
-    }
     */
 }
 

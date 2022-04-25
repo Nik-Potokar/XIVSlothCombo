@@ -42,10 +42,7 @@ namespace XIVSlothComboPlugin.Combos
             ShieldSamba = 16012,
             Flourish = 16013,
             Improvisation = 16014,
-            CuringWaltz = 16015,
-            // Role
-            Peloton = 7557,
-            HeadGraze = 7551;
+            CuringWaltz = 16015;
 
         public static class Buffs
         {
@@ -56,6 +53,7 @@ namespace XIVSlothComboPlugin.Combos
                 FlourishingShower = 1817,
                 StandardStep = 1818,
                 TechnicalStep = 1819,
+                ShieldSamba = 1826,
                 SilkenSymmetry = 2693,
                 SilkenFlow = 2694,
                 FlourishingSymmetry = 3017,
@@ -65,7 +63,6 @@ namespace XIVSlothComboPlugin.Combos
                 FlourishingFinish = 2698,
                 ThreeFoldFanDance = 1820,
                 FourFoldFanDance = 2699,
-                Peloton = 1199,
                 TechnicalFinish = 1822;
         }
 
@@ -80,8 +77,6 @@ namespace XIVSlothComboPlugin.Combos
                 Fountain = 2,
                 StandardStep = 15,
                 ReverseCascade = 20,
-                Peloton = 20,
-                HeadGraze = 24,
                 Bladeshower = 25,
                 FanDance1 = 30,
                 RisingWindmill = 35,
@@ -436,11 +431,11 @@ namespace XIVSlothComboPlugin.Combos
                 var improvisationReady = level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation);
                 var curingWaltzReady = level >= DNC.Levels.CuringWaltz && IsOffCooldown(DNC.CuringWaltz);
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
-                var interruptable = CanInterruptEnemy() && IsOffCooldown(DNC.HeadGraze) && level >= DNC.Levels.HeadGraze;
+                var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
 
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
-                        return DNC.HeadGraze;
+                        return All.HeadGraze;
 
                 // Simple ST Tech Step
                 if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
@@ -567,11 +562,11 @@ namespace XIVSlothComboPlugin.Combos
                 var improvisationReady = level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation);
                 var curingWaltzReady = level >= DNC.Levels.CuringWaltz && IsOffCooldown(DNC.CuringWaltz);
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
-                var interruptable = CanInterruptEnemy() && IsOffCooldown(DNC.HeadGraze) && level >= DNC.Levels.HeadGraze;
+                var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
                 
                 // Simple AoE Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
-                        return DNC.HeadGraze;
+                        return All.HeadGraze;
 
                 // Simple AoE Standard Step (step function)
                 if (HasEffect(DNC.Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature))

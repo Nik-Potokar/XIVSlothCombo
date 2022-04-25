@@ -103,13 +103,28 @@ namespace XIVSlothComboPlugin
         AllTankReprisalFeature = 100001,
 
         //Magical Ranged Features
-        [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged (Casters).\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllCasterFeatures = 100098,
 
         [ParentCombo(AllCasterFeatures)]
-        [CustomComboInfo("Magical Ranged: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
-        AllCasterAddleFeature = 100011,
-        
+        [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
+        AllCasterAddleFeature = 100010,
+
+        //Melee Features
+        [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllMeleeFeatures = 100097,
+
+        [ParentCombo(AllMeleeFeatures)]
+        [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
+        AllMeleeFeintFeature = 100020,
+
+        //Ranged Physical Features
+        [CustomComboInfo("Global Physical Ranged Features", "Features and options involving shared role actions for Physical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllRangedPhysicalFeatures = 100096,
+
+        [ParentCombo(AllRangedPhysicalFeatures)]
+        [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
+        AllRangedPhysicalMitigationFeature = 100030,
 
         #endregion
 

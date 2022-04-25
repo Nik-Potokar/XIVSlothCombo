@@ -7,7 +7,6 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 36;
 
         public const uint
-            Addle = 7560,
             Swiftcast = 7561,
             RoseOfDestruction = 23275,
             ShockStrike = 11429,
@@ -56,7 +55,6 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Slow = 9,
                 Bind = 13,
-                Addle = 1203,
                 SongOfTorment = 273,
                 DeepFreeze = 1731,
                 Offguard = 1717,
@@ -260,11 +258,11 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BLU.MagicHammer)
             {
-                var addleCD = GetCooldown(BLU.Addle);
+                var addleCD = GetCooldown(All.Addle);
                 var hammerCD = GetCooldown(BLU.MagicHammer);
 
-                if (hammerCD.IsCooldown&& !addleCD.IsCooldown && !TargetHasEffect(BLU.Debuffs.Addle) && !TargetHasEffect(BLU.Debuffs.Conked))
-                    return BLU.Addle;
+                if (hammerCD.IsCooldown&& !addleCD.IsCooldown && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(BLU.Debuffs.Conked))
+                    return All.Addle;
             }
 
             return actionID;
