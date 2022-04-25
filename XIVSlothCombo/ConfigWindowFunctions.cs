@@ -26,7 +26,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             var output = Service.Configuration.GetCustomIntValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderInt(sliderDescription, ref output, minValue, maxValue);
+            inputChanged |= ImGui.SliderInt($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
 
             if (inputChanged)
@@ -40,8 +40,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 }
                 Service.Configuration.SetCustomIntValue(config, output);
                 Service.Configuration.Save();
-
-                inputChanged = false;
             }
 
 
@@ -62,7 +60,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             var output = Service.Configuration.GetCustomFloatValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.SliderFloat(sliderDescription, ref output, minValue, maxValue);
+            inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
             if (inputChanged)
             {
@@ -89,9 +87,9 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
             var output = Service.Configuration.GetCustomIntValue(config);
             ImGui.PushItemWidth(itemWidth);
-            var enabled = output == outputValue ? true : false;
+            var enabled = output == outputValue;
 
-            if (ImGui.Checkbox(checkBoxName, ref enabled))
+            if (ImGui.Checkbox($"{checkBoxName}###{config}", ref enabled))
             {
 
                 Service.Configuration.SetCustomIntValue(config, outputValue);
@@ -104,49 +102,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.PopStyleColor();
             ImGui.Unindent();
             ImGui.Spacing();
-        }
-
-        /// <summary>
-        /// Draws an image located inside the plugins images folder
-        /// </summary>
-        /// <param name="imageName">Name of the image. Must be locted inside the images folder.</param>
-        /// <param name="height">The output height of the image.</param>
-        /// <param name="width">The output width of the image.</param>
-        public static void DrawImage(string imageName, int height, int width)
-        {
-            var path = Path.Combine(Service.PluginFolder, "images", imageName);
-
-            if (File.Exists(path))
-            {
-                var slothImage = Service.Interface.UiBuilder.LoadImage(path);
-                if (slothImage != null)
-                {
-                    ImGui.Image(slothImage.ImGuiHandle, new Vector2(width, height));
-                }
-            }
-        }
-
-
-        public async static Task DrawDownloadedImage(string directImgUrl, int height, int width)
-        {
-            if (!directImgUrl.IsNullOrEmpty())
-            {
-                byte[]? imageData = Service.Configuration.GetImageInCache(directImgUrl);
-                if (imageData == null)
-                {
-                    Log.Debug("IsNull");
-                    if (await ImageHandler.TryGetImage(directImgUrl))
-                    {
-                        imageData = Service.Configuration.GetImageInCache(directImgUrl);
-                    }
-                }
-
-                if (imageData != null)
-                {
-                    ImGui.Image(Service.Interface.UiBuilder.LoadImage(imageData).ImGuiHandle, new Vector2(width, height));
-                }
-
-            }
         }
 
         public static void DrawPvPStatusMultiChoice(string config)

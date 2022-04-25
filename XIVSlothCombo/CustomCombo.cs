@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Numerics;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
@@ -8,6 +5,9 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
+using System;
+using System.Linq;
+using System.Numerics;
 using System.Timers;
 using XIVSlothComboPlugin.Attributes;
 
@@ -42,7 +42,7 @@ namespace XIVSlothComboPlugin.Combos
             };
 
             combatTimer = new Timer(1000); // in miliseconds
-            combatTimer.Elapsed += updateCombatTimer;
+            combatTimer.Elapsed += UpdateCombatTimer;
             combatTimer.Start();
 
         }
@@ -71,11 +71,11 @@ namespace XIVSlothComboPlugin.Combos
         /// to keep track of combat duration.
         /// </summary>
         private bool restartCombatTimer = true;
-        private TimeSpan combatDuration = new TimeSpan();
+        private TimeSpan combatDuration = new();
         private DateTime combatStart;
         private DateTime combatEnd;
-        private Timer combatTimer;
-        private void updateCombatTimer(object sender, EventArgs e)
+        private readonly Timer combatTimer;
+        private void UpdateCombatTimer(object sender, EventArgs e)
         {
             if (InCombat())
             {
@@ -149,6 +149,7 @@ namespace XIVSlothComboPlugin.Combos
                 return false;
 
             var resultingActionID = this.Invoke(actionID, lastComboMove, comboTime, level);
+            //Dalamud.Logging.PluginLog.Debug(resultingActionID.ToString());
 
             if (resultingActionID == 0 || actionID == resultingActionID)
                 return false;
@@ -619,11 +620,11 @@ namespace XIVSlothComboPlugin.Combos
 
             return currentHealth / maxHealth * 100;
         }
-        protected static bool HasBattleTarget(bool v)
+        protected static bool HasBattleTarget()
         {
             if (CurrentTarget is null)
                 return false;
-            if (CurrentTarget is not BattleChara chara)
+            if (CurrentTarget is not BattleChara)
                 return false;
 
             return true;
@@ -643,7 +644,7 @@ namespace XIVSlothComboPlugin.Combos
             return false;
         }
 
-        
+
         /// <summary>
         /// Gets the party list
         /// </summary>
@@ -674,16 +675,17 @@ namespace XIVSlothComboPlugin.Combos
         /// Attempts to target the given party member
         /// </summary>
         /// <param name="target"></param>
-        protected unsafe static void TargetPartyMember(TargetType target)
+        protected unsafe static void TargetObject(TargetType target)
         {
             var t = GetTarget(target);
+            if (t == null) return;
             var o = PartyTargetingService.GetObjectID(t);
             var p = Service.ObjectTable.Where(x => x.ObjectId == o).First();
 
             if (IsInRange(p)) SetTarget(p);
         }
 
-        protected static void TargetPartyMember(GameObject? target)
+        protected static void TargetObject(GameObject? target)
         {
             if (IsInRange(target)) SetTarget(target);
         }
@@ -692,34 +694,18 @@ namespace XIVSlothComboPlugin.Combos
         {
             try
             {
-                FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* o;
-
-                switch (slot)
+                var o = slot switch
                 {
-                    case 2:
-                        o = GetTarget(TargetType.P2);
-                        break;
-                    case 3:
-                        o = GetTarget(TargetType.P3);
-                        break;
-                    case 4:
-                        o = GetTarget(TargetType.P4);
-                        break;
-                    case 5:
-                        o = GetTarget(TargetType.P5);
-                        break;
-                    case 6:
-                        o = GetTarget(TargetType.P6);
-                        break;
-                    case 7:
-                        o = GetTarget(TargetType.P7);
-                        break;
-                    default:
-                        o = GetTarget(TargetType.Self);
-                        break;
-
-                }
-
+                    1 => GetTarget(TargetType.Self),
+                    2 => GetTarget(TargetType.P2),
+                    3 => GetTarget(TargetType.P3),
+                    4 => GetTarget(TargetType.P4),
+                    5 => GetTarget(TargetType.P5),
+                    6 => GetTarget(TargetType.P6),
+                    7 => GetTarget(TargetType.P7),
+                    8 => GetTarget(TargetType.P8),
+                    _ => GetTarget(TargetType.Self),
+                };
                 var i = PartyTargetingService.GetObjectID(o);
                 if (Service.ObjectTable.Where(x => x.ObjectId == i).Any())
                     return Service.ObjectTable.Where(x => x.ObjectId == i).First();
@@ -806,6 +792,13 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         protected static bool InPvP()
-            => Service.ClientState.IsPvP || Service.ClientState.TerritoryType == 250;
+            => Service.ClientState.IsPvP ||
+            Service.ClientState.TerritoryType == 250 || //Wolves Den
+            Service.ClientState.TerritoryType == 376 || //Borderland Ruins
+            Service.ClientState.TerritoryType == 431 || //Seal Rock
+            Service.ClientState.TerritoryType == 554 || //Fields of Glory
+            Service.ClientState.TerritoryType == 888 || //Onsal Hakair
+            Service.ClientState.TerritoryType == 729 || //Astragalos
+            Service.ClientState.TerritoryType == 791;   //Hidden Gorge
     }
 }

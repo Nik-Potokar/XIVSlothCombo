@@ -32,6 +32,12 @@ namespace XIVSlothComboPlugin
                 Unguarded = 3021;
         }
 
+        internal class Buffs
+        {
+            public const ushort
+                Guard = 3054;
+        }
+
 
         internal class GlobalEmergencyHeals : CustomCombo
         {
@@ -39,7 +45,12 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return PVPCommon.Recuperate;
+                if ((HasEffect(PVPCommon.Buffs.Guard) || JustUsed(PVPCommon.Guard)) && IsEnabled(CustomComboPreset.PVPMashCancel))
+                {
+                    if (actionID == PVPCommon.Guard) return PVPCommon.Guard;
+                    else return OriginalHook(11);
+                }
+                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return OriginalHook(PVPCommon.Recuperate);
                 return actionID;
             }
 
@@ -66,7 +77,12 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return PVPCommon.Guard;
+                if ((HasEffect(PVPCommon.Buffs.Guard) || JustUsed(PVPCommon.Guard)) && IsEnabled(CustomComboPreset.PVPMashCancel))
+                {
+                    if (actionID == PVPCommon.Guard) return PVPCommon.Guard;
+                    else return OriginalHook(11);
+                }
+                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return OriginalHook(PVPCommon.Guard);
                 return actionID;
             }
 
@@ -91,7 +107,12 @@ namespace XIVSlothComboPlugin
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return PVPCommon.Purify;
+                if ((HasEffect(PVPCommon.Buffs.Guard) || JustUsed(PVPCommon.Guard)) && IsEnabled(CustomComboPreset.PVPMashCancel))
+                {
+                    if (actionID == PVPCommon.Guard) return PVPCommon.Guard;
+                    else return OriginalHook(11);
+                }
+                if (Execute() && InPvP() && actionID != PVPCommon.Guard && actionID != PVPCommon.Recuperate && actionID != PVPCommon.Purify && actionID != PVPCommon.StandardElixir) return OriginalHook(PVPCommon.Purify);
                 return actionID;
             }
 

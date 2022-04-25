@@ -20,7 +20,6 @@ namespace XIVSlothComboPlugin
     {
         private readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets;
         private readonly Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> presetChildren;
-        private readonly Vector4 shadedColor = new(0.68f, 0.68f, 0.68f, 1.0f);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
@@ -113,7 +112,7 @@ namespace XIVSlothComboPlugin
 
         }
 
-        private void DrawAboutUs()
+        private static void DrawAboutUs()
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
@@ -146,7 +145,7 @@ namespace XIVSlothComboPlugin
 
         }
 
-        private void DrawGlobalSettings()
+        private static void DrawGlobalSettings()
         {
             ImGui.BeginChild("main", new Vector2(0, 0), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
@@ -228,8 +227,8 @@ namespace XIVSlothComboPlugin
 
             #region SpecialEvent
 
-            var isSpecialEvent = DateTime.Now.Day == 1 && DateTime.Now.Month == 4 ? true : false;
-            var slothIrl = isSpecialEvent ? Service.Configuration.SpecialEvent : false;
+            var isSpecialEvent = DateTime.Now.Day == 1 && DateTime.Now.Month == 4;
+            var slothIrl = isSpecialEvent && Service.Configuration.SpecialEvent;
             if (isSpecialEvent)
 
             {
@@ -297,7 +296,7 @@ namespace XIVSlothComboPlugin
                             //Presets with the ConflictedAttribute
                             var conflictsSource = Service.Configuration.GetAllConflicts();
 
-                            if (conflictsSource.Where(x => x == preset).Count() == 0 || conflictOriginals.Length == 0)
+                            if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
                             {
                                 this.DrawPreset(preset, info, ref i);
                                 continue;
@@ -359,7 +358,7 @@ namespace XIVSlothComboPlugin
                 {
                     if (enabled)
                     {
-                        this.EnableParentPresets(preset);
+                        EnableParentPresets(preset);
                         Service.Configuration.EnabledActions.Add(preset);
                         foreach (var conflict in conflicts)
                         {
@@ -380,7 +379,7 @@ namespace XIVSlothComboPlugin
                 {
                     if (enabled)
                     {
-                        this.EnableParentPresets(preset);
+                        EnableParentPresets(preset);
                         Service.Configuration.EnabledActions.Add(preset);
                         foreach (var conflict in conflicts)
                         {
@@ -503,7 +502,7 @@ namespace XIVSlothComboPlugin
                             //Presets with the ConflictedAttribute
                             var conflictsSource = Service.Configuration.GetAllConflicts();
 
-                            if (conflictsSource.Where(x => x == childPreset || x == preset).Count() == 0 || conflictOriginals.Length == 0)
+                            if (!conflictsSource.Where(x => x == childPreset || x == preset).Any() || conflictOriginals.Length == 0)
                             {
                                 this.DrawPreset(childPreset, childInfo, ref i);
                                 continue;
@@ -540,7 +539,7 @@ namespace XIVSlothComboPlugin
         /// Iterates up a preset's parent tree, enabling each of them.
         /// </summary>
         /// <param name="preset">Combo preset to enabled.</param>
-        private void EnableParentPresets(CustomComboPreset preset)
+        private static void EnableParentPresets(CustomComboPreset preset)
         {
             var parentMaybe = Service.Configuration.GetParent(preset);
             while (parentMaybe != null)
@@ -565,10 +564,8 @@ namespace XIVSlothComboPlugin
         /// </summary>
         /// <param name="preset">The preset it's attached to</param>
         /// <param name="enabled">If it's enabled or not</param>
-        private void DrawUserConfigs(CustomComboPreset preset, bool enabled)
+        private static void DrawUserConfigs(CustomComboPreset preset, bool enabled)
         {
-            //WARNING: IF USING SAME DESCRIPTION FOR YOUR SLIDER AS ANOTHER SLIDER, PLEASE ENSURE YOU USE APPEND ### PLUS AN ID FOR THE SLIDER EG. ###MYSLIDER OR ###THISSLIDER.
-
             if (!enabled) return;
 
             // ====================================================================================
@@ -582,7 +579,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region ASTROLOGIAN
             if (preset == CustomComboPreset.AstrologianLucidFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###AST", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.AstroEssentialDignity)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
@@ -666,8 +663,8 @@ namespace XIVSlothComboPlugin
             {
                 var mudrapath = Service.Configuration.MudraPathSelection;
 
-                bool path1 = mudrapath == 1 ? true : false;
-                bool path2 = mudrapath == 2 ? true : false;
+                bool path1 = mudrapath == 1;
+                bool path2 = mudrapath == 2;
 
                 ImGui.Indent();
                 ImGui.PushItemWidth(75);
@@ -780,7 +777,7 @@ namespace XIVSlothComboPlugin
             }
 
             if (preset == CustomComboPreset.SageLucidFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.CustomSGELucidDreaming, "Set value for your MP to be at or under for this feature to work###SGE", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.CustomSGELucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.CustomSoteriaFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomSoteria, "Set HP percentage value for Soteria to trigger");
@@ -834,7 +831,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work###SCH", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
 
             #endregion
@@ -860,7 +857,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region WHITE MAGE
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work###WHM", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.WHMogcdHealsShieldsFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, WHM.Config.WHMogcdHealsShieldsFeature, "Set HP% of target to use Tetragrammaton");
