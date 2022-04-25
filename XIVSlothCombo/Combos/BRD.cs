@@ -27,6 +27,7 @@ namespace XIVSlothComboPlugin.Combos
             IronJaws = 3560,
             Sidewinder = 3562,
             PitchPerfect = 7404,
+            Troubadour = 7405,
             CausticBite = 7406,
             Stormbite = 7407,
             RefulgentArrow = 7409,
@@ -35,7 +36,6 @@ namespace XIVSlothComboPlugin.Combos
             Shadowbite = 16494,
             Ladonsbite = 25783,
             BlastArrow = 25784,
-            HeadGraze = 7551,
             RadiantFinale = 25785;
 
 
@@ -43,6 +43,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
                 StraightShotReady = 122,
+                Troubadour = 1934,
                 BlastArrowReady = 2692,
                 ShadowbiteReady = 3002,
                 WanderersMinuet = 865,
@@ -81,6 +82,7 @@ namespace XIVSlothComboPlugin.Combos
                 IronJaws = 56,
                 WanderersMinuet = 52,
                 Sidewinder = 60,
+                Troubadour = 62,
                 CausticBite = 64,
                 StormBite = 64,
                 BiteUpgrade = 64,
@@ -90,8 +92,7 @@ namespace XIVSlothComboPlugin.Combos
                 ApexArrow = 80,
                 Ladonsbite = 82,
                 BlastArrow = 86,
-                RadiantFinale = 90,
-                HeadGraze = 24;
+                RadiantFinale = 90;
         }
 
         public static class Config
@@ -540,9 +541,9 @@ namespace XIVSlothComboPlugin.Combos
                     openerFinished = false;
                 }
 
-                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && IsOffCooldown(BRD.HeadGraze))
+                if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                 {
-                    return BRD.HeadGraze;
+                    return All.HeadGraze;
                 }
                 
                 var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleNoWasteMode) ?

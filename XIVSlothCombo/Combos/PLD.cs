@@ -17,12 +17,9 @@
             SpiritsWithin = 29,
             GoringBlade = 3538,
             RoyalAuthority = 3539,
-            LowBlow = 7540,
             TotalEclipse = 7381,
             Requiescat = 7383,
             HolySpirit = 7384,
-            Interject = 7538,
-            Reprisal = 7535,
             Prominence = 16457,
             HolyCircle = 16458,
             Confiteor = 16459,
@@ -47,8 +44,7 @@
         {
             public const ushort
                 BladeOfValor = 2721,
-                GoringBlade = 725,
-                Reprisal = 1193;
+                GoringBlade = 725;
         }
 
         public static class Levels
@@ -160,7 +156,7 @@
                         return PLD.Intervene;
 
                     // Buffs
-                    if (CanDelayedWeave(actionID))
+                    if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.6)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= PLD.Levels.FightOrFlight && lastComboMove is PLD.FastBlade && IsOffCooldown(PLD.FightOrFlight))
                             return PLD.FightOrFlight;
@@ -342,41 +338,6 @@
                         return OriginalHook(PLD.Confiteor);
             }
 
-            return actionID;
-        }
-    }
-    internal class PaladinInterruptFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinInterruptFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is PLD.ShieldBash)
-            {
-                var interjectCD = GetCooldown(PLD.Interject);
-                var lowBlowCD = GetCooldown(PLD.LowBlow);
-
-                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
-                    return PLD.Interject;
-
-                if (!lowBlowCD.IsCooldown)
-                    return PLD.LowBlow;
-            }
-
-            return actionID;
-        }
-    }
-    internal class PaladinReprisalProtection : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PaladinReprisalProtection;
-
-        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-        {
-            if (actionID is PLD.Reprisal)
-            {
-                if (TargetHasEffectAny(PLD.Debuffs.Reprisal) && IsOffCooldown(PLD.Reprisal))
-                    return WHM.Stone1;
-            }
             return actionID;
         }
     }

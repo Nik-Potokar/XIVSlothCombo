@@ -221,7 +221,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == NIN.SpinningEdge)
             {
-                var actionIDCD = GetCooldown(actionID);
+                var canWeave = CanWeave(actionID);
                 var gauge = GetJobGauge<NINGauge>();
                 var bunshinCD = GetCooldown(NIN.Bunshin);
                 var trickCDThreshold = Service.Configuration.GetCustomIntValue(NIN.Config.TrickCooldownRemaining);
@@ -238,7 +238,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (level >= NIN.Levels.Mug && IsEnabled(CustomComboPreset.NinSimpleMug))
                 {
                     var mugCD = GetCooldown(NIN.Mug);
-                    if (actionIDCD.IsCooldown && !mugCD.IsCooldown && gauge.Ninki <= 60)
+                    if (canWeave && !mugCD.IsCooldown && gauge.Ninki <= 60 && !HasEffect(NIN.Buffs.Mudra))
                         return OriginalHook(NIN.Mug);
                 }
 
@@ -306,19 +306,19 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
 
-                if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= NIN.Levels.Bunshin)
+                if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && canWeave && level >= NIN.Levels.Bunshin)
                     return NIN.Bunshin;
                 if (HasEffect(NIN.Buffs.PhantomReady) && level >= NIN.Levels.PhantomKamaitachi)
                     return NIN.PhantomKamaitachi;
 
-                if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && level >= 68)
+                if (gauge.Ninki >= 50 && canWeave && level >= 68)
                     return NIN.Bhavacakra;
 
 
                 if (level >= NIN.Levels.Assassinate)
                 {
                     var assasinateCD = GetCooldown(OriginalHook(NIN.Assassinate));
-                    if (actionIDCD.IsCooldown && !assasinateCD.IsCooldown)
+                    if (canWeave && !assasinateCD.IsCooldown)
                         return OriginalHook(NIN.Assassinate);
                 }
 

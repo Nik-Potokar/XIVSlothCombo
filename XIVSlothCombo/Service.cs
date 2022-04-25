@@ -114,12 +114,12 @@ namespace XIVSlothComboPlugin
         /// <summary>
         /// Returns the Plugin Folder location
         /// </summary>
-        public static string PluginFolder
+        public static string? PluginFolder
         {
             get
             {
                 string codeBase = Assembly.GetExecutingAssembly().Location;
-                UriBuilder uri = new UriBuilder(codeBase);
+                UriBuilder uri = new(codeBase);
                 string path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
             }

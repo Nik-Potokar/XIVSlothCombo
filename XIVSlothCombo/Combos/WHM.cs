@@ -13,9 +13,7 @@ namespace XIVSlothComboPlugin.Combos
             Cure2 = 135,
             AfflatusSolace = 16531,
             AfflatusRapture = 16534,
-            LucidDreaming = 7562,
             Raise = 125,
-            Swiftcast = 7561,
             AfflatusMisery = 16535,
             Medica1 = 124,
             Medica2 = 133,
@@ -45,7 +43,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
-            Swiftcast = 167,
             Medica2 = 150,
             PresenceOfMind = 157,
             ThinAir = 1217,
@@ -68,6 +65,7 @@ namespace XIVSlothComboPlugin.Combos
                 PresenceOfMind = 30,
                 Cure2 = 30,
                 Aero2 = 46,
+                Medica2 = 50,
                 AfflatusSolace = 52,
                 Assize = 56,
                 ThinAir = 58,
@@ -146,10 +144,19 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var gauge = GetJobGauge<WHMGauge>();
+            var tetraHP = Service.Configuration.GetCustomIntValue(WHM.Config.WHMogcdHealsShieldsFeature);
+
 
             if (actionID == WHM.Cure2)
             {
-                if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryCure2Feature) && gauge.BloodLily == 3)
+                if (IsEnabled(CustomComboPreset.WHMPrioritizeoGCDHealsShields) && IsEnabled(CustomComboPreset.WHMBenisonGCDOption) //Is the priority option enabled
+                    && level >= WHM.Levels.DivineBenison && !TargetHasEffectAny(WHM.Buffs.DivineBenison) && HasCharges(WHM.DivineBenison) //Can I use Divine Benison
+                     && (GetCooldown(WHM.DivineBenison).RemainingCharges == 2 || GetCooldown(WHM.DivineBenison).ChargeCooldownRemaining <= 29)) //Did I just use Divine Benison
+                    return actionID;
+                if (IsEnabled(CustomComboPreset.WHMPrioritizeoGCDHealsShields) && IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)
+                    && IsOffCooldown(WHM.Tetragrammaton) && level >= WHM.Levels.Tetragrammaton && EnemyHealthPercentage() <= tetraHP)
+                    return actionID;
+                else if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryCure2Feature) && gauge.BloodLily == 3)
                     return WHM.AfflatusMisery;
                 if (level >= WHM.Levels.AfflatusSolace && gauge.Lily > 0)
                     return WHM.AfflatusSolace;
@@ -174,14 +181,14 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == WHM.Swiftcast)
+                if (actionID == All.Swiftcast)
                 {
                     var thinairCD = GetCooldown(WHM.ThinAir);
                     var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
 
-                    if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(WHM.Buffs.Swiftcast) && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
+                    if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(All.Buffs.Swiftcast) && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
                         return WHM.ThinAir;
-                    if (HasEffect(WHM.Buffs.Swiftcast))
+                    if (HasEffect(All.Buffs.Swiftcast))
                         return WHM.Raise;
                 }
 
@@ -226,8 +233,8 @@ namespace XIVSlothComboPlugin.Combos
                             return WHM.PresenceOfMind;
                         if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= WHM.Levels.Assize && IsOffCooldown(WHM.Assize))
                             return WHM.Assize;
-                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold)
-                            return WHM.LucidDreaming;
+                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                            return All.LucidDreaming;
                     }
 
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
@@ -272,6 +279,8 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var gauge = GetJobGauge<WHMGauge>();
                     var medica2Buff = FindEffect(WHM.Buffs.Medica2);
+                    if (level < WHM.Levels.Medica2)
+                        return WHM.Medica1;
                     if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryMedicaFeature) && gauge.BloodLily == 3)
                         return WHM.AfflatusMisery;
                     if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= WHM.Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff.RemainingTime > 2)
@@ -285,73 +294,27 @@ namespace XIVSlothComboPlugin.Combos
         }
 
     }
-    internal class WHMAlternativeRaise : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMAlternativeRaise;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WHM.Raise)
-            {
-                var thinairCD = GetCooldown(WHM.ThinAir);
-                var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
-                var swiftCD = GetCooldown(WHM.Swiftcast);
-
-                if (!swiftCD.IsCooldown)
-                    return WHM.Swiftcast;
-
-                if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
-                    return WHM.ThinAir;
-
-                if (!swiftCD.IsCooldown)
-                    return WHM.Swiftcast;
-            }
-            return actionID;
-        }
-    }
     internal class WHMogcdHealsShieldsFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMogcdHealsShieldsFeature;
-
-        internal static bool benisonUsed = false;
-        internal static ushort benisonStacks = 0;
-        internal static float benisonReleaseTime = 0;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var tetraHP = Service.Configuration.GetCustomIntValue(WHM.Config.WHMogcdHealsShieldsFeature);
 
-            //Sets benisonStacks to the current charges when higher
-            benisonStacks = System.Math.Max(benisonStacks, GetCooldown(WHM.DivineBenison).RemainingCharges);
-
-            //Checks for a drop in the number of stacks to indicate it has been used
-            if (GetCooldown(WHM.DivineBenison).RemainingCharges < benisonStacks)
-            {
-                benisonUsed = true;
-                benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges;
-                benisonReleaseTime = GetCooldownChargeRemainingTime(WHM.DivineBenison) - 2; // Sets release time to 2 seconds later
-                if (benisonReleaseTime < 0) { benisonReleaseTime = benisonReleaseTime + 30; } // If time is set negative, then adds the recharge time (30sec) to new limit
-            }
-
-            //Checks for when charge remaining time is lower than benisonReleaseTime to allow the next use.
-            //Ensures there is less than 5 seconds difference incase the timer cycles back from 0 to 30
-            if (GetCooldownChargeRemainingTime(WHM.DivineBenison) <= benisonReleaseTime && (benisonReleaseTime - GetCooldownChargeRemainingTime(WHM.DivineBenison) < 5)  && benisonUsed == true)
-            { 
-                benisonUsed = false;
-                benisonStacks = GetCooldown(WHM.DivineBenison).RemainingCharges;
-            }
-
             if (actionID == WHM.Cure2)
             {
+                if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison)
+                    && (GetCooldown(WHM.DivineBenison).RemainingCharges == 2 || GetCooldown(WHM.DivineBenison).ChargeCooldownRemaining <= 29))
+                {
+                    if (IsEnabled(CustomComboPreset.WHMBenisonOGCDOption) && CanSpellWeave(actionID)) { return WHM.DivineBenison; }
+                    if (IsEnabled(CustomComboPreset.WHMBenisonGCDOption)) { return WHM.DivineBenison; }
+                }
                 if (level >= WHM.Levels.Tetragrammaton && IsOffCooldown(WHM.Tetragrammaton) && EnemyHealthPercentage() <= tetraHP)
                 {
                     if (IsEnabled(CustomComboPreset.WHMTetraOnOGCDOption) && CanSpellWeave(actionID)) { return WHM.Tetragrammaton; }
                     if (IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)) { return WHM.Tetragrammaton; }
-                }
-                if (level >= WHM.Levels.DivineBenison && HasCharges(WHM.DivineBenison) && !TargetHasEffectAny(WHM.Buffs.DivineBenison) && benisonUsed == false)
-                {
-                    if (IsEnabled(CustomComboPreset.WHMBenisonOGCDOption) && CanSpellWeave(actionID)) { return WHM.DivineBenison; }
-                    if (IsEnabled(CustomComboPreset.WHMBenisonGCDOption)) { return WHM.DivineBenison; }
                 }
             }
 

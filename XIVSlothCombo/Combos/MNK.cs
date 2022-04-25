@@ -21,7 +21,6 @@ namespace XIVSlothComboPlugin.Combos
             FourPointFury = 16473,
             PerfectBalance = 69,
             TrueStrike = 54,
-            LegSweep = 7863,
             Meditation = 3546,
             HowlingFist = 25763,
             Enlightenment = 16474,

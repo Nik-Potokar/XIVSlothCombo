@@ -21,7 +21,7 @@ namespace XIVSlothComboPlugin
         private readonly Hook<GetIconDelegate> getIconHook;
 
         private IntPtr actionManager = IntPtr.Zero;
-        private IntPtr module = IntPtr.Zero;
+        private readonly IntPtr module = IntPtr.Zero;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IconReplacer"/> class.
@@ -32,7 +32,7 @@ namespace XIVSlothComboPlugin
                 .Where(t => !t.IsAbstract && t.BaseType == typeof(CustomCombo))
                 .Select(t => Activator.CreateInstance(t))
                 .Cast<CustomCombo>()
-                .OrderBy(x => x.Preset)
+                .OrderByDescending(x => x.Preset)
                 .ToList();
 
             this.getIconHook = new Hook<GetIconDelegate>(Service.Address.GetAdjustedActionId, this.GetIconDetour);
