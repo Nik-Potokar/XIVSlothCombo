@@ -177,24 +177,6 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class BluRez : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluRez;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == BLU.AngelWhisper)
-            {
-                var swiftCD = GetCooldown(All.Swiftcast);
-                var angelCD = GetCooldown(BLU.AngelWhisper);
-                if (!swiftCD.IsCooldown && !angelCD.IsCooldown)
-                    return All.Swiftcast;
-            }
-
-            return actionID;
-        }
-    }
-
     internal class BluUltravibrationCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluUltravibrate;

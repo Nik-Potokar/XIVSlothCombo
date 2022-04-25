@@ -120,7 +120,7 @@ namespace XIVSlothComboPlugin.Combos
     }
 
     //Healer Features
-    internal class AllHealerAlternativeRaiseFeature : CustomCombo
+    internal class AllHealerRaiseFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllHealerRaiseFeature;
 
@@ -153,6 +153,24 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (TargetHasEffectAny(All.Debuffs.Addle) && IsOffCooldown(All.Addle))
                     return WAR.FellCleave;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class AllCasterRaiseFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterRaiseFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is BLU.AngelWhisper or RDM.Verraise or SMN.Resurrection)
+            {
+                if (HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
+                    return actionID;
+                if (IsOffCooldown(All.Swiftcast))
+                    return All.Swiftcast;
             }
 
             return actionID;

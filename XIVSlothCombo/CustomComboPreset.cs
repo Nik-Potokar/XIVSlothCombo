@@ -119,6 +119,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
         AllCasterAddleFeature = 100020,
 
+        [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
+        [ParentCombo(AllCasterFeatures)]
+        [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
+        AllCasterRaiseFeature = 100021,
+
         //Melee Features
         [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllMeleeFeatures = 100096,
@@ -363,9 +368,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(BluFinalSting)]
         [CustomComboInfo("Off CD Primal Additions", "Adds any Primals that are off CD to the Final Sting Combo. \nPrimals Used: Feather Rain, Shock Strike, Glass Dance, J Kick, Rose of Destruction. ", BLU.JobID)]
         BluPrimals = 70003,
-
-        [CustomComboInfo("Swiftcasted Angel Whisper", "Turns Angel Whisper to Swiftcast when Swiftcast and Angel Whisper are available. \nSpells required: Angel Whisper ", BLU.JobID)]
-        BluRez = 70004,
 
         [CustomComboInfo("Ram's Voice into Ultravibration", "Turns Ultravibration into Ram's Voice if Deep Freeze isn't on the target. Will swiftcast Ultravibration if available. \nSpells Required: Ram's Voice, Ultravibration. ", BLU.JobID)]
         BluUltravibrate = 70005,
@@ -1717,7 +1719,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
         RedMageLucidOnJolt = 13022,
 
-        [CustomComboInfo("Swiftcast into Verraise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        [CustomComboInfo("RDM Alternative Raise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RedMageSwiftVerraise = 13023,
 
         #endregion
@@ -2142,7 +2144,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
         SummonerEgiAttacksAOEFeature = 17026,
 
-        [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        [ConflictingCombos(AllCasterRaiseFeature)]
+        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
