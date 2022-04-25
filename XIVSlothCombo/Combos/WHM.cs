@@ -40,8 +40,6 @@ namespace XIVSlothComboPlugin.Combos
             ThinAir = 7430,
             PresenceOfMind = 136;
 
-
-
         public static class Buffs
         {
             public const ushort
@@ -295,8 +293,31 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-
     }
+    internal class WHMMedica2ThinAirFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMMedica2ThinAirFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == WHM.Medica2)
+            {
+                var thinairCD = GetCooldown(WHM.ThinAir);
+                var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
+                var medica2Buff = FindEffect(WHM.Buffs.Medica2);
+
+                // Compatibility conditional for CustomComboPreset.WHMMedicaFeature
+                if (IsEnabled(CustomComboPreset.WHMMedicaFeature) && HasEffect(WHM.Buffs.Medica2) && medica2Buff.RemainingTime > 2)
+                    return WHM.Medica;
+
+                if (IsEnabled(CustomComboPreset.WHMMedica2ThinAirFeature) && thinairCD.RemainingCharges > 0 && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
+                    return WHM.ThinAir;
+            }
+
+            return actionID;
+        }
+    }
+
     internal class WHMAlternativeRaise : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMAlternativeRaise;
@@ -318,6 +339,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (!swiftCD.IsCooldown)
                     return WHM.Swiftcast;
             }
+
             return actionID;
         }
     }
@@ -347,5 +369,4 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-
 }
