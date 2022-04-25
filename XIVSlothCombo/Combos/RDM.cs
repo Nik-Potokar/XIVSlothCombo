@@ -83,6 +83,7 @@ namespace XIVSlothComboPlugin.Combos
                 Manafication = 60,
                 Jolt2 = 62,
                 Impact = 66,
+                ManaStack = 68,
                 Verflare = 68,
                 Verholy = 70,
                 Fleche = 45,
@@ -661,7 +662,7 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 
         {
-            if (actionID is RDM.Jolt or RDM.Veraero or RDM.Verthunder or RDM.Verstone 
+            if (actionID is RDM.Jolt or RDM.Veraero or RDM.Verthunder or RDM.Verstone
                 or RDM.Verfire or RDM.Riposte or RDM.Zwerchhau or RDM.Redoublement)
             {
                 const int
@@ -727,7 +728,7 @@ namespace XIVSlothComboPlugin.Combos
                         //we do it in steps to be able to control it
                         if (step == 0)
                         {
-                            if ( lastComboMove == RDM.Veraero3 ) step++;
+                            if (lastComboMove == RDM.Veraero3) step++;
                             else return RDM.Veraero3;
                         }
 
@@ -864,7 +865,7 @@ namespace XIVSlothComboPlugin.Combos
                     else if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20)
                         return RDM.EnchantedRiposte;
                 }
-                    
+
                 if ((lastComboMove is RDM.Zwerchhau or RDM.EnchantedRiposte) && gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
                 {
                     if (level >= RDM.Levels.Redoublement)
@@ -873,9 +874,10 @@ namespace XIVSlothComboPlugin.Combos
                     else if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20)
                         return RDM.EnchantedRiposte;
                 }
-                    
-                if (InMeleeRange() && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 &&
-                    lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch && !HasEffect(RDM.Buffs.Dualcast))
+
+
+                if (InMeleeRange() && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 && !HasEffect(RDM.Buffs.Dualcast) &&
+                    lastComboMove is not (RDM.Verholy or RDM.Verflare or RDM.Scorch) && (gauge.ManaStacks == 0 || level < RDM.Levels.ManaStack))
                     return RDM.EnchantedRiposte;
                 
                 if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerSmartCastFeature))
@@ -886,7 +888,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SimpleRedMageFishing) && inCombat && canWeave) 
                 {
-                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasEffect(RDM.Buffs.VerstoneReady) && !HasEffect(RDM.Buffs.Dualcast) && gauge.ManaStacks != 3)
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasEffect(RDM.Buffs.VerstoneReady) && !HasEffect(RDM.Buffs.Dualcast) &&
+                        gauge.ManaStacks != 3 && lastComboMove is not (RDM.Verholy or RDM.Verflare or RDM.Scorch))
                     {
                         if (!HasEffect(RDM.Buffs.Acceleration) && HasCharges(RDM.Acceleration) && level >= RDM.Levels.Acceleration)
                             return RDM.Acceleration;
