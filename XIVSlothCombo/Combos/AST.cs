@@ -103,6 +103,7 @@ namespace XIVSlothComboPlugin.Combos
                 MinorArcana = 50,
                 Draw = 30,
                 AspectedBenefic = 34,
+                AspectedHelios = 42,
                 CrownPlay = 70,
                 CelestialOpposition = 60,
                 CelestialIntersection = 74,
@@ -583,6 +584,9 @@ namespace XIVSlothComboPlugin.Combos
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<ASTGauge>();
 
+                if (level < AST.Levels.AspectedHelios)
+                    return AST.Helios;
+
                 if (IsEnabled(CustomComboPreset.AstrologianLazyLadyFeature))
                 {
                     if (gauge.DrawnCrownCard == CardType.LADY && incombat && level >= AST.Levels.CrownPlay)
@@ -597,7 +601,9 @@ namespace XIVSlothComboPlugin.Combos
                     if (horoscopeCD.CooldownRemaining == 0 && level >= AST.Levels.Horoscope)
                         return AST.Horoscope;
 
-                    if (!HasEffect(AST.Buffs.AspectedHelios) && HasEffect(AST.Buffs.Horoscope) || HasEffect(AST.Buffs.NeutralSect) && !HasEffect(AST.Buffs.NeutralSectShield))
+                    if ((!HasEffect(AST.Buffs.AspectedHelios) && level >= AST.Levels.AspectedHelios)
+                         || HasEffect(AST.Buffs.Horoscope)
+                         || (HasEffect(AST.Buffs.NeutralSect) && !HasEffect(AST.Buffs.NeutralSectShield)))
                         return AST.AspectedHelios;
 
                     if (HasEffect(AST.Buffs.HoroscopeHelios))

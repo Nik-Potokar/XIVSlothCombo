@@ -68,6 +68,7 @@ namespace XIVSlothComboPlugin.Combos
                 PresenceOfMind = 30,
                 Cure2 = 30,
                 Aero2 = 46,
+                Medica2 = 50,
                 AfflatusSolace = 52,
                 Assize = 56,
                 ThinAir = 58,
@@ -272,6 +273,8 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var gauge = GetJobGauge<WHMGauge>();
                     var medica2Buff = FindEffect(WHM.Buffs.Medica2);
+                    if (level < WHM.Levels.Medica2)
+                        return WHM.Medica1;
                     if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryMedicaFeature) && gauge.BloodLily == 3)
                         return WHM.AfflatusMisery;
                     if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= WHM.Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff.RemainingTime > 2)
