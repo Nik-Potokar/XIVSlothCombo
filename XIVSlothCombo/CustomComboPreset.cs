@@ -102,29 +102,40 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
         AllTankReprisalFeature = 100001,
 
+        //Healer Features
+        [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllHealerFeatures = 100098,
+
+        [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SageEgeiroFeature, WHMRaiseFeature)]
+        [ParentCombo(AllHealerFeatures)]
+        [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
+        AllHealerRaiseFeature = 100010,
+
         //Magical Ranged Features
         [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllCasterFeatures = 100098,
+        AllCasterFeatures = 100097,
 
         [ParentCombo(AllCasterFeatures)]
         [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
-        AllCasterAddleFeature = 100010,
+        AllCasterAddleFeature = 100020,
 
         //Melee Features
         [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllMeleeFeatures = 100097,
+        AllMeleeFeatures = 100096,
 
         [ParentCombo(AllMeleeFeatures)]
         [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
-        AllMeleeFeintFeature = 100020,
+        AllMeleeFeintFeature = 100030,
 
         //Ranged Physical Features
         [CustomComboInfo("Global Physical Ranged Features", "Features and options involving shared role actions for Physical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllRangedPhysicalFeatures = 100096,
+        AllRangedPhysicalFeatures = 100095,
 
         [ParentCombo(AllRangedPhysicalFeatures)]
         [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
-        AllRangedPhysicalMitigationFeature = 100030,
+        AllRangedPhysicalMitigationFeature = 100040,
+
+
 
         #endregion
 
@@ -141,13 +152,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 0, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
         AstrologianBeneficFeature = 1002,
 
-        [ConflictingCombos(AstrologianAlternateAscendFeature)]
-        [CustomComboInfo("AST Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("AST Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
         AstrologianAscendFeature = 1003,
-
-        [ConflictingCombos(AstrologianAscendFeature)]
-        [CustomComboInfo("AST Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available", AST.JobID, 0, "Rez-bot-0003", "Same same, but different!")]
-        AstrologianAlternateAscendFeature = 1019,
 
         [ConflictingCombos(AstrologianAlternateDpsFeature, CustomValuesTest)]
         [CustomComboInfo("DPS Feature(On Malefic)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, 0, "Green DPS? Look no further", "Adds fatter deeps to your combo. Just pick another job already...")]
@@ -1754,13 +1761,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
         SageDPSFeatureToT = 14032,
 
-        [ConflictingCombos(SageAlternateEgeiroFeature)]
-        [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("SGE Alternative Raise Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
         SageEgeiroFeature = 14007,
-
-        [ConflictingCombos(SageEgeiroFeature)]
-        [CustomComboInfo("Egeiro into Swiftcast Feature", "Changes Egiero to Swiftcast when Swiftcast is available.", SGE.JobID, 0, "Raise to Raise", "Swaps your raise with WHM's raise.\nDoesn't work any more. You're welcome")]
-        SageAlternateEgeiroFeature = 14008,
 
         [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
         [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
@@ -2011,13 +2014,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("ED Aetherflow", "Change Energy Drain into Aetherflow when you have no more Aetherflow stacks.", SCH.JobID, 0, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
         ScholarEnergyDrainFeature = 16001,
 
-        [ConflictingCombos(SCHAlternateRaiseFeature)]
-        [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("SCH Alternative Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
         SchRaiseFeature = 16002,
-
-        [ConflictingCombos(SchRaiseFeature)]
-        [CustomComboInfo("SCH Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available.", SCH.JobID, 0, "", "Well, this raise stuff and Peloton Extreme, I guess.")]
-        SCHAlternateRaiseFeature = 16008,
 
         [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID, 0, "", "You're really gonna forget? Really?")]
         ScholarFairyFeature = 16004,
@@ -2255,13 +2254,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, 0, "Inflatus Feature", "Pumps you full of air. Boing!")]
         WhiteMageAfflatusFeature = 19003,
 
-        [ConflictingCombos(WHMAlternativeRaise)]
-        [CustomComboInfo("WHM Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("WHM Alternative Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
         WHMRaiseFeature = 19004,
-
-        [ConflictingCombos(WHMRaiseFeature)]
-        [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID, 0, "Look up!", "It's this, but that.")]
-        WHMAlternativeRaise = 19015,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]

@@ -295,30 +295,7 @@ namespace XIVSlothComboPlugin.Combos
         }
 
     }
-    internal class WHMAlternativeRaise : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMAlternativeRaise;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WHM.Raise)
-            {
-                var thinairCD = GetCooldown(WHM.ThinAir);
-                var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
-                var swiftCD = GetCooldown(All.Swiftcast);
-
-                if (!swiftCD.IsCooldown)
-                    return All.Swiftcast;
-
-                if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
-                    return WHM.ThinAir;
-
-                if (!swiftCD.IsCooldown)
-                    return All.Swiftcast;
-            }
-            return actionID;
-        }
-    }
     internal class WHMogcdHealsShieldsFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMogcdHealsShieldsFeature;

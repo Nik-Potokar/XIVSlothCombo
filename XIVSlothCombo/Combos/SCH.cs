@@ -47,8 +47,7 @@ namespace XIVSlothComboPlugin.Combos
 
             // Role
             Resurrection = 173,
-            LucidDreaming = 7562,
-            Esuna = 5768;
+            LucidDreaming = 7562;
 
         public static class Buffs
         {
@@ -161,22 +160,6 @@ namespace XIVSlothComboPlugin.Combos
 
                 return actionID;
             }
-        }
-    }
-    internal class SCHAlternateRaiseFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCHAlternateRaiseFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == SCH.Resurrection)
-            {
-                var swiftCD = GetCooldown(All.Swiftcast);
-                if ((swiftCD.CooldownRemaining == 0)
-)
-                    return All.Swiftcast;
-            }
-            return actionID;
         }
     }
 

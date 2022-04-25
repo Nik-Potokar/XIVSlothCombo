@@ -105,10 +105,7 @@ namespace XIVSlothComboPlugin.Combos
             // buff 
             RadiantAegis = 25799,
             Aethercharge = 25800,
-            SearingLight = 25801,
-
-            // other
-            Sleep = 25880;
+            SearingLight = 25801;
 
 
         public static class Buffs

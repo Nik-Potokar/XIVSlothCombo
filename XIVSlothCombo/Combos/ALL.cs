@@ -1,18 +1,26 @@
-﻿ namespace XIVSlothComboPlugin.Combos
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
+
+namespace XIVSlothComboPlugin.Combos
 {
     internal static class All
     {
         public const byte JobID = 99;
 
         public const uint
+            Rampart = 7531,
             SecondWind = 7541,
             Addle = 7560,
             Swiftcast = 7561,
             Resurrection = 173,
             Raise = 125,
+            Provoke = 7533,
+            Shirk = 7537,
             Reprisal = 7535,
+            Esuna = 7568,
+            Rescue = 7571,
             SolidReason = 232,
             AgelessWords = 215,
+            Sleep = 25880,
             WiseToTheWorldMIN = 26521,
             WiseToTheWorldBTN = 26522,
             LowBlow = 7540,
@@ -23,7 +31,8 @@
             Feint = 7549,
             Interject = 7538,
             Peloton = 7557,
-            LegSweep = 7863;
+            LegSweep = 7863,
+            Repose = 16560;
 
         public static class Buffs
         {
@@ -32,12 +41,14 @@
                 Medicated = 49,
                 Bloodbath = 84,
                 Swiftcast = 167,
+                Rampart = 1191,
                 Peloton = 1199;
         }
 
         public static class Debuffs
         {
             public const ushort
+                Sleep = 3,
                 Bind = 13,
                 Heavy = 14,
                 Addle = 1203,
@@ -49,18 +60,25 @@
         {
             public const byte
                 LegGraze = 6,
+                Repose = 8,
                 SecondWind = 8,
+                Rampart = 8,
                 Addle = 8,
+                Sleep = 10,
+                Esuna = 10,
                 FootGraze = 10,
                 LegSweep = 10,
                 LowBlow = 12,
                 Bloodbath = 12,
                 Raise = 12,
+                Provoke = 15,
                 Interject = 18,
                 Swiftcast = 18,
                 Peloton = 20,
                 Feint = 22,
-                HeadGraze = 24;
+                HeadGraze = 24,
+                Rescue = 48,
+                Shirk = 48;
         }
     }
 
@@ -95,6 +113,29 @@
             {
                 if (TargetHasEffectAny(All.Debuffs.Reprisal) && IsOffCooldown(All.Reprisal))
                     return WHM.Stone1;
+            }
+
+            return actionID;
+        }
+    }
+
+    //Healer Features
+    internal class AllHealerAlternativeRaiseFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllHealerRaiseFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro)
+            {
+                if (IsOffCooldown(All.Swiftcast))
+                    return All.Swiftcast;
+                if (HasEffect(All.Buffs.Swiftcast))
+                {
+                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHMThinAirFeature) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && level >= WHM.Levels.ThinAir)
+                        return WHM.ThinAir;
+                    return actionID;
+                }
             }
 
             return actionID;
@@ -144,13 +185,14 @@
         {
             if (actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba)
             {
-                if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician) || HasEffectAny(DNC.Buffs.ShieldSamba)))
+                if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician) || HasEffectAny(DNC.Buffs.ShieldSamba)) && IsOffCooldown(actionID))
                     return DRG.Stardiver;
             }
 
             return actionID;
         }
     }
+
 
     /*
     internal class DoMSwiftcastFeature : CustomCombo

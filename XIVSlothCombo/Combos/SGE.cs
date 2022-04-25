@@ -347,26 +347,6 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    //SageAlternateEgeiroFeature
-    //Egeiro (Raise) is replaced with Swiftcast at all times while not active or on cooldown
-    //Egeiro is basically your swiftcast button under this Option.
-    internal class SageAlternateEgeiroFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageAlternateEgeiroFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Egeiro)
-            {
-                var swiftCD = GetCooldown(All.Swiftcast);
-
-                if ((swiftCD.CooldownRemaining is 0))
-                    return All.Swiftcast;
-            }
-            return actionID;
-        }
-    }
-
     internal class SageSingleTargetHeal : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageSingleTargetHealFeature;
