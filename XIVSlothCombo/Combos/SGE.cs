@@ -53,7 +53,6 @@ namespace XIVSlothComboPlugin.Combos
             
             // Role
             Egeiro = 24287,
-            Swiftcast = 7561,
             LucidDreaming = 7562;
 
         public static class Buffs
@@ -61,7 +60,6 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Kardia = 2604,
                 Eukrasia = 2606,
-                Swiftcast = 167,
                 EukrasianDiagnosis = 2607,
                 Kardion = 2872,
                 EukrasianPrognosis = 2609;
@@ -335,15 +333,15 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is SGE.Swiftcast)
+            if (actionID is All.Swiftcast)
             {
                 if (IsEnabled(CustomComboPreset.SageEgeiroFeature))
                 {
-                    if (HasEffect(SGE.Buffs.Swiftcast))
+                    if (HasEffect(All.Buffs.Swiftcast))
                         return SGE.Egeiro;
                 }
 
-                return OriginalHook(SGE.Swiftcast);
+                return OriginalHook(All.Swiftcast);
             }
             return actionID;
         }
@@ -360,10 +358,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is SGE.Egeiro)
             {
-                var swiftCD = GetCooldown(SGE.Swiftcast);
+                var swiftCD = GetCooldown(All.Swiftcast);
 
                 if ((swiftCD.CooldownRemaining is 0))
-                    return SGE.Swiftcast;
+                    return All.Swiftcast;
             }
             return actionID;
         }

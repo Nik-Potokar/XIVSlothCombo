@@ -23,7 +23,6 @@ namespace XIVSlothComboPlugin.Combos
             Malefic4 = 16555,
             LucidDreaming = 7562,
             Ascend = 3603,
-            Swiftcast = 7561,
             CrownPlay = 25869,
             Astrodyne = 25870,
             FallMalefic = 25871,
@@ -63,7 +62,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
             Divination = 1878,
-            Swiftcast = 167,
             LordOfCrownsDrawn = 2054,
             LadyOfCrownsDrawn = 2055,
             AspectedHelios = 836,
@@ -463,15 +461,15 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == AST.Swiftcast)
+            if (actionID == All.Swiftcast)
             {
                 if (IsEnabled(CustomComboPreset.AstrologianAscendFeature))
                 {
-                    if (HasEffect(AST.Buffs.Swiftcast))
+                    if (HasEffect(All.Buffs.Swiftcast))
                         return AST.Ascend;
                 }
 
-                return OriginalHook(AST.Swiftcast);
+                return OriginalHook(All.Swiftcast);
             }
 
             return actionID;
@@ -485,10 +483,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == AST.Ascend)
             {
-                var swiftCD = GetCooldown(AST.Swiftcast);
+                var swiftCD = GetCooldown(All.Swiftcast);
                 if ((swiftCD.CooldownRemaining == 0)
 )
-                    return AST.Swiftcast;
+                    return All.Swiftcast;
             }
             return actionID;
         }

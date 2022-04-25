@@ -108,14 +108,12 @@ namespace XIVSlothComboPlugin.Combos
             SearingLight = 25801,
 
             // other
-            Sleep = 25880,
-            Swiftcast = 7561;
+            Sleep = 25880;
 
 
         public static class Buffs
         {
             public const ushort
-                Swiftcast = 167,
                 FurtherRuin = 2701,
                 GarudasFavor = 2725,
                 TitansFavor = 2853,
@@ -130,7 +128,6 @@ namespace XIVSlothComboPlugin.Combos
                 Aethercharge = 6,
                 SummonRuby = 6,
                 SummonTopaz = 15,
-                Swiftcast = 18,
                 SummonEmerald = 22,
                 Painflare = 52,
                 Ruin3 = 54,
@@ -173,9 +170,9 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Swiftcast)
+            if (actionID == All.Swiftcast)
             {
-                if (IsOnCooldown(SMN.Swiftcast))
+                if (IsOnCooldown(All.Swiftcast))
                     return SMN.Resurrection;
             }
             return actionID;
@@ -267,10 +264,10 @@ namespace XIVSlothComboPlugin.Combos
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnRuinFeature))
                     {
-                        if (IsOffCooldown(SMN.Swiftcast) && level >= SMN.Levels.Swiftcast &&
+                        if (IsOffCooldown(All.Swiftcast) && level >= All.Levels.Swiftcast &&
                             (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda) && HasEffect(SMN.Buffs.GarudasFavor) && level >= SMN.Levels.Slipstream && gauge.IsGarudaAttuned || //Swiftcast Garuda
                             IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit) && gauge.IsIfritAttuned && lastComboMove is SMN.RubyRuin1 or SMN.RubyRuin2 or SMN.RubyRuin3 or SMN.RubyRite && level >= SMN.Levels.RubyRuin1)) //Swiftcast Ifrit
-                            return SMN.Swiftcast;
+                            return All.Swiftcast;
 
                         if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) || //Garuda
                             IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && CanSpellWeave(actionID) || //Titan

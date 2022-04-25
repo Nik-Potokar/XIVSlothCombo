@@ -15,7 +15,6 @@ namespace XIVSlothComboPlugin.Combos
             AfflatusRapture = 16534,
             LucidDreaming = 7562,
             Raise = 125,
-            Swiftcast = 7561,
             AfflatusMisery = 16535,
             Medica1 = 124,
             Medica2 = 133,
@@ -45,7 +44,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
-            Swiftcast = 167,
             Medica2 = 150,
             PresenceOfMind = 157,
             ThinAir = 1217,
@@ -184,14 +182,14 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == WHM.Swiftcast)
+                if (actionID == All.Swiftcast)
                 {
                     var thinairCD = GetCooldown(WHM.ThinAir);
                     var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
 
-                    if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(WHM.Buffs.Swiftcast) && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
+                    if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(All.Buffs.Swiftcast) && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
                         return WHM.ThinAir;
-                    if (HasEffect(WHM.Buffs.Swiftcast))
+                    if (HasEffect(All.Buffs.Swiftcast))
                         return WHM.Raise;
                 }
 
@@ -307,16 +305,16 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var thinairCD = GetCooldown(WHM.ThinAir);
                 var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
-                var swiftCD = GetCooldown(WHM.Swiftcast);
+                var swiftCD = GetCooldown(All.Swiftcast);
 
                 if (!swiftCD.IsCooldown)
-                    return WHM.Swiftcast;
+                    return All.Swiftcast;
 
                 if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
                     return WHM.ThinAir;
 
                 if (!swiftCD.IsCooldown)
-                    return WHM.Swiftcast;
+                    return All.Swiftcast;
             }
             return actionID;
         }

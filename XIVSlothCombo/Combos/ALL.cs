@@ -57,6 +57,7 @@
                 Bloodbath = 12,
                 Raise = 12,
                 Interject = 18,
+                Swiftcast = 18,
                 Peloton = 20,
                 Feint = 22,
                 HeadGraze = 24;
