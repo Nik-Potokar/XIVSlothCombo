@@ -1078,10 +1078,12 @@ namespace XIVSlothComboPlugin.Combos
                 if (!HasEffect(RDM.Buffs.Dualcast) && level >= RDM.Levels.Moulinet &&
                     lastComboMove is not RDM.Verholy or RDM.Verflare or RDM.Scorch)
                 {
-                    if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20 && lastComboMove == RDM.Moulinet)
+                    if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20 && lastComboMove == RDM.Moulinet &&
+                        lastComboMove is not (RDM.Verholy or RDM.Verflare or RDM.Scorch) && (gauge.ManaStacks != 3 || level < RDM.Levels.ManaStack))
                         return RDM.EnchantedMoulinet;
 
-                    if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 && lastComboMove == RDM.Moulinet)
+                    if (gauge.WhiteMana >= 40 && gauge.BlackMana >= 40 && lastComboMove == RDM.Moulinet &&
+                        lastComboMove is not (RDM.Verholy or RDM.Verflare or RDM.Scorch) && (gauge.ManaStacks != 3 || level < RDM.Levels.ManaStack))
                         return RDM.EnchantedMoulinet;
 
                     if (gauge.WhiteMana >= 60 && gauge.BlackMana >= 60 && InMeleeRange())
