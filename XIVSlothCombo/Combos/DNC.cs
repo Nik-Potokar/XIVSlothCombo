@@ -487,7 +487,7 @@ namespace XIVSlothComboPlugin.Combos
                         var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleFeatherPoolingFeature) && level >= DNC.Levels.TechnicalStep ? 3 : 0;
 
                         // Simple ST Feather Overcap & Burst
-                        if (gauge.Feathers > minFeathers || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() > 2)
+                        if (gauge.Feathers > minFeathers || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() < 2)
                             return DNC.FanDance1;
                     }
 

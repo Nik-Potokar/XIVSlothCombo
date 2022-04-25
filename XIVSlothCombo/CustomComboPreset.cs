@@ -505,21 +505,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Single Target Multibutton", "Change Cascade into procs and combos as available.", DNC.JobID, 0, "", "")]
         DancerSingleTargetMultibutton = 4000,
 
-        [ParentCombo(DancerSingleTargetMultibutton)]
-        [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance to the Cascade combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapSTFeature = 4001,
+            [ParentCombo(DancerSingleTargetMultibutton)]
+            [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance to the Cascade combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
+            DancerEspritOvercapSTFeature = 4001,
 
-        [ParentCombo(DancerEspritOvercapSTFeature)]
-        [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.\nOverrides 'ST Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapSTInstantOption = 4002,
+                [ParentCombo(DancerEspritOvercapSTFeature)]
+                [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.\nOverrides 'ST Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
+                DancerEspritOvercapSTInstantOption = 4002,
 
-        [ParentCombo(DancerSingleTargetMultibutton)]
-        [CustomComboInfo("Fan Dance Overcap Protection", "Adds Fan Dance 1 onto Cascade when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
-        DancerFanDanceMainComboOvercapFeature = 4003,
+            [ParentCombo(DancerSingleTargetMultibutton)]
+            [CustomComboInfo("Fan Dance Overcap Protection", "Adds Fan Dance 1 onto Cascade when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
+            DancerFanDanceMainComboOvercapFeature = 4003,
 
-        [ParentCombo(DancerSingleTargetMultibutton)]
-        [CustomComboInfo("Fan Dance On Cascade Feature", "Adds Fan Dance 3/4 onto Cascade when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance34OnMainComboFeature = 4004,
+            [ParentCombo(DancerSingleTargetMultibutton)]
+            [CustomComboInfo("Fan Dance On Cascade Feature", "Adds Fan Dance 3/4 onto Cascade when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance34OnMainComboFeature = 4004,
 
 
         // AoE Multibutton Section
@@ -527,66 +527,64 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Multibutton", "Change Windmill into procs and combos as available.", DNC.JobID, 0, "", "")]
         DancerAoEMultibutton = 4010,
 
-        [ParentCombo(DancerAoEMultibutton)]
-        [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance to the Windmill combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapAoEFeature = 4011,
+            [ParentCombo(DancerAoEMultibutton)]
+            [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance to the Windmill combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
+            DancerEspritOvercapAoEFeature = 4011,
 
-        [ParentCombo(DancerEspritOvercapAoEFeature)]
-        [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapAoEInstantOption = 4012,
+                [ParentCombo(DancerEspritOvercapAoEFeature)]
+                [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
+                DancerEspritOvercapAoEInstantOption = 4012,
 
-        [ParentCombo(DancerAoEMultibutton)]
-        [CustomComboInfo("AoE Fan Dance Overcap Protection", "Adds Fan Dance 2 onto Windmill when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
-        DancerFanDanceAoEComboOvercapFeature = 4013,
+            [ParentCombo(DancerAoEMultibutton)]
+            [CustomComboInfo("AoE Fan Dance Overcap Protection", "Adds Fan Dance 2 onto Windmill when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
+            DancerFanDanceAoEComboOvercapFeature = 4013,
 
-        [ParentCombo(DancerAoEMultibutton)]
-        [CustomComboInfo("AoE Fan Dance On Windmill Feature", "Adds FanDance 3/4 Onto Windmill When available.", DNC.JobID, 0, "", "")]
-        DancerFanDanceOnAoEComboFeature = 4014,
+            [ParentCombo(DancerAoEMultibutton)]
+            [CustomComboInfo("AoE Fan Dance On Windmill Feature", "Adds FanDance 3/4 Onto Windmill When available.", DNC.JobID, 0, "", "")]
+            DancerFanDanceOnAoEComboFeature = 4014,
 
 
         // Dance Features Section (SS/TS)
         [CustomComboInfo("Dance Features", "Features and options involving Standard Step and Technical Step.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuDanceFeatures = 4020,
 
-        [ParentCombo(DancerMenuDanceFeatures)]
-        [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
-        [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
-        DancerDanceStepCombo = 4021,
+            [ParentCombo(DancerMenuDanceFeatures)]
+            [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
+            [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
+            DancerDanceStepCombo = 4021,
 
-        [ParentCombo(DancerMenuDanceFeatures)]
-        [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
-        DancerCombinedDanceFeature = 4022,
+            [ParentCombo(DancerMenuDanceFeatures)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
+            DancerCombinedDanceFeature = 4022,
 
-        [ParentCombo(DancerCombinedDanceFeature)]
-        [CustomComboInfo("Devilment Plus Option", "Adds Devilment right after Technical finish.", DNC.JobID, 0, "", "")]
-        DancerDevilmentOnCombinedDanceFeature = 4023,
+                [ParentCombo(DancerCombinedDanceFeature)]
+                [CustomComboInfo("Devilment Plus Option", "Adds Devilment right after Technical finish.", DNC.JobID, 0, "", "")]
+                DancerDevilmentOnCombinedDanceFeature = 4023,
 
-        [ParentCombo(DancerCombinedDanceFeature)]
-        [CustomComboInfo("Flourish Plus Option", "Adds Flourish to the Combined Dance Feature.", DNC.JobID, 0, "", "")]
-        DancerFlourishOnCombinedDanceFeature = 4024,
+                [ParentCombo(DancerCombinedDanceFeature)]
+                [CustomComboInfo("Flourish Plus Option", "Adds Flourish to the Combined Dance Feature.", DNC.JobID, 0, "", "")]
+                DancerFlourishOnCombinedDanceFeature = 4024,
 
-        [ParentCombo(DancerMenuDanceFeatures)]
-        [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature, DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Custom Dance Step Feature",
-        "Change custom actions into dance steps while dancing." +
-        "\nThis helps ensure you can still dance with combos on, without using auto dance." +
-        "\nYou can change the respective actions by inputting action IDs below for each dance step." +
-        "\nThe defaults are Cascade, Flourish, Fan Dance and Fan Dance II. If set to 0, they will reset to these actions." +
-        "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.", DNC.JobID, 0, "", "")]
-        DancerDanceComboCompatibility = 4025,
-
+            [ParentCombo(DancerMenuDanceFeatures)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature, DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [CustomComboInfo("Custom Dance Step Feature",
+            "Change custom actions into dance steps while dancing." +
+            "\nThis helps ensure you can still dance with combos on, without using auto dance." +
+            "\nYou can change the respective actions by inputting action IDs below for each dance step." +
+            "\nThe defaults are Cascade, Flourish, Fan Dance and Fan Dance II. If set to 0, they will reset to these actions." +
+            "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.", DNC.JobID, 0, "", "")]
+            DancerDanceComboCompatibility = 4025,
 
         // Flourishing Features Section
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuFlourishingFeatures = 4030,
 
-        [ParentCombo(DancerMenuFlourishingFeatures)]
-        [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0, "", "")]
-        DancerFlourishingFanDanceFeature = 4032,
-
+            [ParentCombo(DancerMenuFlourishingFeatures)]
+            [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0, "", "")]
+            DancerFlourishingFanDanceFeature = 4032,
 
         // Fan Dance Combo Features Subsection
         [ParentCombo(DancerMenuFlourishingFeatures)]
@@ -594,21 +592,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fan Dance Combo Features", "Options for Fan Dance combos. Fan Dance 3 takes priority over Fan Dance 4.\nCollapsing this category disables the options inside.", DNC.JobID, 0, "", "")]
         DancerFanDanceComboFeatures = 4033,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 1 -> 3", "Changes Fan Dance 1 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance1_3Combo = 4034,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 1 -> 3", "Changes Fan Dance 1 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance1_3Combo = 4034,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 1 -> 4", "Changes Fan Dance 1 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance1_4Combo = 4035,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 1 -> 4", "Changes Fan Dance 1 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance1_4Combo = 4035,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 2 -> 3", "Changes Fan Dance 2 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance2_3Combo = 4036,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 2 -> 3", "Changes Fan Dance 2 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance2_3Combo = 4036,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 2 -> 4", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance2_4Combo = 4037,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 2 -> 4", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance2_4Combo = 4037,
 
         // Devilment --> Starfall
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
@@ -621,83 +619,82 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Dancer (Single Target)", "BETA - Single button, single target dancer. Includes songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'\nUse at your own risk!", DNC.JobID, 0, "", "")]
         DancerSimpleFeature = 4050,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Interrupt", "Includes an interrupt in the rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
-        DancerSimpleInterruptFeature = 4051,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Interrupt", "Includes an interrupt in the rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
+            DancerSimpleInterruptFeature = 4051,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Standard Step", "Includes Standard Step in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleStandardFeature = 4052,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Standard Step", "Includes Standard Step in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleStandardFeature = 4052,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Technical Step", "Includes Technical Step in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleTechnicalFeature = 4053,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Technical Step", "Includes Technical Step in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleTechnicalFeature = 4053,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
-        DancerSimpleDevilmentFeature = 4054,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you are Lv70 or above.", DNC.JobID, 0, "", "")]
+            DancerSimpleDevilmentFeature = 4054,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Flourish", "Includes Flourish in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleFlourishFeature = 4055,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Flourish", "Includes Flourish in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleFlourishFeature = 4055,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Feathers", "Includes Feather usage in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleFeatherFeature = 4056,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Feathers", "Includes Feather usage in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleFeatherFeature = 4056,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when you're under the effects of Technical Step.", DNC.JobID, 0, "")]
-        DancerSimpleFeatherPoolingFeature = 4057,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when you're under the effects of Technical Step.\nWill expend feathers when your target is under 2 percent HP.", DNC.JobID, 0, "")]
+            DancerSimpleFeatherPoolingFeature = 4057,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
-        DancerSimplePanicHealsFeature = 4058,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
+            DancerSimplePanicHealsFeature = 4058,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Improvisation", "Includes Improvisation in the rotation when available.", DNC.JobID, 0, "", "")]
-        DancerSimpleImprovFeature = 4059,
-
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Improvisation", "Includes Improvisation in the rotation when available.", DNC.JobID, 0, "", "")]
+            DancerSimpleImprovFeature = 4059,
 
         // Simple Dancer AoE Section
         [ConflictingCombos(DancerSingleTargetMultibutton, DancerAoEMultibutton, DancerCombinedDanceFeature, DancerDanceComboCompatibility, DancerMenuFlourishingFeatures, DancerDevilmentFeature)]
         [CustomComboInfo("Simple Dancer (AoE)", "BETA - Single button aoe dancer, including songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.\nUse at your own risk!", DNC.JobID, 0, "", "")]
         DancerSimpleAoEFeature = 4070,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Interrupt", "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEInterruptFeature = 4071,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Interrupt", "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEInterruptFeature = 4071,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Standard Step", "Includes Standard Step in the AoE rotation.", DNC.JobID, 0, "")]
-        DancerSimpleAoEStandardFeature = 4072,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Standard Step", "Includes Standard Step in the AoE rotation.", DNC.JobID, 0, "")]
+            DancerSimpleAoEStandardFeature = 4072,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Technical Step", "Includes Technical Step in the AoE rotation.", DNC.JobID, 0, "")]
-        DancerSimpleAoETechnicalFeature = 4073,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Technical Step", "Includes Technical Step in the AoE rotation.", DNC.JobID, 0, "")]
+            DancerSimpleAoETechnicalFeature = 4073,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEDevilmentFeature = 4074,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEDevilmentFeature = 4074,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Flourish", "Includes Flourish in the AoE rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEFlourishFeature = 4075,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Flourish", "Includes Flourish in the AoE rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEFlourishFeature = 4075,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Feathers", "Includes feather usage in the AoE rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEFeatherFeature = 4076,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Feathers", "Includes feather usage in the AoE rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEFeatherFeature = 4076,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Feather Pooling", "Makes it so the AoE rotation only uses feathers when you have more than 3.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEFeatherPoolingFeature = 4077,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Feather Pooling", "Makes it so the AoE rotation only uses feathers when you have more than 3.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEFeatherPoolingFeature = 4077,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEPanicHealsFeature = 4078,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEPanicHealsFeature = 4078,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Improvisation", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEImprovFeature = 4079,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Improvisation", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEImprovFeature = 4079,
 
         #endregion
         // ====================================================================================
