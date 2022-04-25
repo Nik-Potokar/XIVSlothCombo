@@ -50,11 +50,10 @@ namespace XIVSlothComboPlugin.Combos
             Kardia = 24285,
             Eukrasia = 24290,
             Rhizomata = 24309,
-            
+
             // Role
             Egeiro = 24287,
-            Swiftcast = 7561,
-            LucidDreaming = 7562;
+            Swiftcast = 7561;
 
         public static class Buffs
         {
@@ -84,7 +83,6 @@ namespace XIVSlothComboPlugin.Combos
                 Prognosis = 10,
                 Egeiro = 12,
                 Physis = 20,
-                LucidDreaming = 24,
                 Phlegma = 26,
                 Eukrasia = 30, //includes Dosis, Diagnosis, & Prognosis
                 Soteria = 35,
@@ -210,18 +208,8 @@ namespace XIVSlothComboPlugin.Combos
                     //If not targetting anything, use Dyskrasia Option if selected
                     if ( IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && (!HasTarget()) ) return OriginalHook(SGE.Dyskrasia);
 
-                    uint Phlegma; //Phlegma placeholder
-                    //Find which version of Phlegma based on player's level that we need to update with
-                    //Phlegma unlocks before Dyskrasia & Toxikon (checked above), we'll always have P1 available
-                    switch (level)
-                    {
-                        case >= (byte)SGE.Levels.Phlegma3: Phlegma = SGE.Phlegma3; break;
-                        case >= (byte)SGE.Levels.Phlegma2: Phlegma = SGE.Phlegma2; break;
-                        default : Phlegma = SGE.Phlegma; break;
-                }
-
                     //Check for "out of Phlegma stacks" 
-                    if (GetCooldown(Phlegma).RemainingCharges == 0) {
+                    if (GetCooldown(OriginalHook(SGE.Phlegma)).RemainingCharges == 0) {
                         //and if we have Adderstings to use for Toxikon
                         //Has Priority over Dyskrasia
                         if ( IsEnabled(CustomComboPreset.SagePhlegmaToxikonFeature) && (level >= SGE.Levels.Toxikon) && (GetJobGauge<SGEGauge>().Addersting > 0) )
@@ -252,6 +240,18 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
+
+                    //20220424 Tsusai: Lucid moved to the top (higher priority) similar to SCH
+                    //Lucid should be usable incombat without a target
+                    if (IsEnabled(CustomComboPreset.SageLucidFeature) && level >= All.Levels.LucidDreaming)
+                    {
+                        //Get slider configuration
+                        int MinMP = Service.Configuration.GetCustomIntValue(SGE.Config.CustomSGELucidDreaming, 8000);
+                        //Can we use?
+                        if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= MinMP && CanSpellWeave(actionID))
+                            return All.LucidDreaming;
+                    }
+
                     //If we're too low level to use Eukrasia, we can stop here.
                     if (level >= SGE.Levels.Eukrasia)
                     {
@@ -310,16 +310,6 @@ namespace XIVSlothComboPlugin.Combos
                             else //End Advanced Test Options. If it needs to be removed, leave the next line
                                 return SGE.Eukrasia;
                         }
-                    }
-
-                    //Lucid should be usable outside of whatever is targetted
-                    if (IsEnabled(CustomComboPreset.SageLucidFeature) && level >= SGE.Levels.LucidDreaming)
-                    {
-                        var lucidDreaming = GetCooldown(SGE.LucidDreaming);
-                        //Get slider configuration
-                        int MinMP = Service.Configuration.GetCustomIntValue("CustomSGELucidDreaming", 8000);
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= MinMP && CanWeave(actionID))
-                            return SGE.LucidDreaming;
                     }
                 }
             }
