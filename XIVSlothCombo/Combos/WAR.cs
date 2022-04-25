@@ -20,9 +20,6 @@ namespace XIVSlothComboPlugin.Combos
             FellCleave = 3549,
             Decimate = 3550,
             Upheaval = 7387,
-            LowBlow = 7540,
-            Interject = 7538,
-            Reprisal = 7535,
             InnerRelease = 7389,
             RawIntuition = 3551,
             MythrilTempest = 16462,
@@ -46,7 +43,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Debuffs
         {
             public const ushort
-                Reprisal = 1193;
+                Placeholder = 1;
         }
 
         public static class Levels
@@ -290,23 +287,6 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    internal class WarriorInterruptFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorInterruptFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WAR.LowBlow)
-            {
-                var interjectCD = GetCooldown(WAR.Interject);
-                var lowBlowCD = GetCooldown(WAR.LowBlow);
-                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
-                    return WAR.Interject;
-            }
-
-            return actionID;
-        }
-    }
 
     internal class WarriorInfuriateFellCleave : CustomCombo
     {
@@ -341,20 +321,6 @@ namespace XIVSlothComboPlugin.Combos
                     return WAR.PrimalRend;
             }
 
-            return actionID;
-        }
-    }
-    internal class WarriorReprisalProtection : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorReprisalProtection;
-
-        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-        {
-            if (actionID is WAR.Reprisal)
-            {
-                if (TargetHasEffectAny(WAR.Debuffs.Reprisal) && IsOffCooldown(WAR.Reprisal))
-                    return WHM.Stone1;
-            }
             return actionID;
         }
     }

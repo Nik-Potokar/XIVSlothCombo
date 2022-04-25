@@ -50,10 +50,10 @@ namespace XIVSlothComboPlugin.Combos
             Kardia = 24285,
             Eukrasia = 24290,
             Rhizomata = 24309,
-            
+
             // Role
+            Swiftcast = 756,
             Egeiro = 24287,
-            Swiftcast = 7561,
             LucidDreaming = 7562;
 
         public static class Buffs
@@ -61,7 +61,6 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Kardia = 2604,
                 Eukrasia = 2606,
-                Swiftcast = 167,
                 EukrasianDiagnosis = 2607,
                 Kardion = 2872,
                 EukrasianPrognosis = 2609;
@@ -84,7 +83,6 @@ namespace XIVSlothComboPlugin.Combos
                 Prognosis = 10,
                 Egeiro = 12,
                 Physis = 20,
-                LucidDreaming = 24,
                 Phlegma = 26,
                 Eukrasia = 30, //includes Dosis, Diagnosis, & Prognosis
                 Soteria = 35,
@@ -110,13 +108,12 @@ namespace XIVSlothComboPlugin.Combos
                 Toxikon2 = 82,
                 Krasis = 86,
                 Pneuma = 90;
-                
         }
 
         public static class Config
         {
             public const string
-				//GUI Customization Storage Names
+				        //GUI Customization Storage Names
                 CustomSGELucidDreaming = "CustomSGELucidDreaming",
                 CustomZoe = "CustomZoe",
                 CustomHaima = "CustomHaima",
@@ -210,18 +207,8 @@ namespace XIVSlothComboPlugin.Combos
                     //If not targetting anything, use Dyskrasia Option if selected
                     if ( IsEnabled(CustomComboPreset.SagePhlegmaDyskrasiaFeature) && (!HasTarget()) ) return OriginalHook(SGE.Dyskrasia);
 
-                    uint Phlegma; //Phlegma placeholder
-                    //Find which version of Phlegma based on player's level that we need to update with
-                    //Phlegma unlocks before Dyskrasia & Toxikon (checked above), we'll always have P1 available
-                    switch (level)
-                    {
-                        case >= (byte)SGE.Levels.Phlegma3: Phlegma = SGE.Phlegma3; break;
-                        case >= (byte)SGE.Levels.Phlegma2: Phlegma = SGE.Phlegma2; break;
-                        default : Phlegma = SGE.Phlegma; break;
-                }
-
                     //Check for "out of Phlegma stacks" 
-                    if (GetCooldown(Phlegma).RemainingCharges == 0) {
+                    if (GetCooldown(OriginalHook(SGE.Phlegma)).RemainingCharges == 0) {
                         //and if we have Adderstings to use for Toxikon
                         //Has Priority over Dyskrasia
                         if ( IsEnabled(CustomComboPreset.SagePhlegmaToxikonFeature) && (level >= SGE.Levels.Toxikon) && (GetJobGauge<SGEGauge>().Addersting > 0) )
@@ -252,6 +239,18 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                 {
+
+                    //20220424 Tsusai: Lucid moved to the top (higher priority) similar to SCH
+                    //Lucid should be usable incombat without a target
+                    if (IsEnabled(CustomComboPreset.SageLucidFeature) && level >= All.Levels.LucidDreaming)
+                    {
+                        //Get slider configuration
+                        int MinMP = Service.Configuration.GetCustomIntValue(SGE.Config.CustomSGELucidDreaming, 8000);
+                        //Can we use?
+                        if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= MinMP && CanSpellWeave(actionID))
+                            return All.LucidDreaming;
+                    }
+
                     //If we're too low level to use Eukrasia, we can stop here.
                     if (level >= SGE.Levels.Eukrasia)
                     {
@@ -311,16 +310,6 @@ namespace XIVSlothComboPlugin.Combos
                                 return SGE.Eukrasia;
                         }
                     }
-
-                    //Lucid should be usable outside of whatever is targetted
-                    if (IsEnabled(CustomComboPreset.SageLucidFeature) && level >= SGE.Levels.LucidDreaming)
-                    {
-                        var lucidDreaming = GetCooldown(SGE.LucidDreaming);
-                        //Get slider configuration
-                        int MinMP = Service.Configuration.GetCustomIntValue("CustomSGELucidDreaming", 8000);
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= MinMP && CanWeave(actionID))
-                            return SGE.LucidDreaming;
-                    }
                 }
             }
             return actionID;
@@ -335,35 +324,15 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is SGE.Swiftcast)
+            if (actionID is All.Swiftcast)
             {
                 if (IsEnabled(CustomComboPreset.SageEgeiroFeature))
                 {
-                    if (HasEffect(SGE.Buffs.Swiftcast))
+                    if (HasEffect(All.Buffs.Swiftcast))
                         return SGE.Egeiro;
                 }
 
-                return OriginalHook(SGE.Swiftcast);
-            }
-            return actionID;
-        }
-    }
-
-    //SageAlternateEgeiroFeature
-    //Egeiro (Raise) is replaced with Swiftcast at all times while not active or on cooldown
-    //Egeiro is basically your swiftcast button under this Option.
-    internal class SageAlternateEgeiroFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SageAlternateEgeiroFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Egeiro)
-            {
-                var swiftCD = GetCooldown(SGE.Swiftcast);
-
-                if ((swiftCD.CooldownRemaining is 0))
-                    return SGE.Swiftcast;
+                return OriginalHook(All.Swiftcast);
             }
             return actionID;
         }
