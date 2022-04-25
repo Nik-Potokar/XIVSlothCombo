@@ -47,6 +47,7 @@ namespace XIVSlothComboPlugin.Combos
 
             // Role
             Resurrection = 173,
+            Esuna = 5768,
             LucidDreaming = 7562;
 
         public static class Buffs
@@ -224,20 +225,19 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var actionIDCD = GetCooldown(actionID);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var lucidDreaming = GetCooldown(SCH.LucidDreaming);
                 var biolysis = FindTargetEffect(SCH.Debuffs.Biolysis);
                 var bio1 = FindTargetEffect(SCH.Debuffs.Bio1);
                 var bio2 = FindTargetEffect(SCH.Debuffs.Bio2);
                 var chainBuff = GetCooldown(SCH.ChainStratagem);
                 var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
-                var canWeave = CanWeave(actionID);
-                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(SCH.Config.ScholarLucidDreaming);
 
-                if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature))
+                if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature) && level >= All.Levels.LucidDreaming)
                 {
-                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && canWeave)
-                        return SCH.LucidDreaming;
+                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(SCH.Config.ScholarLucidDreaming);
+                    if ( IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidMPThreshold && CanSpellWeave(actionID) )
+                        return All.LucidDreaming;
                 }
+
                 if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Biolysis && incombat)
                 {
                     if ((biolysis is null) || (biolysis.RemainingTime <= 3))

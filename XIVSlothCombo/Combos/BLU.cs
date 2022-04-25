@@ -30,7 +30,6 @@ namespace XIVSlothComboPlugin.Combos
             Devour = 18320,
             Offguard = 11411,
             BadBreath = 11388,
-            LucidDreaming = 7562,
             MagicHammer = 18305,
             WhiteKnightsTour = 18310,
             BlackKnightsTour = 18311,
@@ -64,7 +63,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
-                LucidDreaming = 24;
+                Placeholder = 1;
         }
     }
 
@@ -214,7 +213,7 @@ namespace XIVSlothComboPlugin.Combos
                 var devourCD = GetCooldown(BLU.Devour);
                 var offguardDebuff = FindTargetEffect(BLU.Debuffs.Offguard);
                 var offguardCD = GetCooldown(BLU.Offguard);
-                var lucidCD = GetCooldown(BLU.LucidDreaming);
+                var lucidCD = GetCooldown(All.LucidDreaming);
 
                 if (offguardDebuff is null && !offguardCD.IsCooldown)
                     return BLU.Offguard;
@@ -222,8 +221,8 @@ namespace XIVSlothComboPlugin.Combos
                     return BLU.BadBreath;
                 if (!devourCD.IsCooldown && HasEffect(BLU.Buffs.TankMimicry))
                     return BLU.Devour;
-                if (!lucidCD.IsCooldown && LocalPlayer.CurrentMp <= 9000)
-                    return BLU.LucidDreaming;
+                if (!lucidCD.IsCooldown && LocalPlayer.CurrentMp <= 9000 & level >= All.Levels.LucidDreaming)
+                    return All.LucidDreaming;
             }
 
             return actionID;

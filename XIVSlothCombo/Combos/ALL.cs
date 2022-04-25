@@ -11,6 +11,7 @@ namespace XIVSlothComboPlugin.Combos
             SecondWind = 7541,
             Addle = 7560,
             Swiftcast = 7561,
+            LucidDreaming = 7562,
             Resurrection = 173,
             Raise = 125,
             Provoke = 7533,
@@ -42,7 +43,8 @@ namespace XIVSlothComboPlugin.Combos
                 Bloodbath = 84,
                 Swiftcast = 167,
                 Rampart = 1191,
-                Peloton = 1199;
+                Peloton = 1199,
+                LucidDreaming = 1204;
         }
 
         public static class Debuffs
@@ -71,6 +73,7 @@ namespace XIVSlothComboPlugin.Combos
                 LowBlow = 12,
                 Bloodbath = 12,
                 Raise = 12,
+                LucidDreaming = 14,
                 Provoke = 15,
                 Interject = 18,
                 Swiftcast = 18,

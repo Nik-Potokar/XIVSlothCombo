@@ -42,8 +42,7 @@ namespace XIVSlothComboPlugin.Combos
             //Buffs
             Acceleration = 7518,
             Manafication = 7521,
-            Embolden = 7520,
-            LucidDreaming = 7562;
+            Embolden = 7520;
 
         public static class Buffs
         {
@@ -68,7 +67,6 @@ namespace XIVSlothComboPlugin.Combos
                 Veraero = 10,
                 Verthunder2 = 18,
                 Veraero2 = 22,
-                LucidDreaming = 24,
                 Verraise = 64,
                 Zwerchhau = 35,
                 Displacement = 40,
@@ -1180,17 +1178,17 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(RDM.Config.RdmLucidMpThreshold);
 
-                if (level >= RDM.Levels.LucidDreaming && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
+                if (level >= All.Levels.LucidDreaming && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
                 {
                     showLucid = true;
                 }
 
-                if (showLucid && CanSpellWeave(actionID) && HasCondition(ConditionFlag.InCombat) && IsOffCooldown(RDM.LucidDreaming) 
+                if (showLucid && CanSpellWeave(actionID) && HasCondition(ConditionFlag.InCombat) && IsOffCooldown(All.LucidDreaming) 
                     && lastComboMove != RDM.EnchantedRiposte && lastComboMove != RDM.EnchantedZwerchhau 
                     && lastComboMove != RDM.EnchantedRedoublement && lastComboMove != RDM.Verflare 
                     && lastComboMove != RDM.Verholy && lastComboMove != RDM.Scorch) // Change abilities to Lucid Dreaming for entire weave window
                 {
-                    return RDM.LucidDreaming;
+                    return All.LucidDreaming;
                 }
                 showLucid = false;
             }
