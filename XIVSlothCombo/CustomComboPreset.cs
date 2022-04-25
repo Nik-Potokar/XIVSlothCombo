@@ -94,53 +94,51 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllTankFeatures = 100099,
 
-        [ParentCombo(AllTankFeatures)]
-        [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
-        AllTankInterruptFeature = 100000,
+            [ParentCombo(AllTankFeatures)]
+            [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
+            AllTankInterruptFeature = 100000,
 
-        [ParentCombo(AllTankFeatures)]
-        [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
-        AllTankReprisalFeature = 100001,
+            [ParentCombo(AllTankFeatures)]
+            [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
+            AllTankReprisalFeature = 100001,
 
         //Healer Features
         [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllHealerFeatures = 100098,
 
-        [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SageEgeiroFeature, WHMRaiseFeature)]
-        [ParentCombo(AllHealerFeatures)]
-        [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
-        AllHealerRaiseFeature = 100010,
+            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SageEgeiroFeature, WHMRaiseFeature)]
+            [ParentCombo(AllHealerFeatures)]
+            [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
+            AllHealerRaiseFeature = 100010,
 
         //Magical Ranged Features
         [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllCasterFeatures = 100097,
 
-        [ParentCombo(AllCasterFeatures)]
-        [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
-        AllCasterAddleFeature = 100020,
+            [ParentCombo(AllCasterFeatures)]
+            [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
+            AllCasterAddleFeature = 100020,
 
-        [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
-        [ParentCombo(AllCasterFeatures)]
-        [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
-        AllCasterRaiseFeature = 100021,
+            [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
+            [ParentCombo(AllCasterFeatures)]
+            [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
+            AllCasterRaiseFeature = 100021,
 
         //Melee Features
         [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllMeleeFeatures = 100096,
 
-        [ParentCombo(AllMeleeFeatures)]
-        [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
-        AllMeleeFeintFeature = 100030,
+            [ParentCombo(AllMeleeFeatures)]
+            [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
+            AllMeleeFeintFeature = 100030,
 
         //Ranged Physical Features
         [CustomComboInfo("Global Physical Ranged Features", "Features and options involving shared role actions for Physical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllRangedPhysicalFeatures = 100095,
 
-        [ParentCombo(AllRangedPhysicalFeatures)]
-        [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
-        AllRangedPhysicalMitigationFeature = 100040,
-
-
+            [ParentCombo(AllRangedPhysicalFeatures)]
+            [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
+            AllRangedPhysicalMitigationFeature = 100040,
 
         #endregion
 
