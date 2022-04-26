@@ -123,7 +123,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is DRG.ChaosThrust or DRG.ChaoticSpring)
             {
 
-                //Piercing Talon Uptime Feature
+                //Piercing Talon Uptime Option
                 if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
                 {
                     if (!InMeleeRange())
@@ -164,7 +164,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is DRG.FullThrust)
             {
 
-                //Piercing Talon Uptime Feature
+                //Piercing Talon Uptime Option
                 if (IsEnabled(CustomComboPreset.DragoonPiercingTalonFullFeature) && level >= DRG.Levels.PiercingTalon)
                 {
                     if (!InMeleeRange())
@@ -203,14 +203,14 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var canWeave = CanWeave(actionID);
 
-                //Piercing Talon Uptime Feature
+                //Piercing Talon Uptime Option
                 if (IsEnabled(CustomComboPreset.DragoonPiercingTalonPlusFeature) && level >= DRG.Levels.PiercingTalon)
                 {
                     if (!InMeleeRange())
                         return DRG.PiercingTalon;
                 }
 
-                //(High) Jump Plus Feature
+                //(High) Jump Plus Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonHighJumpPlusFeature))
@@ -227,7 +227,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Life Surge Plus Feature
+                //Life Surge Plus Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonLifeSurgePlusFeature) && HasEffect(DRG.Buffs.PowerSurge) && !HasEffect(DRG.Buffs.LifeSurge) && CanWeave(actionID, 0.001) && GetRemainingCharges(DRG.LifeSurge) > 0)
@@ -253,7 +253,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Mirage Feature
+                //Mirage Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonMiragePlusFeature))
@@ -324,7 +324,14 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (!inOpener)
                     {
-                        //Lance Charge Feature
+                        //Piercing Talon Uptime Option
+                        if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
+                        {
+                            if (!InMeleeRange())
+                                return DRG.PiercingTalon;
+                        }
+
+                        //Lance Charge Option
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.DragoonLanceFeature))
@@ -340,7 +347,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Dragon Sight Feature
+                        //Dragon Sight Option
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.DragoonDragonSightFeature))
@@ -350,7 +357,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Battle Litany Feature
+                        //Battle Litany Option
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.DragoonLitanyFeature))
@@ -363,7 +370,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Geirskogul and Nastrond Feature Part 1
+                        //Geirskogul and Nastrond Option Part 1
                         if (CanWeave(actionID, 0.001))
                         {
                             if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
@@ -373,7 +380,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //(High) Jump Feature
+                        //(High) Jump Option
                         if (CanWeave(actionID, 0.5))
                         {
                             if (IsEnabled(CustomComboPreset.DragoonHighJumpFeature))
@@ -384,13 +391,13 @@ namespace XIVSlothComboPlugin.Combos
                                     if (level >= DRG.Levels.HighJump && IsOffCooldown(DRG.HighJump))
                                         return DRG.HighJump;
 
-                                    if (level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
+                                    if (level >= DRG.Levels.Jump && level < DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
                                         return DRG.Jump;
                                 }
                             }
                         }
 
-                        //Life Surge Feature
+                        //Life Surge Option
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.DragoonLifeSurgeFeature))
@@ -409,7 +416,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Wyrmwind Thrust Feature
+                        //Wyrmwind Thrust Option
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
@@ -420,7 +427,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Geirskogul and Nastrond Feature Part 2
+                        //Geirskogul and Nastrond Option Part 2
                         if (canWeave)
                         {
 
@@ -431,7 +438,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Dives under Litany and Life of the Dragon Feature
+                        //Dives under Litany and Life of the Dragon Option
                         if (canWeave)
                         {
 
@@ -448,7 +455,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Dives under Litany Feature
+                        //Dives under Litany Option
                         if (canWeave)
                         {
 
@@ -465,7 +472,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Dives Feature
+                        //Dives Option
                         if (canWeave)
                         {
 
@@ -482,7 +489,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Dives under Lance Charge Feature
+                        //Dives under Lance Charge Option
                         if (canWeave)
                         {
 
@@ -499,7 +506,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        //Mirage Feature
+                        //Mirage Option
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.DragoonMirageFeature))
@@ -507,13 +514,6 @@ namespace XIVSlothComboPlugin.Combos
                                 if (level >= DRG.Levels.MirageDive && HasEffect(DRG.Buffs.PowerSurge) && HasEffect(DRG.Buffs.DiveReady) && CanWeave(actionID, 0.001))
                                     return DRG.MirageDive;
                             }
-                        }
-
-                        //Piercing Talon Uptime Feature
-                        if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
-                        {
-                            if (!InMeleeRange())
-                                return DRG.PiercingTalon;
                         }
 
                         if (comboTime > 0)
@@ -690,7 +690,14 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Lance Charge Feature
+                //Piercing Talon Uptime Option
+                if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
+                {
+                    if (!InMeleeRange())
+                        return DRG.PiercingTalon;
+                }
+
+                //Lance Charge Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonLanceFeature))
@@ -706,7 +713,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dragon Sight Feature
+                //Dragon Sight Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonDragonSightFeature))
@@ -716,7 +723,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Battle Litany Feature
+                //Battle Litany Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonLitanyFeature))
@@ -729,7 +736,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Geirskogul and Nastrond Feature Part 1
+                //Geirskogul and Nastrond Option Part 1
                 if (CanWeave(actionID, 0.001))
                 {
                     if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
@@ -739,7 +746,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //(High) Jump Feature
+                //(High) Jump Option
                 if (CanWeave(actionID, 0.5))
                 {
                     if (IsEnabled(CustomComboPreset.DragoonHighJumpFeature))
@@ -750,13 +757,13 @@ namespace XIVSlothComboPlugin.Combos
                             if (level >= DRG.Levels.HighJump && IsOffCooldown(DRG.HighJump))
                                 return DRG.HighJump;
 
-                            if (level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
+                            if (level >= DRG.Levels.Jump && level < DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
                                 return DRG.Jump;
                         }
                     }
                 }
 
-                //Life Surge Feature
+                //Life Surge Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonLifeSurgeFeature))
@@ -775,7 +782,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Wyrmwind Thrust Feature
+                //Wyrmwind Thrust Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
@@ -786,7 +793,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Geirskogul and Nastrond Feature Part 2
+                //Geirskogul and Nastrond Option Part 2
                 if (canWeave)
                 {
 
@@ -797,7 +804,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives under Litany and Life of the Dragon Feature
+                //Dives under Litany and Life of the Dragon Option
                 if (canWeave)
                 {
 
@@ -814,7 +821,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives under Litany Feature
+                //Dives under Litany Option
                 if (canWeave)
                 {
 
@@ -831,7 +838,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives Feature
+                //Dives Option
                 if (canWeave)
                 {
 
@@ -848,7 +855,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives under Lance Charge Feature
+                //Dives under Lance Charge Option
                 if (canWeave)
                 {
 
@@ -865,7 +872,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Mirage Feature
+                //Mirage Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonMirageFeature))
@@ -873,13 +880,6 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= DRG.Levels.MirageDive && HasEffect(DRG.Buffs.PowerSurge) && HasEffect(DRG.Buffs.DiveReady) && CanWeave(actionID, 0.001))
                             return DRG.MirageDive;
                     }
-                }
-
-                //Piercing Talon Uptime Feature
-                if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
-                {
-                    if (!InMeleeRange())
-                        return DRG.PiercingTalon;
                 }
 
                 if (comboTime > 0)
@@ -924,7 +924,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is DRG.CoerthanTorment)
             {
 
-                //Buffs AoE Feature
+                //Buffs AoE Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEBuffsFeature))
@@ -941,7 +941,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dragon Sight AoE Feature
+                //Dragon Sight AoE Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEDragonSightFeature))
@@ -953,7 +953,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Geirskogul and Nastrond AoE Feature Part 1
+                //Geirskogul and Nastrond AoE Option Part 1
                 if (canWeave)
                 {
 
@@ -966,7 +966,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //(High) Jump AoE Feature
+                //(High) Jump AoE Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEHighJumpFeature))
@@ -977,13 +977,13 @@ namespace XIVSlothComboPlugin.Combos
                            ) return DRG.HighJump;
 
                         if (
-                            level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump &&
+                            level >= DRG.Levels.Jump && level < DRG.Levels.HighJump &&
                             IsOffCooldown(DRG.Jump) && CanWeave(actionID, 1)
                            ) return DRG.Jump;
                     }
                 }
 
-                //Life Surge AoE Feature
+                //Life Surge AoE Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoELifeSurgeFeature))
@@ -1009,7 +1009,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Wyrmwind Thrust AoE Feature
+                //Wyrmwind Thrust AoE Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEWyrmwindFeature))
@@ -1020,7 +1020,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Geirskogul and Nastrond AoE Feature Part 2
+                //Geirskogul and Nastrond AoE Option Part 2
                 if (canWeave)
                 {
 
@@ -1031,7 +1031,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives under Litany and Life of the Dragon AoE Feature
+                //Dives under Litany and Life of the Dragon AoE Option
                 if (canWeave)
                 {
 
@@ -1049,7 +1049,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives under Litany AoE Feature
+                //Dives under Litany AoE Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoELitanyDiveFeature))
@@ -1065,7 +1065,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives AoE Feature
+                //Dives AoE Option
                 if (canWeave)
                 {
 
@@ -1085,7 +1085,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Dives under Lance Charge AoE Feature
+                //Dives under Lance Charge AoE Option
                 if (canWeave)
                 {
 
@@ -1102,7 +1102,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Mirage AoE Feature
+                //Mirage AoE Option
                 if (canWeave)
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoEMirageFeature))
