@@ -2195,12 +2195,6 @@ namespace XIVSlothComboPlugin
         WarriorOrogenyFeature = 18009,
 
         [ParentCombo(WarriorStormsPathCombo)]
-        [ConflictingCombos(WarriorSpenderOption)]
-        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, 0, "", "THE EYE OF THE TIGERRRRR")]
-        WarriorInnerChaosOption = 18010,
-
-        [ParentCombo(WarriorStormsPathCombo)]
-        [ConflictingCombos(WarriorInnerChaosOption)]
         [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "MORE CLEAVE!")]
         WarriorSpenderOption = 18011,
 
@@ -2215,9 +2209,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorMythrilTempestCombo)]
         [CustomComboInfo("Inner Release AOE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0)]
         WarriorIRonAOE = 18014,
-
-        [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with Fell Cleave when under Inner Release buff.\nReplaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, 0, "Cleave of annoyance", "Infuriating stuff, if you ask me. Truly chaotic.")]
-        WarriorInfuriateFeature = 18015,
 
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "Tomahawk!", "You heard me! Tomahawk! Ka-chow!")]

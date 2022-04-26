@@ -123,7 +123,6 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.PrimalRend;
 
                     if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.InnerBeast) ||
-                        (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.InnerChaos) ||
                         (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.InnerBeast &&
                         (IsOffCooldown(WAR.InnerRelease) || GetCooldown(WAR.InnerRelease).CooldownRemaining > 35 || HasEffect(WAR.Buffs.NascentChaos))))
                             return OriginalHook(WAR.InnerBeast);
@@ -210,9 +209,9 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= WAR.Levels.PrimalRend)
                             return OriginalHook(WAR.PrimalRend);
+
                         if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.SteelCyclone) ||
-                            (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.SteelCyclone) ||
-                            (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.ChaoticCyclone))
+                            (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.SteelCyclone))
                                 return OriginalHook(WAR.SteelCyclone);
                     }
 
@@ -267,21 +266,6 @@ namespace XIVSlothComboPlugin.Combos
                 return OriginalHook(actionID);
 
 
-            }
-
-            return actionID;
-        }
-    }
-    internal class WarriorInfuriateFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorInfuriateFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WAR.Infuriate)
-            {
-                if (HasEffect(WAR.Buffs.InnerRelease) || HasEffect(WAR.Buffs.NascentChaos))
-                    return OriginalHook(WAR.FellCleave);
             }
 
             return actionID;
