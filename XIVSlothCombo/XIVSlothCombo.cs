@@ -1,9 +1,12 @@
-using System;
-using System.Linq;
-
 using Dalamud.Game.Command;
+using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace XIVSlothComboPlugin
 {
@@ -16,6 +19,8 @@ namespace XIVSlothComboPlugin
 
         private readonly WindowSystem windowSystem;
         private readonly ConfigWindow configWindow;
+
+        private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XIVComboExpandedPlugin"/> class.
@@ -49,6 +54,36 @@ namespace XIVSlothComboPlugin
                 HelpMessage = "Open a window to edit custom combo settings.",
                 ShowInHelp = true,
             });
+
+            if (!Service.Configuration.HideMessageOfTheDay)
+            PrintMotD();
+        }
+
+        private void PrintMotD()
+        {
+            try
+            {
+                using var motd = Dalamud.Utility.Util.HttpClient.GetAsync("https://raw.githubusercontent.com/Nik-Potokar/XIVSlothCombo/main/res/motd.txt").Result;
+                motd.EnsureSuccessStatusCode();
+                var data = motd.Content.ReadAsStringAsync().Result;
+                var payloads = new List<Payload>()
+                {
+                    starterMotd,
+                    EmphasisItalicPayload.ItalicsOn,
+                    new TextPayload(data.Trim()),
+                    EmphasisItalicPayload.ItalicsOff
+                };
+
+                Service.ChatGui.PrintChat(new XivChatEntry
+                {
+                    Message = new SeString(payloads),
+                    Type = XivChatType.Echo
+                });
+            }
+            catch (Exception ex)
+            {
+                Dalamud.Logging.PluginLog.Error(ex, "Unable to retrieve MOTD");
+            }
         }
 
         /// <inheritdoc/>

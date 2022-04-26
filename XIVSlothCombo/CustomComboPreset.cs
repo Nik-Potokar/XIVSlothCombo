@@ -256,7 +256,7 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(AstReFocusFeature)]
         [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously selected target.", AST.JobID)]
+        [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
         AstReTargetFeature = 1033,
 
         [ConflictingCombos(AstReTargetFeature)]
@@ -1402,6 +1402,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash", NIN.JobID, 8)]
         NinHuraijinArmorCrush = 10032,
+
+        [ParentCombo(NinSimpleSingleTarget)]
+        [CustomComboInfo("Ninki Pooling Feature - Bunshin", "Allows you to have a minimum amount of Ninki saved before spending on Bunshin.", NIN.JobID)]
+        NinNinkiBunshinPooling = 10033,
+
+        [ParentCombo(NinSimpleSingleTarget)]
+        [CustomComboInfo("Ninki Pooling Feature - Bhavacakra", "Allows you to have a minimum amount of Ninki saved before spending on Bhavacakra.", NIN.JobID)]
+        NinNinkiBhavacakraPooling = 10034,
 
         #endregion
         // ====================================================================================
