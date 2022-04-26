@@ -2155,6 +2155,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
         SummonerSpecialRuinFeature = 17030,
 
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 0, "", "")]
+        SMNLucidDreamingFeature = 17031,
+
         #endregion
         // ====================================================================================
         #region WARRIOR
