@@ -100,7 +100,7 @@ namespace XIVSlothComboPlugin.Combos
                         return WAR.Tomahawk;
                 }
 
-                if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
+                if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= WAR.Levels.Infuriate && GetRemainingCharges(WAR.Infuriate) >= 1 && !HasEffect(WAR.Buffs.NascentChaos) && gauge <= 40 && CanWeave(actionID))
                     return WAR.Infuriate;
 
                 //Sub Storm's Eye level check
@@ -299,8 +299,10 @@ namespace XIVSlothComboPlugin.Combos
                 var rageGauge = GetJobGauge<WARGauge>();
                 var rageThreshold = Service.Configuration.GetCustomIntValue(WAR.Config.WarInfuriateRange);
                 var hasNascent = HasEffect(WAR.Buffs.NascentChaos);
+                var hasInnerRelease = HasEffect(WAR.Buffs.InnerRelease);
 
-                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate && CanWeave(actionID))
+                    if (InCombat() && rageGauge.BeastGauge <= rageThreshold && GetCooldown(WAR.Infuriate).RemainingCharges > 0 && !hasNascent && level >= WAR.Levels.Infuriate
+                    && ((!hasInnerRelease) || IsNotEnabled(CustomComboPreset.WarriorUseInnerReleaseFirst)))
                         return OriginalHook(WAR.Infuriate);
             }
 

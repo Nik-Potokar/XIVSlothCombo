@@ -2237,6 +2237,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
 
+        [ParentCombo(WarriorInfuriateFellCleave)]
+        [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
+        WarriorUseInnerReleaseFirst = 18022,
+
         #endregion
         // ====================================================================================
         #region WHITE MAGE
