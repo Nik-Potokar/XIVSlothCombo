@@ -232,13 +232,15 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //GCDs
+                        if (twoSeal && lastComboMove == SAM.Yukikaze)
+                            return OriginalHook(SAM.Iaijutsu);
                         if (threeSeal && (GetRemainingCharges(SAM.MeikyoShisui) == 1 || !HasEffect(SAM.Buffs.OgiNamikiriReady)))
                             return OriginalHook(SAM.Iaijutsu);
                         if (oneSeal && !TargetHasEffect(SAM.Debuffs.Higanbana) && GetRemainingCharges(SAM.TsubameGaeshi) == 1)
                             return OriginalHook(SAM.Iaijutsu);
                         if (oneSeal && TargetHasEffect(SAM.Debuffs.Higanbana) && HasEffect(SAM.Buffs.OgiNamikiriReady))
                             return OriginalHook(SAM.OgiNamikiri);
-                        if (gauge.Kaeshi == Kaeshi.SETSUGEKKA)
+                        if (gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Kaeshi == Kaeshi.GOKEN)
                             return OriginalHook(SAM.TsubameGaeshi);
                         if (gauge.Kaeshi == Kaeshi.NAMIKIRI)
                             return OriginalHook(OriginalHook(SAM.OgiNamikiri));
@@ -262,6 +264,12 @@ namespace XIVSlothComboPlugin.Combos
                         if (GetRemainingCharges(SAM.TsubameGaeshi) == 0)
                         {
                             inOpener = false;
+                        }
+
+                        if (lastComboMove == SAM.Yukikaze && oneSeal)
+                        {
+                            inOpener = false;
+                            nonOpener = true;
                         }
                     }
 
@@ -297,6 +305,8 @@ namespace XIVSlothComboPlugin.Combos
                                     inEvenFiller = false;
                                 if (IsOnCooldown(SAM.Hagakure))
                                     inEvenFiller = false;
+                                if (hasDied)
+                                    inEvenFiller = false;
 
                                 if (SamFillerCombo == 2)
                                 {
@@ -329,6 +339,8 @@ namespace XIVSlothComboPlugin.Combos
                             if (inOddFiller)
                             {
                                 if (IsOnCooldown(SAM.Hagakure))
+                                    inOddFiller = false;
+                                if (hasDied)
                                     inOddFiller = false;
 
                                 if (SamFillerCombo == 1)
