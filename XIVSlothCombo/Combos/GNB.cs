@@ -186,7 +186,8 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= GNB.Levels.GnashingFang)
                     {
-                        if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GNB.GnashingFang) && gauge.AmmoComboStep == 0 && gauge.Ammo > 0)
+                        if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GNB.GnashingFang) && gauge.AmmoComboStep == 0 && 
+                            gauge.Ammo > 0) //Conditions for No Mercy/Gnashing Fang timing
                                 return GNB.GnashingFang;
                         if (gauge.AmmoComboStep is 1 or 2)
                             return OriginalHook(GNB.GnashingFang);
@@ -365,6 +366,8 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == GNB.BurstStrike)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
+                if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
+                    return GNB.Hypervelocity;
                 if (gauge == 0 && level >= GNB.Levels.Bloodfest)
                     return GNB.Bloodfest;
             }
