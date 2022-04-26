@@ -107,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= GNB.Levels.NoMercy && IsOffCooldown(GNB.NoMercy))
                         {
                             if (level >= GNB.Levels.BurstStrike && 
-                                ((gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 2) || (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang)) || gauge.Ammo == GNB.MaxCartridges(level))) //cartridges unlocked
+                                ((gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 1.5) || (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang)) || gauge.Ammo == GNB.MaxCartridges(level))) //cartridges unlocked
                                 return GNB.NoMercy;
                             if (level < GNB.Levels.BurstStrike) //no cartridges unlocked
                                 return GNB.NoMercy;
@@ -187,10 +187,11 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= GNB.Levels.GnashingFang)
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GNB.GnashingFang) && gauge.AmmoComboStep == 0 &&
-                            (gauge.Ammo == GNB.MaxCartridges(level) && IsOffCooldown(GNB.NoMercy) || //Regular 60 second GF/NM timing
-                            (gauge.Ammo > 0 && GetCooldownRemainingTime(GNB.NoMercy) > 17) || //Regular 30 second window                                                                        
-                            (gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 2 && GetCooldownRemainingTime(GNB.NoMercy) < 2) || //1 ammo but Bloodfest ready during NM
-                            (gauge.Ammo == 3 && GetCooldownRemainingTime(GNB.NoMercy) < 2))) //3 ammo and NM nearly ready
+                            (gauge.Ammo == GNB.MaxCartridges(level) && GetCooldownRemainingTime(GNB.NoMercy) > 55 || //Regular 60 second GF/NM timing
+                            (gauge.Ammo > 0 && GetCooldownRemainingTime(GNB.NoMercy) > 17 && GetCooldownRemainingTime(GNB.NoMercy) < 35) || //Regular 30 second window                                                                        
+                            (gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 1 && GetCooldownRemainingTime(GNB.NoMercy) < 1) || //1 ammo but Bloodfest ready during NM
+                            (gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.NoMercy) > 55 && IsOffCooldown(GNB.Bloodfest)) || //Opener Conditions
+                            (gauge.Ammo == 3 && GetCooldownRemainingTime(GNB.NoMercy) < 1))) //3 ammo and NM nearly ready
                                 return GNB.GnashingFang;
                         if (gauge.AmmoComboStep is 1 or 2)
                             return OriginalHook(GNB.GnashingFang);
