@@ -267,6 +267,23 @@ namespace XIVSlothComboPlugin
 
             #endregion
 
+            #region Message of the Day
+            var motd = Service.Configuration.HideMessageOfTheDay;
+            if (ImGui.Checkbox("Hide Message of the Day", ref motd))
+            {
+                Service.Configuration.HideMessageOfTheDay = motd;
+                Service.Configuration.Save();
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Disables the Message of the Day message in your chat when you login.");
+                ImGui.EndTooltip();
+            }
+            ImGui.NextColumn();
+
+            #endregion
+
             ImGui.EndChild();
         }
 
