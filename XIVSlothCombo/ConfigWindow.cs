@@ -704,10 +704,16 @@ namespace XIVSlothComboPlugin
             
 
             if (preset == CustomComboPreset.NinAeolianMugFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, $"Set the amount of Ninki to be at or under for this feature (level {NIN.TraitLevels.Shukiho} onwards)");
 
             if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo)
                 ConfigWindowFunctions.DrawSliderInt(0, 30, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+
+            if (preset == CustomComboPreset.NinNinkiBhavacakraPooling)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.NinkiBhavaPooling, "The minimum value of Ninki to have before spending.");
+
+            if (preset == CustomComboPreset.NinNinkiBunshinPooling)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.NinkiBunshinPooling, "The minimum value of Ninki to have before spending.");
 
             #endregion
             // ====================================================================================

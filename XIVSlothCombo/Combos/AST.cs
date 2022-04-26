@@ -274,6 +274,8 @@ namespace XIVSlothComboPlugin.Combos
     internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
     {
         private new bool GetTarget = true;
+
+        private GameObject? CurrentTarget;
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -304,6 +306,8 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (GetTarget || (IsEnabled(CustomComboPreset.AstrologianTargetLock)))
                             SetTarget();
+                        
+                            
                     }
 
                     return OriginalHook(AST.Play);
@@ -312,7 +316,10 @@ namespace XIVSlothComboPlugin.Combos
                 if (!GetTarget && (IsEnabled(CustomComboPreset.AstReFocusFeature) || IsEnabled(CustomComboPreset.AstReTargetFeature)))
                 {
                     if (IsEnabled(CustomComboPreset.AstReTargetFeature))
-                        TargetObject(TargetType.LastTarget);
+                    {
+                        Dalamud.Logging.PluginLog.Debug("Previous?");
+                        TargetObject(CurrentTarget);
+                    }
                     
 
                     if (IsEnabled(CustomComboPreset.AstReFocusFeature))
@@ -331,7 +338,7 @@ namespace XIVSlothComboPlugin.Combos
             var gauge = GetJobGauge<ASTGauge>();
             if (gauge.DrawnCard.Equals(CardType.NONE)) return false;
             var cardDrawn = gauge.DrawnCard;
-
+            if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
             //Checks for trusts then normal parties
             int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
             if (GetPartyMembers().Length > 0) maxPartySize = GetPartyMembers().Length;
