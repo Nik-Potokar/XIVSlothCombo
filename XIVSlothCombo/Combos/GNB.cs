@@ -107,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= GNB.Levels.NoMercy && IsOffCooldown(GNB.NoMercy))
                         {
                             if (level >= GNB.Levels.BurstStrike && 
-                                ((gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 3.5) || (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang)) || gauge.Ammo == GNB.MaxCartridges(level))) //cartridges unlocked
+                                ((gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 1.5) || (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang)) || gauge.Ammo == GNB.MaxCartridges(level))) //cartridges unlocked
                                 return GNB.NoMercy;
                             if (level < GNB.Levels.BurstStrike) //no cartridges unlocked
                                 return GNB.NoMercy;
@@ -186,7 +186,11 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= GNB.Levels.GnashingFang)
                     {
-                        if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GNB.GnashingFang) && gauge.AmmoComboStep == 0 && gauge.Ammo > 0)
+                        if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GNB.GnashingFang) && gauge.AmmoComboStep == 0 &&
+                            (gauge.Ammo == GNB.MaxCartridges(level) && GetCooldownRemainingTime(GNB.NoMercy) > 55 || //Regular 60 second GF/NM timing
+                            (gauge.Ammo > 0 && GetCooldownRemainingTime(GNB.NoMercy) > 17 && GetCooldownRemainingTime(GNB.NoMercy) < 35) || //Regular 30 second window                                                                        
+                            (gauge.Ammo == 3 && GetCooldownRemainingTime(GNB.Bloodfest) < 2 && GetCooldownRemainingTime(GNB.NoMercy) < 2) || //3 minute window
+                            (gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.NoMercy) > 55 && IsOffCooldown(GNB.Bloodfest)))) //Opener Conditions
                                 return GNB.GnashingFang;
                         if (gauge.AmmoComboStep is 1 or 2)
                             return OriginalHook(GNB.GnashingFang);
@@ -214,7 +218,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                                 return GNB.Hypervelocity;
                             if (level >= GNB.Levels.BurstStrike && (gauge.Ammo == GNB.MaxCartridges(level) ||
-                                (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && GetCooldownRemainingTime(GNB.Bloodfest) < 6 && gauge.Ammo != 0))) //Burns Ammo for Bloodfest
+                                (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && GetCooldownRemainingTime(GNB.Bloodfest) < 6 && gauge.Ammo != 0 && IsOnCooldown(GNB.NoMercy)))) //Burns Ammo for Bloodfest
                                 return GNB.BurstStrike;
                         }
 
@@ -365,6 +369,8 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == GNB.BurstStrike)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
+                if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
+                    return GNB.Hypervelocity;
                 if (gauge == 0 && level >= GNB.Levels.Bloodfest)
                     return GNB.Bloodfest;
             }

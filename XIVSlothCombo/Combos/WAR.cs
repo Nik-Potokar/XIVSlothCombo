@@ -122,11 +122,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady))
                         return WAR.PrimalRend;
 
-                    if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.InnerBeast) ||
-                        (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.InnerChaos) ||
-                        (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.InnerBeast &&
-                        (IsOffCooldown(WAR.InnerRelease) || GetCooldown(WAR.InnerRelease).CooldownRemaining > 35 || HasEffect(WAR.Buffs.NascentChaos))))
+                    if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && level >= WAR.Levels.InnerBeast)
+                    {
+                        if (gauge >= 50 && (IsOffCooldown(WAR.InnerRelease) || GetCooldownRemainingTime(WAR.InnerRelease) > 35 || HasEffect(WAR.Buffs.NascentChaos)))
                             return OriginalHook(WAR.InnerBeast);
+                        if (HasEffect(WAR.Buffs.InnerRelease))
+                            return OriginalHook(WAR.InnerBeast);
+                    }
+
                 }
 
                 if (comboTime > 0)
@@ -162,9 +165,6 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == WAR.StormsEye)
                 {
-                    if (IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease))
-                        return OriginalHook(WAR.FellCleave);
-
                     if (comboTime > 0)
                     {
                         if (lastComboMove == WAR.HeavySwing && level >= WAR.Levels.Maim)
@@ -210,10 +210,8 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= WAR.Levels.PrimalRend)
                             return OriginalHook(WAR.PrimalRend);
-                        if ((IsEnabled(CustomComboPreset.WarriorInnerReleaseFeature) && HasEffect(WAR.Buffs.InnerRelease) && level >= WAR.Levels.SteelCyclone) ||
-                            (IsEnabled(CustomComboPreset.WarriorSpenderOption) && gauge >= 50 && level >= WAR.Levels.SteelCyclone) ||
-                            (IsEnabled(CustomComboPreset.WarriorInnerChaosOption) && HasEffect(WAR.Buffs.NascentChaos) && level >= WAR.Levels.ChaoticCyclone))
-                                return OriginalHook(WAR.SteelCyclone);
+                        if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && level >= WAR.Levels.SteelCyclone && (gauge >= 50 || HasEffect(WAR.Buffs.InnerRelease)))
+                            return OriginalHook(WAR.SteelCyclone);
                     }
 
                     if (comboTime > 0)
@@ -267,21 +265,6 @@ namespace XIVSlothComboPlugin.Combos
                 return OriginalHook(actionID);
 
 
-            }
-
-            return actionID;
-        }
-    }
-    internal class WarriorInfuriateFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorInfuriateFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WAR.Infuriate)
-            {
-                if (HasEffect(WAR.Buffs.InnerRelease) || HasEffect(WAR.Buffs.NascentChaos))
-                    return OriginalHook(WAR.FellCleave);
             }
 
             return actionID;
