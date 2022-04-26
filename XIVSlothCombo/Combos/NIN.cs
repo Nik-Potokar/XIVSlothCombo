@@ -111,7 +111,9 @@ namespace XIVSlothComboPlugin.Combos
                 TrickCooldownRemaining = "TrickCooldownRemaining",
                 HutonRemainingTimer = "HutonRemainingTimer",
                 HutonRemainingArmorCrush = "HutonRemainingArmorCrush",
-                MugNinkiGauge = "MugNinkiGauge";
+                MugNinkiGauge = "MugNinkiGauge",
+                NinkiBhavaPooling = "NinkiBhavaPooling",
+                NinkiBunshinPooling = "NinkiBunshinPooling";
         }
     }
 
@@ -225,6 +227,8 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<NINGauge>();
                 var bunshinCD = GetCooldown(NIN.Bunshin);
                 var trickCDThreshold = Service.Configuration.GetCustomIntValue(NIN.Config.TrickCooldownRemaining);
+                var ninkiBhavaPooling = Service.Configuration.GetCustomIntValue(NIN.Config.NinkiBhavaPooling);
+                var ninkiBunshinPooling = Service.Configuration.GetCustomIntValue(NIN.Config.NinkiBunshinPooling);
 
                 if (OriginalHook(NIN.Ninjutsu) is NIN.Rabbit) return OriginalHook(NIN.Ninjutsu);
 
@@ -305,14 +309,30 @@ namespace XIVSlothComboPlugin.Combos
                         return NIN.Jin;
                 }
 
+                if (!IsEnabled(CustomComboPreset.NinNinkiBunshinPooling))
+                {
+                    if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && canWeave && level >= NIN.Levels.Bunshin)
+                        return NIN.Bunshin;
+                }
+                else
+                {
+                    if (gauge.Ninki >= ninkiBunshinPooling && !bunshinCD.IsCooldown && canWeave && level >= NIN.Levels.Bunshin)
+                        return NIN.Bunshin;
+                }
 
-                if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && canWeave && level >= NIN.Levels.Bunshin)
-                    return NIN.Bunshin;
                 if (HasEffect(NIN.Buffs.PhantomReady) && level >= NIN.Levels.PhantomKamaitachi)
                     return NIN.PhantomKamaitachi;
 
-                if (gauge.Ninki >= 50 && canWeave && level >= 68)
-                    return NIN.Bhavacakra;
+                if (!IsEnabled(CustomComboPreset.NinNinkiBhavacakraPooling))
+                {
+                    if (gauge.Ninki >= 50 && canWeave && level >= NIN.Levels.Bhavacakra)
+                        return NIN.Bhavacakra;
+                }
+                else
+                {
+                    if (gauge.Ninki >= ninkiBhavaPooling && canWeave && level >= NIN.Levels.Bhavacakra)
+                        return NIN.Bhavacakra;
+                }
 
 
                 if (level >= NIN.Levels.Assassinate)
@@ -325,15 +345,15 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (comboTime > 0f)
                 {
-                    if (lastComboMove == NIN.SpinningEdge && level >= 4)
+                    if (lastComboMove == NIN.SpinningEdge && level >= NIN.Levels.GustSlash)
                         return NIN.GustSlash;
 
 
-                    if (lastComboMove == NIN.GustSlash && level >= 20 && gauge.HutonTimer < 15000 && level >= 54)
+                    if (lastComboMove == NIN.GustSlash && gauge.HutonTimer < 15000 && level >= NIN.Levels.ArmorCrush)
                         return NIN.ArmorCrush;
 
 
-                    if (lastComboMove == NIN.GustSlash && level >= 26)
+                    if (lastComboMove == NIN.GustSlash && level >= NIN.Levels.AeolianEdge)
                         return NIN.AeolianEdge;
 
                 }
