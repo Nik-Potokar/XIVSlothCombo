@@ -97,6 +97,391 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
+    internal class RDM_Balance_Opener : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Balance_Opener;
+
+        internal static bool inOpener = false;
+        internal static bool openerReady = false;
+        internal static byte step = 0;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+
+        {
+            if (actionID is RDM.Jolt or RDM.Verthunder3 or RDM.Veraero3)
+            {
+                const int
+                LONG_DELTA = 6,
+                PROC_DELTA = 5,
+                FINISHER_DELTA = 11,
+                IMBALANCE_DIFF_MAX = 30;
+
+                bool inCombat = HasCondition(ConditionFlag.InCombat);
+
+                bool verfireUp = HasEffect(RDM.Buffs.VerfireReady);
+                bool verstoneUp = HasEffect(RDM.Buffs.VerstoneReady);
+                RDMGauge gauge = GetJobGauge<RDMGauge>();
+                int black = gauge.BlackMana;
+                int white = gauge.WhiteMana;
+                var engagementCD = GetCooldown(RDM.Engagement);
+                var canWeave = CanWeave(actionID);
+
+                // Reset check for opener
+                if (!inCombat)
+                {
+                    inOpener = false;
+                    step = 0;
+                    if (gauge.BlackMana == 0 && gauge.WhiteMana == 0 && IsOffCooldown(RDM.Embolden) && IsOffCooldown(RDM.Manafication) && IsOffCooldown(All.Swiftcast)
+                        && GetCooldown(RDM.Acceleration).RemainingCharges == 2 && GetCooldown(RDM.Corpsacorps).RemainingCharges == 2 && GetCooldown(RDM.Engagement).RemainingCharges == 2)
+                    {
+                        openerReady = true;
+                        return RDM.Verthunder3;
+                    }
+                    else
+                    {
+                        openerReady = false;
+                        return actionID;
+                    }
+                }
+
+                // First move in opener complete
+                if (inCombat && openerReady && lastComboMove is RDM.Verthunder3 && HasEffect(RDM.Buffs.Dualcast) && !inOpener)
+                {
+                    inOpener = true;
+                }
+
+                if (inCombat && inOpener && openerReady)
+                {
+                    //veraero
+                    //swiftcast
+                    //accel
+                    //verthunder
+                    //verthunder
+                    //embolden
+                    //manafication
+                    //Riposte
+                    //Fleche
+                    //Zwercchau
+                    //Contre-sixte
+                    //Redoublement
+                    //Corps-a-corps
+                    //Engagement
+                    //Verholy
+                    //Corps-a-corps
+                    //Engagement
+                    //Scorch
+                    //Resolution
+
+                    //we do it in steps to be able to control it
+                    if (step == 0)
+                    {
+                        if (lastComboMove == RDM.Veraero3) step++;
+                        else return RDM.Veraero3;
+                    }
+
+                    if (step == 1)
+                    {
+                        if (IsOnCooldown(All.Swiftcast)) step++;
+                        else return All.Swiftcast;
+                    }
+
+                    if (step == 2)
+                    {
+                        if (GetRemainingCharges(RDM.Acceleration) < 2) step++;
+                        else return RDM.Acceleration;
+                    }
+
+                    if (step == 3)
+                    {
+                        if (lastComboMove == RDM.Verthunder3) step++;
+                        else return RDM.Verthunder3;
+                    }
+
+                    if (step == 4)
+                    {
+                        if (lastComboMove == RDM.Verthunder3) step++;
+                        else return RDM.Verthunder3;
+                    }
+
+                    if (step == 5)
+                    {
+                        if (IsOnCooldown(RDM.Embolden)) step++;
+                        else return RDM.Embolden;
+                    }
+
+                    if (step == 6)
+                    {
+                        if (IsOnCooldown(RDM.Manafication)) step++;
+                        else return RDM.Manafication;
+                    }
+
+                    if (step == 7)
+                    {
+                        if (lastComboMove == RDM.Riposte) step++;
+                        else return RDM.EnchantedRiposte;
+                    }
+
+                    if (step == 8)
+                    {
+                        if (IsOnCooldown(RDM.Fleche)) step++;
+                        else return RDM.Fleche;
+                    }
+
+                    if (step == 9)
+                    {
+                        if (lastComboMove == RDM.Zwerchhau) step++;
+                        else return RDM.EnchantedZwerchhau;
+                    }
+
+                    if (step == 10)
+                    {
+                        if (IsOnCooldown(RDM.ContreSixte)) step++;
+                        else return RDM.ContreSixte;
+                    }
+
+                    if (step == 11)
+                    {
+                        if (lastComboMove == RDM.Redoublement || gauge.ManaStacks == 3) step++;
+                        else return RDM.EnchantedRedoublement;
+                    }
+
+                    if (step == 12)
+                    {
+                        if (GetRemainingCharges(RDM.Corpsacorps) < 2) step++;
+                        else return RDM.Corpsacorps;
+                    }
+
+                    if (step == 13)
+                    {
+                        if (GetRemainingCharges(RDM.Engagement) < 2) step++;
+                        else return RDM.Engagement;
+                    }
+
+                    if (step == 14)
+                    {
+                        if (lastComboMove == RDM.Verholy) step++;
+                        else return RDM.Verholy;
+                    }
+
+                    if (step == 15)
+                    {
+                        if (GetRemainingCharges(RDM.Corpsacorps) < 1) step++;
+                        else return RDM.Corpsacorps;
+                    }
+
+                    if (step == 16)
+                    {
+                        if (GetRemainingCharges(RDM.Engagement) < 1) step++;
+                        else return RDM.Engagement;
+                    }
+
+                    if (step == 17)
+                    {
+                        if (lastComboMove == RDM.Scorch) step++;
+                        else return RDM.Scorch;
+                    }
+
+                    if (step == 18)
+                    {
+                        if (lastComboMove == RDM.Resolution) step++;
+                        else return RDM.Resolution;
+                    }
+
+                    inOpener = false;
+                    openerReady = false;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave)
+                {
+                    if (level >= RDM.Levels.Fleche && IsOffCooldown(RDM.Fleche))
+                        return RDM.Fleche;
+
+                    if (level >= RDM.Levels.ContreSixte && IsOffCooldown(RDM.ContreSixte))
+                        return RDM.ContreSixte;
+                }
+
+                if (IsEnabled(CustomComboPreset.RedMageEngagementFeature) && canWeave && engagementCD.CooldownRemaining < 35 &&
+                    InMeleeRange() && level >= RDM.Levels.Engagement)
+                    return RDM.Engagement;
+
+                if ((lastComboMove is RDM.Riposte or RDM.EnchantedRiposte) && gauge.WhiteMana >= 30 && gauge.BlackMana >= 30)
+                {
+                    if (level >= RDM.Levels.Zwerchhau)
+                        return OriginalHook(RDM.Zwerchhau);
+
+                    else if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20)
+                        return RDM.EnchantedRiposte;
+                }
+
+                if ((lastComboMove is RDM.Zwerchhau or RDM.EnchantedRiposte) && gauge.WhiteMana >= 15 && gauge.BlackMana >= 15)
+                {
+                    if (level >= RDM.Levels.Redoublement)
+                        return OriginalHook(RDM.Redoublement);
+
+                    else if (gauge.WhiteMana >= 20 && gauge.BlackMana >= 20)
+                        return RDM.EnchantedRiposte;
+                }
+
+
+                if (InMeleeRange() && gauge.WhiteMana >= 50 && gauge.BlackMana >= 50 && !HasEffect(RDM.Buffs.Dualcast) &&
+                    lastComboMove is not (RDM.Verholy or RDM.Verflare or RDM.Scorch) && (gauge.ManaStacks == 0 || level < RDM.Levels.ManaStack))
+                    return RDM.EnchantedRiposte;
+
+                if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerSmartCastFeature))
+                {
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasCondition(ConditionFlag.InCombat) && level >= RDM.Levels.Verthunder)
+                        return OriginalHook(RDM.Verthunder);
+                }
+
+                if (IsEnabled(CustomComboPreset.SimpleRedMageFishing) && inCombat && canWeave)
+                {
+                    if (!HasEffect(RDM.Buffs.VerfireReady) && !HasEffect(RDM.Buffs.VerstoneReady) && !HasEffect(RDM.Buffs.Dualcast) &&
+                        gauge.ManaStacks != 3 && lastComboMove is not (RDM.Verholy or RDM.Verflare or RDM.Scorch))
+                    {
+                        if (!HasEffect(RDM.Buffs.Acceleration) && HasCharges(RDM.Acceleration) && level >= RDM.Levels.Acceleration)
+                            return RDM.Acceleration;
+
+                        if (!IsEnabled(CustomComboPreset.SimpleRedMageAccelOnlyFishing) && !HasEffect(All.Buffs.Swiftcast) &&
+                            IsOffCooldown(All.Swiftcast) && level >= All.Levels.Swiftcast)
+                            return All.Swiftcast;
+                    }
+                }
+
+                if (actionID is RDM.Veraero or RDM.Verthunder)
+                {
+
+                    if (level < RDM.Levels.Verthunder)
+                        return RDM.Jolt;
+
+                    if (level is < RDM.Levels.Veraero and >= RDM.Levels.Verthunder)
+                        return OriginalHook(RDM.Verthunder);
+
+                    // This is for the long opener only, so we're not bothered about fast casting or finishers or anything like that
+                    if (black < white)
+                        return OriginalHook(RDM.Verthunder);
+
+                    if (white < black)
+                        return OriginalHook(RDM.Veraero);
+
+                    return actionID;
+                }
+
+                if (actionID is RDM.Verstone or RDM.Verfire)
+                {
+                }
+
+                bool fastCasting = HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast);
+                bool accelerated = HasEffect(RDM.Buffs.Acceleration);
+                bool isFinishing1 = gauge.ManaStacks == 3;
+                bool isFinishing2 = comboTime > 0 && lastComboMove is RDM.Verholy or RDM.Verflare;
+                bool isFinishing3 = comboTime > 0 && lastComboMove is RDM.Scorch;
+                bool canFinishWhite = level >= RDM.Levels.Verholy;
+                bool canFinishBlack = level >= RDM.Levels.Verflare;
+                int blackThreshold = white + IMBALANCE_DIFF_MAX;
+                int whiteThreshold = black + IMBALANCE_DIFF_MAX;
+
+                // If we're ready to Scorch or Resolution, just do that. Nice and simple. Sadly, that's where the simple ends.
+                if (isFinishing3 && level >= RDM.Levels.Resolution)
+                    return RDM.Resolution;
+
+                if (isFinishing2 && level >= RDM.Levels.Scorch)
+                    return RDM.Scorch;
+
+                if (isFinishing1 && canFinishBlack)
+                {
+                    if (black >= white && canFinishWhite)
+                    {
+
+                        // If we can already Verstone, but we can't Verfire, and Verflare WON'T imbalance us, use Verflare
+                        if (verstoneUp && !verfireUp && (black + FINISHER_DELTA <= blackThreshold))
+                            return RDM.Verflare;
+
+                        return RDM.Verholy;
+                    }
+
+                    // If we can already Verfire, but we can't Verstone, and we can use Verholy, and it WON'T imbalance us, use Verholy
+                    if (verfireUp && !verstoneUp && canFinishWhite && (white + FINISHER_DELTA <= whiteThreshold))
+                        return RDM.Verholy;
+
+                    return RDM.Verflare;
+                }
+
+                if (fastCasting || accelerated)
+                {
+                    if (level is < RDM.Levels.Veraero and >= RDM.Levels.Verthunder)
+                        return RDM.Verthunder;
+
+                    if (verfireUp == verstoneUp)
+                    {
+
+                        // Either both procs are already up or neither is - use whatever gives us the mana we need
+                        if (black < white)
+                            return OriginalHook(RDM.Verthunder);
+
+                        if (white < black)
+                            return OriginalHook(RDM.Veraero);
+
+                        // If mana levels are equal, prioritise the colour that the original button was
+                        return actionID is RDM.Verstone
+                            ? OriginalHook(RDM.Veraero)
+                            : OriginalHook(RDM.Verthunder);
+                    }
+
+                    if (verfireUp)
+                    {
+
+                        // If Veraero is feasible, use it
+                        if (white + LONG_DELTA <= whiteThreshold)
+                            return OriginalHook(RDM.Veraero);
+
+                        return OriginalHook(RDM.Verthunder);
+                    }
+
+                    if (verstoneUp)
+                    {
+
+                        // If Verthunder is feasible, use it
+                        if (black + LONG_DELTA <= blackThreshold)
+                            return OriginalHook(RDM.Verthunder);
+
+                        return OriginalHook(RDM.Veraero);
+                    }
+                }
+
+                if (verfireUp && verstoneUp)
+                {
+
+                    // Decide by mana levels
+                    if (black < white)
+                        return RDM.Verfire;
+
+                    if (white < black)
+                        return RDM.Verstone;
+
+                    // If mana levels are equal, prioritise the original button
+                    return actionID;
+                }
+
+                // Only use Verfire if it won't imbalance us
+                if (verfireUp && black + PROC_DELTA <= blackThreshold)
+                    return RDM.Verfire;
+
+                // Only use Verstone if it won't imbalance us
+                if (verstoneUp && white + PROC_DELTA <= whiteThreshold)
+                    return RDM.Verstone;
+
+                // If neither's up or the one that is would imbalance us, just use Jolt
+                return OriginalHook(RDM.Jolt2);
+            }
+
+            return actionID;
+        }
+    }
+
+
+    /// <summary>
+    /// Old Section Below
+    /// </summary>
     internal class RedMageAoECombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageAoECombo;

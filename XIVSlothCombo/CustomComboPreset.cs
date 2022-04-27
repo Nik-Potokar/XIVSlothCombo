@@ -1641,6 +1641,75 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region RED MAGE
 
+        //RED_MAGE_FEATURE_NUMBERING
+        //Numbering Scheme: 13[Section][Feature Number][Sub-Feature]
+        //Example: 13110 (Section 1: Openers, Feature Number 1, Sub-feature 0)
+        //New features should be added to the appropriate sections.
+
+        //SECTION_1_OPENERS
+        [CustomComboInfo("Balance Opener","Replaces Jolt with the Balance opener ending with Resolution", RDM.JobID, 110)]
+        RDM_Balance_Opener = 13110,
+
+        //SECTION_2to3_ROTATION
+        [CustomComboInfo("Verthunder/Veraero", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210)]
+        RDM_VerthunderVeraero = 13210,
+
+        [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
+        RDM_VerfireVerstone = 13220,
+
+        [CustomComboInfo("Single Target Acceleration", "Use Acceleration when no Verfire/Verstone proc is available", RDM.JobID,230)]
+        RDM_ST_Acceleration = 13230,
+
+        [ParentCombo(RDM_ST_Acceleration)]
+        [CustomComboInfo("Melee combo pre-balancing only", "Only use Acceleration charges just before a melee combo if necessary", RDM.JobID,231)]
+        RDM_ST_Acceleration_MeleeOnly = 13231,
+
+        [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action", RDM.JobID, 240)] // Radio buttons for Engagement or Jolt/Scatter
+        RDM_OGCD = 13240,
+
+        [ParentCombo(RDM_OGCD)]
+        [CustomComboInfo("Fleche", "Use Fleche on specified action", RDM.JobID, 241)]
+        RDM_Fleche = 13241,
+
+        [ParentCombo(RDM_OGCD)]
+        [CustomComboInfo("Contra Sixte", "Use Contre Sixte on specified action", RDM.JobID, 242)]
+        RDM_ContraSixte = 13242,
+
+        [ParentCombo(RDM_OGCD)]
+        [CustomComboInfo("Engagement", "Use Engagement on specified action", RDM.JobID, 243)] // Slider, number of stacks to keep
+        RDM_Engagement = 13243,
+
+        [ParentCombo(RDM_OGCD)]
+        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on specified action", RDM.JobID, 244)] // Slider, number of stacks to keep
+        RDM_Corpsacorps = 13244,
+
+        [CustomComboInfo("Verthunder II/Veraero II", "Replace Scatter with Verthunder II or Veraero II", RDM.JobID, 310)]
+        RDM_VerthunderIIVeraeroII = 13310,
+
+        [CustomComboInfo("AoE Acceleration", "Use Acceleration on Scatter/Scorch for increased damage", RDM.JobID, 320)]
+        RDM_AoE_Acceleration = 13320,
+
+        //SECTION_4to5_MELEE
+        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action", RDM.JobID, 410)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
+        RDM_ST_MeleeCombo = 13410,
+
+        [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
+        RDM_MeleeFinisher = 13510,
+
+        //SECTION_6to7_QOL
+        [CustomComboInfo("Lucid Dreaming", "Use Lucid Dreaming on Veraero, Verthunder and Scatter when below threshold.", RDM.JobID, 610, "Lucid Dreaming the day away", "OOM? Git gud.")]
+        RDM_LucidDreaming = 13610,
+
+        [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        RDM_Verraise = 13620,
+
+
+        //SECTION_8to9_OTHERS
+
+
+        /// <summary>
+        /// OLD SECTION BELOW
+        /// </summary>
         [ConflictingCombos(RedMageSmartcastAoECombo)]
         [CustomComboInfo("Red Mage AoE Combo", "Replaces Veraero/Verthunder 2 with Impact when Dualcast or Swiftcast are active.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageAoECombo = 13000,
