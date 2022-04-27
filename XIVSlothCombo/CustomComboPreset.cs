@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllHealerFeatures = 100098,
 
-            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SageEgeiroFeature, WHMRaiseFeature)]
+            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SGE_Raise, WHMRaiseFeature)]
             [ParentCombo(AllHealerFeatures)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             AllHealerRaiseFeature = 100010,
@@ -1730,130 +1730,138 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SAGE
 
-        [CustomComboInfo("Soteria into Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 0, "Spoopy into Kpoopy", "Don't forget your danc- uh, heal partner!")]
-        SageKardiaFeature = 14000,
+        //SAGE_FEATURE_NUMBERING
+        //Numbering Scheme: 14[Section][Feature Number][Sub-Feature]
+        //Example: 14110 (Section 1: DPS, Feature Number 1, Sub-feature 0)
+        //New features should be added to the appropriate sections.
 
-        [CustomComboInfo("Rhizomata Feature#", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
-        SageRhizomataFeature = 14001,
+        //SECTION_1_DPS
+        [CustomComboInfo("Dosis DPS Enhancements", "Replaces Dosis with Eukrasia Dosis", SGE.JobID, 110)]
+        SGE_ST_Dosis = 14110,
 
-        [CustomComboInfo("Taurochole into Druochole Feature", "Replaces Taurochole with Druochole when Taurochole is on cooldown.", SGE.JobID, 0, "This for that", "They do the same thing, really. If you close your eyes.")]
-        SageTauroDruoFeature = 14002,
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
+            SGE_ST_Lucid = 14111,
 
-        [CustomComboInfo("Phlegma into X Feature", "Does nothing on it's own, must choose any/all sub-features!", SGE.JobID, 0, "", "Phlegmaballs.")]
-        SagePhlegmaFeature = 14031,
+            [ParentCombo(SGE_ST_Dosis)]
+            [ConflictingCombos(SGE_ST_DosisToT)]
+            [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 112)]
+            SGE_ST_DosisAdv = 14112,
 
-        [ParentCombo(SagePhlegmaFeature)]
-        [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
-        SagePhlegmaToxikonFeature = 14003,
+            [ParentCombo(SGE_ST_Dosis)]
+            [ConflictingCombos(SGE_ST_DosisAdv)]
+            [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 113)]
+            SGE_ST_DosisToT = 14113,
 
-        [ParentCombo(SagePhlegmaFeature)]
-        [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-        SagePhlegmaDyskrasiaFeature = 14004,
+        [CustomComboInfo("Phlegma DPS Enhancements", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "Phlegmaballs.")]
+        SGE_AoE_Phlegma = 14121,
 
-        [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
-        SageDPSFeature = 14005,
+            [ParentCombo(SGE_AoE_Phlegma)]
+            [CustomComboInfo("Toxikon", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia", SGE.JobID, 122, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+            SGE_AoE_Toxikon = 14122,
 
-        [ParentCombo(SageDPSFeature)]
-        [ConflictingCombos(SageDPSFeatureToT)]
-        [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
-        SageDPSFeatureAdvTest = 14009,
+            [ParentCombo(SGE_AoE_Phlegma)]
+            [CustomComboInfo("Dyskrasia", "Use Dyskrasia (even without a target selected)", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            SGE_AoE_Dyskrasia = 14123,
 
-        [ParentCombo(SageDPSFeature)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
-        SageLucidFeature = 14006,
 
-        [ParentCombo(SageDPSFeature)]
-        [ConflictingCombos(SageDPSFeatureAdvTest)]
-        [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
-        SageDPSFeatureToT = 14032,
+        //SECTION_2_Healing
+        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
+        [CustomComboInfo("Diagnosis Simple Single Target Heal", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 210)]
+        SGE_ST_Heal = 14210,
 
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 211)]
+            SGE_ST_Heal_Kardia = 14211,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Eukrasian Diagnosis", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 212)]
+            SGE_ST_Heal_Diagnosis = 14212,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Soteria", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 213)]
+            SGE_ST_Heal_Soteria = 14213,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Zoe", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 214)]
+            SGE_ST_Heal_Zoe = 14214,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Pepsis###ST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
+            SGE_ST_Heal_Pepsis = 14215,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Taurochole", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 216)]
+            SGE_ST_Heal_Taurochole = 14216,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Haima", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 217)]
+            SGE_ST_Heal_Haima = 14217,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Rhizomata###SGEST", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
+            SGE_ST_Heal_Rhizomata = 14218,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Krasis", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 219)]
+            SGE_ST_Heal_Krasis = 14219,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Druochole", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 2110)]
+            SGE_ST_Heal_Druochole = 142110,
+
+        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
+        [CustomComboInfo("Sage Simple AoE Heal", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 220)]
+        SGE_AoE_Heal = 14220,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Physis", "Adds Physis.", SGE.JobID, 221)]
+            SGE_AoE_Heal_Physis = 14221,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Eukrasian Prognosis", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 222)]
+            SGE_AoE_Heal_EkPrognosis = 14222,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Holos", "Adds Holos.", SGE.JobID, 223)]
+            SGE_AoE_Heal_Holos = 14223,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Panhaima", "Adds Panhaima.", SGE.JobID, 224)]
+            SGE_AoE_Heal_Panhaima = 14224,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Pepsis##AoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
+            SGE_AoE_Heal_Pepsis = 14225,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Ixochole", "Adds Ixochole", SGE.JobID, 226)]
+            SGE_AoE_Heal_Ixochole = 14226,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Kerachole", "Adds Kerachole", SGE.JobID, 227)]
+            SGE_AoE_Heal_Kerachole = 14227,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Rhizomata###SGEAOE", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
+            SGE_AoE_Heal_Rhizomata = 14228,
+
+
+        [CustomComboInfo("Rhizomata", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
+        SGE_Rhizo = 14230,
+
+        [CustomComboInfo("Upgrade Druochole to Taurochole", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 240)]
+        SGE_DruoTauro = 14240,
+
+        //SECTION_3_Utility
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("SGE Alternative Raise Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
-        SageEgeiroFeature = 14007,
+        [CustomComboInfo("Swiftcast Raise Combo", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
+        SGE_Raise = 14310,
 
-        [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
-        [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
-        SageSingleTargetHealFeature = 14011,
+        [CustomComboInfo("Soteria into Kardia", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
+        SGE_Kardia = 14320,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
-        AutoApplyKardia = 14013,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
-        CustomEukrasianDiagnosisFeature = 14014,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomSoteriaFeature = 14015,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomZoeFeature = 14016,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomPepsisFeature = 14017,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomTaurocholeFeature = 14018,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomHaimaFeature = 14019,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeature = 14020,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomKrasisFeature = 14021,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomDruocholeFeature = 14030,
-
-        [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
-        [CustomComboInfo("Sage AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 0)]
-        SageAoEHealFeature = 14012,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
-        PhysisFeature = 14022,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
-        EukrasianPrognosisFeature = 14023,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
-        HolosFeature = 14024,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
-        PanhaimaFeature = 14025,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
-        PepsisFeature = 14026,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
-        IxocholeFeature = 14027,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
-        KeracholeFeature = 14028,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeatureAoE = 14029,
-
-        //20220420: Last ID Used is 14032
-
-
+        
         #endregion
         // ====================================================================================
         #region SAMURAI
