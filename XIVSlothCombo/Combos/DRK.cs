@@ -107,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsEnabled(CustomComboPreset.DarkEoSPoolOption) && gauge.ShadowTimeRemaining >= 1 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && level >= DRK.Levels.EdgeOfDarkness && CanDelayedWeave(actionID))
                                 return OriginalHook(DRK.EdgeOfDarkness);
-                            if (LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                            if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
                             {
                                 if (level >= DRK.Levels.EdgeOfDarkness)
                                     return OriginalHook(DRK.EdgeOfDarkness);
