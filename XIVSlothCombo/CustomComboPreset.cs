@@ -960,7 +960,7 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Life Surge AoE Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the AoE rotation.", DRG.JobID, 37, "", "")]
             DragoonAoELifeSurgeFeature = 6611,
 
-            [ParentCombo(DragoonSimple)]
+            [ParentCombo(DragoonSimpleAoE)]
             [CustomComboInfo("Ranged Uptime Option", "Replaces Main AoE Combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 40, "", "")]
             DRGSimpleRangedUptimeAoE = 6612,
 
