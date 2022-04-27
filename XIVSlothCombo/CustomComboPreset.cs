@@ -2055,8 +2055,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Demi Attacks on Main Combo", "Adds Astral Flow to the Main Combo.", SMN.JobID, 0, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
         SummonerSingleTargetDemiFeature = 17002,
 
-        [ParentCombo(SummonerDemiAoESummonsFeature)]
-        [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 0, "BRRRR", "Upgrade!")]
+        [ParentCombo(SummonerAOEComboFeature)]
+        [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
         [ParentCombo(EgisOnRuinFeature)]
@@ -2107,7 +2107,7 @@ namespace XIVSlothComboPlugin
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 0, "", "We'll play the game for you. Shush, now")]
+        [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -2115,7 +2115,7 @@ namespace XIVSlothComboPlugin
         SearingLightonRuinFeature = 17018,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 0, "Our Eyes!", "Yay, we're all legally blind!")]
+        [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 2, "Our Eyes!", "Yay, we're all legally blind!")]
         BuffOnSimpleAoESummoner = 17019,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -2123,11 +2123,11 @@ namespace XIVSlothComboPlugin
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         SummonerDemiAoESummonsFeature = 17021,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         EgisOnAOEFeature = 17022,
 
         [ParentCombo(EgisOnRuinFeature)]
@@ -2144,8 +2144,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain for Searing Light/2 min windows.", SMN.JobID, 0)]
         SummonerEDPoolonMainFeature = 17025,
 
-        [ParentCombo(EgisOnAOEFeature)]
-        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
+        [ParentCombo(SummonerAOEComboFeature)]
+        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
         SummonerEgiAttacksAOEFeature = 17026,
 
         [ConflictingCombos(AllCasterRaiseFeature)]
