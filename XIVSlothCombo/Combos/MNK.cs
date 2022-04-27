@@ -99,7 +99,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var gauge = GetJobGauge<MNKGauge>();
-                var canWeave = CanWeave(actionID, 0.4);
+                var canWeave = CanWeave(actionID, 0.5);
                 var canWeaveChakra = CanWeave(actionID);
 
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
@@ -144,7 +144,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (((GetRemainingCharges(MNK.PerfectBalance) == 2) ||
                                 (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
                                 (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
-                                (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 10) ||
+                                (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.RiddleOfFire) && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime < 10) ||
                                 (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 4 && GetCooldownRemainingTime(MNK.Brotherhood) < 8)))
                             {
                                 return MNK.PerfectBalance;
@@ -333,7 +333,6 @@ namespace XIVSlothComboPlugin.Combos
                 var pbStacks = FindEffectAny(MNK.Buffs.PerfectBalance);
                 var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                 var solarNadi = gauge.Nadi == Nadi.SOLAR;
-                var nadiNONE = gauge.Nadi == Nadi.NONE;
 
                 // Opener for MNK
                 if (IsEnabled(CustomComboPreset.MnkLunarSolarOpenerOnMainComboFeature))
@@ -454,7 +453,7 @@ namespace XIVSlothComboPlugin.Combos
                                     (GetRemainingCharges(MNK.PerfectBalance) == 1 && GetCooldownChargeRemainingTime(MNK.PerfectBalance) < 4) ||
                                     (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.Brotherhood)) ||
                                     (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 3 && GetCooldownRemainingTime(MNK.Brotherhood) > 40) ||
-                                    (GetRemainingCharges(MNK.PerfectBalance) >= 1 && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime > 6) ||
+                                    (GetRemainingCharges(MNK.PerfectBalance) >= 1 && HasEffect(MNK.Buffs.RiddleOfFire) && FindEffect(MNK.Buffs.RiddleOfFire).RemainingTime > 6) ||
                                     (GetRemainingCharges(MNK.PerfectBalance) >= 1 && GetCooldownRemainingTime(MNK.RiddleOfFire) < 3 && GetCooldownRemainingTime(MNK.Brotherhood) < 10)))
                                 {
                                     return MNK.PerfectBalance;
@@ -473,7 +472,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.MnkBrotherhoodOnMainComboFeature) && level >= MNK.Levels.Brotherhood &&
-                               !IsOnCooldown(MNK.Brotherhood) && IsOnCooldown(MNK.RiddleOfFire) && (lastComboMove == MNK.Bootshine || lastComboMove == MNK.DragonKick))
+                               !IsOnCooldown(MNK.Brotherhood) && IsOnCooldown(MNK.RiddleOfFire))
                             {
                                 return MNK.Brotherhood;
                             }
@@ -521,7 +520,7 @@ namespace XIVSlothComboPlugin.Combos
                             return MNK.Demolish;
                         }
                     }
-                    if (canSolar)
+                    if (canSolar && !solarNadi)
                     {
                         if (!raptorChakra && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= 2.5))
                         {
