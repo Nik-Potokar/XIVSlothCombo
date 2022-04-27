@@ -117,7 +117,7 @@ namespace XIVSlothComboPlugin.Combos
                     return RDM.ContreSixte;
             }
 
-            if (actionID is RDM.Veraero2)
+            if (actionID is RDM.Veraero2 && level >= RDM.Levels.Veraero2)
             {
                 if (swiftcast || dualcast || chainspell)
                     return OriginalHook(RDM.Impact);
@@ -125,7 +125,7 @@ namespace XIVSlothComboPlugin.Combos
                 return RDM.Veraero2;
             }
 
-            if (actionID is RDM.Verthunder2)
+            if (actionID is RDM.Verthunder2 && level >= RDM.Levels.Verthunder2)
             {
                 if (swiftcast || dualcast || chainspell)
                     return OriginalHook(RDM.Impact);
