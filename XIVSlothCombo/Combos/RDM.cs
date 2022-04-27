@@ -97,9 +97,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class RDM_Balance_Opener : CustomCombo
+    internal class RDM_Main_Combos : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Balance_Opener;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RdmAny;
 
         internal static bool inOpener = false;
         internal static bool readyOpener = false;
@@ -109,7 +109,7 @@ namespace XIVSlothComboPlugin.Combos
 
         {
 //RDM_BALANCE_OPENER
-            if (actionID is RDM.Jolt)
+            if (actionID is RDM.Jolt && IsEnabled(CustomComboPreset.RDM_Balance_Opener))
             {
                 bool inCombat = HasCondition(ConditionFlag.InCombat);
 
@@ -273,46 +273,51 @@ namespace XIVSlothComboPlugin.Combos
 
                     inOpener = false;
                 }
-//END_RDM_BALANCE_OPENER
             }
+            //END_RDM_BALANCE_OPENER
 
-            return actionID;
-        }
-    }
+            //SYSTEM_MANA_BALANCING_MACHINE
+            //Machine to decide which ver spell should be used.
+            //Rules:
+            //1.Avoid balancing
+            //2.Stay withing difference limit
+            //3.Strive to achieve correct mana for double melee combo burst
+            //   - Level 70: 
+            //   - Level 80: 
+            //   - Level 90: 
 
-    internal class RDM_VerthunderVeraero : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_VerthunderVeraero;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            RDMGauge gauge = GetJobGauge<RDMGauge>();
-            int black = gauge.BlackMana;
-            int white = gauge.WhiteMana;
+            //END_SYSTEM_MANA_BALANCING_MACHINE
 
-            if (actionID is RDM.Jolt && (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration)))
-            {
-                if (black > white)
-                {
-                    return OriginalHook(RDM.Veraero);
-                }
-                return OriginalHook(RDM.Verthunder);
-            }
-            return actionID;
-        }
-    }
-
-    internal class RDM_VerfireVerstone : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_VerfireVerstone;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is RDM.Jolt)
+            //RDM_VERFIREVERSTONE
+            if (actionID == RDM.Jolt && IsEnabled(CustomComboPreset.RDM_VerfireVerstone) && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast))
             {
                 if (HasEffect(RDM.Buffs.VerfireReady)) return RDM.Verfire;
                 if (HasEffect(RDM.Buffs.VerstoneReady)) return RDM.Verstone;
             }
+            //END_RDM_VERFIREVERSTONE
+
+            //RDM_VERTHUNDERVERAERO
+            if (actionID == RDM.Jolt && IsEnabled(CustomComboPreset.RDM_VerthunderVeraero))
+            {
+                RDMGauge gauge = GetJobGauge<RDMGauge>();
+                int black = gauge.BlackMana;
+                int white = gauge.WhiteMana;
+
+                if (actionID is RDM.Jolt && (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration)))
+                {
+                    if (black > white)
+                    {
+                        return OriginalHook(RDM.Veraero);
+                    }
+                    return OriginalHook(RDM.Verthunder);
+                }
+            }
+            //END_RDM_VERTHUNDERVERAERO
+
+
+
+
             return actionID;
         }
     }
