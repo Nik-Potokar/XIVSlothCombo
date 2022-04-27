@@ -36,7 +36,6 @@ namespace XIVSlothComboPlugin.Combos
             Foul = 7422,
             Sharpcast = 3574,
             Manafont = 158,
-            Swiftcast = 7561,
             Triplecast = 7421;
 
         public static class Buffs
@@ -46,7 +45,6 @@ namespace XIVSlothComboPlugin.Combos
                 LeyLines = 737,
                 Firestarter = 165,
                 Sharpcast = 867,
-                Swiftcast = 1987,
                 Triplecast = 1211;
         }
 
@@ -62,7 +60,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
-                Swiftcast = 18,
                 Manafont = 30,
                 Fire3 = 35,
                 Blizzard3 = 35,
@@ -547,9 +544,9 @@ namespace XIVSlothComboPlugin.Combos
                                 }
 
                                 // Swiftcast
-                                if (IsOffCooldown(BLM.Swiftcast) && IsOnCooldown(BLM.LeyLines))
+                                if (IsOffCooldown(All.Swiftcast) && IsOnCooldown(BLM.LeyLines))
                                 {
-                                    return BLM.Swiftcast;
+                                    return All.Swiftcast;
                                 }
 
                                 // Manafont
@@ -573,8 +570,8 @@ namespace XIVSlothComboPlugin.Combos
                                 }
 
                                 // Second Triplecast
-                                if (!HasEffect(BLM.Buffs.Triplecast) && !HasEffect(BLM.Buffs.Swiftcast) && 
-                                    IsOnCooldown(BLM.Swiftcast) && lastComboMove != BLM.Swiftcast &&
+                                if (!HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && 
+                                    IsOnCooldown(All.Swiftcast) && lastComboMove != All.Swiftcast &&
                                     GetRemainingCharges(BLM.Triplecast) >= 1 && currentMP < BLM.MP.AspectFire)
                                 {
                                     if (!IsEnabled(CustomComboPreset.BlackSimpleAltOpenerFeature))
@@ -701,20 +698,20 @@ namespace XIVSlothComboPlugin.Combos
                             }
 
                             // Use Swiftcast in Astral Fire
-                            if (level >= BLM.Levels.Swiftcast && IsOffCooldown(BLM.Swiftcast) && gauge.InAstralFire)
+                            if (level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) && gauge.InAstralFire)
                             {
                                 if (level >= BLM.Levels.Despair)
                                 {
                                     if (currentMP >= BLM.MP.Despair)
                                     {
-                                        return BLM.Swiftcast;
+                                        return All.Swiftcast;
                                     }
                                 }
                                 else
                                 {
                                     if (currentMP >= BLM.MP.AspectFire)
                                     {
-                                        return BLM.Swiftcast;
+                                        return All.Swiftcast;
                                     }
                                 }
                             }

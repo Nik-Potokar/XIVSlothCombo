@@ -43,12 +43,7 @@ namespace XIVSlothComboPlugin.Combos
             Regress = 24403,
             Harpe = 24386,
             Soulsow = 24387,
-            HarvestMoon = 24388,
-            // Role
-            SecondWind = 7541,
-            Bloodbath = 7542,
-            LegSweep = 7863,
-            Feint = 7549;
+            HarvestMoon = 24388;
         
 
         public static class Buffs
@@ -76,13 +71,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const byte
                 WaxingSlice = 5,
-                SecondWind = 8,
-                LegSweep = 10,
+
                 ShadowOfDeath = 10,
-                Bloodbath = 12,
                 HellsIngress = 20,
                 HellsEgress = 20,
-                Feint = 22,
                 SpinningScythe = 25,
                 InfernalSlice = 30,
                 WhorlOfDeath = 35,
@@ -179,8 +171,8 @@ namespace XIVSlothComboPlugin.Combos
                     return RPR.Harpe;
                 }
 
-                if (IsEnabled(CustomComboPreset.ReaperStunOption) && level >= RPR.Levels.LegSweep && CanInterruptEnemy() && IsOffCooldown(RPR.LegSweep))
-                    return RPR.LegSweep;
+                if (IsEnabled(CustomComboPreset.ReaperStunOption) && level >= All.Levels.LegSweep && CanInterruptEnemy() && IsOffCooldown(All.LegSweep))
+                    return All.LegSweep;
 
                 if (IsEnabled(CustomComboPreset.ReaperSoulSliceFeature) && !enshrouded && !soulReaver && level >= RPR.Levels.SoulSlice && gauge.Soul <= 50 && !GetCooldown(RPR.SoulSlice).IsCooldown && deathsDesign)
                     return RPR.SoulSlice;
@@ -190,11 +182,11 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.ReaperComboHealsOption))
                 {
-                    if (level >= RPR.Levels.Bloodbath && playerHP < 65 && IsOffCooldown(RPR.Bloodbath))
-                        return RPR.Bloodbath;
+                    if (level >= All.Levels.Bloodbath && playerHP < 65 && IsOffCooldown(All.Bloodbath))
+                        return All.Bloodbath;
 
-                    if (level >= RPR.Levels.SecondWind && playerHP < 40 && IsOffCooldown(RPR.SecondWind))
-                        return RPR.SecondWind;
+                    if (level >= All.Levels.SecondWind && playerHP < 40 && IsOffCooldown(All.SecondWind))
+                        return All.SecondWind;
                 }
 
                 if (IsEnabled(CustomComboPreset.ReaperLemureFeature) && enshrouded && gauge.VoidShroud >= 2)

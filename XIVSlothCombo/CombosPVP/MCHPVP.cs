@@ -1,5 +1,3 @@
-using Dalamud.Game.ClientState.JobGauge.Types;
-
 namespace XIVSlothComboPlugin.Combos
 {
     internal static class MCHPVP
@@ -58,14 +56,16 @@ namespace XIVSlothComboPlugin.Combos
                 if (overheated)
                     return OriginalHook(MCHPVP.HeatBlast);
 
-                if ((HasEffect(MCHPVP.Buffs.DrillPrimed) || HasEffect(MCHPVP.Buffs.ChainSawPrimed)) &&
+                if ((HasEffect(MCHPVP.Buffs.DrillPrimed) || 
+                    (HasEffect(MCHPVP.Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHAltAnalysis)) ||
+                    (HasEffect(MCHPVP.Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHAltAnalysis))) &&
                     !HasEffect(MCHPVP.Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHAltDrill)
                     || IsOnCooldown(MCHPVP.Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
                     return OriginalHook(MCHPVP.Analysis);
 
                 if (bigDamageStacks > 0)
                 {
-                    if (HasEffect(MCHPVP.Buffs.Analysis) && HasEffect(MCHPVP.Buffs.DrillPrimed))
+                    if (HasEffect(MCHPVP.Buffs.DrillPrimed))
                         return OriginalHook(MCHPVP.Drill);
 
                     if (HasEffect(MCHPVP.Buffs.BioblasterPrimed) && GetTargetDistance() <= 12)
@@ -74,7 +74,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (HasEffect(MCHPVP.Buffs.AirAnchorPrimed))
                         return OriginalHook(MCHPVP.AirAnchor);
 
-                    if (HasEffect(MCHPVP.Buffs.Analysis) && HasEffect(MCHPVP.Buffs.ChainSawPrimed))
+                    if (HasEffect(MCHPVP.Buffs.ChainSawPrimed))
                         return OriginalHook(MCHPVP.ChainSaw);
                 }
             }

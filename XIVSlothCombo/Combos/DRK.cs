@@ -17,9 +17,6 @@ namespace XIVSlothComboPlugin.Combos
             Delirium = 7390,
             Quietus = 7391,
             Bloodspiller = 7392,
-            LowBlow = 7540,
-            Interject = 7538,
-            Reprisal = 7535,
             FloodOfDarkness = 16466,
             EdgeOfDarkness = 16467,
             StalwartSoul = 16468,
@@ -45,7 +42,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Debuffs
         {
             public const ushort
-                Reprisal = 1193;
+                Placeholder = 1;
         }
 
         public static class Levels
@@ -110,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsEnabled(CustomComboPreset.DarkEoSPoolOption) && gauge.ShadowTimeRemaining >= 1 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && level >= DRK.Levels.EdgeOfDarkness && CanDelayedWeave(actionID))
                                 return OriginalHook(DRK.EdgeOfDarkness);
-                            if (LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                            if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
                             {
                                 if (level >= DRK.Levels.EdgeOfDarkness)
                                     return OriginalHook(DRK.EdgeOfDarkness);
@@ -264,38 +261,6 @@ namespace XIVSlothComboPlugin.Combos
                     return DRK.SaltAndDarkness;
                 if (IsEnabled(CustomComboPreset.DarkShadowbringeroGCDFeature) && GetCooldownRemainingTime(DRK.Shadowbringer) < 60 && level >= DRK.Levels.Shadowbringer && gauge.DarksideTimeRemaining > 0)
                     return DRK.Shadowbringer;
-            }
-            return actionID;
-        }
-    }
-
-    internal class DarkKnightInterruptFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkKnightInterruptFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == DRK.LowBlow)
-            {
-                var interjectCD = GetCooldown(DRK.Interject);
-                var lowBlowCD = GetCooldown(DRK.LowBlow);
-                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
-                    return DRK.Interject;
-            }
-
-            return actionID;
-        }
-    }
-    internal class DarkKnightReprisalProtection : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DarkKnightReprisalProtection;
-
-        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-        {
-            if (actionID is DRK.Reprisal)
-            {
-                if (TargetHasEffectAny(DRK.Debuffs.Reprisal) && IsOffCooldown(DRK.Reprisal))
-                    return WHM.Stone1;
             }
             return actionID;
         }

@@ -12,9 +12,6 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         public const uint
-            LowBlow = 7540,
-            Interject = 7538,
-            Reprisal = 7535,
             KeenEdge = 16137,
             NoMercy = 16138,
             BrutalShell = 16139,
@@ -43,7 +40,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
-                Medicated = 49,
                 NoMercy = 1831,
                 ReadyToRip = 1842,
                 ReadyToTear = 1843,
@@ -55,8 +51,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
                 BowShock = 1838,
-                SonicBreak = 1837,
-                Reprisal = 1193;
+                SonicBreak = 1837;
         }
 
         public static class Levels
@@ -112,7 +107,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= GNB.Levels.NoMercy && IsOffCooldown(GNB.NoMercy))
                         {
                             if (level >= GNB.Levels.BurstStrike && 
-                                ((gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 3.5) || (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang)) || gauge.Ammo == GNB.MaxCartridges(level))) //cartridges unlocked
+                                ((gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 1.5) || (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang)) || gauge.Ammo == GNB.MaxCartridges(level))) //cartridges unlocked
                                 return GNB.NoMercy;
                             if (level < GNB.Levels.BurstStrike) //no cartridges unlocked
                                 return GNB.NoMercy;
@@ -191,13 +186,17 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= GNB.Levels.GnashingFang)
                     {
-                        if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GNB.GnashingFang) && gauge.AmmoComboStep == 0 && gauge.Ammo > 0)
+                        if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GNB.GnashingFang) && gauge.AmmoComboStep == 0 &&
+                            (gauge.Ammo == GNB.MaxCartridges(level) && GetCooldownRemainingTime(GNB.NoMercy) > 55 || //Regular 60 second GF/NM timing
+                            (gauge.Ammo > 0 && GetCooldownRemainingTime(GNB.NoMercy) > 17 && GetCooldownRemainingTime(GNB.NoMercy) < 35) || //Regular 30 second window                                                                        
+                            (gauge.Ammo == 3 && GetCooldownRemainingTime(GNB.Bloodfest) < 2 && GetCooldownRemainingTime(GNB.NoMercy) < 2) || //3 minute window
+                            (gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.NoMercy) > 55 && IsOffCooldown(GNB.Bloodfest)))) //Opener Conditions
                                 return GNB.GnashingFang;
                         if (gauge.AmmoComboStep is 1 or 2)
                             return OriginalHook(GNB.GnashingFang);
                     }
 
-                    if ((HasEffect(GNB.Buffs.NoMercy)|| HasEffect(GNB.Buffs.Medicated)) && gauge.AmmoComboStep == 0 && level >= GNB.Levels.BurstStrike)
+                    if ((HasEffect(GNB.Buffs.NoMercy)|| HasEffect(All.Buffs.Medicated)) && gauge.AmmoComboStep == 0 && level >= GNB.Levels.BurstStrike)
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                             return GNB.Hypervelocity;
@@ -219,7 +218,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
                                 return GNB.Hypervelocity;
                             if (level >= GNB.Levels.BurstStrike && (gauge.Ammo == GNB.MaxCartridges(level) ||
-                                (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && GetCooldownRemainingTime(GNB.Bloodfest) < 6 && gauge.Ammo != 0))) //Burns Ammo for Bloodfest
+                                (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && GetCooldownRemainingTime(GNB.Bloodfest) < 6 && gauge.Ammo != 0 && IsOnCooldown(GNB.NoMercy)))) //Burns Ammo for Bloodfest
                                 return GNB.BurstStrike;
                         }
 
@@ -293,7 +292,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if ((gauge.AmmoComboStep == 0 && IsOffCooldown(GNB.GnashingFang)) || gauge.AmmoComboStep is 1 or 2)
                     return OriginalHook(GNB.GnashingFang);
-                if (HasEffect(GNB.Buffs.NoMercy) && HasEffect(GNB.Buffs.Medicated) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF) && gauge.AmmoComboStep == 0)
+                if (HasEffect(GNB.Buffs.NoMercy) && HasEffect(All.Buffs.Medicated) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF) && gauge.AmmoComboStep == 0)
                 {
                     if (level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
                         return GNB.Hypervelocity;
@@ -370,61 +369,10 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == GNB.BurstStrike)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
+                if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= GNB.Levels.EnhancedContinuation && HasEffect(GNB.Buffs.ReadyToBlast))
+                    return GNB.Hypervelocity;
                 if (gauge == 0 && level >= GNB.Levels.Bloodfest)
                     return GNB.Bloodfest;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class GunbreakerInterruptFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerInterruptFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == GNB.LowBlow)
-            {
-                var interjectCD = GetCooldown(GNB.Interject);
-                if (CanInterruptEnemy() && !interjectCD.IsCooldown)
-                    return GNB.Interject;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class GunbreakerReprisalProtection : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerReprisalProtection;
-
-        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-        {
-            if (actionID is GNB.Reprisal)
-            {
-                if (TargetHasEffectAny(GNB.Debuffs.Reprisal) && IsOffCooldown(GNB.Reprisal))
-                    return WHM.Stone1;
-            }
-            return actionID;
-        }
-    }
-
-    internal class GunbreakerCDsonNMFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerCDsonNMFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == GNB.NoMercy)
-            {
-                if (IsOnCooldown(GNB.NoMercy) && InCombat())
-                {
-                    if (IsOffCooldown(GNB.SonicBreak))
-                        return GNB.SonicBreak;
-                    if (IsOffCooldown(GNB.BowShock))
-                        return GNB.BowShock;
-                }
             }
 
             return actionID;

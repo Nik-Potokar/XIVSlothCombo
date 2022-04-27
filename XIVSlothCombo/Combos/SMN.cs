@@ -105,17 +105,12 @@ namespace XIVSlothComboPlugin.Combos
             // buff 
             RadiantAegis = 25799,
             Aethercharge = 25800,
-            SearingLight = 25801,
-
-            // other
-            Sleep = 25880,
-            Swiftcast = 7561;
+            SearingLight = 25801;
 
 
         public static class Buffs
         {
             public const ushort
-                Swiftcast = 167,
                 FurtherRuin = 2701,
                 GarudasFavor = 2725,
                 TitansFavor = 2853,
@@ -130,7 +125,6 @@ namespace XIVSlothComboPlugin.Combos
                 Aethercharge = 6,
                 SummonRuby = 6,
                 SummonTopaz = 15,
-                Swiftcast = 18,
                 SummonEmerald = 22,
                 Painflare = 52,
                 Ruin3 = 54,
@@ -173,9 +167,9 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SMN.Swiftcast)
+            if (actionID == All.Swiftcast)
             {
-                if (IsOnCooldown(SMN.Swiftcast))
+                if (IsOnCooldown(All.Swiftcast))
                     return SMN.Resurrection;
             }
             return actionID;
@@ -245,6 +239,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             var gauge = GetJobGauge<SMNGauge>();
             var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(SMN.Config.SummonerPrimalChoice);
+            var lucidThreshold = Service.Configuration.GetCustomIntValue(SMN.Config.SMNLucidDreamingFeature);
 
             if (actionID is SMN.Ruin or SMN.Ruin2)
             {
@@ -252,8 +247,11 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (CanSpellWeave(actionID))
                     {
+                        // Searing Light
                         if (IsEnabled(CustomComboPreset.SearingLightonRuinFeature) && IsOffCooldown(SMN.SearingLight) && level >= SMN.Levels.SearingLight && gauge.IsBahamutReady && GetCooldownRemainingTime(SMN.SummonBahamut) >= 55)
                             return SMN.SearingLight;
+
+                        // ED & Fester
                         if (IsEnabled(CustomComboPreset.SummonerEDMainComboFeature))
                         {
                             if (gauge.HasAetherflowStacks && (IsNotEnabled(CustomComboPreset.SummonerEDPoolonMainFeature) ||
@@ -262,15 +260,19 @@ namespace XIVSlothComboPlugin.Combos
                             if (level >= SMN.Levels.EnergyDrain && !gauge.HasAetherflowStacks && IsOffCooldown(SMN.EnergyDrain))
                                 return SMN.EnergyDrain;
                         }
+
+                        // Lucid
+                        if (IsEnabled(CustomComboPreset.SMNLucidDreamingFeature) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                            return All.LucidDreaming;
                     }
 
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnRuinFeature))
                     {
-                        if (IsOffCooldown(SMN.Swiftcast) && level >= SMN.Levels.Swiftcast &&
+                        if (IsOffCooldown(All.Swiftcast) && level >= All.Levels.Swiftcast &&
                             (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda) && HasEffect(SMN.Buffs.GarudasFavor) && level >= SMN.Levels.Slipstream && gauge.IsGarudaAttuned || //Swiftcast Garuda
                             IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit) && gauge.IsIfritAttuned && lastComboMove is SMN.RubyRuin1 or SMN.RubyRuin2 or SMN.RubyRuin3 or SMN.RubyRite && level >= SMN.Levels.RubyRuin1)) //Swiftcast Ifrit
-                            return SMN.Swiftcast;
+                            return All.Swiftcast;
 
                         if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && gauge.IsGarudaAttuned && HasEffect(SMN.Buffs.GarudasFavor) || //Garuda
                             IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(SMN.Buffs.TitansFavor) && lastComboMove == SMN.TopazRite && CanSpellWeave(actionID) || //Titan
@@ -284,10 +286,12 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= SMN.Levels.SummonRuby)
                                 return OriginalHook(SMN.SummonRuby);
+
                             if (summonerPrimalChoice == 1)
                             {
                                 if (gauge.IsTitanReady && level >=SMN.Levels.SummonTopaz)
                                     return OriginalHook(SMN.SummonTopaz);
+
                                 if (gauge.IsGarudaReady && level >= SMN.Levels.SummonEmerald)
                                     return OriginalHook(SMN.SummonEmerald);
                             }
@@ -296,6 +300,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (gauge.IsGarudaReady && level >= SMN.Levels.SummonEmerald)
                                     return OriginalHook(SMN.SummonEmerald);
+
                                 if (gauge.IsTitanReady && level >= SMN.Levels.SummonTopaz)
                                     return OriginalHook(SMN.SummonTopaz);
                             }
@@ -315,6 +320,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.AstralFlow && (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralImpulse))
                                 return OriginalHook(SMN.AstralFlow);
+
                             if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) && level >= SMN.Levels.Bahamut && lastComboMove is SMN.AstralImpulse or SMN.FountainOfFire)
                                 return OriginalHook(SMN.EnkindleBahamut); 
                         }
@@ -342,6 +348,7 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             var gauge = GetJobGauge<SMNGauge>();
+            var lucidThreshold = Service.Configuration.GetCustomIntValue(SMN.Config.SMNLucidDreamingFeature);
 
             if (actionID is SMN.Tridisaster or SMN.Outburst)
             {
@@ -349,8 +356,11 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (CanSpellWeave(actionID))
                     {
+                        // Searing
                         if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) && IsOffCooldown(SMN.SearingLight) && level >= SMN.Levels.SearingLight && gauge.IsBahamutReady && GetCooldownRemainingTime(SMN.SummonBahamut) >= 55)
                             return SMN.SearingLight;
+
+                        // ED & Fester
                         if (IsEnabled(CustomComboPreset.SummonerESAOEFeature))
                         {
                             if (gauge.HasAetherflowStacks && HasEffect(SMN.Buffs.SearingLight))
@@ -358,6 +368,10 @@ namespace XIVSlothComboPlugin.Combos
                             if (level >= SMN.Levels.EnergySiphon && !gauge.HasAetherflowStacks && IsOffCooldown(SMN.EnergySiphon))
                                 return SMN.EnergySiphon;
                         }
+
+                        // Lucid
+                        if (IsEnabled(CustomComboPreset.SMNLucidDreamingFeature) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                            return All.LucidDreaming;
                     }
 
                     // Egis

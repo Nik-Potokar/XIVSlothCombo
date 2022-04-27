@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.0\nSAM Rework is here! Woo!\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.2\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
@@ -860,10 +860,16 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SUMMONER
+
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice,"Titan","Summons Titan first, Garuda second, Ifrit third", 1);
+
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+
+            if (preset == CustomComboPreset.SMNLucidDreamingFeature)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SMN.Config.SMNLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
             #endregion
             // ====================================================================================
             #region WARRIOR

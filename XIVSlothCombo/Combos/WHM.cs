@@ -13,9 +13,7 @@ namespace XIVSlothComboPlugin.Combos
             Cure2 = 135,
             AfflatusSolace = 16531,
             AfflatusRapture = 16534,
-            LucidDreaming = 7562,
             Raise = 125,
-            Swiftcast = 7561,
             AfflatusMisery = 16535,
             Medica1 = 124,
             Medica2 = 133,
@@ -45,7 +43,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
-            Swiftcast = 167,
             Medica2 = 150,
             PresenceOfMind = 157,
             ThinAir = 1217,
@@ -184,14 +181,14 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == WHM.Swiftcast)
+                if (actionID == All.Swiftcast)
                 {
                     var thinairCD = GetCooldown(WHM.ThinAir);
                     var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
 
-                    if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(WHM.Buffs.Swiftcast) && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
+                    if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(All.Buffs.Swiftcast) && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
                         return WHM.ThinAir;
-                    if (HasEffect(WHM.Buffs.Swiftcast))
+                    if (HasEffect(All.Buffs.Swiftcast))
                         return WHM.Raise;
                 }
 
@@ -236,8 +233,8 @@ namespace XIVSlothComboPlugin.Combos
                             return WHM.PresenceOfMind;
                         if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= WHM.Levels.Assize && IsOffCooldown(WHM.Assize))
                             return WHM.Assize;
-                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(WHM.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold)
-                            return WHM.LucidDreaming;
+                        if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                            return All.LucidDreaming;
                     }
 
                     if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
@@ -297,30 +294,7 @@ namespace XIVSlothComboPlugin.Combos
         }
 
     }
-    internal class WHMAlternativeRaise : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMAlternativeRaise;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == WHM.Raise)
-            {
-                var thinairCD = GetCooldown(WHM.ThinAir);
-                var hasThinAirBuff = HasEffect(WHM.Buffs.ThinAir);
-                var swiftCD = GetCooldown(WHM.Swiftcast);
-
-                if (!swiftCD.IsCooldown)
-                    return WHM.Swiftcast;
-
-                if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && !hasThinAirBuff && level >= WHM.Levels.ThinAir)
-                    return WHM.ThinAir;
-
-                if (!swiftCD.IsCooldown)
-                    return WHM.Swiftcast;
-            }
-            return actionID;
-        }
-    }
     internal class WHMogcdHealsShieldsFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMogcdHealsShieldsFeature;

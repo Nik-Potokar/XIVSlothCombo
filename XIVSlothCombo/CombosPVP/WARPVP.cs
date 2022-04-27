@@ -30,7 +30,7 @@ namespace XIVSlothComboPlugin
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            if (actionID == WARPVP.HeavySwing)
+            if (actionID is WARPVP.HeavySwing or WARPVP.Maim or WARPVP.StormsPath)
             {
                 if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown)
                     return OriginalHook(WARPVP.Bloodwhetting);

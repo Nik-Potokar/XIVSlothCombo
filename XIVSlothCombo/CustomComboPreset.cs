@@ -88,17 +88,60 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ADV
         #endregion
-        /*
-        #region GLOBAL FEATURES
-        [CustomComboInfo("Global Interrupt Feature", "Replaces Stun (LowBlow) with interrupt (Interject) when the target can be interrupted.", All.JobID)]
-        InterruptFeature = 90000,
 
-        [ConflictingCombos(SchRaiseFeature, WHMRaiseFeature, AstrologianAscendFeature, SageEgeiroFeature)]
-        [CustomComboInfo("Global Raise Feature", "Replaces Swiftcast with Raise/Resurrection/Verraise/Ascend/Egeiro when appropriate.", All.JobID)]
-        DoMSwiftcastFeature = 90001,
+        #region GLOBAL FEATURES
+        //Tank Features
+        [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllTankFeatures = 100099,
+
+            [ParentCombo(AllTankFeatures)]
+            [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
+            AllTankInterruptFeature = 100000,
+
+            [ParentCombo(AllTankFeatures)]
+            [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
+            AllTankReprisalFeature = 100001,
+
+        //Healer Features
+        [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllHealerFeatures = 100098,
+
+            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SageEgeiroFeature, WHMRaiseFeature)]
+            [ParentCombo(AllHealerFeatures)]
+            [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
+            AllHealerRaiseFeature = 100010,
+
+        //Magical Ranged Features
+        [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllCasterFeatures = 100097,
+
+            [ParentCombo(AllCasterFeatures)]
+            [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
+            AllCasterAddleFeature = 100020,
+
+            [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
+            [ParentCombo(AllCasterFeatures)]
+            [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
+            AllCasterRaiseFeature = 100021,
+
+        //Melee Features
+        [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllMeleeFeatures = 100096,
+
+            [ParentCombo(AllMeleeFeatures)]
+            [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
+            AllMeleeFeintFeature = 100030,
+
+        //Ranged Physical Features
+        [CustomComboInfo("Global Physical Ranged Features", "Features and options involving shared role actions for Physical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        AllRangedPhysicalFeatures = 100095,
+
+            [ParentCombo(AllRangedPhysicalFeatures)]
+            [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
+            AllRangedPhysicalMitigationFeature = 100040,
 
         #endregion
-        */
+
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -112,13 +155,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 0, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
         AstrologianBeneficFeature = 1002,
 
-        [ConflictingCombos(AstrologianAlternateAscendFeature)]
-        [CustomComboInfo("AST Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("AST Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
         AstrologianAscendFeature = 1003,
-
-        [ConflictingCombos(AstrologianAscendFeature)]
-        [CustomComboInfo("AST Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available", AST.JobID, 0, "Rez-bot-0003", "Same same, but different!")]
-        AstrologianAlternateAscendFeature = 1019,
 
         [ConflictingCombos(AstrologianAlternateDpsFeature, CustomValuesTest)]
         [CustomComboInfo("DPS Feature(On Malefic)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, 0, "Green DPS? Look no further", "Adds fatter deeps to your combo. Just pick another job already...")]
@@ -328,9 +367,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Off CD Primal Additions", "Adds any Primals that are off CD to the Final Sting Combo. \nPrimals Used: Feather Rain, Shock Strike, Glass Dance, J Kick, Rose of Destruction. ", BLU.JobID)]
         BluPrimals = 70003,
 
-        [CustomComboInfo("Swiftcasted Angel Whisper", "Turns Angel Whisper to Swiftcast when Swiftcast and Angel Whisper are available. \nSpells required: Angel Whisper ", BLU.JobID)]
-        BluRez = 70004,
-
         [CustomComboInfo("Ram's Voice into Ultravibration", "Turns Ultravibration into Ram's Voice if Deep Freeze isn't on the target. Will swiftcast Ultravibration if available. \nSpells Required: Ram's Voice, Ultravibration. ", BLU.JobID)]
         BluUltravibrate = 70005,
 
@@ -387,7 +423,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready", BRD.JobID, 0, "", "C-C-C-Combo!")]
         BardAoEComboFeature = 3008,
 
-        [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature)]
+        [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature, BardIronJawsApexFeature)]
         [CustomComboInfo("Simple Bard", "Adds every single target ability to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
         SimpleBardFeature = 3009,
 
@@ -444,6 +480,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Simple Pooling", "Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
         BardSimplePooling = 3023,
 
+        [ConflictingCombos(SimpleBardFeature)]
         [ParentCombo(BardIronJawsFeature)]
         [CustomComboInfo("Iron Jaws Apex", "Adds Apex and Blast Arrow to Iron Jaws when available", BRD.JobID, 0, "", "Arrows this, jaws that.\nTruly the apex of BRD technology")]
         BardIronJawsApexFeature = 3024,
@@ -469,21 +506,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Single Target Multibutton", "Change Cascade into procs and combos as available.", DNC.JobID, 0, "", "")]
         DancerSingleTargetMultibutton = 4000,
 
-        [ParentCombo(DancerSingleTargetMultibutton)]
-        [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance to the Cascade combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapSTFeature = 4001,
+            [ParentCombo(DancerSingleTargetMultibutton)]
+            [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance to the Cascade combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
+            DancerEspritOvercapSTFeature = 4001,
 
-        [ParentCombo(DancerEspritOvercapSTFeature)]
-        [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.\nOverrides 'ST Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapSTInstantOption = 4002,
+                [ParentCombo(DancerEspritOvercapSTFeature)]
+                [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.\nOverrides 'ST Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
+                DancerEspritOvercapSTInstantOption = 4002,
 
-        [ParentCombo(DancerSingleTargetMultibutton)]
-        [CustomComboInfo("Fan Dance Overcap Protection", "Adds Fan Dance 1 onto Cascade when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
-        DancerFanDanceMainComboOvercapFeature = 4003,
+            [ParentCombo(DancerSingleTargetMultibutton)]
+            [CustomComboInfo("Fan Dance Overcap Protection", "Adds Fan Dance 1 onto Cascade when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
+            DancerFanDanceMainComboOvercapFeature = 4003,
 
-        [ParentCombo(DancerSingleTargetMultibutton)]
-        [CustomComboInfo("Fan Dance On Cascade Feature", "Adds Fan Dance 3/4 onto Cascade when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance34OnMainComboFeature = 4004,
+            [ParentCombo(DancerSingleTargetMultibutton)]
+            [CustomComboInfo("Fan Dance On Cascade Feature", "Adds Fan Dance 3/4 onto Cascade when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance34OnMainComboFeature = 4004,
 
 
         // AoE Multibutton Section
@@ -491,66 +528,64 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Multibutton", "Change Windmill into procs and combos as available.", DNC.JobID, 0, "", "")]
         DancerAoEMultibutton = 4010,
 
-        [ParentCombo(DancerAoEMultibutton)]
-        [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance to the Windmill combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapAoEFeature = 4011,
+            [ParentCombo(DancerAoEMultibutton)]
+            [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance to the Windmill combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
+            DancerEspritOvercapAoEFeature = 4011,
 
-        [ParentCombo(DancerEspritOvercapAoEFeature)]
-        [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
-        DancerEspritOvercapAoEInstantOption = 4012,
+                [ParentCombo(DancerEspritOvercapAoEFeature)]
+                [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
+                DancerEspritOvercapAoEInstantOption = 4012,
 
-        [ParentCombo(DancerAoEMultibutton)]
-        [CustomComboInfo("AoE Fan Dance Overcap Protection", "Adds Fan Dance 2 onto Windmill when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
-        DancerFanDanceAoEComboOvercapFeature = 4013,
+            [ParentCombo(DancerAoEMultibutton)]
+            [CustomComboInfo("AoE Fan Dance Overcap Protection", "Adds Fan Dance 2 onto Windmill when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
+            DancerFanDanceAoEComboOvercapFeature = 4013,
 
-        [ParentCombo(DancerAoEMultibutton)]
-        [CustomComboInfo("AoE Fan Dance On Windmill Feature", "Adds FanDance 3/4 Onto Windmill When available.", DNC.JobID, 0, "", "")]
-        DancerFanDanceOnAoEComboFeature = 4014,
+            [ParentCombo(DancerAoEMultibutton)]
+            [CustomComboInfo("AoE Fan Dance On Windmill Feature", "Adds FanDance 3/4 Onto Windmill When available.", DNC.JobID, 0, "", "")]
+            DancerFanDanceOnAoEComboFeature = 4014,
 
 
         // Dance Features Section (SS/TS)
         [CustomComboInfo("Dance Features", "Features and options involving Standard Step and Technical Step.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuDanceFeatures = 4020,
 
-        [ParentCombo(DancerMenuDanceFeatures)]
-        [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
-        [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
-        DancerDanceStepCombo = 4021,
+            [ParentCombo(DancerMenuDanceFeatures)]
+            [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
+            [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
+            DancerDanceStepCombo = 4021,
 
-        [ParentCombo(DancerMenuDanceFeatures)]
-        [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
-        DancerCombinedDanceFeature = 4022,
+            [ParentCombo(DancerMenuDanceFeatures)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
+            DancerCombinedDanceFeature = 4022,
 
-        [ParentCombo(DancerCombinedDanceFeature)]
-        [CustomComboInfo("Devilment Plus Option", "Adds Devilment right after Technical finish.", DNC.JobID, 0, "", "")]
-        DancerDevilmentOnCombinedDanceFeature = 4023,
+                [ParentCombo(DancerCombinedDanceFeature)]
+                [CustomComboInfo("Devilment Plus Option", "Adds Devilment right after Technical finish.", DNC.JobID, 0, "", "")]
+                DancerDevilmentOnCombinedDanceFeature = 4023,
 
-        [ParentCombo(DancerCombinedDanceFeature)]
-        [CustomComboInfo("Flourish Plus Option", "Adds Flourish to the Combined Dance Feature.", DNC.JobID, 0, "", "")]
-        DancerFlourishOnCombinedDanceFeature = 4024,
+                [ParentCombo(DancerCombinedDanceFeature)]
+                [CustomComboInfo("Flourish Plus Option", "Adds Flourish to the Combined Dance Feature.", DNC.JobID, 0, "", "")]
+                DancerFlourishOnCombinedDanceFeature = 4024,
 
-        [ParentCombo(DancerMenuDanceFeatures)]
-        [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature, DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Custom Dance Step Feature",
-        "Change custom actions into dance steps while dancing." +
-        "\nThis helps ensure you can still dance with combos on, without using auto dance." +
-        "\nYou can change the respective actions by inputting action IDs below for each dance step." +
-        "\nThe defaults are Cascade, Flourish, Fan Dance and Fan Dance II. If set to 0, they will reset to these actions." +
-        "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.", DNC.JobID, 0, "", "")]
-        DancerDanceComboCompatibility = 4025,
-
+            [ParentCombo(DancerMenuDanceFeatures)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature, DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [CustomComboInfo("Custom Dance Step Feature",
+            "Change custom actions into dance steps while dancing." +
+            "\nThis helps ensure you can still dance with combos on, without using auto dance." +
+            "\nYou can change the respective actions by inputting action IDs below for each dance step." +
+            "\nThe defaults are Cascade, Flourish, Fan Dance and Fan Dance II. If set to 0, they will reset to these actions." +
+            "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.", DNC.JobID, 0, "", "")]
+            DancerDanceComboCompatibility = 4025,
 
         // Flourishing Features Section
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuFlourishingFeatures = 4030,
 
-        [ParentCombo(DancerMenuFlourishingFeatures)]
-        [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0, "", "")]
-        DancerFlourishingFanDanceFeature = 4032,
-
+            [ParentCombo(DancerMenuFlourishingFeatures)]
+            [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0, "", "")]
+            DancerFlourishingFanDanceFeature = 4032,
 
         // Fan Dance Combo Features Subsection
         [ParentCombo(DancerMenuFlourishingFeatures)]
@@ -558,21 +593,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fan Dance Combo Features", "Options for Fan Dance combos. Fan Dance 3 takes priority over Fan Dance 4.\nCollapsing this category disables the options inside.", DNC.JobID, 0, "", "")]
         DancerFanDanceComboFeatures = 4033,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 1 -> 3", "Changes Fan Dance 1 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance1_3Combo = 4034,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 1 -> 3", "Changes Fan Dance 1 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance1_3Combo = 4034,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 1 -> 4", "Changes Fan Dance 1 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance1_4Combo = 4035,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 1 -> 4", "Changes Fan Dance 1 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance1_4Combo = 4035,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 2 -> 3", "Changes Fan Dance 2 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance2_3Combo = 4036,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 2 -> 3", "Changes Fan Dance 2 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance2_3Combo = 4036,
 
-        [ParentCombo(DancerFanDanceComboFeatures)]
-        [CustomComboInfo("Fan Dance 2 -> 4", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
-        DancerFanDance2_4Combo = 4037,
+            [ParentCombo(DancerFanDanceComboFeatures)]
+            [CustomComboInfo("Fan Dance 2 -> 4", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
+            DancerFanDance2_4Combo = 4037,
 
         // Devilment --> Starfall
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
@@ -582,86 +617,85 @@ namespace XIVSlothComboPlugin
 
         // Simple Dancer Section
         [ConflictingCombos(DancerSingleTargetMultibutton, DancerAoEMultibutton, DancerCombinedDanceFeature, DancerDanceComboCompatibility, DancerMenuFlourishingFeatures, DancerDevilmentFeature)]
-        [CustomComboInfo("Simple Dancer (Single Target)", "BETA - Single button, single target dancer. Includes songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'\nUse at your own risk!", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Dancer (Single Target)", "Single button, single target. Includes songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID, 0, "", "")]
         DancerSimpleFeature = 4050,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Interrupt", "Includes an interrupt in the rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
-        DancerSimpleInterruptFeature = 4051,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Interrupt", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 0, "", "")]
+            DancerSimpleInterruptFeature = 4051,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Standard Step", "Includes Standard Step in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleStandardFeature = 4052,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Standard Step", "Includes Standard Step in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleStandardFeature = 4052,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Technical Step", "Includes Technical Step in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleTechnicalFeature = 4053,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Technical Step", "Includes Technical Step in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleTechnicalFeature = 4053,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
-        DancerSimpleDevilmentFeature = 4054,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you are Lv70 or above.", DNC.JobID, 0, "", "")]
+            DancerSimpleDevilmentFeature = 4054,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Flourish", "Includes Flourish in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleFlourishFeature = 4055,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Flourish", "Includes Flourish in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleFlourishFeature = 4055,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Feathers", "Includes Feather usage in the rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleFeatherFeature = 4056,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Feathers", "Includes Feather usage in the rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleFeatherFeature = 4056,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when you're under the effects of Technical Step.", DNC.JobID, 0, "")]
-        DancerSimpleFeatherPoolingFeature = 4057,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when you're under the effects of Technical Step.\nWill expend feathers when your target is under 2 percent HP.", DNC.JobID, 0, "")]
+            DancerSimpleFeatherPoolingFeature = 4057,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
-        DancerSimplePanicHealsFeature = 4058,
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
+            DancerSimplePanicHealsFeature = 4058,
 
-        [ParentCombo(DancerSimpleFeature)]
-        [CustomComboInfo("Simple Improvisation", "Includes Improvisation in the rotation when available.", DNC.JobID, 0, "", "")]
-        DancerSimpleImprovFeature = 4059,
-
+            [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Improvisation", "Includes Improvisation in the rotation when available.", DNC.JobID, 0, "", "")]
+            DancerSimpleImprovFeature = 4059,
 
         // Simple Dancer AoE Section
         [ConflictingCombos(DancerSingleTargetMultibutton, DancerAoEMultibutton, DancerCombinedDanceFeature, DancerDanceComboCompatibility, DancerMenuFlourishingFeatures, DancerDevilmentFeature)]
-        [CustomComboInfo("Simple Dancer (AoE)", "BETA - Single button aoe dancer, including songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.\nUse at your own risk!", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Dancer (AoE)", "Single button, AoE. Includes songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID, 0, "", "")]
         DancerSimpleAoEFeature = 4070,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Interrupt", "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEInterruptFeature = 4071,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Interrupt", "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEInterruptFeature = 4071,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Standard Step", "Includes Standard Step in the AoE rotation.", DNC.JobID, 0, "")]
-        DancerSimpleAoEStandardFeature = 4072,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Standard Step", "Includes Standard Step in the AoE rotation.", DNC.JobID, 0, "")]
+            DancerSimpleAoEStandardFeature = 4072,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Technical Step", "Includes Technical Step in the AoE rotation.", DNC.JobID, 0, "")]
-        DancerSimpleAoETechnicalFeature = 4073,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Technical Step", "Includes Technical Step in the AoE rotation.", DNC.JobID, 0, "")]
+            DancerSimpleAoETechnicalFeature = 4073,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEDevilmentFeature = 4074,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEDevilmentFeature = 4074,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Flourish", "Includes Flourish in the AoE rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEFlourishFeature = 4075,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Flourish", "Includes Flourish in the AoE rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEFlourishFeature = 4075,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Feathers", "Includes feather usage in the AoE rotation.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEFeatherFeature = 4076,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Feathers", "Includes feather usage in the AoE rotation.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEFeatherFeature = 4076,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Feather Pooling", "Makes it so the AoE rotation only uses feathers when you have more than 3.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEFeatherPoolingFeature = 4077,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Feather Pooling", "Makes it so the AoE rotation only uses feathers when you have more than 3.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEFeatherPoolingFeature = 4077,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEPanicHealsFeature = 4078,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Panic Heals", "Includes Curing Waltz and Second Wind in the AoE rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEPanicHealsFeature = 4078,
 
-        [ParentCombo(DancerSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Improvisation", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 0, "", "")]
-        DancerSimpleAoEImprovFeature = 4079,
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Improvisation", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEImprovFeature = 4079,
 
         #endregion
         // ====================================================================================
@@ -718,9 +752,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID, 0, "Ranged DPS job now, duh", "Stubby little arms, huh")]
         DarkRangedUptimeFeature = 5011,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", DRK.JobID, 0, "Lower blow", "Blow, but low.")]
-        DarkKnightInterruptFeature = 5012,
-
         [ParentCombo(DarkStalwartSoulCombo)]
         [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "Even the un-cool kids got heals these days")]
         DRKStalwartabyssalDrainFeature = 5013,
@@ -769,9 +800,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
 
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", DRK.JobID)]
-        DarkKnightReprisalProtection = 5030,
-
         #endregion
         // ====================================================================================
         #region DRAGOON
@@ -817,11 +845,11 @@ namespace XIVSlothComboPlugin
         DragoonPiercingTalonPlusFeature = 6403,
 
         [ConflictingCombos(DragoonFullThrustCombo, DragoonFullThrustComboPlus, DragoonChaosThrustCombo, DragoonFangThrustFeature, DragoonFangAndClawFeature)]
-        [CustomComboInfo("Simple Dragoon", "One Button, One Dragoon. Conflicts with every non-AoE feature.", DRG.JobID, 11, "", "")]
+        [CustomComboInfo("Simple Dragoon", "Replaces Full Thrust with the entire DRG combo chain. Conflicts with every non-AoE feature.", DRG.JobID, 11, "", "")]
         DragoonSimple = 6500,
 
         [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Simple Opener", "Level 88+. Includes an opener to the Simple Dragoon rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 12, "", "")]
+        [CustomComboInfo("Simple Opener", "Level 88+. Use True North on prepull to activate. Adds opener to the Simple Dragoon rotation. Not recommended for use in dungeons. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 12, "", "")]
         DragoonOpenerFeature = 6501,
 
         [ParentCombo(DragoonSimple)]
@@ -1002,9 +1030,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
         GunbreakerRangedUptimeFeature = 7015,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces LowBlow with Interject when target can be interrupted .", GNB.JobID, 0, "Lower blow", "Blow, but low.")]
-        GunbreakerInterruptFeature = 7016,
-
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
         GunbreakerBloodfestonST = 7014,
@@ -1031,9 +1056,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", GNB.JobID)]
-        GunbreakerReprisalProtection = 7030,
 
         #endregion
         // ====================================================================================
@@ -1380,7 +1402,7 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash", NIN.JobID, 8)]
         NinHuraijinArmorCrush = 10032,
-
+        
         [ParentCombo(NinSimpleSingleTarget)]
         [CustomComboInfo("Ninki Pooling Feature - Bunshin", "Allows you to have a minimum amount of Ninki saved before spending on Bunshin.", NIN.JobID)]
         NinNinkiBunshinPooling = 10033,
@@ -1454,9 +1476,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
         PaladinFightOrFlightFeature = 11017,
 
-        [CustomComboInfo("Interrupt Feature", "Replaces Shield Bash with Interject when target can be interrupted or Low Blow if it's off cooldown. .", PLD.JobID, 0, "Lower blow", "Blow, but low.")]
-        PaladinInterruptFeature = 11019,
-
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
         PaladinHolyCircleFeature = 11020,
@@ -1476,9 +1495,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
-
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", PLD.JobID)]
-        PaladinReprisalProtection = 11030,
 
         #endregion
         // ====================================================================================
@@ -1707,7 +1723,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
         RedMageLucidOnJolt = 13022,
 
-        [CustomComboInfo("Swiftcast into Verraise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        [CustomComboInfo("RDM Alternative Raise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RedMageSwiftVerraise = 13023,
 
         #endregion
@@ -1751,13 +1767,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
         SageDPSFeatureToT = 14032,
 
-        [ConflictingCombos(SageAlternateEgeiroFeature)]
-        [CustomComboInfo("Swiftcast into Egeiro Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("SGE Alternative Raise Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
         SageEgeiroFeature = 14007,
-
-        [ConflictingCombos(SageEgeiroFeature)]
-        [CustomComboInfo("Egeiro into Swiftcast Feature", "Changes Egiero to Swiftcast when Swiftcast is available.", SGE.JobID, 0, "Raise to Raise", "Swaps your raise with WHM's raise.\nDoesn't work any more. You're welcome")]
-        SageAlternateEgeiroFeature = 14008,
 
         [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
         [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
@@ -1849,7 +1861,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Samurai Overcap Feature", "Adds Shinten onto main combo when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 1", "Kinky.")]
         SamuraiOvercapFeature = 15001,
 
-        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Guren>Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 3", "Kinkier")]
+        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 3", "Kinkier")]
         SamuraiOvercapFeatureAoe = 15002,
 
         //Main Combo Features
@@ -1870,7 +1882,7 @@ namespace XIVSlothComboPlugin
 
             [ConflictingCombos(SamuraiYatenFeature)]
             [ParentCombo(SamuraiGekkoCombo)]
-            [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation.", SAM.JobID, 0)]
+            [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation. \nIf the Opener is interrupted, it will exit the opener via a Goken and a Kaeshi: Goken at the end or via the last Yukikaze. If the latter, CDs will be used on cooldown regardless of burst options.", SAM.JobID, 0)]
             SamuraiOpenerFeature = 15007,
 
             [ConflictingCombos(SamuraiYatenFeature)]
@@ -2008,13 +2020,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("ED Aetherflow", "Change Energy Drain into Aetherflow when you have no more Aetherflow stacks.", SCH.JobID, 0, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
         ScholarEnergyDrainFeature = 16001,
 
-        [ConflictingCombos(SCHAlternateRaiseFeature)]
-        [CustomComboInfo("SCH Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("SCH Alternative Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
         SchRaiseFeature = 16002,
-
-        [ConflictingCombos(SchRaiseFeature)]
-        [CustomComboInfo("SCH Raise Alternate Feature", "Changes Resurrection To Swiftcast when Swiftcast is available.", SCH.JobID, 0, "", "Well, this raise stuff and Peloton Extreme, I guess.")]
-        SCHAlternateRaiseFeature = 16008,
 
         [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID, 0, "", "You're really gonna forget? Really?")]
         ScholarFairyFeature = 16004,
@@ -2140,7 +2148,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
         SummonerEgiAttacksAOEFeature = 17026,
 
-        [CustomComboInfo("Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        [ConflictingCombos(AllCasterRaiseFeature)]
+        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
@@ -2153,6 +2162,9 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
         SummonerSpecialRuinFeature = 17030,
+
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 0, "", "")]
+        SMNLucidDreamingFeature = 17031,
 
         #endregion
         // ====================================================================================
@@ -2171,10 +2183,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, 0, "", "Taming the beast... for now.")]
         WarriorGaugeOvercapFeature = 18003,
 
-        [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Inner Release Feature", "Replace Single target and AoE combo with Fell Cleave/Decimate during Inner Release", WAR.JobID, 0, "", "Unleash your deepest thoughts and feelings upon the party. They'll love it!")]
-        WarriorInnerReleaseFeature = 18004,
-
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, 0, "Nasty-ass Flash", "Jeez. Keep it to yourself.")]
         WarriorNascentFlashFeature = 18005,
 
@@ -2191,13 +2199,7 @@ namespace XIVSlothComboPlugin
         WarriorOrogenyFeature = 18009,
 
         [ParentCombo(WarriorStormsPathCombo)]
-        [ConflictingCombos(WarriorSpenderOption)]
-        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, 0, "", "THE EYE OF THE TIGERRRRR")]
-        WarriorInnerChaosOption = 18010,
-
-        [ParentCombo(WarriorStormsPathCombo)]
-        [ConflictingCombos(WarriorInnerChaosOption)]
-        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "MORE CLEAVE!")]
+        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used and Fell Cleave/Steel Cyclone during Inner Release.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "MORE CLEAVE!")]
         WarriorSpenderOption = 18011,
 
         [ParentCombo(WarriorStormsPathCombo)]
@@ -2212,15 +2214,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Inner Release AOE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0)]
         WarriorIRonAOE = 18014,
 
-        [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with Fell Cleave when under Inner Release buff.\nReplaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, 0, "Cleave of annoyance", "Infuriating stuff, if you ask me. Truly chaotic.")]
-        WarriorInfuriateFeature = 18015,
-
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "Tomahawk!", "You heard me! Tomahawk! Ka-chow!")]
         WARRangedUptimeFeature = 18016,
-
-        [CustomComboInfo("Interrupt Feature", "Replaces Low Blow with Interject when target can be interrupted .", WAR.JobID, 0, "", "That's a low blow to my bro-bro, bro.")]
-        WarriorInterruptFeature = 18017,
 
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
         WarriorInfuriateFellCleave = 18018,
@@ -2236,8 +2232,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
         WarriorInfuriateonST = 18021,
 
-        [CustomComboInfo("Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effectby replacing it with Stone", WAR.JobID)]
-        WarriorReprisalProtection = 18030,
+        [ParentCombo(WarriorInfuriateFellCleave)]
+        [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
+        WarriorUseInnerReleaseFirst = 18022,
 
         #endregion
         // ====================================================================================
@@ -2258,13 +2255,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, 0, "Inflatus Feature", "Pumps you full of air. Boing!")]
         WhiteMageAfflatusFeature = 19003,
 
-        [ConflictingCombos(WHMAlternativeRaise)]
-        [CustomComboInfo("WHM Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
+        [ConflictingCombos(AllHealerRaiseFeature)]
+        [CustomComboInfo("WHM Alternative Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
         WHMRaiseFeature = 19004,
-
-        [ConflictingCombos(WHMRaiseFeature)]
-        [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID, 0, "Look up!", "It's this, but that.")]
-        WHMAlternativeRaise = 19015,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]
@@ -2435,11 +2428,16 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
         MCHBurstMode = 80010,
+       
+            [SecretCustomCombo]
+            [ParentCombo(MCHBurstMode)]
+            [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
+            MCHAltDrill = 80011,
 
-        [SecretCustomCombo]
-        [ParentCombo(MCHBurstMode)]
-        [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
-        MCHAltDrill = 80011,
+            [SecretCustomCombo]
+            [ParentCombo(MCHBurstMode)]
+            [CustomComboInfo("Alternate Analysis Mode", "Uses analysis with Air Anchor instead of Chain Saw.", MCHPVP.JobID)]
+            MCHAltAnalysis = 80012,
 
         // BRD
         [SecretCustomCombo]
