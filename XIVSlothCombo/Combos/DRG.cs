@@ -317,7 +317,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.DragoonOpenerFeature) && level >= 88)
                 {
-                    if (inCombat && lastComboMove is DRG.TrueThrust && !inOpener)
+                    if (inCombat && HasEffect(DRG.Buffs.TrueNorth) && !inOpener)
                     {
                         inOpener = true;
                     }
@@ -384,7 +384,7 @@ namespace XIVSlothComboPlugin.Combos
                                     if (level >= DRG.Levels.HighJump && IsOffCooldown(DRG.HighJump))
                                         return DRG.HighJump;
 
-                                    if (level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
+                                    if (level >= DRG.Levels.Jump && level < DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
                                         return DRG.Jump;
                                 }
                             }
@@ -563,7 +563,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (step is 1)
                         {
                             if (lastComboMove is DRG.TrueThrust) step++;
-                            else return DRG.TrueNorth;
+                            else return DRG.TrueThrust;
                         }
 
                         if (step is 2)
@@ -586,7 +586,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (step is 5)
                         {
-                            if (TargetHasEffectAny(DRG.Debuffs.ChaoticSpring)) step++;
+                            if (TargetHasEffect(DRG.Debuffs.ChaoticSpring)) step++;
                             return DRG.ChaoticSpring;
                         }
 
@@ -604,7 +604,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (step is 8)
                         {
-                            if (!HasEffectAny(DRG.Buffs.EnhancedWheelingThrust)) step++;
+                            if (!HasEffect(DRG.Buffs.EnhancedWheelingThrust)) step++;
                             else return DRG.WheelingThrust;
                         }
 
@@ -622,7 +622,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (step is 11)
                         {
-                            if (!HasEffectAny(DRG.Buffs.SharperFangAndClaw)) step++;
+                            if (!HasEffect(DRG.Buffs.SharperFangAndClaw)) step++;
                             else return DRG.FangAndClaw;
                         }
 
@@ -676,13 +676,13 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (step is 20)
                         {
-                            if (!HasEffectAny(DRG.Buffs.SharperFangAndClaw)) step++;
+                            if (!HasEffect(DRG.Buffs.SharperFangAndClaw)) step++;
                             else return DRG.FangAndClaw;
                         }
 
                         if (step is 21)
                         {
-                            if (!HasEffectAny(DRG.Buffs.EnhancedWheelingThrust)) step++;
+                            if (!HasEffect(DRG.Buffs.EnhancedWheelingThrust)) step++;
                             else return DRG.WheelingThrust;
                         }
 
@@ -750,7 +750,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (level >= DRG.Levels.HighJump && IsOffCooldown(DRG.HighJump))
                                 return DRG.HighJump;
 
-                            if (level >= DRG.Levels.Jump && level <= DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
+                            if (level >= DRG.Levels.Jump && level < DRG.Levels.HighJump && IsOffCooldown(DRG.Jump))
                                 return DRG.Jump;
                         }
                     }
@@ -988,22 +988,22 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (IsEnabled(CustomComboPreset.DragoonAoELifeSurgeFeature))
                     {
-                        if (HasEffect(DRG.Buffs.LanceCharge) && lastComboMove is DRG.CoerthanTorment && level >= DRG.Levels.CoerthanTorment && !HasEffectAny(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
+                        if (HasEffect(DRG.Buffs.LanceCharge) && lastComboMove is DRG.CoerthanTorment && level >= DRG.Levels.CoerthanTorment && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
                             return DRG.LifeSurge;
 
-                        if (HasEffect(DRG.Buffs.RightEye) && lastComboMove is DRG.CoerthanTorment && level >= DRG.Levels.CoerthanTorment && !HasEffectAny(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
+                        if (HasEffect(DRG.Buffs.RightEye) && lastComboMove is DRG.CoerthanTorment && level >= DRG.Levels.CoerthanTorment && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
                             return DRG.LifeSurge;
 
-                        if (HasEffect(DRG.Buffs.LanceCharge) && lastComboMove is DRG.SonicThrust && level >= DRG.Levels.SonicThrust && level <= DRG.Levels.CoerthanTorment && !HasEffectAny(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
+                        if (HasEffect(DRG.Buffs.LanceCharge) && lastComboMove is DRG.SonicThrust && level >= DRG.Levels.SonicThrust && level <= DRG.Levels.CoerthanTorment && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
                             return DRG.LifeSurge;
 
-                        if (HasEffect(DRG.Buffs.RightEye) && lastComboMove is DRG.SonicThrust && level >= DRG.Levels.SonicThrust && level <= DRG.Levels.CoerthanTorment && !HasEffectAny(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
+                        if (HasEffect(DRG.Buffs.RightEye) && lastComboMove is DRG.SonicThrust && level >= DRG.Levels.SonicThrust && level <= DRG.Levels.CoerthanTorment && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
                             return DRG.LifeSurge;
 
-                        if (HasEffect(DRG.Buffs.LanceCharge) && lastComboMove == OriginalHook(DRG.DoomSpike) && level <= DRG.Levels.SonicThrust && !HasEffectAny(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
+                        if (HasEffect(DRG.Buffs.LanceCharge) && lastComboMove == OriginalHook(DRG.DoomSpike) && level <= DRG.Levels.SonicThrust && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
                             return DRG.LifeSurge;
 
-                        if (HasEffect(DRG.Buffs.RightEye) && lastComboMove == OriginalHook(DRG.DoomSpike) && level <= DRG.Levels.SonicThrust && !HasEffectAny(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
+                        if (HasEffect(DRG.Buffs.RightEye) && lastComboMove == OriginalHook(DRG.DoomSpike) && level <= DRG.Levels.SonicThrust && !HasEffect(DRG.Buffs.LifeSurge) && GetRemainingCharges(DRG.LifeSurge) > 0 && CanWeave(actionID, weaveTime: 0.3))
                             return DRG.LifeSurge;
 
                     }

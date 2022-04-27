@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.1\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.2\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
@@ -264,6 +264,23 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
                 ImGui.EndTooltip();
             }
+
+            #endregion
+
+            #region Message of the Day
+            var motd = Service.Configuration.HideMessageOfTheDay;
+            if (ImGui.Checkbox("Hide Message of the Day", ref motd))
+            {
+                Service.Configuration.HideMessageOfTheDay = motd;
+                Service.Configuration.Save();
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Disables the Message of the Day message in your chat when you login.");
+                ImGui.EndTooltip();
+            }
+            ImGui.NextColumn();
 
             #endregion
 
@@ -704,10 +721,16 @@ namespace XIVSlothComboPlugin
             
 
             if (preset == CustomComboPreset.NinAeolianMugFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, "Set the amount of Ninki to be at or under for this feature (level 66 onwards)");
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, $"Set the amount of Ninki to be at or under for this feature (level {NIN.TraitLevels.Shukiho} onwards)");
 
             if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo)
                 ConfigWindowFunctions.DrawSliderInt(0, 30, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+
+            if (preset == CustomComboPreset.NinNinkiBhavacakraPooling)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.NinkiBhavaPooling, "The minimum value of Ninki to have before spending.");
+
+            if (preset == CustomComboPreset.NinNinkiBunshinPooling)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.NinkiBunshinPooling, "The minimum value of Ninki to have before spending.");
 
             #endregion
             // ====================================================================================
@@ -837,10 +860,16 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SUMMONER
+
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice,"Titan","Summons Titan first, Garuda second, Ifrit third", 1);
+
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+
+            if (preset == CustomComboPreset.SMNLucidDreamingFeature)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SMN.Config.SMNLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
             #endregion
             // ====================================================================================
             #region WARRIOR

@@ -169,6 +169,8 @@ namespace XIVSlothComboPlugin
 
         public bool SpecialEvent { get; set; } = false;
 
+        public bool HideMessageOfTheDay { get; set; } = false;
+
         [JsonProperty]
         public Dictionary<string, byte[]> ImageCache { get; set; } = new();
 
