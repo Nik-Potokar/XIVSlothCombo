@@ -855,6 +855,10 @@ namespace XIVSlothComboPlugin
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.ScholarFairyFeature)
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.ScholarFairy, "Eos", "Summon Eos", 1);
+            if (preset == CustomComboPreset.ScholarFairyFeature)
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.ScholarFairy, "Selene", "Summon Selene", 2);
 
 
             #endregion

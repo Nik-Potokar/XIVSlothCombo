@@ -105,7 +105,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                ScholarLucidDreaming = "LucidScholar";
+                ScholarLucidDreaming = "LucidScholar",
+                ScholarFairy = "ScholarFairy";
         }
     }
 
@@ -205,11 +206,14 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if(actionID == SCH.WhisperingDawn || actionID == SCH.FeyBlessing || actionID == SCH.FeyBlessing || actionID == SCH.FeyIllumination || actionID == SCH.Dissipation || actionID == SCH.Aetherpact)
+            if (actionID == SCH.WhisperingDawn || actionID == SCH.FeyBlessing || actionID == SCH.FeyBlessing || actionID == SCH.FeyIllumination || actionID == SCH.Dissipation || actionID == SCH.Aetherpact)
             {
                 var gauge = GetJobGauge<SCHGauge>();
                 if (!Service.BuddyList.PetBuddyPresent && gauge.SeraphTimer == 0)
-                    return SCH.SummonSelene;
+                {
+                    if ((Service.Configuration.GetCustomIntValue(SCH.Config.ScholarFairy)) == 2) return SCH.SummonSelene;
+                    else return SCH.SummonEos;
+                }
             }
             return actionID;
         }
