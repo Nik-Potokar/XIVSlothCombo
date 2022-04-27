@@ -7,6 +7,7 @@ using Dalamud.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace XIVSlothComboPlugin
 {
@@ -55,8 +56,15 @@ namespace XIVSlothComboPlugin
                 ShowInHelp = true,
             });
 
+            Service.ClientState.Login += PrintLoginMessage;
+            
+        }
+
+        private void PrintLoginMessage(object? sender, EventArgs e)
+        {
             if (!Service.Configuration.HideMessageOfTheDay)
-            PrintMotD();
+                Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(task => PrintMotD());
+
         }
 
         private void PrintMotD()
