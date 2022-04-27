@@ -1421,9 +1421,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Royal Authority Combo", "All-in-one main combo adds Royal Authority/Rage of Halone.\nToggle all sub-options on to make this a 1 button rotation", PLD.JobID, 0, "", "Lmao, 'Authority'... If you say so, buddy.")]
         PaladinRoyalAuthorityCombo = 11001,
 
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
-        PaladinAtonementFeature = 11002,
+        [ParentCombo(PaladinAtonementFeature)]
+        [CustomComboInfo("Atonement drop Feature", "Will drop the last Atonement charge right before FoF comes back off cooldown.\nPlease note that this assumes you use both FoF and Req according to the full FoF opener and standard loop", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
+        PaladinAtonementDropFeature = 11002,
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "Promenade feature", "Long walks on the promenade...")]
         PaladinProminenceCombo = 11003,
@@ -1495,6 +1495,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
+
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
+        PaladinAtonementFeature = 11025,
 
         #endregion
         // ====================================================================================

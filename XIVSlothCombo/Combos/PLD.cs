@@ -182,14 +182,20 @@
                         return OriginalHook(PLD.Confiteor);
                 }
 
-                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
+                if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) && IsNotEnabled(CustomComboPreset.PaladinAtonementDropFeature))
                 {
-                    if ((GetCooldownRemainingTime(PLD.Requiescat) > 5 && GetCooldownRemainingTime(PLD.Requiescat) <= 45 && GetBuffStacks(PLD.Buffs.SwordOath) > (3-atonementUsage)) || HasEffect(PLD.Buffs.Requiescat) && GetCooldownRemainingTime(PLD.FightOrFlight) <= 49)
+                    if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
                         return PLD.Atonement;
                 }
 
-                // 1-2-3 Combo
-                if (comboTime > 0)
+                if (IsEnabled(CustomComboPreset.PaladinAtonementDropFeature) && level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
+                {
+                    if ((GetCooldownRemainingTime(PLD.FightOrFlight) <= 15 && GetBuffStacks(PLD.Buffs.SwordOath) > 1) || HasEffect(PLD.Buffs.Requiescat) && GetCooldownRemainingTime(PLD.FightOrFlight) <= 49)
+                        return PLD.Atonement;
+                }
+
+                    // 1-2-3 Combo
+                    if (comboTime > 0)
                 {
                     if (lastComboMove is PLD.FastBlade && level >= PLD.Levels.RiotBlade)
                         return PLD.RiotBlade;
