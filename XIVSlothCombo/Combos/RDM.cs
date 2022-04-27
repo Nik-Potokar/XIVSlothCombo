@@ -108,14 +108,16 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 
         {
-//RDM_BALANCE_OPENER
+            //MAIN_COMBO_VARIABLES
+            RDMGauge gauge = GetJobGauge<RDMGauge>();
+            int black = gauge.BlackMana;
+            int white = gauge.WhiteMana;
+            //END_MAIN_COMBO_VARIABLES
+
+            //RDM_BALANCE_OPENER
             if (actionID is RDM.Jolt && IsEnabled(CustomComboPreset.RDM_Balance_Opener))
             {
                 bool inCombat = HasCondition(ConditionFlag.InCombat);
-
-                RDMGauge gauge = GetJobGauge<RDMGauge>();
-                int black = gauge.BlackMana;
-                int white = gauge.WhiteMana;
 
                 // Reset check for opener
                 if (gauge.BlackMana == 0 && gauge.WhiteMana == 0 && IsOffCooldown(RDM.Embolden) && IsOffCooldown(RDM.Manafication) && IsOffCooldown(All.Swiftcast)
@@ -279,13 +281,18 @@ namespace XIVSlothComboPlugin.Combos
             //SYSTEM_MANA_BALANCING_MACHINE
             //Machine to decide which ver spell should be used.
             //Rules:
-            //1.Avoid balancing
-            //2.Stay withing difference limit
+            //1.Avoid perfect balancing
+            //2.Stay within difference limit
             //3.Strive to achieve correct mana for double melee combo burst
             //   - Level 70: 
             //   - Level 80: 
             //   - Level 90: 
-
+            bool useFire = false;
+            bool useStone = false;
+            bool useAero = false;
+            bool useThunder = false;
+            bool useAero2 = false;
+            bool useThunder2 = false;
 
             //END_SYSTEM_MANA_BALANCING_MACHINE
 
@@ -300,10 +307,6 @@ namespace XIVSlothComboPlugin.Combos
             //RDM_VERTHUNDERVERAERO
             if (actionID == RDM.Jolt && IsEnabled(CustomComboPreset.RDM_VerthunderVeraero))
             {
-                RDMGauge gauge = GetJobGauge<RDMGauge>();
-                int black = gauge.BlackMana;
-                int white = gauge.WhiteMana;
-
                 if (actionID is RDM.Jolt && (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration)))
                 {
                     if (black > white)
