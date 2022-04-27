@@ -256,7 +256,7 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(AstReFocusFeature)]
         [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously selected target.", AST.JobID)]
+        [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
         AstReTargetFeature = 1033,
 
         [ConflictingCombos(AstReTargetFeature)]
@@ -1402,6 +1402,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash", NIN.JobID, 8)]
         NinHuraijinArmorCrush = 10032,
+        
+        [ParentCombo(NinSimpleSingleTarget)]
+        [CustomComboInfo("Ninki Pooling Feature - Bunshin", "Allows you to have a minimum amount of Ninki saved before spending on Bunshin.", NIN.JobID)]
+        NinNinkiBunshinPooling = 10033,
+
+        [ParentCombo(NinSimpleSingleTarget)]
+        [CustomComboInfo("Ninki Pooling Feature - Bhavacakra", "Allows you to have a minimum amount of Ninki saved before spending on Bhavacakra.", NIN.JobID)]
+        NinNinkiBhavacakraPooling = 10034,
 
         #endregion
         // ====================================================================================
@@ -1853,7 +1861,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Samurai Overcap Feature", "Adds Shinten onto main combo when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 1", "Kinky.")]
         SamuraiOvercapFeature = 15001,
 
-        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Guren>Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 3", "Kinkier")]
+        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, 0, "Wink emoji Overcap Feature 3", "Kinkier")]
         SamuraiOvercapFeatureAoe = 15002,
 
         //Main Combo Features
@@ -1874,7 +1882,7 @@ namespace XIVSlothComboPlugin
 
             [ConflictingCombos(SamuraiYatenFeature)]
             [ParentCombo(SamuraiGekkoCombo)]
-            [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation.", SAM.JobID, 0)]
+            [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation. \nIf the Opener is interrupted, it will exit the opener via a Goken and a Kaeshi: Goken at the end or via the last Yukikaze. If the latter, CDs will be used on cooldown regardless of burst options.", SAM.JobID, 0)]
             SamuraiOpenerFeature = 15007,
 
             [ConflictingCombos(SamuraiYatenFeature)]
@@ -2175,10 +2183,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, 0, "", "Taming the beast... for now.")]
         WarriorGaugeOvercapFeature = 18003,
 
-        [ParentCombo(WarriorStormsPathCombo)]
-        [CustomComboInfo("Inner Release Feature", "Replace Single target and AoE combo with Fell Cleave/Decimate during Inner Release", WAR.JobID, 0, "", "Unleash your deepest thoughts and feelings upon the party. They'll love it!")]
-        WarriorInnerReleaseFeature = 18004,
-
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, 0, "Nasty-ass Flash", "Jeez. Keep it to yourself.")]
         WarriorNascentFlashFeature = 18005,
 
@@ -2195,13 +2199,7 @@ namespace XIVSlothComboPlugin
         WarriorOrogenyFeature = 18009,
 
         [ParentCombo(WarriorStormsPathCombo)]
-        [ConflictingCombos(WarriorSpenderOption)]
-        [CustomComboInfo("Inner Chaos option", "Adds Inner Chaos to Storms Path Combo and Chaotic Cyclone to Overpower Combo if you are buffed with Nascent Chaos.\nRequires Storms Path Combo and Overpower Combo", WAR.JobID, 0, "", "THE EYE OF THE TIGERRRRR")]
-        WarriorInnerChaosOption = 18010,
-
-        [ParentCombo(WarriorStormsPathCombo)]
-        [ConflictingCombos(WarriorInnerChaosOption)]
-        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "MORE CLEAVE!")]
+        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used and Fell Cleave/Steel Cyclone during Inner Release.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "MORE CLEAVE!")]
         WarriorSpenderOption = 18011,
 
         [ParentCombo(WarriorStormsPathCombo)]
@@ -2215,9 +2213,6 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorMythrilTempestCombo)]
         [CustomComboInfo("Inner Release AOE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0)]
         WarriorIRonAOE = 18014,
-
-        [CustomComboInfo("Infuriate Feature", "Replaces Infuriate with Fell Cleave when under Inner Release buff.\nReplaces Infuriate with Inner Chaos When under Nascent Chaos buff", WAR.JobID, 0, "Cleave of annoyance", "Infuriating stuff, if you ask me. Truly chaotic.")]
-        WarriorInfuriateFeature = 18015,
 
         [ParentCombo(WarriorStormsPathCombo)]
         [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "Tomahawk!", "You heard me! Tomahawk! Ka-chow!")]
