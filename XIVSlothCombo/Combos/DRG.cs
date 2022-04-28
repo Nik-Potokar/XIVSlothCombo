@@ -315,6 +315,7 @@ namespace XIVSlothComboPlugin.Combos
                 var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 var canWeave = CanWeave(actionID);
 
+                // Lvl88+ Opener
                 if (IsEnabled(CustomComboPreset.DragoonOpenerFeature) && level >= 88)
                 {
                     if (inCombat && HasEffect(DRG.Buffs.TrueNorth) && !inOpener)
@@ -690,6 +691,10 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+                // Piercing Talon Uptime Option
+                if (IsEnabled(CustomComboPreset.DRGSimpleRangedUptimeST) && level >= DRG.Levels.PiercingTalon && !InMeleeRange())
+                        return DRG.PiercingTalon;
+
                 //Lance Charge Feature
                 if (canWeave)
                 {
@@ -875,13 +880,6 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                //Piercing Talon Uptime Feature
-                if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= DRG.Levels.PiercingTalon)
-                {
-                    if (!InMeleeRange())
-                        return DRG.PiercingTalon;
-                }
-
                 if (comboTime > 0)
                 {
                     if ((lastComboMove is DRG.TrueThrust or DRG.RaidenThrust) && level >= DRG.Levels.Disembowel && (Disembowel is null || (Disembowel.RemainingTime < 10)))
@@ -923,6 +921,9 @@ namespace XIVSlothComboPlugin.Combos
             var gauge = GetJobGauge<DRGGauge>();
             if (actionID is DRG.CoerthanTorment)
             {
+                // Piercing Talon Uptime Option
+                if (IsEnabled(CustomComboPreset.DRGSimpleRangedUptimeAoE) && level >= DRG.Levels.PiercingTalon && !InMeleeRange())
+                    return DRG.PiercingTalon;
 
                 //Buffs AoE Feature
                 if (canWeave)
