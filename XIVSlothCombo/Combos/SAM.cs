@@ -592,7 +592,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.TenkaGokenAOEFeature) && level >= SAM.Levels.TenkaGoken)
                 {
-                    if (!this.IsMoving && (OriginalHook(SAM.Iaijutsu) == SAM.TenkaGoken || OriginalHook(SAM.Iaijutsu) == SAM.Setsugekka))
+                    if (!this.IsMoving && (OriginalHook(SAM.Iaijutsu) == SAM.TenkaGoken || (OriginalHook(SAM.Iaijutsu) == SAM.Setsugekka && level >= SAM.Levels.Setsugekka)))
                         return OriginalHook(SAM.Iaijutsu);
                     if ((gauge.Kaeshi == Kaeshi.GOKEN || gauge.Kaeshi == Kaeshi.SETSUGEKKA) && level >= SAM.Levels.TsubameGaeshi && GetRemainingCharges(SAM.TsubameGaeshi) > 0)
                         return OriginalHook(SAM.TsubameGaeshi);
