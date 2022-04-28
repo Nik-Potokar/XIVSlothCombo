@@ -119,8 +119,13 @@ namespace XIVSlothComboPlugin.Combos
                             return WAR.Onslaught;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady))
+                    if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= WAR.Levels.PrimalRend)
+                    {
+                        if (IsEnabled(CustomComboPreset.WarriorPrimalRendCloseRangeFeature) && (GetTargetDistance() <= 1 || GetBuffRemainingTime(WAR.Buffs.PrimalRendReady) <= 10))
+                            return WAR.PrimalRend;
+                        if (IsNotEnabled(CustomComboPreset.WarriorPrimalRendCloseRangeFeature))
                         return WAR.PrimalRend;
+                    }
 
                     if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && level >= WAR.Levels.InnerBeast)
                     {
@@ -209,7 +214,13 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= WAR.Levels.PrimalRend)
-                            return OriginalHook(WAR.PrimalRend);
+                        {
+                            if (IsEnabled(CustomComboPreset.WarriorPrimalRendCloseRangeFeature) && (GetTargetDistance() <= 3 || GetBuffRemainingTime(WAR.Buffs.PrimalRendReady) <= 10))
+                                return WAR.PrimalRend;
+                            if (IsNotEnabled(CustomComboPreset.WarriorPrimalRendCloseRangeFeature))
+                                return WAR.PrimalRend;
+                        }
+
                         if (IsEnabled(CustomComboPreset.WarriorSpenderOption) && level >= WAR.Levels.SteelCyclone && (gauge >= 50 || HasEffect(WAR.Buffs.InnerRelease)))
                             return OriginalHook(WAR.SteelCyclone);
                     }
