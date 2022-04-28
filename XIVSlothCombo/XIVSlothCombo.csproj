@@ -4,7 +4,7 @@
 	<PropertyGroup>
 		<Authors>attick, Kami, Daemitus, Grammernatzi, Aki, Iaotle, Codemned, PrincessRTFM, damolitionn, ele-starshade, k-kz</Authors>
 		<Company>-</Company>
-		<Version>3.0.12.2</Version>
+		<Version>3.0.12.3</Version>
 		<!-- This is the version that will be used when pushing to the repo.-->
 		<Description>XIVCombo for lazy players</Description>
 		<Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
