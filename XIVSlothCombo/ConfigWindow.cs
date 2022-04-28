@@ -735,8 +735,8 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PALADIN
-            if (preset == CustomComboPreset.PaladinAtonementFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
+            //if (preset == CustomComboPreset.PaladinAtonementDropFeature && enabled)
+            //    ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
 
             if (preset == CustomComboPreset.PaladinInterveneFeature && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLDKeepInterveneCharges, "How many charges to keep ready? (0 = Use All)");
