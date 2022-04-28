@@ -1687,44 +1687,51 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Red Mage AoE Finisher", "Adds Finishers onto Moulinet and SmartCast AoE Feature.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageMeleeAoECombo = 13012,
 
-        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos. (Testing Only!)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
+        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageEngagementFeature = 13013,
 
+        [CustomComboInfo("Corps-a-Corps Feature", "Adds Corps-a-Corps in all melee combos.", RDM.JobID, 0, "Verraise -> Swiftcast", "Ah look, it's what you were always meant to do")]
+        RedMageCorpsACorpsFeature = 13014,
+
         [CustomComboInfo("Simple Red Mage Feature Single Target", "Combines Smartcast feature with melee combo on Verstone,Verfire or melee skills (This is not optimal until i find a solution for distance delay)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMage = 13014,
+        SimpleRedMage = 13015,
 
         [CustomComboInfo("Simple Red Mage Feature AoE", "Combines Smartcast AoE feature with melee AoE combo on Verthunder2/Veraero2 (This is not optimal until i find a solution for distance delay)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageAoE = 13015,
+        SimpleRedMageAoE = 13016,
 
         [CustomComboInfo("Corps-A-corps/Displacement Feature", "Corps-A-corps becomes displacement when in melee range", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageMovementFeature = 13016,
+        RedMageMovementFeature = 13017,
 
         [ParentCombo(RedMageOgcdCombo)]
         [CustomComboInfo("oGCD Feature Everywhere", "Adds oGCD Feature to all other combos", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageOgcdComboOnCombos = 13017,
+        RedMageOgcdComboOnCombos = 13018,
 
         [ParentCombo(SimpleRedMage)]
         [CustomComboInfo("Verstone/Verfire Activation", "Add Acceleration and Swiftcast to Simple Red Mage to force activation of verstone or verfire effects when necessary.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageFishing = 13018,
+        SimpleRedMageFishing = 13019,
 
         [ParentCombo(SimpleRedMageFishing)]
         [CustomComboInfo("Acceleration only", "Only use Acceleration to force verfire or verstone activations.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageAccelOnlyFishing = 13019,
+        SimpleRedMageAccelOnlyFishing = 13020,
 
         [ParentCombo(SimpleRedMage)]
         [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
         [CustomComboInfo("Simple opener", "Do the optimal opener. [lv90 only]", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageOpener = 13020,
+        SimpleRedMageOpener = 13021,
 
         [ConflictingCombos(RedMageSmartSingleTargetCombo, RedMageVerprocCombo)]
         [CustomComboInfo("Jolt into Verproc", "Replaces Jolt with Verstone/Verfire, when proc is available and won't cause severe imbalance", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageJoltVerprocCombo = 13021,
+        RedMageJoltVerprocCombo = 13022,
 
         [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
-        RedMageLucidOnJolt = 13022,
+        RedMageLucidOnJolt = 13023,
 
         [CustomComboInfo("RDM Alternative Raise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
-        RedMageSwiftVerraise = 13023,
+        RedMageSwiftVerraise = 13024,
+
+        [ParentCombo(RedMageCorpsACorpsFeature)]
+        [CustomComboInfo("Pull to target", "When with enough mana to enter melee phase.", RDM.JobID, 0, "", "")]
+        RedMageCorpsACorpsPullFeature = 13025,
 
         #endregion
         // ====================================================================================
