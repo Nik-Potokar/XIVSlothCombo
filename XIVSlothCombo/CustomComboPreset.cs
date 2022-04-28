@@ -1723,7 +1723,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Jolt into Verproc", "Replaces Jolt with Verstone/Verfire, when proc is available and won't cause severe imbalance", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageJoltVerprocCombo = 13022,
 
-        [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
+        [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder, Impact and Jolt when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
         RedMageLucidOnJolt = 13023,
 
         [CustomComboInfo("RDM Alternative Raise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
