@@ -1895,7 +1895,7 @@ namespace XIVSlothComboPlugin
             SamuraiGekkoCDs = 15099,
 
                 [ParentCombo(SamuraiGekkoCDs)]
-                [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten to Single Target/AoE combos when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
+                [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten to Gekko and Mangetsu combos when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
                 SamuraiIkishotenonmaincombo = 15009,
 
                 [ParentCombo(SamuraiGekkoCDs)]
@@ -1965,6 +1965,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "Okeh Combo", "Okeh")]
         SamuraiOkaCombo = 15026,
 
+            [ParentCombo(SamuraiOkaCombo)]    
+            [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze Combo, Mangetsu Combo, Senei, Shinten, and Shoha to Oka Combo.\nOptimal for two targets and when 86 and above.", SAM.JobID, 0)]
+            SamTwoTargetFeature = 150261,
+
         //CD Features
         [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu or Shifu depending on what is needed.", SAM.JobID, 0, "Jumpup/Sitdown", "Work those glutes.")]
         SamuraiJinpuShifuFeature = 15027,
@@ -2008,7 +2012,11 @@ namespace XIVSlothComboPlugin
         SamuraiYatenFeature = 15036,
         
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, 0, "Sticky-icky-shoten", "Wait, you guys use meditation?")]
-        SamuraiIkishotenNamikiriFeature = 150367,
+        SamuraiIkishotenNamikiriFeature = 15037,
+
+        [CustomComboInfo("True North Feature", "Adds True North on all ST Combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0)]
+        SamuraiTrueNorthFeature = 15038,
+        
 
         #endregion
         // ====================================================================================
@@ -2235,6 +2243,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorInfuriateFellCleave)]
         [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
         WarriorUseInnerReleaseFirst = 18022,
+
+        [ParentCombo(WarriorPrimalRendFeature)]
+        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
+        WarriorPrimalRendCloseRangeFeature = 18023,
+        
 
         #endregion
         // ====================================================================================

@@ -9,6 +9,7 @@ namespace XIVSlothComboPlugin.Combos
         public const uint
             Rampart = 7531,
             SecondWind = 7541,
+            TrueNorth = 7546,
             Addle = 7560,
             Swiftcast = 7561,
             LucidDreaming = 7562,
@@ -44,7 +45,8 @@ namespace XIVSlothComboPlugin.Combos
                 Swiftcast = 167,
                 Rampart = 1191,
                 Peloton = 1199,
-                LucidDreaming = 1204;
+                LucidDreaming = 1204,
+                TrueNorth = 1250;
         }
 
         public static class Debuffs
@@ -81,7 +83,8 @@ namespace XIVSlothComboPlugin.Combos
                 Feint = 22,
                 HeadGraze = 24,
                 Rescue = 48,
-                Shirk = 48;
+                Shirk = 48,
+                TrueNorth = 50;
         }
     }
 
