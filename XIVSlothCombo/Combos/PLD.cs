@@ -172,7 +172,7 @@
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit && !HasEffect(PLD.Buffs.FightOrFlight) && LocalPlayer.CurrentMp >= 1000)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor &&
-                            (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
+                            ((GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 && GetBuffRemainingTime(PLD.Buffs.Requiescat) >= 0) || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
                                 return PLD.Confiteor;
 
                             return PLD.HolySpirit;
@@ -247,7 +247,7 @@
                 if (IsEnabled(CustomComboPreset.PaladinHolyCircleFeature) && HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle && LocalPlayer.CurrentMp >= 1000)
                 {
                     if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && level >= PLD.Levels.Confiteor &&
-                        (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
+                        ((GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 && GetBuffRemainingTime(PLD.Buffs.Requiescat) >= 0) || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
                             return PLD.Confiteor;
 
                     return PLD.HolyCircle;
