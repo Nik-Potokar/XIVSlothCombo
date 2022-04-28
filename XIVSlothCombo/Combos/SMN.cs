@@ -156,8 +156,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                SMNLucidDreamingFeature = "SMNLucidDreamingFeature";
-            public const string
+                SMNLucidDreamingFeature = "SMNLucidDreamingFeature",
+                SMNSearingLightChoice = "SMNSearingLightChoice",
                 SummonerPrimalChoice = "SummonerPrimalChoice";
         }
     }
@@ -191,7 +191,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    
+
     internal class SummonerEDFesterCombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SummonerEDFesterCombo;
@@ -289,7 +289,7 @@ namespace XIVSlothComboPlugin.Combos
 
                             if (summonerPrimalChoice == 1)
                             {
-                                if (gauge.IsTitanReady && level >=SMN.Levels.SummonTopaz)
+                                if (gauge.IsTitanReady && level >= SMN.Levels.SummonTopaz)
                                     return OriginalHook(SMN.SummonTopaz);
 
                                 if (gauge.IsGarudaReady && level >= SMN.Levels.SummonEmerald)
@@ -312,8 +312,8 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(SMN.Aethercharge)) &&
                             (level >= SMN.Levels.Aethercharge && level < SMN.Levels.Bahamut || //Pre Bahamut Phase
-                            gauge.IsBahamutReady  && level >= SMN.Levels.Bahamut || //Bahamut Phase
-                            gauge.IsPhoenixReady  && level >= SMN.Levels.Phoenix)) //Phoenix Phase
+                            gauge.IsBahamutReady && level >= SMN.Levels.Bahamut || //Bahamut Phase
+                            gauge.IsPhoenixReady && level >= SMN.Levels.Phoenix)) //Phoenix Phase
                             return OriginalHook(SMN.Aethercharge);
 
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanSpellWeave(actionID))
@@ -322,7 +322,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(SMN.AstralFlow);
 
                             if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) && level >= SMN.Levels.Bahamut && lastComboMove is SMN.AstralImpulse or SMN.FountainOfFire)
-                                return OriginalHook(SMN.EnkindleBahamut); 
+                                return OriginalHook(SMN.EnkindleBahamut);
                         }
 
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption))
@@ -331,7 +331,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(SMN.AstralFlow);
                         }
                     }
-                    
+
                     if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature) && level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
                         return SMN.Ruin4;
                 }
@@ -356,9 +356,20 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (CanSpellWeave(actionID))
                     {
+                        var searingChoice = Service.Configuration.GetCustomIntValue(SMN.Config.SMNSearingLightChoice);
+
                         // Searing
-                        if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) && IsOffCooldown(SMN.SearingLight) && level >= SMN.Levels.SearingLight && gauge.IsBahamutReady && GetCooldownRemainingTime(SMN.SummonBahamut) >= 55)
+                        if (IsEnabled(CustomComboPreset.BuffOnSimpleAoESummoner) &&
+                            IsOffCooldown(SMN.SearingLight) &&
+                            level >= SMN.Levels.SearingLight &&
+                            (searingChoice == 0 ||
+                            (OriginalHook(SMN.Tridisaster) is SMN.AstralFlare && gauge.SummonTimerRemaining > 0 && searingChoice == 1) ||
+                            (OriginalHook(SMN.Tridisaster) is SMN.BrandOfPurgatory && gauge.SummonTimerRemaining > 0 && searingChoice == 2) ||
+                            (OriginalHook(SMN.PreciousBrilliance) is (SMN.RubyCata or SMN.RubyOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 3) ||
+                            (OriginalHook(SMN.PreciousBrilliance) is (SMN.EmeraldCata or SMN.EmeraldOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 4) ||
+                            (OriginalHook(SMN.PreciousBrilliance) is (SMN.TopazCata or SMN.TopazOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 5)))
                             return SMN.SearingLight;
+
 
                         // ED & Fester
                         if (IsEnabled(CustomComboPreset.SummonerESAOEFeature))
@@ -374,6 +385,39 @@ namespace XIVSlothComboPlugin.Combos
                             return All.LucidDreaming;
                     }
 
+                    //Demi
+                    if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
+                    {
+                        if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(SMN.Aethercharge)) &&
+                            (level >= SMN.Levels.Aethercharge && level < SMN.Levels.Bahamut || //Pre Bahamut Phase
+                            gauge.IsBahamutReady && level >= SMN.Levels.Bahamut || //Bahamut Phase
+                            gauge.IsPhoenixReady && level >= SMN.Levels.Phoenix)) //Phoenix Phase
+                            return OriginalHook(SMN.Aethercharge);
+
+                    }
+
+                    //Demi Nuke
+                    if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
+                    {
+                        if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) &&
+                            level >= SMN.Levels.AstralFlow &&
+                            (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralFlare) &&
+                            gauge.AttunmentTimerRemaining > 0)
+                            return OriginalHook(SMN.AstralFlow);
+                        if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) &&
+                            level >= SMN.Levels.Bahamut &&
+                            lastComboMove is SMN.AstralFlare or SMN.BrandOfPurgatory &&
+                            gauge.AttunmentTimerRemaining > 0)
+                            return OriginalHook(SMN.EnkindleBahamut);
+                    }
+
+                    //Demi Nuke 2: Electric Boogaloo
+                    if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
+                    {
+                        if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.BrandOfPurgatory)
+                            return OriginalHook(SMN.AstralFlow);
+                    }
+
                     // Egis
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
@@ -382,10 +426,7 @@ namespace XIVSlothComboPlugin.Combos
                             IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)) //Ifrit
                             return OriginalHook(SMN.AstralFlow);
 
-                        if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                            return OriginalHook(SMN.PreciousBrilliance);
-
-                        if (gauge.SummonTimerRemaining == 0 && IsOnCooldown(SMN.SummonPhoenix) && IsOnCooldown(SMN.SummonBahamut))
+                        if (gauge.SummonTimerRemaining == 0)
                         {
                             if (gauge.IsTitanReady && level >= SMN.Levels.SummonTopaz)
                                 return OriginalHook(SMN.SummonTopaz);
@@ -396,29 +437,11 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    //Demi
-                    if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
-                    {
-                        if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(SMN.Aethercharge)) &&
-                            (level >= SMN.Levels.Aethercharge && level < SMN.Levels.Bahamut || //Pre Bahamut Phase
-                            gauge.IsBahamutReady && level >= SMN.Levels.Bahamut || //Bahamut Phase
-                            gauge.IsPhoenixReady && level >= SMN.Levels.Phoenix)) //Phoenix Phase
-                            return OriginalHook(SMN.Aethercharge);
+                    //Precious Brilliance
+                    if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
+                        return OriginalHook(SMN.PreciousBrilliance);
 
-                        if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
-                        {
-                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && level >= SMN.Levels.AstralFlow && (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralFlare))
-                                return OriginalHook(SMN.AstralFlow);
-                            if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) && level >= SMN.Levels.Bahamut && lastComboMove is SMN.AstralFlare or SMN.BrandOfPurgatory)
-                                return OriginalHook(SMN.EnkindleBahamut);
-                        }
-                        
-                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
-                        {
-                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.BrandOfPurgatory)
-                                return OriginalHook(SMN.AstralFlow);
-                        }
-                    }
+
 
                     if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature) && level >= SMN.Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(SMN.Buffs.FurtherRuin))
                         return SMN.Ruin4;
