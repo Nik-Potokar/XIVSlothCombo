@@ -2498,6 +2498,25 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Curing Waltz Burst Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
         DNCCuringWaltzOption = 80072,
 
+        // SAM
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.", SAM.JobID)]
+        SAMBurstMode = 80080,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMBurstMode)]
+            [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode.", SAM.JobID)]
+            SAMBurstChitenFeature = 80081,
+            [SecretCustomCombo]
+            [ParentCombo(SAMBurstMode)]
+            [CustomComboInfo("Mineuchi to Burst Mode", "Adds Mineuchi to the Burst Mode.", SAM.JobID)]
+            SAMBurstStunFeature = 80082,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
+        SAMGapCloserFeature = 80083,
+
         /*
         [SecretCustomCombo] // I'm probably gonna remove this entirely
         [ParentCombo(DNCBurstMode)]

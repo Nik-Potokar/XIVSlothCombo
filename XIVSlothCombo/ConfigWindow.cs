@@ -834,6 +834,8 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount for ST combos.");
             if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamAOEKenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
+            if (preset == CustomComboPreset.SAMBurstMode && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 2, SAMPvP.Config.SamSotenCharges, "How many charges of Soten to keep ready? (0 = Use All).");
             //Fillers
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
                 ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
