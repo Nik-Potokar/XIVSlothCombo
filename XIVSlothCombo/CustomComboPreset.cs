@@ -1422,7 +1422,7 @@ namespace XIVSlothComboPlugin
         PaladinRoyalAuthorityCombo = 11001,
 
         [ParentCombo(PaladinAtonementFeature)]
-        [CustomComboInfo("Atonement drop Feature", "Will drop the last Atonement charge right before FoF comes back off cooldown.\nPlease note that this assumes you use both FoF and Req according to the full FoF opener and standard loop", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
+        [CustomComboInfo("Atonement drop Feature", "Will drop the last Atonement charge right before FoF comes back off cooldown.\nPlease note that this assumes you use both FoF and Req according to the full FoF opener and standard loop\nRequires a skill speed tier of 2.45-2.40", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
         PaladinAtonementDropFeature = 11002,
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "Promenade feature", "Long walks on the promenade...")]
@@ -1464,7 +1464,7 @@ namespace XIVSlothComboPlugin
         PaladinFightOrFlightMainComboFeature = 11013,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Requiescat Feature", "Adds Requiescat onto the main combo (Testing).", PLD.JobID, 2, "", "Just defend 4hed")]
+        [CustomComboInfo("Requiescat Feature", "Adds Requiescat onto the main combo.", PLD.JobID, 2, "", "Just defend 4hed")]
         PaladinReqMainComboFeature = 11014,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
@@ -1473,7 +1473,7 @@ namespace XIVSlothComboPlugin
         PaladinRangedUptimeFeature2 = 11016,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
+        [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo with a delayed weave.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
         PaladinFightOrFlightFeature = 11017,
 
         [ParentCombo(PaladinProminenceCombo)]
@@ -1485,7 +1485,7 @@ namespace XIVSlothComboPlugin
         PaladinAoEConfiteorFeature = 11021,
 
         [ParentCombo(PaladinHolyCircleFeature)]
-        [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.\nProbably not optimal at all.", PLD.JobID, 0, "", "")]
+        [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.", PLD.JobID, 0, "", "")]
         PaladinReqAoEComboFeature = 11022,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
