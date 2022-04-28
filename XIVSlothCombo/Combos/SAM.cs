@@ -169,6 +169,9 @@ namespace XIVSlothComboPlugin.Combos
                         return SAM.Enpi;
                 }
 
+                if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SamuraiTrueNorthFeature) && GetBuffStacks(SAM.Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0)
+                    return All.TrueNorth;
+
                 if (!InCombat())
                 {
                     hasDied = false;
@@ -414,9 +417,6 @@ namespace XIVSlothComboPlugin.Combos
                             //oGCDs
                             if (CanSpellWeave(actionID))
                             {
-                                if (IsEnabled(CustomComboPreset.SamuraiTrueNorthFeature) &&GetBuffStacks(SAM.Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0)
-                                    return All.TrueNorth;
-
                                 //Senei Features
                                 if (IsEnabled(CustomComboPreset.SeneionST) && gauge.Kenki >= 25 && IsOffCooldown(SAM.Senei) && level >= SAM.Levels.Senei)
                                 {
