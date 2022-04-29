@@ -88,9 +88,6 @@
         {
             public const string
                 PLDKeepInterveneCharges = "PLDKeepInterveneCharges";
-
-            public const string
-                PLDAtonementCharges = "PLDAtonementCharges";
         }
     }
 
@@ -128,7 +125,6 @@
             if (actionID is PLD.RageOfHalone or PLD.RoyalAuthority)
             {
                 var interveneChargesRemaining = Service.Configuration.GetCustomIntValue(PLD.Config.PLDKeepInterveneCharges);
-                var atonementUsage = Service.Configuration.GetCustomIntValue(PLD.Config.PLDAtonementCharges);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 // Uptime Features
@@ -172,7 +168,7 @@
                     if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolySpirit && !HasEffect(PLD.Buffs.FightOrFlight) && LocalPlayer.CurrentMp >= 1000)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && level >= PLD.Levels.Confiteor &&
-                            (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
+                            ((GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 && GetBuffRemainingTime(PLD.Buffs.Requiescat) >= 0) || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
                                 return PLD.Confiteor;
 
                             return PLD.HolySpirit;
@@ -182,15 +178,14 @@
                         return OriginalHook(PLD.Confiteor);
                 }
 
-                if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
+                if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && IsEnabled(CustomComboPreset.PaladinAtonementFeature))
                 {
+                    if (IsNotEnabled(CustomComboPreset.PaladinAtonementDropFeature))
+                        return PLD.Atonement;
+
                     if ((IsEnabled(CustomComboPreset.PaladinAtonementDropFeature) &&
                          GetCooldownRemainingTime(PLD.FightOrFlight) <= 15 && GetBuffStacks(PLD.Buffs.SwordOath) > 1) ||
                         (HasEffect(PLD.Buffs.Requiescat) && GetCooldownRemainingTime(PLD.FightOrFlight) <= 49))
-                        return PLD.Atonement;
-
-                    if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) &&
-                        IsNotEnabled(CustomComboPreset.PaladinAtonementDropFeature))
                         return PLD.Atonement;
                 }
 
@@ -247,7 +242,7 @@
                 if (IsEnabled(CustomComboPreset.PaladinHolyCircleFeature) && HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.HolyCircle && LocalPlayer.CurrentMp >= 1000)
                 {
                     if (IsEnabled(CustomComboPreset.PaladinAoEConfiteorFeature) && level >= PLD.Levels.Confiteor &&
-                        (GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
+                        ((GetBuffRemainingTime(PLD.Buffs.Requiescat) <= 3 && GetBuffRemainingTime(PLD.Buffs.Requiescat) >= 0) || GetBuffStacks(PLD.Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
                             return PLD.Confiteor;
 
                     return PLD.HolyCircle;

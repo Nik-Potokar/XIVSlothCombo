@@ -719,6 +719,11 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
+        protected static int GetOptionValue(string SliderID)
+        {
+            return Service.Configuration.GetCustomIntValue(SliderID);
+        }
+
         protected unsafe static FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* GetTarget(TargetType target)
         {
             GameObject? o = null;

@@ -660,10 +660,10 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (gauge.Sen.HasFlag(Sen.SETSU) == false && level >= SAM.Levels.Yukikaze)
                             return SAM.Yukikaze;
-                        if (gauge.Sen.HasFlag(Sen.GETSU) == false && level >= SAM.Levels.Mangetsu)
-                            return SAM.Mangetsu;
-                        if (gauge.Sen.HasFlag(Sen.KA) == false && level >= SAM.Levels.Oka)
-                            return SAM.Oka;
+                        if (gauge.Sen.HasFlag(Sen.GETSU) == false && level >= SAM.Levels.Gekko)
+                            return SAM.Gekko;
+                        if (gauge.Sen.HasFlag(Sen.KA) == false && level >= SAM.Levels.Kasha)
+                            return SAM.Kasha;
                     }
 
                     if (level >= SAM.Levels.TsubameGaeshi && gauge.Kaeshi == Kaeshi.SETSUGEKKA && GetRemainingCharges(SAM.TsubameGaeshi) > 0)
