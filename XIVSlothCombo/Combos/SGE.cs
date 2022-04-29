@@ -228,10 +228,9 @@ namespace XIVSlothComboPlugin.Combos
 
                 //Eukrasian Dosis.
                 //If we're too low level to use Eukrasia, we can stop here.
-                if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && (level >= SGE.Levels.Eukrasia))
+                if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && (level >= SGE.Levels.Eukrasia) && CurrentTarget is not null)
                 {
                     var OurTarget = CurrentTarget;
-                    if (OurTarget is null) return actionID;
                     //Check if our Target is there and not an enemy
                     if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
                     {
