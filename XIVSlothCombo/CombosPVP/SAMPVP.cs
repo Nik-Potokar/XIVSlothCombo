@@ -75,10 +75,13 @@
             {
                 if (actionID is SAMPvP.Yukikaze or SAMPvP.Gekko or SAMPvP.Kasha or SAMPvP.Hyosetsu or SAMPvP.Mangetsu or SAMPvP.Oka)
                 {
-                    if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && !InMeleeRange() && GetRemainingCharges(SAMPvP.Soten) > 0)
-                        return OriginalHook(SAMPvP.Soten);
-                    if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !InMeleeRange() && HasEffect(SAMPvP.Buffs.Kaiten))
-                        return SAM.Yukikaze;
+                    if (!InMeleeRange())
+                    {
+                        if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(SAMPvP.Soten) > 0)
+                            return OriginalHook(SAMPvP.Soten);
+                        if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && HasEffect(SAMPvP.Buffs.Kaiten))
+                            return SAM.Yukikaze;
+                    }
                 }
 
                 return actionID;
