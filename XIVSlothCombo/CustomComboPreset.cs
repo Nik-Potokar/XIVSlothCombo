@@ -2514,7 +2514,6 @@ namespace XIVSlothComboPlugin
         DNCCuringWaltzOption = 80072,
 
         // SAM
-
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.", SAM.JobID)]
         SAMBurstMode = 80080,
@@ -2531,12 +2530,11 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
-            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo.", SAM.JobID)]
+            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID)]
             SamPVPMainComboFeature = 80084,
-            
 
         [SecretCustomCombo]
-        [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo instead.", SAM.JobID)]
+        [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
         SAMGapCloserFeature = 80083,
 
         /*
