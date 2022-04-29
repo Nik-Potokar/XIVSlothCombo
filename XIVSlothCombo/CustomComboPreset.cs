@@ -2481,6 +2481,11 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
         WARBurstMode = 80040,
+        
+        [SecretCustomCombo]
+        [ParentCombo(WARBurstMode)]
+        [CustomComboInfo("Bloodwhetting Option", "Allows usage of bloodwhetting anytime, not just inbetween GCDs.", WARPVP.JobID)]
+        WARBurstOption = 80041,
 
         // NIN
         [ConflictingCombos(NINAoEBurstMode)]
