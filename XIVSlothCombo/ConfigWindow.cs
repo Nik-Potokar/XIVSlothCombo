@@ -775,7 +775,13 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche", "Add OGCDs to Fleche", 1);
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt", "Add OGCDs to Jolt\n[Choose for one button rotation.]\n-----------------------------------------------", 2);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "Only add OGCDs to Jolt/Jolt II", 2);
+
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "Only add OGCDs to Scatter/Impact", 3);
+
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "Add OGCDs to Jolt/Jolt II and Scatter/Impact\n[Choose Jolt or Impact for a one button rotation.]\n---------------------------------------------------------", 4);
 
 
             #endregion

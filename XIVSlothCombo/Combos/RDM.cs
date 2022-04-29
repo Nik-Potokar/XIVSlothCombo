@@ -286,33 +286,38 @@ namespace XIVSlothComboPlugin.Combos
             if (IsEnabled(CustomComboPreset.RDM_OGCD))
             {
                 var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_OGCD_OnAction);
-                uint setAction = RDM.Fleche;
+                if (radioButton >= 1) radioButton = radioButton; //Default radio button check
+                else radioButton = 1;
                 uint placeOGCD = 0;
 
-                if (radioButton == 2) setAction = RDM.Jolt2;
-                else setAction = RDM.Fleche;
+                //Radio Button Settings:
+                //1: Fleche
+                //2: Jolt
+                //3: Impact
+                //4: Jolt + Impact
 
-                if (OriginalHook(actionID) == setAction)
+                if (actionID is RDM.Jolt or RDM.Jolt2 or RDM.Scatter or RDM.Impact or RDM.Fleche)
                 {
                     if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(RDM.Engagement).RemainingCharges > 0 && level >= RDM.Levels.Engagement) placeOGCD = RDM.Engagement;
                     if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && GetCooldown(RDM.Corpsacorps).RemainingCharges > 0
                         && (GetCooldown(RDM.Corpsacorps).RemainingCharges >= GetCooldown(RDM.Engagement).RemainingCharges || !InMeleeRange()) // Try to alternate between Corps-a-corps and Engagement
                         && level >= RDM.Levels.Corpsacorps) placeOGCD = RDM.Corpsacorps;
                     if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && IsOffCooldown(RDM.ContreSixte) && level >= RDM.Levels.ContreSixte) placeOGCD = RDM.ContreSixte;
-                    if ((setAction == RDM.Fleche || IsEnabled(CustomComboPreset.RDM_Fleche)) && IsOffCooldown(RDM.Fleche) && level >= RDM.Levels.Fleche) placeOGCD = RDM.Fleche;
+                    if ((radioButton == 1 || IsEnabled(CustomComboPreset.RDM_Fleche)) && IsOffCooldown(RDM.Fleche) && level >= RDM.Levels.Fleche) placeOGCD = RDM.Fleche;
 
-                    if (setAction == RDM.Jolt2 && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
-                    if (placeOGCD == 0 && setAction == RDM.Fleche) // All actions are on cooldown, determine the lowest CD to display on Fleche.
+                    if ((actionID is RDM.Jolt or RDM.Jolt2) && (radioButton is 2 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
+                    if ((actionID is RDM.Scatter or RDM.Impact) && (radioButton is 3 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
+                    if (actionID is RDM.Fleche && radioButton == 1 && placeOGCD == 0) // All actions are on cooldown, determine the lowest CD to display on Fleche.
                     {
                         placeOGCD = RDM.Fleche;
-                        if (GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.ContreSixte).CooldownRemaining) placeOGCD = RDM.ContreSixte;
-                        if (GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.Corpsacorps).ChargeCooldownRemaining) placeOGCD = RDM.Corpsacorps;
+                        if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.ContreSixte).CooldownRemaining) placeOGCD = RDM.ContreSixte;
+                        if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.Corpsacorps).ChargeCooldownRemaining) placeOGCD = RDM.Corpsacorps;
                         if (placeOGCD == RDM.Corpsacorps)
                         {
-                            if (GetCooldown(placeOGCD).ChargeCooldownRemaining > GetCooldown(RDM.Engagement).ChargeCooldownRemaining) placeOGCD = RDM.Engagement;
-                        } else if (GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.Engagement).ChargeCooldownRemaining) placeOGCD = RDM.Engagement;
+                            if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(placeOGCD).ChargeCooldownRemaining > GetCooldown(RDM.Engagement).ChargeCooldownRemaining) placeOGCD = RDM.Engagement;
+                        } else if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.Engagement).ChargeCooldownRemaining) placeOGCD = RDM.Engagement;
                     }
-                    if (setAction == RDM.Fleche) return placeOGCD;
+                    if (actionID is RDM.Fleche && radioButton == 1) return placeOGCD;
                 }
             }
             //END_RDM_OGCD
@@ -328,15 +333,15 @@ namespace XIVSlothComboPlugin.Combos
             //   - Level 90: 
             bool useFire = false;
             bool useStone = false;
-            bool useAero = false;
             bool useThunder = false;
-            bool useAero2 = false;
+            bool useAero = false;
             bool useThunder2 = false;
+            bool useAero2 = false;
 
             //END_SYSTEM_MANA_BALANCING_MACHINE
 
             //RDM_VERFIREVERSTONE
-            if (actionID == RDM.Jolt && IsEnabled(CustomComboPreset.RDM_VerfireVerstone) && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast))
+            if (IsEnabled(CustomComboPreset.RDM_VerfireVerstone) && actionID is RDM.Jolt or RDM.Jolt2 && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast))
             {
                 if (HasEffect(RDM.Buffs.VerfireReady)) return RDM.Verfire;
                 if (HasEffect(RDM.Buffs.VerstoneReady)) return RDM.Verstone;
@@ -344,16 +349,13 @@ namespace XIVSlothComboPlugin.Combos
             //END_RDM_VERFIREVERSTONE
 
             //RDM_VERTHUNDERVERAERO
-            if (actionID == RDM.Jolt && IsEnabled(CustomComboPreset.RDM_VerthunderVeraero))
+            if (IsEnabled(CustomComboPreset.RDM_VerthunderVeraero) && actionID is RDM.Jolt or RDM.Jolt2 && (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration)))
             {
-                if (actionID is RDM.Jolt && (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration)))
+                if (black > white)
                 {
-                    if (black > white)
-                    {
-                        return OriginalHook(RDM.Veraero);
-                    }
-                    return OriginalHook(RDM.Verthunder);
+                    return OriginalHook(RDM.Veraero);
                 }
+                return OriginalHook(RDM.Verthunder);
             }
             //END_RDM_VERTHUNDERVERAERO
 
