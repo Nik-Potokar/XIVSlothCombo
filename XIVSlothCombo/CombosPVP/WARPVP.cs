@@ -34,16 +34,16 @@ namespace XIVSlothComboPlugin
             {
                 var canWeave = CanWeave(actionID);
 
-                if (IsOffCooldown(WARPVP.Bloodwhetting) && (IsEnabled(CustomComboPreset.WARBurstOption) || canWeave))
+                if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown && (IsEnabled(CustomComboPreset.WARBurstOption) || canWeave))
                     return OriginalHook(WARPVP.Bloodwhetting);
-
-                if (IsOffCooldown(WARPVP.PrimalRend))
+                    
+                if (!GetCooldown(WARPVP.PrimalRend).IsCooldown)
                     return OriginalHook(WARPVP.PrimalRend);
                 
-                if (!InMeleeRange() && IsOffCooldown(WARPVP.Blota) && !TargetHasEffectAny(PVPCommon.Debuffs.Stun))
+                if (!InMeleeRange() && !GetCooldown(WARPVP.Blota).IsCooldown && !TargetHasEffectAny(PVPCommon.Debuffs.Stun) && GetCooldown(WARPVP.PrimalRend).CooldownRemaining >= 5)
                     return OriginalHook(WARPVP.Blota);
 
-                if (IsOffCooldown(WARPVP.Onslaught) && canWeave)
+                if (!GetCooldown(WARPVP.Onslaught).IsCooldown && canWeave)
                     return OriginalHook(WARPVP.Onslaught);
 
                 if (InMeleeRange())
@@ -51,9 +51,8 @@ namespace XIVSlothComboPlugin
                     if (HasEffect(WARPVP.Buffs.NascentChaos))
                         return OriginalHook(WARPVP.Bloodwhetting);
 
-                    if (IsOffCooldown(WARPVP.Orogeny) && canWeave)
+                    if (!GetCooldown(WARPVP.Orogeny).IsCooldown && canWeave)
                         return OriginalHook(WARPVP.Orogeny);
-
                 }
             }
             return actionID;
