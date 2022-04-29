@@ -64,7 +64,7 @@ namespace XIVSlothComboPlugin.Combos
             public const byte
                 Jolt = 2,
                 Verthunder = 4,
-                CorpsACorps = 6,
+                Corpsacorps = 6,
                 Veraero = 10,
                 Verthunder2 = 18,
                 Veraero2 = 22,
@@ -156,7 +156,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.RedMageCorpsACorpsFeature) && canWeave && GetCooldownRemainingTime(RDM.Corpsacorps) < 35 &&
                     ((InMeleeRange() && IsOnCooldown(RDM.Fleche) && IsOnCooldown(RDM.ContreSixte)) ||
                      (IsEnabled(CustomComboPreset.RedMageCorpsACorpsPullFeature) &&
-                     gauge.BlackMana >= 50 && gauge.WhiteMana >= 50)) && level >= RDM.Levels.CorpsACorps && !HasEffect(RDM.Buffs.Dualcast))
+                     gauge.BlackMana >= 50 && gauge.WhiteMana >= 50)) && level >= RDM.Levels.Corpsacorps && !HasEffect(RDM.Buffs.Dualcast))
                     return RDM.Corpsacorps;
 
                 if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && !HasEffect(RDM.Buffs.Dualcast))
@@ -618,7 +618,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.RedMageCorpsACorpsFeature) && canWeave && GetCooldownRemainingTime(RDM.Corpsacorps) < 35 &&
                     ((InMeleeRange() && IsOnCooldown(RDM.Fleche) && IsOnCooldown(RDM.ContreSixte)) ||
                      (IsEnabled(CustomComboPreset.RedMageCorpsACorpsPullFeature) &&
-                     gauge.BlackMana >= 60 && gauge.WhiteMana >= 60)) && level >= RDM.Levels.CorpsACorps && !HasEffect(RDM.Buffs.Dualcast))
+                     gauge.BlackMana >= 60 && gauge.WhiteMana >= 60)) && level >= RDM.Levels.Corpsacorps && !HasEffect(RDM.Buffs.Dualcast))
                     return RDM.Corpsacorps;
 
                 if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && !HasEffect(RDM.Buffs.Dualcast))
@@ -856,7 +856,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.RedMageCorpsACorpsFeature) && canWeave && GetCooldownRemainingTime(RDM.Corpsacorps) < 35 &&
                     ((InMeleeRange() && IsOnCooldown(RDM.Fleche) && IsOnCooldown(RDM.ContreSixte)) || 
                      (IsEnabled(CustomComboPreset.RedMageCorpsACorpsPullFeature) && 
-                     gauge.BlackMana >= 50 && gauge.WhiteMana >= 50)) && level >= RDM.Levels.CorpsACorps && !HasEffect(RDM.Buffs.Dualcast))
+                     gauge.BlackMana >= 50 && gauge.WhiteMana >= 50)) && level >= RDM.Levels.Corpsacorps && !HasEffect(RDM.Buffs.Dualcast))
                     return RDM.Corpsacorps;
 
                 if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave)
@@ -1084,7 +1084,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.RedMageCorpsACorpsFeature) && canWeave && GetCooldownRemainingTime(RDM.Corpsacorps) < 35 &&
                     ((InMeleeRange() && IsOnCooldown(RDM.Fleche) && IsOnCooldown(RDM.ContreSixte)) ||
                      (IsEnabled(CustomComboPreset.RedMageCorpsACorpsPullFeature) &&
-                     gauge.BlackMana >= 60 && gauge.WhiteMana >= 60)) && level >= RDM.Levels.CorpsACorps && !HasEffect(RDM.Buffs.Dualcast))
+                     gauge.BlackMana >= 60 && gauge.WhiteMana >= 60)) && level >= RDM.Levels.Corpsacorps && !HasEffect(RDM.Buffs.Dualcast))
                     return RDM.Corpsacorps;
 
                 if (IsEnabled(CustomComboPreset.RedMageOgcdComboOnCombos) && canWeave && !HasEffect(RDM.Buffs.Dualcast))

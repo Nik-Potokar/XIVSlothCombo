@@ -1,4 +1,4 @@
-﻿using XIVSlothComboPlugin.Combos;
+using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
@@ -34,14 +34,14 @@ namespace XIVSlothComboPlugin
             {
                 var canWeave = CanWeave(actionID);
 
-                if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown && canWeave)
+                if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown && (IsEnabled(CustomComboPreset.WARBurstOption) || canWeave))
                     return OriginalHook(WARPVP.Bloodwhetting);
-
-                if (!InMeleeRange() && !GetCooldown(WARPVP.Blota).IsCooldown)
-                    return OriginalHook(WARPVP.Blota);
-
+                    
                 if (!GetCooldown(WARPVP.PrimalRend).IsCooldown)
                     return OriginalHook(WARPVP.PrimalRend);
+                
+                if (!InMeleeRange() && !GetCooldown(WARPVP.Blota).IsCooldown && !TargetHasEffectAny(PVPCommon.Debuffs.Stun) && GetCooldown(WARPVP.PrimalRend).CooldownRemaining >= 5)
+                    return OriginalHook(WARPVP.Blota);
 
                 if (!GetCooldown(WARPVP.Onslaught).IsCooldown && canWeave)
                     return OriginalHook(WARPVP.Onslaught);
@@ -53,10 +53,8 @@ namespace XIVSlothComboPlugin
 
                     if (!GetCooldown(WARPVP.Orogeny).IsCooldown && canWeave)
                         return OriginalHook(WARPVP.Orogeny);
-
                 }
             }
-
             return actionID;
         }
     }
