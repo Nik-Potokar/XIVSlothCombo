@@ -122,7 +122,7 @@ namespace XIVSlothComboPlugin.Combos
                 bool inCombat = HasCondition(ConditionFlag.InCombat);
 
                 // Check to start opener
-                if (readyOpener && !inOpener && lastComboMove is RDM.Verthunder3 && HasEffect(RDM.Buffs.Dualcast)) inOpener = true;
+                if (readyOpener && !inOpener && !inCombat && lastComboMove is RDM.Verthunder3 && HasEffect(RDM.Buffs.Dualcast)) inOpener = true; //NOTE: inCombat flag is wonky, needs testing!
 
                 // Reset check for opener
                 if (gauge.BlackMana == 0 && gauge.WhiteMana == 0 && IsOffCooldown(RDM.Embolden) && IsOffCooldown(RDM.Manafication) && IsOffCooldown(All.Swiftcast)
