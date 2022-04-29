@@ -352,23 +352,29 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Thunder uptime
-                if (level >= BLM.Levels.Thunder4)
+                if (currentMP >= BLM.MP.AspectThunder && lastComboMove != BLM.Manafont)
                 {
-                    if (lastComboMove != BLM.Thunder4 && ((gauge.InUmbralIce && gauge.UmbralHearts == 3) || gauge.InAstralFire) && 
-                        (!thunder4Debuff || thunder4Timer.RemainingTime <= 4))
+                    if (level >= BLM.Levels.Thunder4)
                     {
-                        return BLM.Thunder4;
+                        if (lastComboMove != BLM.Thunder4 && (!thunder4Debuff || thunder4Timer.RemainingTime <= 4) && 
+                           ((gauge.InUmbralIce && gauge.UmbralHearts == 3) || 
+                            (gauge.InAstralFire && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))))
+                        {
+                            return BLM.Thunder4;
+                        }
                     }
-                }
-                else if (level >= BLM.Levels.Thunder2)
-                {
-                    if (lastComboMove != BLM.Thunder2 && ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4)) || gauge.InAstralFire) &&
-                        (!thunder2Debuff || thunder2Timer.RemainingTime <= 4))
+                    else if (level >= BLM.Levels.Thunder2)
                     {
-                        return BLM.Thunder2;
+                        if (lastComboMove != BLM.Thunder2 && (!thunder2Debuff || thunder2Timer.RemainingTime <= 4) &&
+                           ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4)) || 
+                            (gauge.InAstralFire && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))))
+                        {
+                            return BLM.Thunder2;
+                        }
                     }
                 }
 
+                // Fire 2 / Flare
                 if (gauge.InAstralFire)
                 {
                     if (currentMP >= 7000)
@@ -381,6 +387,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+                // Umbral Hearts
                 if (gauge.InUmbralIce)
                 {
                     if (level >= BLM.Levels.Blizzard4 && gauge.UmbralHearts <= 2)
@@ -793,6 +800,24 @@ namespace XIVSlothComboPlugin.Combos
                     // Fire3 when at max umbral hearts
                     return gauge.UmbralHearts == 3 ? BLM.Fire3 : BLM.Blizzard4;
                 }
+            }
+
+            return actionID;
+        }
+    }
+    internal class BlackSimpleTranposeFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackSimpleTransposeFeature;
+
+        internal static bool inOpener = false;
+        internal static bool openerFinished = false;
+
+        internal delegate bool DotRecast(int value);
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == BLM.Scathe)
+            {
             }
 
             return actionID;

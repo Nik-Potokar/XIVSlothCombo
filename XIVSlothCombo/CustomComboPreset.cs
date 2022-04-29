@@ -270,7 +270,7 @@ namespace XIVSlothComboPlugin
         #region BLACK MAGE
 
         [ConflictingCombos(BlackSimpleFeature)]
-        [CustomComboInfo("Scathe Feature", "Replaces Scathe with Fire 4 or Blizzard 4 depending on Astral Fire/Umbral Ice.", BLM.JobID, 0, "BrainLess Mage", "One button, BAYBEE!")]
+        [CustomComboInfo("Scathe Feature", "Replaces Scathe with Fire 4 or Blizzard 4 depending on Astral Fire/Umbral Ice.", BLM.JobID, 2, "BrainLess Mage", "One button, BAYBEE!")]
         BlackEnochianFeature = 2000,
 
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "Eh? Huh?", "Just does BLM things. Probably.")]
@@ -309,7 +309,7 @@ namespace XIVSlothComboPlugin
         BlackThunderUptimeFeature = 2011,
 
         [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature)]
-        [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -2, "", "")]
         BlackSimpleFeature = 2012,
 
         [ParentCombo(BlackSimpleFeature)]
@@ -343,6 +343,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(BlackAoEComboFeature)]
         [CustomComboInfo("Foul / Manafont Flare Option", "Adds Foul when available during Astral Fire. Weaves Manafont after Foul for additional Flare", BLM.JobID, 0, "", "")]
         BlackAoEFoulOption = 2020,
+
+        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature)]
+        [CustomComboInfo("Simple Advanced BLM", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -1, "", "")]
+        BlackSimpleTransposeFeature = 2021,
 
         #endregion
         // ====================================================================================
