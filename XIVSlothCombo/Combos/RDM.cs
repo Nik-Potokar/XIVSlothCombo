@@ -64,6 +64,7 @@ namespace XIVSlothComboPlugin.Combos
             public const byte
                 Jolt = 2,
                 Verthunder = 4,
+                Corpsacorps = 6,
                 Veraero = 10,
                 Verthunder2 = 18,
                 Veraero2 = 22,
@@ -94,6 +95,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const string
                 RdmLucidMpThreshold = "RdmLucidMpThreshold";
+            public const string RDM_OGCD_OnAction = "RDM_OGCD_OnAction";
         }
     }
 
@@ -119,6 +121,9 @@ namespace XIVSlothComboPlugin.Combos
             {
                 bool inCombat = HasCondition(ConditionFlag.InCombat);
 
+                // Check to start opener
+                if (readyOpener && !inOpener && lastComboMove is RDM.Verthunder3 && HasEffect(RDM.Buffs.Dualcast)) inOpener = true;
+
                 // Reset check for opener
                 if (gauge.BlackMana == 0 && gauge.WhiteMana == 0 && IsOffCooldown(RDM.Embolden) && IsOffCooldown(RDM.Manafication) && IsOffCooldown(All.Swiftcast)
                     && GetCooldown(RDM.Acceleration).RemainingCharges == 2 && GetCooldown(RDM.Corpsacorps).RemainingCharges == 2 && GetCooldown(RDM.Engagement).RemainingCharges == 2
@@ -133,7 +138,6 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (inCombat && !inOpener) readyOpener = false;
                 if (readyOpener && !inOpener) return RDM.Verthunder3;
-                if (!inOpener && lastComboMove is RDM.Verthunder3 && HasEffect(RDM.Buffs.Dualcast) && !inOpener) inOpener = true;
 
                 // Start Opener
                 if (inOpener)
@@ -278,6 +282,41 @@ namespace XIVSlothComboPlugin.Combos
             }
             //END_RDM_BALANCE_OPENER
 
+            //RDM_OGCD
+            if (IsEnabled(CustomComboPreset.RDM_OGCD))
+            {
+                var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_OGCD_OnAction);
+                uint setAction = RDM.Fleche;
+                uint placeOGCD = 0;
+
+                if (radioButton == 2) setAction = RDM.Jolt2;
+                else setAction = RDM.Fleche;
+
+                if (OriginalHook(actionID) == setAction)
+                {
+                    if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(RDM.Engagement).RemainingCharges > 0 && level >= RDM.Levels.Engagement) placeOGCD = RDM.Engagement;
+                    if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && GetCooldown(RDM.Corpsacorps).RemainingCharges > 0
+                        && (GetCooldown(RDM.Corpsacorps).RemainingCharges >= GetCooldown(RDM.Engagement).RemainingCharges || !InMeleeRange()) // Try to alternate between Corps-a-corps and Engagement
+                        && level >= RDM.Levels.Corpsacorps) placeOGCD = RDM.Corpsacorps;
+                    if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && IsOffCooldown(RDM.ContreSixte) && level >= RDM.Levels.ContreSixte) placeOGCD = RDM.ContreSixte;
+                    if ((setAction == RDM.Fleche || IsEnabled(CustomComboPreset.RDM_Fleche)) && IsOffCooldown(RDM.Fleche) && level >= RDM.Levels.Fleche) placeOGCD = RDM.Fleche;
+
+                    if (setAction == RDM.Jolt2 && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
+                    if (placeOGCD == 0 && setAction == RDM.Fleche) // All actions are on cooldown, determine the lowest CD to display on Fleche.
+                    {
+                        placeOGCD = RDM.Fleche;
+                        if (GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.ContreSixte).CooldownRemaining) placeOGCD = RDM.ContreSixte;
+                        if (GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.Corpsacorps).ChargeCooldownRemaining) placeOGCD = RDM.Corpsacorps;
+                        if (placeOGCD == RDM.Corpsacorps)
+                        {
+                            if (GetCooldown(placeOGCD).ChargeCooldownRemaining > GetCooldown(RDM.Engagement).ChargeCooldownRemaining) placeOGCD = RDM.Engagement;
+                        } else if (GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.Engagement).ChargeCooldownRemaining) placeOGCD = RDM.Engagement;
+                    }
+                    if (setAction == RDM.Fleche) return placeOGCD;
+                }
+            }
+            //END_RDM_OGCD
+
             //SYSTEM_MANA_BALANCING_MACHINE
             //Machine to decide which ver spell should be used.
             //Rules:
@@ -320,7 +359,7 @@ namespace XIVSlothComboPlugin.Combos
 
 
 
-
+            //NO_CONDITIONS_MET
             return actionID;
         }
     }

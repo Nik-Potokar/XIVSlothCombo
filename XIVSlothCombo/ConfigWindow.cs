@@ -771,6 +771,13 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.", 300, 100);
 
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche", "Add OGCDs to Fleche", 1);
+
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt", "Add OGCDs to Jolt\n[Choose for one button rotation.]\n-----------------------------------------------", 2);
+
+
             #endregion
             // ====================================================================================
             #region SAGE

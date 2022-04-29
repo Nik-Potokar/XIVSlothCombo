@@ -1668,19 +1668,19 @@ namespace XIVSlothComboPlugin
         RDM_OGCD = 13240,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Fleche", "Use Fleche on specified action", RDM.JobID, 241)]
+        [CustomComboInfo("Fleche", "Use Fleche on above specified action", RDM.JobID, 241)]
         RDM_Fleche = 13241,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Contra Sixte", "Use Contre Sixte on specified action", RDM.JobID, 242)]
+        [CustomComboInfo("Contra Sixte", "Use Contre Sixte on above specified action", RDM.JobID, 242)]
         RDM_ContraSixte = 13242,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Engagement", "Use Engagement on specified action", RDM.JobID, 243)] // Slider, number of stacks to keep
+        [CustomComboInfo("Engagement", "Use Engagement on above specified action", RDM.JobID, 243)] // Slider, number of stacks to keep
         RDM_Engagement = 13243,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on specified action", RDM.JobID, 244)] // Slider, number of stacks to keep
+        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action", RDM.JobID, 244)] // Slider, number of stacks to keep
         RDM_Corpsacorps = 13244,
 
         [CustomComboInfo("Verthunder II/Veraero II", "Replace Scatter with Verthunder II or Veraero II", RDM.JobID, 310)]
