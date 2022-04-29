@@ -2523,13 +2523,20 @@ namespace XIVSlothComboPlugin
             [ParentCombo(SAMBurstMode)]
             [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode.", SAM.JobID)]
             SAMBurstChitenFeature = 80081,
+
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
             [CustomComboInfo("Mineuchi to Burst Mode", "Adds Mineuchi to the Burst Mode.", SAM.JobID)]
             SAMBurstStunFeature = 80082,
 
+            [SecretCustomCombo]
+            [ParentCombo(SAMBurstMode)]
+            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo.", SAM.JobID)]
+            SamPVPMainComboFeature = 80084,
+            
+
         [SecretCustomCombo]
-        [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
+        [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo instead.", SAM.JobID)]
         SAMGapCloserFeature = 80083,
 
         /*
