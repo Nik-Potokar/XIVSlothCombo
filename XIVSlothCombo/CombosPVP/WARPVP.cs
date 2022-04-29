@@ -1,4 +1,4 @@
-﻿using XIVSlothComboPlugin.Combos;
+using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
@@ -36,12 +36,12 @@ namespace XIVSlothComboPlugin
 
                 if (!GetCooldown(WARPVP.Bloodwhetting).IsCooldown && canWeave)
                     return OriginalHook(WARPVP.Bloodwhetting);
-
-                if (!InMeleeRange() && !GetCooldown(WARPVP.Blota).IsCooldown)
-                    return OriginalHook(WARPVP.Blota);
-
+                    
                 if (!GetCooldown(WARPVP.PrimalRend).IsCooldown)
                     return OriginalHook(WARPVP.PrimalRend);
+
+                if (!InMeleeRange() && !GetCooldown(WARPVP.Blota).IsCooldown && GetCooldown(WARPVP.PrimalRend).CooldownRemaining >= 5)
+                    return OriginalHook(WARPVP.Blota);
 
                 if (!GetCooldown(WARPVP.Onslaught).IsCooldown && canWeave)
                     return OriginalHook(WARPVP.Onslaught);
