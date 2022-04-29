@@ -2519,23 +2519,39 @@ namespace XIVSlothComboPlugin
         DNCCuringWaltzOption = 80072,
 
         // SAM
-
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.", SAM.JobID)]
         SAMBurstMode = 80080,
 
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
-            [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode.", SAM.JobID)]
+            [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
             SAMBurstChitenFeature = 80081,
+
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
             [CustomComboInfo("Mineuchi to Burst Mode", "Adds Mineuchi to the Burst Mode.", SAM.JobID)]
             SAMBurstStunFeature = 80082,
 
+            [SecretCustomCombo]
+            [ParentCombo(SAMBurstMode)]
+            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID)]
+            SamPVPMainComboFeature = 80083,
+
         [SecretCustomCombo]
-        [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
-        SAMGapCloserFeature = 80083,
+        [CustomComboInfo("PvP Features for Kasha Combo", "Collection of Features for Kasha Combo.", SAM.JobID)]
+        SamPvPKashaFeatures = 80084,
+            
+            [SecretCustomCombo]
+            [ParentCombo(SamPvPKashaFeatures)]
+            [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
+            SamGapCloserFeature = 80085,
+
+            [SecretCustomCombo]
+            [ParentCombo(SamPvPKashaFeatures)]
+            [CustomComboInfo("AOE Melee Protection", "Makes the AOE combos unusable if not in melee range of target.", SAM.JobID)]
+            SamAOEMeleeFeature = 80086,
+
 
         /*
         [SecretCustomCombo] // I'm probably gonna remove this entirely

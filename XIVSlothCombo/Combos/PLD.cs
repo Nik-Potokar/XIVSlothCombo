@@ -88,9 +88,6 @@
         {
             public const string
                 PLDKeepInterveneCharges = "PLDKeepInterveneCharges";
-
-            public const string
-                PLDAtonementCharges = "PLDAtonementCharges";
         }
     }
 
@@ -128,7 +125,6 @@
             if (actionID is PLD.RageOfHalone or PLD.RoyalAuthority)
             {
                 var interveneChargesRemaining = Service.Configuration.GetCustomIntValue(PLD.Config.PLDKeepInterveneCharges);
-                var atonementUsage = Service.Configuration.GetCustomIntValue(PLD.Config.PLDAtonementCharges);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 // Uptime Features
@@ -182,15 +178,14 @@
                         return OriginalHook(PLD.Confiteor);
                 }
 
-                if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath))
+                if (level >= PLD.Levels.Atonement && HasEffect(PLD.Buffs.SwordOath) && IsEnabled(CustomComboPreset.PaladinAtonementFeature))
                 {
+                    if (IsNotEnabled(CustomComboPreset.PaladinAtonementDropFeature))
+                        return PLD.Atonement;
+
                     if ((IsEnabled(CustomComboPreset.PaladinAtonementDropFeature) &&
                          GetCooldownRemainingTime(PLD.FightOrFlight) <= 15 && GetBuffStacks(PLD.Buffs.SwordOath) > 1) ||
                         (HasEffect(PLD.Buffs.Requiescat) && GetCooldownRemainingTime(PLD.FightOrFlight) <= 49))
-                        return PLD.Atonement;
-
-                    if (IsEnabled(CustomComboPreset.PaladinAtonementFeature) &&
-                        IsNotEnabled(CustomComboPreset.PaladinAtonementDropFeature))
                         return PLD.Atonement;
                 }
 
