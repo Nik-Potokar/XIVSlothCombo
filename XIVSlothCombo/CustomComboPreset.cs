@@ -1736,33 +1736,45 @@ namespace XIVSlothComboPlugin
         //New features should be added to the appropriate sections.
 
         //SECTION_1_DPS
-        [CustomComboInfo("Dosis DPS Enhancements", "Replaces Dosis with Eukrasia Dosis", SGE.JobID, 110)]
+        [CustomComboInfo("Single Target DPS Enhancements", "Replaces Dosis with options below", SGE.JobID, 110)]
         SGE_ST_Dosis = 14110,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
-            SGE_ST_Lucid = 14111,
+            [CustomComboInfo("Lucid Dreaming", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
+            SGE_ST_Dosis_Lucid = 14111,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [ConflictingCombos(SGE_ST_DosisToT)]
-            [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 112)]
-            SGE_ST_DosisAdv = 14112,
+            [CustomComboInfo("Eukrasian Dosis", "Automatic DoT Uptime", SGE.JobID, 112)]
+            SGE_ST_Dosis_EDosis = 14112,
+
+                [ParentCombo(SGE_ST_Dosis_EDosis)]
+                [ConflictingCombos(SGE_ST_Dosis_EDosisToT)]
+                [CustomComboInfo("Enemy HP%% Limiter", "Stop using Eukrasian Dosis when Enemy HP%% is below this value:", SGE.JobID, 1121)]
+                SGE_ST_Dosis_EDosisHPPer = 141121,
+
+                [ParentCombo(SGE_ST_Dosis_EDosis)]
+                [ConflictingCombos(SGE_ST_Dosis_EDosisHPPer)]
+                [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 1122)]
+                SGE_ST_Dosis_EDosisToT = 141122,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [ConflictingCombos(SGE_ST_DosisAdv)]
-            [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 113)]
-            SGE_ST_DosisToT = 14113,
+            [CustomComboInfo("Toxikon###SGEST", "Use Toxikon when you have Addersting charges", SGE.JobID, 113)]
+            SGE_ST_Dosis_Toxikon = 14113,
 
-        [CustomComboInfo("Phlegma DPS Enhancements", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "Phlegmaballs.")]
+        [CustomComboInfo("AoE DPS Enhancements", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "Phlegmaballs.")]
         SGE_AoE_Phlegma = 14121,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Toxikon", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia", SGE.JobID, 122, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
-            SGE_AoE_Toxikon = 14122,
+            [CustomComboInfo("Toxikon###SGEAoE", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia SubOption", SGE.JobID, 122, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+            SGE_AoE_Phlegma_Toxikon = 14122,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Dyskrasia", "Use Dyskrasia (even without a target selected)", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-            SGE_AoE_Dyskrasia = 14123,
+            [CustomComboInfo("Dyskrasia", "Use Dyskrasia", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            SGE_AoE_Phlegma_Dyskrasia = 14123,
+
+                [ParentCombo(SGE_AoE_Phlegma_Dyskrasia)]
+                [CustomComboInfo("Targetless Mode", "Prioritize Dyskrasia when no target is selected\nIgnores Phlegma Charges", SGE.JobID, 1231, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+                SGE_AoE_Phlegma_Dyskrasia_NoTarget = 141231,
 
 
         //SECTION_2_Healing
@@ -1787,7 +1799,7 @@ namespace XIVSlothComboPlugin
             SGE_ST_Heal_Zoe = 14214,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Pepsis###ST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
+            [CustomComboInfo("Pepsis###SGEST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
             SGE_ST_Heal_Pepsis = 14215,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -1831,7 +1843,7 @@ namespace XIVSlothComboPlugin
             SGE_AoE_Heal_Panhaima = 14224,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Pepsis##AoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
+            [CustomComboInfo("Pepsis##SGEAoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
             SGE_AoE_Heal_Pepsis = 14225,
 
             [ParentCombo(SGE_AoE_Heal)]
@@ -1847,7 +1859,7 @@ namespace XIVSlothComboPlugin
             SGE_AoE_Heal_Rhizomata = 14228,
 
 
-        [CustomComboInfo("Rhizomata", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
+        [CustomComboInfo("Rhizomata Helper", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
         SGE_Rhizo = 14230,
 
         [CustomComboInfo("Upgrade Druochole to Taurochole", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 240)]

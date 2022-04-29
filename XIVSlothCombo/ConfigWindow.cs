@@ -774,33 +774,18 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SAGE
-            if (preset == CustomComboPreset.SGE_ST_DosisAdv)
-            {
-                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
-                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
-                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+            
+            if (preset == CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "");
 
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Target MAX Hp  (If targets MAX Hp is BELOW this value it will not use DoT)", ref MaxHpValue);
-                inputChanged |= ImGui.InputFloat("Input Current Enemy Hp (Flat Value) (If targets Current HP is BELOW this value it will not use DoT)", ref CurrentHpValue);
-                inputChanged |= ImGui.InputFloat("Input Current Enemy % Hp (If targets Current % Hp is BELOW this value it will not use DoT)", ref PercentageHpValue);
+            if (preset == CustomComboPreset.SGE_ST_Dosis_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "", 150, SliderIncrements.Hundreds);
 
+            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
+                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 1);
 
-                if (inputChanged)
-                {
-                    Service.Configuration.EnemyHealthMaxHp = MaxHpValue;
-                    Service.Configuration.EnemyHealthPercentage = PercentageHpValue;
-                    Service.Configuration.EnemyCurrentHp = CurrentHpValue;
-
-                    Service.Configuration.Save();
-                }
-
-                ImGui.Spacing();
-            }
-
-            if (preset == CustomComboPreset.SGE_ST_Lucid)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
+                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 2);
 
             if (preset == CustomComboPreset.SGE_ST_Heal_Soteria)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Set HP percentage value for Soteria to trigger");

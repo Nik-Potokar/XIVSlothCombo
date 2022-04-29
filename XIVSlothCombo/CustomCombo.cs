@@ -719,7 +719,7 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
-        protected static int GetComboSlider(string SliderID)
+        protected static int GetOptionValue(string SliderID)
         {
             return Service.Configuration.GetCustomIntValue(SliderID);
         }
