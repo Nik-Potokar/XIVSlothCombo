@@ -1740,7 +1740,7 @@ namespace XIVSlothComboPlugin
         SGE_ST_Dosis = 14110,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Lucid Dreaming", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
+            [CustomComboInfo("Lucid Dreaming###SGEST", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
             SGE_ST_Dosis_Lucid = 14111,
 
             [ParentCombo(SGE_ST_Dosis)]
