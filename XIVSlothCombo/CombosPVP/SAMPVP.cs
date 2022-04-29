@@ -40,7 +40,7 @@
             {
                 var sotenCharges = Service.Configuration.GetCustomIntValue(SAMPvP.Config.SamSotenCharges);
                 
-                if ((actionID == SAMPvP.MeikyoShisui && IsNotEnabled(CustomComboPreset.SamPVPMainComboFeature)) ||
+                if ((IsNotEnabled(CustomComboPreset.SamPVPMainComboFeature) && actionID == SAMPvP.MeikyoShisui) ||
                     (IsEnabled(CustomComboPreset.SamPVPMainComboFeature) && actionID is SAMPvP.Yukikaze or SAMPvP.Gekko or SAMPvP.Kasha or SAMPvP.Hyosetsu or SAMPvP.Oka or SAMPvP.Mangetsu))
                 { 
                         //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
@@ -61,7 +61,6 @@
                             return OriginalHook(SAMPvP.Soten);
                         if (OriginalHook(SAMPvP.OgiNamikiri) == SAMPvP.Kaeshi)
                             return OriginalHook(SAMPvP.OgiNamikiri);
-                   
                 }
 
                 return actionID;
@@ -78,9 +77,8 @@
                 {
                     if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && !InMeleeRange() && GetRemainingCharges(SAMPvP.Soten) > 0)
                         return OriginalHook(SAMPvP.Soten);
-                    if (IsEnabled(CustomComboPreset.SamHyosetsuMeleeFeature) && !InMeleeRange() && OriginalHook(SAMPvP.Yukikaze) == SAMPvP.Hyosetsu)
+                    if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !InMeleeRange() && !IsOriginal(SAMPvP.Yukikaze))
                         return PLD.Requiescat;
-
                 }
 
                 return actionID;

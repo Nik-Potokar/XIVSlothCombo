@@ -2544,8 +2544,8 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(SamPvPKashaFeatures)]
-            [CustomComboInfo("Hyosetsu Melee Protection", "Makes Hyosetsu unusable if not in melee range of target. Turns it into Requiescat.", SAM.JobID)]
-            SamHyosetsuMeleeFeature = 80086,
+            [CustomComboInfo("AOE Melee Protection", "Makes the AOE combos unusable if not in melee range of target. Turns it into Requiescat.", SAM.JobID)]
+            SamAOEMeleeFeature = 80086,
 
 
         /*
