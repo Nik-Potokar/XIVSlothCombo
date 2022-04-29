@@ -375,7 +375,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return level >= BLM.Levels.HighFire2 ? BLM.HighFire2 : BLM.Fire2;
                     }
-                    else
+                    else if (currentMP >= BLM.MP.AspectFire)
                     {
                         return BLM.Flare;
                     }
