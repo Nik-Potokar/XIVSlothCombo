@@ -429,7 +429,7 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<BLMGauge>();
                 var canWeave = CanSpellWeave(actionID);
                 var currentMP = LocalPlayer.CurrentMp;
-                var astralFireRefresh = Service.Configuration.GetCustomIntValue(BLM.Config.BlmAstralFireRefresh);
+                var astralFireRefresh = Service.Configuration.GetCustomFloatValue(BLM.Config.BlmAstralFireRefresh) * 1000;
 
                 // Opener for BLM
                 // Credit to damolitionn for providing code to be used as a base for this opener
@@ -745,7 +745,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(BLM.Buffs.Firestarter) && currentMP >= BLM.MP.AspectFire)
                     {
-                        return (level >= BLM.Levels.Paradox && gauge.IsParadoxActive) ? BLM.Paradox : BLM.Fire;
+                        return (level >= BLM.Levels.Paradox && gauge.IsParadoxActive) ? BLM.Paradox : (level >= BLM.Levels.Despair ? BLM.Despair : BLM.Fire);
                     }
 
                     // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
@@ -780,8 +780,8 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    // Blizzard3/Despair when below Fire MP
-                    if (currentMP < BLM.MP.AspectFire)
+                    // Blizzard3/Despair when below Fire 4 + Despair MP
+                    if (currentMP < (BLM.MP.AspectFire + BLM.MP.Despair))
                     {
                         return (level >= BLM.Levels.Despair && currentMP >= BLM.MP.Despair) ? BLM.Despair : BLM.Blizzard3;
                     }
@@ -805,6 +805,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
+    
     internal class BlackSimpleTranposeFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackSimpleTransposeFeature;
@@ -818,6 +819,324 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID == BLM.Scathe)
             {
+                var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var gauge = GetJobGauge<BLMGauge>();
+                var canWeave = CanSpellWeave(actionID);
+                var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
+                var currentMP = LocalPlayer.CurrentMp;
+                var astralFireRefresh = Service.Configuration.GetCustomFloatValue(BLM.Config.BlmAstralFireRefresh) * 1000;
+                var thunder3 = TargetHasEffect(BLM.Debuffs.Thunder3);
+                var thunder3Duration = FindTargetEffect(BLM.Debuffs.Thunder3);
+
+                DotRecast thunder3Recast = delegate (int duration)
+                {
+                    return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
+                };
+
+                // Only enable sharpcast if it's available
+                if ((!inOpener || (openerFinished && canWeave)) && !HasEffect(BLM.Buffs.Sharpcast) && (GetRemainingCharges(BLM.Sharpcast) >= 1))
+                {
+                    return BLM.Sharpcast;
+                }
+
+                if (!inCombat && (inOpener || openerFinished))
+                {
+                    inOpener = false;
+                    openerFinished = false;
+                }
+
+                if (inCombat && !inOpener)
+                {
+                    inOpener = true;
+                }
+
+                if (inCombat && inOpener && !openerFinished)
+                {
+                    // Exit out of opener if Enochian is lost
+                    if (!gauge.IsEnochianActive)
+                    {
+                        openerFinished = true;
+                        return BLM.Blizzard3;
+                    }
+
+                    if (gauge.InAstralFire)
+                    {
+                        // First Triplecast
+                        if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) == 2)
+                        {
+                            if (currentMP <= 6000)
+                            {
+                                return BLM.Triplecast;
+                            }
+                        }
+
+                        // Weave other oGCDs
+                        if (canWeave)
+                        {
+                            // Weave Amplifier and Ley Lines
+                            if (currentMP <= 2800)
+                            {
+                                if (level >= BLM.Levels.Amplifier && IsOffCooldown(BLM.Amplifier))
+                                {
+                                    return BLM.Amplifier;
+                                }
+                                if (level >= BLM.Levels.LeyLines && IsOffCooldown(BLM.LeyLines))
+                                {
+                                    return BLM.LeyLines;
+                                }
+                            }
+
+                            if (IsOnCooldown(BLM.LeyLines))
+                            {
+                                // Swiftcast
+                                if (IsOffCooldown(All.Swiftcast))
+                                {
+                                    return All.Swiftcast;
+                                }
+
+                                // Sharpcast
+                                if (!HasEffect(BLM.Buffs.Sharpcast) && GetRemainingCharges(BLM.Sharpcast) >= 1 && IsOnCooldown(BLM.LeyLines))
+                                {
+                                    return BLM.Sharpcast;
+                                }
+                            }
+
+
+                            // Manafont
+                            if (IsOffCooldown(BLM.Manafont) && lastComboMove == BLM.Despair)
+                            {
+                                if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
+                                {
+                                    return BLM.Manafont;
+                                }
+                                else if (currentMP < BLM.MP.AspectFire)
+                                {
+                                    return BLM.Manafont;
+                                }
+                            }
+
+                            // Second Triplecast
+                            if (!HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
+                                lastComboMove != All.Swiftcast && GetRemainingCharges(BLM.Triplecast) >= 1 && currentMP < 6000)
+                            {
+                                return BLM.Triplecast;
+                            }
+
+                            // Lucid Dreaming
+                            if (GetRemainingCharges(BLM.Triplecast) == 0 && IsOffCooldown(All.LucidDreaming))
+                            {
+                                return All.LucidDreaming;
+                            }
+                        }
+
+                        // Cast Despair
+                        if (currentMP < BLM.MP.AspectFire && currentMP >= BLM.MP.Despair)
+                        {
+                            return BLM.Despair;
+                        }
+                        if (currentMP >= BLM.MP.AspectFire)
+                        {
+                            return BLM.Fire4;
+                        }
+                        return BLM.Transpose;
+                    }
+
+                    if (gauge.InUmbralIce)
+                    {
+                        if (gauge.IsParadoxActive)
+                        {
+                            return BLM.Paradox;
+                        }
+                        if (gauge.PolyglotStacks >= 1 && lastComboMove != BLM.Xenoglossy)
+                        {
+                            return BLM.Xenoglossy;
+                        }
+                        if (HasEffect(BLM.Buffs.Thundercloud) && lastComboMove != BLM.Thunder3)
+                        {
+                            return BLM.Thunder3;
+                        }
+                        openerFinished = true;
+                    }
+                }
+                
+                if (gauge.ElementTimeRemaining == 0 || !gauge.IsEnochianActive)
+                {
+                    if (currentMP >= BLM.MP.Fire3)
+                    {
+                        return BLM.Fire3;
+                    }
+                    return BLM.Blizzard3;
+                }
+
+                if (gauge.ElementTimeRemaining > 0)
+                {
+                    // Thunder
+                    if (lastComboMove != BLM.Thunder3 && currentMP >= BLM.MP.AspectThunder && 
+                        thunder3Recast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2) && !TargetHasEffect(BLM.Debuffs.Thunder4))
+                    {
+                        return BLM.Thunder3;
+                    }
+
+                    // Buffs
+                    if (canWeave)
+                    {
+                        // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
+                        if (!HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0 &&
+                            (gauge.InAstralFire || gauge.UmbralHearts >= 1) && currentMP >= BLM.MP.AspectFire * 2)
+                        {
+                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) || GetRemainingCharges(BLM.Triplecast) > 1)
+                            {
+                                return BLM.Triplecast;
+                            }
+                        }
+
+                        if (IsOffCooldown(BLM.Amplifier) && gauge.PolyglotStacks < 2)
+                        {
+                            return BLM.Amplifier;
+                        }
+
+                        if (IsOffCooldown(BLM.LeyLines))
+                        {
+                            return BLM.LeyLines;
+                        }
+
+                        if (IsOffCooldown(BLM.Manafont) && gauge.InAstralFire && currentMP < BLM.MP.Despair)
+                        {
+                            return BLM.Manafont;
+                        }
+
+                        if (GetRemainingCharges(BLM.Sharpcast) > 0 && !HasEffect(BLM.Buffs.Sharpcast))
+                        {
+                            return BLM.Sharpcast;
+                        }
+                    }
+                }
+
+                if (gauge.InUmbralIce)
+                {
+                    // Standard
+                    if (gauge.UmbralIceStacks == 3)
+                    {
+                        if (gauge.IsParadoxActive)
+                        {
+                            return BLM.Paradox;
+                        }
+                        if (gauge.UmbralHearts < 3)
+                        {
+                            return BLM.Blizzard4;
+                        }
+                        return BLM.Fire3;
+                    }
+
+                    // Transpose Instant F3
+                    if (canWeave)
+                    {
+                        if (!HasEffect(BLM.Buffs.Firestarter) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(BLM.Buffs.Triplecast))
+                        {
+                            if (IsOffCooldown(All.Swiftcast))
+                            {
+                                return All.Swiftcast;
+                            }
+                        }
+                        if (IsOffCooldown(All.LucidDreaming))
+                        {
+                            return All.LucidDreaming;
+                        }
+                    }
+
+                    // Paradox for Transpose Lines
+                    if (gauge.IsParadoxActive)
+                    {
+                        return BLM.Paradox;
+                    }
+
+                    // Filler GCDs
+                    if (currentMP <= BLM.MP.MaxMP - BLM.MP.AspectFire)
+                    {
+                        if (lastComboMove != BLM.Xenoglossy && gauge.PolyglotStacks >= 1)
+                        {
+                            return BLM.Xenoglossy;
+                        }
+                        if (lastComboMove != BLM.Thunder3 && thunder3Recast(7))
+                        {
+                            return BLM.Thunder3;
+                        }
+                        if (gauge.PolyglotStacks >= 1)
+                        {
+                            return BLM.Xenoglossy;
+                        }
+                    }
+
+                    if (IsOffCooldown(BLM.Transpose) && (canDelayedWeave || currentMP >= BLM.MP.MaxMP - BLM.MP.AspectFire))
+                    {
+                        return BLM.Transpose;
+                    }
+                    if (HasEffect(All.Buffs.Swiftcast))
+                    {
+                        return BLM.Fire3;
+                    }
+                    if (gauge.PolyglotStacks >= 1)
+                    {
+                        return BLM.Xenoglossy;
+                    }
+                    return BLM.Blizzard4;
+                }
+
+                if (gauge.InAstralFire)
+                {
+                    // F3
+                    if (gauge.AstralFireStacks < 3)
+                    {
+                        return BLM.Fire3;
+                    }
+
+                    // Xenoglossy for Manafont weave
+                    if (gauge.PolyglotStacks >= 1 && IsOffCooldown(BLM.Manafont) && currentMP < BLM.MP.Despair)
+                    {
+                        return BLM.Xenoglossy;
+                    }
+
+                    // Early Despair
+                    if (currentMP < (BLM.MP.AspectFire + BLM.MP.Despair) && currentMP >= BLM.MP.Despair)
+                    {
+                        return BLM.Despair;
+                    }
+
+                    // Transpose if F3 is available, or Thundercloud + Xenoglossy is available
+                    if (currentMP < BLM.MP.AspectFire && lastComboMove != BLM.Manafont && IsOnCooldown(BLM.Manafont) && GetCooldownRemainingTime(BLM.Manafont) <= 118)
+                    {
+                        if ((HasEffect(BLM.Buffs.LeyLines) && FindEffect(BLM.Buffs.LeyLines).RemainingTime >= 15) || HasEffect(BLM.Buffs.Firestarter) ||
+                             lastComboMove == BLM.Xenoglossy || lastComboMove == BLM.Thunder3 || (IsOffCooldown(All.Swiftcast) && (gauge.PolyglotStacks == 2)))
+                        {
+                            if (lastComboMove != BLM.Despair && lastComboMove != BLM.Fire4)
+                            {
+                                return BLM.Transpose;
+                            }
+                            if (lastComboMove == BLM.Despair)
+                            {
+                                if (gauge.PolyglotStacks >= 1)
+                                {
+                                    return BLM.Xenoglossy;
+                                }
+                                if (HasEffect(BLM.Buffs.Thundercloud))
+                                {
+                                    return BLM.Thunder3;
+                                }
+                            }
+                        }
+                    }
+
+                    // Regular Despair / Paradox
+                    if (gauge.ElementTimeRemaining <= astralFireRefresh)
+                    {
+                        return !gauge.IsParadoxActive ? BLM.Despair : BLM.Paradox;
+                    }
+                    if (currentMP >= BLM.MP.AspectFire)
+                    {
+                        return BLM.Fire4;
+                    }
+                    return BLM.Blizzard3;
+                }
             }
 
             return actionID;
