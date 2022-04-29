@@ -2531,11 +2531,22 @@ namespace XIVSlothComboPlugin
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
             [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID)]
-            SamPVPMainComboFeature = 80084,
+            SamPVPMainComboFeature = 80083,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
-        SAMGapCloserFeature = 80083,
+        [CustomComboInfo("PvP Features for Kasha Combo", "Collection of Features for Kasha Combo.", SAM.JobID)]
+        SamPvPKashaFeatures = 80084,
+            
+            [SecretCustomCombo]
+            [ParentCombo(SamPvPKashaFeatures)]
+            [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
+            SamGapCloserFeature = 80085,
+
+            [SecretCustomCombo]
+            [ParentCombo(SamPvPKashaFeatures)]
+            [CustomComboInfo("Hyosetsu Melee Protection", "Makes Hyosetsu unusable if not in melee range of target. Turns it into Requiescat.", SAM.JobID)]
+            SamHyosetsuMeleeFeature = 80086,
+
 
         /*
         [SecretCustomCombo] // I'm probably gonna remove this entirely

@@ -68,16 +68,19 @@
             }
         }
 
-        internal class SAMGapCloserFeature : CustomCombo
+        internal class SamPvPKashaFeatures : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAMGapCloserFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SamPvPKashaFeatures;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is SAMPvP.Yukikaze or SAMPvP.Gekko or SAMPvP.Kasha or SAMPvP.Hyosetsu or SAMPvP.Mangetsu or SAMPvP.Oka)
                 {
-                    if (!InMeleeRange() && GetRemainingCharges(SAMPvP.Soten) > 0)
+                    if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && !InMeleeRange() && GetRemainingCharges(SAMPvP.Soten) > 0)
                         return OriginalHook(SAMPvP.Soten);
+                    if (IsEnabled(CustomComboPreset.SamHyosetsuMeleeFeature) && !InMeleeRange() && OriginalHook(SAMPvP.Yukikaze) == SAMPvP.Hyosetsu)
+                        return PLD.Requiescat;
+
                 }
 
                 return actionID;
