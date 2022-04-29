@@ -23,7 +23,7 @@
         public static class Buffs
         {
             public const ushort
-                Placeholder = 1;
+                Kaiten = 3201;
         }
 
         public static class Config
@@ -47,7 +47,7 @@
 
                         if (IsOffCooldown(SAMPvP.MeikyoShisui))
                             return OriginalHook(SAMPvP.MeikyoShisui);
-                        if (IsEnabled(CustomComboPreset.SAMBurstChitenFeature) && IsOffCooldown(SAMPvP.Chiten))
+                        if (IsEnabled(CustomComboPreset.SAMBurstChitenFeature) && IsOffCooldown(SAMPvP.Chiten) && InCombat() && PlayerHealthPercentageHp() <= 95)
                             return OriginalHook(SAMPvP.Chiten);
                         if (GetCooldownRemainingTime(SAMPvP.Soten) < 1 && CanWeave(SAMPvP.Yukikaze))
                             return OriginalHook(SAMPvP.Soten);
@@ -77,8 +77,8 @@
                 {
                     if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && !InMeleeRange() && GetRemainingCharges(SAMPvP.Soten) > 0)
                         return OriginalHook(SAMPvP.Soten);
-                    if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !InMeleeRange() && !IsOriginal(SAMPvP.Yukikaze))
-                        return PLD.Requiescat;
+                    if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !InMeleeRange() && HasEffect(SAMPvP.Buffs.Kaiten))
+                        return SAM.Yukikaze;
                 }
 
                 return actionID;

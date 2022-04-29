@@ -2520,7 +2520,7 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
-            [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode.", SAM.JobID)]
+            [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
             SAMBurstChitenFeature = 80081,
 
             [SecretCustomCombo]
@@ -2544,7 +2544,7 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(SamPvPKashaFeatures)]
-            [CustomComboInfo("AOE Melee Protection", "Makes the AOE combos unusable if not in melee range of target. Turns it into Requiescat.", SAM.JobID)]
+            [CustomComboInfo("AOE Melee Protection", "Makes the AOE combos unusable if not in melee range of target.", SAM.JobID)]
             SamAOEMeleeFeature = 80086,
 
 
