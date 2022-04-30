@@ -86,15 +86,15 @@ namespace XIVSlothComboPlugin
                 {
                     if (canWeave)
                     {
-                        // Death Warrant on burst
-                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedDeathWarrantOption) && deathWarrantReady)
+                        // Enshrouded Death Warrant Option
+                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedDeathWarrantOption) && deathWarrantReady && enshroudStacks >= 3)
                             return OriginalHook(RPRPVP.DeathWarrant);
 
                         // Lemure's Slice Option
                         if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedLemuresOption) && lemuresSliceReady && canBind && distance <= 8)
                             return RPRPVP.LemuresSlice;
 
-                        // Harvest Moon Proc
+                        // Harvest Moon proc
                         if (HasEffect(RPRPVP.Buffs.Soulsow))
                             return OriginalHook(RPRPVP.DeathWarrant);
                     }
@@ -107,7 +107,7 @@ namespace XIVSlothComboPlugin
                 // Occurring outside of Enshroud burst
                 if (!enshrouded)
                 {
-                    // Death Warrant Option - add plentiful harvest timer check to this
+                    // Death Warrant Option
                     if (IsEnabled(CustomComboPreset.RPRPvPDeathWarrantOption) && deathWarrantReady && (plentifulCD > 20 && immortalStacks < immortalThreshold || plentifulReady && immortalStacks >= immortalThreshold))
                         return OriginalHook(RPRPVP.DeathWarrant);
 
@@ -127,7 +127,7 @@ namespace XIVSlothComboPlugin
                             return RPRPVP.GrimSwathe;
                     }
 
-                    // Soul Slice Option
+                    // Soul Slice
                     if (distance <= 5)
                     {
                         if (GetRemainingCharges(RPRPVP.SoulSlice) == 2 || GetRemainingCharges(RPRPVP.SoulSlice) > 0 && !HasEffect(RPRPVP.Buffs.GallowsOiled) && !HasEffect(RPRPVP.Buffs.SoulReaver))
