@@ -567,6 +567,8 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>Bool indicating whether you are in melee range.</returns>
         protected static bool InMeleeRange()
         {
+            if (LocalPlayer.TargetObject == null) return false;
+
             var distance = GetTargetDistance();
 
             if (distance == 0)
