@@ -96,6 +96,9 @@ namespace XIVSlothComboPlugin.Combos
             public const string
                 RdmLucidMpThreshold = "RdmLucidMpThreshold";
             public const string RDM_OGCD_OnAction = "RDM_OGCD_OnAction";
+            public const string RDM_ST_MeleeCombo_OnAction = "RDM_ST_MeleeCombo_OnAction";
+            public const string RDM_MeleeFinisher_OnAction = "RDM_MeleeFinisher_OnAction";
+            public const string RDM_LucidDreaming_Threshold = "RDM_LucidDreaming_Threshold";
         }
     }
 
@@ -286,8 +289,6 @@ namespace XIVSlothComboPlugin.Combos
             if (IsEnabled(CustomComboPreset.RDM_OGCD))
             {
                 var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_OGCD_OnAction);
-                if (radioButton >= 1) radioButton = radioButton; //Default radio button check
-                else radioButton = 1;
                 uint placeOGCD = 0;
 
                 //Radio Button Settings:
@@ -325,12 +326,24 @@ namespace XIVSlothComboPlugin.Combos
             //SYSTEM_MANA_BALANCING_MACHINE
             //Machine to decide which ver spell should be used.
             //Rules:
-            //1.Avoid perfect balancing
-            //2.Stay within difference limit
-            //3.Strive to achieve correct mana for double melee combo burst
-            //   - Level 70: 
-            //   - Level 80: 
-            //   - Level 90: 
+            //1.Avoid perfect balancing [NOT DONE]
+            //   - Jolt adds 2/2 mana
+            //   - Scatter/Impact adds 3/3 mana
+            //   - Verstone/Verfire add 5 mana
+            //   - Veraero/Verthunder add 6 mana
+            //   - Veraero2/Verthunder2 add 7 mana
+            //   - Verholy/Verflare add 11 mana
+            //   - Scorch adds 4/4 mana
+            //   - Resolution adds 4/4 mana
+            //2.Stay within difference limit [DONE]
+            //3.Strive to achieve correct mana for double melee combo burst [NOT DONE]
+            //   - Level 80: 46/35
+            //   - Level 90: 42/31
+            //   Conditions for 90
+            //   - 31/31 with either proc
+            //   - 36/29 no proc
+            //   - 30/29 no proc + accel
+            //   Above and Manafication off GCD and Embolden has less than 3 seconds remaining.
             bool useFire = false;
             bool useStone = false;
             bool useThunder = false;
@@ -338,38 +351,170 @@ namespace XIVSlothComboPlugin.Combos
             bool useThunder2 = false;
             bool useAero2 = false;
 
+            if (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration) /*&& GetCooldown(RDM.Embolden).CooldownRemaining > 5*/)
+            {
+                if (black <= white || HasEffect(RDM.Buffs.VerstoneReady)) useThunder = true;
+                else useAero = true;
+            }
+            if (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration) /*&& GetCooldown(RDM.Embolden).CooldownRemaining > 5*/)
+            {
+                if (black <= white && HasEffect(RDM.Buffs.VerfireReady)) useFire = true;
+                if (white <= black && HasEffect(RDM.Buffs.VerstoneReady)) useStone = true;
+                if (!useFire && !useStone && HasEffect(RDM.Buffs.VerfireReady)) useFire = true;
+                if (!useFire && !useStone && HasEffect(RDM.Buffs.VerstoneReady)) useStone = true;
+            }
+            if (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration))
+            {
+                if (black <= white) useThunder2 = true;
+                else useAero2 = true;
+            }
             //END_SYSTEM_MANA_BALANCING_MACHINE
 
-            //RDM_VERFIREVERSTONE
-            if (IsEnabled(CustomComboPreset.RDM_VerfireVerstone) && actionID is RDM.Jolt or RDM.Jolt2 && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast))
+            //RDM_MELEEFINISHER
+            if (IsEnabled(CustomComboPreset.RDM_MeleeFinisher))
             {
-                if (HasEffect(RDM.Buffs.VerfireReady)) return RDM.Verfire;
-                if (HasEffect(RDM.Buffs.VerstoneReady)) return RDM.Verstone;
+                var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_MeleeFinisher_OnAction);
+
+                if ((radioButton == 1 && actionID is RDM.Riposte or RDM.EnchantedRiposte or RDM.Moulinet or RDM.EnchantedMoulinet)
+                    || (radioButton == 2 && actionID is RDM.Jolt or RDM.Jolt2 or RDM.Scatter or RDM.Impact))
+                {
+                    if (gauge.ManaStacks >= 3)
+                    {
+                        if (black >= white && level >= RDM.Levels.Verholy)
+                        {
+                            if (HasEffect(RDM.Buffs.VerstoneReady) && !HasEffect(RDM.Buffs.VerfireReady) && (black - white <= 9))
+                                return RDM.Verflare;
+
+                            return RDM.Verholy;
+                        }
+                        else if (level >= RDM.Levels.Verflare)
+                        {
+                            if (!HasEffect(RDM.Buffs.VerstoneReady) && HasEffect(RDM.Buffs.VerfireReady) && level >= RDM.Levels.Verholy && (white - black <= 9))
+                                return RDM.Verholy;
+
+                            return RDM.Verflare;
+                        }
+                    }
+
+                    if ((lastComboMove is RDM.Verflare or RDM.Verholy) && level >= RDM.Levels.Scorch)
+                        return RDM.Scorch;
+
+                    if (lastComboMove is RDM.Scorch && level >= RDM.Levels.Resolution)
+                        return RDM.Resolution;
+                }
+            }
+            //END_RDM_MELEEFINISHER
+
+            //RDM_ST_MELEECOMBO
+            if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo))
+            {
+                var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_ST_MeleeCombo_OnAction);
+
+                if ((radioButton == 1 && actionID is RDM.Riposte or RDM.EnchantedRiposte)
+                    || (radioButton == 2 && actionID is RDM.Jolt or RDM.Jolt2))
+                {
+                    if ((lastComboMove is RDM.Riposte or RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau)
+                        return OriginalHook(RDM.Zwerchhau);
+
+                    if (lastComboMove is RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
+                        return OriginalHook(RDM.Redoublement);
+
+                    if (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 && 
+                        (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
+                    {
+                        return OriginalHook(RDM.Riposte);
+                    }
+                }
+            }
+            //END_RDM_ST_MELEECOMBO
+
+            //RDM_VERFIREVERSTONE
+            if (IsEnabled(CustomComboPreset.RDM_VerfireVerstone) && actionID is RDM.Jolt or RDM.Jolt2)
+            {
+                if (useFire) return RDM.Verfire;
+                if (useStone) return RDM.Verstone;
             }
             //END_RDM_VERFIREVERSTONE
 
             //RDM_VERTHUNDERVERAERO
-            if (IsEnabled(CustomComboPreset.RDM_VerthunderVeraero) && actionID is RDM.Jolt or RDM.Jolt2 && (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration)))
+            if (IsEnabled(CustomComboPreset.RDM_VerthunderVeraero) && actionID is RDM.Jolt or RDM.Jolt2)
             {
-                if (black > white)
-                {
-                    return OriginalHook(RDM.Veraero);
-                }
-                return OriginalHook(RDM.Verthunder);
+                if (useThunder) return OriginalHook(RDM.Verthunder);
+                if (useAero) return OriginalHook(RDM.Veraero);
             }
             //END_RDM_VERTHUNDERVERAERO
 
-
+            //RDM_VERTHUNDERIIVVERAEROII
+            if (IsEnabled(CustomComboPreset.RDM_VerthunderIIVeraeroII) && actionID is RDM.Scatter or RDM.Impact)
+            {
+                if (useThunder2) return RDM.Verthunder2;
+                if (useAero2) return RDM.Veraero2;
+            }
+            //END_RDM_VERTHUNDERIIVVERAEROII
 
             //NO_CONDITIONS_MET
             return actionID;
         }
     }
 
-    /// <summary>
-    /// Old Section Below
-    /// </summary>
-    internal class RedMageAoECombo : CustomCombo
+    internal class RDM_LucidDreaming : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_LucidDreaming;
+
+        internal static bool showLucid = false;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is RDM.Verthunder or RDM.Veraero or RDM.Scatter or RDM.Verthunder3 or RDM.Veraero3 or RDM.Verthunder2 or RDM.Veraero2 or RDM.Impact or RDM.Jolt or RDM.Jolt2)
+            {
+                var lucidThreshold = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_LucidDreaming_Threshold);
+
+                if (level >= All.Levels.LucidDreaming && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
+                {
+                    showLucid = true;
+                }
+
+                if (showLucid && CanSpellWeave(actionID) && HasCondition(ConditionFlag.InCombat) && IsOffCooldown(All.LucidDreaming) && !HasEffect(RDM.Buffs.Dualcast)
+                    && lastComboMove != RDM.EnchantedRiposte && lastComboMove != RDM.EnchantedZwerchhau
+                    && lastComboMove != RDM.EnchantedRedoublement && lastComboMove != RDM.Verflare
+                    && lastComboMove != RDM.Verholy && lastComboMove != RDM.Scorch) // Change abilities to Lucid Dreaming for entire weave window
+                {
+                    return All.LucidDreaming;
+                }
+                showLucid = false;
+            }
+            return actionID;
+        }
+    }
+
+    // RDM_Verraise
+    // Swiftcast combos to Verraise when:
+    //  -Swiftcast is on cooldown.
+    //  -Swiftcast is available, but we we have Dualcast (Dualcasting verraise)
+    // Using this variation other than the alternatefeature style, as verrise is level 63
+    // and swiftcast is unlocked way earlier and in theory, on a hotbar somewhere
+    internal class RDM_Verraise : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Verraise;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is All.Swiftcast && level >= RDM.Levels.Verraise)
+            {
+                if (GetCooldown(All.Swiftcast).CooldownRemaining > 0 ||   // Condition 1: Swiftcast is on cooldown
+                    HasEffect(RDM.Buffs.Dualcast))                        // Condition 2: Swiftcast is available, but we have DualCast)
+                    return RDM.Verraise;
+            }
+
+            // Else we just exit normally and return SwiftCast
+            return actionID;
+        }
+    }
+
+
+/// <summary>
+/// Old Section Below
+/// </summary>
+internal class RedMageAoECombo : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RedMageAoECombo;
 
