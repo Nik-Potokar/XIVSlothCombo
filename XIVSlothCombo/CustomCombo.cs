@@ -719,6 +719,11 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
+        protected static int GetOptionValue(string SliderID)
+        {
+            return Service.Configuration.GetCustomIntValue(SliderID);
+        }
+
         protected unsafe static FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* GetTarget(TargetType target)
         {
             GameObject? o = null;
@@ -794,11 +799,11 @@ namespace XIVSlothComboPlugin.Combos
         protected static bool InPvP()
             => Service.ClientState.IsPvP ||
             Service.ClientState.TerritoryType == 250 || //Wolves Den
-            Service.ClientState.TerritoryType == 376 || //Borderland Ruins
-            Service.ClientState.TerritoryType == 431 || //Seal Rock
-            Service.ClientState.TerritoryType == 554 || //Fields of Glory
-            Service.ClientState.TerritoryType == 888 || //Onsal Hakair
-            Service.ClientState.TerritoryType == 729 || //Astragalos
-            Service.ClientState.TerritoryType == 791;   //Hidden Gorge
+            (Service.ClientState.TerritoryType == 376 && Service.PartyList.Count() > 1) || //Borderland Ruins
+            (Service.ClientState.TerritoryType == 431 && Service.PartyList.Count() > 1) || //Seal Rock
+            (Service.ClientState.TerritoryType == 554 && Service.PartyList.Count() > 1) || //Fields of Glory
+            (Service.ClientState.TerritoryType == 888 && Service.PartyList.Count() > 1) || //Onsal Hakair
+            (Service.ClientState.TerritoryType == 729 && Service.PartyList.Count() > 1) || //Astragalos
+            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Count() > 1);   //Hidden Gorge
     }
 }

@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllHealerFeatures = 100098,
 
-            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SageEgeiroFeature, WHMRaiseFeature)]
+            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SGE_Raise, WHMRaiseFeature)]
             [ParentCombo(AllHealerFeatures)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             AllHealerRaiseFeature = 100010,
@@ -812,153 +812,157 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Chaos Thrust Combo", "Replace Chaos Thrust with its combo chain.", DRG.JobID, 2, "", "")]
         DragoonChaosThrustCombo = 6200,
 
-        [ParentCombo(DragoonChaosThrustCombo)]
-        [CustomComboInfo("Chaos Piercing Talon Uptime", "Replaces Chaos Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 3, "", "")]
-        DragoonPiercingTalonChaosFeature = 6201,
+            [ParentCombo(DragoonChaosThrustCombo)]
+            [CustomComboInfo("Chaos Piercing Talon Uptime", "Replaces Chaos Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 3, "", "")]
+            DragoonPiercingTalonChaosFeature = 6201,
 
         [ConflictingCombos(DragoonFullThrustComboPlus, DragoonSimple)]
         [CustomComboInfo("Full Thrust Combo", "Replace Full Thrust with its combo chain.", DRG.JobID, 4, "", "")]
         DragoonFullThrustCombo = 6300,
 
-        [ParentCombo(DragoonFullThrustCombo)]
-        [CustomComboInfo("Full Piercing Talon Uptime", "Replaces Full Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 5, "", "")]
-        DragoonPiercingTalonFullFeature = 6301,
+            [ParentCombo(DragoonFullThrustCombo)]
+            [CustomComboInfo("Full Piercing Talon Uptime", "Replaces Full Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 5, "", "")]
+            DragoonPiercingTalonFullFeature = 6301,
 
         [ConflictingCombos(DragoonFullThrustCombo, DragoonSimple)]
         [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust Plus Combo with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 6, "", "")]
         DragoonFullThrustComboPlus = 6400,
 
-        [ParentCombo(DragoonFullThrustComboPlus)]
-        [CustomComboInfo("High Jump Plus Feature", "Includes High Jump in the rotation.", DRG.JobID, 7, "", "")]
-        DragoonHighJumpPlusFeature = 6401,
+            [ParentCombo(DragoonFullThrustComboPlus)]
+            [CustomComboInfo("High Jump Plus Feature", "Includes High Jump in the rotation.", DRG.JobID, 7, "", "")]
+            DragoonHighJumpPlusFeature = 6401,
 
-        [ParentCombo(DragoonHighJumpPlusFeature)]
-        [CustomComboInfo("Mirage Plus Feature", "Includes Mirage in the rotation.", DRG.JobID, 8, "", "")]
-        DragoonMiragePlusFeature = 6402,
+            [ParentCombo(DragoonHighJumpPlusFeature)]
+            [CustomComboInfo("Mirage Plus Feature", "Includes Mirage in the rotation.", DRG.JobID, 8, "", "")]
+            DragoonMiragePlusFeature = 6402,
 
-        [ParentCombo(DragoonFullThrustComboPlus)]
-        [CustomComboInfo("Life Surge Plus Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, 9, "", "")]
-        DragoonLifeSurgePlusFeature = 6404,
+            [ParentCombo(DragoonFullThrustComboPlus)]
+            [CustomComboInfo("Life Surge Plus Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, 9, "", "")]
+            DragoonLifeSurgePlusFeature = 6404,
 
-        [ParentCombo(DragoonFullThrustComboPlus)]
-        [CustomComboInfo("Plus Piercing Talon Uptime", "Replaces Full Thrust with Piercing Talon when you are out of range.", DRG.JobID, 10, "", "")]
-        DragoonPiercingTalonPlusFeature = 6403,
+            [ParentCombo(DragoonFullThrustComboPlus)]
+            [CustomComboInfo("Plus Piercing Talon Uptime", "Replaces Full Thrust with Piercing Talon when you are out of range.", DRG.JobID, 10, "", "")]
+            DragoonPiercingTalonPlusFeature = 6403,
 
         [ConflictingCombos(DragoonFullThrustCombo, DragoonFullThrustComboPlus, DragoonChaosThrustCombo, DragoonFangThrustFeature, DragoonFangAndClawFeature)]
         [CustomComboInfo("Simple Dragoon", "Replaces Full Thrust with the entire DRG combo chain. Conflicts with every non-AoE feature.", DRG.JobID, 11, "", "")]
         DragoonSimple = 6500,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Simple Opener", "Level 88+. Use True North on prepull to activate. Adds opener to the Simple Dragoon rotation. Not recommended for use in dungeons. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 12, "", "")]
-        DragoonOpenerFeature = 6501,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Simple Opener", "Level 88+. Use True North on prepull to activate. Adds opener to the Simple Dragoon rotation. Not recommended for use in dungeons. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 12, "", "")]
+            DragoonOpenerFeature = 6501,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Wyrmwind Thrust Feature", "Includes Wyrmwind Thrust to the Simple Dragoon rotation.", DRG.JobID, 13, "", "")]
-        DragoonWyrmwindFeature = 6502,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Wyrmwind Thrust Feature", "Includes Wyrmwind Thrust to the Simple Dragoon rotation.", DRG.JobID, 13, "", "")]
+            DragoonWyrmwindFeature = 6502,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Geirskogul and Nastrond Feature", "Includes Geirskogul and Nastrond in the rotation.", DRG.JobID, 18, "", "")]
-        DragoonGeirskogulNastrondFeature = 6503,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Geirskogul and Nastrond Feature", "Includes Geirskogul and Nastrond in the rotation.", DRG.JobID, 18, "", "")]
+            DragoonGeirskogulNastrondFeature = 6503,
 
-        [ConflictingCombos(DragoonLitanyDiveFeature, DragoonLanceDiveFeature, DragoonLifeLitanyDiveFeature)]
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives Feature", "Single Weave Friendly, but not optimal: Includes Spineshatter Dive, Dragonfire Dive and Stardiver in the rotation.", DRG.JobID, 14, "", "")]
-        DragoonDiveFeature = 6504,
+            [ConflictingCombos(DragoonLitanyDiveFeature, DragoonLanceDiveFeature, DragoonLifeLitanyDiveFeature)]
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Dives Feature", "Single Weave Friendly, but not optimal: Includes Spineshatter Dive, Dragonfire Dive and Stardiver in the rotation.", DRG.JobID, 14, "", "")]
+            DragoonDiveFeature = 6504,
 
-        [ConflictingCombos(DragoonDiveFeature, DragoonLitanyDiveFeature, DragoonLifeLitanyDiveFeature)]
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives under Lance Charge Feature", "Single Weave Friendly: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Lance Charge, and Stardiver while under Life of the Dragon.", DRG.JobID, 17, "", "")]
-        DragoonLanceDiveFeature = 6505,
+            [ConflictingCombos(DragoonDiveFeature, DragoonLitanyDiveFeature, DragoonLifeLitanyDiveFeature)]
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Dives under Lance Charge Feature", "Single Weave Friendly: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Lance Charge, and Stardiver while under Life of the Dragon.", DRG.JobID, 17, "", "")]
+            DragoonLanceDiveFeature = 6505,
 
-        [ConflictingCombos(DragoonDiveFeature, DragoonLanceDiveFeature, DragoonLifeLitanyDiveFeature)]
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives under Litany Feature", "Double Weaves Required: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 15, "", "")]
-        DragoonLitanyDiveFeature = 6506,
+            [ConflictingCombos(DragoonDiveFeature, DragoonLanceDiveFeature, DragoonLifeLitanyDiveFeature)]
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Dives under Litany Feature", "Double Weaves Required: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 15, "", "")]
+            DragoonLitanyDiveFeature = 6506,
 
-        [ConflictingCombos(DragoonDiveFeature, DragoonLanceDiveFeature, DragoonLitanyDiveFeature)]
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dives under Litany and Life of the Dragon Feature", "Double Weaves Required: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 16, "", "")]
-        DragoonLifeLitanyDiveFeature = 6507,
+            [ConflictingCombos(DragoonDiveFeature, DragoonLanceDiveFeature, DragoonLitanyDiveFeature)]
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Dives under Litany and Life of the Dragon Feature", "Double Weaves Required: Includes Spineshatter Dive and Dragonfire Dive in the rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 16, "", "")]
+            DragoonLifeLitanyDiveFeature = 6507,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("High Jump Feature", "Includes High Jump in the rotation.", DRG.JobID, 19, "", "")]
-        DragoonHighJumpFeature = 6508,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("High Jump Feature", "Includes High Jump in the rotation.", DRG.JobID, 19, "", "")]
+            DragoonHighJumpFeature = 6508,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Mirage Feature", "Includes Mirage in the rotation.", DRG.JobID, 20, "", "")]
-        DragoonMirageFeature = 6509,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Mirage Feature", "Includes Mirage in the rotation.", DRG.JobID, 20, "", "")]
+            DragoonMirageFeature = 6509,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Lance Charge Feature", "Includes Lance Charge to the rotation.", DRG.JobID, 21, "", "")]
-        DragoonLanceFeature = 6510,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Lance Charge Feature", "Includes Lance Charge to the rotation.", DRG.JobID, 21, "", "")]
+            DragoonLanceFeature = 6510,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Dragon Sight Feature", "Includes Dragon Sight to the rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 22, "", "")]
-        DragoonDragonSightFeature = 6511,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Dragon Sight Feature", "Includes Dragon Sight to the rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 22, "", "")]
+            DragoonDragonSightFeature = 6511,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Battle Litany Feature", "Includes Battle Litany to the rotation.", DRG.JobID, 23, "", "")]
-        DragoonLitanyFeature = 6514,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Battle Litany Feature", "Includes Battle Litany to the rotation.", DRG.JobID, 23, "", "")]
+            DragoonLitanyFeature = 6514,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Life Surge Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, 24, "", "")]
-        DragoonLifeSurgeFeature = 6512,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Life Surge Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, 24, "", "")]
+            DragoonLifeSurgeFeature = 6512,
 
-        [ParentCombo(DragoonSimple)]
-        [CustomComboInfo("Simple Piercing Talon Feature", "Replaces Full Thrust Combo with Piercing Talon when you are out of range. NOT OPTIMAL", DRG.JobID, 25, "", "")]
-        DragoonSimplePiercingTalonFeature = 6513,
+            [ParentCombo(DragoonSimple)]
+            [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 25, "", "")]
+            DRGSimpleRangedUptimeST = 6513,
 
         [ConflictingCombos(DragoonCoerthanTormentCombo)]
         [CustomComboInfo("Simple Dragoon AoE", "One Button, many enemies hit.", DRG.JobID, 26, "", "")]
         DragoonSimpleAoE = 6600,
 
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Wyrmwind Thrust AoE Feature", "Includes Wyrmwind Thrust to the Simple Dragoon AoE rotation.", DRG.JobID, 27, "", "")]
-        DragoonAoEWyrmwindFeature = 6601,
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Wyrmwind Thrust AoE Feature", "Includes Wyrmwind Thrust to the Simple Dragoon AoE rotation.", DRG.JobID, 27, "", "")]
+            DragoonAoEWyrmwindFeature = 6601,
 
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Geirskogul and Nastrond AoE Feature", "Includes Geirskogul and Nastrond in the AoE rotation.", DRG.JobID, 28, "", "")]
-        DragoonAoEGeirskogulNastrondFeature = 6602,
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Geirskogul and Nastrond AoE Feature", "Includes Geirskogul and Nastrond in the AoE rotation.", DRG.JobID, 28, "", "")]
+            DragoonAoEGeirskogulNastrondFeature = 6602,
 
-        [ConflictingCombos(DragoonAoELitanyDiveFeature, DragoonAoELifeLitanyDiveFeature)]
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Dives AoE Feature", "Includes Spineshatter Dive, Dragonfire Dive and Stardiver in the AoE rotation.", DRG.JobID, 29, "", "")]
-        DragoonAoEDiveFeature = 6603,
+            [ConflictingCombos(DragoonAoELitanyDiveFeature, DragoonAoELifeLitanyDiveFeature)]
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Dives AoE Feature", "Includes Spineshatter Dive, Dragonfire Dive and Stardiver in the AoE rotation.", DRG.JobID, 29, "", "")]
+            DragoonAoEDiveFeature = 6603,
 
-        [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELitanyDiveFeature, DragoonAoELifeLitanyDiveFeature)]
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Dives under Lance Charge AoE Feature", "Single Weave Friendly: Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Lance Charge, and Stardiver while under Life of the Dragon.", DRG.JobID, 30, "", "")]
-        DragoonAoELanceDiveFeature = 6604,
+            [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELitanyDiveFeature, DragoonAoELifeLitanyDiveFeature)]
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Dives under Lance Charge AoE Feature", "Single Weave Friendly: Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Lance Charge, and Stardiver while under Life of the Dragon.", DRG.JobID, 30, "", "")]
+            DragoonAoELanceDiveFeature = 6604,
 
-        [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELanceDiveFeature, DragoonAoELifeLitanyDiveFeature)]
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Dives under Litany AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 31, "", "")]
-        DragoonAoELitanyDiveFeature = 6605,
+            [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELanceDiveFeature, DragoonAoELifeLitanyDiveFeature)]
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Dives under Litany AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany, and Stardiver while under Life of the Dragon.", DRG.JobID, 31, "", "")]
+            DragoonAoELitanyDiveFeature = 6605,
 
-        [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELanceDiveFeature, DragoonAoELitanyDiveFeature)]
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Dives under Litany and Life of the Dragon AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 32, "", "")]
-        DragoonAoELifeLitanyDiveFeature = 6606,
+            [ConflictingCombos(DragoonAoEDiveFeature, DragoonAoELanceDiveFeature, DragoonAoELitanyDiveFeature)]
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Dives under Litany and Life of the Dragon AoE Features", "Includes Spineshatter Dive and Dragonfire Dive in the AoE rotation, while under Battle Litany and Life of the Dragon, and Stardiver while under Life of the Dragon.", DRG.JobID, 32, "", "")]
+            DragoonAoELifeLitanyDiveFeature = 6606,
 
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("High Jump AoE Feature", "Includes High Jump in the AoE rotation.", DRG.JobID, 33, "", "")]
-        DragoonAoEHighJumpFeature = 6607,
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("High Jump AoE Feature", "Includes High Jump in the AoE rotation.", DRG.JobID, 33, "", "")]
+            DragoonAoEHighJumpFeature = 6607,
 
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Mirage AoE Feature", "Includes Mirage in the AoE rotation.", DRG.JobID, 34, "", "")]
-        DragoonAoEMirageFeature = 6608,
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Mirage AoE Feature", "Includes Mirage in the AoE rotation.", DRG.JobID, 34, "", "")]
+            DragoonAoEMirageFeature = 6608,
 
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Buffs AoE Feature", "Includes Lance Charge and Battle Litany to the AoE rotation.", DRG.JobID, 35, "", "")]
-        DragoonAoEBuffsFeature = 6609,
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Buffs AoE Feature", "Includes Lance Charge and Battle Litany to the AoE rotation.", DRG.JobID, 35, "", "")]
+            DragoonAoEBuffsFeature = 6609,
 
-        [ParentCombo(DragoonAoEBuffsFeature)]
-        [CustomComboInfo("Dragon Sight AoE Feature", "Includes Dragon Sight to the AoE rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 36, "", "")]
-        DragoonAoEDragonSightFeature = 6610,
+                [ParentCombo(DragoonAoEBuffsFeature)]
+                [CustomComboInfo("Dragon Sight AoE Feature", "Includes Dragon Sight to the AoE rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 36, "", "")]
+                DragoonAoEDragonSightFeature = 6610,
 
-        [ParentCombo(DragoonSimpleAoE)]
-        [CustomComboInfo("Life Surge AoE Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the AoE rotation.", DRG.JobID, 37, "", "")]
-        DragoonAoELifeSurgeFeature = 6611,
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Life Surge AoE Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the AoE rotation.", DRG.JobID, 37, "", "")]
+            DragoonAoELifeSurgeFeature = 6611,
+
+            [ParentCombo(DragoonSimpleAoE)]
+            [CustomComboInfo("Ranged Uptime Option", "Replaces Main AoE Combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 40, "", "")]
+            DRGSimpleRangedUptimeAoE = 6612,
 
         [ConflictingCombos(DragoonSimple)]
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust, Chaos Thrust Combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw. Requires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 38, "", "")]
@@ -1259,7 +1263,7 @@ namespace XIVSlothComboPlugin
         MnkMeditationOnMainComboFeature = 9017,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. A 1.93 GCD is highly recommended.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. A 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
 
         [ParentCombo(MnkArmOfTheDestroyerCombo)]
@@ -1421,9 +1425,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Royal Authority Combo", "All-in-one main combo adds Royal Authority/Rage of Halone.\nToggle all sub-options on to make this a 1 button rotation", PLD.JobID, 0, "", "Lmao, 'Authority'... If you say so, buddy.")]
         PaladinRoyalAuthorityCombo = 11001,
 
-        [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
-        PaladinAtonementFeature = 11002,
+        [ParentCombo(PaladinAtonementFeature)]
+        [CustomComboInfo("Atonement drop Feature", "Will drop the last Atonement charge right before FoF comes back off cooldown.\nPlease note that this assumes you use both FoF and Req according to the full FoF opener and standard loop\nRequires a skill speed tier of 2.45-2.40", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
+        PaladinAtonementDropFeature = 11002,
 
         [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "Promenade feature", "Long walks on the promenade...")]
         PaladinProminenceCombo = 11003,
@@ -1464,7 +1468,7 @@ namespace XIVSlothComboPlugin
         PaladinFightOrFlightMainComboFeature = 11013,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Requiescat Feature", "Adds Requiescat onto the main combo (Testing).", PLD.JobID, 2, "", "Just defend 4hed")]
+        [CustomComboInfo("Requiescat Feature", "Adds Requiescat onto the main combo.", PLD.JobID, 2, "", "Just defend 4hed")]
         PaladinReqMainComboFeature = 11014,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
@@ -1473,7 +1477,7 @@ namespace XIVSlothComboPlugin
         PaladinRangedUptimeFeature2 = 11016,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
+        [CustomComboInfo("Fight or Flight Feature", "Adds FoF onto the main combo with a delayed weave.", PLD.JobID, 2, "", "This feature hurts my brain. Yours too, no doubt")]
         PaladinFightOrFlightFeature = 11017,
 
         [ParentCombo(PaladinProminenceCombo)]
@@ -1485,7 +1489,7 @@ namespace XIVSlothComboPlugin
         PaladinAoEConfiteorFeature = 11021,
 
         [ParentCombo(PaladinHolyCircleFeature)]
-        [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.\nProbably not optimal at all.", PLD.JobID, 0, "", "")]
+        [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.", PLD.JobID, 0, "", "")]
         PaladinReqAoEComboFeature = 11022,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
@@ -1495,6 +1499,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinProminenceCombo)]
         [CustomComboInfo("AOE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AOE combo during weave windows", PLD.JobID, 0, "", "")]
         PaladinAoEExpiacionScornFeature = 11024,
+
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
+        PaladinAtonementFeature = 11025,
 
         #endregion
         // ====================================================================================
@@ -1756,173 +1764,200 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Red Mage AoE Finisher", "Adds Finishers onto Moulinet and SmartCast AoE Feature.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageMeleeAoECombo = 13012,
 
-        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos. (Testing Only!)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
+        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageEngagementFeature = 13013,
 
+        [CustomComboInfo("Corps-a-Corps Feature", "Adds Corps-a-Corps in all melee combos.", RDM.JobID, 0, "Verraise -> Swiftcast", "Ah look, it's what you were always meant to do")]
+        RedMageCorpsACorpsFeature = 13014,
+
         [CustomComboInfo("Simple Red Mage Feature Single Target", "Combines Smartcast feature with melee combo on Verstone,Verfire or melee skills (This is not optimal until i find a solution for distance delay)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMage = 13014,
+        SimpleRedMage = 13015,
 
         [CustomComboInfo("Simple Red Mage Feature AoE", "Combines Smartcast AoE feature with melee AoE combo on Verthunder2/Veraero2 (This is not optimal until i find a solution for distance delay)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageAoE = 13015,
+        SimpleRedMageAoE = 13016,
 
         [CustomComboInfo("Corps-A-corps/Displacement Feature", "Corps-A-corps becomes displacement when in melee range", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageMovementFeature = 13016,
+        RedMageMovementFeature = 13017,
 
         [ParentCombo(RedMageOgcdCombo)]
         [CustomComboInfo("oGCD Feature Everywhere", "Adds oGCD Feature to all other combos", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageOgcdComboOnCombos = 13017,
+        RedMageOgcdComboOnCombos = 13018,
 
         [ParentCombo(SimpleRedMage)]
         [CustomComboInfo("Verstone/Verfire Activation", "Add Acceleration and Swiftcast to Simple Red Mage to force activation of verstone or verfire effects when necessary.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageFishing = 13018,
+        SimpleRedMageFishing = 13019,
 
         [ParentCombo(SimpleRedMageFishing)]
         [CustomComboInfo("Acceleration only", "Only use Acceleration to force verfire or verstone activations.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageAccelOnlyFishing = 13019,
+        SimpleRedMageAccelOnlyFishing = 13020,
 
         [ParentCombo(SimpleRedMage)]
         [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
         [CustomComboInfo("Simple opener", "Do the optimal opener. [lv90 only]", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageOpener = 13020,
+        SimpleRedMageOpener = 13021,
 
         [ConflictingCombos(RedMageSmartSingleTargetCombo, RedMageVerprocCombo)]
         [CustomComboInfo("Jolt into Verproc", "Replaces Jolt with Verstone/Verfire, when proc is available and won't cause severe imbalance", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageJoltVerprocCombo = 13021,
+        RedMageJoltVerprocCombo = 13022,
 
-        [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder and Impact when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
-        RedMageLucidOnJolt = 13022,
+        [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder, Impact and Jolt when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
+        RedMageLucidOnJolt = 13023,
 
         [CustomComboInfo("RDM Alternative Raise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
-        RedMageSwiftVerraise = 13023,
+        RedMageSwiftVerraise = 13024,
+
+        [ParentCombo(RedMageCorpsACorpsFeature)]
+        [CustomComboInfo("Pull to target", "When with enough mana to enter melee phase.", RDM.JobID, 0, "", "")]
+        RedMageCorpsACorpsPullFeature = 13025,
 
         #endregion
         // ====================================================================================
         #region SAGE
 
-        [CustomComboInfo("Soteria into Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 0, "Spoopy into Kpoopy", "Don't forget your danc- uh, heal partner!")]
-        SageKardiaFeature = 14000,
+        //SAGE_FEATURE_NUMBERING
+        //Numbering Scheme: 14[Section][Feature Number][Sub-Feature]
+        //Example: 14110 (Section 1: DPS, Feature Number 1, Sub-feature 0)
+        //New features should be added to the appropriate sections.
 
-        [CustomComboInfo("Rhizomata Feature#", "Replaces Taurochole, Druochole, Ixochole and Kerachole with Rhizomata when Addersgall is empty.", SGE.JobID, 0, "Rhizomatato", "Can't quite manage that gauge? Neither can we.")]
-        SageRhizomataFeature = 14001,
+        //SECTION_1_DPS
+        [CustomComboInfo("Single Target DPS Enhancements", "Replaces Dosis with options below", SGE.JobID, 110)]
+        SGE_ST_Dosis = 14110,
 
-        [CustomComboInfo("Taurochole into Druochole Feature", "Replaces Taurochole with Druochole when Taurochole is on cooldown.", SGE.JobID, 0, "This for that", "They do the same thing, really. If you close your eyes.")]
-        SageTauroDruoFeature = 14002,
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Lucid Dreaming###SGEST", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
+            SGE_ST_Dosis_Lucid = 14111,
 
-        [CustomComboInfo("Phlegma into X Feature", "Does nothing on it's own, must choose any/all sub-features!", SGE.JobID, 0, "", "Phlegmaballs.")]
-        SagePhlegmaFeature = 14031,
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Eukrasian Dosis", "Automatic DoT Uptime", SGE.JobID, 112)]
+            SGE_ST_Dosis_EDosis = 14112,
 
-        [ParentCombo(SagePhlegmaFeature)]
-        [CustomComboInfo("Phlegma into Toxikon Feature", "Phlegma turns into Toxikon when you are out of Phlegma charges and have Addersting.\nTakes priority over the Phlegma into Dyskrasia Feature.", SGE.JobID, 0, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
-        SagePhlegmaToxikonFeature = 14003,
+                [ParentCombo(SGE_ST_Dosis_EDosis)]
+                [ConflictingCombos(SGE_ST_Dosis_EDosisToT)]
+                [CustomComboInfo("Enemy HP%% Limiter", "Stop using Eukrasian Dosis when Enemy HP%% is below this value:", SGE.JobID, 1121)]
+                SGE_ST_Dosis_EDosisHPPer = 141121,
 
-        [ParentCombo(SagePhlegmaFeature)]
-        [CustomComboInfo("Phlegma into Dyskrasia Feature", "Phlegma turns into Dyskrasia when you are out of charges.", SGE.JobID, 0, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-        SagePhlegmaDyskrasiaFeature = 14004,
+                [ParentCombo(SGE_ST_Dosis_EDosis)]
+                [ConflictingCombos(SGE_ST_Dosis_EDosisHPPer)]
+                [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 1122)]
+                SGE_ST_Dosis_EDosisToT = 141122,
 
-        [CustomComboInfo("Dosis DPS Feature", "Adds Eukrasia and Eukrasian Dosis on one combo button.", SGE.JobID, 0, "", "Oh look, you're basically WHM now!")]
-        SageDPSFeature = 14005,
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Toxikon###SGEST", "Use Toxikon when you have Addersting charges", SGE.JobID, 113)]
+            SGE_ST_Dosis_Toxikon = 14113,
 
-        [ParentCombo(SageDPSFeature)]
-        [ConflictingCombos(SageDPSFeatureToT)]
-        [CustomComboInfo("Fine Tune Dosis", "Input some values to your liking.", SGE.JobID, 0, "", "NERD")]
-        SageDPSFeatureAdvTest = 14009,
+        [CustomComboInfo("AoE DPS Enhancements", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "Phlegmaballs.")]
+        SGE_AoE_Phlegma = 14121,
 
-        [ParentCombo(SageDPSFeature)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming into the Dosis DPS feature at slider value or less.", SGE.JobID, 0, "Muh piety", "Never run out of steam!")]
-        SageLucidFeature = 14006,
+            [ParentCombo(SGE_AoE_Phlegma)]
+            [CustomComboInfo("Toxikon###SGEAoE", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia SubOption", SGE.JobID, 122, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+            SGE_AoE_Phlegma_Toxikon = 14122,
 
-        [ParentCombo(SageDPSFeature)]
-        [ConflictingCombos(SageDPSFeatureAdvTest)]
-        [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 0, "", "NERD")]
-        SageDPSFeatureToT = 14032,
+            [ParentCombo(SGE_AoE_Phlegma)]
+            [CustomComboInfo("Dyskrasia", "Use Dyskrasia", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            SGE_AoE_Phlegma_Dyskrasia = 14123,
 
+                [ParentCombo(SGE_AoE_Phlegma_Dyskrasia)]
+                [CustomComboInfo("Targetless Mode", "Prioritize Dyskrasia when no target is selected\nIgnores Phlegma Charges", SGE.JobID, 1231, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+                SGE_AoE_Phlegma_Dyskrasia_NoTarget = 141231,
+
+
+        //SECTION_2_Healing
+        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
+        [CustomComboInfo("Diagnosis Simple Single Target Heal", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 210)]
+        SGE_ST_Heal = 14210,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 211)]
+            SGE_ST_Heal_Kardia = 14211,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Eukrasian Diagnosis", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 212)]
+            SGE_ST_Heal_Diagnosis = 14212,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Soteria", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 213)]
+            SGE_ST_Heal_Soteria = 14213,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Zoe", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 214)]
+            SGE_ST_Heal_Zoe = 14214,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Pepsis###SGEST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
+            SGE_ST_Heal_Pepsis = 14215,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Taurochole", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 216)]
+            SGE_ST_Heal_Taurochole = 14216,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Haima", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 217)]
+            SGE_ST_Heal_Haima = 14217,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Rhizomata###SGEST", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
+            SGE_ST_Heal_Rhizomata = 14218,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Krasis", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 219)]
+            SGE_ST_Heal_Krasis = 14219,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Druochole", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 2110)]
+            SGE_ST_Heal_Druochole = 142110,
+
+        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
+        [CustomComboInfo("Sage Simple AoE Heal", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 220)]
+        SGE_AoE_Heal = 14220,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Physis", "Adds Physis.", SGE.JobID, 221)]
+            SGE_AoE_Heal_Physis = 14221,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Eukrasian Prognosis", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 222)]
+            SGE_AoE_Heal_EkPrognosis = 14222,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Holos", "Adds Holos.", SGE.JobID, 223)]
+            SGE_AoE_Heal_Holos = 14223,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Panhaima", "Adds Panhaima.", SGE.JobID, 224)]
+            SGE_AoE_Heal_Panhaima = 14224,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Pepsis##SGEAoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
+            SGE_AoE_Heal_Pepsis = 14225,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Ixochole", "Adds Ixochole", SGE.JobID, 226)]
+            SGE_AoE_Heal_Ixochole = 14226,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Kerachole", "Adds Kerachole", SGE.JobID, 227)]
+            SGE_AoE_Heal_Kerachole = 14227,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Rhizomata###SGEAOE", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
+            SGE_AoE_Heal_Rhizomata = 14228,
+
+
+        [CustomComboInfo("Rhizomata Helper", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
+        SGE_Rhizo = 14230,
+
+        [CustomComboInfo("Upgrade Druochole to Taurochole", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 240)]
+        SGE_DruoTauro = 14240,
+
+        //SECTION_3_Utility
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("SGE Alternative Raise Feature", "Changes Swiftcast to Egeiro when under the effect of Swiftcast.", SGE.JobID, 0, "Swiftcast to Swiftcast", "GET BACK TO DOING DAMAGE")]
-        SageEgeiroFeature = 14007,
+        [CustomComboInfo("Swiftcast Raise Combo", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
+        SGE_Raise = 14310,
 
-        [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
-        [CustomComboInfo("Sage Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 0)]
-        SageSingleTargetHealFeature = 14011,
+        [CustomComboInfo("Soteria into Kardia", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
+        SGE_Kardia = 14320,
 
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 0)]
-        AutoApplyKardia = 14013,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Eukrasian Diagnosis Feature", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 0)]
-        CustomEukrasianDiagnosisFeature = 14014,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Soteria Feature", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomSoteriaFeature = 14015,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Zoe Feature", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomZoeFeature = 14016,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Pepsis Feature", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomPepsisFeature = 14017,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Taurochole Feature", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomTaurocholeFeature = 14018,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Haima Feature", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomHaimaFeature = 14019,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeature = 14020,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Custom Krasis Feature", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomKrasisFeature = 14021,
-
-        [ParentCombo(SageSingleTargetHealFeature)]
-        [CustomComboInfo("Druochole Feature", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 0)]
-        CustomDruocholeFeature = 14030,
-
-        [ConflictingCombos(SageRhizomataFeature, SageTauroDruoFeature)]
-        [CustomComboInfo("Sage AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 0)]
-        SageAoEHealFeature = 14012,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Physis Feature", "Adds Physis.", SGE.JobID, 0)]
-        PhysisFeature = 14022,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Eukrasian Prognosis Feature", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 0)]
-        EukrasianPrognosisFeature = 14023,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Holos Feature", "Adds Holos.", SGE.JobID, 0)]
-        HolosFeature = 14024,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Panhaima Feature", "Adds Panhaima.", SGE.JobID, 0)]
-        PanhaimaFeature = 14025,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Pepsis Feature", "Triggers Pepsis if a shield is present.", SGE.JobID, 0)]
-        PepsisFeature = 14026,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Ixochole Feature", "Adds Ixochole", SGE.JobID, 0)]
-        IxocholeFeature = 14027,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Kerachole Feature", "Adds Kerachole", SGE.JobID, 0)]
-        KeracholeFeature = 14028,
-
-        [ParentCombo(SageAoEHealFeature)]
-        [CustomComboInfo("Rhizomata Feature", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 0)]
-        RhizomataFeatureAoE = 14029,
-
-        //20220420: Last ID Used is 14032
-
-
+        
         #endregion
         // ====================================================================================
         #region SAMURAI
@@ -1964,7 +1999,7 @@ namespace XIVSlothComboPlugin
             SamuraiGekkoCDs = 15099,
 
                 [ParentCombo(SamuraiGekkoCDs)]
-                [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten to Single Target/AoE combos when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
+                [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten to Gekko and Mangetsu combos when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "Gauge pls", "You heard me. Gauge pls")]
                 SamuraiIkishotenonmaincombo = 15009,
 
                 [ParentCombo(SamuraiGekkoCDs)]
@@ -2034,6 +2069,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "Okeh Combo", "Okeh")]
         SamuraiOkaCombo = 15026,
 
+            [ParentCombo(SamuraiOkaCombo)]    
+            [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze Combo, Mangetsu Combo, Senei, Shinten, and Shoha to Oka Combo.\nOptimal for two targets and when 86 and above.", SAM.JobID, 0)]
+            SamTwoTargetFeature = 150261,
+
         //CD Features
         [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu or Shifu depending on what is needed.", SAM.JobID, 0, "Jumpup/Sitdown", "Work those glutes.")]
         SamuraiJinpuShifuFeature = 15027,
@@ -2077,7 +2116,11 @@ namespace XIVSlothComboPlugin
         SamuraiYatenFeature = 15036,
         
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID, 0, "Sticky-icky-shoten", "Wait, you guys use meditation?")]
-        SamuraiIkishotenNamikiriFeature = 150367,
+        SamuraiIkishotenNamikiriFeature = 15037,
+
+        [CustomComboInfo("True North Feature", "Adds True North on all ST Combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0)]
+        SamuraiTrueNorthFeature = 15038,
+        
 
         #endregion
         // ====================================================================================
@@ -2093,7 +2136,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("SCH Alternative Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
         SchRaiseFeature = 16002,
 
-        [CustomComboInfo("Fairy Feature", "Change every action that requires a fairy into Summon Eos if you do not have a fairy summoned.", SCH.JobID, 0, "", "You're really gonna forget? Really?")]
+        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 0, "", "You're really gonna forget? Really?")]
         ScholarFairyFeature = 16004,
 
         [CustomComboInfo("DPS Feature", "Adds Bio1/Bio2/Biosys to Broil/Ruin whenever the debuff is not present or about to expire.", SCH.JobID, 0, "", "Pretend something interesting is going on. DPS Routine!")]
@@ -2124,8 +2167,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Demi Attacks on Main Combo", "Adds Astral Flow to the Main Combo.", SMN.JobID, 0, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
         SummonerSingleTargetDemiFeature = 17002,
 
-        [ParentCombo(SummonerDemiAoESummonsFeature)]
-        [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 0, "BRRRR", "Upgrade!")]
+        [ParentCombo(SummonerAOEComboFeature)]
+        [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
         [ParentCombo(EgisOnRuinFeature)]
@@ -2176,7 +2219,7 @@ namespace XIVSlothComboPlugin
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 0, "", "We'll play the game for you. Shush, now")]
+        [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -2184,7 +2227,7 @@ namespace XIVSlothComboPlugin
         SearingLightonRuinFeature = 17018,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 0, "Our Eyes!", "Yay, we're all legally blind!")]
+        [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 2, "Our Eyes!", "Yay, we're all legally blind!")]
         BuffOnSimpleAoESummoner = 17019,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -2192,11 +2235,11 @@ namespace XIVSlothComboPlugin
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         SummonerDemiAoESummonsFeature = 17021,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 0, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         EgisOnAOEFeature = 17022,
 
         [ParentCombo(EgisOnRuinFeature)]
@@ -2213,8 +2256,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain for Searing Light/2 min windows.", SMN.JobID, 0)]
         SummonerEDPoolonMainFeature = 17025,
 
-        [ParentCombo(EgisOnAOEFeature)]
-        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 0)]
+        [ParentCombo(SummonerAOEComboFeature)]
+        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
         SummonerEgiAttacksAOEFeature = 17026,
 
         [ConflictingCombos(AllCasterRaiseFeature)]
@@ -2304,6 +2347,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorInfuriateFellCleave)]
         [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
         WarriorUseInnerReleaseFirst = 18022,
+
+        [ParentCombo(WarriorPrimalRendFeature)]
+        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
+        WarriorPrimalRendCloseRangeFeature = 18023,
+        
 
         #endregion
         // ====================================================================================
@@ -2522,6 +2570,11 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
         WARBurstMode = 80040,
+        
+        [SecretCustomCombo]
+        [ParentCombo(WARBurstMode)]
+        [CustomComboInfo("Bloodwhetting Option", "Allows usage of bloodwhetting anytime, not just inbetween GCDs.", WARPVP.JobID)]
+        WARBurstOption = 80041,
 
         // NIN
         [ConflictingCombos(NINAoEBurstMode)]
@@ -2553,6 +2606,41 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DNCBurstMode)]
         [CustomComboInfo("Curing Waltz Burst Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
         DNCCuringWaltzOption = 80072,
+
+        // SAM
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.", SAM.JobID)]
+        SAMBurstMode = 80080,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMBurstMode)]
+            [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
+            SAMBurstChitenFeature = 80081,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMBurstMode)]
+            [CustomComboInfo("Mineuchi to Burst Mode", "Adds Mineuchi to the Burst Mode.", SAM.JobID)]
+            SAMBurstStunFeature = 80082,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMBurstMode)]
+            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID)]
+            SamPVPMainComboFeature = 80083,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("PvP Features for Kasha Combo", "Collection of Features for Kasha Combo.", SAM.JobID)]
+        SamPvPKashaFeatures = 80084,
+            
+            [SecretCustomCombo]
+            [ParentCombo(SamPvPKashaFeatures)]
+            [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
+            SamGapCloserFeature = 80085,
+
+            [SecretCustomCombo]
+            [ParentCombo(SamPvPKashaFeatures)]
+            [CustomComboInfo("AOE Melee Protection", "Makes the AOE combos unusable if not in melee range of target.", SAM.JobID)]
+            SamAOEMeleeFeature = 80086,
+
 
         /*
         [SecretCustomCombo] // I'm probably gonna remove this entirely

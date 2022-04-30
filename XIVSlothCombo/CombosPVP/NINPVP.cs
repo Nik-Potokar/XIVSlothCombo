@@ -41,7 +41,7 @@ namespace XIVSlothComboPlugin
                 SealedHyoshoRanryu = 3194,
                 SealedGokaMekkyaku = 3193,
                 SealedHuton = 3196,
-                SealedDoton = 3187,
+                SealedDoton = 3197,
                 SeakedForkedRaiju = 3195,
                 SealedMeisui = 3198;
         }

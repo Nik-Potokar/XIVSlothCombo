@@ -99,6 +99,8 @@ namespace XIVSlothComboPlugin.Combos
             public const string
                 SamKenkiOvercapAmount = "SamKenkiOvercapAmount";
             public const string
+                SamAOEKenkiOvercapAmount = "SamAOEKenkiOvercapAmount";
+            public const string
                 SamFillerCombo = "SamFillerCombo";
         }
     }
@@ -114,8 +116,14 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SAMGauge>();
                 var SamKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(SAM.Config.SamKenkiOvercapAmount);
 
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && CanWeave(actionID) && level >= SAM.Levels.Shinten)
+                if (CanWeave(actionID))
+                {
+                    if (IsEnabled(CustomComboPreset.SamuraiTrueNorthFeature) && GetBuffStacks(SAM.Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0)
+                        return All.TrueNorth;
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && level >= SAM.Levels.Shinten)
                         return SAM.Shinten;
+                }
+
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Yukikaze;
 
@@ -161,6 +169,9 @@ namespace XIVSlothComboPlugin.Combos
                         return SAM.Enpi;
                 }
 
+                if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SamuraiTrueNorthFeature) && GetBuffStacks(SAM.Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0)
+                    return All.TrueNorth;
+
                 if (!InCombat())
                 {
                     hasDied = false;
@@ -191,7 +202,8 @@ namespace XIVSlothComboPlugin.Combos
                     //Stops waste if you use Iaijutsu or Ogi and you've got a Kaeshi ready
                     if (!inOpener)
                     {
-
+                        if (IsEnabled(CustomComboPreset.SamuraiOgiNamikiriSTFeature) && (gauge.Kaeshi == Kaeshi.NAMIKIRI))
+                            return OriginalHook(SAM.TsubameGaeshi);
                         if (IsEnabled(CustomComboPreset.IaijutsuSTFeature) && (gauge.Kaeshi == Kaeshi.GOKEN || gauge.Kaeshi == Kaeshi.SETSUGEKKA))
                             return OriginalHook(SAM.TsubameGaeshi);
                     }
@@ -454,7 +466,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (gauge.Kaeshi == Kaeshi.SETSUGEKKA && level >= SAM.Levels.TsubameGaeshi && GetRemainingCharges(SAM.TsubameGaeshi) > 0)
                                     return OriginalHook(SAM.TsubameGaeshi);
-                                if (!this.IsMoving && (((oneSeal || oneSeal && meikyostacks == 2) && GetDebuffRemainingTime(SAM.Debuffs.Higanbana) <= 10) || threeSeal))
+                                if (!this.IsMoving && (((oneSeal || oneSeal && meikyostacks == 2) && GetDebuffRemainingTime(SAM.Debuffs.Higanbana) <= 10) || (threeSeal && level >= SAM.Levels.Setsugekka)))
                                     return OriginalHook(SAM.Iaijutsu);
                             }
 
@@ -522,8 +534,13 @@ namespace XIVSlothComboPlugin.Combos
 
             if (actionID == SAM.Kasha)
             {
-                if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && CanWeave(actionID) && level >= SAM.Levels.Shinten)
-                    return SAM.Shinten;
+                if (CanWeave(actionID))
+                {
+                    if (IsEnabled(CustomComboPreset.SamuraiTrueNorthFeature) && GetBuffStacks(SAM.Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0)
+                        return All.TrueNorth;
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeature) && gauge.Kenki >= SamKenkiOvercapAmount && level >= SAM.Levels.Shinten)
+                        return SAM.Shinten;
+                }
                 if (HasEffect(SAM.Buffs.MeikyoShisui))
                     return SAM.Kasha;
 
@@ -552,7 +569,7 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == SAM.Mangetsu)
             {
                 var gauge = GetJobGauge<SAMGauge>();
-                var SamKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(SAM.Config.SamKenkiOvercapAmount);
+                var SamAOEKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(SAM.Config.SamAOEKenkiOvercapAmount);
 
                 //oGCD Features
                 if (CanSpellWeave(actionID))
@@ -561,7 +578,7 @@ namespace XIVSlothComboPlugin.Combos
                         return SAM.Guren;
                     if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo) && gauge.Kenki <= 50 && IsOffCooldown(SAM.Ikishoten) && level >= SAM.Levels.Ikishoten)
                         return SAM.Ikishoten;
-                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe) && gauge.Kenki >= SamKenkiOvercapAmount && level >= SAM.Levels.Kyuten)
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe) && gauge.Kenki >= SamAOEKenkiOvercapAmount && level >= SAM.Levels.Kyuten)
                             return SAM.Kyuten;
                     if (IsEnabled(CustomComboPreset.SamuraiShoha2AOEFeature) && level >= SAM.Levels.Shoha2 && gauge.MeditationStacks == 3)
                         return SAM.Shoha2;
@@ -575,7 +592,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.TenkaGokenAOEFeature) && level >= SAM.Levels.TenkaGoken)
                 {
-                    if (!this.IsMoving && (OriginalHook(SAM.Iaijutsu) == SAM.TenkaGoken || OriginalHook(SAM.Iaijutsu) == SAM.Setsugekka))
+                    if (!this.IsMoving && (OriginalHook(SAM.Iaijutsu) == SAM.TenkaGoken || (OriginalHook(SAM.Iaijutsu) == SAM.Setsugekka && level >= SAM.Levels.Setsugekka)))
                         return OriginalHook(SAM.Iaijutsu);
                     if ((gauge.Kaeshi == Kaeshi.GOKEN || gauge.Kaeshi == Kaeshi.SETSUGEKKA) && level >= SAM.Levels.TsubameGaeshi && GetRemainingCharges(SAM.TsubameGaeshi) > 0)
                         return OriginalHook(SAM.TsubameGaeshi);
@@ -615,19 +632,56 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == SAM.Oka)
             {
                 var gauge = GetJobGauge<SAMGauge>();
-                var SamKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(SAM.Config.SamKenkiOvercapAmount);
+                var SamAOEKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(SAM.Config.SamAOEKenkiOvercapAmount);
 
                 if (CanWeave(actionID))
                 {
-                    if (IsEnabled(CustomComboPreset.SamuraiIkishotenonmaincombo) && gauge.Kenki <= 50 && IsOffCooldown(SAM.Ikishoten) && level >= SAM.Levels.Ikishoten)
-                        return SAM.Ikishoten;
-
-                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe) && gauge.Kenki >= SamKenkiOvercapAmount && level >= SAM.Levels.Kyuten)
+                    if (IsEnabled(CustomComboPreset.SamuraiOvercapFeatureAoe) && IsNotEnabled(CustomComboPreset.SamTwoTargetFeature) && gauge.Kenki >= SamAOEKenkiOvercapAmount && level >= SAM.Levels.Kyuten)
                             return SAM.Kyuten;
                 }
 
-                if (HasEffect(SAM.Buffs.MeikyoShisui))
+                if (HasEffect(SAM.Buffs.MeikyoShisui) && IsNotEnabled(CustomComboPreset.SamTwoTargetFeature))
                     return SAM.Oka;
+
+                //Two Target Rotation
+                if (IsEnabled(CustomComboPreset.SamTwoTargetFeature))
+                {
+                    if (CanSpellWeave(actionID))
+                    {
+                        if (level >= SAM.Levels.Senei && gauge.Kenki >= 25 && IsOffCooldown(SAM.Senei))
+                            return SAM.Senei;
+                        if (level >= SAM.Levels.Shinten && gauge.Kenki >= 25)
+                            return SAM.Shinten;
+                        if (level >= SAM.Levels.Shoha && gauge.MeditationStacks == 3)
+                            return SAM.Shoha;
+                    }
+
+                    if (HasEffect(SAM.Buffs.MeikyoShisui))
+                    {
+                        if (gauge.Sen.HasFlag(Sen.SETSU) == false && level >= SAM.Levels.Yukikaze)
+                            return SAM.Yukikaze;
+                        if (gauge.Sen.HasFlag(Sen.GETSU) == false && level >= SAM.Levels.Gekko)
+                            return SAM.Gekko;
+                        if (gauge.Sen.HasFlag(Sen.KA) == false && level >= SAM.Levels.Kasha)
+                            return SAM.Kasha;
+                    }
+
+                    if (level >= SAM.Levels.TsubameGaeshi && gauge.Kaeshi == Kaeshi.SETSUGEKKA && GetRemainingCharges(SAM.TsubameGaeshi) > 0)
+                        return OriginalHook(SAM.TsubameGaeshi);
+                    if (level >= SAM.Levels.Setsugekka && OriginalHook(SAM.Iaijutsu) == SAM.Setsugekka)
+                        return OriginalHook(SAM.Iaijutsu);
+
+                    if (comboTime > 0)
+                    {
+                        if (lastComboMove == SAM.Hakaze && level >= SAM.Levels.Yukikaze)
+                            return SAM.Yukikaze;
+                        if (lastComboMove is SAM.Fuko or SAM.Fuga && gauge.Sen.HasFlag(Sen.GETSU) == false && level >= SAM.Levels.Mangetsu)
+                            return SAM.Mangetsu;
+                    }
+
+                    if (gauge.Sen.HasFlag(Sen.SETSU) == false)
+                        return SAM.Hakaze;
+                }
 
                 if (comboTime > 0 && level >= SAM.Levels.Oka)
                 {

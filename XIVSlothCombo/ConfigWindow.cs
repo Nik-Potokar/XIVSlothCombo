@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.2\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.4\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
@@ -735,8 +735,8 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PALADIN
-            if (preset == CustomComboPreset.PaladinAtonementFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
+            //if (preset == CustomComboPreset.PaladinAtonementDropFeature && enabled)
+            //    ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
 
             if (preset == CustomComboPreset.PaladinInterveneFeature && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLDKeepInterveneCharges, "How many charges to keep ready? (0 = Use All)");
@@ -787,66 +787,53 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SAGE
-            if (preset == CustomComboPreset.SageDPSFeatureAdvTest)
-            {
-                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
-                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
-                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+            
+            if (preset == CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "");
 
-                var inputChanged = false;
-                ImGui.PushItemWidth(75);
-                inputChanged |= ImGui.InputFloat("Input Target MAX Hp  (If targets MAX Hp is BELOW this value it will not use DoT)", ref MaxHpValue);
-                inputChanged |= ImGui.InputFloat("Input Current Enemy Hp (Flat Value) (If targets Current HP is BELOW this value it will not use DoT)", ref CurrentHpValue);
-                inputChanged |= ImGui.InputFloat("Input Current Enemy % Hp (If targets Current % Hp is BELOW this value it will not use DoT)", ref PercentageHpValue);
+            if (preset == CustomComboPreset.SGE_ST_Dosis_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "", 150, SliderIncrements.Hundreds);
 
+            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
+                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 1);
 
-                if (inputChanged)
-                {
-                    Service.Configuration.EnemyHealthMaxHp = MaxHpValue;
-                    Service.Configuration.EnemyHealthPercentage = PercentageHpValue;
-                    Service.Configuration.EnemyCurrentHp = CurrentHpValue;
+            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
+                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 2);
 
-                    Service.Configuration.Save();
-                }
+            if (preset == CustomComboPreset.SGE_ST_Heal_Soteria)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Set HP percentage value for Soteria to trigger");
 
-                ImGui.Spacing();
-            }
+            if (preset == CustomComboPreset.SGE_ST_Heal_Zoe)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Set HP percentage value for Zoe to trigger");
 
-            if (preset == CustomComboPreset.SageLucidFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.CustomSGELucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Set HP percentage value for Pepsis to trigger");
 
-            if (preset == CustomComboPreset.CustomSoteriaFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomSoteria, "Set HP percentage value for Soteria to trigger");
+            if (preset == CustomComboPreset.SGE_ST_Heal_Taurochole)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Set HP percentage value for Taurochole to trigger");
 
-            if (preset == CustomComboPreset.CustomZoeFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomZoe, "Set HP percentage value for Zoe to trigger");
+            if (preset == CustomComboPreset.SGE_ST_Heal_Haima)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Set HP percentage value for Haima to trigger");
 
-            if (preset == CustomComboPreset.CustomPepsisFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomPepsis, "Set HP percentage value for Pepsis to trigger");
+            if (preset == CustomComboPreset.SGE_ST_Heal_Krasis)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Set HP percentage value for Krasis to trigger");
 
-            if (preset == CustomComboPreset.CustomTaurocholeFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomTaurochole, "Set HP percentage value for Taurochole to trigger");
+            if (preset == CustomComboPreset.SGE_ST_Heal_Druochole)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Set HP percentage value for Druochole to trigger");
 
-            if (preset == CustomComboPreset.CustomHaimaFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomHaima, "Set HP percentage value for Haima to trigger");
-
-            if (preset == CustomComboPreset.CustomKrasisFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomKrasis, "Set HP percentage value for Krasis to trigger");
-
-            if (preset == CustomComboPreset.CustomDruocholeFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomDruochole, "Set HP percentage value for Druochole to trigger");
-
-            if (preset == CustomComboPreset.CustomEukrasianDiagnosisFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.CustomDiagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
+            if (preset == CustomComboPreset.SGE_ST_Heal_Diagnosis)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
 
 
             #endregion
             // ====================================================================================
             #region SAMURAI
             if (preset == CustomComboPreset.SamuraiOvercapFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount for ST combos.");
             if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount.");
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamAOEKenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
+            if (preset == CustomComboPreset.SAMBurstMode && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 2, SAMPvP.Config.SamSotenCharges, "How many charges of Soten to keep ready? (0 = Use All).");
             //Fillers
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
                 ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
@@ -868,12 +855,25 @@ namespace XIVSlothComboPlugin
             #region SCHOLAR
             if (preset == CustomComboPreset.ScholarLucidDPSFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.ScholarFairyFeature)
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.ScholarFairy, "Eos", "Summon Eos", 1);
+            if (preset == CustomComboPreset.ScholarFairyFeature)
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.ScholarFairy, "Selene", "Summon Selene", 2);
 
 
             #endregion
             // ====================================================================================
             #region SUMMONER
 
+            if (preset == CustomComboPreset.BuffOnSimpleAoESummoner)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 1", "Use Searing Light on cooldown, regardless of phase.", 0);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 2", "Use Searing Light only in Bahamut phase.", 1);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 3", "Use Searing Light only in Phoenix phase.", 2);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 4", "Use Searing Light only in Ifrit phase.", 3);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 5", "Use Searing Light only in Garuda phase.", 4);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 6", "Use Searing Light only in Titan phase.", 5);
+            }
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice,"Titan","Summons Titan first, Garuda second, Ifrit third", 1);
 
