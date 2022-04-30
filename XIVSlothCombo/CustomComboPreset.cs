@@ -2572,19 +2572,55 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("AOE Melee Protection", "Makes the AOE combos unusable if not in melee range of target.", SAM.JobID)]
             SamAOEMeleeFeature = 80086,
 
-
-        /*
-        [SecretCustomCombo] // I'm probably gonna remove this entirely
-        [ParentCombo(DNCBurstMode)]
-        [CustomComboInfo("En Avant Overcap Protection", "Adds En Avant to the main combo when you hit maximum stacks.\nNOT OPTIMAL, THIS MAY GET YOU KILLED", DNC.JobID)]
-        DNCEnAvantOvercapOption = 80073,
-        */
-        /*
         // RPR
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.", RPR.JobID)]
-        RPRBurstMode = 80080,
-        */
+        [CustomComboInfo("Burst Mode - BETA TESTING", "Turns Slice Combo into an all-in-one damage button.\nCurrently in beta testing. Do not expect fully optimal use!", RPR.JobID)]
+        RPRBurstMode = 80090,
+
+            [SecretCustomCombo]
+            [ParentCombo(RPRBurstMode)]
+            [CustomComboInfo("Soul Slice Option", "Adds Soul Slice onto the main combo when available.", RPR.JobID)]
+            RPRPvPSoulSliceOption = 80091,
+
+            [SecretCustomCombo]
+            [ParentCombo(RPRBurstMode)]
+            [CustomComboInfo("Grim Swathe Option", "Weaves Grim Swathe onto the main combo when available.", RPR.JobID)]
+            RPRPvPGrimSwatheOption = 80092,
+
+            [SecretCustomCombo]
+            [ParentCombo(RPRBurstMode)]
+            [CustomComboInfo("Death Warrant Option", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
+            RPRPvPDeathWarrantOption = 80093,
+
+            [SecretCustomCombo]
+            [ParentCombo(RPRBurstMode)]
+            [CustomComboInfo("Immortal Sacrifice Pooling Option", "Pools a set amount of stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.", RPR.JobID)]
+            RPRPvPImmortalPoolingOption = 80094,
+
+            [SecretCustomCombo]
+            [ParentCombo(RPRBurstMode)]
+            [CustomComboInfo("Enshrouded Option", "A collection of options for the Enshrouded burst phase.", RPR.JobID)]
+            RPRPvPEnshroudedOption = 80095,
+
+                [SecretCustomCombo]
+                [ParentCombo(RPRBurstMode)]
+                [CustomComboInfo("Lemure Burst Option", "Adds Lemure's Slice onto the main combo during the Enshroud burst.", RPR.JobID)]
+                RPRPvPEnshroudedLemuresOption = 80096,
+
+                [SecretCustomCombo]
+                [ParentCombo(RPRBurstMode)]
+                [CustomComboInfo("Enshrouded Death Warrant Option", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
+                RPRPvPEnshroudedDeathWarrantOption = 80097,
+
+                [SecretCustomCombo]
+                [ParentCombo(RPRBurstMode)]
+                [CustomComboInfo("Communio Finisher Option", "Adds communio onto the main combo when you have 1 stack of Enshroud remaining.", RPR.JobID)]
+                RPRPvPEnshroudedCommunioOption = 80098,
+
+            [SecretCustomCombo]
+            [ParentCombo(RPRBurstMode)]
+            [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under a set HP perecentage.", RPR.JobID)]
+            RPRPvPArcaneCircleOption = 80099,
 
         #endregion
         // ====================================================================================
