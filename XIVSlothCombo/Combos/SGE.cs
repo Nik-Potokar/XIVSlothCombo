@@ -131,9 +131,9 @@ namespace XIVSlothComboPlugin.Combos
 
     //SageSoteriaKardia
     //Soteria becomes Kardia when Kardia's Buff is not active or Soteria is on cooldown.
-    internal class SageSoteriaKardia : CustomCombo
+    internal class SageSoteriaKardiaFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Kardia;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_KardiaFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID is SGE.Soteria && 
@@ -146,9 +146,9 @@ namespace XIVSlothComboPlugin.Combos
     //SageRhizomata
     //Replaces all Addersgal using Abilities (Taurochole/Druochole/Ixochole/Kerachole) with Rhizomata if out of Addersgall stacks
     //(Scholar speak: Replaces all Aetherflow abilities with Aetherflow when out)
-    internal class SageRhizomata : CustomCombo
+    internal class SageRhizomataFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Rhizo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_RhizoFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -164,9 +164,9 @@ namespace XIVSlothComboPlugin.Combos
     //Druochole Upgrade to Taurochole (like a trait upgrade)
     //Replaces Druocole with Taurochole when Taurochole is available
     //(As of 6.0) Taurochole (single target massive insta heal w/ cooldown), Druochole (Single target insta heal)
-    internal class SageDruoTauro : CustomCombo
+    internal class SageDruoTauroFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauro;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauroFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID is SGE.Druochole && level >= SGE.Levels.Taurochole && IsOffCooldown(SGE.Taurochole)) return SGE.Taurochole;
@@ -176,9 +176,9 @@ namespace XIVSlothComboPlugin.Combos
 
     //Sage AoE / Phlegma Replacement
     //Replaces Zero Charges/Stacks of Phlegma with Toxikon (if you can use it) or Dyskrasia 
-    internal class SageAoEPhlegma : CustomCombo
+    internal class SageAoEPhlegmaFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_Phlegma;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_PhlegmaFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID is SGE.Phlegma or SGE.Phlegma2 or SGE.Phlegma3)
@@ -212,9 +212,9 @@ namespace XIVSlothComboPlugin.Combos
     //Single Target Dosis Combo
     //Currently Replaces Dosis with Eukrasia when the debuff on the target is < 3 seconds or not existing
     //Lucid Dreaming, Target of Target optional
-    internal class SageSTDosis : CustomCombo
+    internal class SageSTDosisFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_Dosis;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_DosisFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID is SGE.Dosis1 or SGE.Dosis2 or SGE.Dosis3 && InCombat())
@@ -286,9 +286,9 @@ namespace XIVSlothComboPlugin.Combos
 
     //SageRaise
     //Swiftcast combos to Egeiro (Raise) while Swiftcast is on cooldown
-    internal class SageRaise : CustomCombo
+    internal class SageRaiseFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Raise;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_RaiseFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast)) return SGE.Egeiro;
@@ -296,9 +296,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class SageSingleTargetHeal : CustomCombo
+    internal class SageSingleTargetHealFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_Heal;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_HealFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -375,9 +375,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class SageAoEHeal : CustomCombo
+    internal class SageAoEHealFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_Heal;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_HealFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
