@@ -2579,48 +2579,43 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
-            [CustomComboInfo("Soul Slice Option", "Adds Soul Slice onto the main combo when available.", RPR.JobID)]
-            RPRPvPSoulSliceOption = 80091,
-
-            [SecretCustomCombo]
-            [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Grim Swathe Option", "Weaves Grim Swathe onto the main combo when available.", RPR.JobID)]
-            RPRPvPGrimSwatheOption = 80092,
+            RPRPvPGrimSwatheOption = 80091,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Death Warrant Option", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
-            RPRPvPDeathWarrantOption = 80093,
+            RPRPvPDeathWarrantOption = 80092,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Immortal Sacrifice Pooling Option", "Pools a set amount of stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.", RPR.JobID)]
-            RPRPvPImmortalPoolingOption = 80094,
+            RPRPvPImmortalPoolingOption = 80093,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Enshrouded Option", "A collection of options for the Enshrouded burst phase.", RPR.JobID)]
-            RPRPvPEnshroudedOption = 80095,
+            RPRPvPEnshroudedOption = 80094,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRBurstMode)]
                 [CustomComboInfo("Lemure Burst Option", "Adds Lemure's Slice onto the main combo during the Enshroud burst.", RPR.JobID)]
-                RPRPvPEnshroudedLemuresOption = 80096,
+                RPRPvPEnshroudedLemuresOption = 80095,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRBurstMode)]
                 [CustomComboInfo("Enshrouded Death Warrant Option", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
-                RPRPvPEnshroudedDeathWarrantOption = 80097,
+                RPRPvPEnshroudedDeathWarrantOption = 80096,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRBurstMode)]
                 [CustomComboInfo("Communio Finisher Option", "Adds communio onto the main combo when you have 1 stack of Enshroud remaining.", RPR.JobID)]
-                RPRPvPEnshroudedCommunioOption = 80098,
+                RPRPvPEnshroudedCommunioOption = 80097,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under a set HP perecentage.", RPR.JobID)]
-            RPRPvPArcaneCircleOption = 80099,
+            RPRPvPArcaneCircleOption = 80098,
 
         #endregion
         // ====================================================================================

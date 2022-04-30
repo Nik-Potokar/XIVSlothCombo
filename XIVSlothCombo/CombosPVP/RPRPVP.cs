@@ -128,7 +128,7 @@ namespace XIVSlothComboPlugin
                     }
 
                     // Soul Slice Option
-                    if (IsEnabled(CustomComboPreset.RPRPvPSoulSliceOption) && distance <= 5)
+                    if (distance <= 5)
                     {
                         if (GetRemainingCharges(RPRPVP.SoulSlice) == 2 || GetRemainingCharges(RPRPVP.SoulSlice) > 0 && !HasEffect(RPRPVP.Buffs.GallowsOiled) && !HasEffect(RPRPVP.Buffs.SoulReaver))
                             return RPRPVP.SoulSlice;
