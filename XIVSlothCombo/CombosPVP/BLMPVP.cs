@@ -61,12 +61,14 @@
                         IsOffCooldown(Burst))
                         return Burst;
 
+
+                    if (!TargetHasEffect(Debuffs.AstralWarmth))
+                        return OriginalHook(Fire);
+
                     if (FindTargetEffect(Debuffs.AstralWarmth).StackCount < 3 &&
                         IsOffCooldown(Paradox))
                         return Paradox;
 
-                    if (!TargetHasEffect(Debuffs.AstralWarmth))
-                        return OriginalHook(Fire);
 
                     if (IsEnabled(CustomComboPreset.BLMNightWing) &&
                         IsOffCooldown(NightWing))
@@ -94,12 +96,14 @@
                         IsOffCooldown(Burst))
                         return Burst;
 
+
+                    if (!TargetHasEffect(Debuffs.UmbralFreeze))
+                        return OriginalHook(Blizzard);
+
                     if (FindTargetEffect(Debuffs.UmbralFreeze).StackCount < 3 &&
                         IsOffCooldown(Paradox))
                         return Paradox;
 
-                    if (!TargetHasEffect(Debuffs.UmbralFreeze))
-                        return OriginalHook(Blizzard);
 
                     if (IsEnabled(CustomComboPreset.BLMNightWing) &&
                         IsOffCooldown(NightWing))
