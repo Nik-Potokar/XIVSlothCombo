@@ -223,7 +223,8 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) &&
                     level >= All.Levels.LucidDreaming &&
                     IsOffCooldown(All.LucidDreaming) &&
-                    LocalPlayer.CurrentMp <= GetOptionValue(SGE.Config.SGE_ST_Dosis_Lucid)
+                    LocalPlayer.CurrentMp <= GetOptionValue(SGE.Config.SGE_ST_Dosis_Lucid) &&
+                    CanSpellWeave(actionID)
                    ) return All.LucidDreaming;
 
                 //Eukrasian Dosis.
@@ -276,8 +277,9 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
                     level >= SGE.Levels.Toxikon &&
                     HasBattleTarget() &&
-                    ( (this.IsMoving && GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 1) || (GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 2) ) &&
-                    GetJobGauge<SGEGauge>().Addersting > 0
+                    ((GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 1 && this.IsMoving) || (GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 2)) &&
+                    GetJobGauge<SGEGauge>().Addersting > 0 &&
+                    CanSpellWeave(actionID)
                    ) return OriginalHook(SGE.Toxikon);
             }
             return actionID;
