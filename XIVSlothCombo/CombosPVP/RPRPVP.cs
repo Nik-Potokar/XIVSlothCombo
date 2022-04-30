@@ -30,6 +30,7 @@ namespace XIVSlothComboPlugin
         {
             internal const ushort
                 Soulsow = 2750,
+                SoulReaver = 2854,
                 GallowsOiled = 2856,
                 Enshrouded = 2863,
                 ImmortalSacrifice = 3204,
@@ -59,11 +60,11 @@ namespace XIVSlothComboPlugin
         {
             if (actionID is RPRPVP.Slice or RPRPVP.WaxingSlice or RPRPVP.InfernalSlice)
             {
-                bool canWeave = CanWeave(actionID);
-                var distance = GetTargetDistance();
+                
                 bool grimSwatheReady = !GetCooldown(RPRPVP.GrimSwathe).IsCooldown;
                 bool lemuresSliceReady = !GetCooldown(RPRPVP.LemuresSlice).IsCooldown;
                 bool arcaneReady = !GetCooldown(RPRPVP.ArcaneCrest).IsCooldown;
+                var arcaneThreshold = Service.Configuration.GetCustomIntValue(RPRPVP.Config.RPRPvPArcaneCircleOption);
                 bool deathWarrantReady = !GetCooldown(RPRPVP.DeathWarrant).IsCooldown;
                 bool plentifulReady = !GetCooldown(RPRPVP.PlentifulHarvest).IsCooldown;
                 var plentifulCD = GetCooldown(RPRPVP.PlentifulHarvest).CooldownRemaining;
@@ -71,9 +72,10 @@ namespace XIVSlothComboPlugin
                 var enshroudStacks = GetBuffStacks(RPRPVP.Buffs.Enshrouded);
                 var immortalStacks = GetBuffStacks(RPRPVP.Buffs.ImmortalSacrifice);
                 var immortalThreshold = Service.Configuration.GetCustomIntValue(RPRPVP.Config.RPRPvPImmortalStackThreshold);
-                var arcaneThreshold = Service.Configuration.GetCustomIntValue(RPRPVP.Config.RPRPvPArcaneCircleOption);
                 bool canBind = !TargetHasEffect(PVPCommon.Debuffs.Bind);
                 var HP = PlayerHealthPercentageHp();
+                bool canWeave = CanWeave(actionID);
+                var distance = GetTargetDistance();
 
                 // Arcane Cirle Option
                 if (IsEnabled(CustomComboPreset.RPRPvPArcaneCircleOption) && arcaneReady && HP <= arcaneThreshold)
@@ -86,7 +88,7 @@ namespace XIVSlothComboPlugin
                     {
                         // Death Warrant on burst
                         if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedDeathWarrantOption) && deathWarrantReady)
-                            return RPRPVP.DeathWarrant;
+                            return OriginalHook(RPRPVP.DeathWarrant);
 
                         // Lemure's Slice Option
                         if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedLemuresOption) && lemuresSliceReady && canBind && distance <= 8)
@@ -94,7 +96,7 @@ namespace XIVSlothComboPlugin
 
                         // Harvest Moon Proc
                         if (HasEffect(RPRPVP.Buffs.Soulsow))
-                            return RPRPVP.HarvestMoon;
+                            return OriginalHook(RPRPVP.DeathWarrant);
                     }
 
                     // Communio Finisher Option
@@ -107,7 +109,7 @@ namespace XIVSlothComboPlugin
                 {
                     // Death Warrant Option - add plentiful harvest timer check to this
                     if (IsEnabled(CustomComboPreset.RPRPvPDeathWarrantOption) && deathWarrantReady && (plentifulCD > 20 && immortalStacks < immortalThreshold || plentifulReady && immortalStacks >= immortalThreshold))
-                        return RPRPVP.DeathWarrant;
+                        return OriginalHook(RPRPVP.DeathWarrant);
 
                     // Plentiful Harvest Pooling Option
                     if (IsEnabled(CustomComboPreset.RPRPvPImmortalPoolingOption) && plentifulReady && immortalStacks >= immortalThreshold && TargetHasEffect(RPRPVP.Debuffs.DeathWarrant))
@@ -118,7 +120,7 @@ namespace XIVSlothComboPlugin
                     {
                         // Harvest Moon Proc
                         if (HasEffect(RPRPVP.Buffs.Soulsow))
-                            return RPRPVP.HarvestMoon;
+                            return OriginalHook(RPRPVP.DeathWarrant);
 
                         // Grim Swathe Option
                         if (IsEnabled(CustomComboPreset.RPRPvPGrimSwatheOption) && grimSwatheReady && distance <= 8)
@@ -126,8 +128,11 @@ namespace XIVSlothComboPlugin
                     }
 
                     // Soul Slice Option
-                    if (IsEnabled(CustomComboPreset.RPRPvPSoulSliceOption) && GetRemainingCharges(RPRPVP.SoulSlice) > 0 && distance <= 5)
-                        return RPRPVP.SoulSlice;
+                    if (IsEnabled(CustomComboPreset.RPRPvPSoulSliceOption) && distance <= 5)
+                    {
+                        if (GetRemainingCharges(RPRPVP.SoulSlice) == 2 || GetRemainingCharges(RPRPVP.SoulSlice) > 0 && !HasEffect(RPRPVP.Buffs.GallowsOiled) && !HasEffect(RPRPVP.Buffs.SoulReaver))
+                            return RPRPVP.SoulSlice;
+                    }
                 }
             }
 
