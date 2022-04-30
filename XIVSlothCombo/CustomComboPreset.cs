@@ -119,7 +119,8 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
             AllCasterAddleFeature = 100020,
 
-            [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
+        //            [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
+            [ConflictingCombos(SummonerRaiseFeature, RDM_Verraise)]
             [ParentCombo(AllCasterFeatures)]
             [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
             AllCasterRaiseFeature = 100021,
@@ -1701,6 +1702,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action", RDM.JobID, 410)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_ST_MeleeCombo = 13410,
 
+        [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
+        RDM_AoE_MeleeCombo = 13420,
+
         [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_MeleeFinisher = 13510,
 
@@ -1718,6 +1722,7 @@ namespace XIVSlothComboPlugin
         /// <summary>
         /// OLD SECTION BELOW
         /// </summary>
+        /*
         [ConflictingCombos(RedMageSmartcastAoECombo)]
         [CustomComboInfo("Red Mage AoE Combo", "Replaces Veraero/Verthunder 2 with Impact when Dualcast or Swiftcast are active.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
         RedMageAoECombo = 13000,
@@ -1809,6 +1814,7 @@ namespace XIVSlothComboPlugin
         [ParentCombo(RedMageCorpsACorpsFeature)]
         [CustomComboInfo("Pull to target", "When with enough mana to enter melee phase.", RDM.JobID, 0, "", "")]
         RedMageCorpsACorpsPullFeature = 13025,
+        */
 
         #endregion
         // ====================================================================================
