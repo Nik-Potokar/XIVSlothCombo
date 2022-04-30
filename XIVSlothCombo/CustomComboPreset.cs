@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllHealerFeatures = 100098,
 
-            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SGE_Raise, WHMRaiseFeature)]
+            [ConflictingCombos(AstrologianAscendFeature, SCH_RaiseFeature, SGE_Raise, WHMRaiseFeature)]
             [ParentCombo(AllHealerFeatures)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             AllHealerRaiseFeature = 100010,
@@ -1882,7 +1882,7 @@ namespace XIVSlothComboPlugin
 
         //SECTION_3_Utility
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("Swiftcast Raise Combo", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
+        [CustomComboInfo("Swiftcast Raise Combo###SGE", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
         SGE_Raise = 14310,
 
         [CustomComboInfo("Soteria into Kardia", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
@@ -2051,39 +2051,81 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("True North Feature", "Adds True North on all ST Combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0)]
         SamuraiTrueNorthFeature = 15038,
-        
+
 
         #endregion
         // ====================================================================================
         #region SCHOLAR
 
-        [CustomComboInfo("Seraph Fey Blessing/Consolation", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 0, "", "Stupid little fairy thing")]
-        ScholarSeraphConsolationFeature = 16000,
+        //SCHOLAR_FEATURE_NUMBERING
+        //Numbering Scheme: 16[Section][Feature Number][Sub-Feature]
+        //Example: 16110 (Section 1: DPS, Feature Number 1, Sub-feature 0)
+        //New features should be added to the appropriate sections.
 
-        [CustomComboInfo("ED Aetherflow", "Change Energy Drain into Aetherflow when you have no more Aetherflow stacks.", SCH.JobID, 0, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
-        ScholarEnergyDrainFeature = 16001,
+        //Section_1_DPS
+        [CustomComboInfo("Single Target DPS Feature", "Replace Ruin 1 / Broils with options below", SCH.JobID, 110)]
+        SCH_ST_BroilFeature = 16110,
+
+            [ParentCombo(SCH_ST_BroilFeature)]
+            [CustomComboInfo("Lucid Dreaming###SCHST", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 111)]
+            SCH_ST_Broil_Lucid = 16111,
+
+            [ParentCombo(SCH_ST_BroilFeature)]
+            [CustomComboInfo("Chain Stratagem", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 112)]
+            SCH_ST_Broil_ChainStratagem = 16112,
+
+            [ParentCombo(SCH_ST_BroilFeature)]
+            [CustomComboInfo("Bio / Biolysis", "Automatic DoT Uptime", SCH.JobID, 113)]
+            SCH_ST_Broil_Bio = 16113,
+
+                [ParentCombo(SCH_ST_Broil_Bio)]
+                [ConflictingCombos(SCH_ST_Broil_BioToT)]
+                [CustomComboInfo("Enemy HP%% Limiter", "Stop using Bio when Enemy HP%% is below this value:", SCH.JobID, 1131)]
+                SCH_ST_Broil_BioHPPer = 161131,
+
+                [ParentCombo(SCH_ST_Broil_Bio)]
+                [ConflictingCombos(SCH_ST_Broil_BioHPPer)]
+                [CustomComboInfo("Target of Target Bio", "Target of Target checking for Bio", SCH.JobID, 1132)]
+                SCH_ST_Broil_BioToT = 161132,
+
+            [ParentCombo(SCH_ST_BroilFeature)]
+            [CustomComboInfo("Ruin 2 when Moving", "Use Ruin 2 when you have to move", SCH.JobID, 114)]
+            SCH_ST_Broil_Ruin2Movement = 16114,
+
+
+        //Section_2_Healing
+        [CustomComboInfo("Fey Blessing to Seraph's Consolation", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "Stupid little fairy thing")]
+        SCH_ConsolationFeature = 16210,
+
+
+        //Section_3_Utilities
+        [CustomComboInfo("Aetherflow Helper", "Change Aetherflow using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 310, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
+        SCH_AetherflowFeature = 16310,
+
+            [ParentCombo(SCH_AetherflowFeature)]
+            [CustomComboInfo("Use Recitation", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 311)]
+            SCH_Aetherflow_Recite = 16311,
+
+                [ParentCombo(SCH_Aetherflow_Recite)]
+                [CustomComboInfo("On Excogitation", "", SCH.JobID, 3111)]
+                SCH_Aetherflow_Recite_Excog = 163111,
+
+                [ParentCombo(SCH_Aetherflow_Recite)]
+                [CustomComboInfo("On Recitation", "", SCH.JobID, 3112)]
+                SCH_Aetherflow_Recite_Indom = 163112,
+
+            [ParentCombo(SCH_AetherflowFeature)]
+            [CustomComboInfo("Use Dissipation", "Show Dissipation if Aetherflow is on cooldown and you have no Aetherflow stacks", SCH.JobID, 312, "", "Oh wow look at that that one...it looks so delicious")]
+            SCH_Aetherflow_Dissipation = 16312,
 
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("SCH Alternative Raise Feature", "Changes Swiftcast to Resurrection.", SCH.JobID, 0, "", "Well, at least PF wants you for something")]
-        SchRaiseFeature = 16002,
+        [CustomComboInfo("Swiftcast Raise Combo###SCH", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 410, "", "BRING OUT YOUR DEAD")]
+        SCH_RaiseFeature = 16410,
 
-        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 0, "", "You're really gonna forget? Really?")]
-        ScholarFairyFeature = 16004,
+        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 510, "", "You're really gonna forget? Really?")]
+        SCH_FairyFeature = 16510,
 
-        [CustomComboInfo("DPS Feature", "Adds Bio1/Bio2/Biosys to Broil/Ruin whenever the debuff is not present or about to expire.", SCH.JobID, 0, "", "Pretend something interesting is going on. DPS Routine!")]
-        ScholarDPSFeature = 16005,
-
-        [ParentCombo(ScholarDPSFeature)]
-        [CustomComboInfo("DPS Feature Buff Option", "Adds Chain Stratagem to the DPS Feature.", SCH.JobID, 0, "", "Raid buffs for everyone!")]
-        ScholarDPSFeatureBuffOption = 16006,
-
-        [ParentCombo(ScholarDPSFeature)]
-        [CustomComboInfo("DPS Feature Lucid Dreaming Option", "Adds Lucid dreaming to the DPS feature when below set MP value.", SCH.JobID, 0, "", "Nobody's perfect. Maybe this'll help")]
-        ScholarLucidDPSFeature = 16007,
-
-        [CustomComboInfo("SCH Extra DPS Feature", "Adds Bio DoT on Ruin II. Won't work below level 38", SCH.JobID, 0, "", "People still use Ruin 2? Shouldn't you be healing or something?")]
-        SCHDPSAlternateFeature = 16003,
-
+ 
         #endregion
         // ====================================================================================
         #region SUMMONER

@@ -1,4 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Enums;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -16,6 +18,7 @@ namespace XIVSlothComboPlugin.Combos
             Lustrate = 189,
             SacredSoil = 188,
             Indomitability = 3583,
+            Excogitation = 7434,
             Consolation = 16546,
 
             // Offense
@@ -43,12 +46,12 @@ namespace XIVSlothComboPlugin.Combos
 
             // Other
             Aetherflow = 166,
+            Recitation = 16542,
             ChainStratagem = 7436,
 
             // Role
-            Resurrection = 173,
-            Esuna = 5768,
-            LucidDreaming = 7562;
+            Resurrection = 173;
+            //Esuna = 5768,
 
         public static class Buffs
         {
@@ -105,164 +108,168 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                ScholarLucidDreaming = "LucidScholar",
-                ScholarFairy = "ScholarFairy";
+                SCH_ST_Broil_Lucid = "SCH_ST_Broil_Lucid",
+                SCH_ST_Broil_BioHPPer = "SCH_ST_Broil_BioHPPer",
+                SCH_Aetherflow_Recite_Excog = "SCH_Aetherflow_Recite_Excog",
+                SCH_Aetherflow_Recite_Indom = "SCH_Aetherflow_Recite_Indom",
+                SCH_FairyFeature = "SCH_FairyFeature";
         }
     }
 
+    //Even though Summon Seraph becomes Consolation, this Feature puts the temporary fairy aoe heal+barrier ontop of the existing fairy AoE skill Fey Blessing
     internal class ScholarSeraphConsolationFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarSeraphConsolationFeature;
-
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_ConsolationFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.FeyBlessing)
-            {
-                var gauge = GetJobGauge<SCHGauge>();
-                if (gauge.SeraphTimer > 0)
-                    return SCH.Consolation;
-            }
-
-            return actionID;
+            if (actionID is SCH.FeyBlessing &&
+                level >= SCH.Levels.SummonSeraph &&
+                GetJobGauge<SCHGauge>().SeraphTimer > 0
+               ) return SCH.Consolation; else return actionID;
         }
     }
 
-    internal class ScholarEnergyDrainFeature : CustomCombo
+    //Replaces all EnergyDrain actions with Aetherflow when depleted
+    //Revised to a similar flow as Sage Rhizomata, but with Dissipation / Recitation as a backup
+    internal class ScholarAetherflowFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarEnergyDrainFeature;
-
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_AetherflowFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.EnergyDrain)
+            if (actionID is SCH.EnergyDrain or SCH.Lustrate or SCH.SacredSoil or SCH.Indomitability or SCH.Excogitation &&
+                level >= SCH.Levels.Aetherflow)
             {
-                var gauge = GetJobGauge<SCHGauge>();
-                if (gauge.Aetherflow == 0)
-                    return SCH.Aetherflow;
-            }
-
-            return actionID;
-        }
-
-        internal class SchRaiseFeature : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SchRaiseFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == All.Swiftcast)
+                var gauge = GetJobGauge<SCHGauge>().Aetherflow;
+                if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite) && level >= SCH.Levels.Recitation && IsOffCooldown(SCH.Recitation))
                 {
-                    if (IsEnabled(CustomComboPreset.SchRaiseFeature))
-                    {
-                        if (HasEffect(All.Buffs.Swiftcast))
-                            return SCH.Resurrection;
-                    }
+                    //Request here. Recitation Indominability and Excogitation, with optional check against AF zero stack count
+                    if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite_Excog) &&
+                        (GetOptionValue(SCH.Config.SCH_Aetherflow_Recite_Excog) == 1 || (GetOptionValue(SCH.Config.SCH_Aetherflow_Recite_Excog) == 2 && gauge == 0)) &&
+                        actionID is SCH.Excogitation
+                       ) return SCH.Recitation;
 
-                    return OriginalHook(All.Swiftcast);
+                    if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite_Indom) &&
+                        (GetOptionValue(SCH.Config.SCH_Aetherflow_Recite_Indom) == 1 || (GetOptionValue(SCH.Config.SCH_Aetherflow_Recite_Indom) == 2 && gauge == 0)) &&
+                        actionID is SCH.Indomitability
+                       ) return SCH.Recitation;
                 }
+                if (gauge == 0)
+                {
+                    if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation) &&
+                        level >= SCH.Levels.Dissipation &&
+                        IsOnCooldown(SCH.Aetherflow)
+                       ) return SCH.Dissipation;
+                    else return SCH.Aetherflow;
 
-                return actionID;
+                }
             }
+            return actionID;
         }
     }
 
-    internal class SCHDPSAlternateFeature : CustomCombo
+    //Swiftcast changes to Raise when activated / on cooldown
+    internal class ScholarRaiseFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCHDPSAlternateFeature;
-
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_RaiseFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.Ruin2)
-            {
-                var gauge = GetJobGauge<SCHGauge>();
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var biolysisDebuff = FindTargetEffect(SCH.Debuffs.Biolysis);
-                var bio2Debuff = FindTargetEffect(SCH.Debuffs.Bio2);
-                var bio1Debuff = FindTargetEffect(SCH.Debuffs.Bio1);
-
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Biolysis)
-                {
-                    if ((!TargetHasEffect(SCH.Debuffs.Biolysis) && incombat && level >= SCH.Levels.Biolysis) || (biolysisDebuff.RemainingTime < 5 && incombat && level >= SCH.Levels.Biolysis))
-                        return SCH.Biolysis;
-                }
-
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis)
-                {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level < SCH.Levels.Biolysis && level >= SCH.Levels.Bio2) || (bio2Debuff.RemainingTime < 5 && incombat && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis))
-                        return SCH.Bio2;
-                }
-
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level < SCH.Levels.Bio2)
-                {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio1) && level < SCH.Levels.Bio2) || (bio1Debuff.RemainingTime < 5 && incombat && level < SCH.Levels.Bio2))
-                        return SCH.Bio1;
-                }
-            }
-            return actionID;
+            if (actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast)) return SCH.Resurrection;
+            else return actionID;
         }
     }
+
+    //Replaces Fairy abilitys with fairy summoning with Eos (default) or Selene
     internal class ScholarFairyFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarFairyFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_FairyFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.WhisperingDawn || actionID == SCH.FeyBlessing || actionID == SCH.FeyBlessing || actionID == SCH.FeyIllumination || actionID == SCH.Dissipation || actionID == SCH.Aetherpact)
+            if (actionID is SCH.WhisperingDawn or SCH.FeyBlessing or SCH.FeyBlessing or SCH.FeyIllumination or SCH.Dissipation or SCH.Aetherpact &&
+                !HasPetPresent() && 
+                GetJobGauge<SCHGauge>().SeraphTimer == 0)
             {
-                var gauge = GetJobGauge<SCHGauge>();
-                if (!Service.BuddyList.PetBuddyPresent && gauge.SeraphTimer == 0)
-                {
-                    if ((Service.Configuration.GetCustomIntValue(SCH.Config.ScholarFairy)) == 2) return SCH.SummonSelene;
-                    else return SCH.SummonEos;
-                }
+                if ((GetOptionValue(SCH.Config.SCH_FairyFeature)) == 2) return SCH.SummonSelene; //it's a 1 or 2 option atm.
+                else return SCH.SummonEos;
             }
             return actionID;
         }
     }
 
-    internal class ScholarDPSFeature : CustomCombo
+    //Overwrides main DPS ability family, The Broils (and ruin 1)
+    //Implements new Sage features as ToT, and Ruin 2 as the movement option
+    //ChainStratagem has overlap protection
+    internal class ScholarBroilFeature : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarDPSFeature;
-
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_ST_BroilFeature;
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is SCH.Broil4 or SCH.Broil3 or SCH.Broil2 or SCH.Broil1 or SCH.Ruin1)
+            if (actionID is SCH.Broil4 or SCH.Broil3 or SCH.Broil2 or SCH.Broil1 or SCH.Ruin1 && InCombat())
             {
-                var actionIDCD = GetCooldown(actionID);
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var biolysis = FindTargetEffect(SCH.Debuffs.Biolysis);
-                var bio1 = FindTargetEffect(SCH.Debuffs.Bio1);
-                var bio2 = FindTargetEffect(SCH.Debuffs.Bio2);
-                var chainBuff = GetCooldown(SCH.ChainStratagem);
-                var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
+                //Lucid Dreaming
+                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Lucid) &&
+                    level >= All.Levels.LucidDreaming &&
+                    IsOffCooldown(All.LucidDreaming) &&
+                    LocalPlayer.CurrentMp <= GetOptionValue(SCH.Config.SCH_ST_Broil_Lucid) &&
+                    CanSpellWeave(actionID)
+                   ) return All.LucidDreaming;
 
-                if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature) && level >= All.Levels.LucidDreaming)
+                //Chain Stratagem
+                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_ChainStratagem) &&
+                    level >= SCH.Levels.ChainStratagem &&
+                    IsOffCooldown(SCH.ChainStratagem) &&
+                    !TargetHasEffectAny(SCH.Debuffs.ChainStratagem) && //Overwrite protection by using this version
+                    CanSpellWeave(actionID)
+                   ) return SCH.ChainStratagem;
+
+                //Bio/Biolysis
+                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Bio) && level >= SCH.Levels.Bio1 && CurrentTarget is not null)
                 {
-                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(SCH.Config.ScholarLucidDreaming);
-                    if ( IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidMPThreshold && CanSpellWeave(actionID) )
-                        return All.LucidDreaming;
+                    var OurTarget = CurrentTarget;
+                    //Check if our Target is there and not an enemy
+                    if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
+                    {
+                        //If ToT is enabled, Check if ToT is not null
+                        if ((IsEnabled(CustomComboPreset.SCH_ST_Broil_BioToT)) &&
+                            (CurrentTarget.TargetObject is not null) &&
+                            ((CurrentTarget.TargetObject as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy))
+                            //Set Ourtarget as the Target of Target
+                            OurTarget = CurrentTarget.TargetObject;
+                        //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
+                        else return actionID;
+                    }
+
+                    //Determine which Bio debuff to check
+                    var BioDebuffID = level switch
+                    {
+                        //Using FindEffect b/c we have a custom Target variable
+                        >= SCH.Levels.Biolysis => FindEffect(SCH.Debuffs.Biolysis, OurTarget, LocalPlayer?.ObjectId),
+                        >= SCH.Levels.Bio2 => FindEffect(SCH.Debuffs.Bio2, OurTarget, LocalPlayer?.ObjectId),
+                        //Bio 1 checked at the start, fine for default
+                        _ => FindEffect(SCH.Debuffs.Bio1, OurTarget, LocalPlayer?.ObjectId),
+                    };
+                    if ((BioDebuffID is null) || (BioDebuffID.RemainingTime <= 3))
+                    {
+                        //Advanced Options Enabled to procede with auto-bio
+                        //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
+                        if (IsEnabled(CustomComboPreset.SCH_ST_Broil_BioHPPer))
+                        {
+                            if ((BioDebuffID is null || BioDebuffID.RemainingTime <= 3) &&
+                                (EnemyHealthPercentage() > GetOptionValue(SCH.Config.SCH_ST_Broil_BioHPPer))
+                               ) return OriginalHook(SCH.Bio1);
+                        }
+                        else return OriginalHook(SCH.Bio1); ;
+                    }
                 }
 
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Biolysis && incombat)
-                {
-                    if ((biolysis is null) || (biolysis.RemainingTime <= 3))
-                        return SCH.Biolysis;
-                }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis && incombat)
-                {
-                    if ((bio2 is null) || (bio2.RemainingTime <= 3))
-                        return SCH.Bio2;
-                }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio1 && level < SCH.Levels.Bio2 && incombat)
-                {
-                    if ((bio1 is null) || (bio1.RemainingTime <= 3))
-                        return SCH.Bio1;
-                }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeatureBuffOption) && level >= SCH.Levels.ChainStratagem)
-                {
-                    if (!chainBuff.IsCooldown && !chainTarget && actionIDCD.IsCooldown && incombat)
-                        return SCH.ChainStratagem;
-                }
+                //Ruin 2 Movement 
+                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Ruin2Movement) &&
+                    level >= SCH.Levels.Ruin2 &&
+                    HasBattleTarget() &&
+                    this.IsMoving
+                   ) return OriginalHook(SCH.Ruin2); //Who knows what the future holds...
 
+                //End
             }
             return actionID;
         }
