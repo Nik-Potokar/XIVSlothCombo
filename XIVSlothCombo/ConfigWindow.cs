@@ -606,8 +606,14 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BLACK MAGE
 
-            if (preset == CustomComboPreset.BlackAoEFoulOption && enabled)
+            if (preset == CustomComboPreset.BlackAoEFoulOption)
+            {
                 ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolygotsStored, "Number of Polygot charges to store.\n(2 = Only use Polygot with Manafont)");
+            }
+            if (preset == CustomComboPreset.BlackSimpleFeature || preset == CustomComboPreset.BlackSimpleTransposeFeature)
+            {
+                ConfigWindowFunctions.DrawSliderFloat(3.0f, 8.0f, BLM.Config.BlmAstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
+            }
 
             #endregion
             // ====================================================================================
