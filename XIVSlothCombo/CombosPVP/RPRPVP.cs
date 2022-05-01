@@ -80,7 +80,7 @@ namespace XIVSlothComboPlugin
                 var distance = GetTargetDistance();
 
                 // Plentiful Harvest Opener
-                if (IsEnabled(CustomComboPreset.RPRPvPPlentifulOpenerOption) && !InCombat() && distance <= 15)
+                if (IsEnabled(CustomComboPreset.RPRPvPPlentifulOpenerOption) && !InCombat() && plentifulReady && distance <= 15)
                     return RPRPVP.PlentifulHarvest;
 
                 // Arcane Cirle Option
@@ -139,11 +139,8 @@ namespace XIVSlothComboPlugin
                     }
 
                     // Soul Slice
-                    if (distance <= 5)
-                    {
-                        if (GetRemainingCharges(RPRPVP.SoulSlice) == 2 || GetRemainingCharges(RPRPVP.SoulSlice) > 0 && !HasEffect(RPRPVP.Buffs.GallowsOiled) && !HasEffect(RPRPVP.Buffs.SoulReaver))
-                            return RPRPVP.SoulSlice;
-                    }
+                    if (distance <= 5 && (GetRemainingCharges(RPRPVP.SoulSlice) == 2 || GetRemainingCharges(RPRPVP.SoulSlice) > 0 && !HasEffect(RPRPVP.Buffs.GallowsOiled) && !HasEffect(RPRPVP.Buffs.SoulReaver)))
+                        return RPRPVP.SoulSlice;
                 }
             }
 
