@@ -284,24 +284,54 @@ namespace XIVSlothComboPlugin.Combos
             }
             //END_RDM_BALANCE_OPENER
 
+            //RDM_ST_MANAFICATIONEMBOLDEN
+            if (IsEnabled(CustomComboPreset.RDM_ST_ManaficationEmbolden) && HasCondition(ConditionFlag.InCombat) && (!HasEffect(RDM.Buffs.Dualcast) || !HasEffect(All.Buffs.Swiftcast) || !HasEffect(RDM.Buffs.Acceleration)))
+            {
+                var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_ST_MeleeCombo_OnAction);
+
+                if ((radioButton == 1 && actionID is RDM.Riposte or RDM.EnchantedRiposte)
+                    || (radioButton == 2 && actionID is RDM.Jolt or RDM.Jolt2)
+                    || (radioButton == 3 && actionID is RDM.Riposte or RDM.EnchantedRiposte or RDM.Jolt or RDM.Jolt2))
+                {
+                    if (IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
+                    && System.Math.Max(black, white) <= 50 && System.Math.Max(black, white) >= 42 && System.Math.Min(black, white) >= 31
+                    && IsOffCooldown(RDM.Manafication) && (IsOffCooldown(RDM.Embolden) || GetCooldown(RDM.Embolden).CooldownRemaining <= 5))
+                    {
+                        return RDM.Manafication;
+                    }
+                    if (IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
+                        && System.Math.Max(black, white) <= 50
+                        && IsOffCooldown(RDM.Manafication) && (IsOffCooldown(RDM.Embolden) || GetCooldown(RDM.Embolden).CooldownRemaining <= 5))
+                    {
+                        return RDM.Manafication;
+                    }
+                }
+            }
+            //END_RDM_ST_MANAFICATIONEMBOLDEN
+
             //RDM_OGCD
             if (IsEnabled(CustomComboPreset.RDM_OGCD))
             {
                 var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_OGCD_OnAction);
-                uint placeOGCD = 0;
-
                 //Radio Button Settings:
                 //1: Fleche
                 //2: Jolt
                 //3: Impact
                 //4: Jolt + Impact
 
+                uint placeOGCD = 0;
+
+                var distance = GetTargetDistance();
+                var corpacorpsRange = 25;
+                if (IsEnabled(CustomComboPreset.RDM_Corpsacorps_MeleeRange)) corpacorpsRange = 5;
+
                 if (actionID is RDM.Jolt or RDM.Jolt2 or RDM.Scatter or RDM.Impact or RDM.Fleche)
                 {
-                    if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(RDM.Engagement).RemainingCharges > 0 && level >= RDM.Levels.Engagement) placeOGCD = RDM.Engagement;
+                    if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(RDM.Engagement).RemainingCharges > 0
+                        && level >= RDM.Levels.Engagement && distance <= 3) placeOGCD = RDM.Engagement;
                     if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && GetCooldown(RDM.Corpsacorps).RemainingCharges > 0
                         && (GetCooldown(RDM.Corpsacorps).RemainingCharges >= GetCooldown(RDM.Engagement).RemainingCharges || !InMeleeRange()) // Try to alternate between Corps-a-corps and Engagement
-                        && level >= RDM.Levels.Corpsacorps) placeOGCD = RDM.Corpsacorps;
+                        && level >= RDM.Levels.Corpsacorps && distance <= corpacorpsRange) placeOGCD = RDM.Corpsacorps;
                     if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && IsOffCooldown(RDM.ContreSixte) && level >= RDM.Levels.ContreSixte) placeOGCD = RDM.ContreSixte;
                     if ((radioButton == 1 || IsEnabled(CustomComboPreset.RDM_Fleche)) && IsOffCooldown(RDM.Fleche) && level >= RDM.Levels.Fleche) placeOGCD = RDM.Fleche;
 
@@ -415,7 +445,11 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if ((lastComboMove is RDM.Riposte or RDM.EnchantedRiposte) && level >= RDM.Levels.Zwerchhau)
                         return OriginalHook(RDM.Zwerchhau);
-
+                    
+                    if (lastComboMove is RDM.Zwerchhau && level >= RDM.Levels.Redoublement
+                        && IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) && GetCooldown(RDM.Manafication).CooldownElapsed <= 10
+                        && IsOffCooldown(RDM.Embolden))
+                        return RDM.Embolden;
                     if (lastComboMove is RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
                         return OriginalHook(RDM.Redoublement);
 

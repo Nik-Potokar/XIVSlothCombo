@@ -1685,12 +1685,16 @@ namespace XIVSlothComboPlugin
         RDM_ContraSixte = 13242,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Engagement", "Use Engagement on above specified action", RDM.JobID, 243)] // Slider, number of stacks to keep
+        [CustomComboInfo("Engagement", "Use Engagement on above specified action when in melee range", RDM.JobID, 243)] // Slider, number of stacks to keep
         RDM_Engagement = 13243,
 
         [ParentCombo(RDM_OGCD)]
         [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action", RDM.JobID, 244)] // Slider, number of stacks to keep
         RDM_Corpsacorps = 13244,
+
+        [ParentCombo(RDM_Corpsacorps)]
+        [CustomComboInfo("Only in Melee Range", "Use Corps-a-corps only when in melee range", RDM.JobID, 245)]
+        RDM_Corpsacorps_MeleeRange = 13245,
 
         [CustomComboInfo("Verthunder II/Veraero II", "Replace Scatter with Verthunder II or Veraero II", RDM.JobID, 310)]
         RDM_VerthunderIIVeraeroII = 13310,
@@ -1701,6 +1705,14 @@ namespace XIVSlothComboPlugin
         //SECTION_4to5_MELEE
         [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action", RDM.JobID, 410)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_ST_MeleeCombo = 13410,
+
+        [ParentCombo(RDM_ST_MeleeCombo)]
+        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden on specified action", RDM.JobID, 411)]
+        RDM_ST_ManaficationEmbolden = 13411,
+
+        [ParentCombo(RDM_ST_ManaficationEmbolden)]
+        [CustomComboInfo("Hold for Double Melee Combo", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
+        RDM_ST_DoubleMeleeCombo = 13412,
 
         [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_AoE_MeleeCombo = 13420,
