@@ -23,7 +23,8 @@
         public static class Buffs
         {
             public const ushort
-                Kaiten = 3201;
+                Kaiten = 3201,
+                Midare = 3203;
         }
 
         public static class Config
@@ -79,7 +80,7 @@
                     {
                         if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(SAMPvP.Soten) > 0)
                             return OriginalHook(SAMPvP.Soten);
-                        if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && HasEffect(SAMPvP.Buffs.Kaiten))
+                        if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !IsOriginal(SAMPvP.Yukikaze) && !HasEffect(SAMPvP.Buffs.Midare) && IsOnCooldown(SAMPvP.MeikyoShisui) && IsOnCooldown(SAMPvP.OgiNamikiri) && OriginalHook(SAMPvP.OgiNamikiri) != SAMPvP.Kaeshi)
                             return SAM.Yukikaze;
                     }
                 }

@@ -2540,7 +2540,7 @@ namespace XIVSlothComboPlugin
 
         // SAM
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.", SAM.JobID)]
+        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.\nWill only cast Midare and Ogi Namikiri when you're not moving.", SAM.JobID)]
         SAMBurstMode = 80080,
 
             [SecretCustomCombo]
