@@ -31,6 +31,9 @@
         {
             public const string
                 SamSotenCharges = "SamSotenCharges";
+            public const string
+                SamSotenHP = "SamSotenHP";
+
         }
 
         internal class SAMBurstMode : CustomCombo
@@ -43,9 +46,11 @@
                 
                 if ((IsNotEnabled(CustomComboPreset.SamPVPMainComboFeature) && actionID == SAMPvP.MeikyoShisui) ||
                     (IsEnabled(CustomComboPreset.SamPVPMainComboFeature) && actionID is SAMPvP.Yukikaze or SAMPvP.Gekko or SAMPvP.Kasha or SAMPvP.Hyosetsu or SAMPvP.Oka or SAMPvP.Mangetsu))
-                { 
-                        //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
+                {
+                    //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
+                    if (!TargetHasEffectAny(PVPCommon.Buffs.Guard))
+                    {
                         if (IsOffCooldown(SAMPvP.MeikyoShisui))
                             return OriginalHook(SAMPvP.MeikyoShisui);
                         if (IsEnabled(CustomComboPreset.SAMBurstChitenFeature) && IsOffCooldown(SAMPvP.Chiten) && InCombat() && PlayerHealthPercentageHp() <= 95)
@@ -62,6 +67,7 @@
                             return OriginalHook(SAMPvP.Soten);
                         if (OriginalHook(SAMPvP.OgiNamikiri) == SAMPvP.Kaeshi)
                             return OriginalHook(SAMPvP.OgiNamikiri);
+                    }
                 }
 
                 return actionID;
@@ -74,11 +80,13 @@
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                var SamSotenHP = Service.Configuration.GetCustomIntValue(SAMPvP.Config.SamSotenHP);
+
                 if (actionID is SAMPvP.Yukikaze or SAMPvP.Gekko or SAMPvP.Kasha or SAMPvP.Hyosetsu or SAMPvP.Mangetsu or SAMPvP.Oka)
                 {
                     if (!InMeleeRange())
                     {
-                        if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(SAMPvP.Soten) > 0)
+                        if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(SAMPvP.Soten) > 0 && EnemyHealthPercentage() <= SamSotenHP)
                             return OriginalHook(SAMPvP.Soten);
                         if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !IsOriginal(SAMPvP.Yukikaze) && !HasEffect(SAMPvP.Buffs.Midare) && IsOnCooldown(SAMPvP.MeikyoShisui) && IsOnCooldown(SAMPvP.OgiNamikiri) && OriginalHook(SAMPvP.OgiNamikiri) != SAMPvP.Kaeshi)
                             return SAM.Yukikaze;
