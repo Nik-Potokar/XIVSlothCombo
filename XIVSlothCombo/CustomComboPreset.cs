@@ -2088,9 +2088,14 @@ namespace XIVSlothComboPlugin
                 [CustomComboInfo("Target of Target Bio", "Target of Target checking for Bio", SCH.JobID, 1132)]
                 SCH_ST_Broil_BioToT = 161132,
 
+
             [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Ruin 2 when Moving", "Use Ruin 2 when you have to move", SCH.JobID, 114)]
-            SCH_ST_Broil_Ruin2Movement = 16114,
+            [CustomComboInfo("Refresh Aetherflow when Empty", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 114)]
+            SCH_ST_Broil_Aetherflow = 16114,
+
+            [ParentCombo(SCH_ST_BroilFeature)]
+            [CustomComboInfo("Ruin 2 when Moving", "Use Ruin 2 when you have to move", SCH.JobID, 115)]
+            SCH_ST_Broil_Ruin2Movement = 16115,
 
 
         //Section_2_Healing

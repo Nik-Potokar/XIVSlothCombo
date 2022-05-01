@@ -841,11 +841,15 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SCHOLAR
             if (preset == CustomComboPreset.SCH_ST_Broil_Lucid)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Broil_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Broil_Lucid, "Use when your MP drops below this value", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.SCH_ST_Broil_BioHPPer)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_BioHPPer, "Stop using at this Enemy HP %%");
+            if (preset == CustomComboPreset.SCH_ST_Broil_ChainStratagem)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_ChainStratagem, "Stop using at this Enemy HP%%");
             if (preset == CustomComboPreset.SCH_FairyFeature)
             {
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "Summon Eos", 1);
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "Summon Selene", 2);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 2);
             }
             if (preset == CustomComboPreset.SCH_Aetherflow_Recite_Excog)
             {
