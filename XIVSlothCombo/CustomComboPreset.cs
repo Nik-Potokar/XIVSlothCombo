@@ -1656,22 +1656,19 @@ namespace XIVSlothComboPlugin
         //New features should be added to the appropriate sections.
 
         //SECTION_1_OPENERS
-        [CustomComboInfo("Balance Opener","Replaces Jolt with the Balance opener ending with Resolution", RDM.JobID, 110)]
+        [CustomComboInfo("Balance Opener", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
         RDM_Balance_Opener = 13110,
 
         //SECTION_2to3_ROTATION
         [CustomComboInfo("Verthunder/Veraero", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210)]
         RDM_VerthunderVeraero = 13210,
 
+        [ParentCombo(RDM_VerthunderVeraero)]
+        [CustomComboInfo("Single Target Acceleration", "Add Acceleration when no Verfire/Verstone proc is available", RDM.JobID, 211)]
+        RDM_ST_Acceleration = 13211,
+
         [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
         RDM_VerfireVerstone = 13220,
-
-        [CustomComboInfo("Single Target Acceleration", "Use Acceleration when no Verfire/Verstone proc is available", RDM.JobID,230)]
-        RDM_ST_Acceleration = 13230,
-
-        [ParentCombo(RDM_ST_Acceleration)]
-        [CustomComboInfo("Melee combo pre-balancing only", "Only use Acceleration charges just before a melee combo if necessary", RDM.JobID,231)]
-        RDM_ST_Acceleration_MeleeOnly = 13231,
 
         [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action", RDM.JobID, 240)] // Radio buttons for Engagement or Jolt/Scatter
         RDM_OGCD = 13240,
@@ -1703,11 +1700,11 @@ namespace XIVSlothComboPlugin
         RDM_AoE_Acceleration = 13320,
 
         //SECTION_4to5_MELEE
-        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action", RDM.JobID, 410)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
+        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_ST_MeleeCombo = 13410,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
-        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden on specified action", RDM.JobID, 411)]
+        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
         RDM_ST_ManaficationEmbolden = 13411,
 
         [ParentCombo(RDM_ST_ManaficationEmbolden)]
@@ -1716,6 +1713,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_AoE_MeleeCombo = 13420,
+
+        [ParentCombo(RDM_ST_MeleeCombo)]
+        [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range before starting the melee combo", RDM.JobID, 430)]
+        RDM_ST_CloseWithCorps = 13430,
+
+        [ParentCombo(RDM_ST_CloseWithCorps)]
+        [CustomComboInfo("Reserve one charge", "Pool one charge of Corp-a-corps for use", RDM.JobID, 431)]
+        RDM_ST_PoolCorps = 13431,
 
         [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_MeleeFinisher = 13510,
