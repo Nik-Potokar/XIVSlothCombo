@@ -2584,38 +2584,48 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
-            [CustomComboInfo("Death Warrant Option", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
+            [CustomComboInfo("Death Warrant Option - BETA TESTING", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
             RPRPvPDeathWarrantOption = 80092,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
-            [CustomComboInfo("Immortal Sacrifice Pooling Option", "Pools a set amount of stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.", RPR.JobID)]
+            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option - BETA TESTING", "Pools a set amount of stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful as soon as it's suitable.", RPR.JobID)]
             RPRPvPImmortalPoolingOption = 80093,
+
+                [SecretCustomCombo]
+                [ParentCombo(RPRPvPImmortalPoolingOption)]
+                [CustomComboInfo("Plentiful Harvest Opener Option - BETA TESTING", "Starts combat with Plentiful Harvest to immediately begin Limit Break generation.", RPR.JobID)]
+                RPRPvPPlentifulOpenerOption = 80094,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Enshrouded Option", "A collection of options for the Enshrouded burst phase.", RPR.JobID)]
-            RPRPvPEnshroudedOption = 80094,
+            RPRPvPEnshroudedOption = 80095,
 
                 [SecretCustomCombo]
-                [ParentCombo(RPRBurstMode)]
+                [ParentCombo(RPRPvPEnshroudedOption)]
                 [CustomComboInfo("Lemure Burst Option", "Adds Lemure's Slice onto the main combo during the Enshroud burst.", RPR.JobID)]
-                RPRPvPEnshroudedLemuresOption = 80095,
+                RPRPvPEnshroudedLemuresOption = 80096,
 
                 [SecretCustomCombo]
-                [ParentCombo(RPRBurstMode)]
-                [CustomComboInfo("Enshrouded Death Warrant Option", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
-                RPRPvPEnshroudedDeathWarrantOption = 80096,
+                [ParentCombo(RPRPvPEnshroudedOption)]
+                [CustomComboInfo("Enshrouded Death Warrant Option - BETA TESTING", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
+                RPRPvPEnshroudedDeathWarrantOption = 80097,
 
                 [SecretCustomCombo]
-                [ParentCombo(RPRBurstMode)]
+                [ParentCombo(RPRPvPEnshroudedOption)]
                 [CustomComboInfo("Communio Finisher Option", "Adds communio onto the main combo when you have 1 stack of Enshroud remaining.", RPR.JobID)]
-                RPRPvPEnshroudedCommunioOption = 80097,
+                RPRPvPEnshroudedCommunioOption = 80098,
+
+            [SecretCustomCombo]
+            [ParentCombo(RPRBurstMode)]
+            [CustomComboInfo("Ranged Harvest Moon Option", "Puts Harvest Moon onto the main combo when you're out of melee range, the GCD is not rolling and it is available for use.", RPR.JobID)]
+            RPRPvPRangedHarvestMoonOption = 80099,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under a set HP perecentage.", RPR.JobID)]
-            RPRPvPArcaneCircleOption = 80098,
+            RPRPvPArcaneCircleOption = 80100,
 
         #endregion
         // ====================================================================================
