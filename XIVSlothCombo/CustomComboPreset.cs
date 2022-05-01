@@ -2067,64 +2067,64 @@ namespace XIVSlothComboPlugin
         SCH_ST_BroilFeature = 16110,
 
             [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Lucid Dreaming###SCHST", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 111)]
+            [CustomComboInfo("Lucid Dreaming Option###SCHST", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 111)]
             SCH_ST_Broil_Lucid = 16111,
 
             [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Chain Stratagem", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 112)]
+            [ConflictingCombos(SCH_ST_Broil_BioToT)]
+            [CustomComboInfo("Chain Stratagem Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 112)]
             SCH_ST_Broil_ChainStratagem = 16112,
 
             [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Bio / Biolysis", "Automatic DoT Uptime", SCH.JobID, 113)]
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 113)]
             SCH_ST_Broil_Bio = 16113,
 
                 [ParentCombo(SCH_ST_Broil_Bio)]
                 [ConflictingCombos(SCH_ST_Broil_BioToT)]
-                [CustomComboInfo("Enemy HP%% Limiter", "Stop using Bio when Enemy HP%% is below this value:", SCH.JobID, 1131)]
+                [CustomComboInfo("Enemy HP%% Limiter Option", "Stop using Bio when Enemy HP%% is below this value:", SCH.JobID, 1131)]
                 SCH_ST_Broil_BioHPPer = 161131,
 
                 [ParentCombo(SCH_ST_Broil_Bio)]
                 [ConflictingCombos(SCH_ST_Broil_BioHPPer)]
-                [CustomComboInfo("Target of Target Bio", "Target of Target checking for Bio", SCH.JobID, 1132)]
+                [CustomComboInfo("Target of Target Bio Option", "Target of Target checking for Bio", SCH.JobID, 1132)]
                 SCH_ST_Broil_BioToT = 161132,
 
-
             [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Refresh Aetherflow when Empty", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 114)]
+            [CustomComboInfo("Refresh Aetherflow Feature", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 114)]
             SCH_ST_Broil_Aetherflow = 16114,
 
             [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Ruin 2 when Moving", "Use Ruin 2 when you have to move", SCH.JobID, 115)]
+            [CustomComboInfo("Ruin 2 Moving Feature", "Use Ruin 2 when you have to move", SCH.JobID, 115)]
             SCH_ST_Broil_Ruin2Movement = 16115,
 
 
         //Section_2_Healing
-        [CustomComboInfo("Fey Blessing to Seraph's Consolation", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "Stupid little fairy thing")]
+        [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "Stupid little fairy thing")]
         SCH_ConsolationFeature = 16210,
 
 
         //Section_3_Utilities
-        [CustomComboInfo("Aetherflow Helper", "Change Aetherflow using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 310, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
+        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 310, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
         SCH_AetherflowFeature = 16310,
 
             [ParentCombo(SCH_AetherflowFeature)]
-            [CustomComboInfo("Use Recitation", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 311)]
+            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 311)]
             SCH_Aetherflow_Recite = 16311,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Excogitation", "", SCH.JobID, 3111)]
+                [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 3111)]
                 SCH_Aetherflow_Recite_Excog = 163111,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Recitation", "", SCH.JobID, 3112)]
+                [CustomComboInfo("On Indominability Option", "", SCH.JobID, 3112)]
                 SCH_Aetherflow_Recite_Indom = 163112,
 
             [ParentCombo(SCH_AetherflowFeature)]
-            [CustomComboInfo("Use Dissipation", "Show Dissipation if Aetherflow is on cooldown and you have no Aetherflow stacks", SCH.JobID, 312, "", "Oh wow look at that that one...it looks so delicious")]
+            [CustomComboInfo("Dissipation Option", "Show Dissipation if Aetherflow is on cooldown and you have no Aetherflow stacks", SCH.JobID, 312, "", "Oh wow look at that that one...it looks so delicious")]
             SCH_Aetherflow_Dissipation = 16312,
 
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("Swiftcast Raise Combo###SCH", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 410, "", "BRING OUT YOUR DEAD")]
+        [CustomComboInfo("Swiftcast Raise Combo Feature###SCH", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 410, "", "BRING OUT YOUR DEAD")]
         SCH_RaiseFeature = 16410,
 
         [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 510, "", "You're really gonna forget? Really?")]
