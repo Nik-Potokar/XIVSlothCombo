@@ -52,11 +52,11 @@
                             return OriginalHook(SAMPvP.Chiten);
                         if (GetCooldownRemainingTime(SAMPvP.Soten) < 1 && CanWeave(SAMPvP.Yukikaze))
                             return OriginalHook(SAMPvP.Soten);
-                        if (OriginalHook(SAMPvP.MeikyoShisui) == SAMPvP.Midare)
+                        if (OriginalHook(SAMPvP.MeikyoShisui) == SAMPvP.Midare && !this.IsMoving)
                             return OriginalHook(SAMPvP.MeikyoShisui);
                         if (IsEnabled(CustomComboPreset.SAMBurstStunFeature) && IsOffCooldown(SAMPvP.Mineuchi))
                             return OriginalHook(SAMPvP.Mineuchi);
-                        if (IsOffCooldown(SAMPvP.OgiNamikiri))
+                        if (IsOffCooldown(SAMPvP.OgiNamikiri) && !this.IsMoving)
                             return OriginalHook(SAMPvP.OgiNamikiri);
                         if (GetRemainingCharges(SAMPvP.Soten) > sotenCharges)
                             return OriginalHook(SAMPvP.Soten);
