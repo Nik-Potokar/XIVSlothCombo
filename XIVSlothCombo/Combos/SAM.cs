@@ -183,9 +183,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (meikyoBuff && openerReady)
                         {
                             if (!inOpener)
-                            {
                                 inOpener = true;
-                            }
                             nonOpener = false;
                         }
 
@@ -203,7 +201,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (!inOpener)
                     {
                         if (IsEnabled(CustomComboPreset.SamuraiOgiNamikiriSTFeature) && (gauge.Kaeshi == Kaeshi.NAMIKIRI))
-                            return OriginalHook(SAM.TsubameGaeshi);
+                            return OriginalHook(SAM.OgiNamikiri);
                         if (IsEnabled(CustomComboPreset.IaijutsuSTFeature) && (gauge.Kaeshi == Kaeshi.GOKEN || gauge.Kaeshi == Kaeshi.SETSUGEKKA))
                             return OriginalHook(SAM.TsubameGaeshi);
                     }
@@ -232,7 +230,6 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (oneSeal && GetRemainingCharges(SAM.MeikyoShisui) == 0 && oneSeal)
                                     return SAM.Shinten;
-
                                 if (GetRemainingCharges(SAM.MeikyoShisui) == 1 && IsOffCooldown(SAM.Senei) && (gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Sen == Sen.NONE))
                                     return SAM.Senei;
                             }
@@ -244,18 +241,16 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //GCDs
-                        if (twoSeal && lastComboMove == SAM.Yukikaze)
+                        if ((twoSeal && lastComboMove == SAM.Yukikaze) ||
+                            (threeSeal && (GetRemainingCharges(SAM.MeikyoShisui) == 1 || !HasEffect(SAM.Buffs.OgiNamikiriReady))) ||
+                            (oneSeal && !TargetHasEffect(SAM.Debuffs.Higanbana) && GetRemainingCharges(SAM.TsubameGaeshi) == 1))
                             return OriginalHook(SAM.Iaijutsu);
-                        if (threeSeal && (GetRemainingCharges(SAM.MeikyoShisui) == 1 || !HasEffect(SAM.Buffs.OgiNamikiriReady)))
-                            return OriginalHook(SAM.Iaijutsu);
-                        if (oneSeal && !TargetHasEffect(SAM.Debuffs.Higanbana) && GetRemainingCharges(SAM.TsubameGaeshi) == 1)
-                            return OriginalHook(SAM.Iaijutsu);
-                        if (oneSeal && TargetHasEffect(SAM.Debuffs.Higanbana) && HasEffect(SAM.Buffs.OgiNamikiriReady))
+                        if ((gauge.Kaeshi == Kaeshi.NAMIKIRI) ||
+                            (oneSeal && TargetHasEffect(SAM.Debuffs.Higanbana) && HasEffect(SAM.Buffs.OgiNamikiriReady)))
                             return OriginalHook(SAM.OgiNamikiri);
                         if (gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Kaeshi == Kaeshi.GOKEN)
                             return OriginalHook(SAM.TsubameGaeshi);
-                        if (gauge.Kaeshi == Kaeshi.NAMIKIRI)
-                            return OriginalHook(OriginalHook(SAM.OgiNamikiri));
+
                         //1-2-3 Logic
                         if (lastComboMove == SAM.Hakaze)
                             return SAM.Yukikaze;
@@ -272,12 +267,9 @@ namespace XIVSlothComboPlugin.Combos
                             if (gauge.MeditationStacks == 0 || !HasEffect(SAM.Buffs.OgiNamikiriReady))
                                 return SAM.Gekko;
                         }
-                            
+                   
                         if (GetRemainingCharges(SAM.TsubameGaeshi) == 0)
-                        {
                             inOpener = false;
-                        }
-
                         if (lastComboMove == SAM.Yukikaze && oneSeal)
                         {
                             inOpener = false;
@@ -290,7 +282,6 @@ namespace XIVSlothComboPlugin.Combos
                         //Death desync check
                         if (HasEffect(All.Buffs.Weakness))
                             hasDied = true;
-
 
                         //Filler Features
                         if (IsEnabled(CustomComboPreset.SamuraiFillersonMainCombo) && !hasDied && !nonOpener && level == 90)
@@ -305,7 +296,6 @@ namespace XIVSlothComboPlugin.Combos
                                     inOddFiller = false;
                                     inEvenFiller = false;
                                 }
-
                             }
 
                             if (!inEvenFiller && evenMinute)
@@ -313,11 +303,7 @@ namespace XIVSlothComboPlugin.Combos
 
                             if (inEvenFiller)
                             {
-                                if (InMeleeRange() && !HasEffect(SAM.Buffs.EnhancedEnpi))
-                                    inEvenFiller = false;
-                                if (IsOnCooldown(SAM.Hagakure))
-                                    inEvenFiller = false;
-                                if (hasDied)
+                                if (hasDied || IsOnCooldown(SAM.Hagakure) || (InMeleeRange() && !HasEffect(SAM.Buffs.EnhancedEnpi)))
                                     inEvenFiller = false;
 
                                 if (SamFillerCombo == 2)
@@ -344,15 +330,12 @@ namespace XIVSlothComboPlugin.Combos
 
                             }
 
-
                             if (!inOddFiller && oddMinute)
                                 inOddFiller = true;
 
                             if (inOddFiller)
                             {
-                                if (IsOnCooldown(SAM.Hagakure))
-                                    inOddFiller = false;
-                                if (hasDied)
+                                if (hasDied || IsOnCooldown(SAM.Hagakure))
                                     inOddFiller = false;
 
                                 if (SamFillerCombo == 1)
@@ -366,6 +349,7 @@ namespace XIVSlothComboPlugin.Combos
                                     if (gauge.Sen == 0)
                                         return SAM.Hakaze;
                                 }
+
                                 if (SamFillerCombo == 2)
                                 {
                                     if (gauge.Kenki >= 75 && CanWeave(actionID))
@@ -379,6 +363,7 @@ namespace XIVSlothComboPlugin.Combos
                                     if (gauge.Sen == 0)
                                         return SAM.Hakaze;
                                 }
+
                                 if (SamFillerCombo == 3)
                                 {
                                     if (!InMeleeRange() && !HasEffect(SAM.Buffs.EnhancedEnpi) && gauge.Kenki >= 10)
@@ -391,7 +376,7 @@ namespace XIVSlothComboPlugin.Combos
                                         return SAM.Gekko;
                                     if (lastComboMove == SAM.Hakaze)
                                         return SAM.Jinpu;
-                                    if ((InMeleeRange() && !HasEffect(SAM.Buffs.EnhancedEnpi) && IsOnCooldown(SAM.Gyoten)))
+                                    if (InMeleeRange() && !HasEffect(SAM.Buffs.EnhancedEnpi) && IsOnCooldown(SAM.Gyoten))
                                         return SAM.Hakaze;
                                     if (HasEffect(SAM.Buffs.EnhancedEnpi))
                                         return SAM.Enpi;
