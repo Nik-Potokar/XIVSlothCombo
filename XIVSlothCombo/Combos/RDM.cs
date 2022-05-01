@@ -412,12 +412,12 @@ namespace XIVSlothComboPlugin.Combos
             bool useThunder2 = false;
             bool useAero2 = false;
 
-            if (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration) /*&& GetCooldown(RDM.Embolden).CooldownRemaining > 5*/)
+            if (HasEffect(RDM.Buffs.Dualcast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Acceleration))
             {
                 if (black <= white || HasEffect(RDM.Buffs.VerstoneReady)) useThunder = true;
                 else useAero = true;
             }
-            if (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration) /*&& GetCooldown(RDM.Embolden).CooldownRemaining > 5*/)
+            if (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration))
             {
                 if (black <= white && HasEffect(RDM.Buffs.VerfireReady)) useFire = true;
                 if (white <= black && HasEffect(RDM.Buffs.VerstoneReady)) useStone = true;
@@ -499,14 +499,14 @@ namespace XIVSlothComboPlugin.Combos
             //END_RDM_AOE_MELEECOMBO
 
             //RDM_ST_ACCELERATION
-            if (IsEnabled(CustomComboPreset.RDM_ST_Acceleration) && actionID is RDM.Jolt or RDM.Jolt2
+            if (IsEnabled(CustomComboPreset.RDM_ST_Acceleration) && actionID is RDM.Jolt or RDM.Jolt2  //Add canspellweave?
                 && !HasEffect(RDM.Buffs.VerfireReady) && !HasEffect(RDM.Buffs.VerstoneReady) && !HasEffect(RDM.Buffs.Acceleration) && !HasEffect(RDM.Buffs.Dualcast)
                 && level >= RDM.Levels.Acceleration && GetCooldown(RDM.Acceleration).RemainingCharges > 0 && GetCooldown(RDM.Acceleration).ChargeCooldownRemaining < 53)
                 return RDM.Acceleration;
             //END_RDM_ST_ACCELERATION
 
             //RDM_AoE_ACCELERATION
-            if (IsEnabled(CustomComboPreset.RDM_AoE_Acceleration) && actionID is RDM.Scatter or RDM.Impact
+            if (IsEnabled(CustomComboPreset.RDM_AoE_Acceleration) && actionID is RDM.Scatter or RDM.Impact  //Add canspellweave?
                 && !HasEffect(RDM.Buffs.Acceleration) && !HasEffect(RDM.Buffs.Dualcast)
                 && level >= RDM.Levels.Acceleration && GetCooldown(RDM.Acceleration).RemainingCharges > 0 && GetCooldown(RDM.Acceleration).ChargeCooldownRemaining < 53)
                 return RDM.Acceleration;
