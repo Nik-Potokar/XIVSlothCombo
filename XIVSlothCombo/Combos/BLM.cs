@@ -431,12 +431,26 @@ namespace XIVSlothComboPlugin.Combos
                 var currentMP = LocalPlayer.CurrentMp;
                 var astralFireRefresh = Service.Configuration.GetCustomFloatValue(BLM.Config.BlmAstralFireRefresh) * 1000;
 
+                var thunder = TargetHasEffect(BLM.Debuffs.Thunder);
+                var thunder3 = TargetHasEffect(BLM.Debuffs.Thunder3);
+                var thunderDuration = FindTargetEffect(BLM.Debuffs.Thunder);
+                var thunder3Duration = FindTargetEffect(BLM.Debuffs.Thunder3);
+
+                DotRecast thunderRecast = delegate (int duration)
+                {
+                    return !thunder || (thunder && thunderDuration.RemainingTime < duration);
+                };
+                DotRecast thunder3Recast = delegate (int duration)
+                {
+                    return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
+                };
+
                 // Opener for BLM
                 // Credit to damolitionn for providing code to be used as a base for this opener
                 if (IsEnabled(CustomComboPreset.BlackSimpleOpenerFeature) && level >= BLM.Levels.Foul)
                 {
                     // Only enable sharpcast if it's available
-                    if ((!inOpener || (openerFinished && CanSpellWeave(actionID))) && !HasEffect(BLM.Buffs.Sharpcast) && (GetRemainingCharges(BLM.Sharpcast) >= 1))
+                    if ((!inOpener || (openerFinished && canWeave)) && !HasEffect(BLM.Buffs.Sharpcast) && GetRemainingCharges(BLM.Sharpcast) >= 1 && lastComboMove != BLM.Thunder3)
                     {
                         return BLM.Sharpcast;
                     }
@@ -575,22 +589,8 @@ namespace XIVSlothComboPlugin.Combos
                 // Handle thunder uptime and buffs
                 if (gauge.ElementTimeRemaining > 0)
                 {
-                    var thunder = TargetHasEffect(BLM.Debuffs.Thunder);
-                    var thunder3 = TargetHasEffect(BLM.Debuffs.Thunder3);
-                    var thunderDuration = FindTargetEffect(BLM.Debuffs.Thunder);
-                    var thunder3Duration = FindTargetEffect(BLM.Debuffs.Thunder3);
-
-                    DotRecast thunderRecast = delegate (int duration)
-                    {
-                        return !thunder || (thunder && thunderDuration.RemainingTime < duration);
-                    };
-                    DotRecast thunder3Recast = delegate (int duration)
-                    {
-                        return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
-                    };
-
                     // Thunder uptime
-                    if (gauge.ElementTimeRemaining >= 6000 && currentMP >= BLM.MP.AspectThunder)
+                    if (gauge.ElementTimeRemaining >= 6000 && (HasEffect(BLM.Buffs.Thundercloud) || currentMP >= BLM.MP.AspectThunder))
                     {
                         if (level < BLM.Levels.Thunder3 && lastComboMove != BLM.Thunder && thunderRecast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2))
                         {
@@ -618,7 +618,8 @@ namespace XIVSlothComboPlugin.Combos
                             }
 
                             // Use Swiftcast in Astral Fire
-                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) && level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) && gauge.InAstralFire)
+                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) && level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) && 
+                                 gauge.InAstralFire && currentMP >= BLM.MP.AspectFire * (HasEffect(BLM.Buffs.Triplecast) ? 3 : 1))
                             {
                                 if (level >= BLM.Levels.Despair && currentMP >= BLM.MP.Despair)
                                 {
@@ -660,9 +661,13 @@ namespace XIVSlothComboPlugin.Combos
                                     return BLM.Manafont;
                                 }
                             }
-                            if (level >= BLM.Levels.Sharpcast && GetRemainingCharges(BLM.Sharpcast) > 0 && !HasEffect(BLM.Buffs.Sharpcast))
+                            if (level >= BLM.Levels.Sharpcast && lastComboMove != BLM.Thunder3 && GetRemainingCharges(BLM.Sharpcast) > 0 && !HasEffect(BLM.Buffs.Sharpcast))
                             {
-                                return BLM.Sharpcast;
+                                // Try to only sharpcast Thunder 3
+                                if (GetRemainingCharges(BLM.Sharpcast) == 2 || thunder3Recast(7))
+                                {
+                                    return BLM.Sharpcast;
+                                }
                             }
                         }
                     }
@@ -773,6 +778,11 @@ namespace XIVSlothComboPlugin.Combos
                                     return BLM.Xenoglossy;
                                 }
                                 if (level >= BLM.Levels.Manafont && IsOffCooldown(BLM.Manafont) && currentMP < BLM.MP.Despair)
+                                {
+                                    return BLM.Xenoglossy;
+                                }
+                                if (level >= BLM.Levels.Sharpcast && GetRemainingCharges(BLM.Sharpcast) >= 1 && !HasEffect(BLM.Buffs.Sharpcast) && 
+                                    thunder3Recast(10) && lastComboMove != BLM.Thunder3 && gauge.InAstralFire && !gauge.IsParadoxActive)
                                 {
                                     return BLM.Xenoglossy;
                                 }
