@@ -383,7 +383,33 @@ namespace XIVSlothComboPlugin.Combos
                         // Lucid
                         if (IsEnabled(CustomComboPreset.SMNLucidDreamingFeature) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
                             return All.LucidDreaming;
+
+                        //Demi Nuke
+                        if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
+                        {
+                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) &&
+                                level >= SMN.Levels.AstralFlow &&
+                                (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralFlare) &&
+                                gauge.AttunmentTimerRemaining > 0)
+                                return OriginalHook(SMN.AstralFlow);
+
+                            if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) &&
+                                level >= SMN.Levels.Bahamut &&
+                                OriginalHook(SMN.Tridisaster) is SMN.AstralFlare or SMN.BrandOfPurgatory &&
+                                gauge.SummonTimerRemaining > 0)
+                                return OriginalHook(SMN.EnkindleBahamut);
+                        }
+
+                        //Demi Nuke 2: Electric Boogaloo
+                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
+                        {
+                            if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) &&
+                                OriginalHook(SMN.Tridisaster) is SMN.BrandOfPurgatory)
+                                return OriginalHook(SMN.AstralFlow);
+                        }
                     }
+
+                   
 
                     //Demi
                     if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
@@ -391,32 +417,14 @@ namespace XIVSlothComboPlugin.Combos
                         if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(SMN.Aethercharge)) &&
                             (level >= SMN.Levels.Aethercharge && level < SMN.Levels.Bahamut || //Pre Bahamut Phase
                             gauge.IsBahamutReady && level >= SMN.Levels.Bahamut || //Bahamut Phase
-                            gauge.IsPhoenixReady && level >= SMN.Levels.Phoenix)) //Phoenix Phase
+                            gauge.IsPhoenixReady && level >= SMN.Levels.Phoenix) && //Phoenix Phase
+                            !gauge.IsIfritReady && 
+                            !gauge.IsTitanReady && 
+                            !gauge.IsGarudaReady) 
                             return OriginalHook(SMN.Aethercharge);
 
                     }
 
-                    //Demi Nuke
-                    if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
-                    {
-                        if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) &&
-                            level >= SMN.Levels.AstralFlow &&
-                            (level < SMN.Levels.Bahamut || lastComboMove is SMN.AstralFlare) &&
-                            gauge.AttunmentTimerRemaining > 0)
-                            return OriginalHook(SMN.AstralFlow);
-                        if (IsOffCooldown(OriginalHook(SMN.EnkindleBahamut)) &&
-                            level >= SMN.Levels.Bahamut &&
-                            lastComboMove is SMN.AstralFlare or SMN.BrandOfPurgatory &&
-                            gauge.AttunmentTimerRemaining > 0)
-                            return OriginalHook(SMN.EnkindleBahamut);
-                    }
-
-                    //Demi Nuke 2: Electric Boogaloo
-                    if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
-                    {
-                        if (IsOffCooldown(OriginalHook(SMN.AstralFlow)) && lastComboMove is SMN.BrandOfPurgatory)
-                            return OriginalHook(SMN.AstralFlow);
-                    }
 
                     // Egis
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
@@ -426,7 +434,7 @@ namespace XIVSlothComboPlugin.Combos
                             IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(SMN.Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == SMN.CrimsonCyclone)) //Ifrit
                             return OriginalHook(SMN.AstralFlow);
 
-                        if (gauge.SummonTimerRemaining == 0)
+                        if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0)
                         {
                             if (gauge.IsTitanReady && level >= SMN.Levels.SummonTopaz)
                                 return OriginalHook(SMN.SummonTopaz);

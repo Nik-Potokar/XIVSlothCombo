@@ -248,7 +248,7 @@ namespace XIVSlothComboPlugin
 
             float offset = (float)Service.Configuration.MeleeOffset;
             ImGui.PushItemWidth(75);
-            
+
             var inputChangedeth = false;
             inputChangedeth |= ImGui.InputFloat("Melee Distance Offset", ref offset);
 
@@ -301,8 +301,6 @@ namespace XIVSlothComboPlugin
 
                 if (ImGui.CollapsingHeader(jobName))
                 {
-                    if (jobName == "All Jobs" && !Service.Configuration.EnableSecretCombos) ImGui.Text("This section currently only contains PVP features at present.");
-
                     foreach (var (preset, info) in this.groupedPresets[jobName])
                     {
                         if (Service.Configuration.HideConflictedCombos)
@@ -354,18 +352,18 @@ namespace XIVSlothComboPlugin
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = Service.Configuration.IsSecret(preset);
-            var trust = Service.Configuration.IsTrustIncompatible(preset);
             var showSecrets = Service.Configuration.EnableSecretCombos;
-            var showTrusts = Service.Configuration.EnableTrustIncompatibles;
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
             var irlsloth = Service.Configuration.SpecialEvent;
 
             if (secret && !showSecrets)
+            {
+                i++;
+                i += AllChildren(this.presetChildren[preset]);
                 return;
-
-            if (trust && !showTrusts)
-                return;
+            }
+                
 
             ImGui.PushItemWidth(200);
 
@@ -433,24 +431,6 @@ namespace XIVSlothComboPlugin
                     ImGui.EndTooltip();
                 }
             }
-            if (trust)
-            {
-                ImGui.SameLine();
-                ImGui.Text("  ");
-                ImGui.SameLine();
-                ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
-                ImGui.Text(FontAwesomeIcon.UserFriends.ToIconString());
-                ImGui.PopStyleColor();
-                ImGui.PopFont();
-
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.BeginTooltip();
-                    ImGui.TextUnformatted("This feature does not work in trust runs.");
-                    ImGui.EndTooltip();
-                }
-            }
 
             ImGui.PopItemWidth();
 
@@ -501,16 +481,17 @@ namespace XIVSlothComboPlugin
             i++;
 
             var hideChildren = Service.Configuration.HideChildren;
-            if (enabled || !hideChildren)
+            var children = this.presetChildren[preset];
+
+            if (children.Length > 0)
             {
-                var children = this.presetChildren[preset];
-                if (children.Length > 0)
+                if (enabled || !hideChildren)
                 {
                     ImGui.Indent();
 
                     foreach (var (childPreset, childInfo) in children)
-
                     {
+
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             //Presets that are contained within a ConflictedAttribute
@@ -547,9 +528,25 @@ namespace XIVSlothComboPlugin
 
                     ImGui.Unindent();
                 }
+                else
+                {
+                    i += AllChildren(this.presetChildren[preset]);
+
+                }
+            }
+        }
+
+        private int AllChildren((CustomComboPreset Preset, CustomComboInfoAttribute Info)[] children)
+        {
+            var output = 0;
+
+            foreach (var child in children)
+            {
+                output++;
+                output += AllChildren(this.presetChildren[child.Preset]);
             }
 
-
+            return output;
         }
 
         /// <summary>
@@ -721,10 +718,10 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.NinSimpleTrickFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
 
-            
+
             if (preset == CustomComboPreset.NinjaHuraijinFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
-            
+
 
             if (preset == CustomComboPreset.NinAeolianMugFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, $"Set the amount of Ninki to be at or under for this feature (level {NIN.TraitLevels.Shukiho} onwards)");
@@ -780,7 +777,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SAGE
-            
+
             if (preset == CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "");
 
@@ -871,7 +868,7 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 6", "Use Searing Light only in Titan phase.", 5);
             }
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice,"Titan","Summons Titan first, Garuda second, Ifrit third", 1);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
 
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
