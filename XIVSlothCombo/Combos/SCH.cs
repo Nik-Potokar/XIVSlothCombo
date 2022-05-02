@@ -181,19 +181,19 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Biolysis)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Biolysis) && incombat && level >= SCH.Levels.Biolysis) || (biolysisDebuff.RemainingTime < 5 && incombat && level >= SCH.Levels.Biolysis))
+                    if ((!TargetHasEffect(SCH.Debuffs.Biolysis) && incombat && level >= SCH.Levels.Biolysis) || (biolysisDebuff?.RemainingTime < 5 && incombat && level >= SCH.Levels.Biolysis))
                         return SCH.Biolysis;
                 }
 
                 if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level < SCH.Levels.Biolysis && level >= SCH.Levels.Bio2) || (bio2Debuff.RemainingTime < 5 && incombat && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis))
+                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level < SCH.Levels.Biolysis && level >= SCH.Levels.Bio2) || (bio2Debuff?.RemainingTime < 5 && incombat && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis))
                         return SCH.Bio2;
                 }
 
                 if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level < SCH.Levels.Bio2)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio1) && level < SCH.Levels.Bio2) || (bio1Debuff.RemainingTime < 5 && incombat && level < SCH.Levels.Bio2))
+                    if ((!TargetHasEffect(SCH.Debuffs.Bio1) && level < SCH.Levels.Bio2) || (bio1Debuff?.RemainingTime < 5 && incombat && level < SCH.Levels.Bio2))
                         return SCH.Bio1;
                 }
             }
@@ -244,17 +244,17 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Biolysis && incombat)
                 {
-                    if ((biolysis is null) || (biolysis.RemainingTime <= 3))
+                    if ((biolysis is null) || (biolysis?.RemainingTime <= 3))
                         return SCH.Biolysis;
                 }
                 if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis && incombat)
                 {
-                    if ((bio2 is null) || (bio2.RemainingTime <= 3))
+                    if ((bio2 is null) || (bio2?.RemainingTime <= 3))
                         return SCH.Bio2;
                 }
                 if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio1 && level < SCH.Levels.Bio2 && incombat)
                 {
-                    if ((bio1 is null) || (bio1.RemainingTime <= 3))
+                    if ((bio1 is null) || (bio1?.RemainingTime <= 3))
                         return SCH.Bio1;
                 }
                 if (IsEnabled(CustomComboPreset.ScholarDPSFeatureBuffOption) && level >= SCH.Levels.ChainStratagem)
