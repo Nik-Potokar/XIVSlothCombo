@@ -2668,7 +2668,7 @@ namespace XIVSlothComboPlugin
 
         // RPR
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.", RPR.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.\nAdds Soul Slice to the main combo.", RPR.JobID)]
         RPRBurstMode = 80190,
 
             #region RPR Burst Mode
@@ -2694,7 +2694,7 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
-            [CustomComboInfo("Enshrouded Option", "A collection of options for the Enshrouded burst phase.", RPR.JobID)]
+            [CustomComboInfo("Enshrouded Burst Option", "Puts Lemure's Slice on the main combo during Enshrouded Burst Phase.\nContains burst options.", RPR.JobID)]
             RPRPvPEnshroudedOption = 80195,
 
                 #region RPR Enshrouded Option
@@ -2705,7 +2705,7 @@ namespace XIVSlothComboPlugin
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPEnshroudedOption)]
-                [CustomComboInfo("Communio Finisher Option", "Adds communio onto the main combo when you have 1 stack of Enshroud remaining.", RPR.JobID)]
+                [CustomComboInfo("Communio Finisher Option", "Adds Communio onto the main combo when you have 1 stack of Enshroud remaining.\nWill not trigger if you are moving.", RPR.JobID)]
                 RPRPvPEnshroudedCommunioOption = 80197,
                 #endregion
 
