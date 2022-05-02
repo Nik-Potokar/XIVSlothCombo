@@ -75,7 +75,7 @@ namespace XIVSlothComboPlugin
                 bool soulsow = HasEffect(RPRPVP.Buffs.Soulsow);
                 bool canBind = !TargetHasEffect(PVPCommon.Debuffs.Bind);
                 bool GCDStopped = !GetCooldown(OriginalHook(RPRPVP.Slice)).IsCooldown;
-                bool enemyGuarded = TargetHasEffect(PVPCommon.Buffs.Guard);
+                bool enemyGuarded = TargetHasEffectAny(PVPCommon.Buffs.Guard);
                 var HP = PlayerHealthPercentageHp();
                 bool canWeave = CanWeave(actionID);
                 var distance = GetTargetDistance();
@@ -113,7 +113,7 @@ namespace XIVSlothComboPlugin
                         }
 
                         // Communio Finisher Option
-                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedCommunioOption) && enshroudStacks == 1 && distance <= 25)
+                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedCommunioOption) && enshroudStacks == 1 && !this.IsMoving && distance <= 25)
                             return RPRPVP.Communio;
                     }
 
