@@ -121,7 +121,7 @@ namespace XIVSlothComboPlugin.Combos
             //END_MAIN_COMBO_VARIABLES
 
             //RDM_BALANCE_OPENER
-            if (actionID is RDM.Jolt && IsEnabled(CustomComboPreset.RDM_Balance_Opener))
+            if (IsEnabled(CustomComboPreset.RDM_Balance_Opener) && actionID is RDM.Jolt or RDM.Jolt2)
             {
                 bool inCombat = HasCondition(ConditionFlag.InCombat);
 
