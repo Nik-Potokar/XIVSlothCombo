@@ -334,9 +334,6 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (level >= DRG.Levels.LanceCharge && IsOffCooldown(DRG.LanceCharge))
                                         return DRG.LanceCharge;
-
-                                    if (level >= DRG.Levels.BattleLitany && IsOffCooldown(DRG.BattleLitany))
-                                        return DRG.BattleLitany;
                                 }
                             }
                         }
@@ -352,11 +349,11 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Battle Litany Feature
-                        if (canWeave)
+                        if (CanWeave(actionID, 1.3))
                         {
                             if (IsEnabled(CustomComboPreset.DragoonLitanyFeature))
                             {
-                                if (HasEffect(DRG.Buffs.PowerSurge) && canWeave)
+                                if (HasEffect(DRG.Buffs.PowerSurge))
                                 {
                                     if (level >= DRG.Levels.BattleLitany && IsOffCooldown(DRG.BattleLitany))
                                         return DRG.BattleLitany;
@@ -704,9 +701,6 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (level >= DRG.Levels.LanceCharge && IsOffCooldown(DRG.LanceCharge))
                                 return DRG.LanceCharge;
-
-                            if (level >= DRG.Levels.BattleLitany && IsOffCooldown(DRG.BattleLitany))
-                                return DRG.BattleLitany;
                         }
                     }
                 }
@@ -722,11 +716,11 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 //Battle Litany Feature
-                if (canWeave)
+                if (CanWeave(actionID, 1.3))
                 {
                     if (IsEnabled(CustomComboPreset.DragoonLitanyFeature))
                     {
-                        if (HasEffect(DRG.Buffs.PowerSurge) && canWeave)
+                        if (HasEffect(DRG.Buffs.PowerSurge))
                         {
                             if (level >= DRG.Levels.BattleLitany && IsOffCooldown(DRG.BattleLitany))
                                 return DRG.BattleLitany;
