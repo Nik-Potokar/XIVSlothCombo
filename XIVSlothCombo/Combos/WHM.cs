@@ -285,7 +285,7 @@ namespace XIVSlothComboPlugin.Combos
                         return WHM.AfflatusMisery;
                     if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= WHM.Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff.RemainingTime > 2)
                         return WHM.AfflatusRapture;
-                    if (HasEffect(WHM.Buffs.Medica2) && medica2Buff.RemainingTime > 2)
+                    if (HasEffect(WHM.Buffs.Medica2) && medica2Buff?.RemainingTime > 2)
                         return WHM.Medica1;
                 }
 
