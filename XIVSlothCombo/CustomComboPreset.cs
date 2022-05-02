@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin
         AllHealerFeatures = 100098,
 
             #region Global Healer Features
-            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SGE_Raise, WHMRaiseFeature)]
+            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SGE_RaiseFeature, WHMRaiseFeature)]
             [ParentCombo(AllHealerFeatures)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             AllHealerRaiseFeature = 100010,
@@ -277,85 +277,83 @@ namespace XIVSlothComboPlugin
         #region BLACK MAGE
 
         [ConflictingCombos(BlackSimpleFeature)]
-        [CustomComboInfo("Enochian Stance Switcher ++", "Change Scathe to Fire 4 or Blizzard 4 depending on stance.\nScathe becomes all in one rotation.\nIf Thunder Feature is turned on it also adds Thunder3 proces onto all in one combo when DoT is about to expire or dosen't exist\nThis REQUIRES other features to be turned on!!!", BLM.JobID, 0, "BrainLess Mage", "One button, BAYBEE!")]
+        [CustomComboInfo("Scathe Feature", "Replaces Scathe with Fire 4 or Blizzard 4 depending on Astral Fire/Umbral Ice.", BLM.JobID, 2, "BrainLess Mage", "One button, BAYBEE!")]
         BlackEnochianFeature = 2000,
 
-        [CustomComboInfo("Umbral Soul/Transpose Switcher", "Change Transpose into Umbral Soul when Umbral Soul is usable.", BLM.JobID, 0, "Eh? Huh?", "Just does BLM things. Probably.")]
+        [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "Eh? Huh?", "Just does BLM things. Probably.")]
         BlackManaFeature = 2001,
 
-        [CustomComboInfo("(Between the) Ley Lines", "Change Ley Lines into BTL when Ley Lines is active.", BLM.JobID, 0, "BLT Sandwich feature", "Look between, and you shall find")]
+        [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Ley Lines when Ley Lines is active.", BLM.JobID, 0, "BLT Sandwich feature", "Look between, and you shall find")]
         BlackLeyLinesFeature = 2002,
 
-        [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Blizzard 1/2/3 Feature", "Blizzard 1 becomes Blizzard 3 when out of Umbral Ice. Freeze becomes Blizzard 2 when synced.", BLM.JobID, 0, "Chilly boi", "Chill out, for real. It's sleepy sloth time")]
+        [CustomComboInfo("Blizzard 1/2/3 Feature", "Replaces Blizzard 1 with Blizzard 3 when out of Umbral Ice. Replaces Freeze with Blizzard 2 when synced.", BLM.JobID, 0, "Chilly boi", "Chill out, for real. It's sleepy sloth time")]
         BlackBlizzardFeature = 2003,
 
         [ConflictingCombos(BlackEnochianFeature, BlackSimpleFeature)]
-        [CustomComboInfo("Scathe/Xenoglossy Feature", "Scathe becomes Xenoglossy when available.", BLM.JobID, 0, "Glossy paint", "So shiny, so glossy...")]
+        [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID, 0, "Glossy paint", "So shiny, so glossy...")]
         BlackScatheFeature = 2004,
 
-        [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Fire 1/3", "Fire 1 becomes Fire 3 outside of Astral Fire, OR when Firestarter proc is up.", BLM.JobID, 0, "Burna boi", "It's getting hot in here...")]
+        [CustomComboInfo("Fire 1/3 Feature", "Replaces Fire 1 with Fire 3 outside of Astral Fire or when Firestarter proc is up.", BLM.JobID, 0, "Burna boi", "It's getting hot in here...")]
         BlackFire13Feature = 2005,
 
         [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Thunder", "Thunder 1/3 replaces Enochian/Fire 4/Blizzard 4 on Enochian switcher.\n Occurs when Thundercloud is up and either\n- Thundercloud buff on you is about to run out, or\n- Thunder debuff on your CURRENT target is about to run out\nAssuming it won't interrupt timer upkeep.\nEnochian Stance Switcher must be active.", BLM.JobID, 0, "Plug Socket Mode", "Forks at the ready!")]
+        [CustomComboInfo("Thundercloud Option", "Replaces Scathe with Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available.", BLM.JobID, 0, "Plug Socket Mode", "Forks at the ready!")]
         BlackThunderFeature = 2006,
 
         [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Despair Feature", "Despair replaces Fire 4 when below 2400 MP.\nEnochian Stance Switcher must be active.", BLM.JobID, 0, "My MP!", "The horror! The despair!")]
+        [CustomComboInfo("Despair Option", "Replaces Fire 4 with Despair when below 2400 MP.", BLM.JobID, 0, "My MP!", "The horror! The despair!")]
         BlackDespairFeature = 2007,
 
-        [CustomComboInfo("AoE Combo Feature", "One Button AoE Feature that adds whole AoE rotation onto FLARE (TESTING ONLY!!!)", BLM.JobID, 0, "Dungeon Tesla Mode", "Asleep at the wheel? We've got you!")]
+        [CustomComboInfo("Simple AoE Feature", "Replaces Flare with a full one button rotation.", BLM.JobID, 0, "Dungeon Tesla Mode", "Asleep at the wheel? We've got you!")]
         BlackAoEComboFeature = 2008,
 
         [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Blizzard Paradox Feature", "Adds Paradox onto ice phase combo", BLM.JobID, 0, "The sentence below is false.", "The sentence above is true.")]
-        BlackBlizzardParadoxFeature = 2009,
-
-        [ParentCombo(BlackEnochianFeature)]
-        [CustomComboInfo("Aspect Swap Feature", "Changes Scathe to Blizzard 3 when at 0 MP in Astral Fire or to Fire 3 when at 10000 MP in Umbral Ice with 3 Umbral Hearts.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Aspect Swap Option", "Replaces Scathe with Blizzard 3 when at 0 MP in Astral Fire or with Fire 3 when at 10000 MP in Umbral Ice with 3 Umbral Hearts.", BLM.JobID, 0, "", "")]
         BlackAspectSwapFeature = 2010,
 
         [ParentCombo(BlackThunderFeature)]
-        [CustomComboInfo("Thunder Uptime Feature", "Changes Scathe to Thunder 1/3 when not detected on target.", BLM.JobID, 0, "Bzzt", "Shocking!")]
+        [CustomComboInfo("Thunder 1/3 Option", "Replaces Scathe with Thunder 1/3 when the debuff isn't present or expiring.", BLM.JobID, 0, "Bzzt", "Shocking!")]
         BlackThunderUptimeFeature = 2011,
 
         [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature)]
-        [CustomComboInfo("Simple BLM", "Adds the whole rotation to one button.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -2, "", "")]
         BlackSimpleFeature = 2012,
 
         [ParentCombo(BlackSimpleFeature)]
-        [CustomComboInfo("Simple Buffs Feature", "Adds Manafont, Sharpcast, Amplifier onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        [CustomComboInfo("CDs Option", "Adds Manafont, Sharpcast, Amplifier onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
         BlackSimpleBuffsFeature = 2013,
 
         [ParentCombo(BlackSimpleFeature)]
-        [CustomComboInfo("Simple Buffs - Ley Lines", "Adds Ley Lines onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
         BlackSimpleBuffsLeylinesFeature = 2014,
 
         [ParentCombo(BlackSimpleFeature)]
-        [CustomComboInfo("Simple Casts Feature", "Adds Triplecast/Swiftcast onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Simple BLM feature.", BLM.JobID, 0, "", "!")]
         BlackSimpleCastsFeature = 2015,
 
-        [ParentCombo(BlackSimpleFeature)]
-        [CustomComboInfo("Simple Casts - Pooling", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        [ParentCombo(BlackSimpleCastsFeature)]
+        [CustomComboInfo("Pool Triplecast / Swiftcast Option", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "!")]
         BlackSimpleCastPoolingFeature = 2016,
 
         [ParentCombo(BlackSimpleFeature)]
-        [CustomComboInfo("Simple Pooling", "Keep one xenoglossy usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "!")]
+        [CustomComboInfo("Pool Xenoglossy Option", "Keep one xenoglossy usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "!")]
         BlackSimplePoolingFeature = 2017,
 
         [ParentCombo(BlackSimpleFeature)]
-        [CustomComboInfo("Simple Fire3 Opener", "Adds the Fire III Opener to Simple BLM.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Fire 3 Opener", "Adds the Fire 3 Opener to Simple BLM.", BLM.JobID, 0, "", "")]
         BlackSimpleOpenerFeature = 2018,
 
-        [ParentCombo(BlackSimpleFeature)]
-        [CustomComboInfo("Simple Fire3 Opener - 1 Triplecast", "Modifies the Simple Fire3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
+        [ParentCombo(BlackSimpleOpenerFeature)]
+        [CustomComboInfo("Fire 3 Opener - 1 Triplecast", "Modifies the Simple Fire 3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
         BlackSimpleAltOpenerFeature = 2019,
 
         [ParentCombo(BlackAoEComboFeature)]
-        [CustomComboInfo("Foul / Manafont to Flare Option", "Adds foul when available during Astral Fire. Weaves manafont after foul for additional Flare", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Foul / Manafont Flare Option", "Adds Foul when available during Astral Fire. Weaves Manafont after Foul for additional Flare", BLM.JobID, 0, "", "")]
         BlackAoEFoulOption = 2020,
+
+        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature)]
+        [CustomComboInfo("Advanced BLM", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -1, "", "")]
+        BlackSimpleTransposeFeature = 2021,
 
         #endregion
         // ====================================================================================
@@ -1789,153 +1787,153 @@ namespace XIVSlothComboPlugin
 
         //SECTION_1_DPS
 
-        [CustomComboInfo("Single Target DPS Enhancements", "Replaces Dosis with options below", SGE.JobID, 110)]
-        SGE_ST_Dosis = 14110,
+        [CustomComboInfo("Single Target DPS Feature", "Replaces Dosis with options below", SGE.JobID, 110)]
+        SGE_ST_DosisFeature = 14110,
 
-            #region Single Target DPS Enhancements
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Lucid Dreaming", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
+            #region Single Target DPS Feature
+            [ParentCombo(SGE_ST_DosisFeature)]
+            [CustomComboInfo("Lucid Dreaming Option###SGEST", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
             SGE_ST_Dosis_Lucid = 14111,
 
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Eukrasian Dosis", "Automatic DoT Uptime", SGE.JobID, 112)]
+            [ParentCombo(SGE_ST_DosisFeature)]
+            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime", SGE.JobID, 112)]
             SGE_ST_Dosis_EDosis = 14112,
 
                 #region Eukrasian Dosis
                 [ParentCombo(SGE_ST_Dosis_EDosis)]
                 [ConflictingCombos(SGE_ST_Dosis_EDosisToT)]
-                [CustomComboInfo("Enemy HP%% Limiter", "Stop using Eukrasian Dosis when Enemy HP%% is below this value:", SGE.JobID, 1121)]
+                [CustomComboInfo("Enemy HP%% Limiter Option", "Stop using Eukrasian Dosis when Enemy HP%% is below this value:", SGE.JobID, 1121)]
                 SGE_ST_Dosis_EDosisHPPer = 141121,
 
                 [ParentCombo(SGE_ST_Dosis_EDosis)]
                 [ConflictingCombos(SGE_ST_Dosis_EDosisHPPer)]
-                [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 1122)]
+                [CustomComboInfo("Target of Target Dosis Option", "Target of Target checking for Dosis", SGE.JobID, 1122)]
                 SGE_ST_Dosis_EDosisToT = 141122,
                 #endregion
 
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon", "Use Toxikon when you have Addersting charges", SGE.JobID, 113)]
+            [ParentCombo(SGE_ST_DosisFeature)]
+            [CustomComboInfo("Toxikon Option###SGEST", "Use Toxikon when you have Addersting charges", SGE.JobID, 113)]
             SGE_ST_Dosis_Toxikon = 14113,
             #endregion
 
-        [CustomComboInfo("AoE DPS Enhancements", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "Phlegmaballs.")]
-        SGE_AoE_Phlegma = 14121,
+        [CustomComboInfo("AoE DPS Feature", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "")]
+        SGE_AoE_PhlegmaFeature = 14121,
 
-            #region AoE DPS Enhancements
-            [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Toxikon###SGEAoE", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia SubOption", SGE.JobID, 122, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+            #region AoE DPS Feature
+            [ParentCombo(SGE_AoE_PhlegmaFeature)]
+            [CustomComboInfo("Toxikon Option###SGEAoE", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia SubOption", SGE.JobID, 122, "", "")]
             SGE_AoE_Phlegma_Toxikon = 14122,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Dyskrasia", "Use Dyskrasia", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            [ParentCombo(SGE_AoE_PhlegmaFeature)]
+            [CustomComboInfo("Dyskrasia Option", "Use Dyskrasia", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
             SGE_AoE_Phlegma_Dyskrasia = 14123,
 
                 #region Dyskrasia
                 [ParentCombo(SGE_AoE_Phlegma_Dyskrasia)]
-                [CustomComboInfo("Targetless Mode", "Prioritize Dyskrasia when no target is selected\nIgnores Phlegma Charges", SGE.JobID, 1231, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+                [CustomComboInfo("Dyskrasia Targetless Mode Option", "Prioritize Dyskrasia when no target is selected\nIgnores Phlegma Charges", SGE.JobID, 1231, "", "")]
                 SGE_AoE_Phlegma_Dyskrasia_NoTarget = 141231,
                 #endregion
 
             #endregion
 
         //SECTION_2_Healing
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Diagnosis Simple Single Target Heal", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 210)]
-        SGE_ST_Heal = 14210,
+        [ConflictingCombos(SGE_RhizoFeature, SGE_DruoTauroFeature)]
+        [CustomComboInfo("Diagnosis Simple Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 210)]
+        SGE_ST_HealFeature = 14210,
 
             #region Diagnosis Simple Single Target Heal
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 211)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 211)]
             SGE_ST_Heal_Kardia = 14211,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Eukrasian Diagnosis", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 212)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 212)]
             SGE_ST_Heal_Diagnosis = 14212,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Soteria", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 213)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Soteria Option", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 213)]
             SGE_ST_Heal_Soteria = 14213,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Zoe", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 214)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Zoe Option", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 214)]
             SGE_ST_Heal_Zoe = 14214,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Pepsis###SGEST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Pepsis Option###SGEST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
             SGE_ST_Heal_Pepsis = 14215,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Taurochole", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 216)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Taurochole Option", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 216)]
             SGE_ST_Heal_Taurochole = 14216,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Haima", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 217)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Haima Option", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 217)]
             SGE_ST_Heal_Haima = 14217,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Rhizomata###SGEST", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Rhizomata Option###SGEST", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
             SGE_ST_Heal_Rhizomata = 14218,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Krasis", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 219)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Krasis Option", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 219)]
             SGE_ST_Heal_Krasis = 14219,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Druochole", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 2110)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Druochole Option", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 2110)]
             SGE_ST_Heal_Druochole = 142110,
             #endregion
 
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Sage Simple AoE Heal", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 220)]
-        SGE_AoE_Heal = 14220,
+        [ConflictingCombos(SGE_RhizoFeature, SGE_DruoTauroFeature)]
+        [CustomComboInfo("Sage Simple AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 220)]
+        SGE_AoE_HealFeature = 14220,
 
             #region Sage Simple AoE Heal
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Physis", "Adds Physis.", SGE.JobID, 221)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 221)]
             SGE_AoE_Heal_Physis = 14221,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Eukrasian Prognosis", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 222)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 222)]
             SGE_AoE_Heal_EkPrognosis = 14222,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Holos", "Adds Holos.", SGE.JobID, 223)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 223)]
             SGE_AoE_Heal_Holos = 14223,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Panhaima", "Adds Panhaima.", SGE.JobID, 224)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 224)]
             SGE_AoE_Heal_Panhaima = 14224,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Pepsis##SGEAoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Pepsis Option##SGEAoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
             SGE_AoE_Heal_Pepsis = 14225,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Ixochole", "Adds Ixochole", SGE.JobID, 226)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Ixochole Option", "Adds Ixochole", SGE.JobID, 226)]
             SGE_AoE_Heal_Ixochole = 14226,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Kerachole", "Adds Kerachole", SGE.JobID, 227)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Kerachole Option", "Adds Kerachole", SGE.JobID, 227)]
             SGE_AoE_Heal_Kerachole = 14227,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Rhizomata###SGEAOE", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Rhizomata Option###SGEAOE", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
             SGE_AoE_Heal_Rhizomata = 14228,
             #endregion
 
-        [CustomComboInfo("Rhizomata Helper", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
-        SGE_Rhizo = 14230,
+        [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
+        SGE_RhizoFeature = 14230,
 
-        [CustomComboInfo("Upgrade Druochole to Taurochole", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 240)]
-        SGE_DruoTauro = 14240,
+        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 240)]
+        SGE_DruoTauroFeature = 14240,
 
         //SECTION_3_Utility
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("Swiftcast Raise Combo", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
-        SGE_Raise = 14310,
+        [CustomComboInfo("Swiftcast Raise Feature###SGE", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
+        SGE_RaiseFeature = 14310,
 
-        [CustomComboInfo("Soteria into Kardia", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
-        SGE_Kardia = 14320,
+        [CustomComboInfo("Soteria to Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
+        SGE_KardiaFeature = 14320,
 
 
         #endregion
@@ -2610,7 +2608,7 @@ namespace XIVSlothComboPlugin
 
         // SAM
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.", SAM.JobID)]
+        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.\nWill only cast Midare and Ogi Namikiri when you're not moving.\nWill not use if target is guarding.", SAM.JobID)]
         SAMBurstMode = 80080,
 
             #region SAM Burst Mode
