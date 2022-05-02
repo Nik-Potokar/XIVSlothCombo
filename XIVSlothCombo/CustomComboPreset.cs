@@ -2668,9 +2668,10 @@ namespace XIVSlothComboPlugin
 
         // RPR
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode - BETA TESTING", "Turns Slice Combo into an all-in-one damage button.\nCurrently in beta testing. Do not expect fully optimal use!", RPR.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.", RPR.JobID)]
         RPRBurstMode = 80190,
 
+            #region RPR Burst Mode
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Grim Swathe Option", "Weaves Grim Swathe onto the main combo when available.", RPR.JobID)]
@@ -2678,24 +2679,27 @@ namespace XIVSlothComboPlugin
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
-            [CustomComboInfo("Death Warrant Option - BETA TESTING", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
+            [CustomComboInfo("Death Warrant Option", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
             RPRPvPDeathWarrantOption = 80192,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
-            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option - BETA TESTING", "Pools a set amount of stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful as soon as it's suitable.", RPR.JobID)]
+            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option - BETA", "Pools stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful as soon as it's suitable.", RPR.JobID)]
             RPRPvPImmortalPoolingOption = 80193,
 
+                #region RPR Plentiful Harvest Option
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPImmortalPoolingOption)]
-                [CustomComboInfo("Plentiful Harvest Opener Option - BETA TESTING", "Starts combat with Plentiful Harvest to immediately begin Limit Break generation.", RPR.JobID)]
+                [CustomComboInfo("Plentiful Harvest Opener Option", "Starts combat with Plentiful Harvest to immediately begin Limit Break generation.", RPR.JobID)]
                 RPRPvPPlentifulOpenerOption = 80194,
+                #endregion
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Enshrouded Option", "A collection of options for the Enshrouded burst phase.", RPR.JobID)]
             RPRPvPEnshroudedOption = 80195,
 
+                #region RPR Enshrouded Option
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPEnshroudedOption)]
                 [CustomComboInfo("Lemure Burst Option", "Adds Lemure's Slice onto the main combo during the Enshroud burst.", RPR.JobID)]
@@ -2703,13 +2707,14 @@ namespace XIVSlothComboPlugin
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPEnshroudedOption)]
-                [CustomComboInfo("Enshrouded Death Warrant Option - BETA TESTING", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
+                [CustomComboInfo("Enshrouded Death Warrant Option", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
                 RPRPvPEnshroudedDeathWarrantOption = 80197,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPEnshroudedOption)]
                 [CustomComboInfo("Communio Finisher Option", "Adds communio onto the main combo when you have 1 stack of Enshroud remaining.", RPR.JobID)]
                 RPRPvPEnshroudedCommunioOption = 80198,
+                #endregion
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
@@ -2720,6 +2725,7 @@ namespace XIVSlothComboPlugin
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under a set HP perecentage.", RPR.JobID)]
             RPRPvPArcaneCircleOption = 80200,
+            #endregion
 
         #endregion
         // ====================================================================================
