@@ -379,6 +379,10 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (currentMP >= 7000)
                     {
+                        if (gauge.UmbralHearts == 1)
+                        {
+                            return BLM.Flare;
+                        }
                         return level >= BLM.Levels.HighFire2 ? BLM.HighFire2 : BLM.Fire2;
                     }
                     else if (currentMP >= BLM.MP.Despair)
