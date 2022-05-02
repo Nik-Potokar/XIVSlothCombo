@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         AllHealerFeatures = 100098,
 
-            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SGE_Raise, WHMRaiseFeature)]
+            [ConflictingCombos(AstrologianAscendFeature, SchRaiseFeature, SGE_RaiseFeature, WHMRaiseFeature)]
             [ParentCombo(AllHealerFeatures)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             AllHealerRaiseFeature = 100010,
@@ -1749,142 +1749,142 @@ namespace XIVSlothComboPlugin
         //New features should be added to the appropriate sections.
 
         //SECTION_1_DPS
-        [CustomComboInfo("Single Target DPS Enhancements", "Replaces Dosis with options below", SGE.JobID, 110)]
-        SGE_ST_Dosis = 14110,
+        [CustomComboInfo("Single Target DPS Feature", "Replaces Dosis with options below", SGE.JobID, 110)]
+        SGE_ST_DosisFeature = 14110,
 
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Lucid Dreaming###SGEST", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
+            [ParentCombo(SGE_ST_DosisFeature)]
+            [CustomComboInfo("Lucid Dreaming Option###SGEST", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
             SGE_ST_Dosis_Lucid = 14111,
 
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Eukrasian Dosis", "Automatic DoT Uptime", SGE.JobID, 112)]
+            [ParentCombo(SGE_ST_DosisFeature)]
+            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime", SGE.JobID, 112)]
             SGE_ST_Dosis_EDosis = 14112,
 
                 [ParentCombo(SGE_ST_Dosis_EDosis)]
                 [ConflictingCombos(SGE_ST_Dosis_EDosisToT)]
-                [CustomComboInfo("Enemy HP%% Limiter", "Stop using Eukrasian Dosis when Enemy HP%% is below this value:", SGE.JobID, 1121)]
+                [CustomComboInfo("Enemy HP%% Limiter Option", "Stop using Eukrasian Dosis when Enemy HP%% is below this value:", SGE.JobID, 1121)]
                 SGE_ST_Dosis_EDosisHPPer = 141121,
 
                 [ParentCombo(SGE_ST_Dosis_EDosis)]
                 [ConflictingCombos(SGE_ST_Dosis_EDosisHPPer)]
-                [CustomComboInfo("Target of Target Dosis", "Target of Target checking for Dosis", SGE.JobID, 1122)]
+                [CustomComboInfo("Target of Target Dosis Option", "Target of Target checking for Dosis", SGE.JobID, 1122)]
                 SGE_ST_Dosis_EDosisToT = 141122,
 
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon###SGEST", "Use Toxikon when you have Addersting charges", SGE.JobID, 113)]
+            [ParentCombo(SGE_ST_DosisFeature)]
+            [CustomComboInfo("Toxikon Option###SGEST", "Use Toxikon when you have Addersting charges", SGE.JobID, 113)]
             SGE_ST_Dosis_Toxikon = 14113,
 
-        [CustomComboInfo("AoE DPS Enhancements", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "Phlegmaballs.")]
-        SGE_AoE_Phlegma = 14121,
+        [CustomComboInfo("AoE DPS Feature", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "Phlegmaballs.")]
+        SGE_AoE_PhlegmaFeature = 14121,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Toxikon###SGEAoE", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia SubOption", SGE.JobID, 122, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
+            [ParentCombo(SGE_AoE_PhlegmaFeature)]
+            [CustomComboInfo("Toxikon Option###SGEAoE", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia SubOption", SGE.JobID, 122, "", "Changes Phlegma to Toxikon, purely because the name is awful.")]
             SGE_AoE_Phlegma_Toxikon = 14122,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Dyskrasia", "Use Dyskrasia", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            [ParentCombo(SGE_AoE_PhlegmaFeature)]
+            [CustomComboInfo("Dyskrasia Option", "Use Dyskrasia", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
             SGE_AoE_Phlegma_Dyskrasia = 14123,
 
                 [ParentCombo(SGE_AoE_Phlegma_Dyskrasia)]
-                [CustomComboInfo("Targetless Mode", "Prioritize Dyskrasia when no target is selected\nIgnores Phlegma Charges", SGE.JobID, 1231, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+                [CustomComboInfo("Dyskrasia Targetless Mode Option", "Prioritize Dyskrasia when no target is selected\nIgnores Phlegma Charges", SGE.JobID, 1231, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
                 SGE_AoE_Phlegma_Dyskrasia_NoTarget = 141231,
 
 
         //SECTION_2_Healing
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Diagnosis Simple Single Target Heal", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 210)]
-        SGE_ST_Heal = 14210,
+        [ConflictingCombos(SGE_RhizoFeature, SGE_DruoTauroFeature)]
+        [CustomComboInfo("Diagnosis Simple Single Target Heal Feature", "Changes Diagnosis. You must target a party member (including yourself) for some features to work.", SGE.JobID, 210)]
+        SGE_ST_HealFeature = 14210,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Apply Kardia", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 211)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 211)]
             SGE_ST_Heal_Kardia = 14211,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Eukrasian Diagnosis", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 212)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 212)]
             SGE_ST_Heal_Diagnosis = 14212,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Soteria", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 213)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Soteria Option", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 213)]
             SGE_ST_Heal_Soteria = 14213,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Zoe", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 214)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Zoe Option", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 214)]
             SGE_ST_Heal_Zoe = 14214,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Pepsis###SGEST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Pepsis Option###SGEST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
             SGE_ST_Heal_Pepsis = 14215,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Taurochole", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 216)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Taurochole Option", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 216)]
             SGE_ST_Heal_Taurochole = 14216,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Haima", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 217)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Haima Option", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 217)]
             SGE_ST_Heal_Haima = 14217,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Rhizomata###SGEST", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Rhizomata Option###SGEST", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
             SGE_ST_Heal_Rhizomata = 14218,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Krasis", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 219)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Krasis Option", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 219)]
             SGE_ST_Heal_Krasis = 14219,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Druochole", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 2110)]
+            [ParentCombo(SGE_ST_HealFeature)]
+            [CustomComboInfo("Druochole Option", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 2110)]
             SGE_ST_Heal_Druochole = 142110,
 
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Sage Simple AoE Heal", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 220)]
-        SGE_AoE_Heal = 14220,
+        [ConflictingCombos(SGE_RhizoFeature, SGE_DruoTauroFeature)]
+        [CustomComboInfo("Sage Simple AoE Heal Feature", "Changes Prognosis. Customize your AoE healing to your liking", SGE.JobID, 220)]
+        SGE_AoE_HealFeature = 14220,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Physis", "Adds Physis.", SGE.JobID, 221)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 221)]
             SGE_AoE_Heal_Physis = 14221,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Eukrasian Prognosis", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 222)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 222)]
             SGE_AoE_Heal_EkPrognosis = 14222,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Holos", "Adds Holos.", SGE.JobID, 223)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 223)]
             SGE_AoE_Heal_Holos = 14223,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Panhaima", "Adds Panhaima.", SGE.JobID, 224)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 224)]
             SGE_AoE_Heal_Panhaima = 14224,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Pepsis##SGEAoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Pepsis Option##SGEAoE", "Triggers Pepsis if a shield is present.", SGE.JobID, 225)]
             SGE_AoE_Heal_Pepsis = 14225,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Ixochole", "Adds Ixochole", SGE.JobID, 226)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Ixochole Option", "Adds Ixochole", SGE.JobID, 226)]
             SGE_AoE_Heal_Ixochole = 14226,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Kerachole", "Adds Kerachole", SGE.JobID, 227)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Kerachole Option", "Adds Kerachole", SGE.JobID, 227)]
             SGE_AoE_Heal_Kerachole = 14227,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Rhizomata###SGEAOE", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
+            [ParentCombo(SGE_AoE_HealFeature)]
+            [CustomComboInfo("Rhizomata Option###SGEAOE", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
             SGE_AoE_Heal_Rhizomata = 14228,
 
 
-        [CustomComboInfo("Rhizomata Helper", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
-        SGE_Rhizo = 14230,
+        [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 230)]
+        SGE_RhizoFeature = 14230,
 
-        [CustomComboInfo("Upgrade Druochole to Taurochole", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 240)]
-        SGE_DruoTauro = 14240,
+        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 240)]
+        SGE_DruoTauroFeature = 14240,
 
         //SECTION_3_Utility
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("Swiftcast Raise Combo", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
-        SGE_Raise = 14310,
+        [CustomComboInfo("Swiftcast Raise Feature###SGE", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
+        SGE_RaiseFeature = 14310,
 
-        [CustomComboInfo("Soteria into Kardia", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
-        SGE_Kardia = 14320,
+        [CustomComboInfo("Soteria to Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
+        SGE_KardiaFeature = 14320,
 
         
         #endregion
