@@ -108,7 +108,7 @@ namespace XIVSlothComboPlugin.Combos
                 ScholarLucidDreaming = "LucidScholar",
                 ScholarFairy = "ScholarFairy";
         }
-    }
+    
 
     internal class ScholarSeraphConsolationFeature : CustomCombo
     {
@@ -116,11 +116,11 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.FeyBlessing)
+            if (actionID == FeyBlessing)
             {
                 var gauge = GetJobGauge<SCHGauge>();
                 if (gauge.SeraphTimer > 0)
-                    return SCH.Consolation;
+                    return Consolation;
             }
 
             return actionID;
@@ -133,11 +133,11 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.EnergyDrain)
+            if (actionID == EnergyDrain)
             {
                 var gauge = GetJobGauge<SCHGauge>();
                 if (gauge.Aetherflow == 0)
-                    return SCH.Aetherflow;
+                    return Aetherflow;
             }
 
             return actionID;
@@ -154,7 +154,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.SchRaiseFeature))
                     {
                         if (HasEffect(All.Buffs.Swiftcast))
-                            return SCH.Resurrection;
+                            return Resurrection;
                     }
 
                     return OriginalHook(All.Swiftcast);
@@ -171,30 +171,30 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.Ruin2)
+            if (actionID == Ruin2)
             {
                 var gauge = GetJobGauge<SCHGauge>();
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var biolysisDebuff = FindTargetEffect(SCH.Debuffs.Biolysis);
-                var bio2Debuff = FindTargetEffect(SCH.Debuffs.Bio2);
-                var bio1Debuff = FindTargetEffect(SCH.Debuffs.Bio1);
+                var biolysisDebuff = FindTargetEffect(Debuffs.Biolysis);
+                var bio2Debuff = FindTargetEffect(Debuffs.Bio2);
+                var bio1Debuff = FindTargetEffect(Debuffs.Bio1);
 
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Biolysis)
+                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= Levels.Biolysis)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Biolysis) && incombat && level >= SCH.Levels.Biolysis) || (biolysisDebuff?.RemainingTime < 5 && incombat && level >= SCH.Levels.Biolysis))
-                        return SCH.Biolysis;
+                    if ((!TargetHasEffect(Debuffs.Biolysis) && incombat && level >= Levels.Biolysis) || (biolysisDebuff?.RemainingTime < 5 && incombat && level >= Levels.Biolysis))
+                        return Biolysis;
                 }
 
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis)
+                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level >= Levels.Bio2 && level < Levels.Biolysis)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio2) && level < SCH.Levels.Biolysis && level >= SCH.Levels.Bio2) || (bio2Debuff?.RemainingTime < 5 && incombat && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis))
-                        return SCH.Bio2;
+                    if ((!TargetHasEffect(Debuffs.Bio2) && level < Levels.Biolysis && level >= Levels.Bio2) || (bio2Debuff?.RemainingTime < 5 && incombat && level >= Levels.Bio2 && level < Levels.Biolysis))
+                        return Bio2;
                 }
 
-                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level < SCH.Levels.Bio2)
+                if (IsEnabled(CustomComboPreset.SCHDPSAlternateFeature) && level < Levels.Bio2)
                 {
-                    if ((!TargetHasEffect(SCH.Debuffs.Bio1) && level < SCH.Levels.Bio2) || (bio1Debuff?.RemainingTime < 5 && incombat && level < SCH.Levels.Bio2))
-                        return SCH.Bio1;
+                    if ((!TargetHasEffect(Debuffs.Bio1) && level < Levels.Bio2) || (bio1Debuff?.RemainingTime < 5 && incombat && level < Levels.Bio2))
+                        return Bio1;
                 }
             }
             return actionID;
@@ -206,65 +206,66 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == SCH.WhisperingDawn || actionID == SCH.FeyBlessing || actionID == SCH.FeyBlessing || actionID == SCH.FeyIllumination || actionID == SCH.Dissipation || actionID == SCH.Aetherpact)
+            if (actionID == WhisperingDawn || actionID == FeyBlessing || actionID == FeyBlessing || actionID == FeyIllumination || actionID == Dissipation || actionID == Aetherpact)
             {
                 var gauge = GetJobGauge<SCHGauge>();
                 if (!Service.BuddyList.PetBuddyPresent && gauge.SeraphTimer == 0)
                 {
-                    if ((Service.Configuration.GetCustomIntValue(SCH.Config.ScholarFairy)) == 2) return SCH.SummonSelene;
-                    else return SCH.SummonEos;
+                    if ((Service.Configuration.GetCustomIntValue(Config.ScholarFairy)) == 2) return SummonSelene;
+                    else return SummonEos;
                 }
             }
             return actionID;
         }
     }
 
-    internal class ScholarDPSFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarDPSFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class ScholarDPSFeature : CustomCombo
         {
-            if (actionID is SCH.Broil4 or SCH.Broil3 or SCH.Broil2 or SCH.Broil1 or SCH.Ruin1)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ScholarDPSFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var actionIDCD = GetCooldown(actionID);
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                var biolysis = FindTargetEffect(SCH.Debuffs.Biolysis);
-                var bio1 = FindTargetEffect(SCH.Debuffs.Bio1);
-                var bio2 = FindTargetEffect(SCH.Debuffs.Bio2);
-                var chainBuff = GetCooldown(SCH.ChainStratagem);
-                var chainTarget = TargetHasEffect(SCH.Debuffs.ChainStratagem);
+                if (actionID is Broil4 or Broil3 or Broil2 or Broil1 or Ruin1)
+                {
+                    var actionIDCD = GetCooldown(actionID);
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var biolysis = FindTargetEffect(Debuffs.Biolysis);
+                    var bio1 = FindTargetEffect(Debuffs.Bio1);
+                    var bio2 = FindTargetEffect(Debuffs.Bio2);
+                    var chainBuff = GetCooldown(ChainStratagem);
+                    var chainTarget = TargetHasEffect(Debuffs.ChainStratagem);
 
-                if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature) && level >= All.Levels.LucidDreaming)
-                {
-                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(SCH.Config.ScholarLucidDreaming);
-                    if ( IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidMPThreshold && CanSpellWeave(actionID) )
-                        return All.LucidDreaming;
-                }
+                    if (IsEnabled(CustomComboPreset.ScholarLucidDPSFeature) && level >= All.Levels.LucidDreaming)
+                    {
+                        var lucidMPThreshold = Service.Configuration.GetCustomIntValue(Config.ScholarLucidDreaming);
+                        if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidMPThreshold && CanSpellWeave(actionID))
+                            return All.LucidDreaming;
+                    }
 
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Biolysis && incombat)
-                {
-                    if ((biolysis is null) || (biolysis?.RemainingTime <= 3))
-                        return SCH.Biolysis;
-                }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio2 && level < SCH.Levels.Biolysis && incombat)
-                {
-                    if ((bio2 is null) || (bio2?.RemainingTime <= 3))
-                        return SCH.Bio2;
-                }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= SCH.Levels.Bio1 && level < SCH.Levels.Bio2 && incombat)
-                {
-                    if ((bio1 is null) || (bio1?.RemainingTime <= 3))
-                        return SCH.Bio1;
-                }
-                if (IsEnabled(CustomComboPreset.ScholarDPSFeatureBuffOption) && level >= SCH.Levels.ChainStratagem)
-                {
-                    if (!chainBuff.IsCooldown && !chainTarget && actionIDCD.IsCooldown && incombat)
-                        return SCH.ChainStratagem;
-                }
+                    if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= Levels.Biolysis && incombat)
+                    {
+                        if ((biolysis is null) || (biolysis?.RemainingTime <= 3))
+                            return Biolysis;
+                    }
+                    if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= Levels.Bio2 && level < Levels.Biolysis && incombat)
+                    {
+                        if ((bio2 is null) || (bio2?.RemainingTime <= 3))
+                            return Bio2;
+                    }
+                    if (IsEnabled(CustomComboPreset.ScholarDPSFeature) && level >= Levels.Bio1 && level < Levels.Bio2 && incombat)
+                    {
+                        if ((bio1 is null) || (bio1?.RemainingTime <= 3))
+                            return Bio1;
+                    }
+                    if (IsEnabled(CustomComboPreset.ScholarDPSFeatureBuffOption) && level >= Levels.ChainStratagem)
+                    {
+                        if (!chainBuff.IsCooldown && !chainTarget && actionIDCD.IsCooldown && incombat)
+                            return ChainStratagem;
+                    }
 
+                }
+                return actionID;
             }
-            return actionID;
         }
     }
 
