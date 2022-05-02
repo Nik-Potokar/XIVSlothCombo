@@ -352,11 +352,11 @@ namespace XIVSlothComboPlugin
         BlackAoEFoulOption = 2020,
 
         [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature)]
-        [CustomComboInfo("Advanced BLM", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -1, "", "")]
         BlackSimpleTransposeFeature = 2021,
 
         [ParentCombo(BlackSimpleTransposeFeature)]
-        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage and swiftcast for movement in the Advanced BLM feature.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced BLM feature.", BLM.JobID, -1, "", "")]
         BlackSimpleTransposePoolingFeature = 2022,
 
         #endregion
