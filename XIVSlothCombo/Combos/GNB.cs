@@ -107,7 +107,9 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= GNB.Levels.NoMercy && IsOffCooldown(GNB.NoMercy))
                         {
                             if (level >= GNB.Levels.BurstStrike && 
-                                ((gauge.Ammo == 1 && GetCooldownRemainingTime(GNB.Bloodfest) < 1.5) || (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang)) || gauge.Ammo == GNB.MaxCartridges(level))) //cartridges unlocked
+                                ((gauge.Ammo == 1 && IsOffCooldown(GNB.GnashingFang) && IsOffCooldown(GNB.Bloodfest)) || //Opener Conditions
+                                (gauge.Ammo == 2 && IsOnCooldown(GNB.GnashingFang) && GetCooldownRemainingTime(GNB.Bloodfest) < 3) || //GFNM windows
+                                gauge.Ammo == GNB.MaxCartridges(level) && GetCooldownRemainingTime(GNB.GnashingFang) < 2)) //Regular NMGF
                                 return GNB.NoMercy;
                             if (level < GNB.Levels.BurstStrike) //no cartridges unlocked
                                 return GNB.NoMercy;

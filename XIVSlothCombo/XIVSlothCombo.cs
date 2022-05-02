@@ -6,6 +6,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,7 +58,7 @@ namespace XIVSlothComboPlugin
             });
 
             Service.ClientState.Login += PrintLoginMessage;
-            
+
         }
 
         private void PrintLoginMessage(object? sender, EventArgs e)
@@ -116,7 +117,7 @@ namespace XIVSlothComboPlugin
         {
             var argumentsParts = arguments.Split();
 
-            switch (argumentsParts[0])
+            switch (argumentsParts[0].ToLower())
             {
                 case "setall":
                     {
@@ -246,7 +247,68 @@ namespace XIVSlothComboPlugin
 
                         break;
                     }
+                case "enabled":
+                    {
+                        foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
+                        {
+                            if (int.TryParse(preset.ToString(), out int pres)) continue;
+                            Service.ChatGui.Print($"{(int)preset} - {preset}");
+                        }
+                        break;
+                    }
+                case "debug":
+                    {
+                        try
+                        {
+                            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
+                            using StreamWriter file = new($"{desktopPath}/SlothDebug.txt", append: false);
+
+                            file.WriteLine("START DEBUG LOG");
+                            file.WriteLine($"Current Job: {Service.ClientState.LocalPlayer.ClassJob.Id}");
+                            file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}");
+                            file.WriteLine($"Current Party Size: {Service.PartyList.Length}");
+                            file.WriteLine($"START ENABLED FEATURES");
+
+                            int i = 0;
+                            foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
+                            {
+                                if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
+                                file.WriteLine($"{(int)preset} - {preset}");
+                            }
+                            file.WriteLine($"END ENABLED FEATURES");
+                            file.WriteLine($"Redundant IDs found: {i}");
+                            if (i > 0)
+                            {
+                                file.WriteLine($"START REDUNDANT IDs");
+                                foreach (var preset in Service.Configuration.EnabledActions.Where(x => int.TryParse(x.ToString(), out _)).OrderBy(x => x))
+                                {
+                                    file.WriteLine($"{(int)preset}");
+                                }
+                                file.WriteLine($"END REDUNDANT IDs");
+                            }
+                            file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
+                            if (Service.ClientState.LocalPlayer.StatusList.Count() > 0)
+                            {
+                                file.WriteLine($"START STATUS EFFECTS");
+                                foreach (var status in Service.ClientState.LocalPlayer.StatusList)
+                                {
+                                    file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceID}");
+                                }
+                                file.WriteLine($"END STATUS EFFECTS");
+
+                            }
+
+                            file.WriteLine("END DEBUG LOG");
+                            Service.ChatGui.Print("Please check your desktop for SlothDebug.txt and upload this file where requested.");
+                            break;
+                        }
+                        catch
+                        {
+                            Service.ChatGui.Print("Unable to write Debug log.");
+                            break;
+                        }
+                    }
                 default:
                     this.configWindow.Toggle();
                     break;
