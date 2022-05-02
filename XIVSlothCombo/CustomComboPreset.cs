@@ -2575,6 +2575,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Bloodwhetting Option", "Allows usage of bloodwhetting anytime, not just inbetween GCDs.", WARPVP.JobID)]
         WARBurstOption = 80041,
 
+        [SecretCustomCombo]
+        [ParentCombo(WARBurstMode)]
+        [CustomComboInfo("Blota Option", "Removes blota from main combo if Primal Rend has 5 seconds or less on its cooldown.", WARPVP.JobID)]
+        WARBurstBlotaOption = 80042,
+        
         // NIN
         [ConflictingCombos(NINAoEBurstMode)]
         [SecretCustomCombo]
