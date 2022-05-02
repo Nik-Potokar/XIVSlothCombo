@@ -103,8 +103,8 @@ namespace XIVSlothComboPlugin
                             if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedDeathWarrantOption) && deathWarrantReady && enshroudStacks >= 3 && distance <= 25)
                                 return OriginalHook(RPRPVP.DeathWarrant);
 
-                            // Lemure's Slice Option
-                            if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedLemuresOption) && lemuresSliceReady && canBind && distance <= 8)
+                            // Lemure's Slice
+                            if (lemuresSliceReady && canBind && distance <= 8)
                                 return RPRPVP.LemuresSlice;
 
                             // Harvest Moon proc
