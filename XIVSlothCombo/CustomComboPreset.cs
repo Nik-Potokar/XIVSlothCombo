@@ -315,7 +315,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Thunder 1/3 Option", "Replaces Scathe with Thunder 1/3 when the debuff isn't present or expiring.", BLM.JobID, 0, "Bzzt", "Shocking!")]
         BlackThunderUptimeFeature = 2011,
 
-        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature)]
+        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleTransposeFeature)]
         [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -2, "", "")]
         BlackSimpleFeature = 2012,
 
