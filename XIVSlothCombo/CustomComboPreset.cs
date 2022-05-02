@@ -1689,6 +1689,8 @@ namespace XIVSlothComboPlugin
         //Numbering Scheme: 13[Section][Feature Number][Sub-Feature]
         //Example: 13110 (Section 1: Openers, Feature Number 1, Sub-feature 0)
         //New features should be added to the appropriate sections.
+        //If more than 10 sub features, use the next feature number if available
+        //The three digets after RDM.JobID can be used to reorder items in the list
 
         //SECTION_1_OPENERS
         [CustomComboInfo("Balance Opener", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
@@ -1713,7 +1715,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
         RDM_VerfireVerstone = 13220,
 
-        [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action", RDM.JobID, 240)] // Radio buttons for Engagement or Jolt/Scatter
+        [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action", RDM.JobID, 240)]
         RDM_OGCD = 13240,
 
         [ParentCombo(RDM_OGCD)]
@@ -1725,11 +1727,11 @@ namespace XIVSlothComboPlugin
         RDM_ContraSixte = 13242,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Engagement", "Use Engagement on above specified action when in melee range", RDM.JobID, 243)] // Slider, number of stacks to keep
+        [CustomComboInfo("Engagement", "Use Engagement on above specified action when in melee range", RDM.JobID, 243)]
         RDM_Engagement = 13243,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action", RDM.JobID, 244)] // Slider, number of stacks to keep
+        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action", RDM.JobID, 244)]
         RDM_Corpsacorps = 13244,
 
         [ParentCombo(RDM_Corpsacorps)]
@@ -1747,7 +1749,7 @@ namespace XIVSlothComboPlugin
         RDM_AoE_AccelSwiftCast = 13321,
 
         //SECTION_4to5_MELEE
-        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
+        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
         RDM_ST_MeleeCombo = 13410,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
@@ -1758,7 +1760,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Hold for Double Melee Combo", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
         RDM_ST_DoubleMeleeCombo = 13412,
 
-        [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
+        [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
@@ -1769,7 +1771,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Reserve one charge", "Pool one charge of Corp-a-corps for use", RDM.JobID, 431)]
         RDM_ST_PoolCorps = 13431,
 
-        [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
+        [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)]
         RDM_MeleeFinisher = 13510,
 
         //SECTION_6to7_QOL
@@ -1779,106 +1781,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RDM_Verraise = 13620,
 
-
-        //SECTION_8to9_OTHERS
-
-
-        /// <summary>
-        /// OLD SECTION BELOW
-        /// </summary>
-        /*
-        [ConflictingCombos(RedMageSmartcastAoECombo)]
-        [CustomComboInfo("Red Mage AoE Combo", "Replaces Veraero/Verthunder 2 with Impact when Dualcast or Swiftcast are active.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageAoECombo = 13000,
-
-        [CustomComboInfo("Redoublement combo", "Replaces Redoublement with its combo chain, following enchantment rules.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageMeleeCombo = 13001,
-
-        [CustomComboInfo("Redoublement Combo Plus", "Replaces Redoublement with Verflare/Verholy after Enchanted Redoublement, whichever is more appropriate.\nRequires Redoublement Combo.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageMeleeComboPlus = 13002,
-
-        [ConflictingCombos(RedMageSmartSingleTargetCombo, RedMageJoltVerprocCombo)]
-        [CustomComboInfo("Verproc into Jolt", "Replaces Verstone/Verfire with Jolt/Scorch when no proc is available.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageVerprocCombo = 13003,
-
-        [ConflictingCombos(RedMageSmartSingleTargetCombo)]
-        [CustomComboInfo("Verproc into Jolt Plus", "Additionally replaces Verstone/Verfire with Veraero/Verthunder if dualcast/swiftcast are up.\nRequires Verproc into Jolt.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageVerprocComboPlus = 13004,
-
-        [ConflictingCombos(RedMageSmartSingleTargetCombo)]
-        [CustomComboInfo("Verproc into Jolt Plus Opener Feature", "Turns Verfire into Verthunder when out of combat.\nRequires Verproc into Jolt Plus.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageVerprocOpenerFeature = 13005,
-
-        [CustomComboInfo("Resolution Feature", "Adds Resolution finisher to Verthunder/Verareo Combo ", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedmageResolutionFinisher = 13006,
-
-        [CustomComboInfo("Resolution Feature Melee", "Adds Resolution finisher to melee combo ", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedmageResolutionFinisherMelee = 13007,
-
-        [ConflictingCombos(RedMageAoECombo)]
-        [CustomComboInfo("Smart AoE Feature", "Replaces Verthunder II With Veraero II and impact depending on mana", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageSmartcastAoECombo = 13008,
-
-        [ConflictingCombos(RedMageVerprocComboPlus, RedMageVerprocOpenerFeature, RedMageVerprocCombo, RedMageJoltVerprocCombo)]
-        [CustomComboInfo("Smart Single Target Feature", "Smart Single target feature Credit: PrincessRTFM", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageSmartSingleTargetCombo = 13009,
-
-        [CustomComboInfo("oGCD Feature", "Replace Contre Strike and Fleche with whichever is available soonest.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageOgcdCombo = 13010,
-
-        [CustomComboInfo("SmartCast Opener Feature", "Verthunder Opener Feature. Allows you to prepull with verthunder and still let the combo balance the mana for you", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageVerprocOpenerSmartCastFeature = 13011,
-
-        [ParentCombo(RedMageSmartcastAoECombo)]
-        [CustomComboInfo("Red Mage AoE Finisher", "Adds Finishers onto Moulinet and SmartCast AoE Feature.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageMeleeAoECombo = 13012,
-
-        [CustomComboInfo("Engagement Feature", "Adds Engagement in all melee combos.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageEngagementFeature = 13013,
-
-        [CustomComboInfo("Corps-a-Corps Feature", "Adds Corps-a-Corps in all melee combos.", RDM.JobID, 0, "Verraise -> Swiftcast", "Ah look, it's what you were always meant to do")]
-        RedMageCorpsACorpsFeature = 13014,
-
-        [CustomComboInfo("Simple Red Mage Feature Single Target", "Combines Smartcast feature with melee combo on Verstone,Verfire or melee skills (This is not optimal until i find a solution for distance delay)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMage = 13015,
-
-        [CustomComboInfo("Simple Red Mage Feature AoE", "Combines Smartcast AoE feature with melee AoE combo on Verthunder2/Veraero2 (This is not optimal until i find a solution for distance delay)", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageAoE = 13016,
-
-        [CustomComboInfo("Corps-A-corps/Displacement Feature", "Corps-A-corps becomes displacement when in melee range", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageMovementFeature = 13017,
-
-        [ParentCombo(RedMageOgcdCombo)]
-        [CustomComboInfo("oGCD Feature Everywhere", "Adds oGCD Feature to all other combos", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageOgcdComboOnCombos = 13018,
-
-        [ParentCombo(SimpleRedMage)]
-        [CustomComboInfo("Verstone/Verfire Activation", "Add Acceleration and Swiftcast to Simple Red Mage to force activation of verstone or verfire effects when necessary.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageFishing = 13019,
-
-        [ParentCombo(SimpleRedMageFishing)]
-        [CustomComboInfo("Acceleration only", "Only use Acceleration to force verfire or verstone activations.", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageAccelOnlyFishing = 13020,
-
-        [ParentCombo(SimpleRedMage)]
-        [ConflictingCombos(RedMageVerprocOpenerSmartCastFeature)]
-        [CustomComboInfo("Simple opener", "Do the optimal opener. [lv90 only]", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        SimpleRedMageOpener = 13021,
-
-        [ConflictingCombos(RedMageSmartSingleTargetCombo, RedMageVerprocCombo)]
-        [CustomComboInfo("Jolt into Verproc", "Replaces Jolt with Verstone/Verfire, when proc is available and won't cause severe imbalance", RDM.JobID, 0, "Swiftcast -> Verraise", "Ah look, it's what you were always meant to do")]
-        RedMageJoltVerprocCombo = 13022,
-
-        [CustomComboInfo("Lucid Dreaming Feature", "Add Lucid Dreaming to Veraero, Verthunder, Impact and Jolt when below threshold.", RDM.JobID, 0, "Veraero / Verthunder / Impact -> Lucid Dreaming", "OOM? Git gud.")]
-        RedMageLucidOnJolt = 13023,
-
-        [CustomComboInfo("RDM Alternative Raise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 0, "Swifty Verraise", "You're panicing right now, aren't you?")]
-        RedMageSwiftVerraise = 13024,
-
-        [ParentCombo(RedMageCorpsACorpsFeature)]
-        [CustomComboInfo("Pull to target", "When with enough mana to enter melee phase.", RDM.JobID, 0, "", "")]
-        RedMageCorpsACorpsPullFeature = 13025,
-        */
+        //SECTION_8to9_OTHERS                   
 
         #endregion
         // ====================================================================================
