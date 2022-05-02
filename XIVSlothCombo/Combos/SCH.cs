@@ -264,9 +264,8 @@ namespace XIVSlothComboPlugin.Combos
                         //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
                         if (IsEnabled(CustomComboPreset.SCH_ST_Broil_BioHPPer))
                         {
-                            if ((BioDebuffID is null || BioDebuffID.RemainingTime <= 3) &&
-                                (EnemyHealthPercentage() > GetOptionValue(SCH.Config.SCH_ST_Broil_BioHPPer))
-                               ) return OriginalHook(SCH.Bio1);
+                            if (EnemyHealthPercentage() > GetOptionValue(SCH.Config.SCH_ST_Broil_BioHPPer))
+                                return OriginalHook(SCH.Bio1);
                         }
                         else return OriginalHook(SCH.Bio1); ;
                     }
