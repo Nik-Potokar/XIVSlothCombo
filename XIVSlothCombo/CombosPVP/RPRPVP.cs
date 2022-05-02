@@ -75,73 +75,77 @@ namespace XIVSlothComboPlugin
                 bool soulsow = HasEffect(RPRPVP.Buffs.Soulsow);
                 bool canBind = !TargetHasEffect(PVPCommon.Debuffs.Bind);
                 bool GCDStopped = !GetCooldown(OriginalHook(RPRPVP.Slice)).IsCooldown;
+                bool enemyGuarded = TargetHasEffect(PVPCommon.Buffs.Guard);
                 var HP = PlayerHealthPercentageHp();
                 bool canWeave = CanWeave(actionID);
                 var distance = GetTargetDistance();
-
-                // Plentiful Harvest Opener
-                if (IsEnabled(CustomComboPreset.RPRPvPPlentifulOpenerOption) && !InCombat() && plentifulReady && distance <= 15)
-                    return RPRPVP.PlentifulHarvest;
 
                 // Arcane Cirle Option
                 if (IsEnabled(CustomComboPreset.RPRPvPArcaneCircleOption) && arcaneReady && HP <= arcaneThreshold)
                     return RPRPVP.ArcaneCrest;
 
-                // Harvest Moon Ranged Option
-                if (IsEnabled(CustomComboPreset.RPRPvPRangedHarvestMoonOption) && distance > 5 && soulsow && GCDStopped)
-                    return RPRPVP.HarvestMoon;
-
-                // Occurring inside of Enshroud burst
-                if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedOption) && enshrouded)
+                if (!enemyGuarded)
                 {
-                    if (canWeave)
-                    {
-                        // Enshrouded Death Warrant Option
-                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedDeathWarrantOption) && deathWarrantReady && enshroudStacks >= 3 && distance <= 25)
-                            return OriginalHook(RPRPVP.DeathWarrant);
-
-                        // Lemure's Slice Option
-                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedLemuresOption) && lemuresSliceReady && canBind && distance <= 8)
-                            return RPRPVP.LemuresSlice;
-
-                        // Harvest Moon proc
-                        if (soulsow && distance <= 25)
-                            return OriginalHook(RPRPVP.DeathWarrant);
-                    }
-
-                    // Communio Finisher Option
-                    if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedCommunioOption) && enshroudStacks == 1 && distance <= 25)
-                        return RPRPVP.Communio;
-                }
-
-                // Occurring outside of Enshroud burst
-                if (!enshrouded)
-                {
-                    // Death Warrant Option
-                    if (IsEnabled(CustomComboPreset.RPRPvPDeathWarrantOption) && deathWarrantReady && distance <= 25
-                        && (plentifulCD > 20 && immortalStacks < immortalThreshold || plentifulReady && immortalStacks >= immortalThreshold))
-                        return OriginalHook(RPRPVP.DeathWarrant);
-
-                    // Plentiful Harvest Pooling Option
-                    if (IsEnabled(CustomComboPreset.RPRPvPImmortalPoolingOption) && plentifulReady && immortalStacks >= immortalThreshold && TargetHasEffect(RPRPVP.Debuffs.DeathWarrant) && distance <= 15)
+                    // Plentiful Harvest Opener
+                    if (IsEnabled(CustomComboPreset.RPRPvPPlentifulOpenerOption) && !InCombat() && plentifulReady && distance <= 15)
                         return RPRPVP.PlentifulHarvest;
 
-                    // Weaves
-                    if (canWeave)
-                    {
-                        // Harvest Moon Proc
-                        if (soulsow && distance <= 25)
-                            return OriginalHook(RPRPVP.DeathWarrant);
+                    // Harvest Moon Ranged Option
+                    if (IsEnabled(CustomComboPreset.RPRPvPRangedHarvestMoonOption) && distance > 5 && soulsow && GCDStopped)
+                        return RPRPVP.HarvestMoon;
 
-                        // Grim Swathe Option
-                        if (IsEnabled(CustomComboPreset.RPRPvPGrimSwatheOption) && grimSwatheReady && distance <= 8)
-                            return RPRPVP.GrimSwathe;
+                    // Occurring inside of Enshroud burst
+                    if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedOption) && enshrouded)
+                    {
+                        if (canWeave)
+                        {
+                            // Enshrouded Death Warrant Option
+                            if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedDeathWarrantOption) && deathWarrantReady && enshroudStacks >= 3 && distance <= 25)
+                                return OriginalHook(RPRPVP.DeathWarrant);
+
+                            // Lemure's Slice Option
+                            if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedLemuresOption) && lemuresSliceReady && canBind && distance <= 8)
+                                return RPRPVP.LemuresSlice;
+
+                            // Harvest Moon proc
+                            if (soulsow && distance <= 25)
+                                return OriginalHook(RPRPVP.DeathWarrant);
+                        }
+
+                        // Communio Finisher Option
+                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedCommunioOption) && enshroudStacks == 1 && distance <= 25)
+                            return RPRPVP.Communio;
                     }
 
-                    // Soul Slice
-                    if (distance <= 5 && (GetRemainingCharges(RPRPVP.SoulSlice) == 2 || GetRemainingCharges(RPRPVP.SoulSlice) > 0 && !HasEffect(RPRPVP.Buffs.GallowsOiled) && !HasEffect(RPRPVP.Buffs.SoulReaver)))
-                        return RPRPVP.SoulSlice;
+                    // Occurring outside of Enshroud burst
+                    if (!enshrouded)
+                    {
+                        // Death Warrant Option
+                        if (IsEnabled(CustomComboPreset.RPRPvPDeathWarrantOption) && deathWarrantReady && distance <= 25
+                            && (plentifulCD > 20 && immortalStacks < immortalThreshold || plentifulReady && immortalStacks >= immortalThreshold))
+                            return OriginalHook(RPRPVP.DeathWarrant);
+
+                        // Plentiful Harvest Pooling Option
+                        if (IsEnabled(CustomComboPreset.RPRPvPImmortalPoolingOption) && plentifulReady && immortalStacks >= immortalThreshold && TargetHasEffect(RPRPVP.Debuffs.DeathWarrant) && distance <= 15)
+                            return RPRPVP.PlentifulHarvest;
+
+                        // Weaves
+                        if (canWeave)
+                        {
+                            // Harvest Moon Proc
+                            if (soulsow && distance <= 25)
+                                return OriginalHook(RPRPVP.DeathWarrant);
+
+                            // Grim Swathe Option
+                            if (IsEnabled(CustomComboPreset.RPRPvPGrimSwatheOption) && grimSwatheReady && distance <= 8)
+                                return RPRPVP.GrimSwathe;
+                        }
+                    }
                 }
+
+                // Soul Slice
+                if (!enshrouded && distance <= 5 && (GetRemainingCharges(RPRPVP.SoulSlice) == 2 || GetRemainingCharges(RPRPVP.SoulSlice) > 0 && !HasEffect(RPRPVP.Buffs.GallowsOiled) && !HasEffect(RPRPVP.Buffs.SoulReaver)))
+                    return RPRPVP.SoulSlice;
             }
 
             return actionID;

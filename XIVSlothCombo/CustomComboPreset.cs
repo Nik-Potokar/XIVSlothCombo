@@ -2575,57 +2575,57 @@ namespace XIVSlothComboPlugin
         // RPR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode - BETA TESTING", "Turns Slice Combo into an all-in-one damage button.\nCurrently in beta testing. Do not expect fully optimal use!", RPR.JobID)]
-        RPRBurstMode = 80090,
+        RPRBurstMode = 80190,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Grim Swathe Option", "Weaves Grim Swathe onto the main combo when available.", RPR.JobID)]
-            RPRPvPGrimSwatheOption = 80091,
+            RPRPvPGrimSwatheOption = 80191,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Death Warrant Option - BETA TESTING", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
-            RPRPvPDeathWarrantOption = 80092,
+            RPRPvPDeathWarrantOption = 80192,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option - BETA TESTING", "Pools a set amount of stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful as soon as it's suitable.", RPR.JobID)]
-            RPRPvPImmortalPoolingOption = 80093,
+            RPRPvPImmortalPoolingOption = 80193,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPImmortalPoolingOption)]
                 [CustomComboInfo("Plentiful Harvest Opener Option - BETA TESTING", "Starts combat with Plentiful Harvest to immediately begin Limit Break generation.", RPR.JobID)]
-                RPRPvPPlentifulOpenerOption = 80094,
+                RPRPvPPlentifulOpenerOption = 80194,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Enshrouded Option", "A collection of options for the Enshrouded burst phase.", RPR.JobID)]
-            RPRPvPEnshroudedOption = 80095,
+            RPRPvPEnshroudedOption = 80195,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPEnshroudedOption)]
                 [CustomComboInfo("Lemure Burst Option", "Adds Lemure's Slice onto the main combo during the Enshroud burst.", RPR.JobID)]
-                RPRPvPEnshroudedLemuresOption = 80096,
+                RPRPvPEnshroudedLemuresOption = 80196,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPEnshroudedOption)]
                 [CustomComboInfo("Enshrouded Death Warrant Option - BETA TESTING", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
-                RPRPvPEnshroudedDeathWarrantOption = 80097,
+                RPRPvPEnshroudedDeathWarrantOption = 80197,
 
                 [SecretCustomCombo]
                 [ParentCombo(RPRPvPEnshroudedOption)]
                 [CustomComboInfo("Communio Finisher Option", "Adds communio onto the main combo when you have 1 stack of Enshroud remaining.", RPR.JobID)]
-                RPRPvPEnshroudedCommunioOption = 80098,
+                RPRPvPEnshroudedCommunioOption = 80198,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Ranged Harvest Moon Option", "Puts Harvest Moon onto the main combo when you're out of melee range, the GCD is not rolling and it is available for use.", RPR.JobID)]
-            RPRPvPRangedHarvestMoonOption = 80099,
+            RPRPvPRangedHarvestMoonOption = 80199,
 
             [SecretCustomCombo]
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under a set HP perecentage.", RPR.JobID)]
-            RPRPvPArcaneCircleOption = 80100,
+            RPRPvPArcaneCircleOption = 80200,
 
         #endregion
         // ====================================================================================
