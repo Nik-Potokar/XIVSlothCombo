@@ -448,6 +448,8 @@ namespace XIVSlothComboPlugin
             ImGui.PopStyleColor();
             ImGui.Spacing();
 
+            DrawUserConfigs(preset, enabled);
+
             if (conflicts.Length > 0)
             {
                 var conflictText = conflicts.Select(conflict =>
@@ -475,8 +477,6 @@ namespace XIVSlothComboPlugin
                     ImGui.Spacing();
                 }
             }
-
-            DrawUserConfigs(preset, enabled);
 
             i++;
 
@@ -772,17 +772,17 @@ namespace XIVSlothComboPlugin
             #region RED MAGE
 
             if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.", 300, 100);
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.", 150, SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================
             #region SAGE
 
             if (preset == CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "");
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "Enemy HP %% Threshold");
 
             if (preset == CustomComboPreset.SGE_ST_Dosis_Lucid)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
                 ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 1);
@@ -813,8 +813,6 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.SGE_ST_Heal_Diagnosis)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
-
-
             #endregion
             // ====================================================================================
             #region SAMURAI
@@ -842,18 +840,30 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.MnkBootshineCombo)
                 ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
-
             #endregion
             // ====================================================================================
             #region SCHOLAR
-            if (preset == CustomComboPreset.ScholarLucidDPSFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.ScholarLucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
-            if (preset == CustomComboPreset.ScholarFairyFeature)
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.ScholarFairy, "Eos", "Summon Eos", 1);
-            if (preset == CustomComboPreset.ScholarFairyFeature)
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.ScholarFairy, "Selene", "Summon Selene", 2);
-
-
+            if (preset == CustomComboPreset.SCH_ST_Broil_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Broil_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.SCH_ST_Broil_BioHPPer)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_BioHPPer, "Enemy HP %% Threshold");
+            if (preset == CustomComboPreset.SCH_ST_Broil_ChainStratagem)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_ChainStratagem, "Enemy HP%% Threshold");
+            if (preset == CustomComboPreset.SCH_FairyFeature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 2);
+            }
+            if (preset == CustomComboPreset.SCH_Aetherflow_Recite_Excog)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Always when available", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Only when out of Aetherflow Stacks", "", 2);
+            }
+            if (preset == CustomComboPreset.SCH_Aetherflow_Recite_Indom)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Always when available", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Only when out of Aetherflow Stacks", "", 2);
+            }
             #endregion
             // ====================================================================================
             #region SUMMONER
