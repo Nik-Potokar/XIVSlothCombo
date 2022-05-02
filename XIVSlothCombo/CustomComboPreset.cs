@@ -1694,6 +1694,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Balance Opener", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
         RDM_Balance_Opener = 13110,
 
+        [ParentCombo(RDM_Balance_Opener)]
+        [CustomComboInfo("Use Opener at any Mana", "Removes 0/0 Mana reqirement to reset opener\n**All other actions must be off cooldown**", RDM.JobID, 111)]
+        RDM_Opener_Any_Mana = 13111,
+
         //SECTION_2to3_ROTATION
         [CustomComboInfo("Verthunder/Veraero", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210)]
         RDM_VerthunderVeraero = 13210,
@@ -1701,6 +1705,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(RDM_VerthunderVeraero)]
         [CustomComboInfo("Single Target Acceleration", "Add Acceleration when no Verfire/Verstone proc is available", RDM.JobID, 211)]
         RDM_ST_Acceleration = 13211,
+
+        [ParentCombo(RDM_ST_Acceleration)]
+        [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used", RDM.JobID, 212)]
+        RDM_ST_AccelSwiftCast = 13212,
 
         [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
         RDM_VerfireVerstone = 13220,
@@ -1734,6 +1742,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Acceleration", "Use Acceleration on Scatter/Scorch for increased damage", RDM.JobID, 320)]
         RDM_AoE_Acceleration = 13320,
 
+        [ParentCombo(RDM_AoE_Acceleration)]
+        [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used", RDM.JobID, 321)]
+        RDM_AoE_AccelSwiftCast = 13321,
+
         //SECTION_4to5_MELEE
         [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)] // Radio buttons for Reposte/Moulinet or Jolt/Scatter
         RDM_ST_MeleeCombo = 13410,
@@ -1751,9 +1763,9 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(RDM_ST_MeleeCombo)]
         [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range before starting the melee combo", RDM.JobID, 430)]
-        RDM_ST_CloseWithCorps = 13430,
+        RDM_ST_CorpsGapClose = 13430,
 
-        [ParentCombo(RDM_ST_CloseWithCorps)]
+        [ParentCombo(RDM_ST_CorpsGapClose)]
         [CustomComboInfo("Reserve one charge", "Pool one charge of Corp-a-corps for use", RDM.JobID, 431)]
         RDM_ST_PoolCorps = 13431,
 
