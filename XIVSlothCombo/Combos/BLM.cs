@@ -618,7 +618,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
 
                             // Use Swiftcast in Astral Fire
-                            if (level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) && gauge.InAstralFire)
+                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) && level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) && gauge.InAstralFire)
                             {
                                 if (level >= BLM.Levels.Despair && currentMP >= BLM.MP.Despair)
                                 {
@@ -718,7 +718,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= BLM.Levels.Xenoglossy)
                     {
                         // Check leylines and triplecast cooldown
-                        if (gauge.PolyglotStacks == 2 && GetCooldown(BLM.LeyLines).CooldownRemaining >= 30 && GetCooldown(BLM.Triplecast).ChargeCooldownRemaining >= 30)
+                        if (gauge.PolyglotStacks == 2 && GetCooldown(BLM.LeyLines).CooldownRemaining >= 20 && GetCooldown(BLM.Triplecast).ChargeCooldownRemaining >= 20)
                         {
                             if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature))
                             {
@@ -984,7 +984,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (!HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0 &&
                             (gauge.InAstralFire || gauge.UmbralHearts >= 1) && currentMP >= BLM.MP.AspectFire * 2)
                         {
-                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) || GetRemainingCharges(BLM.Triplecast) > 1)
+                            if (!IsEnabled(CustomComboPreset.BlackSimpleTransposePoolingFeature) || GetRemainingCharges(BLM.Triplecast) > 1)
                             {
                                 return BLM.Triplecast;
                             }
