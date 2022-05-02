@@ -265,9 +265,7 @@ namespace XIVSlothComboPlugin.Combos
                         //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
                         {
-                            if ((DosisDebuffID is null || DosisDebuffID.RemainingTime <= 3) && 
-                                (EnemyHealthPercentage() > GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPPer))
-                               ) return SGE.Eukrasia;
+                            if (EnemyHealthPercentage() > GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPPer)) return SGE.Eukrasia;
                         }
                         else return SGE.Eukrasia;
                     }
