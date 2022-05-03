@@ -162,7 +162,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         var actionIDCD = GetCooldown(actionID);
                         var gauge = GetJobGauge<NINGauge>();
-                        var bunshinCD = GetCooldown(Bunshin);
+
                         if (gauge.Ninki >= 50 && actionIDCD.IsCooldown)
                             return Bhavacakra;
                     }
@@ -170,7 +170,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.NinAeolianAssassinateFeature) && level >= Levels.Assassinate)
                     {
                         var actionIDCD = GetCooldown(actionID);
-                        var gauge = GetJobGauge<NINGauge>();
+
                         var assasinateCD = GetCooldown(Assassinate);
                         if (actionIDCD.IsCooldown && !assasinateCD.IsCooldown)
                             return OriginalHook(Assassinate);
@@ -379,7 +379,7 @@ namespace XIVSlothComboPlugin.Combos
                     var dotonBuff = FindEffect(Buffs.Doton);
                     var jutsuCooldown = GetCooldown(Ten);
                     var jutsuCharges = jutsuCooldown.RemainingCharges;
-                    var jutsuFullCooldown = jutsuCooldown.CooldownRemaining;
+
                     LastUsedJutsu = OriginalHook(Ninjutsu) != Ninjutsu ? OriginalHook(Ninjutsu) : LastUsedJutsu;
 
 

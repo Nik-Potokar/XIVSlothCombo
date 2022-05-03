@@ -189,7 +189,6 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Scathe)
                 {
                     var gauge = GetJobGauge<BLMGauge>();
-                    var GCD = GetCooldown(actionID);
                     var thundercloudduration = FindEffectAny(Buffs.Thundercloud);
                     var thunderdebuffontarget = FindTargetEffect(Debuffs.Thunder3);
                     var thunderOneDebuff = FindTargetEffect(Debuffs.Thunder);
@@ -1105,7 +1104,7 @@ namespace XIVSlothComboPlugin.Combos
                         // Transpose if F3 is available, or Thundercloud + Xenoglossy is available
                         if (currentMP < MP.AspectFire && lastComboMove != Manafont && IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) <= 118)
                         {
-                            if ((HasEffect(Buffs.LeyLines) && FindEffect(Buffs.LeyLines).RemainingTime >= 15) || HasEffect(Buffs.Firestarter) ||
+                            if ((HasEffect(Buffs.LeyLines) && FindEffect(Buffs.LeyLines)?.RemainingTime >= 15) || HasEffect(Buffs.Firestarter) ||
                                  lastComboMove == Xenoglossy || lastComboMove == Thunder3 || (IsOffCooldown(All.Swiftcast) && (gauge.PolyglotStacks == 2)))
                             {
                                 if (lastComboMove != Despair && lastComboMove != Fire4)

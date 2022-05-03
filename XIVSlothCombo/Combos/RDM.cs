@@ -444,7 +444,6 @@ namespace XIVSlothComboPlugin.Combos
                     RDMGauge gauge = GetJobGauge<RDMGauge>();
                     int black = gauge.BlackMana;
                     int white = gauge.WhiteMana;
-                    var engagementCD = GetCooldown(Engagement);
                     var canWeave = CanWeave(OriginalHook(actionID));
 
                     if (IsEnabled(CustomComboPreset.RedMageVerprocOpenerSmartCastFeature))

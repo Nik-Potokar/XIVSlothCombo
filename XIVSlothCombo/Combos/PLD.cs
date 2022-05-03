@@ -302,8 +302,8 @@
                         var requiescat = FindEffect(Buffs.Requiescat);
 
                         if (level >= Levels.Confiteor &&
-                                ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
-                                requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
+                                ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat?.RemainingTime <= 3 && requiescat?.RemainingTime > 0) ||
+                                requiescat?.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
                             return Confiteor;
 
                         return HolySpirit;
@@ -328,8 +328,8 @@
                     {
                         var requiescat = FindEffect(Buffs.Requiescat);
 
-                        if (level >= Levels.Confiteor && ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat.RemainingTime <= 3 && requiescat.RemainingTime > 0) ||
-                                requiescat.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
+                        if (level >= Levels.Confiteor && ((IsEnabled(CustomComboPreset.PaladinConfiteorFeature) && requiescat?.RemainingTime <= 3 && requiescat?.RemainingTime > 0) ||
+                                requiescat?.StackCount is 1 || LocalPlayer.CurrentMp <= 2000))
                             return Confiteor;
 
                         return HolyCircle;

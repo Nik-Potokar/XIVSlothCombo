@@ -447,7 +447,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) &&
                             IsOffCooldown(StandardStep) && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
-                            techBurstTimer.RemainingTime > 5))
+                            techBurstTimer?.RemainingTime > 5))
                             return StandardStep;
 
                         if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) &&
@@ -580,7 +580,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) &&
                             IsOffCooldown(StandardStep) && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
-                            techBurstTimer.RemainingTime > 5))
+                            techBurstTimer?.RemainingTime > 5))
                             return StandardStep;
 
                         if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) &&

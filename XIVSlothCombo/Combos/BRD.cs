@@ -227,8 +227,6 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         var venomous = TargetHasEffect(Debuffs.VenomousBite);
                         var windbite = TargetHasEffect(Debuffs.Windbite);
-                        var venomousDuration = FindTargetEffect(Debuffs.VenomousBite);
-                        var windbiteDuration = FindTargetEffect(Debuffs.Windbite);
 
                         if (level >= Levels.IronJaws && venomous && windbite)
                         {
@@ -248,8 +246,6 @@ namespace XIVSlothComboPlugin.Combos
 
                     var caustic = TargetHasEffect(Debuffs.CausticBite);
                     var stormbite = TargetHasEffect(Debuffs.Stormbite);
-                    var causticDuration = FindTargetEffect(Debuffs.CausticBite);
-                    var stormbiteDuration = FindTargetEffect(Debuffs.Stormbite);
 
                     if (level >= Levels.IronJaws && caustic && stormbite)
                     {
@@ -743,7 +739,7 @@ namespace XIVSlothComboPlugin.Combos
                             (level >= Levels.IronJaws && poisonRecast(4)) ||
                             (level >= Levels.IronJaws && windRecast(4)) ||
                             (level >= Levels.IronJaws && IsEnabled(CustomComboPreset.BardSimpleRagingJaws) &&
-                                HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration.RemainingTime < ragingJawsRenewTime &&
+                                HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration?.RemainingTime < ragingJawsRenewTime &&
                                 poisonRecast(40) && windRecast(40))
                         );
 

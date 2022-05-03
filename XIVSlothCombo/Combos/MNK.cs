@@ -1,7 +1,7 @@
-using System;
-using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System;
+using System.Linq;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -104,7 +104,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var solarNadi = gauge.Nadi == Nadi.SOLAR;
+
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
 
                     if (!inCombat)
@@ -144,7 +144,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (((GetRemainingCharges(PerfectBalance) == 2) ||
                                     (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire).RemainingTime < 10) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire)?.RemainingTime < 10) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8)))
                                 {
                                     return PerfectBalance;
@@ -253,7 +253,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level >= Levels.TrueStrike)
                     {
-                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration.RemainingTime < 6 && level >= Levels.TwinSnakes))
+                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration?.RemainingTime < 6 && level >= Levels.TwinSnakes))
                             return TwinSnakes;
                         return TrueStrike;
                     }
@@ -272,7 +272,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == Bootshine)
                 {
-                    var gauge = GetJobGauge<MNKGauge>();
+
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
                     {
                         if (!HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes)
@@ -453,7 +453,7 @@ namespace XIVSlothComboPlugin.Combos
                                         (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) > 40) ||
-                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire).RemainingTime > 6) ||
+                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire)?.RemainingTime > 6) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) < 10)))
                                     {
                                         return PerfectBalance;
@@ -526,7 +526,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 return TwinSnakes;
                             }
-                            if (!coeurlChakra && (demolishDuration.RemainingTime <= 2.5 || !TargetHasEffect(Debuffs.Demolish)))
+                            if (!coeurlChakra && (demolishDuration?.RemainingTime <= 2.5 || !TargetHasEffect(Debuffs.Demolish)))
                             {
                                 return Demolish;
                             }
@@ -542,7 +542,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(Config.MnkDisciplinedFistApply)))
+                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration?.RemainingTime <= Service.Configuration.GetCustomIntValue(Config.MnkDisciplinedFistApply)))
                         {
                             return TwinSnakes;
                         }
@@ -574,29 +574,29 @@ namespace XIVSlothComboPlugin.Combos
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
                     if (!nadiNONE && !lunarNadi)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return DragonKick;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return Bootshine;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return DragonKick;
                     }
                     if (nadiNONE)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return DragonKick;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return Bootshine;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return DragonKick;
                     }
                     if (lunarNadi)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return TwinSnakes;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return DragonKick;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return Demolish;
                     }
 

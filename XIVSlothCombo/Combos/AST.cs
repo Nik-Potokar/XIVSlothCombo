@@ -272,7 +272,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             private new bool GetTarget = true;
 
-            private GameObject? CurrentTarget;
+            private new GameObject? CurrentTarget;
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -314,7 +314,6 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.AstReTargetFeature))
                         {
-                            Dalamud.Logging.PluginLog.Debug("Previous?");
                             TargetObject(CurrentTarget);
                         }
 
@@ -537,19 +536,19 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 72 && incombat)
                     {
-                        if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
+                        if ((combust3Debuff is null) || (combust3Debuff?.RemainingTime <= 3))
                             return Combust3;
                     }
 
                     if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 46 && level <= 71 && incombat)
                     {
-                        if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
+                        if ((combust2Debuff is null) || (combust2Debuff?.RemainingTime <= 3))
                             return Combust2;
                     }
 
                     if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 4 && level <= 45 && incombat)
                     {
-                        if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
+                        if ((combust1Debuff is null) || (combust1Debuff?.RemainingTime <= 3))
                             return Combust1;
                     }
                 }
@@ -598,7 +597,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Horoscope);
                     }
 
-                    if (HasEffect(Buffs.AspectedHelios) && heliosBuff.RemainingTime > 2)
+                    if (HasEffect(Buffs.AspectedHelios) && heliosBuff?.RemainingTime > 2)
                         return Helios;
                 }
 
