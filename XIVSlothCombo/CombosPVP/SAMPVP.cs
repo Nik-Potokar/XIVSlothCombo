@@ -63,7 +63,7 @@
                             return OriginalHook(SAMPvP.Mineuchi);
                         if (IsOffCooldown(SAMPvP.OgiNamikiri) && !this.IsMoving)
                             return OriginalHook(SAMPvP.OgiNamikiri);
-                        if (GetRemainingCharges(SAMPvP.Soten) > sotenCharges)
+                        if (GetRemainingCharges(SAMPvP.Soten) > sotenCharges && CanWeave(SAMPvP.Yukikaze))
                             return OriginalHook(SAMPvP.Soten);
                         if (OriginalHook(SAMPvP.OgiNamikiri) == SAMPvP.Kaeshi)
                             return OriginalHook(SAMPvP.OgiNamikiri);

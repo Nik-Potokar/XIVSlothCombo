@@ -409,7 +409,7 @@ namespace XIVSlothComboPlugin.Combos
                                         return SAM.Senei;
                                     if (IsEnabled(CustomComboPreset.SeneiBurstFeature))
                                     {
-                                        if (hasDied || nonOpener || GetCooldownRemainingTime(SAM.Ikishoten) <= 90 || (gauge.Kaeshi == Kaeshi.SETSUGEKKA && GetDebuffRemainingTime(SAM.Debuffs.Higanbana) <= 10))
+                                        if (hasDied || nonOpener || GetCooldownRemainingTime(SAM.Ikishoten) <= 100 || ((gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Sen == Sen.NONE) && GetDebuffRemainingTime(SAM.Debuffs.Higanbana) <= 10))
                                             return SAM.Senei;
                                     }
                                 }

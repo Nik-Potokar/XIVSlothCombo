@@ -265,9 +265,7 @@ namespace XIVSlothComboPlugin.Combos
                         //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
                         {
-                            if ((DosisDebuffID is null || DosisDebuffID.RemainingTime <= 3) && 
-                                (EnemyHealthPercentage() > GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPPer))
-                               ) return SGE.Eukrasia;
+                            if (EnemyHealthPercentage() > GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPPer)) return SGE.Eukrasia;
                         }
                         else return SGE.Eukrasia;
                     }
@@ -278,8 +276,7 @@ namespace XIVSlothComboPlugin.Combos
                     level >= SGE.Levels.Toxikon &&
                     HasBattleTarget() &&
                     ((GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 1 && this.IsMoving) || (GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 2)) &&
-                    GetJobGauge<SGEGauge>().Addersting > 0 &&
-                    CanSpellWeave(actionID)
+                    GetJobGauge<SGEGauge>().Addersting > 0
                    ) return OriginalHook(SGE.Toxikon);
             }
             return actionID;
