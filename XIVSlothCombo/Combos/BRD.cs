@@ -534,7 +534,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 var canWeave = CanWeave(actionID);
                 var canWeaveBuffs = CanWeave(actionID, 0.6);
-                var canWeaveDelayed = CanDelayedWeave(actionID);
+                var canWeaveDelayed = CanDelayedWeave(actionID, 0.9);
 
                 if (!inCombat && (inOpener || openerFinished))
                 {
@@ -549,7 +549,7 @@ namespace XIVSlothComboPlugin.Combos
                 var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleNoWasteMode) ?
                     CustomCombo.EnemyHealthPercentage() > Service.Configuration.GetCustomIntValue(BRD.Config.NoWasteHPPercentage) : true;
 
-                if (IsEnabled(CustomComboPreset.SimpleSongOption) && canWeave && isEnemyHealthHigh)
+                if (IsEnabled(CustomComboPreset.SimpleSongOption) && isEnemyHealthHigh)
                 {
                     var songTimerInSeconds = gauge.SongTimer / 1000;
 
@@ -561,7 +561,7 @@ namespace XIVSlothComboPlugin.Combos
                         var balladOffCooldown = IsOffCooldown(BRD.MagesBallad);
                         var paeonOffCooldown = IsOffCooldown(BRD.ArmysPaeon);
 
-                        if (gauge.Song == Song.NONE)
+                        if (gauge.Song == Song.NONE && canWeave)
                         {
                             // Do logic to determine first song
 
@@ -570,7 +570,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (paeonOffCooldown  && !(JustUsed(BRD.MagesBallad)        || JustUsed(BRD.WanderersMinuet)) ) return BRD.ArmysPaeon;
                         }
 
-                        if (gauge.Song == Song.WANDERER)
+                        if (gauge.Song == Song.WANDERER && canWeave)
                         {
                             // Spend any repertoire before switching to next song
                             if (songTimerInSeconds < 3 && gauge.Repertoire > 0)
@@ -584,7 +584,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        if (gauge.Song == Song.MAGE)
+                        if (gauge.Song == Song.MAGE && canWeave)
                         {
                             // Move to Army's Paeon if < 12 seconds left on song
                             if (songTimerInSeconds < 12 && paeonOffCooldown)
@@ -597,10 +597,10 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        if (gauge.Song == Song.ARMY)
+                        if (gauge.Song == Song.ARMY && canWeaveDelayed)
                         {
-                            // Move to Wanderer's Minuet if < 3 seconds left on song or WM off CD
-                            if (songTimerInSeconds < 3 || minuetOffCooldown)
+                            // Move to Wanderer's Minuet if < 3 seconds left on song or WM off CD and have 4 repertoires of AP
+                            if (songTimerInSeconds < 3 || (minuetOffCooldown && gauge.Repertoire == 4))
                             {
                                 return BRD.WanderersMinuet;
                             }
@@ -617,19 +617,19 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature)  && gauge.Song != Song.NONE && isEnemyHealthHigh)
                 {
-                    if (canWeaveDelayed && level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes) &&
-                        (GetCooldown(BRD.BattleVoice).CooldownRemaining < 4.5 || IsOffCooldown(BRD.BattleVoice)))
+                    if (((canWeaveBuffs && CombatEngageDuration().Minutes == 0 ) || (canWeaveDelayed && CombatEngageDuration().Minutes > 0)) && level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes) &&
+                        (GetCooldown(BRD.BattleVoice).CooldownRemaining <= 5.38 || IsOffCooldown(BRD.BattleVoice)))
                     {
                         return BRD.RagingStrikes;
                     }
-                    if (IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && level >= BRD.Levels.RadiantFinale && canWeaveBuffs &&
+                    if (canWeaveBuffs && IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && level >= BRD.Levels.RadiantFinale &&
                         IsOffCooldown(BRD.RadiantFinale) && (Array.TrueForAll(gauge.Coda, BRD.SongIsNotNone) || Array.Exists(gauge.Coda, BRD.SongIsWandererMinuet)) &&
-                        (IsOffCooldown(BRD.BattleVoice) || GetCooldownRemainingTime(BRD.BattleVoice) < 0.5) && (GetBuffRemainingTime(BRD.Buffs.RagingStrikes) <= 16 || openerFinished ))
+                        (IsOffCooldown(BRD.BattleVoice) || GetCooldownRemainingTime(BRD.BattleVoice) < 0.7) && (GetBuffRemainingTime(BRD.Buffs.RagingStrikes) <= 16.5 || openerFinished ) && IsOnCooldown(BRD.RagingStrikes))
                     { 
-                       if (!JustUsed(BRD.RagingStrikes)) return BRD.RadiantFinale; 
+                        if (!JustUsed(BRD.RagingStrikes)) return BRD.RadiantFinale;
                     }
 
-                    if (canWeaveBuffs && level >= BRD.Levels.BattleVoice && IsOffCooldown(BRD.BattleVoice) && (GetBuffRemainingTime(BRD.Buffs.RagingStrikes) <= 16 || openerFinished))
+                    if (canWeaveBuffs && level >= BRD.Levels.BattleVoice && IsOffCooldown(BRD.BattleVoice) && (GetBuffRemainingTime(BRD.Buffs.RagingStrikes) <= 16.5 || openerFinished ) && IsOnCooldown(BRD.RagingStrikes))
                     {
                         if (!JustUsed(BRD.RagingStrikes)) return BRD.BattleVoice; 
                     }
@@ -647,18 +647,22 @@ namespace XIVSlothComboPlugin.Combos
                 
                 if (canWeave)
                 {
-                    var bvProtection = IsOffCooldown(BRD.BattleVoice) || GetCooldownRemainingTime(BRD.BattleVoice) > 2.5;
-
-                    if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow) && bvProtection)
-                            
+                    if (level >= BRD.Levels.EmpyrealArrow && IsOffCooldown(BRD.EmpyrealArrow) &&
+                        (!openerFinished || (openerFinished && GetCooldownRemainingTime(BRD.BattleVoice) >= 3.5)))
+                    {
                         return BRD.EmpyrealArrow;
+                    }
 
-                    if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER && 
-                        (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 2)) && bvProtection)
-                            
+                    if (level >= BRD.Levels.PitchPerfect && gauge.Song == Song.WANDERER &&
+                        (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && GetCooldown(BRD.EmpyrealArrow).CooldownRemaining < 2)) &&
+                        (!openerFinished || (openerFinished && GetCooldownRemainingTime(BRD.BattleVoice) >= 3.5)))
+                    {
                         return OriginalHook(BRD.WanderersMinuet);
-                            
-                    if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder) && bvProtection)
+                    }
+
+                    if (level >= BRD.Levels.Sidewinder && IsOffCooldown(BRD.Sidewinder) && 
+                        (!openerFinished || (openerFinished && GetCooldownRemainingTime(BRD.BattleVoice) >= 3.5)))
+                    {
                         if (IsEnabled(CustomComboPreset.BardSimplePooling))
                         {
                             if (gauge.Song == Song.WANDERER)
@@ -676,7 +680,10 @@ namespace XIVSlothComboPlugin.Combos
                                 }
                             }
                             else return BRD.Sidewinder;
-                        } else return BRD.Sidewinder;
+                        }
+                        else return BRD.Sidewinder;
+                    }
+
                     if (level >= BRD.Levels.Bloodletter)
                     {
                         var bloodletterCharges = GetRemainingCharges(BRD.Bloodletter);
@@ -696,7 +703,7 @@ namespace XIVSlothComboPlugin.Combos
                                         level < BRD.Levels.RadiantFinale
                                     ) &&
                                     bloodletterCharges > 0) ||
-                                    (bloodletterCharges > 2 && bvProtection)
+                                    bloodletterCharges > 2
                                 )
                                 {
                                     return BRD.Bloodletter;
