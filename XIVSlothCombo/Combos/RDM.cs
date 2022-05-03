@@ -340,13 +340,13 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     //Situation 3: Just use them together
-                    if (IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) && level >= RDM.Levels.Embolden
+                    if ((IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) || level < 90) && level >= RDM.Levels.Embolden
                         && System.Math.Max(black, white) <= 50
                         && (IsOffCooldown(RDM.Manafication) || level < RDM.Levels.Manafication) && IsOffCooldown(RDM.Embolden))
                     {
                         return RDM.Embolden;
                     }
-                    if (IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) && level >= RDM.Levels.Manafication
+                    if ((IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) || level < 90) && level >= RDM.Levels.Manafication
                         && System.Math.Max(black, white) <= 50
                         && IsOffCooldown(RDM.Manafication) && gauge.ManaStacks == 0
                         && GetCooldown(RDM.Embolden).CooldownRemaining >= 110)
