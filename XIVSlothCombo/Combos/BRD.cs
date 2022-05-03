@@ -615,10 +615,10 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature)  && gauge.Song != Song.NONE && isEnemyHealthHigh)
+                if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature)  && ( gauge.Song != Song.NONE || level < BRD.Levels.MagesBallad ) && isEnemyHealthHigh)
                 {
                     if (((canWeaveBuffs && CombatEngageDuration().Minutes == 0 ) || (canWeaveDelayed && CombatEngageDuration().Minutes > 0)) && level >= BRD.Levels.RagingStrikes && IsOffCooldown(BRD.RagingStrikes) &&
-                        (GetCooldown(BRD.BattleVoice).CooldownRemaining <= 5.38 || IsOffCooldown(BRD.BattleVoice)))
+                        (GetCooldown(BRD.BattleVoice).CooldownRemaining <= 5.38 || IsOffCooldown(BRD.BattleVoice) || level < BRD.Levels.BattleVoice))
                     {
                         return BRD.RagingStrikes;
                     }
