@@ -112,9 +112,19 @@ namespace XIVSlothComboPlugin
                                 return OriginalHook(RPRPVP.DeathWarrant);
                         }
 
-                        // Communio Finisher Option
-                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedCommunioOption) && enshroudStacks == 1 && !this.IsMoving && distance <= 25)
-                            return RPRPVP.Communio;
+                        // Communio Option
+                        if (IsEnabled(CustomComboPreset.RPRPvPEnshroudedCommunioOption) && enshroudStacks == 1 && distance <= 25)
+                        {
+                            // Holds Communio when moving & Enshrouded Time Remaining > 2s
+                            // Returns a Void/Cross Reaping if under 2s to avoid charge waste
+                            if (this.IsMoving && GetBuffRemainingTime(RPRPVP.Buffs.Enshrouded) > 2)
+                                return BLM.Xenoglossy;
+
+                            // Returns Communio if stationary
+                            // This doesn't work as an 'else if' and I can't be bothered to refactor it further
+                            if (!this.IsMoving)
+                                return RPRPVP.Communio;
+                        }
                     }
 
                     // Occurring outside of Enshroud burst
