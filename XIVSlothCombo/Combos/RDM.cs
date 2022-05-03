@@ -358,7 +358,24 @@ namespace XIVSlothComboPlugin.Combos
             //END_RDM_ST_MANAFICATIONEMBOLDEN
 
             //RDM_AOE_MANAFICATIONEMBOLDEN
-
+            if (IsEnabled(CustomComboPreset.RDM_AoE_ManaficationEmbolden) && level >= 60 && HasCondition(ConditionFlag.InCombat)
+                && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration)
+                && GetTargetDistance() <= 7 && actionID is RDM.Scatter or RDM.Impact)
+            {
+                if (level >= RDM.Levels.Embolden
+                && System.Math.Max(black, white) <= 50
+                && IsOffCooldown(RDM.Manafication) && IsOffCooldown(RDM.Embolden))
+                {
+                    return RDM.Embolden;
+                }
+                if (level >= RDM.Levels.Manafication
+                    && System.Math.Max(black, white) <= 50
+                    && IsOffCooldown(RDM.Manafication) && gauge.ManaStacks == 0
+                    && GetCooldown(RDM.Embolden).CooldownRemaining >= 110)
+                {
+                    return RDM.Manafication;
+                }
+            }
             //END_RDM_AOE_MANAFICATIONEMBOLDEN
 
             //RDM_OGCD
@@ -507,8 +524,10 @@ namespace XIVSlothComboPlugin.Combos
                     if (lastComboMove is RDM.Zwerchhau && level >= RDM.Levels.Redoublement)
                         return OriginalHook(RDM.Redoublement);
 
-                    if (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 &&
-                        (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
+                    if (((System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 && level >= RDM.Levels.Redoublement) 
+                            || (System.Math.Max(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < RDM.Levels.Redoublement)
+                            || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 20 && level < RDM.Levels.Zwerchhau))
+                        && (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
                     {
                         if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) && GetCooldown(RDM.Corpsacorps).RemainingCharges >= 1 && distance > 3) return RDM.Corpsacorps;
                         if (distance <= 3) return OriginalHook(RDM.Riposte);

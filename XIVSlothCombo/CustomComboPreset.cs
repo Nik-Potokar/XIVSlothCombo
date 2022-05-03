@@ -1771,6 +1771,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("AoE Melee Combo [Lv.52]", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
 
+        [ParentCombo(RDM_AoE_MeleeCombo)]
+        [CustomComboInfo("Use Manafication and Embolden [Lv.60]", "Add Manafication and Embolden to Scatter/Impact\n**Must be in range of Moulinet**", RDM.JobID, 411)]
+        RDM_AoE_ManaficationEmbolden = 13421,
+
         [ParentCombo(RDM_ST_MeleeCombo)]
         [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range before starting the melee combo", RDM.JobID, 430)]
         RDM_ST_CorpsGapClose = 13430,
