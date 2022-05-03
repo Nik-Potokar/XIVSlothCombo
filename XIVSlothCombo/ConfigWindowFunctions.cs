@@ -95,9 +95,12 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 Service.Configuration.Save();
             }
 
-            ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
-            ImGui.TextWrapped(checkboxDescription);
-            ImGui.PopStyleColor();
+            if (!checkboxDescription.IsNullOrEmpty())
+            { 
+                ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+                ImGui.TextWrapped(checkboxDescription);
+                ImGui.PopStyleColor();
+            }
             ImGui.Unindent();
             ImGui.Spacing();
         }
