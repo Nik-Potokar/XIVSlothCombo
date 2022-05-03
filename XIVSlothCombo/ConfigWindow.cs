@@ -777,41 +777,38 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region RED MAGE
 
-//            if (preset == CustomComboPreset.RedMageLucidOnJolt && enabled)
-//                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RdmLucidMpThreshold, "Add Lucid Dreaming when below this MP.", 300, 100);
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche", "", 1);
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche", "Add OGCDs to Fleche", 1);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "", 2);
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "Only add OGCDs to Jolt/Jolt II", 2);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "", 3);
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "Only add OGCDs to Scatter/Impact", 3);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "Add OGCDs to Jolt/Jolt II and Scatter/Impact\n[Choose Jolt or Impact for a one button rotation]\n----------------------------------------------------------------", 4);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte", "Replace Riposte with the single target melee actions", 1);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte", "", 1);
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Jolt/Jolt II", "Replace Jolt/Jolt II with the single target melee actions", 2);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Jolt/Jolt II", "", 2);
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte & Jolt/Jolt II", "Replace Riposte and Jolt/Jolt II with the single target melee actions\n[Choose Jolt or Impact for a one button rotation]\n----------------------------------------------------------------", 3);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte & Jolt/Jolt II", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte", "Replace Riposte with finisher actions", 1);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte", "", 1);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "Replace Jolt/Jolt II and Scatter/Impact with finisher actions", 2);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 2);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Jolt/Jolt II & Scatter/Impact", "Replace Riposte, Jolt/Jolt II and Scatter/Impact with finisher actions\n[Choose Jolt or Impact for a one button rotation]\n----------------------------------------------------------------", 3);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Jolt/Jolt II & Scatter/Impact", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
 
             if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP.", 300, 100);
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP.", 300, SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================

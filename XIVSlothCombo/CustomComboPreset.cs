@@ -1701,7 +1701,7 @@ namespace XIVSlothComboPlugin
         //The three digets after RDM.JobID can be used to reorder items in the list
 
         //SECTION_1_OPENERS
-        [CustomComboInfo("Balance Opener", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
+        [CustomComboInfo("Balance Opener [Lv.90]", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
         RDM_Balance_Opener = 13110,
 
         [ParentCombo(RDM_Balance_Opener)]
@@ -1709,66 +1709,66 @@ namespace XIVSlothComboPlugin
         RDM_Opener_Any_Mana = 13111,
 
         //SECTION_2to3_ROTATION
-        [CustomComboInfo("Verthunder/Veraero", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210)]
+        [CustomComboInfo("Verthunder/Veraero [Lv.4]", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210)]
         RDM_VerthunderVeraero = 13210,
 
         [ParentCombo(RDM_VerthunderVeraero)]
-        [CustomComboInfo("Single Target Acceleration", "Add Acceleration when no Verfire/Verstone proc is available", RDM.JobID, 211)]
+        [CustomComboInfo("Single Target Acceleration [Lv.50]", "Add Acceleration when no Verfire/Verstone proc is available", RDM.JobID, 211)]
         RDM_ST_Acceleration = 13211,
 
         [ParentCombo(RDM_ST_Acceleration)]
-        [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used", RDM.JobID, 212)]
+        [CustomComboInfo("Include Swiftcast [Lv.18]", "Add Swiftcast when all Acceleration charges are used", RDM.JobID, 212)]
         RDM_ST_AccelSwiftCast = 13212,
 
-        [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
+        [CustomComboInfo("Verfire/Verstone [Lv.26]", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
         RDM_VerfireVerstone = 13220,
 
         [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action", RDM.JobID, 240)]
         RDM_OGCD = 13240,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Fleche", "Use Fleche on above specified action", RDM.JobID, 241)]
+        [CustomComboInfo("Fleche [Lv.45]", "Use Fleche on above specified action", RDM.JobID, 241)]
         RDM_Fleche = 13241,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Contra Sixte", "Use Contre Sixte on above specified action", RDM.JobID, 242)]
+        [CustomComboInfo("Contra Sixte [Lv.56]", "Use Contre Sixte on above specified action", RDM.JobID, 242)]
         RDM_ContraSixte = 13242,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Engagement", "Use Engagement on above specified action when in melee range", RDM.JobID, 243)]
+        [CustomComboInfo("Engagement [Lv.40]", "Use Engagement on above specified action when in melee range", RDM.JobID, 243)]
         RDM_Engagement = 13243,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action", RDM.JobID, 244)]
+        [CustomComboInfo("Corps-a-corps [Lv.6]", "Use Corps-a-corps on above specified action", RDM.JobID, 244)]
         RDM_Corpsacorps = 13244,
 
         [ParentCombo(RDM_Corpsacorps)]
         [CustomComboInfo("Only in Melee Range", "Use Corps-a-corps only when in melee range", RDM.JobID, 245)]
         RDM_Corpsacorps_MeleeRange = 13245,
 
-        [CustomComboInfo("Verthunder II/Veraero II", "Replace Scatter with Verthunder II or Veraero II", RDM.JobID, 310)]
+        [CustomComboInfo("Verthunder II/Veraero II [Lv.18]", "Replace Scatter/Impact with Verthunder II or Veraero II", RDM.JobID, 310)]
         RDM_VerthunderIIVeraeroII = 13310,
 
-        [CustomComboInfo("AoE Acceleration", "Use Acceleration on Scatter/Scorch for increased damage", RDM.JobID, 320)]
+        [CustomComboInfo("AoE Acceleration [Lv.50]", "Use Acceleration on Scatter/Scorch for increased damage", RDM.JobID, 320)]
         RDM_AoE_Acceleration = 13320,
 
         [ParentCombo(RDM_AoE_Acceleration)]
-        [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used", RDM.JobID, 321)]
+        [CustomComboInfo("Include Swiftcast [Lv.18]", "Add Swiftcast when all Acceleration charges are used or when below level 50", RDM.JobID, 321)]
         RDM_AoE_AccelSwiftCast = 13321,
 
         //SECTION_4to5_MELEE
-        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
+        [CustomComboInfo("Single Target Melee Combo [Lv.1]", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
         RDM_ST_MeleeCombo = 13410,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
-        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
+        [CustomComboInfo("Use Manafication and Embolden [Lv.60]", "Add Manafication and Embolden on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
         RDM_ST_ManaficationEmbolden = 13411,
 
         [ParentCombo(RDM_ST_ManaficationEmbolden)]
-        [CustomComboInfo("Hold for Double Melee Combo", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
+        [CustomComboInfo("Hold for Double Melee Combo [Lv.90]", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
         RDM_ST_DoubleMeleeCombo = 13412,
 
-        [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
+        [CustomComboInfo("AoE Melee Combo [Lv.52]", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
@@ -1779,14 +1779,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Reserve one charge", "Pool one charge of Corp-a-corps for use", RDM.JobID, 431)]
         RDM_ST_PoolCorps = 13431,
 
-        [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)]
+        [CustomComboInfo("Melee Finisher [Lv.68]", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)]
         RDM_MeleeFinisher = 13510,
 
         //SECTION_6to7_QOL
-        [CustomComboInfo("Lucid Dreaming", "Use Lucid Dreaming on Veraero, Verthunder and Scatter when below threshold.", RDM.JobID, 610, "Lucid Dreaming the day away", "OOM? Git gud.")]
+        [CustomComboInfo("Lucid Dreaming [Lv.14]", "Use Lucid Dreaming on Veraero, Verthunder and Scatter when below threshold.", RDM.JobID, 610, "Lucid Dreaming the day away", "OOM? Git gud.")]
         RDM_LucidDreaming = 13610,
 
-        [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        [CustomComboInfo("Verraise [Lv.56]", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RDM_Verraise = 13620,
 
         //SECTION_8to9_OTHERS                   
