@@ -519,8 +519,17 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return MNK.Demolish;
                         }
+                        if (lunarNadi && !solarNadi)
+                        {
+                            bool demolishFirst = !TargetHasEffect(MNK.Debuffs.Demolish);
+                            if (!demolishFirst && HasEffect(MNK.Buffs.DisciplinedFist))
+                            {
+                                demolishFirst = twinsnakeDuration.RemainingTime >= demolishDuration.RemainingTime;
+                            }
+                            return demolishFirst ? MNK.Demolish : MNK.TwinSnakes;
+                        }
                     }
-                    if (canSolar && !solarNadi)
+                    if (canSolar && (lunarNadi || !solarNadi))
                     {
                         if (!raptorChakra && (!HasEffect(MNK.Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= 2.5))
                         {

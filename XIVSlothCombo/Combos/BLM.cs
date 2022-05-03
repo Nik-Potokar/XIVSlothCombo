@@ -1383,6 +1383,10 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (gauge.InUmbralIce)
                     {
+                        if (gauge.PolyglotStacks == 2)
+                        {
+                            return BLM.Xenoglossy;
+                        }
                         return gauge.IsParadoxActive ? BLM.Paradox : (gauge.UmbralHearts == 3 ? BLM.Fire3 : BLM.Blizzard4);
                     }
                 }
