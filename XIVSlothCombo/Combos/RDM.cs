@@ -294,7 +294,7 @@ namespace XIVSlothComboPlugin.Combos
             //END_RDM_BALANCE_OPENER
 
             //RDM_ST_MANAFICATIONEMBOLDEN
-            if (IsEnabled(CustomComboPreset.RDM_ST_ManaficationEmbolden) && level >= 60 && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false
+            if (IsEnabled(CustomComboPreset.RDM_ST_ManaficationEmbolden) && level >= RDM.Levels.Embolden && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false
                 && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration) 
                 && (GetTargetDistance() <= 3 || (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) && GetCooldown(RDM.Corpsacorps).RemainingCharges >= 1)))
             {
@@ -342,7 +342,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Situation 3: Just use them together
                     if (IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) && level >= RDM.Levels.Embolden
                         && System.Math.Max(black, white) <= 50
-                        && IsOffCooldown(RDM.Manafication) && IsOffCooldown(RDM.Embolden))
+                        && (IsOffCooldown(RDM.Manafication) || level < RDM.Levels.Manafication) && IsOffCooldown(RDM.Embolden))
                     {
                         return RDM.Embolden;
                     }
@@ -353,18 +353,25 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return RDM.Manafication;
                     }
+
+                    //Situation 4: Level 58 or 59
+                    if (level < RDM.Levels.Manafication && level >= RDM.Levels.Embolden
+                        && System.Math.Min(black, white) >= 50 && IsOffCooldown(RDM.Embolden))
+                    {
+                        return RDM.Embolden;
+                    }
                 }
             }
             //END_RDM_ST_MANAFICATIONEMBOLDEN
 
             //RDM_AOE_MANAFICATIONEMBOLDEN
-            if (IsEnabled(CustomComboPreset.RDM_AoE_ManaficationEmbolden) && level >= 60 && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false
+            if (IsEnabled(CustomComboPreset.RDM_AoE_ManaficationEmbolden) && level >= RDM.Levels.Embolden && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false
                 && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration)
                 && GetTargetDistance() < 8 && actionID is RDM.Scatter or RDM.Impact)
             {
-                if (level >= RDM.Levels.Embolden
+                if (level >= RDM.Levels.Manafication
                 && System.Math.Max(black, white) <= 50 && System.Math.Min(black, white) >= 10
-                && IsOffCooldown(RDM.Manafication) && IsOffCooldown(RDM.Embolden))
+                && (IsOffCooldown(RDM.Manafication) || level < RDM.Levels.Manafication) && IsOffCooldown(RDM.Embolden))
                 {
                     return RDM.Embolden;
                 }
@@ -374,6 +381,11 @@ namespace XIVSlothComboPlugin.Combos
                     && GetCooldown(RDM.Embolden).CooldownRemaining >= 110)
                 {
                     return RDM.Manafication;
+                }
+                if (level < RDM.Levels.Manafication && level >= RDM.Levels.Embolden
+                    && System.Math.Min(black, white) >= 20 && IsOffCooldown(RDM.Embolden))
+                {
+                    return RDM.Embolden;
                 }
             }
             //END_RDM_AOE_MANAFICATIONEMBOLDEN
@@ -539,7 +551,7 @@ namespace XIVSlothComboPlugin.Combos
             //RDM_AOE_MELEECOMBO
             if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo) && level >= RDM.Levels.Moulinet && actionID is RDM.Scatter or RDM.Impact && LocalPlayer.IsCasting == false
                 && !HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration)
-                && System.Math.Min(gauge.BlackMana, gauge.WhiteMana) + (gauge.ManaStacks * 20) >= 60
+                && (System.Math.Min(gauge.BlackMana, gauge.WhiteMana) + (gauge.ManaStacks * 20) >= 60 || (level < RDM.Levels.Manafication && System.Math.Min(gauge.BlackMana, gauge.WhiteMana) >= 20))
                 && ((GetTargetDistance() <= 7 && gauge.ManaStacks == 0) || gauge.ManaStacks > 0))
                 return OriginalHook(RDM.EnchantedMoulinet);
             //END_RDM_AOE_MELEECOMBO

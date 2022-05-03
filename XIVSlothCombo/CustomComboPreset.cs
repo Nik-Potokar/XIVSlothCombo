@@ -1761,7 +1761,7 @@ namespace XIVSlothComboPlugin
         RDM_ST_MeleeCombo = 13410,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
-        [CustomComboInfo("Use Manafication and Embolden [Lv.60]", "Add Manafication and Embolden on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
+        [CustomComboInfo("Use Manafication and Embolden [Lv.58]", "Add Manafication and Embolden on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
         RDM_ST_ManaficationEmbolden = 13411,
 
         [ParentCombo(RDM_ST_ManaficationEmbolden)]
@@ -1772,7 +1772,7 @@ namespace XIVSlothComboPlugin
         RDM_AoE_MeleeCombo = 13420,
 
         [ParentCombo(RDM_AoE_MeleeCombo)]
-        [CustomComboInfo("Use Manafication and Embolden [Lv.60]", "Add Manafication and Embolden to Scatter/Impact\n**Must be in range of Moulinet**", RDM.JobID, 411)]
+        [CustomComboInfo("Use Manafication and Embolden [Lv.58]", "Add Manafication and Embolden to Scatter/Impact\n**Must be in range of Moulinet**", RDM.JobID, 411)]
         RDM_AoE_ManaficationEmbolden = 13421,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
