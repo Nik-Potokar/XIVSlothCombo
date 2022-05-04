@@ -117,7 +117,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return MNK.FormShift;
                     }
-                    if (!InMeleeRange() && gauge.Chakra == 5 && HasEffect(MNK.Buffs.FormlessFist))
+                    if (IsEnabled(CustomComboPreset.MnkThunderclapOnAoEComboFeature) && !InMeleeRange() && gauge.Chakra == 5 && HasEffect(MNK.Buffs.FormlessFist))
                     {
                         return MNK.Thunderclap;
                     }
@@ -425,7 +425,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         return MNK.FormShift;
                     }
-                    if (!InMeleeRange() && gauge.Chakra == 5 && HasEffect(MNK.Buffs.FormlessFist))
+                    if (IsEnabled(CustomComboPreset.MnkThunderclapOnMainComboFeature) && !InMeleeRange() && gauge.Chakra == 5 && HasEffect(MNK.Buffs.FormlessFist))
                     {
                         return MNK.Thunderclap;
                     }
