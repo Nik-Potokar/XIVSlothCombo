@@ -97,10 +97,10 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is All.LowBlow or PLD.ShieldBash)
             {
-                if (IsOffCooldown(All.LowBlow) && level >= All.Levels.LowBlow)
-                    return All.LowBlow;
                 if (CanInterruptEnemy() && IsOffCooldown(All.Interject) && level >= All.Levels.Interject)
                     return All.Interject;
+                if (IsOffCooldown(All.LowBlow) && level >= All.Levels.LowBlow)
+                    return All.LowBlow;
                 if (actionID == PLD.ShieldBash && IsOnCooldown(All.LowBlow))
                     return actionID;
             }
