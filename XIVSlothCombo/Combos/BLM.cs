@@ -356,8 +356,8 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (level >= BLM.Levels.Thunder4)
                     {
-                        if (lastComboMove != BLM.Thunder4 && (!thunder4Debuff || thunder4Timer.RemainingTime <= 4) && 
-                           ((gauge.InUmbralIce && gauge.UmbralHearts == 3) || 
+                        if (lastComboMove != BLM.Thunder4 && (!thunder4Debuff || thunder4Timer.RemainingTime <= 4) &&
+                           ((gauge.InUmbralIce && gauge.UmbralHearts == 3) ||
                             (gauge.InAstralFire && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))))
                         {
                             return BLM.Thunder4;
@@ -366,7 +366,7 @@ namespace XIVSlothComboPlugin.Combos
                     else if (level >= BLM.Levels.Thunder2)
                     {
                         if (lastComboMove != BLM.Thunder2 && (!thunder2Debuff || thunder2Timer.RemainingTime <= 4) &&
-                           ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4)) || 
+                           ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < BLM.Levels.Blizzard4)) ||
                             (gauge.InAstralFire && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))))
                         {
                             return BLM.Thunder2;
@@ -415,15 +415,15 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    
+
     internal class BlackSimpleFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackSimpleFeature;
-        
+
         internal static bool inOpener = false;
         internal static bool openerFinished = false;
 
-        internal delegate bool DotRecast(int value); 
+        internal delegate bool DotRecast(int value);
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -533,13 +533,13 @@ namespace XIVSlothComboPlugin.Combos
                                 // Second Triplecast / Sharpcast
                                 if (!IsEnabled(CustomComboPreset.BlackSimpleAltOpenerFeature))
                                 {
-                                    if (!HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) && 
+                                    if (!HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
                                         lastComboMove != All.Swiftcast && GetRemainingCharges(BLM.Triplecast) >= 1 && currentMP < BLM.MP.AspectFire)
                                     {
                                         return BLM.Triplecast;
                                     }
 
-                                    if (!HasEffect(BLM.Buffs.Sharpcast) && GetRemainingCharges(BLM.Sharpcast) >= 1 && IsOnCooldown(BLM.Manafont) && 
+                                    if (!HasEffect(BLM.Buffs.Sharpcast) && GetRemainingCharges(BLM.Sharpcast) >= 1 && IsOnCooldown(BLM.Manafont) &&
                                         lastComboMove == BLM.Fire4)
                                     {
                                         return BLM.Sharpcast;
@@ -562,7 +562,7 @@ namespace XIVSlothComboPlugin.Combos
                             // Fire4 / Umbral Ice
                             return (currentMP >= BLM.MP.AspectFire || lastComboMove == BLM.Manafont) ? BLM.Fire4 : BLM.Blizzard3;
                         }
-                        
+
                         if (gauge.InUmbralIce)
                         {
                             // Dump Polygot Stacks
@@ -612,7 +612,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.BlackSimpleCastsFeature))
                         {
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
-                            if (level >= BLM.Levels.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0 && 
+                            if (level >= BLM.Levels.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) > 0 &&
                                 (gauge.InAstralFire || gauge.UmbralHearts == 3) && currentMP >= BLM.MP.AspectFire * 2)
                             {
                                 if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) || GetRemainingCharges(BLM.Triplecast) > 1)
@@ -622,7 +622,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
 
                             // Use Swiftcast in Astral Fire
-                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) && level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) && 
+                            if (!IsEnabled(CustomComboPreset.BlackSimpleCastPoolingFeature) && level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) &&
                                  gauge.InAstralFire && currentMP >= BLM.MP.AspectFire * (HasEffect(BLM.Buffs.Triplecast) ? 3 : 1))
                             {
                                 if (level >= BLM.Levels.Despair && currentMP >= BLM.MP.Despair)
@@ -723,7 +723,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Use polygot stacks if we don't need it for a future weave
-                if (gauge.PolyglotStacks > 0 && gauge.ElementTimeRemaining >= 5000 &&  (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0)))
+                if (gauge.PolyglotStacks > 0 && gauge.ElementTimeRemaining >= 5000 && (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0)))
                 {
                     if (level >= BLM.Levels.Xenoglossy)
                     {
@@ -786,7 +786,7 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     return BLM.Xenoglossy;
                                 }
-                                if (level >= BLM.Levels.Sharpcast && GetRemainingCharges(BLM.Sharpcast) >= 1 && !HasEffect(BLM.Buffs.Sharpcast) && 
+                                if (level >= BLM.Levels.Sharpcast && GetRemainingCharges(BLM.Sharpcast) >= 1 && !HasEffect(BLM.Buffs.Sharpcast) &&
                                     thunder3Recast(15) && lastComboMove != BLM.Thunder3 && gauge.InAstralFire && !gauge.IsParadoxActive)
                                 {
                                     return BLM.Xenoglossy;
@@ -820,7 +820,7 @@ namespace XIVSlothComboPlugin.Combos
             return actionID;
         }
     }
-    
+
     internal class BlackSimpleTranposeFeature : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BlackSimpleTransposeFeature;
@@ -973,7 +973,7 @@ namespace XIVSlothComboPlugin.Combos
                         openerFinished = true;
                     }
                 }
-                
+
                 if (gauge.ElementTimeRemaining == 0 || !gauge.IsEnochianActive)
                 {
                     if (currentMP >= BLM.MP.Fire3)
@@ -986,7 +986,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (gauge.ElementTimeRemaining > 0)
                 {
                     // Thunder
-                    if (lastComboMove != BLM.Thunder3 && currentMP >= BLM.MP.AspectThunder && 
+                    if (lastComboMove != BLM.Thunder3 && currentMP >= BLM.MP.AspectThunder &&
                         thunder3Recast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2) && !TargetHasEffect(BLM.Debuffs.Thunder4))
                     {
                         return BLM.Thunder3;

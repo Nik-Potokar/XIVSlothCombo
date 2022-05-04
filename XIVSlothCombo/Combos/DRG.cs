@@ -472,7 +472,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 // Piercing Talon Uptime Option
                 if (IsEnabled(CustomComboPreset.DRGSimpleRangedUptimeST) && level >= DRG.Levels.PiercingTalon && !InMeleeRange())
-                        return DRG.PiercingTalon;
+                    return DRG.PiercingTalon;
 
                 //Lance Charge Feature
                 if (canWeave)
