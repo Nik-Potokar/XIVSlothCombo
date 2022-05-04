@@ -391,7 +391,7 @@ namespace XIVSlothComboPlugin.Combos
             //END_RDM_AOE_MANAFICATIONEMBOLDEN
 
             //RDM_OGCD
-            if (IsEnabled(CustomComboPreset.RDM_OGCD) && level >= RDM.Levels.Corpsacorps && LocalPlayer.IsCasting == false)
+            if (IsEnabled(CustomComboPreset.RDM_OGCD) && level >= RDM.Levels.Corpsacorps)
             {
                 var radioButton = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_OGCD_OnAction);
                 //Radio Button Settings:
@@ -424,15 +424,15 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionID is RDM.Fleche && radioButton == 1 && placeOGCD == 0) // All actions are on cooldown, determine the lowest CD to display on Fleche.
                     {
                         placeOGCD = RDM.Fleche;
-                        if (IsEnabled(CustomComboPreset.RDM_ContraSixte) 
+                        if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && level >= RDM.Levels.ContreSixte
                             && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.ContreSixte).CooldownRemaining) placeOGCD = RDM.ContreSixte;
-                        if (IsEnabled(CustomComboPreset.RDM_Corpsacorps)
+                        if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && level >= RDM.Levels.Corpsacorps
                             && ((IsNotEnabled(CustomComboPreset.RDM_ST_PoolCorps) && GetCooldown(RDM.Corpsacorps).RemainingCharges >= 0) || GetCooldown(RDM.Corpsacorps).RemainingCharges >= 2)
                             && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(RDM.Corpsacorps).ChargeCooldownRemaining
                             && distance <= corpacorpsRange) placeOGCD = RDM.Corpsacorps;
                         if (placeOGCD == RDM.Corpsacorps)
                         {
-                            if (IsEnabled(CustomComboPreset.RDM_Engagement) 
+                            if (IsEnabled(CustomComboPreset.RDM_Engagement) && level >= RDM.Levels.Engagement
                                 && GetCooldown(placeOGCD).ChargeCooldownRemaining > GetCooldown(RDM.Engagement).ChargeCooldownRemaining
                                 && distance <= 3) placeOGCD = RDM.Engagement;
                         } else if (IsEnabled(CustomComboPreset.RDM_Engagement)
@@ -537,11 +537,11 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(RDM.Redoublement);
 
                     if (((System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 && level >= RDM.Levels.Redoublement) 
-                            || (System.Math.Max(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < RDM.Levels.Redoublement)
+                            || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < RDM.Levels.Redoublement)
                             || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 20 && level < RDM.Levels.Zwerchhau))
                         && (!HasEffect(RDM.Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
                     {
-                        if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) && GetCooldown(RDM.Corpsacorps).RemainingCharges >= 1 && distance > 3) return RDM.Corpsacorps;
+                        if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) && level >= RDM.Levels.Corpsacorps && GetCooldown(RDM.Corpsacorps).RemainingCharges >= 1 && distance > 3) return RDM.Corpsacorps;
                         if (distance <= 3) return OriginalHook(RDM.Riposte);
                     }
                 }
@@ -604,6 +604,7 @@ namespace XIVSlothComboPlugin.Combos
             //END_RDM_VERTHUNDERIIVVERAEROII
 
             //NO_CONDITIONS_MET
+            if (level < RDM.Levels.Jolt && actionID is RDM.Jolt or RDM.Jolt2) { return RDM.Riposte; }
             return actionID;
         }
     }
