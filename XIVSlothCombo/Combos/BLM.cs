@@ -599,9 +599,12 @@ namespace XIVSlothComboPlugin.Combos
                     // Thunder uptime
                     if (gauge.ElementTimeRemaining >= 6000 && (HasEffect(BLM.Buffs.Thundercloud) || currentMP >= BLM.MP.AspectThunder))
                     {
-                        if (level < BLM.Levels.Thunder3 && lastComboMove != BLM.Thunder && thunderRecast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2))
+                        if (level < BLM.Levels.Thunder3)
                         {
-                            return BLM.Thunder;
+                            if (lastComboMove != BLM.Thunder && thunderRecast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2))
+                            {
+                                return BLM.Thunder;
+                            }
                         }
                         else if (lastComboMove != BLM.Thunder3 && thunder3Recast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2) && !TargetHasEffect(BLM.Debuffs.Thunder4))
                         {
