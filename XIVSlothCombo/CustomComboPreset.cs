@@ -562,9 +562,10 @@ namespace XIVSlothComboPlugin
             [ParentCombo(DancerAoEMultibutton)]
             [CustomComboInfo("AoE Fan Dance On Windmill Feature", "Adds FanDance 3/4 Onto Windmill When available.", DNC.JobID, 0, "", "")]
             DancerFanDanceOnAoEComboFeature = 4014,
-            #endregion
+        #endregion
 
         // Dance Features Section (SS/TS)
+        [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Dance Features", "Features and options involving Standard Step and Technical Step.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuDanceFeatures = 4020,
 
@@ -575,7 +576,7 @@ namespace XIVSlothComboPlugin
             DancerDanceStepCombo = 4021,
 
             [ParentCombo(DancerMenuDanceFeatures)]
-            [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility)]
             [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
             DancerCombinedDanceFeature = 4022,
 
@@ -590,7 +591,7 @@ namespace XIVSlothComboPlugin
             #endregion
 
             [ParentCombo(DancerMenuDanceFeatures)]
-            [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature, DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature)]
             [CustomComboInfo("Custom Dance Step Feature",
             "Change custom actions into dance steps while dancing." +
             "\nThis helps ensure you can still dance with combos on, without using auto dance." +
@@ -661,28 +662,32 @@ namespace XIVSlothComboPlugin
             DancerSimpleTechnicalFeature = 4053,
 
             [ParentCombo(DancerSimpleFeature)]
+            [CustomComboInfo("Simple Dance Step Combo", "Changes Standard Step and Technical Step into each dance step while dancing.", DNC.JobID, 0, "", "")]
+            DancerSimpleDanceStepFeature = 4054,
+
+            [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you are Lv70 or above.", DNC.JobID, 0, "", "")]
-            DancerSimpleDevilmentFeature = 4054,
+            DancerSimpleDevilmentFeature = 4055,
 
             [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Flourish", "Includes Flourish in the rotation.", DNC.JobID, 0, "", "")]
-            DancerSimpleFlourishFeature = 4055,
+            DancerSimpleFlourishFeature = 4056,
 
             [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Feathers", "Includes Feather usage in the rotation.", DNC.JobID, 0, "", "")]
-            DancerSimpleFeatherFeature = 4056,
+            DancerSimpleFeatherFeature = 4057,
 
             [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when you're under the effects of Technical Step.\nWill expend feathers when your target is under 2 percent HP.", DNC.JobID, 0, "")]
-            DancerSimpleFeatherPoolingFeature = 4057,
+            DancerSimpleFeatherPoolingFeature = 4058,
 
             [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
-            DancerSimplePanicHealsFeature = 4058,
+            DancerSimplePanicHealsFeature = 4059,
 
             [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Improvisation", "Includes Improvisation in the rotation when available.", DNC.JobID, 0, "", "")]
-            DancerSimpleImprovFeature = 4059,
+            DancerSimpleImprovFeature = 4060,
             #endregion
 
         // Simple Dancer AoE Section
@@ -704,28 +709,32 @@ namespace XIVSlothComboPlugin
             DancerSimpleAoETechnicalFeature = 4073,
 
             [ParentCombo(DancerSimpleAoEFeature)]
+            [CustomComboInfo("Simple AoE Dance Step Combo", "Changes Standard Step and Technical Step into each dance step while dancing.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoEDanceStepFeature = 4074,
+
+            [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
-            DancerSimpleAoEDevilmentFeature = 4074,
+            DancerSimpleAoEDevilmentFeature = 4075,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Flourish", "Includes Flourish in the AoE rotation.", DNC.JobID, 0, "", "")]
-            DancerSimpleAoEFlourishFeature = 4075,
+            DancerSimpleAoEFlourishFeature = 4076,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Feathers", "Includes feather usage in the AoE rotation.", DNC.JobID, 0, "", "")]
-            DancerSimpleAoEFeatherFeature = 4076,
+            DancerSimpleAoEFeatherFeature = 4077,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Feather Pooling", "Makes it so the AoE rotation only uses feathers when you have more than 3.", DNC.JobID, 0, "", "")]
-            DancerSimpleAoEFeatherPoolingFeature = 4077,
+            DancerSimpleAoEFeatherPoolingFeature = 4078,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Panic Heals", "Includes Curing Waltz and Second Wind in the AoE rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
-            DancerSimpleAoEPanicHealsFeature = 4078,
+            DancerSimpleAoEPanicHealsFeature = 4079,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Improvisation", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 0, "", "")]
-            DancerSimpleAoEImprovFeature = 4079,
+            DancerSimpleAoEImprovFeature = 4080,
             #endregion
 
         #endregion
@@ -2662,7 +2671,7 @@ namespace XIVSlothComboPlugin
 
         [SecretCustomCombo]
         [ParentCombo(DNCBurstMode)]
-        [CustomComboInfo("Curing Waltz Burst Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
+        [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
         DNCCuringWaltzOption = 80072,
 
         // SAM
