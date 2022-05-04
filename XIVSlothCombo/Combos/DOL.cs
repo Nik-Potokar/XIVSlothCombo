@@ -50,89 +50,88 @@ namespace XIVSlothComboPlugin.Combos
                 PrizeCatch = 81,
                 WiseToTheWorld = 90;
         }
+    }
 
+    internal class MinerEurekaFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DolEurekaFeature;
 
-        internal class MinerEurekaFeature : CustomCombo
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DolEurekaFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == DOL.SolidReason)
             {
-                if (actionID == SolidReason)
-                {
-                    if (level >= Levels.WiseToTheWorld && HasEffect(Buffs.EurekaMoment))
-                        return MinWiseToTheWorld;
-                }
-
-                if (actionID == AgelessWords)
-                {
-                    if (level >= Levels.WiseToTheWorld && HasEffect(Buffs.EurekaMoment))
-                        return BtnWiseToTheWorld;
-                }
-
-                return actionID;
+                if (level >= DOL.Levels.WiseToTheWorld && HasEffect(DOL.Buffs.EurekaMoment))
+                    return DOL.MinWiseToTheWorld;
             }
+
+            if (actionID == DOL.AgelessWords)
+            {
+                if (level >= DOL.Levels.WiseToTheWorld && HasEffect(DOL.Buffs.EurekaMoment))
+                    return DOL.BtnWiseToTheWorld;
+            }
+
+            return actionID;
         }
+    }
 
-        internal class FisherCast : CustomCombo
+    internal class FisherCast : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DolAny;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DolAny;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == DOL.Cast)
             {
-                if (actionID == Cast)
+                if (IsEnabled(CustomComboPreset.DolCastHookFeature))
                 {
-                    if (IsEnabled(CustomComboPreset.DolCastHookFeature))
-                    {
-                        if (HasCondition(ConditionFlag.Fishing))
-                            return Hook;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.DolCastGigFeature))
-                    {
-                        if (HasCondition(ConditionFlag.Diving))
-                            return Gig;
-                    }
+                    if (HasCondition(ConditionFlag.Fishing))
+                        return DOL.Hook;
                 }
 
-                if (actionID == SurfaceSlap)
+                if (IsEnabled(CustomComboPreset.DolCastGigFeature))
                 {
-                    if (IsEnabled(CustomComboPreset.DolSurfaceTradeFeature))
-                    {
-                        if (HasCondition(ConditionFlag.Diving))
-                            return VeteranTrade;
-                    }
+                    if (HasCondition(ConditionFlag.Diving))
+                        return DOL.Gig;
                 }
-
-                if (actionID == PrizeCatch)
-                {
-                    if (IsEnabled(CustomComboPreset.DolPrizeBountyFeature))
-                    {
-                        if (HasCondition(ConditionFlag.Diving))
-                            return NaturesBounty;
-                    }
-                }
-
-                if (actionID == Snagging)
-                {
-                    if (IsEnabled(CustomComboPreset.DolSnaggingSalvageFeature))
-                    {
-                        if (HasCondition(ConditionFlag.Diving))
-                            return Salvage;
-                    }
-                }
-
-                if (actionID == CastLight)
-                {
-                    if (IsEnabled(CustomComboPreset.DolCastLightElectricCurrentFeature))
-                    {
-                        if (HasCondition(ConditionFlag.Diving))
-                            return ElectricCurrent;
-                    }
-                }
-
-                return actionID;
             }
+
+            if (actionID == DOL.SurfaceSlap)
+            {
+                if (IsEnabled(CustomComboPreset.DolSurfaceTradeFeature))
+                {
+                    if (HasCondition(ConditionFlag.Diving))
+                        return DOL.VeteranTrade;
+                }
+            }
+
+            if (actionID == DOL.PrizeCatch)
+            {
+                if (IsEnabled(CustomComboPreset.DolPrizeBountyFeature))
+                {
+                    if (HasCondition(ConditionFlag.Diving))
+                        return DOL.NaturesBounty;
+                }
+            }
+
+            if (actionID == DOL.Snagging)
+            {
+                if (IsEnabled(CustomComboPreset.DolSnaggingSalvageFeature))
+                {
+                    if (HasCondition(ConditionFlag.Diving))
+                        return DOL.Salvage;
+                }
+            }
+
+            if (actionID == DOL.CastLight)
+            {
+                if (IsEnabled(CustomComboPreset.DolCastLightElectricCurrentFeature))
+                {
+                    if (HasCondition(ConditionFlag.Diving))
+                        return DOL.ElectricCurrent;
+                }
+            }
+
+            return actionID;
         }
     }
 }

@@ -45,122 +45,121 @@ namespace XIVSlothComboPlugin
                 SeakedForkedRaiju = 3195,
                 SealedMeisui = 3198;
         }
+    }
 
+    internal class NINBurstMode : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINBurstMode;
 
-        internal class NINBurstMode : CustomCombo
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINBurstMode;
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            if (actionID is NINPVP.SpinningEdge or NINPVP.AeolianEdge or NINPVP.GustSlash)
             {
-                if (actionID is SpinningEdge or AeolianEdge or GustSlash)
+                var threeMudrasCD = GetCooldown(NINPVP.ThreeMudra);
+                var fumaCD = GetCooldown(NINPVP.FumaShuriken);
+                var bunshinStacks = HasEffect(NINPVP.Buffs.Bunshin) ? GetBuffStacks(NINPVP.Buffs.Bunshin) : 0;
+                bool raijuLocked = HasEffect(NINPVP.Debuffs.SeakedForkedRaiju);
+                bool meisuiLocked = HasEffect(NINPVP.Debuffs.SealedMeisui);
+                bool hyoshoLocked = HasEffect(NINPVP.Debuffs.SealedHyoshoRanryu);
+                bool dotonLocked = HasEffect(NINPVP.Debuffs.SealedDoton);
+                bool gokaLocked = HasEffect(NINPVP.Debuffs.SealedGokaMekkyaku);
+                bool hutonLocked = HasEffect(NINPVP.Debuffs.SealedHuton);
+                bool mudraMode = HasEffect(NINPVP.Buffs.ThreeMudra);
+                bool canWeave = CanWeave(actionID);
+
+                if (HasEffect(NINPVP.Buffs.Hidden))
+                    return OriginalHook(NINPVP.Assassinate);
+
+                if (canWeave)
                 {
-                    var threeMudrasCD = GetCooldown(ThreeMudra);
-                    var fumaCD = GetCooldown(FumaShuriken);
-                    var bunshinStacks = HasEffect(Buffs.Bunshin) ? GetBuffStacks(Buffs.Bunshin) : 0;
-                    bool raijuLocked = HasEffect(Debuffs.SeakedForkedRaiju);
-                    bool meisuiLocked = HasEffect(Debuffs.SealedMeisui);
-                    bool hyoshoLocked = HasEffect(Debuffs.SealedHyoshoRanryu);
-                    bool dotonLocked = HasEffect(Debuffs.SealedDoton);
-                    bool gokaLocked = HasEffect(Debuffs.SealedGokaMekkyaku);
-                    bool hutonLocked = HasEffect(Debuffs.SealedHuton);
-                    bool mudraMode = HasEffect(Buffs.ThreeMudra);
-                    bool canWeave = CanWeave(actionID);
+                    if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown)
+                        return OriginalHook(NINPVP.Mug);
 
-                    if (HasEffect(Buffs.Hidden))
-                        return OriginalHook(Assassinate);
+                    if (!GetCooldown(NINPVP.Bunshin).IsCooldown)
+                        return OriginalHook(NINPVP.Bunshin);
 
-                    if (canWeave)
-                    {
-                        if (InMeleeRange() && !GetCooldown(Mug).IsCooldown)
-                            return OriginalHook(Mug);
-
-                        if (!GetCooldown(Bunshin).IsCooldown)
-                            return OriginalHook(Bunshin);
-
-                        if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
-                            return OriginalHook(ThreeMudra);
-                    }
-
-                    if (mudraMode)
-                    {
-                        if (!hyoshoLocked)
-                            return OriginalHook(HyoshoRanryu);
-
-                        if (!raijuLocked && bunshinStacks > 0)
-                            return OriginalHook(ForkedRaiju);
-
-                        if (!hutonLocked)
-                            return Huton;
-                    }
-
-                    if (fumaCD.RemainingCharges > 0)
-                        return OriginalHook(FumaShuriken);
-
+                    if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
+                        return OriginalHook(NINPVP.ThreeMudra);
                 }
 
-                return actionID;
+                if (mudraMode)
+                {
+                    if (!hyoshoLocked)
+                        return OriginalHook(NINPVP.HyoshoRanryu);
+
+                    if (!raijuLocked && bunshinStacks > 0)
+                        return OriginalHook(NINPVP.ForkedRaiju);
+
+                    if (!hutonLocked)
+                        return NINPVP.Huton;
+                }
+
+                if (fumaCD.RemainingCharges > 0)
+                    return OriginalHook(NINPVP.FumaShuriken);
+
             }
+
+            return actionID;
         }
+    }
 
-        internal class NINAoEBurstMode : CustomCombo
+    internal class NINAoEBurstMode : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINAoEBurstMode;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINAoEBurstMode;
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            if (actionID == NINPVP.FumaShuriken)
             {
-                if (actionID == FumaShuriken)
+                var threeMudrasCD = GetCooldown(NINPVP.ThreeMudra);
+                var fumaCD = GetCooldown(NINPVP.FumaShuriken);
+                var bunshinStacks = HasEffect(NINPVP.Buffs.Bunshin) ? GetBuffStacks(NINPVP.Buffs.Bunshin) : 0;
+                bool raijuLocked = HasEffect(NINPVP.Debuffs.SeakedForkedRaiju);
+                bool meisuiLocked = HasEffect(NINPVP.Debuffs.SealedMeisui);
+                bool hyoshoLocked = HasEffect(NINPVP.Debuffs.SealedHyoshoRanryu);
+                bool dotonLocked = HasEffect(NINPVP.Debuffs.SealedDoton);
+                bool gokaLocked = HasEffect(NINPVP.Debuffs.SealedGokaMekkyaku);
+                bool hutonLocked = HasEffect(NINPVP.Debuffs.SealedHuton);
+                bool mudraMode = HasEffect(NINPVP.Buffs.ThreeMudra);
+                bool canWeave = CanWeave(actionID);
+
+                if (canWeave)
                 {
-                    var threeMudrasCD = GetCooldown(ThreeMudra);
-                    var fumaCD = GetCooldown(FumaShuriken);
-                    var bunshinStacks = HasEffect(Buffs.Bunshin) ? GetBuffStacks(Buffs.Bunshin) : 0;
-                    bool raijuLocked = HasEffect(Debuffs.SeakedForkedRaiju);
-                    bool meisuiLocked = HasEffect(Debuffs.SealedMeisui);
-                    bool hyoshoLocked = HasEffect(Debuffs.SealedHyoshoRanryu);
-                    bool dotonLocked = HasEffect(Debuffs.SealedDoton);
-                    bool gokaLocked = HasEffect(Debuffs.SealedGokaMekkyaku);
-                    bool hutonLocked = HasEffect(Debuffs.SealedHuton);
-                    bool mudraMode = HasEffect(Buffs.ThreeMudra);
-                    bool canWeave = CanWeave(actionID);
+                    if (InMeleeRange() && !GetCooldown(NINPVP.Mug).IsCooldown)
+                        return NINPVP.Mug;
 
-                    if (canWeave)
-                    {
-                        if (InMeleeRange() && !GetCooldown(Mug).IsCooldown)
-                            return Mug;
+                    if (!GetCooldown(NINPVP.Bunshin).IsCooldown)
+                        return NINPVP.Bunshin;
 
-                        if (!GetCooldown(Bunshin).IsCooldown)
-                            return Bunshin;
-
-                        if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
-                            return OriginalHook(ThreeMudra);
-                    }
-
-                    if (mudraMode)
-                    {
-                        if (!dotonLocked)
-                            return OriginalHook(Doton);
-
-                        if (!gokaLocked)
-                            return OriginalHook(GokaMekkyaku);
-                    }
-
-                    if (fumaCD.RemainingCharges > 0)
-                        return OriginalHook(FumaShuriken);
-
-                    if (InMeleeRange())
-                    {
-                        if (lastComboActionID == GustSlash)
-                            return OriginalHook(AeolianEdge);
-
-                        if (lastComboActionID == SpinningEdge)
-                            return OriginalHook(GustSlash);
-
-                        return OriginalHook(SpinningEdge);
-                    }
+                    if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
+                        return OriginalHook(NINPVP.ThreeMudra);
                 }
 
-                return actionID;
+                if (mudraMode)
+                {
+                    if (!dotonLocked)
+                        return OriginalHook(NINPVP.Doton);
+
+                    if (!gokaLocked)
+                        return OriginalHook(NINPVP.GokaMekkyaku);
+                }
+
+                if (fumaCD.RemainingCharges > 0)
+                    return OriginalHook(NINPVP.FumaShuriken);
+
+                if (InMeleeRange())
+                {
+                    if (lastComboActionID == NINPVP.GustSlash)
+                        return OriginalHook(NINPVP.AeolianEdge);
+
+                    if (lastComboActionID == NINPVP.SpinningEdge)
+                        return OriginalHook(NINPVP.GustSlash);
+
+                    return OriginalHook(NINPVP.SpinningEdge);
+                }
             }
+
+            return actionID;
         }
     }
 }

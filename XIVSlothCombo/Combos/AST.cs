@@ -266,99 +266,138 @@ namespace XIVSlothComboPlugin.Combos
                 Sage = "賢者",
                 Conjurer = "幻術士";
         }
+    }
 
+    internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
+    {
+        private new bool GetTarget = true;
 
-        internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
+        private GameObject? CurrentTarget;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            private new bool GetTarget = true;
-
-            private new GameObject? CurrentTarget;
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == Play)
-                {
-                    var gauge = GetJobGauge<ASTGauge>();
-                    var haveCard = HasEffect(Buffs.Balance) || HasEffect(Buffs.Bole) || HasEffect(Buffs.Arrow) || HasEffect(Buffs.Spear) || HasEffect(Buffs.Ewer) || HasEffect(Buffs.Spire);
-                    var cardDrawn = gauge.DrawnCard;
-
-                    if (!gauge.ContainsSeal(SealType.NONE) && IsEnabled(CustomComboPreset.AstrologianAstrodyneOnPlayFeature) && (gauge.DrawnCard != CardType.NONE || GetCooldown(Draw).CooldownRemaining > 30))
-                        return Astrodyne;
-
-                    if (haveCard)
-                    {
-                        if (HasEffect(Buffs.ClarifyingDraw) && IsEnabled(CustomComboPreset.AstRedrawFeature))
-                        {
-                            if ((cardDrawn == CardType.BALANCE && gauge.Seals.Contains(SealType.SUN)) ||
-                                (cardDrawn == CardType.ARROW && gauge.Seals.Contains(SealType.MOON)) ||
-                                (cardDrawn == CardType.SPEAR && gauge.Seals.Contains(SealType.CELESTIAL)) ||
-                                (cardDrawn == CardType.BOLE && gauge.Seals.Contains(SealType.SUN)) ||
-                                (cardDrawn == CardType.EWER && gauge.Seals.Contains(SealType.MOON)) ||
-                                (cardDrawn == CardType.SPIRE && gauge.Seals.Contains(SealType.CELESTIAL)))
-
-                                return Redraw;
-                        }
-                        if (IsEnabled(CustomComboPreset.AstAutoCardTarget))
-                        {
-                            if (GetTarget || (IsEnabled(CustomComboPreset.AstrologianTargetLock)))
-                                SetTarget();
-
-
-                        }
-
-                        return OriginalHook(Play);
-                    }
-
-                    if (!GetTarget && (IsEnabled(CustomComboPreset.AstReFocusFeature) || IsEnabled(CustomComboPreset.AstReTargetFeature)))
-                    {
-                        if (IsEnabled(CustomComboPreset.AstReTargetFeature))
-                        {
-                            TargetObject(CurrentTarget);
-                        }
-
-
-                        if (IsEnabled(CustomComboPreset.AstReFocusFeature))
-                            TargetObject(TargetType.FocusTarget);
-                    }
-
-                    GetTarget = true;
-                    return OriginalHook(Draw);
-                }
-
-                return actionID;
-            }
-
-            private bool SetTarget()
+            if (actionID == AST.Play)
             {
                 var gauge = GetJobGauge<ASTGauge>();
-                if (gauge.DrawnCard.Equals(CardType.NONE)) return false;
+                var haveCard = HasEffect(AST.Buffs.Balance) || HasEffect(AST.Buffs.Bole) || HasEffect(AST.Buffs.Arrow) || HasEffect(AST.Buffs.Spear) || HasEffect(AST.Buffs.Ewer) || HasEffect(AST.Buffs.Spire);
                 var cardDrawn = gauge.DrawnCard;
-                if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
-                //Checks for trusts then normal parties
-                int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
-                if (GetPartyMembers().Length > 0) maxPartySize = GetPartyMembers().Length;
-                if (GetPartyMembers().Length == 0 && Service.BuddyList.Length == 0) maxPartySize = 0;
 
-                for (int i = 2; i <= maxPartySize; i++)
+                if (!gauge.ContainsSeal(SealType.NONE) && IsEnabled(CustomComboPreset.AstrologianAstrodyneOnPlayFeature) && (gauge.DrawnCard != CardType.NONE || GetCooldown(AST.Draw).CooldownRemaining > 30))
+                    return AST.Astrodyne;
+
+                if (haveCard)
+                {
+                    if (HasEffect(AST.Buffs.ClarifyingDraw) && IsEnabled(CustomComboPreset.AstRedrawFeature))
+                    {
+                        if ((cardDrawn == CardType.BALANCE && gauge.Seals.Contains(SealType.SUN)) ||
+                            (cardDrawn == CardType.ARROW && gauge.Seals.Contains(SealType.MOON)) ||
+                            (cardDrawn == CardType.SPEAR && gauge.Seals.Contains(SealType.CELESTIAL)) ||
+                            (cardDrawn == CardType.BOLE && gauge.Seals.Contains(SealType.SUN)) ||
+                            (cardDrawn == CardType.EWER && gauge.Seals.Contains(SealType.MOON)) ||
+                            (cardDrawn == CardType.SPIRE && gauge.Seals.Contains(SealType.CELESTIAL)))
+
+                            return AST.Redraw;
+                    }
+                    if (IsEnabled(CustomComboPreset.AstAutoCardTarget))
+                    {
+                        if (GetTarget || (IsEnabled(CustomComboPreset.AstrologianTargetLock)))
+                            SetTarget();
+                        
+                            
+                    }
+
+                    return OriginalHook(AST.Play);
+                }
+
+                if (!GetTarget && (IsEnabled(CustomComboPreset.AstReFocusFeature) || IsEnabled(CustomComboPreset.AstReTargetFeature)))
+                {
+                    if (IsEnabled(CustomComboPreset.AstReTargetFeature))
+                    {
+                        Dalamud.Logging.PluginLog.Debug("Previous?");
+                        TargetObject(CurrentTarget);
+                    }
+                    
+
+                    if (IsEnabled(CustomComboPreset.AstReFocusFeature))
+                        TargetObject(TargetType.FocusTarget);
+                }
+
+                GetTarget = true;
+                return OriginalHook(AST.Draw);
+            }
+
+            return actionID;
+        }
+
+        private bool SetTarget()
+        {
+            var gauge = GetJobGauge<ASTGauge>();
+            if (gauge.DrawnCard.Equals(CardType.NONE)) return false;
+            var cardDrawn = gauge.DrawnCard;
+            if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
+            //Checks for trusts then normal parties
+            int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
+            if (GetPartyMembers().Length > 0) maxPartySize = GetPartyMembers().Length;
+            if (GetPartyMembers().Length == 0 && Service.BuddyList.Length == 0) maxPartySize = 0;
+
+            for (int i = 2; i <= maxPartySize; i++)
+            {
+                GameObject? member = GetPartySlot(i);
+
+                if (member == null) break;
+                string job = "";
+                if (member is BattleNpc) job = (member as BattleNpc).ClassJob.GameData.Name.ToString();
+                if (member is BattleChara) job = (member as BattleChara).ClassJob.GameData.Name.ToString();
+
+                if (FindEffectOnMember(AST.Buffs.BalanceDamage, member) is not null) continue;
+                if (FindEffectOnMember(AST.Buffs.ArrowDamage, member) is not null) continue;
+                if (FindEffectOnMember(AST.Buffs.BoleDamage, member) is not null) continue;
+                if (FindEffectOnMember(AST.Buffs.EwerDamage, member) is not null) continue;
+                if (FindEffectOnMember(AST.Buffs.SpireDamage, member) is not null) continue;
+                if (FindEffectOnMember(AST.Buffs.SpearDamage, member) is not null) continue;
+
+                if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
+                {
+                    if (typeof(AST.MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                    {
+                        TargetObject(member);
+                        GetTarget = false;
+                        return true;
+                    }
+
+                }
+                if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
+                {
+                    if (typeof(AST.RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                    {
+                        TargetObject(member);
+                        GetTarget = false;
+                        return true;
+                    }
+                }
+            }
+
+            if (IsEnabled(CustomComboPreset.AstrologianTargetExtraFeature))
+            {
+                for (int i = 1; i <= maxPartySize; i++)
                 {
                     GameObject? member = GetPartySlot(i);
-
                     if (member == null) break;
                     string job = "";
                     if (member is BattleNpc) job = (member as BattleNpc).ClassJob.GameData.Name.ToString();
                     if (member is BattleChara) job = (member as BattleChara).ClassJob.GameData.Name.ToString();
 
-                    if (FindEffectOnMember(Buffs.BalanceDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.ArrowDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.BoleDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.EwerDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
+                    if (FindEffectOnMember(AST.Buffs.BalanceDamage, member) is not null) continue;
+                    if (FindEffectOnMember(AST.Buffs.ArrowDamage, member) is not null) continue;
+                    if (FindEffectOnMember(AST.Buffs.BoleDamage, member) is not null) continue;
+                    if (FindEffectOnMember(AST.Buffs.EwerDamage, member) is not null) continue;
+                    if (FindEffectOnMember(AST.Buffs.SpireDamage, member) is not null) continue;
+                    if (FindEffectOnMember(AST.Buffs.SpearDamage, member) is not null) continue;
 
                     if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                     {
-                        if (typeof(MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(MeleeCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(AST.TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetObject(member);
                             GetTarget = false;
@@ -368,501 +407,463 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                     {
-                        if (typeof(RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(RangedCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(AST.HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetObject(member);
                             GetTarget = false;
                             return true;
                         }
+                        
                     }
                 }
-
-                if (IsEnabled(CustomComboPreset.AstrologianTargetExtraFeature))
-                {
-                    for (int i = 1; i <= maxPartySize; i++)
-                    {
-                        GameObject? member = GetPartySlot(i);
-                        if (member == null) break;
-                        string job = "";
-                        if (member is BattleNpc) job = (member as BattleNpc).ClassJob.GameData.Name.ToString();
-                        if (member is BattleChara) job = (member as BattleChara).ClassJob.GameData.Name.ToString();
-
-                        if (FindEffectOnMember(Buffs.BalanceDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.ArrowDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.BoleDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.EwerDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
-
-                        if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
-                        {
-                            if (typeof(TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(TankCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
-                            {
-                                TargetObject(member);
-                                GetTarget = false;
-                                return true;
-                            }
-
-                        }
-                        if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
-                        {
-                            if (typeof(HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(HealerCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
-                            {
-                                TargetObject(member);
-                                GetTarget = false;
-                                return true;
-                            }
-
-                        }
-                    }
-
-                }
-
-                return false;
 
             }
+
+            return false;
+
         }
+    }
 
 
-        internal class AstrologianCrownPlayFeature : CustomCombo
+    internal class AstrologianCrownPlayFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCrownPlayFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCrownPlayFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.CrownPlay)
             {
-                if (actionID == CrownPlay)
-                {
-                    var gauge = GetJobGauge<ASTGauge>();
-                    /*var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
-                    var lordofCrown = HasEffect(AST.Buffs.LordOfCrownsDrawn);
-                    var minorArcanaCD = GetCooldown(AST.MinorArcana);*/
-                    if (level >= Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE)
-                        return MinorArcana;
-                }
-
-                return actionID;
+                var gauge = GetJobGauge<ASTGauge>();
+                /*var ladyofCrown = HasEffect(AST.Buffs.LadyOfCrownsDrawn);
+                var lordofCrown = HasEffect(AST.Buffs.LordOfCrownsDrawn);
+                var minorArcanaCD = GetCooldown(AST.MinorArcana);*/
+                if (level >= AST.Levels.MinorArcana && gauge.DrawnCrownCard == CardType.NONE)
+                    return AST.MinorArcana;
             }
-        }
 
-        internal class AstrologianBeneficFeature : CustomCombo
+            return actionID;
+        }
+    }
+
+    internal class AstrologianBeneficFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianBeneficFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianBeneficFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.Benefic2)
             {
-                if (actionID == Benefic2)
-                {
-                    if (level < Levels.Benefic2)
-                        return Benefic;
-                }
-
-                return actionID;
+                if (level < AST.Levels.Benefic2)
+                    return AST.Benefic;
             }
-        }
 
-        internal class AstrologianAscendFeature : CustomCombo
+            return actionID;
+        }
+    }
+
+    internal class AstrologianAscendFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAscendFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAscendFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == All.Swiftcast)
             {
-                if (actionID == All.Swiftcast)
+                if (IsEnabled(CustomComboPreset.AstrologianAscendFeature))
                 {
-                    if (IsEnabled(CustomComboPreset.AstrologianAscendFeature))
-                    {
-                        if (HasEffect(All.Buffs.Swiftcast))
-                            return Ascend;
-                    }
-
-                    return OriginalHook(All.Swiftcast);
+                    if (HasEffect(All.Buffs.Swiftcast))
+                        return AST.Ascend;
                 }
 
-                return actionID;
+                return OriginalHook(All.Swiftcast);
             }
-        }
 
-        internal class AstrologianDpsFeature : CustomCombo
+            return actionID;
+        }
+    }
+
+    internal class AstrologianDpsFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianDpsFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianDpsFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.FallMalefic || actionID == AST.Malefic4 || actionID == AST.Malefic3 || actionID == AST.Malefic2 || actionID == AST.Malefic1)
             {
-                if (actionID == FallMalefic || actionID == Malefic4 || actionID == Malefic3 || actionID == Malefic2 || actionID == Malefic1)
+
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var combust3Debuff = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust2Debuff = FindTargetEffect(AST.Debuffs.Combust2);
+                var combust1Debuff = FindTargetEffect(AST.Debuffs.Combust1);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(All.LucidDreaming);
+                var fallmalefic = GetCooldown(AST.FallMalefic);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
+                        return AST.Lightspeed;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
+                        return AST.Astrodyne;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        return AST.Draw;
 
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var combust3Debuff = FindTargetEffect(Debuffs.Combust3);
-                    var combust2Debuff = FindTargetEffect(Debuffs.Combust2);
-                    var combust1Debuff = FindTargetEffect(Debuffs.Combust1);
-                    var gauge = GetJobGauge<ASTGauge>();
-                    var lucidDreaming = GetCooldown(All.LucidDreaming);
-                    var fallmalefic = GetCooldown(FallMalefic);
-                    var minorarcanaCD = GetCooldown(MinorArcana);
-                    var drawCD = GetCooldown(Draw);
-                    var actionIDCD = GetCooldown(actionID);
-                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(Config.ASTLucidDreamingFeature);
-
-                    if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
-                    {
-                        var lightspeed = GetCooldown(Lightspeed);
-                        if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
-                            return Lightspeed;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
-                    {
-                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
-                            return Astrodyne;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
-                    {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
-                            return Draw;
-
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
-                    {
-                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
-                            return MinorArcana;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
-                    {
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.2)
-                            return All.LucidDreaming;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
-                    {
-                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
-                            return LordOfCrowns;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 72 && incombat)
-                    {
-                        if ((combust3Debuff is null) || (combust3Debuff?.RemainingTime <= 3))
-                            return Combust3;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 46 && level <= 71 && incombat)
-                    {
-                        if ((combust2Debuff is null) || (combust2Debuff?.RemainingTime <= 3))
-                            return Combust2;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 4 && level <= 45 && incombat)
-                    {
-                        if ((combust1Debuff is null) || (combust1Debuff?.RemainingTime <= 3))
-                            return Combust1;
-                    }
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        return AST.MinorArcana;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.2)
+                        return All.LucidDreaming;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        return AST.LordOfCrowns;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 72 && incombat)
+                {
+                    if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
+                        return AST.Combust3;
                 }
 
-                return actionID;
-            }
-        }
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 46 && level <= 71 && incombat)
+                {
+                    if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
+                        return AST.Combust2;
+                }
 
-        internal class AstrologianHeliosFeature : CustomCombo
+                if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 4 && level <= 45 && incombat)
+                {
+                    if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
+                        return AST.Combust1;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class AstrologianHeliosFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianHeliosFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianHeliosFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.AspectedHelios)
             {
-                if (actionID == AspectedHelios)
+                var heliosBuff = FindEffect(AST.Buffs.AspectedHelios);
+                var horoscopeCD = GetCooldown(AST.Horoscope);
+                var celestialOppositionCD = GetCooldown(AST.CelestialOpposition);
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var gauge = GetJobGauge<ASTGauge>();
+
+                if (level < AST.Levels.AspectedHelios)
+                    return AST.Helios;
+
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLadyFeature))
                 {
-                    var heliosBuff = FindEffect(Buffs.AspectedHelios);
-                    var horoscopeCD = GetCooldown(Horoscope);
-                    var celestialOppositionCD = GetCooldown(CelestialOpposition);
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var gauge = GetJobGauge<ASTGauge>();
-
-                    if (level < Levels.AspectedHelios)
-                        return Helios;
-
-                    if (IsEnabled(CustomComboPreset.AstrologianLazyLadyFeature))
-                    {
-                        if (gauge.DrawnCrownCard == CardType.LADY && incombat && level >= Levels.CrownPlay)
-                            return LadyOfCrown;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.AstrologianCelestialOppositionFeature) && celestialOppositionCD.CooldownRemaining == 0 && level >= Levels.CelestialOpposition)
-                        return CelestialOpposition;
-
-                    if (IsEnabled(CustomComboPreset.AstrologianHoroscopeFeature))
-                    {
-                        if (horoscopeCD.CooldownRemaining == 0 && level >= Levels.Horoscope)
-                            return Horoscope;
-
-                        if ((!HasEffect(Buffs.AspectedHelios) && level >= Levels.AspectedHelios)
-                             || HasEffect(Buffs.Horoscope)
-                             || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
-                            return AspectedHelios;
-
-                        if (HasEffect(Buffs.HoroscopeHelios))
-                            return OriginalHook(Horoscope);
-                    }
-
-                    if (HasEffect(Buffs.AspectedHelios) && heliosBuff?.RemainingTime > 2)
-                        return Helios;
+                    if (gauge.DrawnCrownCard == CardType.LADY && incombat && level >= AST.Levels.CrownPlay)
+                        return AST.LadyOfCrown;
                 }
 
-                return actionID;
+                if (IsEnabled(CustomComboPreset.AstrologianCelestialOppositionFeature) && celestialOppositionCD.CooldownRemaining == 0 && level >= AST.Levels.CelestialOpposition)
+                    return AST.CelestialOpposition;
+
+                if (IsEnabled(CustomComboPreset.AstrologianHoroscopeFeature))
+                {
+                    if (horoscopeCD.CooldownRemaining == 0 && level >= AST.Levels.Horoscope)
+                        return AST.Horoscope;
+
+                    if ((!HasEffect(AST.Buffs.AspectedHelios) && level >= AST.Levels.AspectedHelios)
+                         || HasEffect(AST.Buffs.Horoscope)
+                         || (HasEffect(AST.Buffs.NeutralSect) && !HasEffect(AST.Buffs.NeutralSectShield)))
+                        return AST.AspectedHelios;
+
+                    if (HasEffect(AST.Buffs.HoroscopeHelios))
+                        return OriginalHook(AST.Horoscope);
+                }
+
+                if (HasEffect(AST.Buffs.AspectedHelios) && heliosBuff.RemainingTime > 2)
+                    return AST.Helios;
             }
+
+            return actionID;
         }
-        internal class AstrologianDpsAoEFeature : CustomCombo
+    }
+    internal class AstrologianDpsAoEFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianDpsAoEFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianDpsAoEFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.Gravity || actionID == AST.Gravity2)
             {
-                if (actionID == Gravity || actionID == Gravity2)
+
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(All.LucidDreaming);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
-
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var gauge = GetJobGauge<ASTGauge>();
-                    var lucidDreaming = GetCooldown(All.LucidDreaming);
-                    var minorarcanaCD = GetCooldown(MinorArcana);
-                    var drawCD = GetCooldown(Draw);
-                    var actionIDCD = GetCooldown(actionID);
-                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(Config.ASTLucidDreamingFeature);
-
-                    if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
-                    {
-                        var lightspeed = GetCooldown(Lightspeed);
-                        if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
-                            return Lightspeed;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
-                    {
-                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 50)
-                            return Astrodyne;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
-                    {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
-                            return Draw;
-
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
-                    {
-                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
-                            return LordOfCrowns;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
-                    {
-                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
-                            return MinorArcana;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
-                    {
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && actionIDCD.CooldownRemaining > 0.2)
-                            return All.LucidDreaming;
-                    }
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
+                        return AST.Lightspeed;
                 }
-                return actionID;
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 50)
+                        return AST.Astrodyne;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        return AST.Draw;
+
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        return AST.LordOfCrowns;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        return AST.MinorArcana;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && actionIDCD.CooldownRemaining > 0.2 )
+                        return All.LucidDreaming;
+                }
             }
+            return actionID;
         }
-        internal class AstrologianAstrodyneOnPlayFeature : CustomCombo
+    }
+    internal class AstrologianAstrodyneOnPlayFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAstrodyneOnPlayFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAstrodyneOnPlayFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.Play && !IsEnabled(CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat))
             {
-                if (actionID == Play && !IsEnabled(CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat))
-                {
-                    var gauge = GetJobGauge<ASTGauge>();
-                    if (!gauge.ContainsSeal(SealType.NONE))
-                        return Astrodyne;
-                }
-                return actionID;
-
+                var gauge = GetJobGauge<ASTGauge>();
+                if (!gauge.ContainsSeal(SealType.NONE))
+                    return AST.Astrodyne;
             }
+            return actionID;
+
         }
-        internal class AstrologianAlternateDpsFeature : CustomCombo
+    }
+    internal class AstrologianAlternateDpsFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAlternateDpsFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAlternateDpsFeature;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.Combust1 || actionID == AST.Combust2 || actionID == AST.Combust3)
             {
-                if (actionID == Combust1 || actionID == Combust2 || actionID == Combust3)
+
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var combust3Debuff = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust2Debuff = FindTargetEffect(AST.Debuffs.Combust2);
+                var combust1Debuff = FindTargetEffect(AST.Debuffs.Combust1);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(All.LucidDreaming);
+                var fallmalefic = GetCooldown(AST.FallMalefic);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
+
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
-
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var combust3Debuff = FindTargetEffect(Debuffs.Combust3);
-                    var combust2Debuff = FindTargetEffect(Debuffs.Combust2);
-                    var combust1Debuff = FindTargetEffect(Debuffs.Combust1);
-                    var gauge = GetJobGauge<ASTGauge>();
-                    var lucidDreaming = GetCooldown(All.LucidDreaming);
-                    var fallmalefic = GetCooldown(FallMalefic);
-                    var minorarcanaCD = GetCooldown(MinorArcana);
-                    var drawCD = GetCooldown(Draw);
-                    var actionIDCD = GetCooldown(actionID);
-                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(Config.ASTLucidDreamingFeature);
-
-
-                    if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
-                    {
-                        var lightspeed = GetCooldown(Lightspeed);
-                        if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
-                            return Lightspeed;
-                    }
-                    if (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
-                    {
-                        return OriginalHook(Malefic1);
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
-                    {
-                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
-                            return Astrodyne;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
-                    {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
-                            return Draw;
-
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
-                    {
-                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
-                            return MinorArcana;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
-                    {
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.2)
-                            return All.LucidDreaming;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
-                    {
-                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
-                            return LordOfCrowns;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 72 && incombat)
-                    {
-                        if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
-                            return Combust3;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 46 && level <= 71 && incombat)
-                    {
-                        if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
-                            return Combust2;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 4 && level <= 45 && incombat)
-                    {
-                        if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
-                            return Combust1;
-                    }
-                    return OriginalHook(Malefic1);
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
+                        return AST.Lightspeed;
                 }
-                return actionID;
+                if (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                {
+                    return OriginalHook(AST.Malefic1);
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
+                        return AST.Astrodyne;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        return AST.Draw;
+
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        return AST.MinorArcana;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.2)
+                        return All.LucidDreaming;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        return AST.LordOfCrowns;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 72 && incombat)
+                {
+                    if ((combust3Debuff is null) || (combust3Debuff.RemainingTime <= 3))
+                        return AST.Combust3;
+                }
+
+                if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 46 && level <= 71 && incombat)
+                {
+                    if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
+                        return AST.Combust2;
+                }
+
+                if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 4 && level <= 45 && incombat)
+                {
+                    if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
+                        return AST.Combust1;
+                }
+                return OriginalHook(AST.Malefic1);
             }
+            return actionID;
         }
-        internal class CustomValuesTest : CustomCombo
+    }
+    internal class CustomValuesTest : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.CustomValuesTest;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.CustomValuesTest;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.FallMalefic || actionID == AST.Malefic4 || actionID == AST.Malefic3 || actionID == AST.Malefic2 || actionID == AST.Malefic1)
             {
-                if (actionID == FallMalefic || actionID == Malefic4 || actionID == Malefic3 || actionID == Malefic2 || actionID == Malefic1)
+
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                var combust3Debuff = FindTargetEffect(AST.Debuffs.Combust3);
+                var combust2Debuff = FindTargetEffect(AST.Debuffs.Combust2);
+                var combust1Debuff = FindTargetEffect(AST.Debuffs.Combust1);
+                var gauge = GetJobGauge<ASTGauge>();
+                var lucidDreaming = GetCooldown(All.LucidDreaming);
+                var fallmalefic = GetCooldown(AST.FallMalefic);
+                var minorarcanaCD = GetCooldown(AST.MinorArcana);
+                var drawCD = GetCooldown(AST.Draw);
+                var actionIDCD = GetCooldown(actionID);
+                var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
+                var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
+                var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
+                var lucidMPThreshold = Service.Configuration.GetCustomIntValue(AST.Config.ASTLucidDreamingFeature);
+
+                if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
                 {
-
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var combust3Debuff = FindTargetEffect(Debuffs.Combust3);
-                    var combust2Debuff = FindTargetEffect(Debuffs.Combust2);
-                    var combust1Debuff = FindTargetEffect(Debuffs.Combust1);
-                    var gauge = GetJobGauge<ASTGauge>();
-                    var lucidDreaming = GetCooldown(All.LucidDreaming);
-                    var fallmalefic = GetCooldown(FallMalefic);
-                    var minorarcanaCD = GetCooldown(MinorArcana);
-                    var drawCD = GetCooldown(Draw);
-                    var actionIDCD = GetCooldown(actionID);
-                    var MaxHpValue = Service.Configuration.EnemyHealthMaxHp;
-                    var PercentageHpValue = Service.Configuration.EnemyHealthPercentage;
-                    var CurrentHpValue = Service.Configuration.EnemyCurrentHp;
-                    var lucidMPThreshold = Service.Configuration.GetCustomIntValue(Config.ASTLucidDreamingFeature);
-
-                    if (IsEnabled(CustomComboPreset.AstrologianLightSpeedFeature) && level >= 6)
-                    {
-                        var lightspeed = GetCooldown(Lightspeed);
-                        if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4)
-                            return Lightspeed;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
-                    {
-                        if (!gauge.ContainsSeal(SealType.NONE) && lastComboMove == OriginalHook(actionID) && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
-                            return Astrodyne;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
-                    {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
-                            return Draw;
-
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
-                    {
-                        if (gauge.DrawnCrownCard == CardType.NONE && lastComboMove == OriginalHook(actionID) && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
-                            return MinorArcana;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
-                    {
-                        if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.4)
-                            return All.LucidDreaming;
-                    }
-                    if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
-                    {
-                        var buff = HasEffect(Buffs.Divination);
-                        var buffcd = GetCooldown(Divination);
-                        if (gauge.DrawnCrownCard == CardType.LORD && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buff || gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buffcd.IsCooldown)
-                            return LordOfCrowns;
-                    }
-                    if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 72 && incombat)
-                    {
-                        if ((combust3Debuff is null) && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue || (combust3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
-                            return Combust3;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 46 && level <= 71 && incombat)
-                    {
-                        if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
-                            return Combust2;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 4 && level <= 45 && incombat)
-                    {
-                        if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
-                            return Combust1;
-                    }
+                    var lightspeed = GetCooldown(AST.Lightspeed);
+                    if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4)
+                        return AST.Lightspeed;
                 }
-                return actionID;
-            }
+                if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
+                {
+                    if (!gauge.ContainsSeal(SealType.NONE) && lastComboMove == OriginalHook(actionID) && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
+                        return AST.Astrodyne;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
+                {
+                    if (gauge.DrawnCard.Equals(CardType.NONE) && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        return AST.Draw;
 
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
+                {
+                    if (gauge.DrawnCrownCard == CardType.NONE && lastComboMove == OriginalHook(actionID) && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                        return AST.MinorArcana;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
+                {
+                    if (!lucidDreaming.IsCooldown && LocalPlayer.CurrentMp <= lucidMPThreshold && fallmalefic.CooldownRemaining > 0.4)
+                        return All.LucidDreaming;
+                }
+                if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
+                {
+                    var buff = HasEffect(AST.Buffs.Divination);
+                    var buffcd = GetCooldown(AST.Divination);
+                    if (gauge.DrawnCrownCard == CardType.LORD && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buff || gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buffcd.IsCooldown)
+                        return AST.LordOfCrowns;
+                }
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 72 && incombat)
+                {
+                    if ((combust3Debuff is null) && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue || (combust3Debuff.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue)
+                        return AST.Combust3;
+                }
+
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 46 && level <= 71 && incombat)
+                {
+                    if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
+                        return AST.Combust2;
+                }
+
+                if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 4 && level <= 45 && incombat)
+                {
+                    if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
+                        return AST.Combust1;
+                }
+            }
+            return actionID;
         }
 
-        internal class AstrologianSimpleSingleTargetHeal : CustomCombo
+    }
+
+    internal class AstrologianSimpleSingleTargetHeal : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianSimpleSingleTargetHeal;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianSimpleSingleTargetHeal;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == AST.Benefic2)
             {
-                if (actionID == Benefic2)
-                {
-                    var aspectedBeneficHoT = FindTargetEffect(Buffs.AspectedBenefic);
-                    var NeutralSectBuff = FindTargetEffect(Buffs.NeutralSect);
-                    var NeutralSectShield = FindTargetEffect(Buffs.NeutralSectShield);
-                    var customEssentialDignity = Service.Configuration.GetCustomIntValue(Config.AstroEssentialDignity);
-                    var exaltationCD = GetCooldown(Exaltation);
+                var aspectedBeneficHoT = FindTargetEffect(AST.Buffs.AspectedBenefic);
+                var NeutralSectBuff = FindTargetEffect(AST.Buffs.NeutralSect);
+                var NeutralSectShield = FindTargetEffect(AST.Buffs.NeutralSectShield);
+                var customEssentialDignity = Service.Configuration.GetCustomIntValue(AST.Config.AstroEssentialDignity);
+                var exaltationCD = GetCooldown(AST.Exaltation);
 
-                    if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)) || ((NeutralSectShield is null) && (NeutralSectBuff is not null)))
-                        return AspectedBenefic;
+                if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)) || ((NeutralSectShield is null) && (NeutralSectBuff is not null)))
+                    return AST.AspectedBenefic;
 
-                    if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && GetCooldown(EssentialDignity).RemainingCharges > 0 && level >= Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
-                        return EssentialDignity;
+                if (IsEnabled(CustomComboPreset.AstroEssentialDignity) && GetCooldown(AST.EssentialDignity).RemainingCharges > 0 && level >= AST.Levels.EssentialDignity && EnemyHealthPercentage() <= customEssentialDignity)
+                    return AST.EssentialDignity;
 
-                    if (IsEnabled(CustomComboPreset.ExaltationFeature) && exaltationCD.CooldownRemaining == 0 && level >= Levels.Exaltation)
-                        return Exaltation;
+                if (IsEnabled(CustomComboPreset.ExaltationFeature) && exaltationCD.CooldownRemaining == 0 && level >= AST.Levels.Exaltation)
+                    return AST.Exaltation;
 
-                    if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) && GetCooldown(CelestialIntersection).RemainingCharges > 0 && level >= Levels.CelestialIntersection)
-                        return CelestialIntersection;
-                }
-
-
-                return actionID;
+                if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) && GetCooldown(AST.CelestialIntersection).RemainingCharges > 0 && level >= AST.Levels.CelestialIntersection)
+                    return AST.CelestialIntersection;
             }
+
+
+            return actionID;
         }
+
     }
 }

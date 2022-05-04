@@ -39,7 +39,7 @@ namespace XIVSlothComboPlugin
             Service.Address.Setup();
 
             if (Service.Configuration.Version == 4)
-                UpgradeConfig4();
+                this.UpgradeConfig4();
 
             Service.ComboCache = new CustomComboCache();
             Service.IconReplacer = new IconReplacer();
@@ -59,13 +59,6 @@ namespace XIVSlothComboPlugin
 
             Service.ClientState.Login += PrintLoginMessage;
 
-            ResetFeatures();
-        }
-
-        private static void ResetFeatures()
-        {
-            //DO NOT USE THIS ONE, HERE FOR DEMO PURPOSES ONLY
-            //Service.Configuration.ResetFeatures("PVP Feature Reset - May 2022", Enumerable.Range(80000, 9999).ToArray());
         }
 
         private void PrintLoginMessage(object? sender, EventArgs e)
@@ -295,7 +288,7 @@ namespace XIVSlothComboPlugin
                                 file.WriteLine($"END REDUNDANT IDs");
                             }
                             file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
-                            if (Service.ClientState.LocalPlayer.StatusList.Length > 0)
+                            if (Service.ClientState.LocalPlayer.StatusList.Count() > 0)
                             {
                                 file.WriteLine($"START STATUS EFFECTS");
                                 foreach (var status in Service.ClientState.LocalPlayer.StatusList)
@@ -324,7 +317,7 @@ namespace XIVSlothComboPlugin
             Service.Configuration.Save();
         }
 
-        private static void UpgradeConfig4()
+        private void UpgradeConfig4()
         {
             Service.Configuration.Version = 5;
             Service.Configuration.EnabledActions = Service.Configuration.EnabledActions4

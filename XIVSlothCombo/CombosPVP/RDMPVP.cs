@@ -37,43 +37,42 @@ namespace XIVSlothComboPlugin
                 VermilionRadiance = 3233,
                 MagickBarrier = 3240;
         }
+    }
 
+    internal class RedMageBurstMode : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDMBurstMode;
 
-        internal class RedMageBurstMode : CustomCombo
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDMBurstMode;
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            if (actionID is RDMPVP.Verstone or RDMPVP.Verfire)
             {
-                if (actionID is Verstone or Verfire)
+
+                if (!GetCooldown(RDMPVP.Frazzle).IsCooldown && HasEffect(RDMPVP.Buffs.BlackShift))
+                    return OriginalHook(RDMPVP.Frazzle);
+
+                if (!GetCooldown(RDMPVP.Resolution).IsCooldown)
+                    return OriginalHook(RDMPVP.Resolution);
+
+                if (!InMeleeRange() && GetCooldown(RDMPVP.CorpsACorps).RemainingCharges > 0 && !GetCooldown(RDMPVP.EnchantedRiposte).IsCooldown)
+                    return OriginalHook(RDMPVP.CorpsACorps);
+
+                if (InMeleeRange())
                 {
+                    if (!GetCooldown(RDMPVP.EnchantedRiposte).IsCooldown || lastComboActionID == RDMPVP.EnchantedRiposte || lastComboActionID == RDMPVP.EnchantedZwerchhau)
+                        return OriginalHook(RDMPVP.EnchantedRiposte);
 
-                    if (!GetCooldown(Frazzle).IsCooldown && HasEffect(Buffs.BlackShift))
-                        return OriginalHook(Frazzle);
-
-                    if (!GetCooldown(Resolution).IsCooldown)
-                        return OriginalHook(Resolution);
-
-                    if (!InMeleeRange() && GetCooldown(CorpsACorps).RemainingCharges > 0 && !GetCooldown(EnchantedRiposte).IsCooldown)
-                        return OriginalHook(CorpsACorps);
-
-                    if (InMeleeRange())
-                    {
-                        if (!GetCooldown(EnchantedRiposte).IsCooldown || lastComboActionID == EnchantedRiposte || lastComboActionID == EnchantedZwerchhau)
-                            return OriginalHook(EnchantedRiposte);
-
-                        if (lastComboActionID == EnchantedRedoublement && GetCooldown(Displacement).RemainingCharges > 0)
-                            return OriginalHook(Displacement);
-                    }
-
-                    if (HasEffect(Buffs.VermilionRadiance))
-                        return OriginalHook(EnchantedRiposte);
-
-                    return OriginalHook(Verstone);
+                    if (lastComboActionID == RDMPVP.EnchantedRedoublement && GetCooldown(RDMPVP.Displacement).RemainingCharges > 0)
+                        return OriginalHook(RDMPVP.Displacement);
                 }
 
-                return actionID;
+                if (HasEffect(RDMPVP.Buffs.VermilionRadiance))
+                    return OriginalHook(RDMPVP.EnchantedRiposte);
+
+                return OriginalHook(RDMPVP.Verstone);
             }
+
+            return actionID;
         }
     }
 }

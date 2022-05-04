@@ -1,4 +1,4 @@
-namespace XIVSlothComboPlugin.Combos
+﻿namespace XIVSlothComboPlugin.Combos
 {
     internal static class SAMPvP
     {

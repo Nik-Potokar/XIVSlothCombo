@@ -185,10 +185,6 @@ namespace XIVSlothComboPlugin
 
         [JsonProperty]
         private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
-
-        [JsonProperty]
-        private static Dictionary<string, bool> FeaturesReset { get; set; } = new Dictionary<string, bool>();
-
         public float GetCustomFloatValue(string config, float defaultMinValue = 0)
         {
             float configValue;
@@ -259,20 +255,6 @@ namespace XIVSlothComboPlugin
         public void SetCustomBoolArrayValue(string config, bool[] value)
         {
             CustomBoolArrayValues[config] = value;
-        }
-
-        public bool GetResetValues(string config)
-        {
-            bool output;
-
-            if (!FeaturesReset.TryGetValue(config, out output)) return false;
-
-            return true;
-        }
-
-        public void SetResetValues(string config, bool value)
-        {
-            FeaturesReset[config] = value;
         }
 
         public bool GetJobGridValue(string config, byte jobID)
@@ -367,45 +349,6 @@ namespace XIVSlothComboPlugin
                 BLU.JobID => 19,
                 _ => -1
             };
-        }
-
-        public void ResetFeatures(string config, int[] values)
-        {
-            if (!GetResetValues(config))
-            {
-                var presets = Enum.GetValues<CustomComboPreset>().Cast<int>();
-                List<CustomComboInfoAttribute> resetFeatures = new List<CustomComboInfoAttribute>();
-                foreach (int value in values)
-                {
-                    if (presets.Contains(value))
-                    {
-                        var preset = Enum.GetValues<CustomComboPreset>()
-                            .Where(preset => (int)preset == value)
-                            .First();
-
-                        if (IsEnabled(preset))
-                        {
-                            var attr = preset.GetAttribute<CustomComboInfoAttribute>();
-
-                            resetFeatures.Add(attr);
-
-                            EnabledActions.Remove(preset);
-                        }
-                    }
-                }
-
-                SetResetValues(config, true);
-                Save();
-                if (resetFeatures.Count > 0)
-                {
-                    Service.ChatGui.PrintError($"[XIV Sloth Combo] Some features have been un-enabled due to an update:");
-                    foreach (CustomComboInfoAttribute preset in resetFeatures)
-                    {
-                        Service.ChatGui.PrintError($"[XIV Sloth Combo] - {preset.JobName}: {preset.FancyName}");
-                    }
-                    Service.ChatGui.PrintError("[XIV Sloth Combo] Please re-enable these features if you wish to use them again. We apologise for the inconvenience.");
-                }
-            }
         }
     }
 }

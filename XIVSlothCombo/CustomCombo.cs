@@ -119,9 +119,6 @@ namespace XIVSlothComboPlugin.Combos
         {
             newActionID = 0;
 
-            if (!IsEnabled(this.Preset))
-                return false;
-
             // Movement
             if (this.MovingCounter == 0)
             {
@@ -136,7 +133,8 @@ namespace XIVSlothComboPlugin.Combos
             if (this.MovingCounter > 0)
                 this.MovingCounter--;
 
-
+            if (!IsEnabled(this.Preset))
+                return false;
 
             var classJobID = LocalPlayer!.ClassJob.Id;
 
@@ -803,11 +801,11 @@ namespace XIVSlothComboPlugin.Combos
         protected static bool InPvP()
             => Service.ClientState.IsPvP ||
             Service.ClientState.TerritoryType == 250 || //Wolves Den
-            (Service.ClientState.TerritoryType == 376 && Service.PartyList.Length > 1) || //Borderland Ruins
-            (Service.ClientState.TerritoryType == 431 && Service.PartyList.Length > 1) || //Seal Rock
-            (Service.ClientState.TerritoryType == 554 && Service.PartyList.Length > 1) || //Fields of Glory
-            (Service.ClientState.TerritoryType == 888 && Service.PartyList.Length > 1) || //Onsal Hakair
-            (Service.ClientState.TerritoryType == 729 && Service.PartyList.Length > 1) || //Astragalos
-            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Length > 1);   //Hidden Gorge
+            (Service.ClientState.TerritoryType == 376 && Service.PartyList.Count() > 1) || //Borderland Ruins
+            (Service.ClientState.TerritoryType == 431 && Service.PartyList.Count() > 1) || //Seal Rock
+            (Service.ClientState.TerritoryType == 554 && Service.PartyList.Count() > 1) || //Fields of Glory
+            (Service.ClientState.TerritoryType == 888 && Service.PartyList.Count() > 1) || //Onsal Hakair
+            (Service.ClientState.TerritoryType == 729 && Service.PartyList.Count() > 1) || //Astragalos
+            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Count() > 1);   //Hidden Gorge
     }
 }

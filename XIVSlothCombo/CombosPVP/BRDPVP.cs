@@ -32,30 +32,30 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 
-                if (actionID == PowerfulShot)
+                if (actionID == BRDPvP.PowerfulShot)
                 {
                     var canWeave = CanWeave(actionID, 0.5);
                     //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
                     if (canWeave)
                     {
-                        if (GetCooldown(EmpyrealArrow).RemainingCharges == 3)
-                            return OriginalHook(EmpyrealArrow);
+                        if (GetCooldown(BRDPvP.EmpyrealArrow).RemainingCharges == 3)
+                            return OriginalHook(BRDPvP.EmpyrealArrow);
 
-                        if (!GetCooldown(SilentNocturne).IsCooldown)
-                            return OriginalHook(SilentNocturne);
+                        if (!GetCooldown(BRDPvP.SilentNocturne).IsCooldown)
+                            return OriginalHook(BRDPvP.SilentNocturne);
                     }
 
-                    if (HasEffect(Buffs.BlastArrowReady))
-                        return OriginalHook(BlastArrow);
+                    if (HasEffect(BRDPvP.Buffs.BlastArrowReady))
+                        return OriginalHook(BRDPvP.BlastArrow);
 
-                    if (HasEffect(Buffs.Repertoire))
-                        return OriginalHook(PowerfulShot);
+                    if (HasEffect(BRDPvP.Buffs.Repertoire))
+                        return OriginalHook(BRDPvP.PowerfulShot);
 
-                    if (!GetCooldown(ApexArrow).IsCooldown)
-                        return OriginalHook(ApexArrow);
+                    if (!GetCooldown(BRDPvP.ApexArrow).IsCooldown)
+                        return OriginalHook(BRDPvP.ApexArrow);
 
-                    return OriginalHook(PowerfulShot);
+                    return OriginalHook(BRDPvP.PowerfulShot);
                 }
                 
                 return actionID;

@@ -35,52 +35,51 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Wildfire = 1323;
         }
+    }
 
+    internal class HeatedCleanShotFeature : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCHBurstMode;
 
-        internal class HeatedCleanShotFeature : CustomCombo
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCHBurstMode;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            if (actionID == MCHPVP.BlastCharge)
             {
-                if (actionID == BlastCharge)
+                var canWeave = CanWeave(actionID);
+                var analysisStacks = GetRemainingCharges(MCHPVP.Analysis);
+                var bigDamageStacks = GetRemainingCharges(OriginalHook(MCHPVP.Drill));
+                var overheated = HasEffect(MCHPVP.Buffs.Overheated);
+
+                if (canWeave && HasEffect(MCHPVP.Buffs.Overheated) && IsOffCooldown(MCHPVP.Wildfire))
+                    return OriginalHook(MCHPVP.Wildfire);
+
+                if (overheated)
+                    return OriginalHook(MCHPVP.HeatBlast);
+
+                if ((HasEffect(MCHPVP.Buffs.DrillPrimed) || 
+                    (HasEffect(MCHPVP.Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHAltAnalysis)) ||
+                    (HasEffect(MCHPVP.Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHAltAnalysis))) &&
+                    !HasEffect(MCHPVP.Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHAltDrill)
+                    || IsOnCooldown(MCHPVP.Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
+                    return OriginalHook(MCHPVP.Analysis);
+
+                if (bigDamageStacks > 0)
                 {
-                    var canWeave = CanWeave(actionID);
-                    var analysisStacks = GetRemainingCharges(Analysis);
-                    var bigDamageStacks = GetRemainingCharges(OriginalHook(Drill));
-                    var overheated = HasEffect(Buffs.Overheated);
+                    if (HasEffect(MCHPVP.Buffs.DrillPrimed))
+                        return OriginalHook(MCHPVP.Drill);
 
-                    if (canWeave && HasEffect(Buffs.Overheated) && IsOffCooldown(Wildfire))
-                        return OriginalHook(Wildfire);
+                    if (HasEffect(MCHPVP.Buffs.BioblasterPrimed) && GetTargetDistance() <= 12)
+                        return OriginalHook(MCHPVP.BioBlaster);
 
-                    if (overheated)
-                        return OriginalHook(HeatBlast);
+                    if (HasEffect(MCHPVP.Buffs.AirAnchorPrimed))
+                        return OriginalHook(MCHPVP.AirAnchor);
 
-                    if ((HasEffect(Buffs.DrillPrimed) ||
-                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHAltAnalysis)) ||
-                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHAltAnalysis))) &&
-                        !HasEffect(Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHAltDrill)
-                        || IsOnCooldown(Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
-                        return OriginalHook(Analysis);
-
-                    if (bigDamageStacks > 0)
-                    {
-                        if (HasEffect(Buffs.DrillPrimed))
-                            return OriginalHook(Drill);
-
-                        if (HasEffect(Buffs.BioblasterPrimed) && GetTargetDistance() <= 12)
-                            return OriginalHook(BioBlaster);
-
-                        if (HasEffect(Buffs.AirAnchorPrimed))
-                            return OriginalHook(AirAnchor);
-
-                        if (HasEffect(Buffs.ChainSawPrimed))
-                            return OriginalHook(ChainSaw);
-                    }
+                    if (HasEffect(MCHPVP.Buffs.ChainSawPrimed))
+                        return OriginalHook(MCHPVP.ChainSaw);
                 }
-
-                return actionID;
             }
+
+            return actionID;
         }
     }
 }
