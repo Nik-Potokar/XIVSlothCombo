@@ -1329,6 +1329,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
         MnkMeditationOnAoEComboFeature = 9023,
 
+        [ParentCombo(MnkArmOfTheDestroyerCombo)]
+        [CustomComboInfo("Thunderclap on AoE Combo", "Adds Thunderclap when out of combat to the AoE Combo.", MNK.JobID, 0, "", "")]
+        MnkThunderclapOnAoEComboFeature = 9024,
+
+        [ParentCombo(MnkBootshineCombo)]
+        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the Main Combo.", MNK.JobID, 0, "", "")]
+        MnkThunderclapOnMainComboFeature = 9025,
+
         #endregion
         // ====================================================================================
         #region NINJA
