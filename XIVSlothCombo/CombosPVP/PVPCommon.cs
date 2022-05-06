@@ -5,6 +5,8 @@ namespace XIVSlothComboPlugin
     internal static class PVPCommon
     {
         public const uint
+            Teleport = 5,
+            Return = 6,
             StandardElixir = 29055,
             Recuperate = 29711,
             Purify = 29056,
@@ -57,7 +59,9 @@ namespace XIVSlothComboPlugin
                      actionID != Recuperate &&
                      actionID != Purify &&
                      actionID != StandardElixir &&
-                     actionID != Sprint)
+                     actionID != Sprint &&
+                     actionID != Teleport &&
+                     actionID != Return)
                      return OriginalHook(Recuperate);
 
                 return actionID;
@@ -98,7 +102,9 @@ namespace XIVSlothComboPlugin
                     actionID != Recuperate &&
                     actionID != Purify &&
                     actionID != StandardElixir &&
-                    actionID != Sprint)
+                     actionID != Sprint &&
+                     actionID != Teleport &&
+                     actionID != Return)
                     return OriginalHook(Guard);
 
                 return actionID;
@@ -137,7 +143,9 @@ namespace XIVSlothComboPlugin
                     actionID != Recuperate &&
                     actionID != Purify &&
                     actionID != StandardElixir &&
-                    actionID != Sprint)
+                    actionID != Sprint &&
+                    actionID != Teleport &&
+                    actionID != Return)
                     return OriginalHook(Purify);
 
                 return actionID;
