@@ -51,7 +51,6 @@ namespace XIVSlothComboPlugin.Combos
 
             // Role
             Resurrection = 173;
-            //Esuna = 5768,
 
         public static class Buffs
         {
@@ -110,7 +109,10 @@ namespace XIVSlothComboPlugin.Combos
             public const string
                 SCH_ST_Broil_Lucid = "SCH_ST_Broil_Lucid",
                 SCH_ST_Broil_BioHPPer = "SCH_ST_Broil_BioHPPer",
+                SCH_ST_Broil_BioHPMax = "SCH_ST_Broil_BioHPMax",
+                SCH_ST_Broil_BioCurHP = "SCH_ST_Broil_BioCurHP",
                 SCH_ST_Broil_ChainStratagem = "SCH_ST_Broil_ChainStratagem",
+                SCH_Aetherflow_Display = "SCH_Aetherflow_Display",
                 SCH_Aetherflow_Recite_Excog = "SCH_Aetherflow_Recite_Excog",
                 SCH_Aetherflow_Recite_Indom = "SCH_Aetherflow_Recite_Indom",
                 SCH_FairyFeature = "SCH_FairyFeature";
@@ -138,7 +140,7 @@ namespace XIVSlothComboPlugin.Combos
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             if (actionID is SCH.EnergyDrain or SCH.Lustrate or SCH.SacredSoil or SCH.Indomitability or SCH.Excogitation &&
-                level >= SCH.Levels.Aetherflow)
+                level >= SCH.Levels.Aetherflow && IsOffCooldown(actionID))
             {
                 var gauge = GetJobGauge<SCHGauge>().Aetherflow;
                 if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite) && 
@@ -162,14 +164,18 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 if (gauge == 0)
                 {
-                    if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation) &&
-                        level >= SCH.Levels.Dissipation &&
-                        IsOffCooldown(SCH.Dissipation) &&
-                        IsOnCooldown(SCH.Aetherflow) &&
-                        HasPetPresent() //Dissipation requires fairy, can't seem to make it replace dissipation with fairy summon feature *shrug*
-                       ) return SCH.Dissipation;
-                    else return SCH.Aetherflow;
+                    if ((actionID is SCH.EnergyDrain && GetOptionValue(SCH.Config.SCH_Aetherflow_Display) == 1)
+                         || GetOptionValue(SCH.Config.SCH_Aetherflow_Display) == 2)
+                    {
+                        if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation)
+                            && level >= SCH.Levels.Dissipation
+                            && IsOffCooldown(SCH.Dissipation) 
+                            && IsOnCooldown(SCH.Aetherflow)
+                            //Dissipation requires fairy, can't seem to make it replace dissipation with fairy summon feature *shrug*
+                            && HasPetPresent()) return SCH.Dissipation;
 
+                        else return SCH.Aetherflow;
+                    }
                 }
             }
             return actionID;
@@ -223,6 +229,14 @@ namespace XIVSlothComboPlugin.Combos
                     CanSpellWeave(actionID)
                    ) return All.LucidDreaming;
 
+                //Aetherflow
+                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Aetherflow) &&
+                    level >= SCH.Levels.Aetherflow &&
+                    GetJobGauge<SCHGauge>().Aetherflow == 0 &&
+                    IsOffCooldown(SCH.Aetherflow) &&
+                    CanSpellWeave(actionID)
+                   ) return SCH.Aetherflow;
+
                 //Chain Stratagem
                 if (IsEnabled(CustomComboPreset.SCH_ST_Broil_ChainStratagem) &&
                     level >= SCH.Levels.ChainStratagem &&
@@ -231,6 +245,13 @@ namespace XIVSlothComboPlugin.Combos
                     EnemyHealthPercentage() > GetOptionValue(SCH.Config.SCH_ST_Broil_ChainStratagem) &&
                     CanSpellWeave(actionID)
                    ) return SCH.ChainStratagem;
+
+                //Ruin 2 Movement 
+                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Ruin2Movement) &&
+                    level >= SCH.Levels.Ruin2 &&
+                    HasBattleTarget() &&
+                    this.IsMoving
+                   ) return OriginalHook(SCH.Ruin2); //Who knows in the future
 
                 //Bio/Biolysis
                 if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Bio) && level >= SCH.Levels.Bio1 && CurrentTarget is not null)
@@ -262,29 +283,19 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         //Advanced Options Enabled to procede with auto-bio
                         //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
-                        if (IsEnabled(CustomComboPreset.SCH_ST_Broil_BioHPPer))
+                        if (IsEnabled(CustomComboPreset.SCH_ST_Broil_BioHPLimiters))
                         {
-                            if (EnemyHealthPercentage() > GetOptionValue(SCH.Config.SCH_ST_Broil_BioHPPer))
+                            var MaxHpValue = GetOptionValue(SCH.Config.SCH_ST_Broil_BioHPMax);
+                            var PercentageHpValue = GetOptionValue(SCH.Config.SCH_ST_Broil_BioHPPer);
+                            var CurrentHpValue = GetOptionValue(SCH.Config.SCH_ST_Broil_BioCurHP);
+
+                            if ((BioDebuffID is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) ||
+                                ((BioDebuffID?.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
                                 return OriginalHook(SCH.Bio1);
                         }
-                        else return OriginalHook(SCH.Bio1); ;
+                        else return OriginalHook(SCH.Bio1);
                     }
                 }
-
-                //Aetherflow
-                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Aetherflow) &&
-                    level >= SCH.Levels.Aetherflow &&
-                    GetJobGauge<SCHGauge>().Aetherflow == 0 &&
-                    IsOffCooldown(SCH.Aetherflow)
-                   ) return SCH.Aetherflow;
-
-                //Ruin 2 Movement 
-                if (IsEnabled(CustomComboPreset.SCH_ST_Broil_Ruin2Movement) &&
-                    level >= SCH.Levels.Ruin2 &&
-                    HasBattleTarget() &&
-                    this.IsMoving
-                   ) return OriginalHook(SCH.Ruin2); //Who knows in the future
-
                 //End
             }
             return actionID;

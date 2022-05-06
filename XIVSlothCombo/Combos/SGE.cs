@@ -52,9 +52,7 @@ namespace XIVSlothComboPlugin.Combos
             Rhizomata = 24309,
 
             // Role
-            Swiftcast = 756,
-            Egeiro = 24287,
-            LucidDreaming = 7562;
+            Egeiro = 24287;
 
         public static class Buffs
         {
@@ -109,12 +107,18 @@ namespace XIVSlothComboPlugin.Combos
                 Krasis = 86,
                 Pneuma = 90;
         }
+        public static class Range
+        {
+            public const byte Phlegma = 6;
+        }
 
         public static class Config
         {
             public const string
                 //GUI Customization Storage Names
                 SGE_ST_Dosis_EDosisHPPer = "SGE_ST_Dosis_EDosisHPPer",
+                SGE_ST_Dosis_EDosisHPMax = "SGE_ST_Dosis_EDosisHPMax",
+                SGE_ST_Dosis_EDosisCurHP = "SGE_ST_Dosis_EDosisCurHP",
                 SGE_ST_Dosis_Lucid = "SGE_ST_Dosis_Lucid",
                 SGE_ST_Dosis_Toxikon = "SGE_ST_Dosis_Toxikon",
                 SGE_ST_Heal_Zoe = "SGE_ST_Heal_Zoe",
@@ -183,26 +187,26 @@ namespace XIVSlothComboPlugin.Combos
         {
             if (actionID is SGE.Phlegma or SGE.Phlegma2 or SGE.Phlegma3)
             {
-                //Check for "out of Phlegma stacks" 
-                if (GetCooldown(OriginalHook(SGE.Phlegma)).RemainingCharges == 0)
+                var NoPhlegmaToxikon  = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaToxikon);
+                var OutOfRangeToxikon = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_OutOfRangeToxikon);
+                if ((NoPhlegmaToxikon || OutOfRangeToxikon) &&
+                    level >= SGE.Levels.Toxikon &&
+                    HasBattleTarget() && 
+                    GetJobGauge<SGEGauge>().Addersting > 0)
                 {
-                    //Toxikon Checks
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Toxikon) &&
-                        level >= SGE.Levels.Toxikon &&
-                        HasBattleTarget() &&
-                        GetJobGauge<SGEGauge>().Addersting > 0
-                       ) return OriginalHook(SGE.Toxikon);
-
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && level >= SGE.Levels.Dyskrasia)
-                        return OriginalHook(SGE.Dyskrasia);
+                    if ((NoPhlegmaToxikon && GetCooldown(OriginalHook(SGE.Phlegma)).RemainingCharges == 0) ||
+                        (OutOfRangeToxikon && (GetTargetDistance() > SGE.Range.Phlegma)))
+                       return OriginalHook(SGE.Toxikon);
                 }
-                //Sub-Sub Feature. Allows running around in a dungeon/field with nothing targetted, saving charges.
-                //Will switch back to Phlegma/Toxikon when targetting something, as those two are target only skills
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && //Check for parent until GUI fixes for an active child feature with a disabled parent
-                    IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia_NoTarget) &&
-                    level >= SGE.Levels.Dyskrasia &&
-                    CurrentTarget == null
-                   ) return OriginalHook(SGE.Dyskrasia);
+                var NoPhlegmaDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaDyskrasia);
+                var NoTargetDyskrasia  = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
+                if ((NoPhlegmaDyskrasia || NoTargetDyskrasia) &&
+                    level >= SGE.Levels.Phlegma)
+                {
+                    if ((NoPhlegmaDyskrasia && GetCooldown(OriginalHook(SGE.Phlegma)).RemainingCharges == 0) ||
+                        (NoTargetDyskrasia && CurrentTarget is null))
+                       return OriginalHook(SGE.Dyskrasia);
+                }
             }
             return actionID;
         }
@@ -231,6 +235,10 @@ namespace XIVSlothComboPlugin.Combos
                 //If we're too low level to use Eukrasia, we can stop here.
                 if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && (level >= SGE.Levels.Eukrasia) && CurrentTarget is not null)
                 {
+
+                    //If we're already Eukrasian'd, the whole point of this section is moot
+                    if (HasEffect(SGE.Buffs.Eukrasia)) return OriginalHook(SGE.Dosis1); //OriginalHook will autoselect the correct Dosis for us
+
                     var OurTarget = CurrentTarget;
                     //Check if our Target is there and not an enemy
                     if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
@@ -254,21 +262,26 @@ namespace XIVSlothComboPlugin.Combos
                         //Ekrasia Dosis unlocks with Eukrasia, checked at the start
                         _ => FindEffect(SGE.Debuffs.EukrasianDosis1, OurTarget, LocalPlayer?.ObjectId),
                     };
-
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return OriginalHook(SGE.Dosis1); //OriginalHook will autoselect the correct Dosis for us
-
+                    
                     //Got our Debuff for our level, check for it and procede 
-                    if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
+                    //if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
+                    //Experimental Line
+                    if (!(DosisDebuffID?.RemainingTime > 3))
                     {
                         //Advanced Options Enabled to procede with auto-Eukrasia
                         //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPLimiters))
                         {
-                            if (EnemyHealthPercentage() > GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPPer)) return SGE.Eukrasia;
+                            var MaxHpValue = GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPMax);
+                            var PercentageHpValue = GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPPer);
+                            var CurrentHpValue = GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisCurHP);
+
+                            if ( (DosisDebuffID is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) ||
+                                ((DosisDebuffID?.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue) )
+                               return SGE.Eukrasia;
                         }
                         else return SGE.Eukrasia;
-                    }
+                    } 
                 }
 
                 //Toxikon

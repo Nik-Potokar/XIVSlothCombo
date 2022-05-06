@@ -1,4 +1,4 @@
-using XIVSlothComboPlugin.Attributes;
+﻿using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
@@ -1858,7 +1858,7 @@ namespace XIVSlothComboPlugin
 
             #region Single Target DPS Feature
             [ParentCombo(SGE_ST_DosisFeature)]
-            [CustomComboInfo("Lucid Dreaming Option###SGEST", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 111)]
             SGE_ST_Dosis_Lucid = 14111,
 
             [ParentCombo(SGE_ST_DosisFeature)]
@@ -1868,37 +1868,39 @@ namespace XIVSlothComboPlugin
                 #region Eukrasian Dosis
                 [ParentCombo(SGE_ST_Dosis_EDosis)]
                 [ConflictingCombos(SGE_ST_Dosis_EDosisToT)]
-                [CustomComboInfo("Enemy HP%% Limiter Option", "Stop using Eukrasian Dosis when Enemy HP%% is below this value:", SGE.JobID, 1121)]
-                SGE_ST_Dosis_EDosisHPPer = 141121,
+                [CustomComboInfo("Enemy HP Limiter Options", "Stop using Eukrasian Dosis when Enemy HP values match\nEnable to see input boxes", SGE.JobID, 1121)]
+                SGE_ST_Dosis_EDosisHPLimiters = 141121,
 
                 [ParentCombo(SGE_ST_Dosis_EDosis)]
-                [ConflictingCombos(SGE_ST_Dosis_EDosisHPPer)]
+                [ConflictingCombos(SGE_ST_Dosis_EDosisHPLimiters)]
                 [CustomComboInfo("Target of Target Dosis Option", "Target of Target checking for Dosis", SGE.JobID, 1122)]
                 SGE_ST_Dosis_EDosisToT = 141122,
                 #endregion
 
             [ParentCombo(SGE_ST_DosisFeature)]
-            [CustomComboInfo("Toxikon Option###SGEST", "Use Toxikon when you have Addersting charges", SGE.JobID, 113)]
+            [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving", SGE.JobID, 113)]
             SGE_ST_Dosis_Toxikon = 14113,
             #endregion
 
-        [CustomComboInfo("AoE DPS Feature", "Replaces Phlegma with suboptions when on cooldown", SGE.JobID, 121, "", "")]
+        [CustomComboInfo("AoE DPS Feature", "Replaces Phlegma with various options", SGE.JobID, 121, "", "")]
         SGE_AoE_PhlegmaFeature = 14121,
 
             #region AoE DPS Feature
             [ParentCombo(SGE_AoE_PhlegmaFeature)]
-            [CustomComboInfo("Toxikon Option###SGEAoE", "Use Toxikon when you have Addersting charges\nTakes priority over Dyskrasia SubOption", SGE.JobID, 122, "", "")]
-            SGE_AoE_Phlegma_Toxikon = 14122,
+            [CustomComboInfo("No Phlegma to Toxikon Option", "Use Toxikon when out of Phlegma charges\nTakes priority over Dyskrasia", SGE.JobID, 122, "", "")]
+            SGE_AoE_Phlegma_NoPhlegmaToxikon = 14122,
 
             [ParentCombo(SGE_AoE_PhlegmaFeature)]
-            [CustomComboInfo("Dyskrasia Option", "Use Dyskrasia", SGE.JobID, 123, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
-            SGE_AoE_Phlegma_Dyskrasia = 14123,
+            [CustomComboInfo("Toxikon Distance Option", "Use Toxikon when out of Phlemga's Range\nTakes priority over Dyskrasia", SGE.JobID, 123, "", "")]
+            SGE_AoE_Phlegma_OutOfRangeToxikon = 14123,
 
-                #region Dyskrasia
-                [ParentCombo(SGE_AoE_Phlegma_Dyskrasia)]
-                [CustomComboInfo("Dyskrasia Targetless Mode Option", "Prioritize Dyskrasia when no target is selected\nIgnores Phlegma Charges", SGE.JobID, 1231, "", "")]
-                SGE_AoE_Phlegma_Dyskrasia_NoTarget = 141231,
-                #endregion
+            [ParentCombo(SGE_AoE_PhlegmaFeature)]
+            [CustomComboInfo("No Phlegma to Dyskrasia Option", "Use Dyskrasia when out of Phlegma charges", SGE.JobID, 124, "", "Again, Phlegma is the worst skill name in the game. GET RID!")]
+            SGE_AoE_Phlegma_NoPhlegmaDyskrasia = 14124,
+
+            [ParentCombo(SGE_AoE_PhlegmaFeature)]
+            [CustomComboInfo("Dyskrasia No-Target Option", "Use Dyskrasia when no target is selected", SGE.JobID, 125, "", "")]
+            SGE_AoE_Phlegma_NoTargetDyskrasia = 14125,
 
             #endregion
 
@@ -1925,7 +1927,7 @@ namespace XIVSlothComboPlugin
             SGE_ST_Heal_Zoe = 14214,
 
             [ParentCombo(SGE_ST_HealFeature)]
-            [CustomComboInfo("Pepsis Option###SGEST", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
+            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 215)]
             SGE_ST_Heal_Pepsis = 14215,
 
             [ParentCombo(SGE_ST_HealFeature)]
@@ -1937,7 +1939,7 @@ namespace XIVSlothComboPlugin
             SGE_ST_Heal_Haima = 14217,
 
             [ParentCombo(SGE_ST_HealFeature)]
-            [CustomComboInfo("Rhizomata Option###SGEST", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 218)]
             SGE_ST_Heal_Rhizomata = 14218,
 
             [ParentCombo(SGE_ST_HealFeature)]
@@ -1983,7 +1985,7 @@ namespace XIVSlothComboPlugin
             SGE_AoE_Heal_Kerachole = 14227,
 
             [ParentCombo(SGE_AoE_HealFeature)]
-            [CustomComboInfo("Rhizomata Option###SGEAOE", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 228)]
             SGE_AoE_Heal_Rhizomata = 14228,
             #endregion
 
@@ -1995,7 +1997,7 @@ namespace XIVSlothComboPlugin
 
         //SECTION_3_Utility
         [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("Swiftcast Raise Feature###SGE", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
+        [CustomComboInfo("Swiftcast Raise Feature", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 310)]
         SGE_RaiseFeature = 14310,
 
         [CustomComboInfo("Soteria to Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 320)]
@@ -2190,80 +2192,80 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SCHOLAR
 
-        //SCHOLAR_FEATURE_NUMBERING
-        //Numbering Scheme: 16[Section][Feature Number][Sub-Feature]
-        //Example: 16110 (Section 1: DPS, Feature Number 1, Sub-feature 0)
-        //New features should be added to the appropriate sections.
+            //SCHOLAR_FEATURE_NUMBERING
+            //Numbering Scheme: 16[Section][Feature Number][Sub-Feature]
+            //Example: 16110 (Section 1: DPS, Feature Number 1, Sub-feature 0)
+            //New features should be added to the appropriate sections.
 
-        //Section_1_DPS
-        [CustomComboInfo("Single Target DPS Feature", "Replace Ruin 1 / Broils with options below", SCH.JobID, 110)]
-        SCH_ST_BroilFeature = 16110,
+            #region SCHOLAR DPS
+            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin 1 / Broils with options below", SCH.JobID, 110)]
+            SCH_ST_BroilFeature = 16110,
 
-            [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Lucid Dreaming Option###SCHST", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 111)]
-            SCH_ST_Broil_Lucid = 16111,
+                [ParentCombo(SCH_ST_BroilFeature)]
+                [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 111)]
+                SCH_ST_Broil_Lucid = 16111,
 
-            [ParentCombo(SCH_ST_BroilFeature)]
-            [ConflictingCombos(SCH_ST_Broil_BioToT)]
-            [CustomComboInfo("Chain Stratagem Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 112)]
-            SCH_ST_Broil_ChainStratagem = 16112,
-
-            [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 113)]
-            SCH_ST_Broil_Bio = 16113,
-
-                [ParentCombo(SCH_ST_Broil_Bio)]
+                [ParentCombo(SCH_ST_BroilFeature)]
                 [ConflictingCombos(SCH_ST_Broil_BioToT)]
-                [CustomComboInfo("Enemy HP%% Limiter Option", "Stop using Bio when Enemy HP%% is below this value:", SCH.JobID, 1131)]
-                SCH_ST_Broil_BioHPPer = 161131,
+                [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 112)]
+                SCH_ST_Broil_ChainStratagem = 16112,
 
-                [ParentCombo(SCH_ST_Broil_Bio)]
-                [ConflictingCombos(SCH_ST_Broil_BioHPPer)]
-                [CustomComboInfo("Target of Target Bio Option", "Target of Target checking for Bio", SCH.JobID, 1132)]
-                SCH_ST_Broil_BioToT = 161132,
+                [ParentCombo(SCH_ST_BroilFeature)]
+                [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 113)]
+                SCH_ST_Broil_Bio = 16113,
 
-            [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Refresh Aetherflow Feature", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 114)]
-            SCH_ST_Broil_Aetherflow = 16114,
+                    [ParentCombo(SCH_ST_Broil_Bio)]
+                    [ConflictingCombos(SCH_ST_Broil_BioToT)]
+                    [CustomComboInfo("Enemy HP Limiter Options", "Stop using Bio when Enemy HP values match below:", SCH.JobID, 1131)]
+                    SCH_ST_Broil_BioHPLimiters = 161131,
 
-            [ParentCombo(SCH_ST_BroilFeature)]
-            [CustomComboInfo("Ruin 2 Moving Feature", "Use Ruin 2 when you have to move", SCH.JobID, 115)]
-            SCH_ST_Broil_Ruin2Movement = 16115,
+                    [ParentCombo(SCH_ST_Broil_Bio)]
+                    [ConflictingCombos(SCH_ST_Broil_BioHPLimiters)]
+                    [CustomComboInfo("Target of Target Bio Option", "Target of Target checking for Bio", SCH.JobID, 1132)]
+                    SCH_ST_Broil_BioToT = 161132,
 
+                [ParentCombo(SCH_ST_BroilFeature)]
+                [CustomComboInfo("Aetherflow Weave Feature", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 114)]
+                SCH_ST_Broil_Aetherflow = 16114,
 
-        //Section_2_Healing
-        [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "Stupid little fairy thing")]
-        SCH_ConsolationFeature = 16210,
+                [ParentCombo(SCH_ST_BroilFeature)]
+                [CustomComboInfo("Ruin II Moving Feature", "Use Ruin 2 when you have to move", SCH.JobID, 115)]
+                SCH_ST_Broil_Ruin2Movement = 16115,
+            #endregion
 
+            #region SCHOLAR HEALING
+            [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "Stupid little fairy thing")]
+            SCH_ConsolationFeature = 16210,
+            #endregion
 
-        //Section_3_Utilities
-        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 310, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
-        SCH_AetherflowFeature = 16310,
+            #region SCHOLAR UTILITIES
+            [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 310, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
+            SCH_AetherflowFeature = 16310,
 
-            [ParentCombo(SCH_AetherflowFeature)]
-            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 311)]
-            SCH_Aetherflow_Recite = 16311,
+                [ParentCombo(SCH_AetherflowFeature)]
+                [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 311)]
+                SCH_Aetherflow_Recite = 16311,
 
-                [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 3111)]
-                SCH_Aetherflow_Recite_Excog = 163111,
+                    [ParentCombo(SCH_Aetherflow_Recite)]
+                    [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 3111)]
+                    SCH_Aetherflow_Recite_Excog = 163111,
 
-                [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Indominability Option", "", SCH.JobID, 3112)]
-                SCH_Aetherflow_Recite_Indom = 163112,
+                    [ParentCombo(SCH_Aetherflow_Recite)]
+                    [CustomComboInfo("On Indominability Option", "", SCH.JobID, 3112)]
+                    SCH_Aetherflow_Recite_Indom = 163112,
 
-            [ParentCombo(SCH_AetherflowFeature)]
-            [CustomComboInfo("Dissipation Option", "Show Dissipation if Aetherflow is on cooldown and you have no Aetherflow stacks", SCH.JobID, 312, "", "Oh wow look at that that one...it looks so delicious")]
-            SCH_Aetherflow_Dissipation = 16312,
+                [ParentCombo(SCH_AetherflowFeature)]
+                [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 312, "", "Oh wow look at that that one...it looks so delicious")]
+                SCH_Aetherflow_Dissipation = 16312,
 
-        [ConflictingCombos(AllHealerRaiseFeature)]
-        [CustomComboInfo("Swiftcast Raise Combo Feature###SCH", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 410, "", "BRING OUT YOUR DEAD")]
-        SCH_RaiseFeature = 16410,
+            [ConflictingCombos(AllHealerRaiseFeature)]
+            [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 410, "", "BRING OUT YOUR DEAD")]
+            SCH_RaiseFeature = 16410,
 
-        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 510, "", "You're really gonna forget? Really?")]
-        SCH_FairyFeature = 16510,
+            [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 510, "", "You're really gonna forget? Really?")]
+            SCH_FairyFeature = 16510,
+            #endregion
 
- 
         #endregion
         // ====================================================================================
         #region SUMMONER
