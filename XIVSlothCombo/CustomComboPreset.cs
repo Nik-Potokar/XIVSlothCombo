@@ -825,8 +825,8 @@ namespace XIVSlothComboPlugin
         DarkCnSFeature = 5022,
 
         [ParentCombo(DarkPlungeFeature)]
-        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
-        DarkPlungeBurstOption = 5023,
+        [CustomComboInfo("Melee Plunge Option", "Uses Plunge when under Darkside and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", DRK.JobID, 0)]
+        DarkMeleePlungeOption = 5023,
 
         [ParentCombo(DarkMainComboCDsGroup)]
         [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0)]
@@ -1144,7 +1144,11 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "")]
         GunbreakerDDonBurstStrikeFeature = 7026,
-        
+
+        [ParentCombo(GunbreakerRoughDivideFeature)]
+        [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst CDs on CD, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
+        GunbreakerMeleeRoughDivideOption = 7027,
+
 
         #endregion
         // ====================================================================================
@@ -1596,6 +1600,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinRoyalAuthorityCombo)]
         [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
         PaladinAtonementFeature = 11025,
+
+        [ParentCombo(PaladinInterveneFeature)]
+        [CustomComboInfo("Melee Intervene Option", "Uses Intervene when under Fight or Flight and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", PLD.JobID, 4, "", "")]
+        PaladinMeleeInterveneOption = 11026,
 
         #endregion
         // ====================================================================================
@@ -2454,6 +2462,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorPrimalRendFeature)]
         [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
         WarriorPrimalRendCloseRangeFeature = 18023,
+
+        [ParentCombo(WarriorOnslaughtFeature)]
+        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", WAR.JobID, 0, "", "")]
+        WarriorMeleeOnslaughtOption = 18024,
+        
 
 
         #endregion

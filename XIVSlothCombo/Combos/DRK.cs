@@ -73,8 +73,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                DrkKeepPlungeCharges = "DrkKeepPlungeCharges";
-            public const string
+                DrkKeepPlungeCharges = "DrkKeepPlungeCharges",
                 DrkMPManagement = "DrkMPManagement";
         }
     }
@@ -147,10 +146,10 @@ namespace XIVSlothComboPlugin.Combos
 
                                 if (IsEnabled(CustomComboPreset.DarkCnSFeature) && IsOffCooldown(DRK.CarveAndSpit) && level >= DRK.Levels.CarveAndSpit)
                                     return DRK.CarveAndSpit;
-                                if (level >= DRK.Levels.Plunge && IsEnabled(CustomComboPreset.DarkPlungeFeature))
+                                if (level >= DRK.Levels.Plunge && IsEnabled(CustomComboPreset.DarkPlungeFeature) && GetRemainingCharges(DRK.Plunge) > plungeChargesRemaining)
                                 {
-                                    if ((GetRemainingCharges(DRK.Plunge) > plungeChargesRemaining && IsNotEnabled(CustomComboPreset.DarkPlungeBurstOption)) ||
-                                        (IsEnabled(CustomComboPreset.DarkPlungeBurstOption) && GetRemainingCharges(DRK.Plunge) > 0 && gauge.ShadowTimeRemaining > 1 && IsOnCooldown(DRK.Delirium))) //burst feature
+                                    if (IsNotEnabled(CustomComboPreset.DarkMeleePlungeOption) ||
+                                        (IsEnabled(CustomComboPreset.DarkMeleePlungeOption) && GetCooldownRemainingTime(DRK.Delirium) >= 45 && GetTargetDistance() <= 1))
                                         return DRK.Plunge;
                                 }
                             }

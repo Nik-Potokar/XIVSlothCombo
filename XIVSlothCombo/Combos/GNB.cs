@@ -125,10 +125,6 @@ namespace XIVSlothComboPlugin.Combos
                                     return GNB.Bloodfest;
                         }
 
-                        //Rough Divide Feature
-                        if (level >= GNB.Levels.RoughDivide && IsEnabled(CustomComboPreset.GunbreakerRoughDivideFeature) && GetRemainingCharges(GNB.RoughDivide) > roughDivideChargesRemaining)
-                                return GNB.RoughDivide;
-
                         //Blasting Zone outside of NM
                         if (IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && level >= GNB.Levels.DangerZone && IsOffCooldown(GNB.DangerZone))
                         {
@@ -160,6 +156,14 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= GNB.Levels.Continuation &&
                             (HasEffect(GNB.Buffs.ReadyToRip) || HasEffect(GNB.Buffs.ReadyToTear) || HasEffect(GNB.Buffs.ReadyToGouge)) && level >= GNB.Levels.Continuation)
                                 return OriginalHook(GNB.Continuation);
+
+                        //Rough Divide Feature
+                        if (level >= GNB.Levels.RoughDivide && IsEnabled(CustomComboPreset.GunbreakerRoughDivideFeature) && GetRemainingCharges(GNB.RoughDivide) > roughDivideChargesRemaining)
+                        {
+                            if (IsNotEnabled(CustomComboPreset.GunbreakerMeleeRoughDivideOption) ||
+                                (IsEnabled(CustomComboPreset.GunbreakerMeleeRoughDivideOption) && GetTargetDistance() <= 1 && HasEffect(GNB.Buffs.NoMercy) && IsOnCooldown(OriginalHook(GNB.DangerZone)) && IsOnCooldown(GNB.BowShock) && IsOnCooldown(GNB.Bloodfest)))
+                                return GNB.RoughDivide;
+                        }
                     }
 
                     // 60s window features
