@@ -825,8 +825,8 @@ namespace XIVSlothComboPlugin
         DarkCnSFeature = 5022,
 
         [ParentCombo(DarkPlungeFeature)]
-        [CustomComboInfo("Plunge Burst Option", "Pools Plunge to use during minute window bursts.", DRK.JobID, 0)]
-        DarkPlungeBurstOption = 5023,
+        [CustomComboInfo("Melee Plunge Option", "Uses Plunge when under Darkside and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", DRK.JobID, 0)]
+        DarkMeleePlungeOption = 5023,
 
         [ParentCombo(DarkMainComboCDsGroup)]
         [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0)]
@@ -839,6 +839,23 @@ namespace XIVSlothComboPlugin
         [ParentCombo(DarkMainComboBuffsGroup)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
+
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Blood Weapon Option", "Adds Blood Weapon to AOE Combo on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkBloodWeaponAOEOption = 5027,
+
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Delirium Option", "Adds Deliriun to AOE Combo on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkDeliriumAOEOption = 5028,
+
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AOE on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkSaltedEarthAOEOption = 5029,
+
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AOE on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkLivingShadowAOEOption = 5030,
+        
 
         #endregion
         // ====================================================================================
@@ -1040,10 +1057,6 @@ namespace XIVSlothComboPlugin
         GunbreakerMainComboCDsGroup = 7002,
 
         [ParentCombo(GunbreakerMainComboCDsGroup)]
-        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
-        GunbreakerDZOnMainComboFeature = 7005,
-
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
@@ -1051,9 +1064,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
         GunbreakerRoughDivideFeature = 7004,
 
-        [ParentCombo(GunbreakerDemonSlaughterCombo)]
-        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
-        GunbreakerBowShockFeature = 7017,
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
+        GunbreakerDZOnMainComboFeature = 7005,
 
         [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "dEmOn SlAuGhTeR", "Demon Slaughter? Really? What is this, RPR?")]
         GunbreakerDemonSlaughterCombo = 7006,
@@ -1082,13 +1095,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "P4S Vampire man Bloodfest Feature", "Again with the edgelord names?\nTut, tut, Yoshi-P. Do better.")]
         GunbreakerBloodfestOvercapFeature = 7013,
 
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
+        GunbreakerBloodfestonST = 7014,
+
         [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
         GunbreakerRangedUptimeFeature = 7015,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
-        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
-        GunbreakerBloodfestonST = 7014,
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("No Mercy AOE Option", "Adds No Mercy to AOE Combo when it's available.", GNB.JobID, 0, "")]
+        GunbreakerNoMercyAOEOption = 7016,
+
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
+        GunbreakerBowShockFeature = 7017,
 
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to main combo when at full ammo.", GNB.JobID, 0)]
@@ -1112,6 +1133,22 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
+
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("Bloodfest AOE Option", "Adds Bloodfest to AOE Combo when it's available. Will dump Ammo through Fated Circle to prepare for Bloodfest.", GNB.JobID, 0, "")]
+        GunbreakerBloodfestAOEOption = 7024,
+
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("Double Down AOE Option", "Adds Double Down to AOE Combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "")]
+        GunbreakerDoubleDownAOEOption = 7025,
+
+        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "")]
+        GunbreakerDDonBurstStrikeFeature = 7026,
+
+        [ParentCombo(GunbreakerRoughDivideFeature)]
+        [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst CDs on CD, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
+        GunbreakerMeleeRoughDivideOption = 7027,
+
 
         #endregion
         // ====================================================================================
@@ -1563,6 +1600,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(PaladinRoyalAuthorityCombo)]
         [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "Atonement for what? Picking the weakest Tank?")]
         PaladinAtonementFeature = 11025,
+
+        [ParentCombo(PaladinInterveneFeature)]
+        [CustomComboInfo("Melee Intervene Option", "Uses Intervene when under Fight or Flight and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", PLD.JobID, 4, "", "")]
+        PaladinMeleeInterveneOption = 11026,
 
         #endregion
         // ====================================================================================
@@ -2057,6 +2098,7 @@ namespace XIVSlothComboPlugin
 
             #region Mangetsu Combo
             [ParentCombo(SamuraiMangetsuCombo)]
+            [ConflictingCombos(SamTwoTargetFeature)]
             [CustomComboInfo("Oka to Mangetsu Combo", "Adds Oka combo after Mangetsu combo loop. \n Will add Oka if needed during Meikyo Shisui.", SAM.JobID, 0)]
             SamuraiOkaFeature = 15021,
 
@@ -2078,12 +2120,14 @@ namespace XIVSlothComboPlugin
             SamuraiGurenAOEFeature = 15025,
             #endregion
 
+        
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "Okeh Combo", "Okeh")]
         SamuraiOkaCombo = 15026,
 
             #region Oka Combo
             [ParentCombo(SamuraiOkaCombo)]
-            [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze Combo, Mangetsu Combo, Senei, Shinten, and Shoha to Oka Combo.\nOptimal for two targets and when 86 and above.", SAM.JobID, 0)]
+            [ConflictingCombos(SamuraiOkaFeature)]
+            [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze Combo, Mangetsu Combo, Senei, Shinten, and Shoha to Oka Combo.\nUsed for two targets only and when 86 and above.", SAM.JobID, 0)]
             SamTwoTargetFeature = 150261,
             #endregion
 
@@ -2430,6 +2474,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(WarriorPrimalRendFeature)]
         [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
         WarriorPrimalRendCloseRangeFeature = 18023,
+
+        [ParentCombo(WarriorOnslaughtFeature)]
+        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", WAR.JobID, 0, "", "")]
+        WarriorMeleeOnslaughtOption = 18024,
+        
 
 
         #endregion

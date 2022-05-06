@@ -136,6 +136,15 @@
                         return PLD.HolySpirit;
                 }
 
+                // Buffs
+                if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.2)
+                {
+                    if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= PLD.Levels.FightOrFlight && lastComboMove is PLD.FastBlade && IsOffCooldown(PLD.FightOrFlight))
+                        return PLD.FightOrFlight;
+                    if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= PLD.Levels.Requiescat && HasEffect(PLD.Buffs.FightOrFlight) && GetBuffRemainingTime(PLD.Buffs.FightOrFlight) < 17 && IsOffCooldown(PLD.Requiescat))
+                        return PLD.Requiescat;
+                }
+
                 // oGCD features
                 if (CanWeave(actionID))
                 {
@@ -149,16 +158,10 @@
                     }
 
                     if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= PLD.Levels.Intervene && GetRemainingCharges(PLD.Intervene) > interveneChargesRemaining)
-                        return PLD.Intervene;
-
-                    // Buffs
-                    if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.6)
                     {
-                        if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= PLD.Levels.FightOrFlight && lastComboMove is PLD.FastBlade && IsOffCooldown(PLD.FightOrFlight))
-                            return PLD.FightOrFlight;
-
-                        if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= PLD.Levels.Requiescat && HasEffect(PLD.Buffs.FightOrFlight) && GetBuffRemainingTime(PLD.Buffs.FightOrFlight) < 17 && IsOffCooldown(PLD.Requiescat))
-                            return PLD.Requiescat;
+                        if (IsNotEnabled(CustomComboPreset.PaladinMeleeInterveneOption) ||
+                            (IsEnabled(CustomComboPreset.PaladinMeleeInterveneOption) && HasEffect(PLD.Buffs.FightOrFlight) && GetTargetDistance() <= 1))
+                            return PLD.Intervene;
                     }
                 }
 
