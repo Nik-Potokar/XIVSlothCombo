@@ -396,6 +396,10 @@ namespace XIVSlothComboPlugin.Combos
                             return BLM.Fire2;
                         }
                     }
+                    else if (level < BLM.Levels.Fire3)
+                    {
+                        return BLM.Transpose;
+                    }
                 }
 
                 // Umbral Hearts
