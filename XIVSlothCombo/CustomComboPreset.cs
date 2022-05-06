@@ -1057,10 +1057,6 @@ namespace XIVSlothComboPlugin
         GunbreakerMainComboCDsGroup = 7002,
 
         [ParentCombo(GunbreakerMainComboCDsGroup)]
-        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
-        GunbreakerDZOnMainComboFeature = 7005,
-
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
         GunbreakerDDonMain = 7003,
 
@@ -1068,9 +1064,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
         GunbreakerRoughDivideFeature = 7004,
 
-        [ParentCombo(GunbreakerDemonSlaughterCombo)]
-        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
-        GunbreakerBowShockFeature = 7017,
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
+        GunbreakerDZOnMainComboFeature = 7005,
 
         [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "dEmOn SlAuGhTeR", "Demon Slaughter? Really? What is this, RPR?")]
         GunbreakerDemonSlaughterCombo = 7006,
@@ -1099,13 +1095,21 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "P4S Vampire man Bloodfest Feature", "Again with the edgelord names?\nTut, tut, Yoshi-P. Do better.")]
         GunbreakerBloodfestOvercapFeature = 7013,
 
+        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
+        GunbreakerBloodfestonST = 7014,
+
         [ParentCombo(GunbreakerSolidBarrelCombo)]
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
         GunbreakerRangedUptimeFeature = 7015,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
-        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
-        GunbreakerBloodfestonST = 7014,
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("No Mercy AOE Option", "Adds No Mercy to AOE Combo when it's available.", GNB.JobID, 0, "")]
+        GunbreakerNoMercyAOEOption = 7016,
+
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
+        GunbreakerBowShockFeature = 7017,
 
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to main combo when at full ammo.", GNB.JobID, 0)]
@@ -1129,6 +1133,18 @@ namespace XIVSlothComboPlugin
         [ParentCombo(GunbreakerMainComboCDsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
+
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("Bloodfest AOE Option", "Adds Bloodfest to AOE Combo when it's available. Will dump Ammo through Fated Circle to prepare for Bloodfest.", GNB.JobID, 0, "")]
+        GunbreakerBloodfestAOEOption = 7024,
+
+        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [CustomComboInfo("Double Down AOE Option", "Adds Double Down to AOE Combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "")]
+        GunbreakerDoubleDownAOEOption = 7025,
+
+        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "")]
+        GunbreakerDDonBurstStrikeFeature = 7026,
+        
 
         #endregion
         // ====================================================================================
