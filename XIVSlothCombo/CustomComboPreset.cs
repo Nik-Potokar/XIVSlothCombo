@@ -678,7 +678,7 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Simple Feathers", "Includes Feather usage in the rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleFeatherFeature = 4057,
 
-            [ParentCombo(DancerSimpleFeature)]
+            [ParentCombo(DancerSimpleFeatherFeature)]
             [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when you're under the effects of Technical Step.\nWill expend feathers when your target is under 2 percent HP.", DNC.JobID, 0, "")]
             DancerSimpleFeatherPoolingFeature = 4058,
 
@@ -725,7 +725,7 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Simple AoE Feathers", "Includes feather usage in the AoE rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleAoEFeatherFeature = 4077,
 
-            [ParentCombo(DancerSimpleAoEFeature)]
+            [ParentCombo(DancerSimpleAoEFeatherFeature)]
             [CustomComboInfo("Simple AoE Feather Pooling", "Makes it so the AoE rotation only uses feathers when you have more than 3.", DNC.JobID, 0, "", "")]
             DancerSimpleAoEFeatherPoolingFeature = 4078,
 
