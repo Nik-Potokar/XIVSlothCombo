@@ -451,8 +451,13 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (gauge.Kaeshi == Kaeshi.SETSUGEKKA && level >= SAM.Levels.TsubameGaeshi && GetRemainingCharges(SAM.TsubameGaeshi) > 0)
                                     return OriginalHook(SAM.TsubameGaeshi);
-                                if (!this.IsMoving && (((oneSeal || oneSeal && meikyostacks == 2) && GetDebuffRemainingTime(SAM.Debuffs.Higanbana) <= 10) || (threeSeal && level >= SAM.Levels.Setsugekka)))
-                                    return OriginalHook(SAM.Iaijutsu);
+                                if (!this.IsMoving)
+                                {
+                                    if (((oneSeal || (oneSeal && meikyostacks == 2)) && GetDebuffRemainingTime(SAM.Debuffs.Higanbana) <= 10) ||
+                                        (twoSeal && level < SAM.Levels.Setsugekka) ||
+                                        (threeSeal && level >= SAM.Levels.Setsugekka))
+                                        return OriginalHook(SAM.Iaijutsu);
+                                }
                             }
 
                             //Ogi Namikiri Features
@@ -591,14 +596,27 @@ namespace XIVSlothComboPlugin.Combos
                         return SAM.Oka;
                 }
 
-                if (comboTime > 0 && level >= SAM.Levels.Mangetsu && (lastComboMove == SAM.Fuko || lastComboMove == SAM.Fuga))
+                if (comboTime > 0)
                 {
-                    if (IsNotEnabled(CustomComboPreset.SamuraiOkaFeature) || 
-                        gauge.Sen.HasFlag(Sen.GETSU) == false || GetBuffRemainingTime(SAM.Buffs.Fugetsu) < GetBuffRemainingTime(SAM.Buffs.Fuka) || !HasEffect(SAM.Buffs.Fugetsu))
-                        return SAM.Mangetsu;
-                    if (IsEnabled(CustomComboPreset.SamuraiOkaFeature) && level >= SAM.Levels.Oka &&
-                        (gauge.Sen.HasFlag(Sen.KA) == false || GetBuffRemainingTime(SAM.Buffs.Fuka) < GetBuffRemainingTime(SAM.Buffs.Fugetsu) || !HasEffect(SAM.Buffs.Fuka)))
-                        return SAM.Oka;
+                    if (level >= SAM.Levels.Mangetsu && (lastComboMove == SAM.Fuko || lastComboMove == SAM.Fuga))
+                    {
+                        if (IsNotEnabled(CustomComboPreset.SamuraiOkaFeature) ||
+                            gauge.Sen.HasFlag(Sen.GETSU) == false || GetBuffRemainingTime(SAM.Buffs.Fugetsu) < GetBuffRemainingTime(SAM.Buffs.Fuka) || !HasEffect(SAM.Buffs.Fugetsu))
+                            return SAM.Mangetsu;
+                        if (IsEnabled(CustomComboPreset.SamuraiOkaFeature) && level >= SAM.Levels.Oka &&
+                            (gauge.Sen.HasFlag(Sen.KA) == false || GetBuffRemainingTime(SAM.Buffs.Fuka) < GetBuffRemainingTime(SAM.Buffs.Fugetsu) || !HasEffect(SAM.Buffs.Fuka)))
+                            return SAM.Oka;
+                    }
+                }
+
+                if (level < SAM.Levels.Oka && level >= SAM.Levels.Kasha)
+                {
+                    if (lastComboMove == SAM.Shifu)
+                        return SAM.Kasha;
+                    if (lastComboMove == SAM.Hakaze)
+                        return SAM.Shifu;
+                    if (gauge.Sen.HasFlag(Sen.KA) == false || GetBuffRemainingTime(SAM.Buffs.Fuka) < GetBuffRemainingTime(SAM.Buffs.Fugetsu) || !HasEffect(SAM.Buffs.Fuka))
+                        return SAM.Hakaze;
                 }
 
                 return OriginalHook(SAM.Fuko);

@@ -2057,6 +2057,7 @@ namespace XIVSlothComboPlugin
 
             #region Mangetsu Combo
             [ParentCombo(SamuraiMangetsuCombo)]
+            [ConflictingCombos(SamTwoTargetFeature)]
             [CustomComboInfo("Oka to Mangetsu Combo", "Adds Oka combo after Mangetsu combo loop. \n Will add Oka if needed during Meikyo Shisui.", SAM.JobID, 0)]
             SamuraiOkaFeature = 15021,
 
@@ -2078,12 +2079,14 @@ namespace XIVSlothComboPlugin
             SamuraiGurenAOEFeature = 15025,
             #endregion
 
+        
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "Okeh Combo", "Okeh")]
         SamuraiOkaCombo = 15026,
 
             #region Oka Combo
             [ParentCombo(SamuraiOkaCombo)]
-            [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze Combo, Mangetsu Combo, Senei, Shinten, and Shoha to Oka Combo.\nOptimal for two targets and when 86 and above.", SAM.JobID, 0)]
+            [ConflictingCombos(SamuraiOkaFeature)]
+            [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze Combo, Mangetsu Combo, Senei, Shinten, and Shoha to Oka Combo.\nUsed for two targets only and when 86 and above.", SAM.JobID, 0)]
             SamTwoTargetFeature = 150261,
             #endregion
 
