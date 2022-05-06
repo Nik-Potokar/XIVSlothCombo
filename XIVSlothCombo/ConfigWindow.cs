@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.6\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.13.0\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
