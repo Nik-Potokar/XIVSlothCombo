@@ -98,7 +98,7 @@ namespace XIVSlothComboPlugin.Combos
         }
         public static class Config
         {
-            public const string BlmPolygotsStored = "BlmPolygotsStored";
+            public const string BlmPolyglotsStored = "BlmPolyglotsStored";
             public const string BlmAstralFireRefresh = "BlmAstralFireRefresh";
         }
     }
@@ -335,9 +335,9 @@ namespace XIVSlothComboPlugin.Combos
                 var thunder2Debuff = TargetHasEffect(BLM.Debuffs.Thunder2);
                 var thunder2Timer = FindTargetEffect(BLM.Debuffs.Thunder2);
                 var currentMP = LocalPlayer.CurrentMp;
-                var polyToStore = Service.Configuration.GetCustomIntValue(BLM.Config.BlmPolygotsStored);
+                var polyToStore = Service.Configuration.GetCustomIntValue(BLM.Config.BlmPolyglotsStored);
 
-                // Polygot usage
+                // Polyglot usage
                 if (IsEnabled(CustomComboPreset.BlackAoEFoulOption) && level >= BLM.Levels.Manafont && level >= BLM.Levels.Foul)
                 {
                     if (gauge.InAstralFire && currentMP <= BLM.MP.AspectFire && IsOffCooldown(BLM.Manafont) && CanSpellWeave(actionID) && lastComboMove == BLM.Foul)
@@ -387,7 +387,18 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     else if (currentMP >= BLM.MP.Despair)
                     {
-                        return BLM.Flare;
+                        if (level >= BLM.Levels.Flare)
+                        {
+                            return BLM.Flare;
+                        }
+                        else if (currentMP >= BLM.MP.AspectFire)
+                        {
+                            return BLM.Fire2;
+                        }
+                    }
+                    else if (level < BLM.Levels.Fire3)
+                    {
+                        return BLM.Transpose;
                     }
                 }
 
@@ -482,7 +493,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (gauge.InAstralFire)
                         {
                             // First Triplecast
-                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) == 2)
+                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) >= 1)
                             {
                                 var triplecastMP = 7600;
                                 if (IsEnabled(CustomComboPreset.BlackSimpleAltOpenerFeature))
@@ -568,7 +579,7 @@ namespace XIVSlothComboPlugin.Combos
                         
                         if (gauge.InUmbralIce)
                         {
-                            // Dump Polygot Stacks
+                            // Dump Polyglot Stacks
                             if (gauge.PolyglotStacks >= 1 && gauge.ElementTimeRemaining >= 6000)
                             {
                                 return level >= BLM.Levels.Xenoglossy ? BLM.Xenoglossy : BLM.Foul;
@@ -731,7 +742,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                // Use polygot stacks if we don't need it for a future weave
+                // Use polyglot stacks if we don't need it for a future weave
                 if (gauge.PolyglotStacks > 0 && gauge.ElementTimeRemaining >= 5000 &&  (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0)))
                 {
                     if (level >= BLM.Levels.Xenoglossy)
@@ -770,12 +781,12 @@ namespace XIVSlothComboPlugin.Combos
                     // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
                     if (lastComboMove != BLM.Xenoglossy && gauge.PolyglotStacks > 0 && level >= BLM.Levels.Xenoglossy)
                     {
-                        var pooledPolygotStacks = IsEnabled(CustomComboPreset.BlackSimplePoolingFeature) ? 1 : 0;
+                        var pooledPolyglotStacks = IsEnabled(CustomComboPreset.BlackSimplePoolingFeature) ? 1 : 0;
                         if (IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) && level >= BLM.Levels.Amplifier && IsOffCooldown(BLM.Amplifier))
                         {
                             return BLM.Xenoglossy;
                         }
-                        if (gauge.PolyglotStacks > pooledPolygotStacks)
+                        if (gauge.PolyglotStacks > pooledPolyglotStacks)
                         {
                             if (IsEnabled(CustomComboPreset.BlackSimpleBuffsLeylinesFeature))
                             {
@@ -886,7 +897,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.InAstralFire)
                     {
                         // First Triplecast
-                        if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) == 2)
+                        if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) >= 1)
                         {
                             if (currentMP <= 6000)
                             {
@@ -1044,6 +1055,10 @@ namespace XIVSlothComboPlugin.Combos
                     // Standard
                     if (gauge.UmbralIceStacks == 3)
                     {
+                        if (gauge.PolyglotStacks == 2)
+                        {
+                            return BLM.Xenoglossy;
+                        }
                         if (gauge.IsParadoxActive)
                         {
                             return BLM.Paradox;
@@ -1226,7 +1241,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (gauge.InAstralFire)
                         {
                             // First Triplecast
-                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) == 2)
+                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) >= 1)
                             {
                                 var triplecastMP = 7600;
                                 if (currentMP <= triplecastMP)
@@ -1302,7 +1317,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (gauge.InUmbralIce)
                         {
-                            // Dump Polygot Stacks
+                            // Dump Polyglot Stacks
                             if (gauge.PolyglotStacks >= 1 && gauge.ElementTimeRemaining >= 6000)
                             {
                                 return BLM.Xenoglossy;
