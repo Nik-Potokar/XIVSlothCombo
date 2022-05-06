@@ -387,7 +387,14 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     else if (currentMP >= BLM.MP.Despair)
                     {
-                        return BLM.Flare;
+                        if (level >= BLM.Levels.Flare)
+                        {
+                            return BLM.Flare;
+                        }
+                        else if (currentMP >= BLM.MP.AspectFire)
+                        {
+                            return BLM.Fire2;
+                        }
                     }
                 }
 
@@ -482,7 +489,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (gauge.InAstralFire)
                         {
                             // First Triplecast
-                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) == 2)
+                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) >= 1)
                             {
                                 var triplecastMP = 7600;
                                 if (IsEnabled(CustomComboPreset.BlackSimpleAltOpenerFeature))
@@ -886,7 +893,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.InAstralFire)
                     {
                         // First Triplecast
-                        if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) == 2)
+                        if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) >= 1)
                         {
                             if (currentMP <= 6000)
                             {
@@ -1044,6 +1051,10 @@ namespace XIVSlothComboPlugin.Combos
                     // Standard
                     if (gauge.UmbralIceStacks == 3)
                     {
+                        if (gauge.PolyglotStacks == 2)
+                        {
+                            return BLM.Xenoglossy;
+                        }
                         if (gauge.IsParadoxActive)
                         {
                             return BLM.Paradox;
@@ -1226,7 +1237,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (gauge.InAstralFire)
                         {
                             // First Triplecast
-                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) == 2)
+                            if (lastComboMove != BLM.Triplecast && !HasEffect(BLM.Buffs.Triplecast) && GetRemainingCharges(BLM.Triplecast) >= 1)
                             {
                                 var triplecastMP = 7600;
                                 if (currentMP <= triplecastMP)
