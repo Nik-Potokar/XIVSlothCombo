@@ -2290,8 +2290,12 @@ namespace XIVSlothComboPlugin
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo.", SMN.JobID, 0, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo and will be used on cooldown.", SMN.JobID, 0, "My eyes!", "I can't see!")]
         SearingLightonRuinFeature = 17018,
+
+        [ParentCombo(SearingLightonRuinFeature)]
+        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0, "My eyes!", "I can't see!")]
+        SummonerSearingLightBurstOption = 170181,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 2, "Our Eyes!", "Yay, we're all legally blind!")]
@@ -2316,11 +2320,11 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(EgisOnRuinFeature)]
         [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
-        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts 2nd Ruby Rite if available.", SMN.JobID, 1, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
+        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts Ruby Rite if available.", SMN.JobID, 1, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
         SummonerSwiftcastFeatureIfrit = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
-        [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain for Searing Light/2 min windows.", SMN.JobID, 0)]
+        [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0)]
         SummonerEDPoolonMainFeature = 17025,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2344,6 +2348,14 @@ namespace XIVSlothComboPlugin
 
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 0, "", "")]
         SMNLucidDreamingFeature = 17031,
+
+        [ParentCombo(SummonerMainComboFeature)]
+        [CustomComboInfo("Burse Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
+        SummonerPrimalBurstChoice = 17032,
+
+        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.", SMN.JobID, 0, "", "")]
+        SummonerAstralFlowonSummonsFeature = 17034,
+        
 
         #endregion
         // ====================================================================================
