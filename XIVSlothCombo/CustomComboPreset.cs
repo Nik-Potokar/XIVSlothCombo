@@ -840,6 +840,23 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0)]
         DarkBloodWeaponOption = 5026,
 
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Blood Weapon Option", "Adds Blood Weapon to AOE Combo on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkBloodWeaponAOEOption = 5027,
+
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Delirium Option", "Adds Deliriun to AOE Combo on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkDeliriumAOEOption = 5028,
+
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AOE on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkSaltedEarthAOEOption = 5029,
+
+        [ParentCombo(DarkStalwartSoulCombo)]
+        [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AOE on CD and when Darkside is up.", DRK.JobID, 0)]
+        DarkLivingShadowAOEOption = 5030,
+        
+
         #endregion
         // ====================================================================================
         #region DRAGOON
