@@ -520,9 +520,12 @@ namespace XIVSlothComboPlugin.Combos
                                 // Manafont
                                 if (IsOffCooldown(BLM.Manafont) && (lastComboMove == BLM.Despair || lastComboMove == BLM.Fire))
                                 {
-                                    if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
+                                    if (level >= BLM.Levels.Despair)
                                     {
-                                        return BLM.Manafont;
+                                        if (currentMP < BLM.MP.Despair)
+                                        {
+                                            return BLM.Manafont;
+                                        }
                                     }
                                     else if (currentMP < BLM.MP.AspectFire)
                                     {
@@ -596,9 +599,12 @@ namespace XIVSlothComboPlugin.Combos
                     // Thunder uptime
                     if (gauge.ElementTimeRemaining >= 6000 && (HasEffect(BLM.Buffs.Thundercloud) || currentMP >= BLM.MP.AspectThunder))
                     {
-                        if (level < BLM.Levels.Thunder3 && lastComboMove != BLM.Thunder && thunderRecast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2))
+                        if (level < BLM.Levels.Thunder3)
                         {
-                            return BLM.Thunder;
+                            if (lastComboMove != BLM.Thunder && thunderRecast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2))
+                            {
+                                return BLM.Thunder;
+                            }
                         }
                         else if (lastComboMove != BLM.Thunder3 && thunder3Recast(4) && !TargetHasEffect(BLM.Debuffs.Thunder2) && !TargetHasEffect(BLM.Debuffs.Thunder4))
                         {
@@ -656,9 +662,12 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsOffCooldown(BLM.Manafont) && gauge.InAstralFire)
                             {
-                                if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
+                                if (level >= BLM.Levels.Despair)
                                 {
-                                    return BLM.Manafont;
+                                    if (currentMP < BLM.MP.Despair)
+                                    {
+                                        return BLM.Manafont;
+                                    }
                                 }
                                 else if (currentMP < BLM.MP.AspectFire)
                                 {
@@ -920,9 +929,12 @@ namespace XIVSlothComboPlugin.Combos
                             // Manafont
                             if (IsOffCooldown(BLM.Manafont) && lastComboMove == BLM.Despair)
                             {
-                                if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
+                                if (level >= BLM.Levels.Despair)
                                 {
-                                    return BLM.Manafont;
+                                    if (currentMP < BLM.MP.Despair)
+                                    {
+                                        return BLM.Manafont;
+                                    }
                                 }
                                 else if (currentMP < BLM.MP.AspectFire)
                                 {
@@ -1248,9 +1260,12 @@ namespace XIVSlothComboPlugin.Combos
                                 // Manafont
                                 if (IsOffCooldown(BLM.Manafont) && (lastComboMove == BLM.Despair || lastComboMove == BLM.Fire))
                                 {
-                                    if (level >= BLM.Levels.Despair && currentMP < BLM.MP.Despair)
+                                    if (level >= BLM.Levels.Despair)
                                     {
-                                        return BLM.Manafont;
+                                        if (currentMP < BLM.MP.Despair)
+                                        {
+                                            return BLM.Manafont;
+                                        }
                                     }
                                     else if (currentMP < BLM.MP.AspectFire)
                                     {
@@ -1383,6 +1398,10 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (gauge.InUmbralIce)
                     {
+                        if (gauge.PolyglotStacks == 2)
+                        {
+                            return BLM.Xenoglossy;
+                        }
                         return gauge.IsParadoxActive ? BLM.Paradox : (gauge.UmbralHearts == 3 ? BLM.Fire3 : BLM.Blizzard4);
                     }
                 }

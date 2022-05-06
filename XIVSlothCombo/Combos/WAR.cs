@@ -73,10 +73,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                WarInfuriateRange = "WarInfuriateRange";
-            public const string
-                WarSurgingRefreshRange = "WarSurgingRefreshRange";
-            public const string
+                WarInfuriateRange = "WarInfuriateRange",
+                WarSurgingRefreshRange = "WarSurgingRefreshRange",
                 WarKeepOnslaughtCharges = "WarKeepOnslaughtCharges";
         }
     }
@@ -116,7 +114,11 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.WarriorUpheavalMainComboFeature) && IsOffCooldown(WAR.Upheaval) && level >= WAR.Levels.Upheaval)
                             return WAR.Upheaval;
                         if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= WAR.Levels.Onslaught && GetRemainingCharges(WAR.Onslaught) > onslaughtChargesRemaining)
-                            return WAR.Onslaught;
+                        {
+                            if (IsNotEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) ||
+                                (IsEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) && GetTargetDistance() <= 1))
+                                return WAR.Onslaught;
+                        }
                     }
 
                     if (IsEnabled(CustomComboPreset.WarriorPrimalRendFeature) && HasEffect(WAR.Buffs.PrimalRendReady) && level >= WAR.Levels.PrimalRend)

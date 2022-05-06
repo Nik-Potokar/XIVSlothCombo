@@ -426,6 +426,34 @@ namespace XIVSlothComboPlugin.Combos
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
 
+                // Dance Step Replacement
+                if (IsEnabled(CustomComboPreset.DancerSimpleDanceStepFeature))
+                {
+                    // Standard Step
+                    if (actionID is DNC.StandardStep)
+                    {
+                        if (gauge.IsDancing && HasEffect(DNC.Buffs.StandardStep))
+                        {
+                            if (gauge.CompletedSteps < 2)
+                                return (uint)gauge.NextStep;
+
+                            return DNC.StandardFinish2;
+                        }
+                    }
+
+                    // Technical Step
+                    if ((actionID is DNC.TechnicalStep) && level >= DNC.Levels.TechnicalStep)
+                    {
+                        if (gauge.IsDancing && HasEffect(DNC.Buffs.TechnicalStep))
+                        {
+                            if (gauge.CompletedSteps < 4)
+                                return (uint)gauge.NextStep;
+
+                            return DNC.TechnicalFinish4;
+                        }
+                    }
+                }
+
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
                         return All.HeadGraze;
@@ -558,7 +586,35 @@ namespace XIVSlothComboPlugin.Combos
                 var curingWaltzReady = level >= DNC.Levels.CuringWaltz && IsOffCooldown(DNC.CuringWaltz);
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
-                
+
+                // Dance Step Replacement
+                if (IsEnabled(CustomComboPreset.DancerSimpleAoEDanceStepFeature))
+                {
+                    // Standard Step
+                    if (actionID is DNC.StandardStep)
+                    {
+                        if (gauge.IsDancing && HasEffect(DNC.Buffs.StandardStep))
+                        {
+                            if (gauge.CompletedSteps < 2)
+                                return (uint)gauge.NextStep;
+
+                            return DNC.StandardFinish2;
+                        }
+                    }
+
+                    // Technical Step
+                    if ((actionID is DNC.TechnicalStep) && level >= DNC.Levels.TechnicalStep)
+                    {
+                        if (gauge.IsDancing && HasEffect(DNC.Buffs.TechnicalStep))
+                        {
+                            if (gauge.CompletedSteps < 4)
+                                return (uint)gauge.NextStep;
+
+                            return DNC.TechnicalFinish4;
+                        }
+                    }
+                }
+
                 // Simple AoE Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
                         return All.HeadGraze;

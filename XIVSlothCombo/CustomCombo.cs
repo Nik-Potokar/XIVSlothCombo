@@ -531,9 +531,11 @@ namespace XIVSlothComboPlugin.Combos
         /// at the later half of the gcd without causing clipping (aka Delayed Weaving)
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
+        /// <param name="start">Time (in seconds) to start to check for the weave window.</param>
+        /// <param name="end">Time (in seconds) to end the check for the weave window.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanDelayedWeave(uint actionID)
-           => GetCooldown(actionID).CooldownRemaining < 1.250 && GetCooldown(actionID).CooldownRemaining > 0.6;
+        protected static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6)
+           => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
 
         /// <summary>
         /// Get a job gauge.

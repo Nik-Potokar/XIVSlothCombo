@@ -913,11 +913,18 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 5", "Use Searing Light only in Garuda phase.", 4);
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 6", "Use Searing Light only in Titan phase.", 5);
             }
-            if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
 
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
                 ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+            }
+
+            if (preset == CustomComboPreset.SummonerPrimalBurstChoice)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+            }
 
             if (preset == CustomComboPreset.SMNLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SMN.Config.SMNLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
