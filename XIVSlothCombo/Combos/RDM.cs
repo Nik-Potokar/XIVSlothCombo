@@ -492,7 +492,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if ((radioButton == 1 && actionID is RDM.Riposte or RDM.EnchantedRiposte or RDM.Moulinet or RDM.EnchantedMoulinet)
                     || (radioButton == 2 && actionID is RDM.Jolt or RDM.Jolt2 or RDM.Scatter or RDM.Impact)
-                    || (radioButton == 3 && actionID is RDM.Riposte or RDM.EnchantedRiposte or RDM.Moulinet or RDM.EnchantedMoulinet or RDM.Jolt or RDM.Jolt2 or RDM.Scatter or RDM.Impact))
+                    || (radioButton == 3 && actionID is RDM.Riposte or RDM.EnchantedRiposte or RDM.Moulinet or RDM.EnchantedMoulinet or RDM.Jolt or RDM.Jolt2 or RDM.Scatter or RDM.Impact)
+                    || (radioButton == 4 && actionID is RDM.Veraero or RDM.Veraero2 or RDM.Veraero3 or RDM.Verthunder or RDM.Verthunder2 or RDM.Verthunder3))
                 {
                     if (gauge.ManaStacks >= 3)
                     {
@@ -617,7 +618,7 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is RDM.Verthunder or RDM.Veraero or RDM.Scatter or RDM.Verthunder3 or RDM.Veraero3 or RDM.Verthunder2 or RDM.Veraero2 or RDM.Impact or RDM.Jolt or RDM.Jolt2)
+            if (actionID is RDM.Jolt or RDM.Jolt2 or RDM.Veraero or RDM.Veraero2 or RDM.Veraero3 or RDM.Verthunder or RDM.Verthunder2 or RDM.Verthunder3 or RDM.Scatter or RDM.Impact)
             {
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(RDM.Config.RDM_LucidDreaming_Threshold);
 
@@ -659,6 +660,18 @@ namespace XIVSlothComboPlugin.Combos
 
             // Else we just exit normally and return SwiftCast
             return actionID;
+        }
+    }
+
+    internal class RDM_CorpsDisplacement : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_CorpsDisplacement;
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            var distance = GetTargetDistance();
+
+            if (actionID is RDM.Corpsacorps && level >= RDM.Levels.Displacement && HasTarget() && distance <= 5) { return RDM.Displacement; }
+            else return actionID;
         }
     }
 }

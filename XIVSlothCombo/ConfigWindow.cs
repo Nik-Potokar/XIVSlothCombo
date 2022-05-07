@@ -799,13 +799,16 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte & Jolt/Jolt II", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte & Moulinet", "", 1);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 2);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Jolt/Jolt II & Scatter/Impact", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Moulinet, Jolt/Jolt II & Scatter/Impact", "", 3);
+
+            if (preset == CustomComboPreset.RDM_MeleeFinisher)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Veraero 1/2/3 and Verthunder 1/2/3", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
 
             if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP.", 300, SliderIncrements.Hundreds);
