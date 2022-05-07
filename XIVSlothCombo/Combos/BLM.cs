@@ -836,8 +836,8 @@ namespace XIVSlothComboPlugin.Combos
                         return BLM.Paradox;
                     }
 
-                    // Fire3 when at max umbral hearts
-                    return gauge.UmbralHearts == 3 ? BLM.Fire3 : BLM.Blizzard4;
+                    // Fire3 when at max umbral hearts and near max MP
+                    return (gauge.UmbralHearts == 3 && currentMP >= BLM.MP.MaxMP - BLM.MP.AspectThunder) ? BLM.Fire3 : BLM.Blizzard4;
                 }
             }
 
