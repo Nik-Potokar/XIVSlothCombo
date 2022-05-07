@@ -16,7 +16,6 @@ namespace XIVSlothComboPlugin
             var header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is (13 or 2)) return;
-            Dalamud.Logging.PluginLog.Debug(ActionType.ToString());
             if (header.ActionId != 7 &&
                 header.ActionId != 8 &&
                 sourceObjectId == Service.ClientState.LocalPlayer.ObjectId)

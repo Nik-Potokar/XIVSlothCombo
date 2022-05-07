@@ -314,7 +314,6 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.AstReTargetFeature))
                         {
-                            Dalamud.Logging.PluginLog.Debug("Previous?");
                             TargetObject(CurrentTarget);
                         }
 
