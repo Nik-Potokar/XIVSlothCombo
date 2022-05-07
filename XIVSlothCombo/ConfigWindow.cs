@@ -337,6 +337,10 @@ namespace XIVSlothComboPlugin
                 else
                 {
                     i += this.groupedPresets[jobName].Count;
+                    foreach(var preset in this.groupedPresets[jobName])
+                    {
+                        i += AllChildren(this.presetChildren[preset.Preset]);
+                    }
                 }
 
             }
