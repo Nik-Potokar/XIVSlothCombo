@@ -775,7 +775,11 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(BLM.Buffs.Firestarter) && currentMP >= BLM.MP.AspectFire)
                     {
-                        return (level >= BLM.Levels.Paradox && gauge.IsParadoxActive) ? BLM.Paradox : (level >= BLM.Levels.Despair ? BLM.Despair : BLM.Fire);
+                        if (level >= BLM.Levels.Paradox)
+                        {
+                            return gauge.IsParadoxActive ? BLM.Paradox : BLM.Despair;
+                        }
+                        return BLM.Fire;
                     }
 
                     // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
