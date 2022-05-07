@@ -2,12 +2,18 @@
 using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace XIVSlothComboPlugin
 {
     public static class ActionWatching
     {
+        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
+            .Where(i => i.RowId is not 7)
+            .ToDictionary(i => i.RowId, i => i);
+
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
         private static void ReceiveActionEffectDetour(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
@@ -20,13 +26,29 @@ namespace XIVSlothComboPlugin
                 header.ActionId != 8 &&
                 sourceObjectId == Service.ClientState.LocalPlayer.ObjectId)
             {
-                LastAbilityUseCount++;
-                if (header.ActionId != LastAbility)
+                LastActionUseCount++;
+                if (header.ActionId != LastAction)
                 {
-                    LastAbilityUseCount = 1;
+                    LastActionUseCount = 1;
                 }
-                LastAbility = header.ActionId;
+                LastAction = header.ActionId;
 
+                ActionSheet.TryGetValue(header.ActionId, out var sheet);
+                if (sheet != null)
+                {
+                    switch (sheet.ActionCategory.Value.Name)
+                    {
+                        case "Spell":
+                            LastSpell = header.ActionId;
+                            break;
+                        case "Weaponskill":
+                            LastWeaponskill = header.ActionId;
+                            break;
+                        case "Ability":
+                            LastAbility = header.ActionId;
+                            break;
+                    }
+                }
             }
         }
 
@@ -38,11 +60,17 @@ namespace XIVSlothComboPlugin
             ActionType = actionType;
         }
 
-        public static uint LastAbility { get; set; } = 0;
+        public static uint LastAction { get; set; } = 0;
 
-        public static int LastAbilityUseCount { get; set; } = 0;
+        public static int LastActionUseCount { get; set; } = 0;
 
         public static uint ActionType { get; set; } = 0;
+
+        public static uint LastWeaponskill { get; set; } = 0;
+
+        public static uint LastAbility { get; set; } = 0;
+
+        public static uint LastSpell { get; set; } = 0;
 
         public static void Dispose()
         {

@@ -861,9 +861,19 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         public bool WasLastAction(uint id)
-            => ActionWatching.LastAbility == id;
+            => ActionWatching.LastAction == id;
 
         public int LastActionCounter()
-            => ActionWatching.LastAbilityUseCount;
+            => ActionWatching.LastActionUseCount;
+
+        public bool WasLastWeaponskill(uint id)
+            => ActionWatching.LastWeaponskill == id;
+
+        public bool WasLastSpell(uint id)
+            => ActionWatching.LastSpell == id;
+
+        public bool WasLastAbility(uint id)
+            => ActionWatching.LastAbility == id;
+
     }
 }

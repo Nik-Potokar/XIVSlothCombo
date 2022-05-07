@@ -95,12 +95,12 @@
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (ActionWatching.LastAbility != LastAction || ActionWatching.LastAbilityUseCount != LastActionCount)
+                if (ActionWatching.LastAction != LastAction || ActionWatching.LastActionUseCount != LastActionCount)
                 {
-                    LastAction = ActionWatching.LastAbility;
-                    LastActionCount = ActionWatching.LastAbilityUseCount;
+                    LastAction = ActionWatching.LastAction;
+                    LastActionCount = ActionWatching.LastActionUseCount;
 
-                    Service.ChatGui.Print($"You just used: {GetActionName(ActionWatching.LastAbility)} x{LastActionCount}");
+                    Service.ChatGui.Print($"You just used: {GetActionName(ActionWatching.LastAction)} x{LastActionCount}");
                 }
 
                 return actionID;
