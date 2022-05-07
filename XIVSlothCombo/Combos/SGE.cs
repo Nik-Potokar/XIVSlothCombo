@@ -264,9 +264,7 @@ namespace XIVSlothComboPlugin.Combos
                     };
                     
                     //Got our Debuff for our level, check for it and procede 
-                    //if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
-                    //Experimental Line
-                    if (!(DosisDebuffID?.RemainingTime > 3))
+                    if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
                     {
                         //Advanced Options Enabled to procede with auto-Eukrasia
                         //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
