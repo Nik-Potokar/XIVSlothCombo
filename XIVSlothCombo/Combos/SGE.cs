@@ -126,312 +126,313 @@ namespace XIVSlothComboPlugin.Combos
                 SGE_ST_Heal_Druochole = "SGE_ST_Heal_Druochole",
                 SGE_ST_Heal_Taurochole = "SGE_ST_Heal_Taurochole";
         }
-    }
 
 
-    //SageSoteriaKardia
-    //Soteria becomes Kardia when Kardia's Buff is not active or Soteria is on cooldown.
-    internal class SageSoteriaKardiaFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_KardiaFeature;
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+
+        //SageSoteriaKardia
+        //Soteria becomes Kardia when Kardia's Buff is not active or Soteria is on cooldown.
+        internal class SageSoteriaKardiaFeature : CustomCombo
         {
-            if (actionID is SGE.Soteria && 
-                (!HasEffect(SGE.Buffs.Kardia) || IsOnCooldown(SGE.Soteria)) 
-               ) return SGE.Kardia;
-            else return actionID;
-        }
-    }
-
-    //SageRhizomata
-    //Replaces all Addersgal using Abilities (Taurochole/Druochole/Ixochole/Kerachole) with Rhizomata if out of Addersgall stacks
-    //(Scholar speak: Replaces all Aetherflow abilities with Aetherflow when out)
-    internal class SageRhizomataFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_RhizoFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Taurochole or SGE.Druochole or SGE.Ixochole or SGE.Kerachole &&
-                level >= SGE.Levels.Rhizomata &&
-                GetJobGauge<SGEGauge>().Addersgall == 0
-               ) return SGE.Rhizomata;
-            else return actionID;
-        }
-    }
-
-    //SageDruoTauro
-    //Druochole Upgrade to Taurochole (like a trait upgrade)
-    //Replaces Druocole with Taurochole when Taurochole is available
-    //(As of 6.0) Taurochole (single target massive insta heal w/ cooldown), Druochole (Single target insta heal)
-    internal class SageDruoTauroFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauroFeature;
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Druochole && level >= SGE.Levels.Taurochole && IsOffCooldown(SGE.Taurochole)) return SGE.Taurochole;
-            else return actionID;
-        }
-    }
-
-    //Sage AoE / Phlegma Replacement
-    //Replaces Zero Charges/Stacks of Phlegma with Toxikon (if you can use it) or Dyskrasia 
-    internal class SageAoEPhlegmaFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_PhlegmaFeature;
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Phlegma or SGE.Phlegma2 or SGE.Phlegma3)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_KardiaFeature;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                //Check for "out of Phlegma stacks" 
-                if (GetCooldown(OriginalHook(SGE.Phlegma)).RemainingCharges == 0)
-                {
-                    //Toxikon Checks
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Toxikon) &&
-                        level >= SGE.Levels.Toxikon &&
-                        HasBattleTarget() &&
-                        GetJobGauge<SGEGauge>().Addersting > 0
-                       ) return OriginalHook(SGE.Toxikon);
-
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && level >= SGE.Levels.Dyskrasia)
-                        return OriginalHook(SGE.Dyskrasia);
-                }
-                //Sub-Sub Feature. Allows running around in a dungeon/field with nothing targetted, saving charges.
-                //Will switch back to Phlegma/Toxikon when targetting something, as those two are target only skills
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && //Check for parent until GUI fixes for an active child feature with a disabled parent
-                    IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia_NoTarget) &&
-                    level >= SGE.Levels.Dyskrasia &&
-                    CurrentTarget == null
-                   ) return OriginalHook(SGE.Dyskrasia);
+                if (actionID is SGE.Soteria &&
+                    (!HasEffect(Buffs.Kardia) || IsOnCooldown(Soteria))
+                   ) return Kardia;
+                else return actionID;
             }
-            return actionID;
         }
-    }
 
-    //SageSTDosis
-    //Single Target Dosis Combo
-    //Currently Replaces Dosis with Eukrasia when the debuff on the target is < 3 seconds or not existing
-    //Lucid Dreaming, Target of Target optional
-    internal class SageSTDosisFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_DosisFeature;
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        //SageRhizomata
+        //Replaces all Addersgal using Abilities (Taurochole/Druochole/Ixochole/Kerachole) with Rhizomata if out of Addersgall stacks
+        //(Scholar speak: Replaces all Aetherflow abilities with Aetherflow when out)
+        internal class SageRhizomataFeature : CustomCombo
         {
-            if (actionID is SGE.Dosis1 or SGE.Dosis2 or SGE.Dosis3 && InCombat())
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_RhizoFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                //Lucid Dreaming
-                if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) &&
-                    level >= All.Levels.LucidDreaming &&
-                    IsOffCooldown(All.LucidDreaming) &&
-                    LocalPlayer.CurrentMp <= GetOptionValue(SGE.Config.SGE_ST_Dosis_Lucid) &&
-                    CanSpellWeave(actionID)
-                   ) return All.LucidDreaming;
+                if (actionID is Taurochole or Druochole or Ixochole or Kerachole &&
+                    level >= Levels.Rhizomata &&
+                    GetJobGauge<SGEGauge>().Addersgall == 0
+                   ) return Rhizomata;
+                else return actionID;
+            }
+        }
 
-                //Eukrasian Dosis.
-                //If we're too low level to use Eukrasia, we can stop here.
-                if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && (level >= SGE.Levels.Eukrasia) && CurrentTarget is not null)
+        //SageDruoTauro
+        //Druochole Upgrade to Taurochole (like a trait upgrade)
+        //Replaces Druocole with Taurochole when Taurochole is available
+        //(As of 6.0) Taurochole (single target massive insta heal w/ cooldown), Druochole (Single target insta heal)
+        internal class SageDruoTauroFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauroFeature;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is SGE.Druochole && level >= Levels.Taurochole && IsOffCooldown(Taurochole)) return Taurochole;
+                else return actionID;
+            }
+        }
+
+        //Sage AoE / Phlegma Replacement
+        //Replaces Zero Charges/Stacks of Phlegma with Toxikon (if you can use it) or Dyskrasia 
+        internal class SageAoEPhlegmaFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_PhlegmaFeature;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Phlegma or Phlegma2 or Phlegma3)
                 {
-                    var OurTarget = CurrentTarget;
-                    //Check if our Target is there and not an enemy
-                    if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
+                    //Check for "out of Phlegma stacks" 
+                    if (GetCooldown(OriginalHook(Phlegma)).RemainingCharges == 0)
                     {
-                        //If ToT is enabled, Check if ToT is not null
-                        if ((IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisToT)) &&
-                            (CurrentTarget.TargetObject is not null) &&
-                            ((CurrentTarget.TargetObject as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy))
-                            //Set Ourtarget as the Target of Target
-                            OurTarget = CurrentTarget.TargetObject;
-                        //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
-                        else return actionID;
+                        //Toxikon Checks
+                        if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Toxikon) &&
+                            level >= Levels.Toxikon &&
+                            HasBattleTarget() &&
+                            GetJobGauge<SGEGauge>().Addersting > 0
+                           ) return OriginalHook(Toxikon);
+
+                        if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && level >= Levels.Dyskrasia)
+                            return OriginalHook(Dyskrasia);
                     }
+                    //Sub-Sub Feature. Allows running around in a dungeon/field with nothing targetted, saving charges.
+                    //Will switch back to Phlegma/Toxikon when targetting something, as those two are target only skills
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && //Check for parent until GUI fixes for an active child feature with a disabled parent
+                        IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia_NoTarget) &&
+                        level >= Levels.Dyskrasia &&
+                        CurrentTarget == null
+                       ) return OriginalHook(Dyskrasia);
+                }
+                return actionID;
+            }
+        }
 
-                    //Determine which Dosis debuff to check
-                    var DosisDebuffID = level switch
+        //SageSTDosis
+        //Single Target Dosis Combo
+        //Currently Replaces Dosis with Eukrasia when the debuff on the target is < 3 seconds or not existing
+        //Lucid Dreaming, Target of Target optional
+        internal class SageSTDosisFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_DosisFeature;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Dosis1 or Dosis2 or Dosis3 && InCombat())
+                {
+                    //Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) &&
+                        level >= All.Levels.LucidDreaming &&
+                        IsOffCooldown(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_ST_Dosis_Lucid) &&
+                        CanSpellWeave(actionID)
+                       ) return All.LucidDreaming;
+
+                    //Eukrasian Dosis.
+                    //If we're too low level to use Eukrasia, we can stop here.
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && (level >= Levels.Eukrasia) && CurrentTarget is not null)
                     {
-                        //Using FindEffect b/c we have a custom Target variable
-                        >= SGE.Levels.Dosis3 => FindEffect(SGE.Debuffs.EukrasianDosis3, OurTarget, LocalPlayer?.ObjectId),
-                        >= SGE.Levels.Dosis2 => FindEffect(SGE.Debuffs.EukrasianDosis2, OurTarget, LocalPlayer?.ObjectId),
-                        //Ekrasia Dosis unlocks with Eukrasia, checked at the start
-                        _ => FindEffect(SGE.Debuffs.EukrasianDosis1, OurTarget, LocalPlayer?.ObjectId),
-                    };
-
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return OriginalHook(SGE.Dosis1); //OriginalHook will autoselect the correct Dosis for us
-
-                    //Got our Debuff for our level, check for it and procede 
-                    if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
-                    {
-                        //Advanced Options Enabled to procede with auto-Eukrasia
-                        //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
+                        var OurTarget = CurrentTarget;
+                        //Check if our Target is there and not an enemy
+                        if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
                         {
-                            if (EnemyHealthPercentage() > GetOptionValue(SGE.Config.SGE_ST_Dosis_EDosisHPPer)) return SGE.Eukrasia;
+                            //If ToT is enabled, Check if ToT is not null
+                            if ((IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisToT)) &&
+                                (CurrentTarget.TargetObject is not null) &&
+                                ((CurrentTarget.TargetObject as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy))
+                                //Set Ourtarget as the Target of Target
+                                OurTarget = CurrentTarget.TargetObject;
+                            //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
+                            else return actionID;
                         }
-                        else return SGE.Eukrasia;
+
+                        //Determine which Dosis debuff to check
+                        var DosisDebuffID = level switch
+                        {
+                            //Using FindEffect b/c we have a custom Target variable
+                            >= Levels.Dosis3 => FindEffect(Debuffs.EukrasianDosis3, OurTarget, LocalPlayer?.ObjectId),
+                            >= Levels.Dosis2 => FindEffect(Debuffs.EukrasianDosis2, OurTarget, LocalPlayer?.ObjectId),
+                            //Ekrasia Dosis unlocks with Eukrasia, checked at the start
+                            _ => FindEffect(Debuffs.EukrasianDosis1, OurTarget, LocalPlayer?.ObjectId),
+                        };
+
+                        if (HasEffect(Buffs.Eukrasia))
+                            return OriginalHook(Dosis1); //OriginalHook will autoselect the correct Dosis for us
+
+                        //Got our Debuff for our level, check for it and procede 
+                        if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
+                        {
+                            //Advanced Options Enabled to procede with auto-Eukrasia
+                            //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
+                            if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
+                            {
+                                if (EnemyHealthPercentage() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)) return Eukrasia;
+                            }
+                            else return Eukrasia;
+                        }
+                    }
+
+                    //Toxikon
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
+                        level >= Levels.Toxikon &&
+                        HasBattleTarget() &&
+                        ((GetOptionValue(Config.SGE_ST_Dosis_Toxikon) == 1 && this.IsMoving) || (GetOptionValue(Config.SGE_ST_Dosis_Toxikon) == 2)) &&
+                        GetJobGauge<SGEGauge>().Addersting > 0
+                       ) return OriginalHook(Toxikon);
+                }
+                return actionID;
+            }
+        }
+
+        //SageRaise
+        //Swiftcast combos to Egeiro (Raise) while Swiftcast is on cooldown
+        internal class SageRaiseFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_RaiseFeature;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast)) return Egeiro;
+                else return actionID;
+            }
+        }
+
+        internal class SageSingleTargetHealFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_HealFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is SGE.Diagnosis)
+                {
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) &&
+                        level >= Levels.Druochole &&
+                        IsOffCooldown(Druochole) &&
+                        GetJobGauge<SGEGauge>().Addersgall >= 1 &&
+                        EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Druochole)
+                       ) return Druochole;
+
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) &&
+                        level >= Levels.Taurochole &&
+                        IsOffCooldown(Taurochole) &&
+                        GetJobGauge<SGEGauge>().Addersgall >= 1 &&
+                        EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Taurochole)
+                       ) return Taurochole;
+
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) &&
+                        level >= Levels.Rhizomata &&
+                        IsOffCooldown(Rhizomata) &&
+                        GetJobGauge<SGEGauge>().Addersgall is 0
+                       ) return Rhizomata;
+
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Kardia) &&
+                        level >= Levels.Kardia &&
+                        FindEffect(Buffs.Kardia) is null &&
+                        FindTargetEffect(Buffs.Kardion) is null
+                       ) return Kardia;
+
+                    if (CurrentTarget?.ObjectKind is ObjectKind.Player)
+                    {
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) &&
+                            level >= Levels.Soteria &&
+                            IsOffCooldown(Soteria) &&
+                            EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Soteria)
+                           ) return Soteria;
+
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) &&
+                            level >= Levels.Zoe &&
+                            IsOffCooldown(Zoe) &&
+                            EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Zoe)
+                           ) return Zoe;
+
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) &&
+                            level >= Levels.Krasis &&
+                            IsOffCooldown(Krasis) && EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Krasis)
+                           ) return Krasis;
+
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) &&
+                            level >= Levels.Pepsis &&
+                            IsOffCooldown(Pepsis) && EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
+                            FindTargetEffect(Buffs.EukrasianDiagnosis) is not null
+                           ) return Pepsis;
+
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) &&
+                            level >= Levels.Haima &&
+                            IsOffCooldown(Haima) && EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Haima)
+                           ) return Haima;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) &&
+                        level >= Levels.Eukrasia &&
+                        FindTargetEffect(Buffs.EukrasianDiagnosis) is null &&
+                        EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
+                    {
+                        if (!HasEffect(Buffs.Eukrasia))
+                            return Eukrasia;
+                        else return EukrasianDiagnosis;
                     }
                 }
-
-                //Toxikon
-                if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
-                    level >= SGE.Levels.Toxikon &&
-                    HasBattleTarget() &&
-                    ((GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 1 && this.IsMoving) || (GetOptionValue(SGE.Config.SGE_ST_Dosis_Toxikon) == 2)) &&
-                    GetJobGauge<SGEGauge>().Addersting > 0
-                   ) return OriginalHook(SGE.Toxikon);
+                return actionID;
             }
-            return actionID;
         }
-    }
 
-    //SageRaise
-    //Swiftcast combos to Egeiro (Raise) while Swiftcast is on cooldown
-    internal class SageRaiseFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_RaiseFeature;
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class SageAoEHealFeature : CustomCombo
         {
-            if (actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast)) return SGE.Egeiro;
-            else return actionID;
-        }
-    }
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_HealFeature;
 
-    internal class SageSingleTargetHealFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_HealFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Diagnosis )
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && 
-                    level >= SGE.Levels.Druochole &&
-                    IsOffCooldown(SGE.Druochole) &&
-                    GetJobGauge<SGEGauge>().Addersgall >= 1 && 
-                    EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Druochole)
-                   ) return SGE.Druochole;
-
-                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) &&
-                    level >= SGE.Levels.Taurochole && 
-                    IsOffCooldown(SGE.Taurochole) && 
-                    GetJobGauge<SGEGauge>().Addersgall >= 1 &&
-                    EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Taurochole)
-                   ) return SGE.Taurochole;
-
-                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) &&
-                    level >= SGE.Levels.Rhizomata &&
-                    IsOffCooldown(SGE.Rhizomata) &&
-                    GetJobGauge<SGEGauge>().Addersgall is 0
-                   ) return SGE.Rhizomata;
-
-                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Kardia) && 
-                    level >= SGE.Levels.Kardia &&
-                    FindEffect(SGE.Buffs.Kardia) is null &&
-                    FindTargetEffect(SGE.Buffs.Kardion) is null
-                   ) return SGE.Kardia;
-
-                if (CurrentTarget?.ObjectKind is ObjectKind.Player)
+                if (actionID is SGE.Prognosis)
                 {
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) &&
-                        level >= SGE.Levels.Soteria &&
-                        IsOffCooldown(SGE.Soteria) && 
-                        EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Soteria)
-                       ) return SGE.Soteria;
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) &&
+                        level >= Levels.Rhizomata &&
+                        IsOffCooldown(Rhizomata) &&
+                        GetJobGauge<SGEGauge>().Addersgall is 0
+                       ) return Rhizomata;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) &&
-                        level >= SGE.Levels.Zoe &&
-                        IsOffCooldown(SGE.Zoe) && 
-                        EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Zoe)
-                       ) return SGE.Zoe;
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) &&
+                        level >= Levels.Kerachole &&
+                        IsOffCooldown(Kerachole) &&
+                        GetJobGauge<SGEGauge>().Addersgall >= 1
+                       ) return Kerachole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) &&
-                        level >= SGE.Levels.Krasis &&
-                        IsOffCooldown(SGE.Krasis) && EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Krasis)
-                       ) return SGE.Krasis;
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) &&
+                        level >= Levels.Ixochole &&
+                        IsOffCooldown(Ixochole) &&
+                        GetJobGauge<SGEGauge>().Addersgall >= 1
+                       ) return Ixochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) &&
-                        level >= SGE.Levels.Pepsis && 
-                        IsOffCooldown(SGE.Pepsis) && EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Pepsis) &&
-                        FindTargetEffect(SGE.Buffs.EukrasianDiagnosis) is not null
-                       ) return SGE.Pepsis;
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis) &&
+                        level >= Levels.Physis &&
+                        IsOffCooldown(OriginalHook(Physis))
+                       ) return OriginalHook(Physis);
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) &&
-                        level >= SGE.Levels.Haima &&
-                        IsOffCooldown(SGE.Haima) && EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Haima)
-                       ) return SGE.Haima;
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EkPrognosis) &&
+                        level >= Levels.Eukrasia &&
+                        FindEffect(Buffs.EukrasianPrognosis) is null)
+                    {
+                        if (!HasEffect(Buffs.Eukrasia))
+                            return Eukrasia;
+                        if (HasEffect(Buffs.Eukrasia))
+                            return EukrasianPrognosis;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) &&
+                        level >= Levels.Holos &&
+                        IsOffCooldown(Holos)
+                       ) return Holos;
+
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) &&
+                        level >= Levels.Panhaima &&
+                        IsOffCooldown(Panhaima)
+                       ) return Panhaima;
+
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) &&
+                        level >= Levels.Pepsis &&
+                        IsOffCooldown(Pepsis) &&
+                        FindEffect(Buffs.EukrasianPrognosis) is not null
+                       ) return Pepsis;
                 }
-                
-                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) &&
-                    level >= SGE.Levels.Eukrasia &&
-                    FindTargetEffect(SGE.Buffs.EukrasianDiagnosis) is null && 
-                    EnemyHealthPercentage() <= GetOptionValue(SGE.Config.SGE_ST_Heal_Diagnosis))
-                {
-                    if (!HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.Eukrasia;
-                    else return SGE.EukrasianDiagnosis;
-                }
+                return actionID;
             }
-            return actionID;
-        }
-    }
-
-    internal class SageAoEHealFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_HealFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is SGE.Prognosis)
-            {
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) &&
-                    level >= SGE.Levels.Rhizomata &&
-                    IsOffCooldown(SGE.Rhizomata) &&
-                    GetJobGauge<SGEGauge>().Addersgall is 0 
-                   ) return SGE.Rhizomata;
-
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) &&
-                    level >= SGE.Levels.Kerachole &&
-                    IsOffCooldown(SGE.Kerachole) && 
-                    GetJobGauge<SGEGauge>().Addersgall >= 1
-                   ) return SGE.Kerachole;
-
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) &&
-                    level >= SGE.Levels.Ixochole &&
-                    IsOffCooldown(SGE.Ixochole) &&
-                    GetJobGauge<SGEGauge>().Addersgall >= 1                     
-                   ) return SGE.Ixochole;
-
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis) &&
-                    level >= SGE.Levels.Physis &&
-                    IsOffCooldown(OriginalHook(SGE.Physis))
-                   ) return OriginalHook(SGE.Physis);
-
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EkPrognosis) &&
-                    level >= SGE.Levels.Eukrasia &&
-                    FindEffect(SGE.Buffs.EukrasianPrognosis) is null)
-                {
-                    if (!HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.Eukrasia;
-                    if (HasEffect(SGE.Buffs.Eukrasia))
-                        return SGE.EukrasianPrognosis;
-                }
-
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) &&
-                    level >= SGE.Levels.Holos &&
-                    IsOffCooldown(SGE.Holos)
-                   ) return SGE.Holos;
-
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) &&
-                    level >= SGE.Levels.Panhaima &&
-                    IsOffCooldown(SGE.Panhaima)
-                   ) return SGE.Panhaima;
-
-                if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) &&
-                    level >= SGE.Levels.Pepsis &&
-                    IsOffCooldown(SGE.Pepsis) &&
-                    FindEffect(SGE.Buffs.EukrasianPrognosis) is not null
-                   ) return SGE.Pepsis;
-            }
-            return actionID;
         }
     }
 }

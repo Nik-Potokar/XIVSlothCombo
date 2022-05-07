@@ -6,6 +6,7 @@ using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Timers;
@@ -800,14 +801,69 @@ namespace XIVSlothComboPlugin.Combos
             P8
         }
 
+        /// <summary>
+        /// Checks if the player is in a PVP enabled zone.
+        /// </summary>
+        /// <returns></returns>
         protected static bool InPvP()
             => Service.ClientState.IsPvP ||
             Service.ClientState.TerritoryType == 250 || //Wolves Den
-            (Service.ClientState.TerritoryType == 376 && Service.PartyList.Count() > 1) || //Borderland Ruins
-            (Service.ClientState.TerritoryType == 431 && Service.PartyList.Count() > 1) || //Seal Rock
-            (Service.ClientState.TerritoryType == 554 && Service.PartyList.Count() > 1) || //Fields of Glory
-            (Service.ClientState.TerritoryType == 888 && Service.PartyList.Count() > 1) || //Onsal Hakair
-            (Service.ClientState.TerritoryType == 729 && Service.PartyList.Count() > 1) || //Astragalos
-            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Count() > 1);   //Hidden Gorge
+            (Service.ClientState.TerritoryType == 376 && Service.PartyList.Length > 1) || //Borderland Ruins
+            (Service.ClientState.TerritoryType == 431 && Service.PartyList.Length > 1) || //Seal Rock
+            (Service.ClientState.TerritoryType == 554 && Service.PartyList.Length > 1) || //Fields of Glory
+            (Service.ClientState.TerritoryType == 888 && Service.PartyList.Length > 1) || //Onsal Hakair
+            (Service.ClientState.TerritoryType == 729 && Service.PartyList.Length > 1) || //Astragalos
+            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Length > 1);   //Hidden Gorge
+
+        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
+            .Where(i => i.RowId is not 7)
+            .ToDictionary(i => i.RowId, i => i);
+
+        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
+            .ToDictionary(i => i.RowId, i => i);
+
+        public int GetLevel(uint id)
+        {
+            if (ActionSheet.TryGetValue(id, out var action))
+            {
+                return action.ClassJobLevel;
+            }
+
+            return 0;
+        }
+
+        public string GetActionName(uint id)
+        {
+            if (ActionSheet.TryGetValue(id, out var action))
+            {
+                return action.Name;
+            }
+
+            return "UNKNOWN ABILITY";
+        }
+
+        public bool LevelChecked(uint id)
+        {
+            if (LocalPlayer.Level < GetLevel(id))
+                return false;
+
+            return true;
+        }
+
+        public string GetStatusName(uint id)
+        {
+            if (StatusSheet.TryGetValue(id, out var status))
+            {
+                return status.Name;
+            }
+
+            return "Unknown Status";
+        }
+
+        public bool WasLastAction(uint id)
+            => ActionWatching.LastAbility == id;
+
+        public int LastActionCounter()
+            => ActionWatching.LastAbilityUseCount;
     }
 }

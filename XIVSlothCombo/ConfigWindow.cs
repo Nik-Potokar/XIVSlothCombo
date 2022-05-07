@@ -442,7 +442,28 @@ namespace XIVSlothComboPlugin
             }
             else
             {
+                if (preset.GetAttribute<ReplaceSkillAttribute>() != null)
+                {
+                    string skills = string.Join(", ", preset.GetAttribute<ReplaceSkillAttribute>().ActionNames);
+
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.BeginTooltip();
+                        ImGui.TextUnformatted($"Replaces: {skills}");
+                        ImGui.EndTooltip();
+                    }
+                }
                 ImGui.TextWrapped($"#{i}: {info.Description}");
+
+                if (preset.GetAttribute<HoverInfoAttribute>() != null)
+                {
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.BeginTooltip();
+                        ImGui.TextUnformatted(preset.GetAttribute<HoverInfoAttribute>().HoverText);
+                        ImGui.EndTooltip();
+                    }
+                }
             }
 
             ImGui.PopStyleColor();

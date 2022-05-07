@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.ClientState.Objects.Types;
+using System;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -34,18 +35,18 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (InCombat())
+                if (true)
                 {
                     if (LocalPlayer.TargetObject is BattleChara chara)
                     {
                         foreach (var status in chara.StatusList)
                         {
-                            Dalamud.Logging.PluginLog.Debug($"TARGET STATUS CHECK: {chara.Name} -> {status.StatusId}");
+                            Dalamud.Logging.PluginLog.Debug($"TARGET STATUS CHECK: {chara.Name} -> {GetStatusName(status.StatusId)}: {status.StatusId}");
                         }
                     }
                     foreach (var status in (LocalPlayer as BattleChara).StatusList)
                     {
-                        Dalamud.Logging.PluginLog.Debug($"SELF STATUS CHECK: {LocalPlayer.Name} -> {status.StatusId}");
+                        Dalamud.Logging.PluginLog.Debug($"SELF STATUS CHECK: {LocalPlayer.Name} -> {GetStatusName(status.StatusId)}: {status.StatusId}");
                     }
 
                     Dalamud.Logging.PluginLog.Debug($"TARGET OBJECT KIND: {LocalPlayer.TargetObject?.ObjectKind}");
@@ -58,8 +59,10 @@ namespace XIVSlothComboPlugin.Combos
                     Dalamud.Logging.PluginLog.Debug($"ZONE: {Service.ClientState.TerritoryType}");
 
                 }
+
                 return actionID;
             }
+
         }
 #endif
 

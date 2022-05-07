@@ -43,6 +43,7 @@ namespace XIVSlothComboPlugin
 
             Service.ComboCache = new CustomComboCache();
             Service.IconReplacer = new IconReplacer();
+            ActionWatching.Enable();
 
             this.configWindow = new();
             this.windowSystem = new("XIVSlothCombo");
@@ -108,6 +109,7 @@ namespace XIVSlothComboPlugin
 
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
+            ActionWatching.Dispose();
         }
 
         private void OnOpenConfigUi()
