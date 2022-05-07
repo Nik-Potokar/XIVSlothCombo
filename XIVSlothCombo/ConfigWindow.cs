@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.12.6\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.13.0\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
@@ -605,7 +605,7 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.BlackAoEFoulOption)
             {
-                ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolygotsStored, "Number of Polygot charges to store.\n(2 = Only use Polygot with Manafont)");
+                ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
             }
             if (preset == CustomComboPreset.BlackSimpleFeature || preset == CustomComboPreset.BlackSimpleTransposeFeature)
             {

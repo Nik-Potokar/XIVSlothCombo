@@ -458,13 +458,13 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
                         return All.HeadGraze;
 
-                // Simple ST Tech Step
+                // Simple ST Tech Steps
                 if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
                     return gauge.CompletedSteps < 4
                         ? (uint)gauge.NextStep
                         : DNC.TechnicalFinish4;
 
-                // Simple ST Standard Step
+                // Simple ST Standard Steps
                 if (HasEffect(DNC.Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature))
                     return gauge.CompletedSteps < 2
                         ? (uint)gauge.NextStep
@@ -587,10 +587,10 @@ namespace XIVSlothComboPlugin.Combos
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
 
-                // Dance Step Replacement
+                // Simple AoE Dance Step Replacement
                 if (IsEnabled(CustomComboPreset.DancerSimpleAoEDanceStepFeature))
                 {
-                    // Standard Step
+                    // Simple AoE Standard Steps
                     if (actionID is DNC.StandardStep)
                     {
                         if (gauge.IsDancing && HasEffect(DNC.Buffs.StandardStep))
@@ -602,7 +602,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    // Technical Step
+                    // Simple AoE Technical Steps
                     if ((actionID is DNC.TechnicalStep) && level >= DNC.Levels.TechnicalStep)
                     {
                         if (gauge.IsDancing && HasEffect(DNC.Buffs.TechnicalStep))
