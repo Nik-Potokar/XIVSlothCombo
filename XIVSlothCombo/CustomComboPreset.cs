@@ -2209,7 +2209,7 @@ namespace XIVSlothComboPlugin
             //New features should be added to the appropriate sections.
 
             #region SCHOLAR DPS
-            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin 1 / Broils with options below", SCH.JobID, 110)]
+            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils with options below", SCH.JobID, 110)]
             SCH_ST_BroilFeature = 16110,
 
                 [ParentCombo(SCH_ST_BroilFeature)]
@@ -2222,26 +2222,26 @@ namespace XIVSlothComboPlugin
                 SCH_ST_Broil_ChainStratagem = 16112,
 
                 [ParentCombo(SCH_ST_BroilFeature)]
-                [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 113)]
-                SCH_ST_Broil_Bio = 16113,
+                [CustomComboInfo("Aetherflow Weave Feature", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 113)]
+                SCH_ST_Broil_Aetherflow = 16113,
+
+                [ParentCombo(SCH_ST_BroilFeature)]
+                [CustomComboInfo("Ruin II Moving Feature", "Use Ruin 2 when you have to move", SCH.JobID, 114)]
+                SCH_ST_Broil_Ruin2Movement = 16114,
+
+                [ParentCombo(SCH_ST_BroilFeature)]
+                [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 115)]
+                SCH_ST_Broil_Bio = 16115,
 
                     [ParentCombo(SCH_ST_Broil_Bio)]
                     [ConflictingCombos(SCH_ST_Broil_BioToT)]
-                    [CustomComboInfo("Enemy HP Limiter Options", "Stop using Bio when Enemy HP values match below:", SCH.JobID, 1131)]
-                    SCH_ST_Broil_BioHPLimiters = 161131,
+                    [CustomComboInfo("Enemy HP Limiter Options", "Stop using Bio when Enemy HP values match below:", SCH.JobID, 1151)]
+                    SCH_ST_Broil_BioHPLimiters = 161151,
 
                     [ParentCombo(SCH_ST_Broil_Bio)]
                     [ConflictingCombos(SCH_ST_Broil_BioHPLimiters)]
-                    [CustomComboInfo("Target of Target Bio Option", "Target of Target checking for Bio", SCH.JobID, 1132)]
-                    SCH_ST_Broil_BioToT = 161132,
-
-                [ParentCombo(SCH_ST_BroilFeature)]
-                [CustomComboInfo("Aetherflow Weave Feature", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 114)]
-                SCH_ST_Broil_Aetherflow = 16114,
-
-                [ParentCombo(SCH_ST_BroilFeature)]
-                [CustomComboInfo("Ruin II Moving Feature", "Use Ruin 2 when you have to move", SCH.JobID, 115)]
-                SCH_ST_Broil_Ruin2Movement = 16115,
+                    [CustomComboInfo("Target of Target Bio Option", "Target of Target checking for Bio", SCH.JobID, 1152)]
+                    SCH_ST_Broil_BioToT = 161152,
             #endregion
 
             #region SCHOLAR HEALING
