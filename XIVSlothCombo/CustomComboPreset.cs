@@ -1915,7 +1915,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
         RDM_VerfireVerstone = 13220,
 
-        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte)]
+        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Fleche)]
         [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action", RDM.JobID, 240)]
         RDM_OGCD = 13240,
 
@@ -1944,7 +1944,7 @@ namespace XIVSlothComboPlugin
         RDM_VerthunderIIVeraeroII = 13310,
 
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
-        [CustomComboInfo("AoE Acceleration", "Use Acceleration on Scatter/Scorch for increased damage", RDM.JobID, 320)]
+        [CustomComboInfo("AoE Acceleration", "Use Acceleration on Scatter/Impact for increased damage", RDM.JobID, 320)]
         RDM_AoE_Acceleration = 13320,
 
         [ParentCombo(RDM_AoE_Acceleration)]
@@ -1952,7 +1952,7 @@ namespace XIVSlothComboPlugin
         RDM_AoE_AccelSwiftCast = 13321,
 
         //SECTION_4to5_MELEE
-        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte)]
+        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Riposte)]
         [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
         RDM_ST_MeleeCombo = 13410,
 
@@ -1965,6 +1965,7 @@ namespace XIVSlothComboPlugin
         RDM_ST_DoubleMeleeCombo = 13412,
 
         //[ReplaceSkill(RDM.Moulinet)]
+        [ReplaceSkill(RDM.Scatter, RDM.Impact)]
         [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
 
@@ -1980,7 +1981,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Reserve one charge", "Pool one charge of Corp-a-corps for use", RDM.JobID, 431)]
         RDM_ST_PoolCorps = 13431,
 
-        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet)]
+        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3)]
         [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)]
         RDM_MeleeFinisher = 13510,
 
