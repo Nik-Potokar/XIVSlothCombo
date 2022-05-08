@@ -100,15 +100,15 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                DNCFinalSSBurstPercent = "DNCFinalSSBurstPercent";
+                DNCSimpleSSBurstPercent = "DNCSimpleSSBurstPercent";
             public const string
-                DNCFinalTSBurstPercent = "DNCFinalTSBurstPercent";
+                DNCSimpleTSBurstPercent = "DNCSimpleTSBurstPercent";
             public const string
-                DNCFeatherBurstPercent = "DNCFeatherBurstPercent";
+                DNCSimpleFeatherBurstPercent = "DNCSimpleFeatherBurstPercent";
             public const string
-                DNCFinalSSAoEBurstPercent = "DNCFinalSSAoEBurstPercent";
+                DNCSimpleSSAoEBurstPercent = "DNCSimpleSSAoEBurstPercent";
             public const string
-                DNCFinalTSAoEBurstPercent = "DNCFinalTSAoEBurstPercent";
+                DNCSimpleTSAoEBurstPercent = "DNCSimpleTSAoEBurstPercent";
         }
 
     internal class DancerDanceComboCompatibility : CustomCombo
@@ -437,9 +437,9 @@ namespace XIVSlothComboPlugin.Combos
                 var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
-                var DNCFinalSSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSBurstPercent);
-                var DNCFinalTSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSBurstPercent);
-                var DNCFeatherBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFeatherBurstPercent);
+                var DNCFinalSSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
+                var DNCFinalTSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
+                var DNCFeatherBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent);
 
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
@@ -571,8 +571,8 @@ namespace XIVSlothComboPlugin.Combos
                     var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                     var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                     var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
-                    var DNCFinalSSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSAoEBurstPercent);
-                    var DNCFinalTSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSAoEBurstPercent);
+                    var DNCFinalSSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
+                    var DNCFinalTSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
 
                     // Simple AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
