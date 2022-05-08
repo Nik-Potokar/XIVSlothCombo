@@ -89,13 +89,13 @@ namespace XIVSlothComboPlugin
         {
             if (ImGui.BeginTabBar("SlothBar"))
             {
-                if (ImGui.BeginTabItem("PVE Features"))
+                if (ImGui.BeginTabItem("PvE Features"))
                 {
                     DrawPVEWindow();
                     ImGui.EndTabItem();
                 }
 
-                if (ImGui.BeginTabItem("PVP Features"))
+                if (ImGui.BeginTabItem("PvP Features"))
                 {
                     DrawPVPWindow();
                     ImGui.EndTabItem();
@@ -120,13 +120,13 @@ namespace XIVSlothComboPlugin
 
         private void DrawPVPWindow()
         {
-            ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
+            ImGui.Text("This tab allows you to select which PvP combos and features you wish to enable.");
 
             ImGui.PushFont(UiBuilder.IconFont);
             ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
             ImGui.PopFont();
             ImGui.SameLine();
-            ImGui.TextUnformatted("These are PVP features. They will only work in PVP enabled zones.");
+            ImGui.TextUnformatted("These are PvP features. They will only work in PvP-enabled zones.");
             ImGui.SameLine();
             ImGui.PushFont(UiBuilder.IconFont);
             ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
@@ -247,7 +247,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Hides all options a combo might have until you enable it.");
+                ImGui.TextUnformatted("Hides the sub-options of disabled features.");
                 ImGui.EndTooltip();
             }
             ImGui.NextColumn();
@@ -266,7 +266,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Hides any combos that conflict with anything you have selected.");
+                ImGui.TextUnformatted("Hides any combos that conflict with others you have selected.");
                 ImGui.EndTooltip();
             }
 
@@ -336,7 +336,7 @@ namespace XIVSlothComboPlugin
 
         private void DrawPVEWindow()
         {
-            ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
+            ImGui.Text("This tab allows you to select which PvE combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
