@@ -80,6 +80,7 @@ namespace XIVSlothComboPlugin.Combos
                 Xenoglossy = 80,
                 HighFire2 = 82,
                 HighBlizzard2 = 82,
+                EnhancedManafont = 84,
                 Amplifier = 86,
                 Paradox = 90;
         }
@@ -573,8 +574,18 @@ namespace XIVSlothComboPlugin.Combos
                                     return Fire;
                                 }
 
+                                // Cast Fire 4 after Manafont
+                                if (IsOnCooldown(Manafont))
+                                {
+                                    if ((level < Levels.EnhancedManafont && GetCooldownRemainingTime(Manafont) >= 179) ||
+                                        (level >= Levels.EnhancedManafont && GetCooldownRemainingTime(Manafont) >= 119))
+                                    {
+                                        return Fire4;
+                                    }
+                                }
+
                                 // Fire4 / Umbral Ice
-                                return (currentMP >= MP.AspectFire || lastComboMove == Manafont) ? Fire4 : Blizzard3;
+                                return currentMP >= MP.AspectFire ? Fire4 : Blizzard3;
                             }
 
                             if (gauge.InUmbralIce)
@@ -608,7 +619,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (gauge.ElementTimeRemaining > 0)
                     {
                         // Thunder uptime
-                        if (gauge.ElementTimeRemaining >= 6000 && (HasEffect(Buffs.Thundercloud) || currentMP >= MP.AspectThunder))
+                        if (gauge.ElementTimeRemaining >= astralFireRefresh && (HasEffect(Buffs.Thundercloud) || currentMP >= MP.AspectThunder))
                         {
                             if (level < Levels.Thunder3)
                             {
@@ -688,7 +699,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (level >= Levels.Sharpcast && lastComboMove != Thunder3 && GetRemainingCharges(Sharpcast) >= 1 && !HasEffect(Buffs.Sharpcast))
                                 {
                                     // Try to only sharpcast Thunder 3
-                                    if (thunder3Recast(7) ||
+                                    if (thunder3Recast(7) || GetRemainingCharges(Sharpcast) == 2 ||
                                        (thunder3Recast(15) && (gauge.InUmbralIce || (gauge.InAstralFire && !gauge.IsParadoxActive))))
                                     {
                                         return Sharpcast;
@@ -743,7 +754,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     // Use polyglot stacks if we don't need it for a future weave
-                    if (gauge.PolyglotStacks > 0 && gauge.ElementTimeRemaining >= 5000 && (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0)))
+                    if (gauge.PolyglotStacks > 0 && gauge.ElementTimeRemaining >= astralFireRefresh && (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts == 0)))
                     {
                         if (level >= Levels.Xenoglossy)
                         {
@@ -775,11 +786,15 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.AspectFire)
                         {
-                            return (level >= Levels.Paradox && gauge.IsParadoxActive) ? Paradox : (level >= Levels.Despair ? Despair : Fire);
+                            if (level >= Levels.Paradox)
+                            {
+                                return gauge.IsParadoxActive ? Paradox : Despair;
+                            }
+                            return Fire;
                         }
 
                         // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
-                        if (lastComboMove != Xenoglossy && gauge.PolyglotStacks > 0 && level >= Levels.Xenoglossy)
+                        if (lastComboMove != Xenoglossy && gauge.PolyglotStacks > 0 && level >= Levels.Xenoglossy && gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
                             var pooledPolyglotStacks = IsEnabled(CustomComboPreset.BlackSimplePoolingFeature) ? 1 : 0;
                             if (IsEnabled(CustomComboPreset.BlackSimpleBuffsFeature) && level >= Levels.Amplifier && IsOffCooldown(Amplifier))
@@ -815,6 +830,16 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
+                        // Cast Fire 4 after Manafont
+                        if (IsOnCooldown(Manafont))
+                        {
+                            if ((level < Levels.EnhancedManafont && GetCooldownRemainingTime(Manafont) >= 179) ||
+                                (level >= Levels.EnhancedManafont && GetCooldownRemainingTime(Manafont) >= 119))
+                            {
+                                return Fire4;
+                            }
+                        }
+
                         // Blizzard3/Despair when below Fire 4 + Despair MP
                         if (currentMP < (MP.AspectFire + MP.Despair))
                         {
@@ -833,7 +858,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         // Fire3 when at max umbral hearts
-                        return gauge.UmbralHearts == 3 ? Fire3 : Blizzard4;
+                        return (gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.AspectThunder) ? Fire3 : Blizzard4;
                     }
                 }
 
@@ -908,6 +933,15 @@ namespace XIVSlothComboPlugin.Combos
                             // Weave other oGCDs
                             if (canWeave)
                             {
+                                // Manafont
+                                if (IsOffCooldown(Manafont) && lastComboMove == Despair)
+                                {
+                                    if (currentMP < MP.Despair)
+                                    {
+                                        return Manafont;
+                                    }
+                                }
+
                                 // Weave Amplifier and Ley Lines
                                 if (currentMP <= 2800)
                                 {
@@ -936,23 +970,6 @@ namespace XIVSlothComboPlugin.Combos
                                     }
                                 }
 
-
-                                // Manafont
-                                if (IsOffCooldown(Manafont) && lastComboMove == Despair)
-                                {
-                                    if (level >= Levels.Despair)
-                                    {
-                                        if (currentMP < MP.Despair)
-                                        {
-                                            return Manafont;
-                                        }
-                                    }
-                                    else if (currentMP < MP.AspectFire)
-                                    {
-                                        return Manafont;
-                                    }
-                                }
-
                                 // Second Triplecast
                                 if (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
                                     lastComboMove != All.Swiftcast && GetRemainingCharges(Triplecast) >= 1 && currentMP < 6000)
@@ -972,11 +989,14 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 return Despair;
                             }
-                            if (currentMP >= MP.AspectFire)
+
+                            // Cast Fire 4 after Manafont
+                            if (IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) >= 119)
                             {
                                 return Fire4;
                             }
-                            return Transpose;
+
+                            return currentMP >= MP.AspectFire ? Fire4 : Transpose;
                         }
 
                         if (gauge.InUmbralIce)
@@ -1033,7 +1053,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return Amplifier;
                             }
 
-                            if (IsOffCooldown(LeyLines))
+                            if (IsEnabled(CustomComboPreset.BlackSimpleTransposeLeyLinesFeature) && IsOffCooldown(LeyLines))
                             {
                                 return LeyLines;
                             }
@@ -1142,6 +1162,12 @@ namespace XIVSlothComboPlugin.Combos
                         if (currentMP < (MP.AspectFire + MP.Despair) && currentMP >= MP.Despair)
                         {
                             return Despair;
+                        }
+
+                        // Cast Fire 4 after Manafont
+                        if (IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) >= 119)
+                        {
+                            return Fire4;
                         }
 
                         // Transpose if F3 is available, or Thundercloud + Xenoglossy is available
@@ -1256,11 +1282,11 @@ namespace XIVSlothComboPlugin.Combos
                                     // Weave Amplifier and Ley Lines
                                     if (currentMP <= 4400)
                                     {
-                                        if (level >= Levels.Amplifier && IsOffCooldown(Amplifier))
+                                        if (IsOffCooldown(Amplifier))
                                         {
                                             return Amplifier;
                                         }
-                                        if (level >= Levels.LeyLines && IsOffCooldown(LeyLines))
+                                        if (IsEnabled(CustomComboPreset.BlackSimpleParadoxLeyLinesFeature) && IsOffCooldown(LeyLines))
                                         {
                                             return LeyLines;
                                         }
@@ -1273,16 +1299,9 @@ namespace XIVSlothComboPlugin.Combos
                                     }
 
                                     // Manafont
-                                    if (IsOffCooldown(Manafont) && (lastComboMove == Despair || lastComboMove == Fire))
+                                    if (IsOffCooldown(Manafont) && lastComboMove == Despair)
                                     {
-                                        if (level >= Levels.Despair)
-                                        {
-                                            if (currentMP < MP.Despair)
-                                            {
-                                                return Manafont;
-                                            }
-                                        }
-                                        else if (currentMP < MP.AspectFire)
+                                        if (currentMP < MP.Despair)
                                         {
                                             return Manafont;
                                         }
@@ -1311,8 +1330,14 @@ namespace XIVSlothComboPlugin.Combos
                                     return Despair;
                                 }
 
+                                // Cast Fire 4 after Manafont
+                                if (IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) >= 119)
+                                {
+                                    return Fire4;
+                                }
+
                                 // Fire4 / Umbral Ice
-                                return (currentMP >= MP.AspectFire || lastComboMove == Manafont) ? Fire4 : Blizzard3;
+                                return currentMP >= MP.AspectFire ? Fire4 : Blizzard3;
                             }
 
                             if (gauge.InUmbralIce)
@@ -1447,6 +1472,13 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return Fire3;
                         }
+
+                        // Cast Despair after Manafont
+                        if (IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) >= 119)
+                        {
+                            return Despair;
+                        }
+
                         if (HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast) || HasEffect(Buffs.Sharpcast))
                         {
                             if (!HasEffect(Buffs.Firestarter) && currentMP >= MP.AspectFire)

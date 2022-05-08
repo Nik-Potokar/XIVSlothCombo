@@ -271,9 +271,10 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (level < Levels.SearingLight)
                                         return Fester;
-                                    if (HasEffect(Buffs.SearingLight) &&
+                                    if (HasEffectAny(Buffs.SearingLight) &&
                                         ((SummonerBurstPhase == 1 && OriginalHook(Ruin) == AstralImpulse) ||
-                                        (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire)))
+                                        (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire) ||
+                                        IsNotEnabled(CustomComboPreset.SummonerPrimalBurstChoice)))
                                         return Fester;
                                 }
                             }
@@ -295,7 +296,9 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && HasEffect(Buffs.GarudasFavor) && gauge.IsGarudaAttuned)
                                 return All.Swiftcast;
-                            if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast))
+                            if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && 
+                                ((gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) ||
+                                (gauge.Attunement == 0 && HasEffect(Buffs.GarudasFavor)))) //Astral Flow if Swiftcast is not ready throughout Garuda
                                 return OriginalHook(AstralFlow);
                         }
 

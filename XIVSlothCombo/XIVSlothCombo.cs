@@ -110,6 +110,8 @@ namespace XIVSlothComboPlugin
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
             ActionWatching.Dispose();
+
+            Service.ClientState.Login -= PrintLoginMessage;
         }
 
         private void OnOpenConfigUi()

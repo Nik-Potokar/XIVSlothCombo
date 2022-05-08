@@ -203,14 +203,14 @@ namespace XIVSlothComboPlugin.Combos
 
                         if ((HasEffect(Buffs.NoMercy) || HasEffect(All.Buffs.Medicated)) && gauge.AmmoComboStep == 0 && level >= Levels.BurstStrike)
                         {
-                            if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
+                            if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                                 return Hypervelocity;
                             if (IsEnabled(CustomComboPreset.GunbreakerBSinNMFeature) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && gauge.Ammo != 0 && IsOnCooldown(GnashingFang))
                                 return BurstStrike;
                         }
 
                         //final check if Burst Strike is used right before No Mercy ends
-                        if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
+                        if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                             return Hypervelocity;
 
                         // Regular 1-2-3 combo with overcap feature
@@ -220,7 +220,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsEnabled(CustomComboPreset.GunbreakerAmmoOvercapFeature))
                             {
-                                if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
+                                if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                                     return Hypervelocity;
                                 if (level >= Levels.BurstStrike && (gauge.Ammo == MaxCartridges(level) ||
                                     (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && GetCooldownRemainingTime(Bloodfest) < 6 && gauge.Ammo != 0 && IsOnCooldown(NoMercy)))) //Burns Ammo for Bloodfest
@@ -299,13 +299,13 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(GnashingFang);
                     if (HasEffect(Buffs.NoMercy) && HasEffect(All.Buffs.Medicated) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF) && gauge.AmmoComboStep == 0)
                     {
-                        if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
+                        if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                             return Hypervelocity;
                         if ((gauge.Ammo != 0) && level >= Levels.BurstStrike)
                             return BurstStrike;
                     }
                     //final check if Burst Strike is used right before No Mercy ends
-                    if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast) && IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature))
+                    if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                         return Hypervelocity;
                 }
 
@@ -319,12 +319,8 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == BurstStrike)
-                {
-                    if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
-                        return Hypervelocity;
-                }
-
+                if (actionID == BurstStrike && level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
+                    return Hypervelocity;
                 return actionID;
             }
         }
@@ -350,7 +346,6 @@ namespace XIVSlothComboPlugin.Combos
                         return DoubleDown;
                     if (IsEnabled(CustomComboPreset.GunbreakerBloodfestAOEOption) && gauge.Ammo != 0 && GetCooldownRemainingTime(Bloodfest) < 6 && level >= Levels.FatedCircle)
                         return FatedCircle;
-
                     if (comboTime > 0 && lastComboMove == DemonSlice && level >= Levels.DemonSlaughter)
                     {
                         if (IsEnabled(CustomComboPreset.GunbreakerAmmoOvercapFeature) && level >= Levels.FatedCircle && gauge.Ammo == MaxCartridges(level))
@@ -374,14 +369,8 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
-                if (actionID == BurstStrike)
-                {
-                    if (IsEnabled(CustomComboPreset.GunbreakerBurstStrikeConFeature) && level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
-                        return Hypervelocity;
-                    if (gauge == 0 && level >= Levels.Bloodfest)
-                        return Bloodfest;
-                }
-
+                if (actionID == BurstStrike && gauge == 0 && level >= Levels.Bloodfest && !HasEffect(Buffs.ReadyToBlast))
+                    return Bloodfest;
                 return actionID;
             }
         }
@@ -393,10 +382,27 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
-                if (actionID == BurstStrike)
+                if (actionID == BurstStrike && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && gauge >= 2)
+                    return DoubleDown;
+                return actionID;
+            }
+        }
+
+        internal class GunbreakerCDsonNMFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerCDsonNMFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == NoMercy)
                 {
-                    if (HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && gauge >= 2)
-                        return DoubleDown;
+                    if (IsOnCooldown(NoMercy) && InCombat())
+                    {
+                        if (IsOffCooldown(SonicBreak))
+                            return SonicBreak;
+                        if (IsOffCooldown(BowShock))
+                            return BowShock;
+                    }
                 }
 
                 return actionID;
