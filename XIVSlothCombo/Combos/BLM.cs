@@ -775,7 +775,11 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.AspectFire)
                         {
-                            return (level >= Levels.Paradox && gauge.IsParadoxActive) ? Paradox : (level >= Levels.Despair ? Despair : Fire);
+                            if (level >= Levels.Paradox)
+                            {
+                                return gauge.IsParadoxActive ? Paradox : Despair;
+                            }
+                            return Fire;
                         }
 
                         // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
@@ -833,7 +837,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         // Fire3 when at max umbral hearts
-                        return gauge.UmbralHearts == 3 ? Fire3 : Blizzard4;
+                        return (gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.AspectThunder) ? Fire3 : Blizzard4;
                     }
                 }
 
