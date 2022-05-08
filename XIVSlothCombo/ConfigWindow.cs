@@ -683,6 +683,12 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.DancerSimpleFeatherPoolingFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCFeatherBurstPercent, "Target HP percentage to dump all pooled feathers below", 75, SliderIncrements.Ones);
 
+            if (preset == CustomComboPreset.DancerSimpleAoEStandardFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCFinalSSAoEBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleAoETechnicalFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCFinalTSAoEBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
             if (preset == CustomComboPreset.DNCCuringWaltzOption)
                 ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Caps at 90 to prevent waste.###DNCPvP", 150, SliderIncrements.Ones);
 

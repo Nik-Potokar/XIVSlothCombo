@@ -767,7 +767,7 @@ namespace XIVSlothComboPlugin
             DancerSimpleAoEFeatherFeature = 4077,
 
             [ParentCombo(DancerSimpleAoEFeatherFeature)]
-            [CustomComboInfo("Simple AoE Feather Pooling", "Makes it so the AoE rotation only uses feathers when you have more than 3.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple AoE Feather Pooling", "Expends a feather in the next available weave window when capped.", DNC.JobID, 0, "", "")]
             DancerSimpleAoEFeatherPoolingFeature = 4078,
 
             [ParentCombo(DancerSimpleAoEFeature)]

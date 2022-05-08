@@ -105,6 +105,10 @@ namespace XIVSlothComboPlugin.Combos
                 DNCFinalTSBurstPercent = "DNCFinalTSBurstPercent";
             public const string
                 DNCFeatherBurstPercent = "DNCFeatherBurstPercent";
+            public const string
+                DNCFinalSSAoEBurstPercent = "DNCFinalSSAoEBurstPercent";
+            public const string
+                DNCFinalTSAoEBurstPercent = "DNCFinalTSAoEBurstPercent";
         }
 
     internal class DancerDanceComboCompatibility : CustomCombo
@@ -567,6 +571,8 @@ namespace XIVSlothComboPlugin.Combos
                     var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                     var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                     var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
+                    var DNCFinalSSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSAoEBurstPercent);
+                    var DNCFinalTSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSAoEBurstPercent);
 
                     // Simple AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
@@ -585,15 +591,14 @@ namespace XIVSlothComboPlugin.Combos
                             : TechnicalFinish4;
 
                     // Simple AoE Standard/Tech (activates dances with no target, or when target is over 5% HP)
-                    if (!HasTarget() || EnemyHealthPercentage() > 5)
+                    if (!HasTarget())
                     {
-                        if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) &&
-                            IsOffCooldown(StandardStep) && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
+                        if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > DNCFinalSSAoEBurstPercent &&
+                            ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
                             techBurstTimer.RemainingTime > 5))
                             return StandardStep;
 
-                        if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) &&
-                            !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
+                        if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > DNCFinalTSAoEBurstPercent)
                             return TechnicalStep;
                     }
 
