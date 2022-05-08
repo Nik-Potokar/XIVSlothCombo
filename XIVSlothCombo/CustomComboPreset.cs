@@ -564,50 +564,50 @@ namespace XIVSlothComboPlugin
         #region Single Target Multibutton
         [ReplaceSkill(DNC.Cascade)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("Single Target Multibutton", "Change Cascade into procs and combos as available.", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("Single Target Multibutton Feature", "Single target combo with Fan Dances and Esprit use.", DNC.JobID, 0, "", "")]
         DancerSingleTargetMultibutton = 4000,
 
             #region ST Espirit Overcap Options
             [ParentCombo(DancerSingleTargetMultibutton)]
-            [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance to the Cascade combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
             DancerEspritOvercapSTFeature = 4001,
 
                 [ParentCombo(DancerEspritOvercapSTFeature)]
-                [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.\nOverrides 'ST Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
+                [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance if you have at least 50 Esprit.\nOverrides 'ST Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
                 DancerEspritOvercapSTInstantOption = 4002,
                 #endregion
 
             [ParentCombo(DancerSingleTargetMultibutton)]
-            [CustomComboInfo("Fan Dance Overcap Protection", "Adds Fan Dance 1 onto Cascade when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Fan Dance Overcap Protection Option", "Adds Fan Dance 1 when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
             DancerFanDanceMainComboOvercapFeature = 4003,
 
             [ParentCombo(DancerSingleTargetMultibutton)]
-            [CustomComboInfo("Fan Dance On Cascade Feature", "Adds Fan Dance 3/4 onto Cascade when available.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Fan Dance Option", "Adds Fan Dance 3/4 when available.", DNC.JobID, 0, "", "")]
             DancerFanDance34OnMainComboFeature = 4004,
             #endregion
 
         #region AoE Multibutton
         [ReplaceSkill(DNC.Windmill)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
-        [CustomComboInfo("AoE Multibutton", "Change Windmill into procs and combos as available.", DNC.JobID, 0, "", "")]
+        [CustomComboInfo("AoE Multibutton Feature", "AoE combo with Fan Dances and Esprit use.", DNC.JobID, 0, "", "")]
         DancerAoEMultibutton = 4010,
 
             #region AoE Espirit Overcap Options
             [ParentCombo(DancerAoEMultibutton)]
-            [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance to the Windmill combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
             DancerEspritOvercapAoEFeature = 4011,
 
-            [ParentCombo(DancerEspritOvercapAoEFeature)]
-            [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
-            DancerEspritOvercapAoEInstantOption = 4012,
-            #endregion
+                [ParentCombo(DancerEspritOvercapAoEFeature)]
+                [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
+                DancerEspritOvercapAoEInstantOption = 4012,
+                #endregion
 
             [ParentCombo(DancerAoEMultibutton)]
-            [CustomComboInfo("AoE Fan Dance Overcap Protection", "Adds Fan Dance 2 onto Windmill when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("AoE Fan Dance Overcap Protection Option", "Adds Fan Dance 2 when Fourfold Feathers are full.", DNC.JobID, 0, "", "")]
             DancerFanDanceAoEComboOvercapFeature = 4013,
 
             [ParentCombo(DancerAoEMultibutton)]
-            [CustomComboInfo("AoE Fan Dance On Windmill Feature", "Adds FanDance 3/4 Onto Windmill When available.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("AoE Fan Dance Option", "Adds Fan Dance 3/4 when available.", DNC.JobID, 0, "", "")]
             DancerFanDanceOnAoEComboFeature = 4014,
             #endregion
 
