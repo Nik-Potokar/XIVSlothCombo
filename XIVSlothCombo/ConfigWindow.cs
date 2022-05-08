@@ -681,9 +681,9 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region DARK KNIGHT
             if (preset == CustomComboPreset.DarkEoSPoolOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)");
+                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Hundreds);
             if (preset == CustomComboPreset.DarkPlungeFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)");
+                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
             #endregion
             // ====================================================================================
             #region DRAGOON
