@@ -805,7 +805,7 @@ namespace XIVSlothComboPlugin
             }
 
             if (preset == CustomComboPreset.ReaperShadowOfDeathFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 5, RPR.Config.RPRSoDThreshold, "Set a HP Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(0, 5, RPR.Config.RPRSoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
 
             #endregion
             // ====================================================================================
