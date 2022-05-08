@@ -89,9 +89,15 @@ namespace XIVSlothComboPlugin
         {
             if (ImGui.BeginTabBar("SlothBar"))
             {
-                if (ImGui.BeginTabItem("Features & Options"))
+                if (ImGui.BeginTabItem("PVE Features"))
                 {
-                    DrawMainWindow();
+                    DrawPVEWindow();
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem("PVP Features"))
+                {
+                    DrawPVPWindow();
                     ImGui.EndTabItem();
                 }
 
@@ -110,6 +116,80 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTabBar();
             }
 
+        }
+
+        private void DrawPVPWindow()
+        {
+            ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
+
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+            ImGui.PopFont();
+            ImGui.SameLine();
+            ImGui.TextUnformatted("These are PVP features. They will only work in PVP enabled zones.");
+            ImGui.SameLine();
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+            ImGui.PopFont();
+
+            ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
+
+            ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
+
+            var i = 1;
+
+            foreach (var jobName in this.groupedPresets.Keys)
+            {
+                if (this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count() == 0) continue;
+
+                if (ImGui.CollapsingHeader(jobName))
+                {
+                    foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    {
+                        if (Service.Configuration.HideConflictedCombos)
+                        {
+                            //Presets that are contained within a ConflictedAttribute
+                            var conflictOriginals = Service.Configuration.GetConflicts(preset);
+
+                            //Presets with the ConflictedAttribute
+                            var conflictsSource = Service.Configuration.GetAllConflicts();
+
+                            if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
+                            {
+                                this.DrawPreset(preset, info, ref i);
+                                continue;
+                            }
+                            if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
+                            {
+                                Service.Configuration.EnabledActions.Remove(preset);
+                                Service.Configuration.Save();
+                            }
+                            else
+                            {
+                                this.DrawPreset(preset, info, ref i);
+                                continue;
+                            }
+
+                        }
+                        else
+                        {
+                            this.DrawPreset(preset, info, ref i);
+                        }
+                    }
+                }
+                else
+                {
+                    i += this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    {
+                        i += AllChildren(this.presetChildren[preset.Preset]);
+                    }
+                }
+
+            }
+
+            ImGui.PopStyleVar();
+            ImGui.EndChild();
         }
 
         private static void DrawAboutUs()
@@ -149,44 +229,6 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("main", new Vector2(0, 0), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
-
-            #region PvPCombos
-
-            var showSecrets = Service.Configuration.EnableSecretCombos;
-            if (ImGui.Checkbox("Show PvP Combos", ref showSecrets))
-            {
-                Service.Configuration.EnableSecretCombos = showSecrets;
-                Service.Configuration.Save();
-            }
-
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Adds PVP Combos To The Combo Setup Screen");
-                ImGui.EndTooltip();
-            }
-            ImGui.NextColumn();
-
-            #endregion
-
-            #region TrustIncompatibles
-
-            //var showTrustIncompatible = Service.Configuration.EnableTrustIncompatibles;
-            //if (ImGui.Checkbox("Show Trust Incompatible Combos", ref showTrustIncompatible))
-            //{
-            //    Service.Configuration.EnableTrustIncompatibles = showTrustIncompatible;
-            //    Service.Configuration.Save();
-            //}
-
-            //if (ImGui.IsItemHovered())
-            //{
-            //    ImGui.BeginTooltip();
-            //    ImGui.TextUnformatted("These features won't work in a trust run due to technical restraints.");
-            //    ImGui.EndTooltip();
-            //}
-            //ImGui.NextColumn();
-
-            #endregion
 
             #region SubCombos
 
@@ -287,7 +329,7 @@ namespace XIVSlothComboPlugin
             ImGui.EndChild();
         }
 
-        private void DrawMainWindow()
+        private void DrawPVEWindow()
         {
             ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
@@ -301,7 +343,7 @@ namespace XIVSlothComboPlugin
 
                 if (ImGui.CollapsingHeader(jobName))
                 {
-                    foreach (var (preset, info) in this.groupedPresets[jobName])
+                    foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
                         if (Service.Configuration.HideConflictedCombos)
                         {
@@ -336,8 +378,8 @@ namespace XIVSlothComboPlugin
                 }
                 else
                 {
-                    i += this.groupedPresets[jobName].Count;
-                    foreach(var preset in this.groupedPresets[jobName])
+                    i += this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
                         i += AllChildren(this.presetChildren[preset.Preset]);
                     }
@@ -356,18 +398,9 @@ namespace XIVSlothComboPlugin
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = Service.Configuration.IsSecret(preset);
-            var showSecrets = Service.Configuration.EnableSecretCombos;
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
             var irlsloth = Service.Configuration.SpecialEvent;
-
-            if (secret && !showSecrets)
-            {
-                i++;
-                i += AllChildren(this.presetChildren[preset]);
-                return;
-            }
-                
 
             ImGui.PushItemWidth(200);
 
@@ -415,27 +448,6 @@ namespace XIVSlothComboPlugin
 
             }
 
-
-
-            if (secret)
-            {
-                ImGui.SameLine();
-                ImGui.Text("  ");
-                ImGui.SameLine();
-                ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedOrange);
-                ImGui.Text(FontAwesomeIcon.SkullCrossbones.ToIconString());
-                ImGui.PopStyleColor();
-                ImGui.PopFont();
-
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.BeginTooltip();
-                    ImGui.TextUnformatted("This is a PVP Combo (Only Works in PVP Enabled Areas)");
-                    ImGui.EndTooltip();
-                }
-            }
-
             ImGui.PopItemWidth();
 
 
@@ -479,10 +491,6 @@ namespace XIVSlothComboPlugin
             {
                 var conflictText = conflicts.Select(conflict =>
                 {
-                    if (!showSecrets && Service.Configuration.IsSecret(conflict))
-                        return string.Empty;
-
-
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
                     if (irlsloth)
                     {

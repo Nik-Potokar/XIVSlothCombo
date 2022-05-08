@@ -272,7 +272,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             private new bool GetTarget = true;
 
-            private GameObject? CurrentTarget;
+            private new GameObject? CurrentTarget;
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
