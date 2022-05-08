@@ -96,7 +96,6 @@ namespace XIVSlothComboPlugin.Combos
 
         public static class Config
         {
-            //            public const string RdmLucidMpThreshold = "RdmLucidMpThreshold";
             public const string RDM_OGCD_OnAction = "RDM_OGCD_OnAction";
             public const string RDM_ST_MeleeCombo_OnAction = "RDM_ST_MeleeCombo_OnAction";
             public const string RDM_MeleeFinisher_OnAction = "RDM_MeleeFinisher_OnAction";
