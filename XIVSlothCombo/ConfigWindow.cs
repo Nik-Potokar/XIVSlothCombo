@@ -681,9 +681,9 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region DARK KNIGHT
             if (preset == CustomComboPreset.DarkEoSPoolOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)");
+                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Hundreds);
             if (preset == CustomComboPreset.DarkPlungeFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)");
+                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
             #endregion
             // ====================================================================================
             #region DRAGOON
@@ -833,13 +833,16 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte & Jolt/Jolt II", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte & Moulinet", "", 1);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 2);
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Jolt/Jolt II & Scatter/Impact", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Moulinet, Jolt/Jolt II & Scatter/Impact", "", 3);
+
+            if (preset == CustomComboPreset.RDM_MeleeFinisher)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Veraero 1/2/3 and Verthunder 1/2/3", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
 
             if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP.", 300, SliderIncrements.Hundreds);
