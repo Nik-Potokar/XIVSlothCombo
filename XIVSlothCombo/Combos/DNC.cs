@@ -106,9 +106,18 @@ namespace XIVSlothComboPlugin.Combos
             public const string
                 DNCSimpleFeatherBurstPercent = "DNCSimpleFeatherBurstPercent";
             public const string
+                DNCSimplePanicHealWaltzPercent = "DNCSimplePanicHealWaltzPercent";
+            public const string
+                DNCSimplePanicHealWindPercent = "DNCSimplePanicHealWindPercent";
+
+            public const string
                 DNCSimpleSSAoEBurstPercent = "DNCSimpleSSAoEBurstPercent";
             public const string
                 DNCSimpleTSAoEBurstPercent = "DNCSimpleTSAoEBurstPercent";
+            public const string
+                DNCSimpleAoEPanicHealWaltzPercent = "DNCSimpleAoEPanicHealWaltzPercent";
+            public const string
+                DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";
         }
 
     internal class DancerDanceComboCompatibility : CustomCombo
@@ -437,9 +446,11 @@ namespace XIVSlothComboPlugin.Combos
                 var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
-                var DNCFinalSSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
-                var DNCFinalTSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
-                var DNCFeatherBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent);
+                var standardStepBurstThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
+                var technicalStepBurstThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
+                var featherBurstThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent);
+                var waltzThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent);
+                var secondWindThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent);
 
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
@@ -460,11 +471,11 @@ namespace XIVSlothComboPlugin.Combos
                 // Simple ST Standard/Tech (activates dances with no target, or when target is over 2% HP)
                 if (!HasTarget())
                 {
-                    if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > DNCFinalSSBurstPercent &&
+                    if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > standardStepBurstThreshold &&
                         ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer.RemainingTime > 5))
                         return StandardStep;
 
-                    if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > DNCFinalTSBurstPercent)
+                    if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > technicalStepBurstThreshold)
                         return TechnicalStep;
                 }
 
@@ -500,7 +511,7 @@ namespace XIVSlothComboPlugin.Combos
                         var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleFeatherPoolingFeature) && level >= Levels.TechnicalStep ? 3 : 0;
 
                         // Simple ST Feather Overcap & Burst
-                        if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() < DNCFeatherBurstPercent && gauge.Feathers > 0)
+                        if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() < featherBurstThreshold && gauge.Feathers > 0)
                             return FanDance1;
                     }
 
@@ -511,10 +522,10 @@ namespace XIVSlothComboPlugin.Combos
                     // Simple ST Panic Heals
                     if (IsEnabled(CustomComboPreset.DancerSimplePanicHealsFeature))
                     {
-                        if (PlayerHealthPercentageHp() < 30 && curingWaltzReady)
+                        if (PlayerHealthPercentageHp() < waltzThreshold && curingWaltzReady)
                             return CuringWaltz;
 
-                        if (PlayerHealthPercentageHp() < 50 && secondWindReady)
+                        if (PlayerHealthPercentageHp() < secondWindThreshold && secondWindReady)
                             return All.SecondWind;
                     }
                     
@@ -571,8 +582,10 @@ namespace XIVSlothComboPlugin.Combos
                     var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                     var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                     var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
-                    var DNCFinalSSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
-                    var DNCFinalTSAoEBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
+                    var standardStepBurstThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
+                    var technicalStepBurstThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
+                    var waltzThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWaltzPercent);
+                    var secondWindThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent);
 
                     // Simple AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
@@ -593,12 +606,12 @@ namespace XIVSlothComboPlugin.Combos
                     // Simple AoE Standard/Tech (activates dances with no target, or when target is over 5% HP)
                     if (!HasTarget())
                     {
-                        if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > DNCFinalSSAoEBurstPercent &&
+                        if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > standardStepBurstThreshold &&
                             ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
                             techBurstTimer.RemainingTime > 5))
                             return StandardStep;
 
-                        if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > DNCFinalTSAoEBurstPercent)
+                        if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > technicalStepBurstThreshold)
                             return TechnicalStep;
                     }
 
@@ -649,10 +662,10 @@ namespace XIVSlothComboPlugin.Combos
                         // Simple AoE Panic Heals
                         if (IsEnabled(CustomComboPreset.DancerSimpleAoEPanicHealsFeature))
                         {
-                            if (PlayerHealthPercentageHp() < 30 && curingWaltzReady)
+                            if (PlayerHealthPercentageHp() < waltzThreshold && curingWaltzReady)
                                 return CuringWaltz;
 
-                            if (PlayerHealthPercentageHp() < 50 && secondWindReady)
+                            if (PlayerHealthPercentageHp() < secondWindThreshold && secondWindReady)
                                 return All.SecondWind;
                         }
 

@@ -728,7 +728,7 @@ namespace XIVSlothComboPlugin
             DancerSimpleFeatherPoolingFeature = 4058,
 
             [ParentCombo(DancerSimpleFeature)]
-            [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple Panic Heals", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 0, "", "")]
             DancerSimplePanicHealsFeature = 4059,
 
             [ParentCombo(DancerSimpleFeature)]
@@ -771,7 +771,7 @@ namespace XIVSlothComboPlugin
             DancerSimpleAoEFeatherPoolingFeature = 4078,
 
             [ParentCombo(DancerSimpleAoEFeature)]
-            [CustomComboInfo("Simple AoE Panic Heals", "Includes Curing Waltz and Second Wind in the AoE rotation when available and below 30 and 50 percent HP, respectively.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple AoE Panic Heals", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 0, "", "")]
             DancerSimpleAoEPanicHealsFeature = 4079,
 
             [ParentCombo(DancerSimpleAoEFeature)]
