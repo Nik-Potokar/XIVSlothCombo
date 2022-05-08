@@ -1728,6 +1728,7 @@ namespace XIVSlothComboPlugin
         ReaperPositionalConfig = 12000,
 
         #region Single Target (Slice) Combo Section
+        [ReplaceSkill(RPR.Slice)]
         [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.", RPR.JobID, 0, "", "")]
         ReaperSliceCombo = 12001,
 
@@ -1783,6 +1784,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the combo when current target is afflicted with Death's Design.\nWill use Void/Cross Reaping during Enshroud.", RPR.JobID, 0, "", "")]
         GibbetGallowsonSTFeature = 12014,
 
+        [ReplaceSkill(RPR.ShadowOfDeath)]
         [ParentCombo(GibbetGallowsonSTFeature)]
         [CustomComboInfo("Gibbet and Gallows on SoD Option", "Adds Gibbet and Gallows to Shadow of Death as well.", RPR.JobID, 0, "", "")]
         GibbetGallowsonSoD = 12015,
@@ -1793,6 +1795,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #region AoE (Scythe) Combo Section
+        [ReplaceSkill(RPR.SpinningScythe)]
         [CustomComboInfo("Scythe Combo Feature", "Replace Spinning Scythe with its combo chain.", RPR.JobID, 0, "", "")]
         ReaperScytheCombo = 12020,
 
@@ -1834,6 +1837,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #region Blood Stalk/Grim Swathe Combo Section
+        [ReplaceSkill(RPR.BloodStalk, RPR.GrimSwathe)]
         [CustomComboInfo("Gibbet and Gallows/Guillotine on Blood Stalk/Grim Swathe Feature", "Adds Gibbet and Gallows on Blood Stalk.\nAdds Guillotine on Grim Swathe.", RPR.JobID, 0, "", "")]
         ReaperBloodStalkComboFeature = 12040,
 
@@ -1847,27 +1851,34 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #region Miscellaneous
+        [ReplaceSkill(RPR.ArcaneCircle)]
         [CustomComboInfo("Arcane Circle Harvest Feature", "Replaces Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID, 0, "", "")]
         ReaperHarvestFeature = 12051,
 
+        [ReplaceSkill(RPR.HellsEgress, RPR.HellsIngress)]
         [CustomComboInfo("Regress Feature", "Changes both Hell's Ingress and Hell's Egress turn into Regress when Threshold is active.", RPR.JobID, 0, "", "")]
         ReaperRegressFeature = 12052,
 
+        [ReplaceSkill(RPR.Slice, RPR.SpinningScythe, RPR.ShadowOfDeath, RPR.Harpe, RPR.BloodStalk)]
         [CustomComboInfo("Soulsow Reminder Feature", "Adds Soulsow to Slice, Spinning Scythe, Shadow of Death, Harpe, and Blood Stalk when out of combat.", RPR.JobID, 0, "", "")]
         ReaperSoulSowReminderFeature = 12053,
 
+        [ReplaceSkill(RPR.Harpe)]
         [ParentCombo(ReaperSoulSowReminderFeature)]
         [CustomComboInfo("Harpe Harvest Moon Feature", "Replaces Harpe with Harvest Moon when you are in combat with Soulsow active.", RPR.JobID, 0, "", "")]
         ReaperHarpeHarvestMoonFeature = 12054,
 
+        [ReplaceSkill(RPR.Harpe, RPR.Slice)]
         [ParentCombo(ReaperSoulSowReminderFeature)]
         [CustomComboInfo("Enhanced Harpe Option", "Prevent Harvest Moon replacing Harpe when Enhanced Harpe is active.", RPR.JobID, 0, "", "")]
         ReaperHarpeHarvestMoonEnhancedOption = 12055,
 
+        [ReplaceSkill(RPR.Harpe, RPR.Slice)]
         [ParentCombo(ReaperSoulSowReminderFeature)]
         [CustomComboInfo("Combat Harpe Option", "Prevent Harvest Moon replacing Harpe when you are not in combat.", RPR.JobID, 0, "", "")]
         ReaperHarpeHarvestMoonCombatOption = 12056,
 
+        [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud Protection Feature", "Turns Enshroud into Gibbet/Gallows to protect Soul Reaver waste.", RPR.JobID, 0, "", "")]
         ReaperEnshroudProtectionFeature = 12057,
         #endregion
