@@ -146,6 +146,7 @@ namespace XIVSlothComboPlugin
                 {
                     foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
                     {
+                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             //Presets that are contained within a ConflictedAttribute
@@ -156,7 +157,8 @@ namespace XIVSlothComboPlugin
 
                             if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
                                 continue;
                             }
                             if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
@@ -166,14 +168,17 @@ namespace XIVSlothComboPlugin
                             }
                             else
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
+                                
                                 continue;
                             }
 
                         }
                         else
                         {
-                            this.DrawPreset(preset, info, ref i);
+                            presetBox.Draw();
+                            ImGuiHelpers.ScaledDummy(12.0f);
                         }
                     }
                 }
@@ -345,6 +350,7 @@ namespace XIVSlothComboPlugin
                 {
                     foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
+                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             //Presets that are contained within a ConflictedAttribute
@@ -355,7 +361,8 @@ namespace XIVSlothComboPlugin
 
                             if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
                                 continue;
                             }
                             if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
@@ -365,14 +372,16 @@ namespace XIVSlothComboPlugin
                             }
                             else
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
                                 continue;
                             }
 
                         }
                         else
                         {
-                            this.DrawPreset(preset, info, ref i);
+                            presetBox.Draw();
+                            ImGuiHelpers.ScaledDummy(12.0f);
                         }
                     }
                 }
