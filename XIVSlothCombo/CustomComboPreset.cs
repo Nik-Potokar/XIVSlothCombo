@@ -700,12 +700,12 @@ namespace XIVSlothComboPlugin
             DancerSimpleInterruptFeature = 4051,
 
             [ParentCombo(DancerSimpleFeature)]
-            [CustomComboInfo("Simple Standard Step Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleStandardFeature = 4052,
 
             [ParentCombo(DancerSimpleFeature)]
             [ConflictingCombos(DancerSimpleTechFillFeature)]
-            [CustomComboInfo("Simple Technical Step Option", "Includes Technical Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleTechnicalFeature = 4053,
 
             [ParentCombo(DancerSimpleFeature)]
@@ -749,12 +749,12 @@ namespace XIVSlothComboPlugin
             DancerSimpleAoEInterruptFeature = 4071,
 
             [ParentCombo(DancerSimpleAoEFeature)]
-            [CustomComboInfo("Simple AoE Standard Step Option", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
+            [CustomComboInfo("Simple AoE Standard Dance Option", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
             DancerSimpleAoEStandardFeature = 4072,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [ConflictingCombos(DancerSimpleAoETechFillFeature)]
-            [CustomComboInfo("Simple AoE Technical Step Option", "Includes Technical Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
+            [CustomComboInfo("Simple AoE Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the AoE rotation.", DNC.JobID, 0, "")]
             DancerSimpleAoETechnicalFeature = 4073,
 
             [ParentCombo(DancerSimpleAoEFeature)]
