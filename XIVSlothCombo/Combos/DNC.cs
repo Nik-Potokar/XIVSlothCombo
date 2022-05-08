@@ -100,6 +100,12 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
+                DNCEspritThreshold_ST = "DNCEspritThreshold_ST";
+            public const string
+                DNCEspritThreshold_AoE = "DNCEspritThreshold_AoE";
+
+            #region Simple ST Sliders
+            public const string
                 DNCSimpleSSBurstPercent = "DNCSimpleSSBurstPercent";
             public const string
                 DNCSimpleTSBurstPercent = "DNCSimpleTSBurstPercent";
@@ -109,7 +115,9 @@ namespace XIVSlothComboPlugin.Combos
                 DNCSimplePanicHealWaltzPercent = "DNCSimplePanicHealWaltzPercent";
             public const string
                 DNCSimplePanicHealWindPercent = "DNCSimplePanicHealWindPercent";
+            #endregion
 
+            #region Simple AoE Sliders
             public const string
                 DNCSimpleSSAoEBurstPercent = "DNCSimpleSSAoEBurstPercent";
             public const string
@@ -118,9 +126,10 @@ namespace XIVSlothComboPlugin.Combos
                 DNCSimpleAoEPanicHealWaltzPercent = "DNCSimpleAoEPanicHealWaltzPercent";
             public const string
                 DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";
+            #endregion
         }
 
-    internal class DancerDanceComboCompatibility : CustomCombo
+        internal class DancerDanceComboCompatibility : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerDanceComboCompatibility;
 
@@ -255,11 +264,10 @@ namespace XIVSlothComboPlugin.Combos
                 var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
                 var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
                 var canWeave = CanWeave(actionID);
+                var espritThreshold = Service.Configuration.GetCustomIntValue(Config.DNCEspritThreshold_ST);
 
                 // ST Esprit overcap options
-                if (level >= Levels.SaberDance &&
-                   (gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTInstantOption) ||
-                    gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTFeature)))
+                if (level >= Levels.SaberDance && gauge.Esprit >= espritThreshold && IsEnabled(CustomComboPreset.DancerEspritOvercapSTFeature))
                         return SaberDance;
 
                 if (canWeave)
@@ -310,11 +318,10 @@ namespace XIVSlothComboPlugin.Combos
                 var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
                 var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
                 var canWeave = CanWeave(actionID);
+                var espritThreshold = Service.Configuration.GetCustomIntValue(Config.DNCEspritThreshold_AoE);
 
                 // AoE Esprit overcap options
-                if (level >= Levels.SaberDance &&
-                   (gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEInstantOption) ||
-                    gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEFeature)))
+                if (level >= Levels.SaberDance && gauge.Esprit >= espritThreshold && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEFeature))
                     return SaberDance;
 
                 if (canWeave)
