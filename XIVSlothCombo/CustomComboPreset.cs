@@ -1161,11 +1161,11 @@ namespace XIVSlothComboPlugin
         GunbreakerDDOnGF = 7010,
 
         [ParentCombo(GunbreakerGnashingFangCombo)]
-        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "More Teeth", "Gnashing fang, but like, if a shark did it. Or something.")]
+        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike and Hypervelocity added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "More Teeth", "Gnashing fang, but like, if a shark did it. Or something.")]
         GunbreakerCDsOnGF = 7011,
 
-        [ReplaceSkill(GNB.BurstStrike, GNB.SolidBarrel, GNB.GnashingFang)]
-        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo and Gnashing Fang.", GNB.JobID, 0, "Swish, swoosh", "Now we're cooking with gas! Hyper!")]
+        [ReplaceSkill(GNB.BurstStrike)]
+        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike.", GNB.JobID, 0, "Swish, swoosh", "Now we're cooking with gas! Hyper!")]
         GunbreakerBurstStrikeConFeature = 7012,
 
         [ReplaceSkill(GNB.BurstStrike)]
@@ -1209,7 +1209,7 @@ namespace XIVSlothComboPlugin
         GunbreakerCDsonNMFeature = 7022,
 
         [ParentCombo(GunbreakerMainComboCDsGroup)]
-        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
+        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
 
         [ParentCombo(GunbreakerDemonSlaughterCombo)]
@@ -1220,6 +1220,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Double Down AOE Option", "Adds Double Down to AOE Combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "")]
         GunbreakerDoubleDownAOEOption = 7025,
 
+        [ReplaceSkill(GNB.BurstStrike)]
         [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "")]
         GunbreakerDDonBurstStrikeFeature = 7026,
 
@@ -2547,7 +2548,7 @@ namespace XIVSlothComboPlugin
         SMNLucidDreamingFeature = 17031,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Burse Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.", SMN.JobID, 0, "", "")]
