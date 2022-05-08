@@ -392,6 +392,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9% less damage than Simple BLM). Requires level 90.", BLM.JobID, -1, "", "")]
         BlackSimpleParadoxFeature = 2023,
 
+        [ParentCombo(BlackSimpleTransposeFeature)]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced BLM feature.", BLM.JobID, -1, "", "")]
+        BlackSimpleTransposeLeyLinesFeature = 2024,
+
+        [ParentCombo(BlackSimpleParadoxFeature)]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Paradox BLM feature.", BLM.JobID, -1, "", "")]
+        BlackSimpleParadoxLeyLinesFeature = 2025,
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE

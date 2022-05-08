@@ -913,7 +913,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (canWeave)
                             {
                                 // Manafont
-                                if (IsOffCooldown(Manafont) && (lastComboMove == Despair || lastComboMove == Xenoglossy))
+                                if (IsOffCooldown(Manafont) && lastComboMove == Despair)
                                 {
                                     if (currentMP < MP.Despair)
                                     {
@@ -1029,7 +1029,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return Amplifier;
                             }
 
-                            if (IsOffCooldown(LeyLines))
+                            if (IsEnabled(CustomComboPreset.BlackSimpleTransposeLeyLinesFeature) && IsOffCooldown(LeyLines))
                             {
                                 return LeyLines;
                             }
@@ -1252,11 +1252,11 @@ namespace XIVSlothComboPlugin.Combos
                                     // Weave Amplifier and Ley Lines
                                     if (currentMP <= 4400)
                                     {
-                                        if (level >= Levels.Amplifier && IsOffCooldown(Amplifier))
+                                        if (IsOffCooldown(Amplifier))
                                         {
                                             return Amplifier;
                                         }
-                                        if (level >= Levels.LeyLines && IsOffCooldown(LeyLines))
+                                        if (IsEnabled(CustomComboPreset.BlackSimpleParadoxLeyLinesFeature) && IsOffCooldown(LeyLines))
                                         {
                                             return LeyLines;
                                         }
@@ -1269,16 +1269,9 @@ namespace XIVSlothComboPlugin.Combos
                                     }
 
                                     // Manafont
-                                    if (IsOffCooldown(Manafont) && (lastComboMove == Despair || lastComboMove == Fire))
+                                    if (IsOffCooldown(Manafont) && lastComboMove == Despair)
                                     {
-                                        if (level >= Levels.Despair)
-                                        {
-                                            if (currentMP < MP.Despair)
-                                            {
-                                                return Manafont;
-                                            }
-                                        }
-                                        else if (currentMP < MP.AspectFire)
+                                        if (currentMP < MP.Despair)
                                         {
                                             return Manafont;
                                         }
