@@ -89,9 +89,15 @@ namespace XIVSlothComboPlugin
         {
             if (ImGui.BeginTabBar("SlothBar"))
             {
-                if (ImGui.BeginTabItem("Features & Options"))
+                if (ImGui.BeginTabItem("PvE Features"))
                 {
-                    DrawMainWindow();
+                    DrawPVEWindow();
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem("PvP Features"))
+                {
+                    DrawPVPWindow();
                     ImGui.EndTabItem();
                 }
 
@@ -110,6 +116,85 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTabBar();
             }
 
+        }
+
+        private void DrawPVPWindow()
+        {
+            ImGui.Text("This tab allows you to select which PvP combos and features you wish to enable.");
+
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+            ImGui.PopFont();
+            ImGui.SameLine();
+            ImGui.TextUnformatted("These are PvP features. They will only work in PvP-enabled zones.");
+            ImGui.SameLine();
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+            ImGui.PopFont();
+
+            ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
+
+            ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
+
+            var i = 1;
+
+            foreach (var jobName in this.groupedPresets.Keys)
+            {
+                if (this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count() == 0) continue;
+
+                if (ImGui.CollapsingHeader(jobName))
+                {
+                    foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    {
+                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
+                        if (Service.Configuration.HideConflictedCombos)
+                        {
+                            //Presets that are contained within a ConflictedAttribute
+                            var conflictOriginals = Service.Configuration.GetConflicts(preset);
+
+                            //Presets with the ConflictedAttribute
+                            var conflictsSource = Service.Configuration.GetAllConflicts();
+
+                            if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
+                            {
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
+                                continue;
+                            }
+                            if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
+                            {
+                                Service.Configuration.EnabledActions.Remove(preset);
+                                Service.Configuration.Save();
+                            }
+                            else
+                            {
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
+                                
+                                continue;
+                            }
+
+                        }
+                        else
+                        {
+                            presetBox.Draw();
+                            ImGuiHelpers.ScaledDummy(12.0f);
+                        }
+                    }
+                }
+                else
+                {
+                    i += this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    {
+                        i += AllChildren(this.presetChildren[preset.Preset]);
+                    }
+                }
+
+            }
+
+            ImGui.PopStyleVar();
+            ImGui.EndChild();
         }
 
         private static void DrawAboutUs()
@@ -150,44 +235,6 @@ namespace XIVSlothComboPlugin
             ImGui.BeginChild("main", new Vector2(0, 0), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
 
-            #region PvPCombos
-
-            var showSecrets = Service.Configuration.EnableSecretCombos;
-            if (ImGui.Checkbox("Show PvP Combos", ref showSecrets))
-            {
-                Service.Configuration.EnableSecretCombos = showSecrets;
-                Service.Configuration.Save();
-            }
-
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Adds PVP Combos To The Combo Setup Screen");
-                ImGui.EndTooltip();
-            }
-            ImGui.NextColumn();
-
-            #endregion
-
-            #region TrustIncompatibles
-
-            //var showTrustIncompatible = Service.Configuration.EnableTrustIncompatibles;
-            //if (ImGui.Checkbox("Show Trust Incompatible Combos", ref showTrustIncompatible))
-            //{
-            //    Service.Configuration.EnableTrustIncompatibles = showTrustIncompatible;
-            //    Service.Configuration.Save();
-            //}
-
-            //if (ImGui.IsItemHovered())
-            //{
-            //    ImGui.BeginTooltip();
-            //    ImGui.TextUnformatted("These features won't work in a trust run due to technical restraints.");
-            //    ImGui.EndTooltip();
-            //}
-            //ImGui.NextColumn();
-
-            #endregion
-
             #region SubCombos
 
 
@@ -200,7 +247,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Hides all options a combo might have until you enable it.");
+                ImGui.TextUnformatted("Hides the sub-options of disabled features.");
                 ImGui.EndTooltip();
             }
             ImGui.NextColumn();
@@ -219,7 +266,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Hides any combos that conflict with anything you have selected.");
+                ImGui.TextUnformatted("Hides any combos that conflict with others you have selected.");
                 ImGui.EndTooltip();
             }
 
@@ -287,9 +334,9 @@ namespace XIVSlothComboPlugin
             ImGui.EndChild();
         }
 
-        private void DrawMainWindow()
+        private void DrawPVEWindow()
         {
-            ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
+            ImGui.Text("This tab allows you to select which PvE combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
@@ -301,8 +348,9 @@ namespace XIVSlothComboPlugin
 
                 if (ImGui.CollapsingHeader(jobName))
                 {
-                    foreach (var (preset, info) in this.groupedPresets[jobName])
+                    foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
+                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             //Presets that are contained within a ConflictedAttribute
@@ -313,7 +361,8 @@ namespace XIVSlothComboPlugin
 
                             if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
                                 continue;
                             }
                             if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
@@ -323,21 +372,23 @@ namespace XIVSlothComboPlugin
                             }
                             else
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
                                 continue;
                             }
 
                         }
                         else
                         {
-                            this.DrawPreset(preset, info, ref i);
+                            presetBox.Draw();
+                            ImGuiHelpers.ScaledDummy(12.0f);
                         }
                     }
                 }
                 else
                 {
-                    i += this.groupedPresets[jobName].Count;
-                    foreach(var preset in this.groupedPresets[jobName])
+                    i += this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
                         i += AllChildren(this.presetChildren[preset.Preset]);
                     }
@@ -356,18 +407,9 @@ namespace XIVSlothComboPlugin
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = Service.Configuration.IsSecret(preset);
-            var showSecrets = Service.Configuration.EnableSecretCombos;
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
             var irlsloth = Service.Configuration.SpecialEvent;
-
-            if (secret && !showSecrets)
-            {
-                i++;
-                i += AllChildren(this.presetChildren[preset]);
-                return;
-            }
-                
 
             ImGui.PushItemWidth(200);
 
@@ -415,27 +457,6 @@ namespace XIVSlothComboPlugin
 
             }
 
-
-
-            if (secret)
-            {
-                ImGui.SameLine();
-                ImGui.Text("  ");
-                ImGui.SameLine();
-                ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedOrange);
-                ImGui.Text(FontAwesomeIcon.SkullCrossbones.ToIconString());
-                ImGui.PopStyleColor();
-                ImGui.PopFont();
-
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.BeginTooltip();
-                    ImGui.TextUnformatted("This is a PVP Combo (Only Works in PVP Enabled Areas)");
-                    ImGui.EndTooltip();
-                }
-            }
-
             ImGui.PopItemWidth();
 
 
@@ -479,10 +500,6 @@ namespace XIVSlothComboPlugin
             {
                 var conflictText = conflicts.Select(conflict =>
                 {
-                    if (!showSecrets && Service.Configuration.IsSecret(conflict))
-                        return string.Empty;
-
-
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
                     if (irlsloth)
                     {
@@ -674,14 +691,53 @@ namespace XIVSlothComboPlugin
 
             }
 
+            if (preset == CustomComboPreset.DancerEspritOvercapSTFeature)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_ST, "Esprit", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerEspritOvercapAoEFeature)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Ones);
+
+            #region Simple ST Sliders
+            if (preset == CustomComboPreset.DancerSimpleStandardFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleSSBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleTechnicalFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleTSBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleFeatherPoolingFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleFeatherBurstPercent, "Target HP percentage to dump all pooled feathers below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimplePanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimplePanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            #endregion
+
+            #region Simple AoE Sliders
+            if (preset == CustomComboPreset.DancerSimpleAoEStandardFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleSSAoEBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleAoETechnicalFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleTSAoEBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleAoEPanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleAoEPanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            #endregion
+
+            #region PvP Sliders
             if (preset == CustomComboPreset.DNCCuringWaltzOption)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###DNC", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Caps at 90 to prevent waste.###DNCPvP", 150, SliderIncrements.Ones);
+            #endregion
 
             #endregion
             // ====================================================================================
             #region DARK KNIGHT
             if (preset == CustomComboPreset.DarkEoSPoolOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
             if (preset == CustomComboPreset.DarkPlungeFeature && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
             #endregion
