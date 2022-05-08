@@ -103,6 +103,8 @@ namespace XIVSlothComboPlugin.Combos
                 DNCFinalSSBurstPercent = "DNCFinalSSBurstPercent";
             public const string
                 DNCFinalTSBurstPercent = "DNCFinalTSBurstPercent";
+            public const string
+                DNCFeatherBurstPercent = "DNCFeatherBurstPercent";
         }
 
     internal class DancerDanceComboCompatibility : CustomCombo
@@ -433,6 +435,7 @@ namespace XIVSlothComboPlugin.Combos
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
                 var DNCFinalSSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSBurstPercent);
                 var DNCFinalTSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSBurstPercent);
+                var DNCFeatherBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFeatherBurstPercent);
 
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
@@ -493,7 +496,7 @@ namespace XIVSlothComboPlugin.Combos
                         var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleFeatherPoolingFeature) && level >= Levels.TechnicalStep ? 3 : 0;
 
                         // Simple ST Feather Overcap & Burst
-                        if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() < 2)
+                        if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() < DNCFeatherBurstPercent && gauge.Feathers > 0)
                             return FanDance1;
                     }
 

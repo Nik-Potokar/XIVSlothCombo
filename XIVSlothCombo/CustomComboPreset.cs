@@ -724,7 +724,7 @@ namespace XIVSlothComboPlugin
             DancerSimpleFeatherFeature = 4057,
 
             [ParentCombo(DancerSimpleFeatherFeature)]
-            [CustomComboInfo("Simple Feather Pooling", "Makes the rotation only use feathers when you have more than 3, or when you're under the effects of Technical Step.\nWill expend feathers when your target is under 2 percent HP.", DNC.JobID, 0, "")]
+            [CustomComboInfo("Simple Feather Pooling", "Expends a feather in the next available weave window when capped.\nWeaves feathers where possible during Technical Finish.\nWeaves feathers outside of burst when target is below set HP percentage.", DNC.JobID, 0, "")]
             DancerSimpleFeatherPoolingFeature = 4058,
 
             [ParentCombo(DancerSimpleFeature)]
