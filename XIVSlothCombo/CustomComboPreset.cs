@@ -2481,7 +2481,7 @@ namespace XIVSlothComboPlugin
         SummonerCarbuncleSummonFeature = 17010,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Ruin 4 on Main Combo", "Adds Ruin4 on Main Combo when there are currently no summons active.", SMN.JobID, 0, "Ruin -> Ruin -> Ruin", "Ruin this, ruin that. Can't you see I'm busy ruining the plugin?!")]
+        [CustomComboInfo("Ruin 4 on Main Combo", "Adds Ruin4 on Main Combo when there are currently no summons active.", SMN.JobID, 1, "Ruin -> Ruin -> Ruin", "Ruin this, ruin that. Can't you see I'm busy ruining the plugin?!")]
         SummonerRuin4ToRuin3Feature = 17011,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2493,11 +2493,11 @@ namespace XIVSlothComboPlugin
         SummonerFesterPainflareRuinFeature = 17013,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID, 0)]
+        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID, 1)]
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
         EgisOnRuinFeature = 17015,
 
         [ParentCombo(EgisOnRuinFeature)]
@@ -2509,7 +2509,7 @@ namespace XIVSlothComboPlugin
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo and will be used on cooldown.", SMN.JobID, 0, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo and will be used on cooldown.", SMN.JobID, 1, "My eyes!", "I can't see!")]
         SearingLightonRuinFeature = 17018,
 
         [ParentCombo(SearingLightonRuinFeature)]
@@ -2521,7 +2521,7 @@ namespace XIVSlothComboPlugin
         BuffOnSimpleAoESummoner = 17019,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 0, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
+        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
