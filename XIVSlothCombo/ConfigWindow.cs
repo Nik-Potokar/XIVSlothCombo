@@ -674,8 +674,14 @@ namespace XIVSlothComboPlugin
 
             }
 
+            if (preset == CustomComboPreset.DancerSimpleStandardFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCFinalSSBurstPercent, "Target HP percentage to stop using Standard Step below.", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleTechnicalFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCFinalTSBurstPercent, "Target HP percentage to stop using Technical Step below.", 75, SliderIncrements.Ones);
+
             if (preset == CustomComboPreset.DNCCuringWaltzOption)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###DNC", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Caps at 90 to prevent waste.###DNCPvP", 150, SliderIncrements.Ones);
 
             #endregion
             // ====================================================================================

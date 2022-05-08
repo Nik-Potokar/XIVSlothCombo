@@ -97,7 +97,13 @@ namespace XIVSlothComboPlugin.Combos
                 FanDance4 = 86,
                 StarfallDance = 90;
         }
-    
+        public static class Config
+        {
+            public const string
+                DNCFinalSSBurstPercent = "DNCFinalSSBurstPercent";
+            public const string
+                DNCFinalTSBurstPercent = "DNCFinalTSBurstPercent";
+        }
 
     internal class DancerDanceComboCompatibility : CustomCombo
     {
@@ -425,6 +431,8 @@ namespace XIVSlothComboPlugin.Combos
                 var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
+                var DNCFinalSSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSBurstPercent);
+                var DNCFinalTSBurstPercent = Service.Configuration.GetCustomIntValue(Config.DNCFinalSSBurstPercent);
 
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
@@ -443,15 +451,13 @@ namespace XIVSlothComboPlugin.Combos
                         : StandardFinish2;
 
                 // Simple ST Standard/Tech (activates dances with no target, or when target is over 2% HP)
-                if (!HasTarget() || EnemyHealthPercentage() > 2)
+                if (!HasTarget())
                 {
-                    if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) &&
-                        IsOffCooldown(StandardStep) && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
-                        techBurstTimer.RemainingTime > 5))
+                    if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > DNCFinalSSBurstPercent &&
+                        ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer.RemainingTime > 5))
                         return StandardStep;
 
-                    if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) &&
-                        !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
+                    if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > DNCFinalTSBurstPercent)
                         return TechnicalStep;
                 }
 
