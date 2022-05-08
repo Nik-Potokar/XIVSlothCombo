@@ -912,6 +912,15 @@ namespace XIVSlothComboPlugin.Combos
                             // Weave other oGCDs
                             if (canWeave)
                             {
+                                // Manafont
+                                if (IsOffCooldown(Manafont) && (lastComboMove == Despair || lastComboMove == Xenoglossy))
+                                {
+                                    if (currentMP < MP.Despair)
+                                    {
+                                        return Manafont;
+                                    }
+                                }
+
                                 // Weave Amplifier and Ley Lines
                                 if (currentMP <= 2800)
                                 {
@@ -937,23 +946,6 @@ namespace XIVSlothComboPlugin.Combos
                                     if (!HasEffect(Buffs.Sharpcast) && GetRemainingCharges(Sharpcast) >= 1 && IsOnCooldown(LeyLines))
                                     {
                                         return Sharpcast;
-                                    }
-                                }
-
-
-                                // Manafont
-                                if (IsOffCooldown(Manafont) && lastComboMove == Despair)
-                                {
-                                    if (level >= Levels.Despair)
-                                    {
-                                        if (currentMP < MP.Despair)
-                                        {
-                                            return Manafont;
-                                        }
-                                    }
-                                    else if (currentMP < MP.AspectFire)
-                                    {
-                                        return Manafont;
                                     }
                                 }
 

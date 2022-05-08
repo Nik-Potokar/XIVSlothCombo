@@ -487,17 +487,18 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 &&
-                                HasEffect(Buffs.DisciplinedFist) && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire)
+                            if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && HasEffect(Buffs.DisciplinedFist))
                             {
-                                return OriginalHook(Meditation);
+                                if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature) || (IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
+                                {
+                                    return OriginalHook(Meditation);
+                                }
                             }
                         }
                     }
 
                     // Masterful Blitz
-                    if (IsEnabled(CustomComboPreset.MonkMasterfulBlitzOnMainCombo) &&
-                        level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                    if (IsEnabled(CustomComboPreset.MonkMasterfulBlitzOnMainCombo) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                     {
                         return OriginalHook(MasterfulBlitz);
                     }
