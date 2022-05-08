@@ -350,7 +350,7 @@ namespace XIVSlothComboPlugin
                 {
                     foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
-                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
+                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             //Presets that are contained within a ConflictedAttribute
