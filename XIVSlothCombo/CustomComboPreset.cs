@@ -621,13 +621,13 @@ namespace XIVSlothComboPlugin
             #region Dance Features
             [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
             [ParentCombo(DancerMenuDanceFeatures)]
-            [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
+            [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
             [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
             DancerDanceStepCombo = 4021,
 
             [ReplaceSkill(DNC.StandardStep)]
             [ParentCombo(DancerMenuDanceFeatures)]
-            [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
             [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
             DancerCombinedDanceFeature = 4022,
 
@@ -642,7 +642,7 @@ namespace XIVSlothComboPlugin
                 #endregion
 
             [ParentCombo(DancerMenuDanceFeatures)]
-            [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature)]
+            [ConflictingCombos(DancerDanceStepCombo, DancerCombinedDanceFeature, DancerSimpleFeature, DancerSimpleAoEFeature)]
             [CustomComboInfo("Custom Dance Step Feature",
             "Change custom actions into dance steps while dancing." +
             "\nThis helps ensure you can still dance with combos on, without using auto dance." +
