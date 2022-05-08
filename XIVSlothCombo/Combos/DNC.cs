@@ -459,21 +459,21 @@ namespace XIVSlothComboPlugin.Combos
                 var waltzThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent);
                 var secondWindThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent);
 
-                // Simple ST Interrupt
-                if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
-                        return All.HeadGraze;
-
-                // Simple ST Tech Steps
-                if (HasEffect(Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
-                    return gauge.CompletedSteps < 4
-                        ? (uint)gauge.NextStep
-                        : TechnicalFinish4;
-
                 // Simple ST Standard Steps
                 if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature))
                     return gauge.CompletedSteps < 2
                         ? (uint)gauge.NextStep
                         : StandardFinish2;
+
+                // Simple ST Tech Steps & Fill Feature
+                if (HasEffect(Buffs.TechnicalStep) && (IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) || IsEnabled(CustomComboPreset.DancerSimpleTechFillFeature)))
+                    return gauge.CompletedSteps < 4
+                        ? (uint)gauge.NextStep
+                        : TechnicalFinish4;
+
+                // Simple ST Interrupt
+                if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
+                        return All.HeadGraze;
 
                 // Simple ST Standard (activates dance with no target, or when target is over HP% threshold)
                 if (!HasTarget() || EnemyHealthPercentage() > standardStepBurstThreshold)
@@ -598,10 +598,6 @@ namespace XIVSlothComboPlugin.Combos
                     var waltzThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWaltzPercent);
                     var secondWindThreshold = Service.Configuration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent);
 
-                    // Simple AoE Interrupt
-                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
-                        return All.HeadGraze;
-
                     // Simple AoE Standard Step (step function)
                     if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature))
                         return gauge.CompletedSteps < 2
@@ -609,10 +605,14 @@ namespace XIVSlothComboPlugin.Combos
                             : StandardFinish2;
 
                     // Simple AoE Tech Step (step function)
-                    if (HasEffect(Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature))
+                    if (HasEffect(Buffs.TechnicalStep) && (IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) || IsEnabled(CustomComboPreset.DancerSimpleAoETechFillFeature)))
                         return gauge.CompletedSteps < 4
                             ? (uint)gauge.NextStep
                             : TechnicalFinish4;
+
+                    // Simple AoE Interrupt
+                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
+                        return All.HeadGraze;
 
                     // Simple AoE Standard (activates dance with no target, or when target is over HP% threshold)
                     if (!HasTarget() || EnemyHealthPercentage() > standardStepBurstThreshold)
