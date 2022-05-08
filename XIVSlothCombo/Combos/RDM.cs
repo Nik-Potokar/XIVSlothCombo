@@ -605,6 +605,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 //END_RDM_VERTHUNDERIIVVERAEROII
 
+
                 //NO_CONDITIONS_MET
                 if (level < Levels.Jolt && actionID is Jolt or Jolt2) { return Riposte; }
                 return actionID;
@@ -671,10 +672,10 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var distance = GetTargetDistance();
 
-                if (actionID is Corpsacorps && level >= Levels.Displacement && HasTarget() && distance <= 5) { return Displacement; }
-                else return actionID;
+                if (actionID is Displacement && level >= Levels.Displacement && HasTarget() && distance >= 5) { return Corpsacorps; }
+                return actionID;
             }
         }
-    }
 
+    }
 }
