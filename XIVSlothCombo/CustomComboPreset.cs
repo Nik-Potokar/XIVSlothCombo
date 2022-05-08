@@ -1169,11 +1169,11 @@ namespace XIVSlothComboPlugin
         GunbreakerDDOnGF = 7010,
 
         [ParentCombo(GunbreakerGnashingFangCombo)]
-        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "More Teeth", "Gnashing fang, but like, if a shark did it. Or something.")]
+        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike and Hypervelocity added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "More Teeth", "Gnashing fang, but like, if a shark did it. Or something.")]
         GunbreakerCDsOnGF = 7011,
 
-        [ReplaceSkill(GNB.BurstStrike, GNB.SolidBarrel, GNB.GnashingFang)]
-        [CustomComboInfo("BurstStrikeContinuation", "Adds Hypervelocity on Burst Strike Continuation combo and main combo and Gnashing Fang.", GNB.JobID, 0, "Swish, swoosh", "Now we're cooking with gas! Hyper!")]
+        [ReplaceSkill(GNB.BurstStrike)]
+        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike.", GNB.JobID, 0, "Swish, swoosh", "Now we're cooking with gas! Hyper!")]
         GunbreakerBurstStrikeConFeature = 7012,
 
         [ReplaceSkill(GNB.BurstStrike)]
@@ -1217,7 +1217,7 @@ namespace XIVSlothComboPlugin
         GunbreakerCDsonNMFeature = 7022,
 
         [ParentCombo(GunbreakerMainComboCDsGroup)]
-        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
+        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
         GunbreakerBSinNMFeature = 7023,
 
         [ParentCombo(GunbreakerDemonSlaughterCombo)]
@@ -1228,6 +1228,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Double Down AOE Option", "Adds Double Down to AOE Combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "")]
         GunbreakerDoubleDownAOEOption = 7025,
 
+        [ReplaceSkill(GNB.BurstStrike)]
         [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "")]
         GunbreakerDDonBurstStrikeFeature = 7026,
 
@@ -2480,7 +2481,7 @@ namespace XIVSlothComboPlugin
         SummonerCarbuncleSummonFeature = 17010,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Ruin 4 on Main Combo", "Adds Ruin4 on Main Combo when there are currently no summons active.", SMN.JobID, 0, "Ruin -> Ruin -> Ruin", "Ruin this, ruin that. Can't you see I'm busy ruining the plugin?!")]
+        [CustomComboInfo("Ruin 4 on Main Combo", "Adds Ruin4 on Main Combo when there are currently no summons active.", SMN.JobID, 1, "Ruin -> Ruin -> Ruin", "Ruin this, ruin that. Can't you see I'm busy ruining the plugin?!")]
         SummonerRuin4ToRuin3Feature = 17011,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2492,11 +2493,11 @@ namespace XIVSlothComboPlugin
         SummonerFesterPainflareRuinFeature = 17013,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID, 0)]
+        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID, 1)]
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
         EgisOnRuinFeature = 17015,
 
         [ParentCombo(EgisOnRuinFeature)]
@@ -2508,7 +2509,7 @@ namespace XIVSlothComboPlugin
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo and will be used on cooldown.", SMN.JobID, 0, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo and will be used on cooldown.", SMN.JobID, 1, "My eyes!", "I can't see!")]
         SearingLightonRuinFeature = 17018,
 
         [ParentCombo(SearingLightonRuinFeature)]
@@ -2520,7 +2521,7 @@ namespace XIVSlothComboPlugin
         BuffOnSimpleAoESummoner = 17019,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 0, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
+        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2570,7 +2571,7 @@ namespace XIVSlothComboPlugin
         SMNLucidDreamingFeature = 17031,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Burse Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.", SMN.JobID, 0, "", "")]

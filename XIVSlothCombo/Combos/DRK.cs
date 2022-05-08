@@ -133,7 +133,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (IsEnabled(CustomComboPreset.DarkSaltedEarthFeature) && level >= Levels.SaltedEarth)
                                 {
                                     if ((IsOffCooldown(SaltedEarth) && !HasEffect(Buffs.SaltedEarth)) || //Salted Earth
-                                        (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && level >= Levels.SaltAndDarkness)) //Salt and Darkness
+                                        (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && level >= Levels.SaltAndDarkness) && GetBuffRemainingTime(Buffs.SaltedEarth) < 9) //Salt and Darkness
                                         return OriginalHook(SaltedEarth);
                                 }
 
