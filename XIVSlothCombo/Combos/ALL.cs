@@ -1,6 +1,4 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Types;
-
-namespace XIVSlothComboPlugin.Combos
+﻿namespace XIVSlothComboPlugin.Combos
 {
     internal static class All
     {
@@ -9,6 +7,7 @@ namespace XIVSlothComboPlugin.Combos
         public const uint
             Rampart = 7531,
             SecondWind = 7541,
+            TrueNorth = 7546,
             Addle = 7560,
             Swiftcast = 7561,
             LucidDreaming = 7562,
@@ -44,7 +43,8 @@ namespace XIVSlothComboPlugin.Combos
                 Swiftcast = 167,
                 Rampart = 1191,
                 Peloton = 1199,
-                LucidDreaming = 1204;
+                LucidDreaming = 1204,
+                TrueNorth = 1250;
         }
 
         public static class Debuffs
@@ -81,163 +81,187 @@ namespace XIVSlothComboPlugin.Combos
                 Feint = 22,
                 HeadGraze = 24,
                 Rescue = 48,
-                Shirk = 48;
+                Shirk = 48,
+                TrueNorth = 50;
         }
-    }
 
-    //Tank Features
-    internal class AllTankInterruptFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankInterruptFeature;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        //Non-gameplay features
+        internal class OutputCombatLog : CustomCombo
         {
-            if (actionID is All.LowBlow or PLD.ShieldBash)
+            private uint LastAction = 0;
+            private int LastActionCount = 0;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllOutputCombatLog;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (IsOffCooldown(All.LowBlow) && level >= All.Levels.LowBlow)
-                    return All.LowBlow;
-                if (CanInterruptEnemy() && IsOffCooldown(All.Interject) && level >= All.Levels.Interject)
-                    return All.Interject;
-                if (actionID == PLD.ShieldBash && IsOnCooldown(All.LowBlow))
-                    return actionID;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class AllTankReprisalFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankReprisalFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is All.Reprisal)
-            {
-                if (TargetHasEffectAny(All.Debuffs.Reprisal) && IsOffCooldown(All.Reprisal))
-                    return WHM.Stone1;
-            }
-
-            return actionID;
-        }
-    }
-
-    //Healer Features
-    internal class AllHealerRaiseFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllHealerRaiseFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro)
-            {
-                if (IsOffCooldown(All.Swiftcast))
-                    return All.Swiftcast;
-                if (HasEffect(All.Buffs.Swiftcast))
+                if (ActionWatching.LastAction != LastAction || ActionWatching.LastActionUseCount != LastActionCount)
                 {
-                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHMThinAirFeature) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && level >= WHM.Levels.ThinAir)
-                        return WHM.ThinAir;
-                    return actionID;
+                    LastAction = ActionWatching.LastAction;
+                    LastActionCount = ActionWatching.LastActionUseCount;
+
+                    Service.ChatGui.Print($"You just used: {GetActionName(ActionWatching.LastAction)} x{LastActionCount}");
                 }
+
+                return actionID;
             }
-
-            return actionID;
         }
-    }
 
-    //Caster Features
-    internal class AllCasterAddleFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterAddleFeature;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        //Tank Features
+        internal class AllTankInterruptFeature : CustomCombo
         {
-            if (actionID is All.Addle)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankInterruptFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (TargetHasEffectAny(All.Debuffs.Addle) && IsOffCooldown(All.Addle))
-                    return WAR.FellCleave;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class AllCasterRaiseFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterRaiseFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is BLU.AngelWhisper or RDM.Verraise or SMN.Resurrection)
-            {
-                if (HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
-                    return actionID;
-                if (IsOffCooldown(All.Swiftcast))
-                    return All.Swiftcast;
-            }
-
-            return actionID;
-        }
-    }
-
-    //Melee DPS Features
-    internal class AllMeleeFeintFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllMeleeFeintFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is All.Feint)
-            {
-                if (TargetHasEffectAny(All.Debuffs.Feint) && IsOffCooldown(All.Feint))
-                    return BLM.Fire;
-            }
-
-            return actionID;
-        }
-    }
-
-    //Ranged Physical Features
-    internal class AllRangedPhysicalMitigationFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllRangedPhysicalMitigationFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba)
-            {
-                if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician) || HasEffectAny(DNC.Buffs.ShieldSamba)) && IsOffCooldown(actionID))
-                    return DRG.Stardiver;
-            }
-
-            return actionID;
-        }
-    }
-
-
-    /*
-    internal class DoMSwiftcastFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DoMSwiftcastFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
-            {
-                if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SGE.Egeiro || actionID == AST.Ascend || actionID == RDM.Verraise)
+                if (actionID is LowBlow or PLD.ShieldBash)
                 {
-                    var swiftCD = GetCooldown(All.Swiftcast);
-                    if ((swiftCD.CooldownRemaining == 0 && !HasEffect(RDM.Buffs.Dualcast))
-                        || level <= All.Levels.Raise
-                        || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
-                        return All.Swiftcast;
+                    if (CanInterruptEnemy() && IsOffCooldown(Interject) && level >= Levels.Interject)
+                        return Interject;
+                    if (IsOffCooldown(LowBlow) && level >= Levels.LowBlow)
+                        return LowBlow;
+                    if (actionID == PLD.ShieldBash && IsOnCooldown(LowBlow))
+                        return actionID;
                 }
+
+                return actionID;
             }
-
-            return actionID;
         }
-    }
 
-    */
+        internal class AllTankReprisalFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankReprisalFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is All.Reprisal)
+                {
+                    if (TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal))
+                        return WHM.Stone1;
+                }
+
+                return actionID;
+            }
+        }
+
+        //Healer Features
+        internal class AllHealerRaiseFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllHealerRaiseFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro)
+                {
+                    if (IsOffCooldown(Swiftcast))
+                        return Swiftcast;
+                    if (HasEffect(Buffs.Swiftcast))
+                    {
+                        if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHMThinAirFeature) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && level >= WHM.Levels.ThinAir)
+                            return WHM.ThinAir;
+                        return actionID;
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+        //Caster Features
+        internal class AllCasterAddleFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterAddleFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is All.Addle)
+                {
+                    if (TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle))
+                        return WAR.FellCleave;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class AllCasterRaiseFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterRaiseFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is BLU.AngelWhisper or RDM.Verraise or SMN.Resurrection)
+                {
+                    if (HasEffect(Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
+                        return actionID;
+                    if (IsOffCooldown(Swiftcast))
+                        return Swiftcast;
+                }
+
+                return actionID;
+            }
+        }
+
+        //Melee DPS Features
+        internal class AllMeleeFeintFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllMeleeFeintFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is All.Feint)
+                {
+                    if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
+                        return BLM.Fire;
+                }
+
+                return actionID;
+            }
+        }
+
+        //Ranged Physical Features
+        internal class AllRangedPhysicalMitigationFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllRangedPhysicalMitigationFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba)
+                {
+                    if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician) || HasEffectAny(DNC.Buffs.ShieldSamba)) && IsOffCooldown(actionID))
+                        return DRG.Stardiver;
+                }
+
+                return actionID;
+            }
+        }
+
+
+        /*
+        internal class DoMSwiftcastFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DoMSwiftcastFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
+                {
+                    if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SGE.Egeiro || actionID == AST.Ascend || actionID == RDM.Verraise)
+                    {
+                        var swiftCD = GetCooldown(All.Swiftcast);
+                        if ((swiftCD.CooldownRemaining == 0 && !HasEffect(RDM.Buffs.Dualcast))
+                            || level <= All.Levels.Raise
+                            || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
+                            return All.Swiftcast;
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+        */
+    }
 }
 

@@ -97,7 +97,7 @@ namespace XIVSlothComboPlugin.Combos
                 FanDance4 = 86,
                 StarfallDance = 90;
         }
-    }
+    
 
     internal class DancerDanceComboCompatibility : CustomCombo
     {
@@ -111,17 +111,17 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var actionIDs = Service.Configuration.DancerDanceCompatActionIDs;
 
-                if (actionID == actionIDs[0] || (actionIDs[0] == 0 && actionID == DNC.Cascade))
-                    return OriginalHook(DNC.Cascade);
+                if (actionID == actionIDs[0] || (actionIDs[0] == 0 && actionID == Cascade))
+                    return OriginalHook(Cascade);
 
-                if (actionID == actionIDs[1] || (actionIDs[1] == 0 && actionID == DNC.Flourish))
-                    return OriginalHook(DNC.Fountain);
+                if (actionID == actionIDs[1] || (actionIDs[1] == 0 && actionID == Flourish))
+                    return OriginalHook(Fountain);
 
-                if (actionID == actionIDs[2] || (actionIDs[2] == 0 && actionID == DNC.FanDance1))
-                    return OriginalHook(DNC.ReverseCascade);
+                if (actionID == actionIDs[2] || (actionIDs[2] == 0 && actionID == FanDance1))
+                    return OriginalHook(ReverseCascade);
 
-                if (actionID == actionIDs[3] || (actionIDs[3] == 0 && actionID == DNC.FanDance2))
-                    return OriginalHook(DNC.Fountainfall);
+                if (actionID == actionIDs[3] || (actionIDs[3] == 0 && actionID == FanDance2))
+                    return OriginalHook(Fountainfall);
             }
 
             return actionID;
@@ -135,29 +135,29 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var FD3Ready = HasEffect(DNC.Buffs.ThreeFoldFanDance);
-            var FD4Ready = HasEffect(DNC.Buffs.FourFoldFanDance);
+            var FD3Ready = HasEffect(Buffs.ThreeFoldFanDance);
+            var FD4Ready = HasEffect(Buffs.FourFoldFanDance);
 
             if (actionID is DNC.FanDance1)
             {
                 // FD 1 -> 3
                 if (FD3Ready && IsEnabled(CustomComboPreset.DancerFanDance1_3Combo))
-                    return DNC.FanDance3;
+                    return FanDance3;
 
                 // FD 1 -> 4
                 if (FD4Ready && IsEnabled(CustomComboPreset.DancerFanDance1_4Combo))
-                    return DNC.FanDance4;
+                    return FanDance4;
             }
 
             if (actionID is DNC.FanDance2)
             {
                 // FD 2 -> 3
                 if (FD3Ready && IsEnabled(CustomComboPreset.DancerFanDance2_3Combo))
-                    return DNC.FanDance3;
+                    return FanDance3;
 
                 // FD 2 -> 4
                 if (FD4Ready && IsEnabled(CustomComboPreset.DancerFanDance2_4Combo))
-                    return DNC.FanDance4;
+                    return FanDance4;
             }
 
             return actionID;
@@ -175,24 +175,24 @@ namespace XIVSlothComboPlugin.Combos
             // Standard Step
             if (actionID is DNC.StandardStep)
             {
-                if (gauge.IsDancing && HasEffect(DNC.Buffs.StandardStep))
+                if (gauge.IsDancing && HasEffect(Buffs.StandardStep))
                 {
                     if (gauge.CompletedSteps < 2)
                         return (uint)gauge.NextStep;
 
-                    return DNC.StandardFinish2;
+                    return StandardFinish2;
                 }
             }
 
             // Technical Step
-            if ((actionID is DNC.TechnicalStep) && level >= DNC.Levels.TechnicalStep)
+            if ((actionID is DNC.TechnicalStep) && level >= Levels.TechnicalStep)
             {
-                if (gauge.IsDancing && HasEffect(DNC.Buffs.TechnicalStep))
+                if (gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
                 {
                     if (gauge.CompletedSteps < 4)
                         return (uint)gauge.NextStep;
 
-                    return DNC.TechnicalFinish4;
+                    return TechnicalFinish4;
                 }
             }
 
@@ -211,11 +211,11 @@ namespace XIVSlothComboPlugin.Combos
             // Fan Dance 3 & 4 on Flourish when relevant
             if (actionID is DNC.Flourish && canWeave)
             {
-                if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
-                    return DNC.FanDance3;
+                if (HasEffect(Buffs.ThreeFoldFanDance))
+                    return FanDance3;
 
-                if (HasEffect(DNC.Buffs.FourFoldFanDance))
-                    return DNC.FanDance4;
+                if (HasEffect(Buffs.FourFoldFanDance))
+                    return FanDance4;
             }
 
             return actionID;
@@ -231,48 +231,46 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is DNC.Cascade)
             {
                 var gauge = GetJobGauge<DNCGauge>();
-                var flow = (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow));
-                var symmetry = (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry));
+                var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
+                var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
                 var canWeave = CanWeave(actionID);
 
                 // ST Esprit overcap options
-                if (level >= DNC.Levels.SaberDance)
-                {
-                    if ((gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTInstantOption)) ||
-                        (gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTFeature)))
-                        return DNC.SaberDance;
-                }
+                if (level >= Levels.SaberDance &&
+                   (gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTInstantOption) ||
+                    gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapSTFeature)))
+                        return SaberDance;
 
                 if (canWeave)
                 {
                     // ST Fan Dance overcap protection
-                    if (gauge.Feathers is 4 && level >= DNC.Levels.FanDance1 && IsEnabled(CustomComboPreset.DancerFanDanceMainComboOvercapFeature))
-                        return DNC.FanDance1;
+                    if (gauge.Feathers is 4 && level >= Levels.FanDance1 && IsEnabled(CustomComboPreset.DancerFanDanceMainComboOvercapFeature))
+                        return FanDance1;
 
                     // ST Fan Dance 3/4 on combo
                     if (IsEnabled(CustomComboPreset.DancerFanDance34OnMainComboFeature))
                     {
-                        if (HasEffect(DNC.Buffs.ThreeFoldFanDance) && level >= DNC.Levels.FanDance3)
-                            return DNC.FanDance3;
+                        if (HasEffect(Buffs.ThreeFoldFanDance) && level >= Levels.FanDance3)
+                            return FanDance3;
 
-                        if (HasEffect(DNC.Buffs.FourFoldFanDance) && level >= DNC.Levels.FanDance4)
-                            return DNC.FanDance4;
+                        if (HasEffect(Buffs.FourFoldFanDance) && level >= Levels.FanDance4)
+                            return FanDance4;
                     }
                 }
 
                 // ST From Fountain
-                if (level >= DNC.Levels.Fountainfall && flow)
-                    return DNC.Fountainfall;
+                if (level >= Levels.Fountainfall && flow)
+                    return Fountainfall;
 
                 // ST From Cascade
-                if (level >= DNC.Levels.ReverseCascade && symmetry)
-                    return DNC.ReverseCascade;
+                if (level >= Levels.ReverseCascade && symmetry)
+                    return ReverseCascade;
 
                 // ST Cascade Combo
-                if (lastComboMove is DNC.Cascade && level >= DNC.Levels.Fountain)
-                    return DNC.Fountain;
+                if (lastComboMove is DNC.Cascade && level >= Levels.Fountain)
+                    return Fountain;
 
-                return DNC.Cascade;
+                return Cascade;
             }
 
             return actionID;
@@ -288,48 +286,46 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is DNC.Windmill)
             {
                 var gauge = GetJobGauge<DNCGauge>();
-                var flow = (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow));
-                var symmetry = (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry));
+                var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
+                var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
                 var canWeave = CanWeave(actionID);
 
-                // AoE Esprit Overcap Options
-                if (level >= DNC.Levels.SaberDance)
-                {
-                    if ((gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEInstantOption)) ||
-                        (gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEFeature)))
-                        return DNC.SaberDance;
-                }
+                // AoE Esprit overcap options
+                if (level >= Levels.SaberDance &&
+                   (gauge.Esprit >= 50 && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEInstantOption) ||
+                    gauge.Esprit >= 85 && IsEnabled(CustomComboPreset.DancerEspritOvercapAoEFeature)))
+                    return SaberDance;
 
                 if (canWeave)
                 {
                     // AoE Fan Dance overcap protection
-                    if (gauge.Feathers is 4 && level >= DNC.Levels.FanDance2 && IsEnabled(CustomComboPreset.DancerFanDanceAoEComboOvercapFeature))
-                        return DNC.FanDance2;
+                    if (gauge.Feathers is 4 && level >= Levels.FanDance2 && IsEnabled(CustomComboPreset.DancerFanDanceAoEComboOvercapFeature))
+                        return FanDance2;
 
                     // AoE Fan Dance 3/4 on combo
                     if (IsEnabled(CustomComboPreset.DancerFanDance34OnMainComboFeature))
                     {
-                        if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
-                            return DNC.FanDance3;
+                        if (HasEffect(Buffs.ThreeFoldFanDance))
+                            return FanDance3;
 
-                        if (HasEffect(DNC.Buffs.FourFoldFanDance))
-                            return DNC.FanDance4;
+                        if (HasEffect(Buffs.FourFoldFanDance))
+                            return FanDance4;
                     }
                 }
 
                 // AoE From Bladeshower
-                if (level >= DNC.Levels.Bloodshower && flow)
-                    return DNC.Bloodshower;
+                if (level >= Levels.Bloodshower && flow)
+                    return Bloodshower;
 
                 // AoE From Windmill
-                if (level >= DNC.Levels.RisingWindmill && symmetry)
-                    return DNC.RisingWindmill;
+                if (level >= Levels.RisingWindmill && symmetry)
+                    return RisingWindmill;
 
                 // AoE Windmill Combo
-                if (lastComboMove is DNC.Windmill && level >= DNC.Levels.Bladeshower)
-                    return DNC.Bladeshower;
+                if (lastComboMove is DNC.Windmill && level >= Levels.Bladeshower)
+                    return Bladeshower;
 
-                return DNC.Windmill;
+                return Windmill;
             }
 
             return actionID;
@@ -342,11 +338,8 @@ namespace XIVSlothComboPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is DNC.Devilment)
-            {
-                if (HasEffect(DNC.Buffs.FlourishingStarfall))
-                    return DNC.StarfallDance;
-            }
+            if (actionID is DNC.Devilment && HasEffect(Buffs.FlourishingStarfall))
+                    return StarfallDance;
 
             return actionID;
         }
@@ -362,48 +355,48 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID is DNC.StandardStep)
             {
                 var gauge = GetJobGauge<DNCGauge>();
-                var standardCD = GetCooldown(DNC.StandardStep);
-                var techstepCD = GetCooldown(DNC.TechnicalStep);
-                var devilmentCD = GetCooldown(DNC.Devilment);
-                var flourishCD = GetCooldown(DNC.Flourish);
+                var standardCD = GetCooldown(StandardStep);
+                var techstepCD = GetCooldown(TechnicalStep);
+                var devilmentCD = GetCooldown(Devilment);
+                var flourishCD = GetCooldown(Flourish);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                 if (IsEnabled(CustomComboPreset.DancerDevilmentOnCombinedDanceFeature) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                 {
-                    if ((level >= DNC.Levels.Devilment && level < DNC.Levels.TechnicalStep) ||
-                        (level >= DNC.Levels.TechnicalStep && techstepCD.IsCooldown))
-                        return DNC.Devilment;
+                    if ((level >= Levels.Devilment && level < Levels.TechnicalStep) ||
+                        (level >= Levels.TechnicalStep && techstepCD.IsCooldown))
+                        return Devilment;
                 }
 
                 if (IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown &&
-                    incombat && level >= DNC.Levels.Flourish && standardCD.IsCooldown)
-                    return DNC.Flourish;
+                    incombat && level >= Levels.Flourish && standardCD.IsCooldown)
+                    return Flourish;
 
-                if (HasEffect(DNC.Buffs.FlourishingStarfall))
-                    return DNC.StarfallDance;
+                if (HasEffect(Buffs.FlourishingStarfall))
+                    return StarfallDance;
 
-                if (HasEffect(DNC.Buffs.FlourishingFinish))
-                    return DNC.Tillana;
+                if (HasEffect(Buffs.FlourishingFinish))
+                    return Tillana;
 
-                if (standardCD.IsCooldown && !techstepCD.IsCooldown && !gauge.IsDancing && !HasEffect(DNC.Buffs.StandardStep))
-                    return DNC.TechnicalStep;
+                if (standardCD.IsCooldown && !techstepCD.IsCooldown && !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
+                    return TechnicalStep;
 
                 if (gauge.IsDancing)
                 {
-                    if (HasEffect(DNC.Buffs.StandardStep))
+                    if (HasEffect(Buffs.StandardStep))
                     {
                         if (gauge.CompletedSteps < 2)
                             return (uint)gauge.NextStep;
 
-                        return DNC.StandardFinish2;
+                        return StandardFinish2;
                     }
 
-                    if (HasEffect(DNC.Buffs.TechnicalStep))
+                    if (HasEffect(Buffs.TechnicalStep))
                     {
                         if (gauge.CompletedSteps < 4)
                             return (uint)gauge.NextStep;
 
-                        return DNC.TechnicalFinish4;
+                        return TechnicalFinish4;
                     }
                 }
 
@@ -422,42 +415,72 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var gauge = GetJobGauge<DNCGauge>();
                 var canWeave = CanWeave(actionID);
-                var flow = (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow));
-                var symmetry = (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry));
-                var techBurstTimer = FindEffect(DNC.Buffs.TechnicalFinish);
-                var techBurst = HasEffect(DNC.Buffs.TechnicalFinish);
-                var flourishReady = level >= DNC.Levels.Flourish && IsOffCooldown(DNC.Flourish);
-                var devilmentReady = level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment);
-                var improvisationReady = level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation);
-                var curingWaltzReady = level >= DNC.Levels.CuringWaltz && IsOffCooldown(DNC.CuringWaltz);
+                var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
+                var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
+                var techBurstTimer = FindEffect(Buffs.TechnicalFinish);
+                var techBurst = HasEffect(Buffs.TechnicalFinish);
+                var flourishReady = level >= Levels.Flourish && IsOffCooldown(Flourish);
+                var devilmentReady = level >= Levels.Devilment && IsOffCooldown(Devilment);
+                var improvisationReady = level >= Levels.Improvisation && IsOffCooldown(Improvisation);
+                var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
+
+                // Dance Step Replacement
+                if (IsEnabled(CustomComboPreset.DancerSimpleDanceStepFeature))
+                {
+                    // Standard Step
+                    if (actionID is DNC.StandardStep)
+                    {
+                        if (gauge.IsDancing && HasEffect(Buffs.StandardStep))
+                        {
+                            if (gauge.CompletedSteps < 2)
+                                return (uint)gauge.NextStep;
+
+                            return StandardFinish2;
+                        }
+                    }
+
+                    // Technical Step
+                    if ((actionID is DNC.TechnicalStep) && level >= Levels.TechnicalStep)
+                    {
+                        if (gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
+                        {
+                            if (gauge.CompletedSteps < 4)
+                                return (uint)gauge.NextStep;
+
+                            return TechnicalFinish4;
+                        }
+                    }
+                }
 
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
                         return All.HeadGraze;
 
-                // Simple ST Tech Step
-                if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
+                // Simple ST Tech Steps
+                if (HasEffect(Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature))
                     return gauge.CompletedSteps < 4
                         ? (uint)gauge.NextStep
-                        : DNC.TechnicalFinish4;
+                        : TechnicalFinish4;
 
-                // Simple ST Standard Step
-                if (HasEffect(DNC.Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature))
+                // Simple ST Standard Steps
+                if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature))
                     return gauge.CompletedSteps < 2
                         ? (uint)gauge.NextStep
-                        : DNC.StandardFinish2;
+                        : StandardFinish2;
 
                 // Simple ST Standard/Tech (activates dances with no target, or when target is over 2% HP)
                 if (!HasTarget() || EnemyHealthPercentage() > 2)
                 {
-                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(DNC.StandardStep) && ((!HasEffect(DNC.Buffs.TechnicalStep) && !techBurst) ||
+                    if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) &&
+                        IsOffCooldown(StandardStep) && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
                         techBurstTimer.RemainingTime > 5))
-                        return DNC.StandardStep;
+                        return StandardStep;
 
-                    if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(DNC.Buffs.StandardStep) && IsOffCooldown(DNC.TechnicalStep))
-                        return DNC.TechnicalStep;
+                    if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) &&
+                        !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
+                        return TechnicalStep;
                 }
 
                 if (canWeave)
@@ -465,46 +488,46 @@ namespace XIVSlothComboPlugin.Combos
                     // Simple ST Devilment
                     if (IsEnabled(CustomComboPreset.DancerSimpleDevilmentFeature) && devilmentReady)
                     {
-                        if (techBurst || (level < DNC.Levels.TechnicalStep))
-                            return DNC.Devilment;
+                        if (techBurst || (level < Levels.TechnicalStep))
+                            return Devilment;
                     }
 
                     // Simple ST Flourish
                     if (IsEnabled(CustomComboPreset.DancerSimpleFlourishFeature) && flourishReady)
-                        return DNC.Flourish;
+                        return Flourish;
                 }
                 
                 // Simple ST Saber Dance
-                if (level >= DNC.Levels.SaberDance && (gauge.Esprit >= 85 || (techBurst && gauge.Esprit > 50)))
-                    return DNC.SaberDance;
+                if (level >= Levels.SaberDance && (gauge.Esprit >= 85 || (techBurst && gauge.Esprit > 50)))
+                    return SaberDance;
 
                 // Occurring within weave windows
                 if (canWeave)
                 {
                     // Simple ST Feathers
-                    if (level >= DNC.Levels.FanDance1 && IsEnabled(CustomComboPreset.DancerSimpleFeatherFeature))
+                    if (level >= Levels.FanDance1 && IsEnabled(CustomComboPreset.DancerSimpleFeatherFeature))
                     {
                         // Simple ST FD3
-                        if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
-                            return DNC.FanDance3;
+                        if (HasEffect(Buffs.ThreeFoldFanDance))
+                            return FanDance3;
 
                         // Simple ST Feather Pooling
-                        var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleFeatherPoolingFeature) && level >= DNC.Levels.TechnicalStep ? 3 : 0;
+                        var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleFeatherPoolingFeature) && level >= Levels.TechnicalStep ? 3 : 0;
 
                         // Simple ST Feather Overcap & Burst
-                        if (gauge.Feathers > minFeathers || (HasEffect(DNC.Buffs.TechnicalFinish) && gauge.Feathers > 0))
-                            return DNC.FanDance1;
+                        if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() < 2)
+                            return FanDance1;
                     }
 
                     // Simple ST FD4 
-                    if (HasEffect(DNC.Buffs.FourFoldFanDance))
-                        return DNC.FanDance4;
+                    if (HasEffect(Buffs.FourFoldFanDance))
+                        return FanDance4;
                     
                     // Simple ST Panic Heals
                     if (IsEnabled(CustomComboPreset.DancerSimplePanicHealsFeature))
                     {
                         if (PlayerHealthPercentageHp() < 30 && curingWaltzReady)
-                            return DNC.CuringWaltz;
+                            return CuringWaltz;
 
                         if (PlayerHealthPercentageHp() < 50 && secondWindReady)
                             return All.SecondWind;
@@ -512,167 +535,198 @@ namespace XIVSlothComboPlugin.Combos
                     
                     // Simple ST Improvisation
                     if (IsEnabled(CustomComboPreset.DancerSimpleImprovFeature) && improvisationReady)
-                        return DNC.Improvisation;
+                        return Improvisation;
                 }
 
                 // Simple ST Combos and burst attacks
-                if (level >= DNC.Levels.Fountain && lastComboMove is DNC.Cascade && comboTime < 2 && comboTime > 0)
-                    return DNC.Fountain;
+                if (level >= Levels.Fountain && lastComboMove is DNC.Cascade && comboTime < 2 && comboTime > 0)
+                    return Fountain;
 
                 // Tillana
-                if (HasEffect(DNC.Buffs.FlourishingFinish))
-                    return DNC.Tillana;
+                if (HasEffect(Buffs.FlourishingFinish))
+                    return Tillana;
 
                 // Starfall Dance
-                if (HasEffect(DNC.Buffs.FlourishingStarfall))
-                    return DNC.StarfallDance;
+                if (HasEffect(Buffs.FlourishingStarfall))
+                    return StarfallDance;
 
-                if (level >= DNC.Levels.Fountainfall && flow)
-                    return DNC.Fountainfall;
+                if (level >= Levels.Fountainfall && flow)
+                    return Fountainfall;
 
-                if (level >= DNC.Levels.ReverseCascade && symmetry)
-                    return DNC.ReverseCascade;
+                if (level >= Levels.ReverseCascade && symmetry)
+                    return ReverseCascade;
                 
-                if (level >= DNC.Levels.Fountain && lastComboMove is DNC.Cascade && comboTime > 0)
-                    return DNC.Fountain;
+                if (level >= Levels.Fountain && lastComboMove is DNC.Cascade && comboTime > 0)
+                    return Fountain;
 
-                return DNC.Cascade;
+                return Cascade;
             }
 
             return actionID;
         }
     }
 
-    internal class DancerSimpleAoeFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerSimpleAoEFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class DancerSimpleAoeFeature : CustomCombo
         {
-            if (actionID is DNC.Windmill) 
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerSimpleAoEFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<DNCGauge>();
-                var canWeave = CanWeave(actionID);
-                var flow = (HasEffect(DNC.Buffs.SilkenFlow) || HasEffect(DNC.Buffs.FlourishingFlow));
-                var symmetry = (HasEffect(DNC.Buffs.SilkenSymmetry) || HasEffect(DNC.Buffs.FlourishingSymmetry));
-                var techBurstTimer = FindEffect(DNC.Buffs.TechnicalFinish);
-                var techBurst = HasEffect(DNC.Buffs.TechnicalFinish);
-                var flourishReady = level >= DNC.Levels.Flourish && IsOffCooldown(DNC.Flourish);
-                var devilmentReady = level >= DNC.Levels.Devilment && IsOffCooldown(DNC.Devilment);
-                var improvisationReady = level >= DNC.Levels.Improvisation && IsOffCooldown(DNC.Improvisation);
-                var curingWaltzReady = level >= DNC.Levels.CuringWaltz && IsOffCooldown(DNC.CuringWaltz);
-                var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
-                var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
-                
-                // Simple AoE Interrupt
-                if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
-                        return All.HeadGraze;
-
-                // Simple AoE Standard Step (step function)
-                if (HasEffect(DNC.Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature))
-                    return gauge.CompletedSteps < 2
-                        ? (uint)gauge.NextStep
-                        : DNC.StandardFinish2;
-
-                // Simple AoE Tech Step (step function)
-                if (HasEffect(DNC.Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature))
-                    return gauge.CompletedSteps < 4
-                        ? (uint)gauge.NextStep
-                        : DNC.TechnicalFinish4;
-
-                // Simple AoE Standard/Tech (activates dances with no target, or when target is over 5% HP)
-                if (!HasTarget() || EnemyHealthPercentage() > 5)
+                if (actionID is DNC.Windmill)
                 {
-                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) && IsOffCooldown(DNC.StandardStep) && ((!HasEffect(DNC.Buffs.TechnicalStep) && !techBurst) ||
-                        techBurstTimer.RemainingTime > 5))
-                        return DNC.StandardStep;
+                    var gauge = GetJobGauge<DNCGauge>();
+                    var canWeave = CanWeave(actionID);
+                    var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
+                    var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
+                    var techBurstTimer = FindEffect(Buffs.TechnicalFinish);
+                    var techBurst = HasEffect(Buffs.TechnicalFinish);
+                    var flourishReady = level >= Levels.Flourish && IsOffCooldown(Flourish);
+                    var devilmentReady = level >= Levels.Devilment && IsOffCooldown(Devilment);
+                    var improvisationReady = level >= Levels.Improvisation && IsOffCooldown(Improvisation);
+                    var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
+                    var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
+                    var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
 
-                    if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) && !HasEffect(DNC.Buffs.StandardStep) && IsOffCooldown(DNC.TechnicalStep))
-                        return DNC.TechnicalStep;
-                }
-
-                if (canWeave)
-                {
-                    // Simple AoE Tech Devilment
-                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEDevilmentFeature) && devilmentReady)
+                    // Simple AoE Dance Step Replacement
+                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEDanceStepFeature))
                     {
-                        if (HasEffect(DNC.Buffs.TechnicalFinish) || (level < DNC.Levels.TechnicalStep))
-                            return DNC.Devilment;
-                    }
-
-                    // Simple AoE Flourish
-                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEFlourishFeature) && flourishReady)
-                        return DNC.Flourish;
-                }
-                
-                // Simple AoE Saber Dance
-                if (level >= DNC.Levels.SaberDance && (gauge.Esprit >= 85 || (techBurst && gauge.Esprit > 50)))
-                    return DNC.SaberDance;
-
-                // Occurring within weave windows
-                if (canWeave)
-                {
-                    // Simple AoE Feathers
-                    if (level >= DNC.Levels.FanDance1 && IsEnabled(CustomComboPreset.DancerSimpleAoEFeatherFeature))
-                    {
-
-                        // Simple AoE Feather Pooling
-                        var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleAoEFeatherPoolingFeature) && level >= DNC.Levels.TechnicalStep ? 3 : 0;
-
-                        // Simple AoE FD3
-                        if (HasEffect(DNC.Buffs.ThreeFoldFanDance))
-                            return DNC.FanDance3;
-
-                        // Simple AoE Overcap & Burst
-                        if (level >= DNC.Levels.FanDance2)
+                        // Simple AoE Standard Steps
+                        if (actionID is DNC.StandardStep)
                         {
-                            if (gauge.Feathers > minFeathers || (techBurst && gauge.Feathers > 0))
-                                return DNC.FanDance2;
+                            if (gauge.IsDancing && HasEffect(Buffs.StandardStep))
+                            {
+                                if (gauge.CompletedSteps < 2)
+                                    return (uint)gauge.NextStep;
+
+                                return StandardFinish2;
+                            }
+                        }
+
+                        // Simple AoE Technical Steps
+                        if ((actionID is DNC.TechnicalStep) && level >= Levels.TechnicalStep)
+                        {
+                            if (gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
+                            {
+                                if (gauge.CompletedSteps < 4)
+                                    return (uint)gauge.NextStep;
+
+                                return TechnicalFinish4;
+                            }
                         }
                     }
 
-                    // Simple AoE FD4 
-                    if (HasEffect(DNC.Buffs.FourFoldFanDance))
-                        return DNC.FanDance4;
+                    // Simple AoE Interrupt
+                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)
+                        return All.HeadGraze;
 
-                    // Simple AoE Panic Heals
-                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEPanicHealsFeature))
+                    // Simple AoE Standard Step (step function)
+                    if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature))
+                        return gauge.CompletedSteps < 2
+                            ? (uint)gauge.NextStep
+                            : StandardFinish2;
+
+                    // Simple AoE Tech Step (step function)
+                    if (HasEffect(Buffs.TechnicalStep) && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature))
+                        return gauge.CompletedSteps < 4
+                            ? (uint)gauge.NextStep
+                            : TechnicalFinish4;
+
+                    // Simple AoE Standard/Tech (activates dances with no target, or when target is over 5% HP)
+                    if (!HasTarget() || EnemyHealthPercentage() > 5)
                     {
-                        if (PlayerHealthPercentageHp() < 30 && curingWaltzReady)
-                            return DNC.CuringWaltz;
+                        if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) &&
+                            IsOffCooldown(StandardStep) && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
+                            techBurstTimer.RemainingTime > 5))
+                            return StandardStep;
 
-                        if (PlayerHealthPercentageHp() < 50 && secondWindReady)
-                            return All.SecondWind;
+                        if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) &&
+                            !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
+                            return TechnicalStep;
                     }
 
-                    // Simple AoE Improvisation
-                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEImprovFeature) && improvisationReady)
-                        return DNC.Improvisation;
+                    if (canWeave)
+                    {
+                        // Simple AoE Tech Devilment
+                        if (IsEnabled(CustomComboPreset.DancerSimpleAoEDevilmentFeature) && devilmentReady)
+                        {
+                            if (HasEffect(Buffs.TechnicalFinish) || (level < Levels.TechnicalStep))
+                                return Devilment;
+                        }
+
+                        // Simple AoE Flourish
+                        if (IsEnabled(CustomComboPreset.DancerSimpleAoEFlourishFeature) && flourishReady)
+                            return Flourish;
+                    }
+
+                    // Simple AoE Saber Dance
+                    if (level >= Levels.SaberDance && (gauge.Esprit >= 85 || (techBurst && gauge.Esprit > 50)))
+                        return SaberDance;
+
+                    // Occurring within weave windows
+                    if (canWeave)
+                    {
+                        // Simple AoE Feathers
+                        if (level >= Levels.FanDance1 && IsEnabled(CustomComboPreset.DancerSimpleAoEFeatherFeature))
+                        {
+
+                            // Simple AoE Feather Pooling
+                            var minFeathers = IsEnabled(CustomComboPreset.DancerSimpleAoEFeatherPoolingFeature) && level >= Levels.TechnicalStep ? 3 : 0;
+
+                            // Simple AoE FD3
+                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                                return FanDance3;
+
+                            // Simple AoE Overcap & Burst
+                            if (level >= Levels.FanDance2)
+                            {
+                                if (gauge.Feathers > minFeathers || (techBurst && gauge.Feathers > 0))
+                                    return FanDance2;
+                            }
+                        }
+
+                        // Simple AoE FD4 
+                        if (HasEffect(Buffs.FourFoldFanDance))
+                            return FanDance4;
+
+                        // Simple AoE Panic Heals
+                        if (IsEnabled(CustomComboPreset.DancerSimpleAoEPanicHealsFeature))
+                        {
+                            if (PlayerHealthPercentageHp() < 30 && curingWaltzReady)
+                                return CuringWaltz;
+
+                            if (PlayerHealthPercentageHp() < 50 && secondWindReady)
+                                return All.SecondWind;
+                        }
+
+                        // Simple AoE Improvisation
+                        if (IsEnabled(CustomComboPreset.DancerSimpleAoEImprovFeature) && improvisationReady)
+                            return Improvisation;
+                    }
+
+                    // Simple AoE Combos and burst attacks
+                    if (level >= Levels.Bladeshower && lastComboMove is DNC.Windmill && comboTime < 2 && comboTime > 0)
+                        return Bladeshower;
+
+                    // Tillana
+                    if (HasEffect(Buffs.FlourishingFinish))
+                        return Tillana;
+
+                    // Starfall Dance
+                    if (HasEffect(Buffs.FlourishingStarfall))
+                        return StarfallDance;
+
+                    if (level >= Levels.Bloodshower && flow)
+                        return Bloodshower;
+
+                    if (level >= Levels.RisingWindmill && symmetry)
+                        return RisingWindmill;
+
+                    if (level >= Levels.Bladeshower && lastComboMove is DNC.Windmill && comboTime > 0)
+                        return Bladeshower;
                 }
 
-                // Simple AoE Combos and burst attacks
-                if (level >= DNC.Levels.Bladeshower && lastComboMove is DNC.Windmill && comboTime < 2 && comboTime > 0)
-                    return DNC.Bladeshower;
-
-                // Tillana
-                if (HasEffect(DNC.Buffs.FlourishingFinish))
-                    return DNC.Tillana;
-
-                // Starfall Dance
-                if (HasEffect(DNC.Buffs.FlourishingStarfall))
-                    return DNC.StarfallDance;
-
-                if (level >= DNC.Levels.Bloodshower && flow)
-                    return DNC.Bloodshower;
-
-                if (level >= DNC.Levels.RisingWindmill && symmetry)
-                    return DNC.RisingWindmill;
-
-                if (level >= DNC.Levels.Bladeshower && lastComboMove is DNC.Windmill && comboTime > 0)
-                    return DNC.Bladeshower;
+                return actionID;
             }
-
-            return actionID;
         }
     }
 }
