@@ -696,12 +696,18 @@ namespace XIVSlothComboPlugin
             DancerSimpleInterruptFeature = 4051,
 
             [ParentCombo(DancerSimpleFeature)]
-            [CustomComboInfo("Simple Standard Step Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleStandardFeature = 4052,
 
             [ParentCombo(DancerSimpleFeature)]
-            [CustomComboInfo("Simple Technical Step Option", "Includes Technical Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
+            [ConflictingCombos(DancerSimpleTechFillFeature)]
+            [CustomComboInfo("Simple Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleTechnicalFeature = 4053,
+
+            [ParentCombo(DancerSimpleFeature)]
+            [ConflictingCombos(DancerSimpleTechnicalFeature)]
+            [CustomComboInfo("Simple Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the rotation.\nTechnical Step itself needs to be initiated manually when using this option.", DNC.JobID, 0, "", "")]
+            DancerSimpleTechFillFeature = 4054,
 
             [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Tech Devilment Option", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you are Lv70 or above.", DNC.JobID, 0, "", "")]
@@ -739,12 +745,18 @@ namespace XIVSlothComboPlugin
             DancerSimpleAoEInterruptFeature = 4071,
 
             [ParentCombo(DancerSimpleAoEFeature)]
-            [CustomComboInfo("Simple AoE Standard Step Option", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
+            [CustomComboInfo("Simple AoE Standard Dance Option", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
             DancerSimpleAoEStandardFeature = 4072,
 
             [ParentCombo(DancerSimpleAoEFeature)]
-            [CustomComboInfo("Simple AoE Technical Step Option", "Includes Technical Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
+            [ConflictingCombos(DancerSimpleAoETechFillFeature)]
+            [CustomComboInfo("Simple AoE Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the AoE rotation.", DNC.JobID, 0, "")]
             DancerSimpleAoETechnicalFeature = 4073,
+
+            [ParentCombo(DancerSimpleAoEFeature)]
+            [ConflictingCombos(DancerSimpleAoETechnicalFeature)]
+            [CustomComboInfo("Simple AoE Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the AoE rotation.\nTechnical Step itself needs to be initiated manually when using this option.", DNC.JobID, 0, "", "")]
+            DancerSimpleAoETechFillFeature = 4074,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Tech Devilment Option", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
