@@ -561,18 +561,17 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region DANCER
 
+        #region Single Target Multibutton
         [ReplaceSkill(DNC.Cascade)]
-        // Single Target Multibutton Section
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Single Target Multibutton", "Change Cascade into procs and combos as available.", DNC.JobID, 0, "", "")]
         DancerSingleTargetMultibutton = 4000,
 
-            #region Single Target Multibutton
+            #region ST Espirit Overcap Options
             [ParentCombo(DancerSingleTargetMultibutton)]
             [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance to the Cascade combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
             DancerEspritOvercapSTFeature = 4001,
 
-                #region ST Espirit Overcap Option
                 [ParentCombo(DancerEspritOvercapSTFeature)]
                 [CustomComboInfo("ST Instant Saber Option", "Adds Saber Dance to the Cascade combo if you have at least 50 Esprit.\nOverrides 'ST Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
                 DancerEspritOvercapSTInstantOption = 4002,
@@ -585,20 +584,19 @@ namespace XIVSlothComboPlugin
             [ParentCombo(DancerSingleTargetMultibutton)]
             [CustomComboInfo("Fan Dance On Cascade Feature", "Adds Fan Dance 3/4 onto Cascade when available.", DNC.JobID, 0, "", "")]
             DancerFanDance34OnMainComboFeature = 4004,
-        #endregion
+            #endregion
 
-        // AoE Multibutton Section
+        #region AoE Multibutton
         [ReplaceSkill(DNC.Windmill)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("AoE Multibutton", "Change Windmill into procs and combos as available.", DNC.JobID, 0, "", "")]
         DancerAoEMultibutton = 4010,
 
-            #region AoE Multibutton
+            #region AoE Espirit Overcap Options
             [ParentCombo(DancerAoEMultibutton)]
             [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance to the Windmill combo if you are at 85 or more Esprit.", DNC.JobID, 0, "", "")]
             DancerEspritOvercapAoEFeature = 4011,
 
-            #region AoE Espirit Overcap Option
             [ParentCombo(DancerEspritOvercapAoEFeature)]
             [CustomComboInfo("AoE Instant Saber Option", "Adds Saber Dance to the Windmill combo if you have at least 50 Esprit.\nOverrides 'AoE Esprit Overcap Option'.", DNC.JobID, 0, "", "")]
             DancerEspritOvercapAoEInstantOption = 4012,
@@ -611,26 +609,20 @@ namespace XIVSlothComboPlugin
             [ParentCombo(DancerAoEMultibutton)]
             [CustomComboInfo("AoE Fan Dance On Windmill Feature", "Adds FanDance 3/4 Onto Windmill When available.", DNC.JobID, 0, "", "")]
             DancerFanDanceOnAoEComboFeature = 4014,
-        #endregion
+            #endregion
 
-        // Dance Features Section (SS/TS)
+        #region Dance Features
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Dance Features", "Features and options involving Standard Step and Technical Step.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuDanceFeatures = 4020,
 
-            #region Dance Features
-            [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
-            [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
-            [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
-            DancerDanceStepCombo = 4021,
-
+            #region Combined Dance Feature
             [ReplaceSkill(DNC.StandardStep)]
             [ParentCombo(DancerMenuDanceFeatures)]
             [ConflictingCombos(DancerDanceStepCombo, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
             [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
             DancerCombinedDanceFeature = 4022,
 
-                #region Combined Dance Feature
                 [ParentCombo(DancerCombinedDanceFeature)]
                 [CustomComboInfo("Devilment Plus Option", "Adds Devilment right after Technical finish.", DNC.JobID, 0, "", "")]
                 DancerDevilmentOnCombinedDanceFeature = 4023,
@@ -651,12 +643,11 @@ namespace XIVSlothComboPlugin
             DancerDanceComboCompatibility = 4025,
             #endregion
 
-        // Flourishing Features Section
+        #region Flourishing Features
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
         DancerMenuFlourishingFeatures = 4030,
 
-            #region Flourishing Features
             [ReplaceSkill(DNC.Flourish)]
             [ParentCombo(DancerMenuFlourishingFeatures)]
             [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
@@ -664,13 +655,12 @@ namespace XIVSlothComboPlugin
             DancerFlourishingFanDanceFeature = 4032,
             #endregion
 
-        // Fan Dance Combo Features Subsection
+        #region Fan Dance Combo Features
         [ParentCombo(DancerMenuFlourishingFeatures)]
         [ConflictingCombos(DancerSimpleFeature, DancerSimpleAoEFeature)]
         [CustomComboInfo("Fan Dance Combo Features", "Options for Fan Dance combos. Fan Dance 3 takes priority over Fan Dance 4.\nCollapsing this category disables the options inside.", DNC.JobID, 0, "", "")]
         DancerFanDanceComboFeatures = 4033,
 
-            #region Fan Dance Combo Features
             [ReplaceSkill(DNC.FanDance1)]
             [ParentCombo(DancerFanDanceComboFeatures)]
             [CustomComboInfo("Fan Dance 1 -> 3", "Changes Fan Dance 1 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
@@ -698,14 +688,17 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID, 0, "", "")]
         DancerDevilmentFeature = 4038,
 
+        [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
+        [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
+        [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
+        DancerDanceStepCombo = 4039,
 
-        // Simple Dancer Section
+        #region Simple Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
         [ConflictingCombos(DancerSingleTargetMultibutton, DancerAoEMultibutton, DancerCombinedDanceFeature, DancerDanceComboCompatibility, DancerMenuFlourishingFeatures, DancerDevilmentFeature)]
         [CustomComboInfo("Simple Dancer (Single Target)", "Single button, single target. Includes songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID, 0, "", "")]
         DancerSimpleFeature = 4050,
 
-            #region Simple Dancer (Single Target)
             [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Interrupt", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 0, "", "")]
             DancerSimpleInterruptFeature = 4051,
@@ -743,13 +736,12 @@ namespace XIVSlothComboPlugin
             DancerSimpleImprovFeature = 4060,
             #endregion
 
-        // Simple Dancer AoE Section
+        #region Simple Dancer (AoE)
         [ReplaceSkill(DNC.Windmill)]
         [ConflictingCombos(DancerSingleTargetMultibutton, DancerAoEMultibutton, DancerCombinedDanceFeature, DancerDanceComboCompatibility, DancerMenuFlourishingFeatures, DancerDevilmentFeature)]
         [CustomComboInfo("Simple Dancer (AoE)", "Single button, AoE. Includes songs, flourishes and overprotections.\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID, 0, "", "")]
         DancerSimpleAoEFeature = 4070,
 
-            #region Simple Dancer (AoE)
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Interrupt", "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
             DancerSimpleAoEInterruptFeature = 4071,
