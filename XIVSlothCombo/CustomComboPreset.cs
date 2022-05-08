@@ -704,11 +704,11 @@ namespace XIVSlothComboPlugin
             DancerSimpleInterruptFeature = 4051,
 
             [ParentCombo(DancerSimpleFeature)]
-            [CustomComboInfo("Simple Standard Step", "Includes Standard Step in the rotation.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple Standard Step", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleStandardFeature = 4052,
 
             [ParentCombo(DancerSimpleFeature)]
-            [CustomComboInfo("Simple Technical Step", "Includes Technical Step in the rotation.", DNC.JobID, 0, "", "")]
+            [CustomComboInfo("Simple Technical Step", "Includes Technical Step (and all steps) in the rotation.", DNC.JobID, 0, "", "")]
             DancerSimpleTechnicalFeature = 4053,
 
             [ParentCombo(DancerSimpleFeature)]
@@ -747,11 +747,11 @@ namespace XIVSlothComboPlugin
             DancerSimpleAoEInterruptFeature = 4071,
 
             [ParentCombo(DancerSimpleAoEFeature)]
-            [CustomComboInfo("Simple AoE Standard Step", "Includes Standard Step in the AoE rotation.", DNC.JobID, 0, "")]
+            [CustomComboInfo("Simple AoE Standard Step", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
             DancerSimpleAoEStandardFeature = 4072,
 
             [ParentCombo(DancerSimpleAoEFeature)]
-            [CustomComboInfo("Simple AoE Technical Step", "Includes Technical Step in the AoE rotation.", DNC.JobID, 0, "")]
+            [CustomComboInfo("Simple AoE Technical Step", "Includes Technical Step (and all steps) in the AoE rotation.", DNC.JobID, 0, "")]
             DancerSimpleAoETechnicalFeature = 4073,
 
             [ParentCombo(DancerSimpleAoEFeature)]
