@@ -798,6 +798,15 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.RPRPvPArcaneCircleOption && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
 
+            if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
+            {
+                    ConfigWindowFunctions.DrawRadioButton(RPR.Config.RPRPositionChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
+                    ConfigWindowFunctions.DrawRadioButton(RPR.Config.RPRPositionChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
+            }
+
+            if (preset == CustomComboPreset.ReaperShadowOfDeathFeature && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, RPR.Config.RPRSoDThreshold, "Set a HP Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
+
             #endregion
             // ====================================================================================
             #region RED MAGE
