@@ -691,8 +691,47 @@ namespace XIVSlothComboPlugin
 
             }
 
+            if (preset == CustomComboPreset.DancerEspritOvercapSTFeature)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_ST, "Esprit", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerEspritOvercapAoEFeature)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Ones);
+
+            #region Simple ST Sliders
+            if (preset == CustomComboPreset.DancerSimpleStandardFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleSSBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleTechnicalFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleTSBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleFeatherPoolingFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleFeatherBurstPercent, "Target HP percentage to dump all pooled feathers below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimplePanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimplePanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            #endregion
+
+            #region Simple AoE Sliders
+            if (preset == CustomComboPreset.DancerSimpleAoEStandardFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleSSAoEBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleAoETechnicalFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleTSAoEBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleAoEPanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DancerSimpleAoEPanicHealsFeature)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            #endregion
+
+            #region PvP Sliders
             if (preset == CustomComboPreset.DNCCuringWaltzOption)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###DNC", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Caps at 90 to prevent waste.###DNCPvP", 150, SliderIncrements.Ones);
+            #endregion
 
             #endregion
             // ====================================================================================
