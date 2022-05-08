@@ -475,15 +475,19 @@ namespace XIVSlothComboPlugin.Combos
                         ? (uint)gauge.NextStep
                         : StandardFinish2;
 
-                // Simple ST Standard/Tech (activates dances with no target, or when target is over 2% HP)
-                if (!HasTarget())
+                // Simple ST Standard (activates dance with no target, or when target is over HP% threshold)
+                if (!HasTarget() || EnemyHealthPercentage() > standardStepBurstThreshold)
                 {
-                    if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > standardStepBurstThreshold &&
-                        ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer.RemainingTime > 5))
-                        return StandardStep;
+                    if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleStandardFeature) && IsOffCooldown(DNC.StandardStep)
+                        && ((!HasEffect(DNC.Buffs.TechnicalStep) && !techBurst) || techBurstTimer.RemainingTime > 5))
+                        return DNC.StandardStep;
+                }
 
-                    if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > technicalStepBurstThreshold)
-                        return TechnicalStep;
+                // Simple ST Tech (activates dance with no target, or when target is over HP% threshold)
+                if (!HasTarget() || EnemyHealthPercentage() > technicalStepBurstThreshold)
+                {
+                    if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleTechnicalFeature) && !HasEffect(DNC.Buffs.StandardStep) && IsOffCooldown(DNC.TechnicalStep))
+                        return DNC.TechnicalStep;
                 }
 
                 if (canWeave)
@@ -610,16 +614,19 @@ namespace XIVSlothComboPlugin.Combos
                             ? (uint)gauge.NextStep
                             : TechnicalFinish4;
 
-                    // Simple AoE Standard/Tech (activates dances with no target, or when target is over 5% HP)
-                    if (!HasTarget())
+                    // Simple AoE Standard (activates dance with no target, or when target is over HP% threshold)
+                    if (!HasTarget() || EnemyHealthPercentage() > standardStepBurstThreshold)
                     {
-                        if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) && IsOffCooldown(StandardStep) && EnemyHealthPercentage() > standardStepBurstThreshold &&
-                            ((!HasEffect(Buffs.TechnicalStep) && !techBurst) ||
-                            techBurstTimer.RemainingTime > 5))
-                            return StandardStep;
+                        if (level >= DNC.Levels.StandardStep && IsEnabled(CustomComboPreset.DancerSimpleAoEStandardFeature) && IsOffCooldown(DNC.StandardStep)
+                            && ((!HasEffect(DNC.Buffs.TechnicalStep) && !techBurst) || techBurstTimer.RemainingTime > 5))
+                            return DNC.StandardStep;
+                    }
 
-                        if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep) && EnemyHealthPercentage() > technicalStepBurstThreshold)
-                            return TechnicalStep;
+                    // Simple AoE Tech (activates dance with no target, or when target is over HP% threshold)
+                    if (!HasTarget() || EnemyHealthPercentage() > technicalStepBurstThreshold)
+                    {
+                        if (level >= DNC.Levels.TechnicalStep && IsEnabled(CustomComboPreset.DancerSimpleAoETechnicalFeature) && !HasEffect(DNC.Buffs.StandardStep) && IsOffCooldown(DNC.TechnicalStep))
+                            return DNC.TechnicalStep;
                     }
 
                     if (canWeave)
