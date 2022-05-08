@@ -426,34 +426,6 @@ namespace XIVSlothComboPlugin.Combos
                 var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                 var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
 
-                // Dance Step Replacement
-                if (IsEnabled(CustomComboPreset.DancerSimpleDanceStepFeature))
-                {
-                    // Standard Step
-                    if (actionID is DNC.StandardStep)
-                    {
-                        if (gauge.IsDancing && HasEffect(Buffs.StandardStep))
-                        {
-                            if (gauge.CompletedSteps < 2)
-                                return (uint)gauge.NextStep;
-
-                            return StandardFinish2;
-                        }
-                    }
-
-                    // Technical Step
-                    if ((actionID is DNC.TechnicalStep) && level >= Levels.TechnicalStep)
-                    {
-                        if (gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
-                        {
-                            if (gauge.CompletedSteps < 4)
-                                return (uint)gauge.NextStep;
-
-                            return TechnicalFinish4;
-                        }
-                    }
-                }
-
                 // Simple ST Interrupt
                 if (IsEnabled(CustomComboPreset.DancerSimpleInterruptFeature) && interruptable)
                         return All.HeadGraze;
@@ -566,7 +538,7 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-        internal class DancerSimpleAoeFeature : CustomCombo
+    internal class DancerSimpleAoeFeature : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DancerSimpleAoEFeature;
 
@@ -586,34 +558,6 @@ namespace XIVSlothComboPlugin.Combos
                     var curingWaltzReady = level >= Levels.CuringWaltz && IsOffCooldown(CuringWaltz);
                     var secondWindReady = level >= All.Levels.SecondWind && IsOffCooldown(All.SecondWind);
                     var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && level >= All.Levels.HeadGraze;
-
-                    // Simple AoE Dance Step Replacement
-                    if (IsEnabled(CustomComboPreset.DancerSimpleAoEDanceStepFeature))
-                    {
-                        // Simple AoE Standard Steps
-                        if (actionID is DNC.StandardStep)
-                        {
-                            if (gauge.IsDancing && HasEffect(Buffs.StandardStep))
-                            {
-                                if (gauge.CompletedSteps < 2)
-                                    return (uint)gauge.NextStep;
-
-                                return StandardFinish2;
-                            }
-                        }
-
-                        // Simple AoE Technical Steps
-                        if ((actionID is DNC.TechnicalStep) && level >= Levels.TechnicalStep)
-                        {
-                            if (gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
-                            {
-                                if (gauge.CompletedSteps < 4)
-                                    return (uint)gauge.NextStep;
-
-                                return TechnicalFinish4;
-                            }
-                        }
-                    }
 
                     // Simple AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DancerSimpleAoEInterruptFeature) && interruptable)

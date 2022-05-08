@@ -620,8 +620,7 @@ namespace XIVSlothComboPlugin
 
             #region Dance Features
             [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
-            [ParentCombo(DancerMenuDanceFeatures)]
-            [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility, DancerSimpleFeature, DancerSimpleAoEFeature)]
+            [ConflictingCombos(DancerCombinedDanceFeature, DancerDanceComboCompatibility)]
             [CustomComboInfo("Dance Step Combo", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
             DancerDanceStepCombo = 4021,
 
@@ -720,10 +719,6 @@ namespace XIVSlothComboPlugin
             DancerSimpleTechnicalFeature = 4053,
 
             [ParentCombo(DancerSimpleFeature)]
-            [CustomComboInfo("Simple Dance Step Combo", "Changes Standard Step and Technical Step into each dance step while dancing.", DNC.JobID, 0, "", "")]
-            DancerSimpleDanceStepFeature = 4054,
-
-            [ParentCombo(DancerSimpleFeature)]
             [CustomComboInfo("Simple Tech Devilment", "Includes Devilment in the rotation.\nWill activate only during Technical Finish if you are Lv70 or above.", DNC.JobID, 0, "", "")]
             DancerSimpleDevilmentFeature = 4055,
 
@@ -766,10 +761,6 @@ namespace XIVSlothComboPlugin
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Technical Step", "Includes Technical Step in the AoE rotation.", DNC.JobID, 0, "")]
             DancerSimpleAoETechnicalFeature = 4073,
-
-            [ParentCombo(DancerSimpleAoEFeature)]
-            [CustomComboInfo("Simple AoE Dance Step Combo", "Changes Standard Step and Technical Step into each dance step while dancing.", DNC.JobID, 0, "", "")]
-            DancerSimpleAoEDanceStepFeature = 4074,
 
             [ParentCombo(DancerSimpleAoEFeature)]
             [CustomComboInfo("Simple AoE Tech Devilment", "Includes Devilment in the AoE rotation.\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 0, "", "")]
