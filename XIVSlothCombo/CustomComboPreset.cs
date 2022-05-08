@@ -389,7 +389,7 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature, BlackSimpleTransposeFeature)]
-        [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9% less damage than Simple BLM). Requires level 90.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9%% less damage than Simple BLM). Requires level 90.", BLM.JobID, -1, "", "")]
         BlackSimpleParadoxFeature = 2023,
 
         [ParentCombo(BlackSimpleTransposeFeature)]
