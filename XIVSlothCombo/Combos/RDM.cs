@@ -404,15 +404,19 @@ namespace XIVSlothComboPlugin.Combos
                     var distance = GetTargetDistance();
                     var corpacorpsRange = 25;
                     var corpsacorpsPool = 0;
+                    var engagementPool = 0;
 
                     if (IsEnabled(CustomComboPreset.RDM_Corpsacorps_MeleeRange)) corpacorpsRange = 3;
-                    if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) && IsEnabled(CustomComboPreset.RDM_ST_PoolCorps)) corpsacorpsPool = 1;
+                    if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && IsEnabled(CustomComboPreset.RDM_PoolCorps)) corpsacorpsPool = 1;
+                    if (IsEnabled(CustomComboPreset.RDM_Engagement) && IsEnabled(CustomComboPreset.RDM_PoolEngage)) engagementPool = 1;
 
                     if (actionID is Jolt or Jolt2 or Scatter or Impact or Fleche)
                     {
-                        if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(Engagement).RemainingCharges > 0
+                        if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(Engagement).RemainingCharges >= engagementPool 
+                            && (GetCooldown(Engagement).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolEngage))
                             && level >= Levels.Engagement && distance <= 3) placeOGCD = Engagement;
-                        if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && GetCooldown(Corpsacorps).RemainingCharges > corpsacorpsPool
+                        if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && GetCooldown(Corpsacorps).RemainingCharges >= corpsacorpsPool
+                            && (GetCooldown(Corpsacorps).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolCorps))
                             && ((GetCooldown(Corpsacorps).RemainingCharges >= GetCooldown(Engagement).RemainingCharges) || level < Levels.Engagement) // Try to alternate between Corps-a-corps and Engagement
                             && level >= Levels.Corpsacorps && distance <= corpacorpsRange) placeOGCD = Corpsacorps;
                         if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && IsOffCooldown(ContreSixte) && level >= Levels.ContreSixte) placeOGCD = ContreSixte;
@@ -426,18 +430,11 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && level >= Levels.ContreSixte
                                 && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(ContreSixte).CooldownRemaining) placeOGCD = ContreSixte;
                             if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && level >= Levels.Corpsacorps
-                                && ((IsNotEnabled(CustomComboPreset.RDM_ST_PoolCorps) && GetCooldown(Corpsacorps).RemainingCharges >= 0) || GetCooldown(Corpsacorps).RemainingCharges >= 2)
-                                && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(Corpsacorps).ChargeCooldownRemaining
-                                && distance <= corpacorpsRange) placeOGCD = Corpsacorps;
-                            if (placeOGCD == Corpsacorps)
-                            {
-                                if (IsEnabled(CustomComboPreset.RDM_Engagement) && level >= Levels.Engagement
-                                    && GetCooldown(placeOGCD).ChargeCooldownRemaining > GetCooldown(Engagement).ChargeCooldownRemaining
-                                    && distance <= 3) placeOGCD = Engagement;
-                            }
-                            else if (IsEnabled(CustomComboPreset.RDM_Engagement)
-                              && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(Engagement).ChargeCooldownRemaining
-                              && distance <= 3) placeOGCD = Engagement;
+                                && GetCooldown(Corpsacorps).RemainingCharges == 0
+                                && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(Corpsacorps).CooldownRemaining) placeOGCD = Corpsacorps;
+                            if (IsEnabled(CustomComboPreset.RDM_Engagement) && level >= Levels.Engagement
+                                && GetCooldown(Engagement).RemainingCharges == 0
+                                && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(Engagement).CooldownRemaining) placeOGCD = Engagement;
                         }
                         if (actionID is Fleche && radioButton == 1) return placeOGCD;
                     }
