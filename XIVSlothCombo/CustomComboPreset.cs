@@ -1951,6 +1951,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used or when below level 50", RDM.JobID, 321)]
         RDM_AoE_AccelSwiftCast = 13321,
 
+        [ParentCombo(RDM_AoE_Acceleration)]
+        [CustomComboInfo("Weave Acceleration", "Only use acceleration during weave windows", RDM.JobID, 322)]
+        RDM_AoE_WeaveAcceleration = 13322,
+
         //SECTION_4to5_MELEE
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Riposte)]
         [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
