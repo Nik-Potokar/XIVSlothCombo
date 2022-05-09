@@ -1,10 +1,14 @@
-# XIVSlothCombo - The Super Expanded XIVCombo
-## NEW: Join our [Discord](https://discord.gg/xT7zyjzjtY) server!
+<p style="text-align:center;" align="center"><img align="center" src="https://i.imgur.com/DR6TM5j.png" width="100%" /><br /><br /></p>
 
-[![Build](https://img.shields.io/github/workflow/status/Nik-Potokar/XIVSlothCombo/Build?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml)
-[![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Nik-Potokar/XIVSlothCombo/main?style=for-the-badge)](https://github.com/Nik-Potokar/XIVSlothCombo/commits/main)
-![Discord](https://img.shields.io/discord/957680331056615506?color=5865F2&label=Discord&logo=Discord&logoColor=ffffff&style=for-the-badge)
-
+<p align="center">
+<a href="https://github.com/Nik-Potokar/XIVSlothCombo/actions/workflows/build.yml" alt="Build">
+  <img src="https://img.shields.io/github/workflow/status/Nik-Potokar/XIVSlothCombo/Build?style=for-the-badge" /></a>
+<a href="https://github.com/Nik-Potokar/XIVSlothCombo/commits/main" alt="Commits">
+  <img src="https://img.shields.io/github/last-commit/Nik-Potokar/XIVSlothCombo/main?style=for-the-badge" /></a>
+<a href="https://discord.gg/xT7zyjzjtY" alt="Discord">
+  <img src="https://img.shields.io/discord/957680331056615506?color=5865F2&label=Discord&logo=Discord&logoColor=ffffff&style=for-the-badge" /></a>
+</p>
+  
 # Have an issue or suggestion? Please post them *[here](https://github.com/Nik-Potokar/XIVSlothCombo/issues)*. If something dosen't seem to be working, please change to another job and back, or re-slot the skill.
 
 
