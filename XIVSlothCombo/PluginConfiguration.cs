@@ -64,7 +64,6 @@ namespace XIVSlothComboPlugin
         /// <summary>
         /// Gets or sets a value indicating whether to allow and display secret combos.
         /// </summary>
-        [JsonProperty("Debug")]
         public bool EnabledOutputLog { get; set; } = false;
 
 
