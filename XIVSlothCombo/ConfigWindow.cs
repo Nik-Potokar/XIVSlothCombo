@@ -128,13 +128,14 @@ namespace XIVSlothComboPlugin
 
         }
 
+#if DEBUG
         internal class Debug : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; }
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                throw new NotImplementedException();
+                return actionID;
             }
         }
         private void DrawDebug()
@@ -174,7 +175,7 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted("Plese log in to use this tab.");
             }
         }
-
+#endif
         private void DrawPVPWindow()
         {
             ImGui.Text("This tab allows you to select which PvP combos and features you wish to enable.");
