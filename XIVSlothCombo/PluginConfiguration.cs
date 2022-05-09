@@ -64,8 +64,7 @@ namespace XIVSlothComboPlugin
         /// <summary>
         /// Gets or sets a value indicating whether to allow and display secret combos.
         /// </summary>
-        [JsonProperty("Debug")]
-        public bool EnableSecretCombos { get; set; } = false;
+        public bool EnabledOutputLog { get; set; } = false;
 
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace XIVSlothComboPlugin
         /// <param name="preset">Preset to check.</param>
         /// <returns>The boolean representation.</returns>
         public bool IsEnabled(CustomComboPreset preset)
-            => this.EnabledActions.Contains(preset) && (this.EnableSecretCombos || !this.IsSecret(preset));
+            => this.EnabledActions.Contains(preset);
 
         /// <summary>
         /// Gets a value indicating whether a preset is secret.

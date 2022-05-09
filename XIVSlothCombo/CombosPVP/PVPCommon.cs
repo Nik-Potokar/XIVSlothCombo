@@ -67,7 +67,7 @@ namespace XIVSlothComboPlugin
                 return actionID;
             }
 
-            public static bool Execute()
+            public bool Execute()
             {
                 var jobMaxHp = LocalPlayer.MaxHp;
                 var threshold = Service.Configuration.GetCustomIntValue(Config.EmergencyHealThreshold);
@@ -110,7 +110,7 @@ namespace XIVSlothComboPlugin
                 return actionID;
             }
 
-            public static bool Execute()
+            public bool Execute()
             {
                 var jobMaxHp = LocalPlayer.MaxHp;
                 var threshold = Service.Configuration.GetCustomIntValue(Config.EmergencyGuardThreshold);
@@ -151,7 +151,7 @@ namespace XIVSlothComboPlugin
                 return actionID;
             }
 
-            public static bool Execute()
+            public bool Execute()
             {
                 var selectedStatuses = Service.Configuration.GetCustomBoolArrayValue(Config.QuickPurifyStatuses);
 

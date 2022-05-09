@@ -1,2 +1,2 @@
-Welcome to XIVSlothCombo v3.0.13.0!
-Red Mage [RDM] players - check your settings! There's been a full job rework.
+Welcome to XIVSlothCombo v3.0.14.1!
+Apologies if you experienced issues with v3.0.14.0, we had an unexpected memory leak.
