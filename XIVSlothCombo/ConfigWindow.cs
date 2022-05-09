@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Windowing;
@@ -113,9 +114,65 @@ namespace XIVSlothComboPlugin
                     DrawAboutUs();
                     ImGui.EndTabItem();
                 }
+
+#if DEBUG
+                if (ImGui.BeginTabItem("Debug Mode"))
+                {
+                    DrawDebug();
+                    ImGui.EndTabItem();
+                }
+#endif
+
                 ImGui.EndTabBar();
             }
 
+        }
+
+        internal class Debug : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; }
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        private void DrawDebug()
+        {
+            var LocalPlayer = Service.ClientState.LocalPlayer;
+            var comboClass = new Debug();
+
+            if (LocalPlayer != null)
+            {
+                if (Service.ClientState.LocalPlayer.TargetObject is BattleChara chara)
+                {
+                    foreach (var status in chara.StatusList)
+                    {
+                        ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
+                    }
+                }
+                foreach (var status in (Service.ClientState.LocalPlayer as BattleChara).StatusList)
+                {
+                    ImGui.TextUnformatted($"SELF STATUS CHECK: {Service.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
+                }
+
+                ImGui.TextUnformatted($"TARGET OBJECT KIND: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
+                ImGui.TextUnformatted($"TARGET IS BATTLE CHARA: {Service.ClientState.LocalPlayer.TargetObject is BattleChara}");
+                ImGui.TextUnformatted($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
+                ImGui.TextUnformatted($"IN COMBAT: {comboClass.InCombat()}");
+                ImGui.TextUnformatted($"IN MELEE RANGE: {comboClass.InMeleeRange()}");
+                ImGui.TextUnformatted($"DISTANCE FROM TARGET: {comboClass.GetTargetDistance()}");
+                ImGui.TextUnformatted($"TARGET HP VALUE: {comboClass.EnemyHealthCurrentHp()}");
+                ImGui.TextUnformatted($"LAST ACTION: {ActionWatching.GetActionName(ActionWatching.LastAction)}");
+                ImGui.TextUnformatted($"LAST WEAPONSKILL: {ActionWatching.GetActionName(ActionWatching.LastWeaponskill)}");
+                ImGui.TextUnformatted($"LAST SPELL: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
+                ImGui.TextUnformatted($"LAST ABILITY: {ActionWatching.GetActionName(ActionWatching.LastAbility)}");
+                ImGui.TextUnformatted($"ZONE: {Service.ClientState.TerritoryType}");
+            }
+            else
+            {
+                ImGui.TextUnformatted("Plese log in to use this tab.");
+            }
         }
 
         private void DrawPVPWindow()
@@ -267,6 +324,24 @@ namespace XIVSlothComboPlugin
             {
                 ImGui.BeginTooltip();
                 ImGui.TextUnformatted("Hides any combos that conflict with others you have selected.");
+                ImGui.EndTooltip();
+            }
+
+            #endregion
+
+            #region Combat Log
+            var showCombatLog = Service.Configuration.EnabledOutputLog;
+
+            if (ImGui.Checkbox("Output Log to Chat", ref showCombatLog))
+            {
+                Service.Configuration.EnabledOutputLog = showCombatLog;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Every time you use an action, the plugin will print it to the chat.");
                 ImGui.EndTooltip();
             }
 

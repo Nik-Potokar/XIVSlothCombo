@@ -80,10 +80,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Disabled", "This should not be used.", ADV.JobID)]
         Disabled = 99999,
 
-#if DEBUG
-        [CustomComboInfo("DEBUG MODE", "OUTPUTS DEBUG INFO. PLEASE USE THE /XLDEV COMMAND AND OPEN THE LOG WINDOW AND SET LOG LEVEL TO DEBUG.", 0)]
-        DEBUG = 99998,
-#endif
         #endregion
         // ====================================================================================
         #region GLOBAL FEATURES
@@ -151,8 +147,8 @@ namespace XIVSlothComboPlugin
             #endregion
 
         //Non-gameplay Features
-        [CustomComboInfo("Output Combat Log", "Outputs your performed actions to the chat.", ADV.JobID)]
-        AllOutputCombatLog = 100094,
+        //[CustomComboInfo("Output Combat Log", "Outputs your performed actions to the chat.", ADV.JobID)]
+        //AllOutputCombatLog = 100094,
 
 
         #endregion

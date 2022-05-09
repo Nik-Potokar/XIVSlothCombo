@@ -6,7 +6,6 @@ using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Timers;
@@ -167,7 +166,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="original">The original action.</param>
         /// <param name="actions">Action data.</param>
         /// <returns>The appropriate action to use.</returns>
-        protected static uint CalcBestAction(uint original, params uint[] actions)
+        public uint CalcBestAction(uint original, params uint[] actions)
         {
             static (uint ActionID, CooldownData Data) Compare(
                 uint original,
@@ -219,7 +218,7 @@ namespace XIVSlothComboPlugin.Combos
                 return a1.Data.IsCooldown ? a2 : a1;
             }
 
-            static (uint ActionID, CooldownData Data) Selector(uint actionID)
+            (uint ActionID, CooldownData Data) Selector(uint actionID)
                 => (actionID, GetCooldown(actionID));
 
             return actions
@@ -247,20 +246,20 @@ namespace XIVSlothComboPlugin.Combos
         /// <summary>
         /// Gets the player or null.
         /// </summary>
-        protected static PlayerCharacter? LocalPlayer
+        public PlayerCharacter? LocalPlayer
             => Service.ClientState.LocalPlayer;
 
         /// <summary>
         /// Gets the current target or null.
         /// </summary>
-        protected static GameObject? CurrentTarget
+        public GameObject? CurrentTarget
             => Service.TargetManager.Target;
 
         /// <summary>
         /// Find if the player has a target.
         /// </summary>
         /// <returns>A value indicating whether the player has a target.</returns>
-        protected static bool HasTarget()
+        public bool HasTarget()
             => CurrentTarget is not null;
 
         /// <summary>
@@ -268,7 +267,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID.</param>
         /// <returns>The result from the hook.</returns>
-        protected static uint OriginalHook(uint actionID)
+        public uint OriginalHook(uint actionID)
             => Service.IconReplacer.OriginalHook(actionID);
 
         /// <summary>
@@ -276,7 +275,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID.</param>
         /// <returns>A value indicating whether the action would be modified.</returns>
-        protected static bool IsOriginal(uint actionID)
+        public bool IsOriginal(uint actionID)
             => Service.IconReplacer.OriginalHook(actionID) == actionID;
 
         /// <summary>
@@ -284,7 +283,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>A value indicating whether the preset is enabled.</returns>
-        protected static bool IsEnabled(CustomComboPreset preset)
+        public bool IsEnabled(CustomComboPreset preset)
             => (int)preset < 100 || Service.Configuration.IsEnabled(preset);
 
         /// <summary>
@@ -292,7 +291,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>A value indicating whether the preset is not enabled.</returns>
-        protected static bool IsNotEnabled(CustomComboPreset preset)
+        public bool IsNotEnabled(CustomComboPreset preset)
             => !IsEnabled(preset);
 
         /// <summary>
@@ -300,21 +299,21 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="flag">Condition flag.</param>
         /// <returns>A value indicating whether the player is in the condition.</returns>
-        protected static bool HasCondition(ConditionFlag flag)
+        public bool HasCondition(ConditionFlag flag)
             => Service.Condition[flag];
 
         /// <summary>
         /// Find if the player is in combat.
         /// </summary>
         /// <returns>A value indicating whether the player is in combat.</returns>
-        protected static bool InCombat()
+        public bool InCombat()
             => Service.Condition[ConditionFlag.InCombat];
 
         /// <summary>
         /// Find if the player has a pet present.
         /// </summary>
         /// <returns>A value indicating whether the player has a pet present.</returns>
-        protected static bool HasPetPresent()
+        public bool HasPetPresent()
             => Service.BuddyList.PetBuddyPresent;
 
         /// <summary>
@@ -323,14 +322,14 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool HasEffect(ushort effectID)
+        public bool HasEffect(ushort effectID)
             => FindEffect(effectID) is not null;
-        protected static float GetBuffStacks(ushort effectId)
+        public float GetBuffStacks(ushort effectId)
         {
             Status? eff = FindEffect(effectId);
             return eff?.StackCount ?? 0;
         }
-        protected static float GetBuffRemainingTime(ushort effectId)
+        public float GetBuffRemainingTime(ushort effectId)
         {
             Status? eff = FindEffect(effectId);
             return eff?.RemainingTime ?? 0;
@@ -343,7 +342,7 @@ namespace XIVSlothComboPlugin.Combos
         ///<param name="effectID">Status effect ID.</param>
         ///<param name="obj"></param>
         ///<return>Status object or null.</return>
-        protected static Status? FindEffectOnMember(ushort effectID, GameObject? obj)
+        public Status? FindEffectOnMember(ushort effectID, GameObject? obj)
             => Service.ComboCache.GetStatus(effectID, obj, null);
 
 
@@ -353,7 +352,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindEffect(ushort effectID)
+        public Status? FindEffect(ushort effectID)
             => FindEffect(effectID, LocalPlayer, LocalPlayer?.ObjectId);
 
         /// <summary>
@@ -362,7 +361,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool TargetHasEffect(ushort effectID)
+        public bool TargetHasEffect(ushort effectID)
             => FindTargetEffect(effectID) is not null;
 
         /// <summary>
@@ -371,10 +370,10 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindTargetEffect(ushort effectID)
+        public Status? FindTargetEffect(ushort effectID)
             => FindEffect(effectID, CurrentTarget, LocalPlayer?.ObjectId);
 
-        protected static float GetDebuffRemainingTime(ushort effectId)
+        public float GetDebuffRemainingTime(ushort effectId)
         {
             Status? eff = FindTargetEffect(effectId);
             return eff?.RemainingTime ?? 0;
@@ -386,7 +385,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool HasEffectAny(ushort effectID)
+        public bool HasEffectAny(ushort effectID)
             => FindEffectAny(effectID) is not null;
 
         /// <summary>
@@ -395,7 +394,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindEffectAny(ushort effectID)
+        public Status? FindEffectAny(ushort effectID)
             => FindEffect(effectID, LocalPlayer, null);
 
         /// <summary>
@@ -404,7 +403,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>A value indicating if the effect exists.</returns>
-        protected static bool TargetHasEffectAny(ushort effectID)
+        public bool TargetHasEffectAny(ushort effectID)
             => FindTargetEffectAny(effectID) is not null;
 
         /// <summary>
@@ -413,7 +412,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="effectID">Status effect ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindTargetEffectAny(ushort effectID)
+        public Status? FindTargetEffectAny(ushort effectID)
             => FindEffect(effectID, CurrentTarget, null);
 
         /// <summary>
@@ -423,7 +422,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="obj">Object to look for effects on.</param>
         /// <param name="sourceID">Source object ID.</param>
         /// <returns>Status object or null.</returns>
-        protected static Status? FindEffect(ushort effectID, GameObject? obj, uint? sourceID)
+        public Status? FindEffect(ushort effectID, GameObject? obj, uint? sourceID)
             => Service.ComboCache.GetStatus(effectID, obj, sourceID);
 
         /// <summary>
@@ -431,7 +430,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>Cooldown data.</returns>
-        protected static CooldownData GetCooldown(uint actionID)
+        public CooldownData GetCooldown(uint actionID)
             => Service.ComboCache.GetCooldown(actionID);
 
         /// <summary>
@@ -439,7 +438,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>Total remaining time of the cooldown.</returns>
-        protected static float GetCooldownRemainingTime(uint actionID)
+        public float GetCooldownRemainingTime(uint actionID)
             => Service.ComboCache.GetCooldown(actionID).CooldownRemaining;
 
         /// <summary>
@@ -447,7 +446,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>Remaining time for the next charge of the cooldown.</returns>
-        protected static float GetCooldownChargeRemainingTime(uint actionID)
+        public float GetCooldownChargeRemainingTime(uint actionID)
             => Service.ComboCache.GetCooldown(actionID).ChargeCooldownRemaining;
 
         /// <summary>
@@ -455,7 +454,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>True or false.</returns>
-        protected static bool IsOnCooldown(uint actionID)
+        public bool IsOnCooldown(uint actionID)
             => GetCooldown(actionID).IsCooldown;
 
         /// <summary>
@@ -463,7 +462,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>True or false.</returns>
-        protected static bool IsOffCooldown(uint actionID)
+        public bool IsOffCooldown(uint actionID)
             => !GetCooldown(actionID).IsCooldown;
 
         /// <summary>
@@ -471,7 +470,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>True or false.</returns>
-        protected static bool JustUsed(uint actionID)
+        public bool JustUsed(uint actionID)
            => IsOnCooldown(actionID) && GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
 
 
@@ -480,7 +479,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>True or false.</returns>
-        protected static bool HasCharges(uint actionID)
+        public bool HasCharges(uint actionID)
             => GetCooldown(actionID).RemainingCharges > 0;
 
         /// <summary>
@@ -488,7 +487,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>Number of charges.</returns>
-        protected static ushort GetRemainingCharges(uint actionID)
+        public ushort GetRemainingCharges(uint actionID)
             => GetCooldown(actionID).RemainingCharges;
 
         /// <summary>
@@ -496,7 +495,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
         /// <returns>Number of charges.</returns>
-        protected static ushort GetMaxCharges(uint actionID)
+        public ushort GetMaxCharges(uint actionID)
             => GetCooldown(actionID).MaxCharges;
 
         /// <summary>
@@ -506,7 +505,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanWeave(uint actionID, double weaveTime = 0.7)
+        public bool CanWeave(uint actionID, double weaveTime = 0.7)
            => GetCooldown(actionID).CooldownRemaining > weaveTime;
 
         /// <summary>
@@ -516,7 +515,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.6.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanSpellWeave(uint actionID, double weaveTime = 0.6)
+        public bool CanSpellWeave(uint actionID, double weaveTime = 0.6)
         {
             var castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
 
@@ -535,7 +534,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="start">Time (in seconds) to start to check for the weave window.</param>
         /// <param name="end">Time (in seconds) to end the check for the weave window.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6)
+        public bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6)
            => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
 
         /// <summary>
@@ -543,14 +542,14 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <typeparam name="T">Type of job gauge.</typeparam>
         /// <returns>The job gauge.</returns>
-        protected static T GetJobGauge<T>() where T : JobGaugeBase
+        public T GetJobGauge<T>() where T : JobGaugeBase
             => Service.ComboCache.GetJobGauge<T>();
 
         /// <summary>
         /// Gets the distance from the target.
         /// </summary>
         /// <returns>Double representing the distance from the target.</returns>
-        protected static double GetTargetDistance()
+        public double GetTargetDistance()
         {
             if (CurrentTarget is null || LocalPlayer is null)
                 return 0;
@@ -568,7 +567,7 @@ namespace XIVSlothComboPlugin.Combos
         /// Gets a value indicating whether you are in melee range from the current target.
         /// </summary>
         /// <returns>Bool indicating whether you are in melee range.</returns>
-        protected static bool InMeleeRange()
+        public bool InMeleeRange()
         {
             if (LocalPlayer.TargetObject == null) return false;
 
@@ -584,7 +583,7 @@ namespace XIVSlothComboPlugin.Combos
         }
 
         // Grabs current target HP %, including teammates.
-        protected static double EnemyHealthPercentage()
+        public double EnemyHealthPercentage()
         {
             if (CurrentTarget is null)
                 return 0;
@@ -596,7 +595,7 @@ namespace XIVSlothComboPlugin.Combos
 
             return health / maxHealth * 100;
         }
-        protected static double EnemyHealthMaxHp()
+        public double EnemyHealthMaxHp()
         {
             if (CurrentTarget is null)
                 return 0;
@@ -607,7 +606,7 @@ namespace XIVSlothComboPlugin.Combos
 
             return maxHealth;
         }
-        protected static double EnemyHealthCurrentHp()
+        public double EnemyHealthCurrentHp()
         {
             if (CurrentTarget is null)
                 return 0;
@@ -618,14 +617,14 @@ namespace XIVSlothComboPlugin.Combos
 
             return currentHp;
         }
-        protected static double PlayerHealthPercentageHp()
+        public double PlayerHealthPercentageHp()
         {
             double maxHealth = LocalPlayer.MaxHp;
             double currentHealth = LocalPlayer.CurrentHp;
 
             return currentHealth / maxHealth * 100;
         }
-        protected static bool HasBattleTarget()
+        public bool HasBattleTarget()
         {
             if (CurrentTarget is null)
                 return false;
@@ -638,7 +637,7 @@ namespace XIVSlothComboPlugin.Combos
         /// Determines if the enemy can be interrupted if they are currently casting.
         /// </summary>
         /// <returns>Bool indicating whether they can be interrupted or not.</returns>
-        protected static bool CanInterruptEnemy()
+        public bool CanInterruptEnemy()
         {
             if (CurrentTarget is null)
                 return false;
@@ -654,13 +653,13 @@ namespace XIVSlothComboPlugin.Combos
         /// Gets the party list
         /// </summary>
         /// <returns>Current party list.</returns>
-        protected static PartyList GetPartyMembers() => Service.PartyList;
+        public PartyList GetPartyMembers() => Service.PartyList;
 
         /// <summary>
         /// Sets the player's target. 
         /// </summary>
         /// <param name="target">Target must be a game object that the player can normally click and target.</param>
-        protected static void SetTarget(GameObject? target) =>
+        public void SetTarget(GameObject? target) =>
             Service.TargetManager.Target = target;
 
 
@@ -668,7 +667,7 @@ namespace XIVSlothComboPlugin.Combos
         /// Checks if target is in appropriate range for targeting
         /// </summary>
         /// <param name="target">The target object to check</param>
-        protected static bool IsInRange(GameObject? target)
+        public bool IsInRange(GameObject? target)
         {
             if (target == null) return false;
             if (target.YalmDistanceX >= 30) return false;
@@ -680,7 +679,7 @@ namespace XIVSlothComboPlugin.Combos
         /// Attempts to target the given party member
         /// </summary>
         /// <param name="target"></param>
-        protected unsafe static void TargetObject(TargetType target)
+        protected unsafe void TargetObject(TargetType target)
         {
             var t = GetTarget(target);
             if (t == null) return;
@@ -690,7 +689,7 @@ namespace XIVSlothComboPlugin.Combos
             if (IsInRange(p)) SetTarget(p);
         }
 
-        protected static void TargetObject(GameObject? target)
+        public void TargetObject(GameObject? target)
         {
             if (IsInRange(target)) SetTarget(target);
         }
@@ -724,7 +723,7 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
-        protected static int GetOptionValue(string SliderID)
+        public int GetOptionValue(string SliderID)
         {
             return Service.Configuration.GetCustomIntValue(SliderID);
         }
@@ -805,7 +804,7 @@ namespace XIVSlothComboPlugin.Combos
         /// Checks if the player is in a PVP enabled zone.
         /// </summary>
         /// <returns></returns>
-        protected static bool InPvP()
+        public bool InPvP()
             => Service.ClientState.IsPvP ||
             Service.ClientState.TerritoryType == 250 || //Wolves Den
             (Service.ClientState.TerritoryType == 376 && Service.PartyList.Length > 1) || //Borderland Ruins
@@ -815,33 +814,6 @@ namespace XIVSlothComboPlugin.Combos
             (Service.ClientState.TerritoryType == 729 && Service.PartyList.Length > 1) || //Astragalos
             (Service.ClientState.TerritoryType == 791 && Service.PartyList.Length > 1);   //Hidden Gorge
 
-        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
-            .Where(i => i.RowId is not 7)
-            .ToDictionary(i => i.RowId, i => i);
-
-        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
-            .ToDictionary(i => i.RowId, i => i);
-
-        public int GetLevel(uint id)
-        {
-            if (ActionSheet.TryGetValue(id, out var action))
-            {
-                return action.ClassJobLevel;
-            }
-
-            return 0;
-        }
-
-        public string GetActionName(uint id)
-        {
-            if (ActionSheet.TryGetValue(id, out var action))
-            {
-                return action.Name;
-            }
-
-            return "UNKNOWN ABILITY";
-        }
-
         public bool LevelChecked(uint id)
         {
             if (LocalPlayer.Level < GetLevel(id))
@@ -850,15 +822,14 @@ namespace XIVSlothComboPlugin.Combos
             return true;
         }
 
-        public string GetStatusName(uint id)
-        {
-            if (StatusSheet.TryGetValue(id, out var status))
-            {
-                return status.Name;
-            }
+        public string GetActionName(uint id)
+            => ActionWatching.GetActionName(id);
 
-            return "Unknown Status";
-        }
+        public string GetStatusName(uint id)
+            => ActionWatching.GetStatusName(id);
+
+        public int GetLevel(uint id)
+            => ActionWatching.GetLevel(id);
 
         public bool WasLastAction(uint id)
             => ActionWatching.LastAction == id;
