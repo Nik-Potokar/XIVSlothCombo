@@ -86,28 +86,6 @@
         }
 
 
-        //Non-gameplay features
-        internal class OutputCombatLog : CustomCombo
-        {
-            private uint LastAction = 0;
-            private int LastActionCount = 0;
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllOutputCombatLog;
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {
-                if (ActionWatching.LastAction != LastAction || ActionWatching.LastActionUseCount != LastActionCount)
-                {
-                    LastAction = ActionWatching.LastAction;
-                    LastActionCount = ActionWatching.LastActionUseCount;
-
-                    Service.ChatGui.Print($"You just used: {GetActionName(ActionWatching.LastAction)} x{LastActionCount}");
-                }
-
-                return actionID;
-            }
-        }
-
-
         //Tank Features
         internal class AllTankInterruptFeature : CustomCombo
         {

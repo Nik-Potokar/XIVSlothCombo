@@ -1,5 +1,4 @@
-﻿using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Hooking;
+﻿using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using System;
 using System.Collections.Generic;
@@ -13,6 +12,9 @@ namespace XIVSlothComboPlugin
         private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
             .Where(i => i.RowId is not 7)
             .ToDictionary(i => i.RowId, i => i);
+
+        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
+    .ToDictionary(i => i.RowId, i => i);
 
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
@@ -49,6 +51,9 @@ namespace XIVSlothComboPlugin
                             break;
                     }
                 }
+
+                if (Service.Configuration.EnabledOutputLog)
+                    OutputLog();
             }
         }
 
@@ -72,6 +77,11 @@ namespace XIVSlothComboPlugin
 
         public static uint LastSpell { get; set; } = 0;
 
+        public static void OutputLog()
+        {
+            Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
+
+        }
         public static void Dispose()
         {
             ReceiveActionEffectHook?.Dispose();
@@ -96,6 +106,35 @@ namespace XIVSlothComboPlugin
             SendActionHook?.Disable();
         }
 
+        public static int GetLevel(uint id)
+        {
+            if (ActionSheet.TryGetValue(id, out var action))
+            {
+                return action.ClassJobLevel;
+            }
+
+            return 0;
+        }
+
+        public static string GetActionName(uint id)
+        {
+            if (ActionSheet.TryGetValue(id, out var action))
+            {
+                return action.Name;
+            }
+
+            return "UNKNOWN ABILITY";
+        }
+
+        public static string GetStatusName(uint id)
+        {
+            if (StatusSheet.TryGetValue(id, out var status))
+            {
+                return status.Name;
+            }
+
+            return "Unknown Status";
+        }
     }
 
     internal unsafe static class ActionManagerHelper
