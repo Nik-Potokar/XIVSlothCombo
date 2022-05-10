@@ -663,29 +663,6 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        // RDM_Verraise
-        // Swiftcast combos to Verraise when:
-        //  -Swiftcast is on cooldown.
-        //  -Swiftcast is available, but we we have Dualcast (Dualcasting verraise)
-        // Using this variation other than the alternatefeature style, as verrise is level 63
-        // and swiftcast is unlocked way earlier and in theory, on a hotbar somewhere
-        internal class RDM_Verraise : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Verraise;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is All.Swiftcast && level >= Levels.Verraise)
-                {
-                    if (GetCooldown(All.Swiftcast).CooldownRemaining > 0 ||   // Condition 1: Swiftcast is on cooldown
-                        HasEffect(Buffs.Dualcast))                        // Condition 2: Swiftcast is available, but we have DualCast)
-                        return Verraise;
-                }
-
-                // Else we just exit normally and return SwiftCast
-                return actionID;
-            }
-        }
-
         internal class RDM_CorpsDisplacement : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_CorpsDisplacement;
