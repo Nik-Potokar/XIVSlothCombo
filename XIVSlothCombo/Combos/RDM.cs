@@ -100,6 +100,7 @@ namespace XIVSlothComboPlugin.Combos
             public const string RDM_ST_MeleeCombo_OnAction = "RDM_ST_MeleeCombo_OnAction";
             public const string RDM_MeleeFinisher_OnAction = "RDM_MeleeFinisher_OnAction";
             public const string RDM_LucidDreaming_Threshold = "RDM_LucidDreaming_Threshold";
+            public const string RDM_MoulinetRange = "RDM_MoulinetRange";
         }
 
 
@@ -117,6 +118,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 //MAIN_COMBO_VARIABLES
                 RDMGauge gauge = GetJobGauge<RDMGauge>();
+                var moulinetRange = Service.Configuration.GetCustomIntValue(Config.RDM_MoulinetRange);
                 int black = gauge.BlackMana;
                 int white = gauge.WhiteMana;
                 //END_MAIN_COMBO_VARIABLES
@@ -367,7 +369,7 @@ namespace XIVSlothComboPlugin.Combos
                 //RDM_AOE_MANAFICATIONEMBOLDEN
                 if (IsEnabled(CustomComboPreset.RDM_AoE_ManaficationEmbolden) && level >= Levels.Embolden && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false
                     && !HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Acceleration)
-                    && GetTargetDistance() < 8 && actionID is Scatter or Impact)
+                    && GetTargetDistance() < moulinetRange && actionID is Scatter or Impact)
                 {
                     //Situation 1: Embolden First (Double)
                     if (level >= Levels.Manafication && gauge.ManaStacks == 2
@@ -570,7 +572,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo) && level >= Levels.Moulinet && actionID is Scatter or Impact && LocalPlayer.IsCasting == false
                     && !HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Acceleration)
                     && ((System.Math.Min(gauge.BlackMana, gauge.WhiteMana) + (gauge.ManaStacks * 20) >= 60) || (level < Levels.Manafication && System.Math.Min(gauge.BlackMana, gauge.WhiteMana) >= 20))
-                    && ((GetTargetDistance() <= 7 && gauge.ManaStacks == 0) || gauge.ManaStacks > 0))
+                    && ((GetTargetDistance() <= moulinetRange && gauge.ManaStacks == 0) || gauge.ManaStacks > 0))
                     return OriginalHook(EnchantedMoulinet);
                 //END_RDM_AOE_MELEECOMBO
 
