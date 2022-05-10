@@ -1986,6 +1986,7 @@ namespace XIVSlothComboPlugin
         RDM_LucidDreaming = 13610,
 
         [ReplaceSkill(All.Swiftcast)]
+        [ConflictingCombos(AllCasterRaiseFeature)]
         [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RDM_Verraise = 13620,
 
