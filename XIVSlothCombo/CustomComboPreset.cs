@@ -1985,6 +1985,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lucid Dreaming", "Use Lucid Dreaming on Jolt 1/2, Veraero 1/2/3, Verthunder 1/2/3, and Scatter/Impact when below threshold.", RDM.JobID, 610, "Lucid Dreaming the day away", "OOM? Git gud.")]
         RDM_LucidDreaming = 13610,
 
+        [ReplaceSkill(All.Swiftcast)]
+        [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        RDM_Verraise = 13620,
+
         //SECTION_8to9_OTHERS                   
         [ReplaceSkill(RDM.Displacement)]
         [CustomComboInfo("Displacement <> Corps-a-corps", "Replace Displacement with Corps-a-corps when out of range.", RDM.JobID, 810, "I take two steps forward, you take two steps back.", "We come together because opposites attract.")]
