@@ -371,8 +371,8 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     //Situation 1: Embolden First (Double)
                     if (level >= Levels.Manafication && gauge.ManaStacks == 2
-                    && System.Math.Min(black, white) >= 22
-                    && IsOffCooldown(Manafication) && IsOffCooldown(Embolden))
+                        && System.Math.Min(black, white) >= 22
+                        && IsOffCooldown(Manafication) && IsOffCooldown(Embolden))
                     {
                         return Embolden;
                     }
@@ -386,9 +386,9 @@ namespace XIVSlothComboPlugin.Combos
 
                     //Situation 2: Manafication first (Single)
                     if (level >= Levels.Manafication && gauge.ManaStacks == 0
-                    && lastComboMove is not Verflare && lastComboMove is not Verholy && lastComboMove is not Scorch
-                    && System.Math.Max(black, white) <= 50 && System.Math.Min(black, white) >= 10
-                    && IsOffCooldown(Manafication) && IsOffCooldown(Embolden))
+                        && lastComboMove is not Verflare && lastComboMove is not Verholy && lastComboMove is not Scorch
+                        && System.Math.Max(black, white) <= 50 && System.Math.Min(black, white) >= 10
+                        && IsOffCooldown(Manafication) && IsOffCooldown(Embolden))
                     {
                         return Embolden;
                     }
@@ -555,8 +555,8 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Redoublement);
 
                         if (((System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 && level >= Levels.Redoublement)
-                                || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < Levels.Redoublement)
-                                || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 20 && level < Levels.Zwerchhau))
+                            || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < Levels.Redoublement)
+                            || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 20 && level < Levels.Zwerchhau))
                             && (!HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
                         {
                             if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) && level >= Levels.Corpsacorps && GetCooldown(Corpsacorps).RemainingCharges >= 1 && distance > 3) return Corpsacorps;
@@ -576,6 +576,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 //RDM_ST_ACCELERATION
                 if (IsEnabled(CustomComboPreset.RDM_ST_Acceleration) && actionID is Jolt or Jolt2 && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false && gauge.ManaStacks == 0
+                    && lastComboMove is not Verflare && lastComboMove is not Verholy && lastComboMove is not Scorch
                     && !HasEffect(Buffs.VerfireReady) && !HasEffect(Buffs.VerstoneReady) && !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast))
                 {
                     if (level >= Levels.Acceleration && GetCooldown(Acceleration).RemainingCharges > 0 && GetCooldown(Acceleration).ChargeCooldownRemaining < 54.5)
@@ -587,6 +588,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 //RDM_AoE_ACCELERATION
                 if (IsEnabled(CustomComboPreset.RDM_AoE_Acceleration) && actionID is Scatter or Impact && LocalPlayer.IsCasting == false && gauge.ManaStacks == 0
+                    && lastComboMove is not Verflare && lastComboMove is not Verholy && lastComboMove is not Scorch
                     && (IsNotEnabled(CustomComboPreset.RDM_AoE_WeaveAcceleration) || CanSpellWeave(actionID))
                     && !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast))
                 {
