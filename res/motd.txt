@@ -1,1 +1,2 @@
-Welcome to XIVSlothCombo v3.0.14.0!
+Welcome to XIVSlothCombo v3.0.14.1!
+Apologies if you experienced issues with v3.0.14.0, we had an unexpected memory leak.
