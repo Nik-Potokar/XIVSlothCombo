@@ -117,8 +117,6 @@ namespace XIVSlothComboPlugin.Combos
             public const string
                 //GUI Customization Storage Names
                 SGE_ST_Dosis_EDosisHPPer = "SGE_ST_Dosis_EDosisHPPer",
-                SGE_ST_Dosis_EDosisHPMax = "SGE_ST_Dosis_EDosisHPMax",
-                SGE_ST_Dosis_EDosisCurHP = "SGE_ST_Dosis_EDosisCurHP",
                 SGE_ST_Dosis_Lucid = "SGE_ST_Dosis_Lucid",
                 SGE_ST_Dosis_Toxikon = "SGE_ST_Dosis_Toxikon",
                 SGE_ST_Heal_Zoe = "SGE_ST_Heal_Zoe",
@@ -158,6 +156,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID is Taurochole or Druochole or Ixochole or Kerachole &&
                     level >= Levels.Rhizomata &&
+                    IsOffCooldown(actionID) &&
                     GetJobGauge<SGEGauge>().Addersgall == 0
                    ) return Rhizomata;
                 else return actionID;
@@ -262,24 +261,18 @@ namespace XIVSlothComboPlugin.Combos
                             //Ekrasia Dosis unlocks with Eukrasia, checked at the start
                             _ => FindEffect(Debuffs.EukrasianDosis1, OurTarget, LocalPlayer?.ObjectId),
                         };
-                    
+
                         //Got our Debuff for our level, check for it and procede 
                         if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
                         {
                             //Advanced Options Enabled to procede with auto-Eukrasia
                             //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
-                            if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPLimiters))
+                            if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
                             {
-                                var MaxHpValue = GetOptionValue(Config.SGE_ST_Dosis_EDosisHPMax);
-                                var PercentageHpValue = GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer);
-                                var CurrentHpValue = GetOptionValue(Config.SGE_ST_Dosis_EDosisCurHP);
-
-                                if ( (DosisDebuffID is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) ||
-                                    ((DosisDebuffID?.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue) )
-                                   return Eukrasia;
+                                if (EnemyHealthPercentage() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)) return Eukrasia;
                             }
                             else return Eukrasia;
-                        } 
+                        }
                     }
 
                     //Toxikon

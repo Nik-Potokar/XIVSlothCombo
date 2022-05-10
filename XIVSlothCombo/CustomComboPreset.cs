@@ -2034,10 +2034,10 @@ namespace XIVSlothComboPlugin
                         [ParentCombo(SGE_ST_Dosis_EDosis)]
                         [ConflictingCombos(SGE_ST_Dosis_EDosisToT)]
                         [CustomComboInfo("Enemy HP Limiter Options", "Stop using Eukrasian Dosis when Enemy HP values match\nEnable to see input boxes", SGE.JobID, 121)]
-                        SGE_ST_Dosis_EDosisHPLimiters = 14121,
+                        SGE_ST_Dosis_EDosisHPPer = 14121,
 
                         [ParentCombo(SGE_ST_Dosis_EDosis)]
-                        [ConflictingCombos(SGE_ST_Dosis_EDosisHPLimiters)]
+                        [ConflictingCombos(SGE_ST_Dosis_EDosisHPPer)]
                         [CustomComboInfo("Target of Target Dosis Option", "Target of Target checking for Dosis", SGE.JobID, 122)]
                         SGE_ST_Dosis_EDosisToT = 14122,
 
@@ -2367,9 +2367,9 @@ namespace XIVSlothComboPlugin
         #region SCHOLAR
 
             //SCHOLAR_FEATURE_NUMBERING
-        //Numbering Scheme: 16[Feature][Option][Sub-Option]
-        //Example: 16110 (Feature Number 1, Option 1, no suboption)
-        //New features should be added to the appropriate sections.
+            //Numbering Scheme: 16[Feature][Option][Sub-Option]
+            //Example: 16110 (Feature Number 1, Option 1, no suboption)
+            //New features should be added to the appropriate sections.
 
             #region SCHOLAR_DPS
 
@@ -2401,10 +2401,10 @@ namespace XIVSlothComboPlugin
                         [ParentCombo(SCH_ST_Broil_Bio)]
                         [ConflictingCombos(SCH_ST_Broil_BioToT)]
                         [CustomComboInfo("Enemy HP Limiter Options", "Stop using Bio when Enemy HP values match below:", SCH.JobID, 151)]
-                        SCH_ST_Broil_BioHPLimiters = 16151,
+                        SCH_ST_Broil_BioHPPer = 16151,
 
                         [ParentCombo(SCH_ST_Broil_Bio)]
-                        [ConflictingCombos(SCH_ST_Broil_BioHPLimiters)]
+                        [ConflictingCombos(SCH_ST_Broil_BioHPPer)]
                         [CustomComboInfo("Target of Target Bio Option", "Target of Target checking for Bio", SCH.JobID, 152)]
                         SCH_ST_Broil_BioToT = 16152,
             #endregion

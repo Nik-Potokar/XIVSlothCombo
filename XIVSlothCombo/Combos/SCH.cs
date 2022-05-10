@@ -109,8 +109,6 @@ namespace XIVSlothComboPlugin.Combos
             public const string
                 SCH_ST_Broil_Lucid = "SCH_ST_Broil_Lucid",
                 SCH_ST_Broil_BioHPPer = "SCH_ST_Broil_BioHPPer",
-                SCH_ST_Broil_BioHPMax = "SCH_ST_Broil_BioHPMax",
-                SCH_ST_Broil_BioCurHP = "SCH_ST_Broil_BioCurHP",
                 SCH_ST_Broil_ChainStratagem = "SCH_ST_Broil_ChainStratagem",
                 SCH_Aetherflow_Display = "SCH_Aetherflow_Display",
                 SCH_Aetherflow_Recite_Excog = "SCH_Aetherflow_Recite_Excog",
@@ -283,15 +281,9 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             //Advanced Options Enabled to procede with auto-bio
                             //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
-                            if (IsEnabled(CustomComboPreset.SCH_ST_Broil_BioHPLimiters))
+                            if (IsEnabled(CustomComboPreset.SCH_ST_Broil_BioHPPer))
                             {
-                                var MaxHpValue = GetOptionValue(Config.SCH_ST_Broil_BioHPMax);
-                                var PercentageHpValue = GetOptionValue(Config.SCH_ST_Broil_BioHPPer);
-                                var CurrentHpValue = GetOptionValue(Config.SCH_ST_Broil_BioCurHP);
-
-                                if ((BioDebuffID is null && EnemyHealthMaxHp() > MaxHpValue && EnemyHealthPercentage() > PercentageHpValue) ||
-                                    ((BioDebuffID?.RemainingTime <= 3) && EnemyHealthPercentage() > PercentageHpValue && EnemyHealthCurrentHp() > CurrentHpValue))
-                                    return OriginalHook(Bio1);
+                                if (EnemyHealthPercentage() > GetOptionValue(Config.SCH_ST_Broil_BioHPPer)) return OriginalHook(Bio1);
                             }
                             else return OriginalHook(Bio1);
                         }

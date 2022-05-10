@@ -846,44 +846,40 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SAGE
 
-            if (preset == CustomComboPreset.SGE_ST_Dosis_EDosisHPLimiters)
-            {
+            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "Enemy HP % Threshold");
-                ConfigWindowFunctions.DrawIntBox(SGE.Config.SGE_ST_Dosis_EDosisHPMax, "Enemy Max HP");
-                ConfigWindowFunctions.DrawIntBox(SGE.Config.SGE_ST_Dosis_EDosisCurHP, "Enemy Current HP");
-            }
 
-            if (preset == CustomComboPreset.SGE_ST_Dosis_Lucid)
+            if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
+            if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
                 ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 1);
 
-            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
+            if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
                 ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 2);
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Soteria)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Set HP percentage value for Soteria to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Zoe)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Set HP percentage value for Zoe to trigger");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Set HP percentage value for Pepsis to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Taurochole)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Set HP percentage value for Taurochole to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Haima)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Set HP percentage value for Haima to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Krasis)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Set HP percentage value for Krasis to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Druochole)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Set HP percentage value for Druochole to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Diagnosis)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Diagnosis)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
             #endregion
             // ====================================================================================
@@ -907,32 +903,28 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SCHOLAR
-            if (preset == CustomComboPreset.SCH_ST_Broil_Lucid)
+            if (preset is CustomComboPreset.SCH_ST_Broil_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Broil_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-            if (preset == CustomComboPreset.SCH_ST_Broil_BioHPLimiters)
-            {
+            if (preset is CustomComboPreset.SCH_ST_Broil_BioHPPer)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_BioHPPer, "Enemy HP % Threshold");
-                ConfigWindowFunctions.DrawIntBox(SCH.Config.SCH_ST_Broil_BioHPMax, "Enemy Max HP");
-                ConfigWindowFunctions.DrawIntBox(SCH.Config.SCH_ST_Broil_BioCurHP, "Enemy Current HP");
-            }
-            if (preset == CustomComboPreset.SCH_ST_Broil_ChainStratagem)
+            if (preset is CustomComboPreset.SCH_ST_Broil_ChainStratagem)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_ChainStratagem, "Enemy HP% Threshold");
-            if (preset == CustomComboPreset.SCH_FairyFeature)
+            if (preset is CustomComboPreset.SCH_FairyFeature)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 1);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 2);
             }
-            if (preset == CustomComboPreset.SCH_AetherflowFeature)
+            if (preset is CustomComboPreset.SCH_AetherflowFeature)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only","", 1);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 2);
             }
-            if (preset == CustomComboPreset.SCH_Aetherflow_Recite_Excog)
+            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Excog)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Always when available", "", 1);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Only when out of Aetherflow Stacks", "", 2);
             }
-            if (preset == CustomComboPreset.SCH_Aetherflow_Recite_Indom)
+            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Indom)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Always when available", "", 1);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Only when out of Aetherflow Stacks", "", 2);

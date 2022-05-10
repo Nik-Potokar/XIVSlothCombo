@@ -105,23 +105,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
-        public static void DrawIntBox(string config, string intboxDescription, float itemWidth = 150)
-        {
-            var output = Service.Configuration.GetCustomIntValue(config);
-            var inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            inputChanged |= ImGui.InputInt($"{intboxDescription}###{config}", ref output, 1, 100);
-
-            if (inputChanged) 
-            {
-                output = Math.Max(0, output); //Positive number only check
-                Service.Configuration.SetCustomIntValue(config, output);
-                Service.Configuration.Save();
-            }
-
-            ImGui.Spacing();
-        }
-
         public static void DrawPvPStatusMultiChoice(string config)
         {
             var values = Service.Configuration.GetCustomBoolArrayValue(config);
