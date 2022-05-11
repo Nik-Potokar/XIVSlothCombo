@@ -1717,7 +1717,7 @@ namespace XIVSlothComboPlugin
 
         #region Single Target (Slice) Combo Section
         [ReplaceSkill(RPR.Slice)]
-        [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Simple Reaper)", RPR.JobID, 0, "", "")]
         ReaperSliceCombo = 12001,
 
         [ParentCombo(ReaperSliceCombo)]
@@ -1749,7 +1749,7 @@ namespace XIVSlothComboPlugin
         ReaperEnshroudonSTFeature = 12008,
 
         [ParentCombo(ReaperEnshroudonSTFeature)]
-        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window), but will pool Shroud outside of burst windows.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window), but will pool Shroud outside of burst windows.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
         ReaperEnshroudPoolOption = 12009,
 
         [ParentCombo(ReaperEnshroudonSTFeature)]
@@ -1784,7 +1784,7 @@ namespace XIVSlothComboPlugin
 
         #region AoE (Scythe) Combo Section
         [ReplaceSkill(RPR.SpinningScythe)]
-        [CustomComboInfo("Scythe Combo Feature", "Replace Spinning Scythe with its combo chain.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Scythe Combo Feature", "Replace Spinning Scythe with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", RPR.JobID, 0, "", "")]
         ReaperScytheCombo = 12020,
 
         [ParentCombo(ReaperScytheCombo)]
