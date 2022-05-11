@@ -35,6 +35,7 @@ namespace XIVSlothComboPlugin.Combos
             BlackKnightsTour = 18311,
             PeripheralSynthesis = 23286,
             BasicInstinct = 23276,
+            HydroPull = 23282,
             MustardBomb = 23279;
 
         public static class Buffs
@@ -196,6 +197,8 @@ namespace XIVSlothComboPlugin.Combos
                     var swiftCD = GetCooldown(All.Swiftcast);
                     var ultraCD = GetCooldown(Ultravibration);
 
+                    if (IsEnabled(CustomComboPreset.BluHydroPull) && !InMeleeRange() && IsSpellActive(HydroPull))
+                        return HydroPull;
                     if (freezeDebuff is null && !ultraCD.IsCooldown && IsSpellActive(RamsVoice))
                         return RamsVoice;
                     if (freezeDebuff is not null)

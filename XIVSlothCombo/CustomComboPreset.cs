@@ -455,6 +455,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Solo Mode", "Uses Basic Instinct if you're in an instance and on your own.", BLU.JobID)]
         BluSoloMode = 70011,
 
+        [BlueInactive(BLU.HydroPull)]
+        [ParentCombo(BluUltravibrate)]
+        [CustomComboInfo("Hydro Pull Setup", "Uses Hydro Pull before using Ram's Voice.", BLU.JobID)]
+        BluHydroPull = 70012,
+
 
         #endregion
         // ====================================================================================
