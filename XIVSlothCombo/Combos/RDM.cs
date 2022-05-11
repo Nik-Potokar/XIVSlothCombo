@@ -369,7 +369,7 @@ namespace XIVSlothComboPlugin.Combos
                 //RDM_AOE_MANAFICATIONEMBOLDEN
                 if (IsEnabled(CustomComboPreset.RDM_AoE_ManaficationEmbolden) && level >= Levels.Embolden && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false
                     && !HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Acceleration)
-                    && GetTargetDistance() < moulinetRange && actionID is Scatter or Impact)
+                    && GetTargetDistance() <= moulinetRange && actionID is Scatter or Impact)
                 {
                     //Situation 1: Embolden First (Double)
                     if (level >= Levels.Manafication && gauge.ManaStacks == 2
