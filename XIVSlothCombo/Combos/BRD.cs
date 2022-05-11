@@ -856,11 +856,15 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == WanderersMinuet)
                 { // Doesn't display the lowest cooldown song if they have been used out of order and are all on cooldown.
+
+                    var gauge = GetJobGauge<BRDGauge>();
+                    bool canUse = gauge.Song != Song.WANDERER && !JustUsed(WanderersMinuet);
+
                     if (level >= Levels.WanderersMinuet && IsOffCooldown(WanderersMinuet))
                         return WanderersMinuet;
-                    if (level >= Levels.MagesBallad && IsOffCooldown(MagesBallad))
+                    if (level >= Levels.MagesBallad && IsOffCooldown(MagesBallad) && canUse)
                         return MagesBallad;
-                    if (level >= Levels.ArmysPaeon && IsOffCooldown(ArmysPaeon))
+                    if (level >= Levels.ArmysPaeon && IsOffCooldown(ArmysPaeon) && canUse)
                         return ArmysPaeon;
                 }
 
