@@ -34,6 +34,7 @@ namespace XIVSlothComboPlugin.Combos
             WhiteKnightsTour = 18310,
             BlackKnightsTour = 18311,
             PeripheralSynthesis = 23286,
+            BasicInstinct = 23276,
             MustardBomb = 23279;
 
         public static class Buffs
@@ -44,7 +45,8 @@ namespace XIVSlothComboPlugin.Combos
                 Tingle = 2492,
                 Whistle = 2118,
                 TankMimicry = 2124,
-                DPSMimicry = 2125;
+                DPSMimicry = 2125,
+                BasicInstinct = 2498;
         }
 
         public static class Debuffs
@@ -149,7 +151,8 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == FinalSting)
                 {
-
+                    if (IsEnabled(CustomComboPreset.BluSoloMode) && HasCondition(ConditionFlag.BoundByDuty) && !HasEffect(Buffs.BasicInstinct) && GetPartyMembers().Length == 0 && IsSpellActive(BasicInstinct))
+                        return BasicInstinct;
                     if (!HasEffect(Buffs.MoonFlute) && IsSpellActive(MoonFlute))
                         return MoonFlute;
                     if (IsEnabled(CustomComboPreset.BluPrimals))

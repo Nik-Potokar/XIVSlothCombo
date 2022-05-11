@@ -450,6 +450,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Peripheral Synthesis into Mustard Bomb", "Turns Peripheral Synthesis into Mustard Bomb when target is under the effect of Lightheaded. \nSpells Required: Peripheral Synthesis, Mustard Bomb.", BLU.JobID)]
         BluLightheadedCombo = 70010,
 
+        [BlueInactive(BLU.BasicInstinct)]
+        [ParentCombo(BluFinalSting)]
+        [CustomComboInfo("Solo Mode", "Uses Basic Instinct if you're in an instance and on your own.", BLU.JobID)]
+        BluSoloMode = 70011,
+
 
         #endregion
         // ====================================================================================

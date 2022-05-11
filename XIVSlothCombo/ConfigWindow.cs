@@ -169,7 +169,7 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted($"LAST SPELL: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
                 ImGui.TextUnformatted($"LAST ABILITY: {ActionWatching.GetActionName(ActionWatching.LastAbility)}");
                 ImGui.TextUnformatted($"ZONE: {Service.ClientState.TerritoryType}");
-                ImGui.TextUnformatted($"SELECTED BLU SPELLS: {string.Join(", ", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
+                ImGui.TextUnformatted($"SELECTED BLU SPELLS: {string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
 
             }
             else

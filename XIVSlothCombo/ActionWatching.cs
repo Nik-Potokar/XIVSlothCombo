@@ -14,7 +14,10 @@ namespace XIVSlothComboPlugin
             .ToDictionary(i => i.RowId, i => i);
 
         private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
-    .ToDictionary(i => i.RowId, i => i);
+            .ToDictionary(i => i.RowId, i => i);
+
+        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.TerritoryType>? TerritorySheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?
+            .ToDictionary(i => i.RowId, i => i);
 
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
