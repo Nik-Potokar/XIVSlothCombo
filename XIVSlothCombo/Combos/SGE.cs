@@ -178,6 +178,18 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
+        //SageZoePneumaFeature
+        //Places Zoe on top of Pneuma when both are available.
+        internal class SageZoePneumaFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ZoePneumaFeature;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Pneuma && level >= Levels.Pneuma && IsOffCooldown(Pneuma) && IsOffCooldown(Zoe)) return Zoe;
+                else return actionID;
+            }
+        }
+
         //Sage AoE / Phlegma Replacement
         //Replaces Zero Charges/Stacks of Phlegma with Toxikon (if you can use it) or Dyskrasia 
         internal class SageAoEPhlegmaFeature : CustomCombo

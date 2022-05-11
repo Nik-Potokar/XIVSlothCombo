@@ -2166,8 +2166,13 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600)]
             SGE_RhizoFeature = 14600,
 
+            [ReplaceSkill(SGE.Druochole)]
             [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 700)]
             SGE_DruoTauroFeature = 14700,
+
+            [ReplaceSkill(SGE.Pneuma)]
+            [CustomComboInfo("Zoe Buff for Pneuma Feature", "Places Zoe ontop of Pneuma when both actions are on cooldown", SGE.JobID, 701)]//Temporary to keep the order
+            SGE_ZoePneumaFeature = 141000,
             #endregion
 
             #region Utility
