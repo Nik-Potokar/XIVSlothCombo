@@ -853,10 +853,13 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
+            {
                 ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 1);
-
-            if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
                 ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 2);
+            }
+
+            if (preset is CustomComboPreset.SGE_AoE_Phlegma_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_AoE_Phlegma_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Set HP percentage value for Soteria to trigger");

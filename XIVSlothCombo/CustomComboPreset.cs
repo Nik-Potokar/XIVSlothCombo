@@ -2067,6 +2067,10 @@ namespace XIVSlothComboPlugin
                     [CustomComboInfo("Dyskrasia No-Target Option", "Use Dyskrasia when no target is selected", SGE.JobID, 240, "", "")]
                     SGE_AoE_Phlegma_NoTargetDyskrasia = 14240,
 
+                    [ParentCombo(SGE_AoE_PhlegmaFeature)]
+                    [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Phlegma when MP drops below slider value", SGE.JobID, 250)]
+                    SGE_AoE_Phlegma_Lucid = 14250,
+
                 #endregion
 
             #endregion

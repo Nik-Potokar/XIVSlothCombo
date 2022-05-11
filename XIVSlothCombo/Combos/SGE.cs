@@ -119,6 +119,7 @@ namespace XIVSlothComboPlugin.Combos
                 SGE_ST_Dosis_EDosisHPPer = "SGE_ST_Dosis_EDosisHPPer",
                 SGE_ST_Dosis_Lucid = "SGE_ST_Dosis_Lucid",
                 SGE_ST_Dosis_Toxikon = "SGE_ST_Dosis_Toxikon",
+                SGE_AoE_Phlegma_Lucid = "SGE_AoE_Phlegma_Lucid",
                 SGE_ST_Heal_Zoe = "SGE_ST_Heal_Zoe",
                 SGE_ST_Heal_Haima = "SGE_ST_Heal_Haima",
                 SGE_ST_Heal_Krasis = "SGE_ST_Heal_Krasis",
@@ -186,6 +187,14 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID is Phlegma or Phlegma2 or Phlegma3)
                 {
+                    //Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) &&
+                        level >= All.Levels.LucidDreaming &&
+                        IsOffCooldown(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_AoE_Phlegma_Lucid) &&
+                        CanSpellWeave(actionID)
+                       ) return All.LucidDreaming;
+
                     var NoPhlegmaToxikon  = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaToxikon);
                     var OutOfRangeToxikon = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_OutOfRangeToxikon);
                     if ((NoPhlegmaToxikon || OutOfRangeToxikon) &&
