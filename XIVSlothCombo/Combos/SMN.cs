@@ -451,11 +451,8 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
                                 (level is >= Levels.Aethercharge and < Levels.Bahamut || //Pre Bahamut Phase
-                                gauge.IsBahamutReady && level >= Levels.Bahamut || //Bahamut Phase
-                                gauge.IsPhoenixReady && level >= Levels.Phoenix) && //Phoenix Phase
-                                !gauge.IsIfritReady &&
-                                !gauge.IsTitanReady &&
-                                !gauge.IsGarudaReady)
+                                 gauge.IsBahamutReady && level >= Levels.Bahamut || //Bahamut Phase
+                                 gauge.IsPhoenixReady && level >= Levels.Phoenix)) //Phoenix Phase
                                 return OriginalHook(Aethercharge);
 
                         }
