@@ -2492,7 +2492,7 @@ namespace XIVSlothComboPlugin
         SearingLightonRuinFeature = 17018,
 
         [ParentCombo(SearingLightonRuinFeature)]
-        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
         SummonerSearingLightBurstOption = 170181,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2512,14 +2512,11 @@ namespace XIVSlothComboPlugin
         EgisOnAOEFeature = 17022,
 
         [ParentCombo(EgisOnRuinFeature)]
-        [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
-        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 1, "No Raising for me!", "Always slips swiftstream, sometimes")]
-        SummonerSwiftcastFeatureGaruda = 17023,
+        [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
+        SummonerSwiftcastEgiFeature = 17023,
 
-        [ParentCombo(EgisOnRuinFeature)]
-        [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
-        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts Ruby Rite if available.", SMN.JobID, 1, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
-        SummonerSwiftcastFeatureIfrit = 17024,
+        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 1, "", "")]
+        SummonerPrimalAbilitiesFeature = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
         [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0)]

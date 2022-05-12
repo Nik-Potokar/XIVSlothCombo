@@ -1082,9 +1082,18 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.SummonerPrimalBurstChoice)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase.", 1);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase.", 2);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first).", 3);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase.", 4);
             }
+
+            if (preset == CustomComboPreset.SummonerSwiftcastEgiFeature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerSwiftcastPhase, "Garuda", "Swiftcast Slipstream.", 1);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerSwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite.", 2);
+                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerSwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready.", 3);
+            }          
 
             if (preset == CustomComboPreset.SMNLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SMN.Config.SMNLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
