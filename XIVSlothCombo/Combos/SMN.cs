@@ -358,7 +358,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanSpellWeave(actionID))
                         {
                             if (IsOffCooldown(OriginalHook(AstralFlow)) && 
-                                level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is SMN.AstralImpulse))
+                                level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralImpulse))
                                 return OriginalHook(AstralFlow);
 
                             if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && 
@@ -368,7 +368,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption))
                         {
-                            if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is SMN.FountainOfFire)
+                            if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is FountainOfFire)
                                 return OriginalHook(AstralFlow);
                         }
                     }
@@ -403,8 +403,8 @@ namespace XIVSlothComboPlugin.Combos
                                 IsOffCooldown(SearingLight) &&
                                 level >= Levels.SearingLight &&
                                 (searingChoice == 0 ||
-                                (OriginalHook(Tridisaster) is SMN.AstralFlare && gauge.SummonTimerRemaining > 0 && searingChoice == 1) ||
-                                (OriginalHook(Tridisaster) is SMN.BrandOfPurgatory && gauge.SummonTimerRemaining > 0 && searingChoice == 2) ||
+                                (OriginalHook(Tridisaster) is AstralFlare && gauge.SummonTimerRemaining > 0 && searingChoice == 1) ||
+                                (OriginalHook(Tridisaster) is BrandOfPurgatory && gauge.SummonTimerRemaining > 0 && searingChoice == 2) ||
                                 (OriginalHook(PreciousBrilliance) is (RubyCata or RubyOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 3) ||
                                 (OriginalHook(PreciousBrilliance) is (EmeraldCata or EmeraldOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 4) ||
                                 (OriginalHook(PreciousBrilliance) is (TopazCata or TopazOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 5)))
@@ -428,7 +428,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
                             {
                                 if (IsOffCooldown(OriginalHook(AstralFlow)) && 
-                                    level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is SMN.AstralFlare))
+                                    level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralFlare))
                                     return OriginalHook(AstralFlow);
 
                                 if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && 
@@ -439,7 +439,7 @@ namespace XIVSlothComboPlugin.Combos
                             //Demi Nuke 2: Electric Boogaloo
                             if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
                             {
-                                if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is SMN.BrandOfPurgatory)
+                                if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is BrandOfPurgatory)
                                     return OriginalHook(AstralFlow);
                             }
                         }
