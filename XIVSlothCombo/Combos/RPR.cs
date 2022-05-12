@@ -173,7 +173,7 @@ namespace XIVSlothComboPlugin.Combos
                         return All.LegSweep;
                     if (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && level >= Levels.ShadowOfDeath && !soulReaver && enemyHP > sodThreshold)
                     {
-                        if ((IsEnabled(CustomComboPreset.DoubleSoDOption) && enshrouded && GetCooldownRemainingTime(ArcaneCircle) < 9 &&
+                        if ((IsEnabled(CustomComboPreset.DoubleSoDOption) && level >= Levels.PlentifulHarvest && enshrouded && GetCooldownRemainingTime(ArcaneCircle) < 9 &&
                             ((gauge.LemureShroud is 4 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30) || gauge.LemureShroud is 3 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 50)) || //double shroud windows
                             (GetDebuffRemainingTime(Debuffs.DeathsDesign) < 3 && IsOffCooldown(ArcaneCircle)) || //Opener Condition
                             (GetDebuffRemainingTime(Debuffs.DeathsDesign) < 3 && IsOnCooldown(ArcaneCircle)))  //non 2 minute windows  
@@ -196,7 +196,7 @@ namespace XIVSlothComboPlugin.Combos
                             return PlentifulHarvest;
                     }
 
-                    if (deathsDesign || enemyHP < sodThreshold)
+                    if (HasBattleTarget() && (deathsDesign || (IsEnabled(CustomComboPreset.ReaperShadowOfDeathFeature) && enemyHP < sodThreshold)))
                     {
                         if (!soulReaver && IsEnabled(CustomComboPreset.ReaperEnshroudonSTFeature))
                         {
