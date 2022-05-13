@@ -577,7 +577,7 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_AOE_MELEECOMBO
 
                 //RDM_ST_ACCELERATION
-                if (IsEnabled(CustomComboPreset.RDM_ST_Acceleration) && actionID is Jolt or Jolt2 && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false && gauge.ManaStacks == 0
+                if (IsEnabled(CustomComboPreset.RDM_VerthunderVeraero) && IsEnabled(CustomComboPreset.RDM_ST_Acceleration) && actionID is Jolt or Jolt2 && HasCondition(ConditionFlag.InCombat) && LocalPlayer.IsCasting == false && gauge.ManaStacks == 0
                     && lastComboMove is not Verflare && lastComboMove is not Verholy && lastComboMove is not Scorch
                     && !HasEffect(Buffs.VerfireReady) && !HasEffect(Buffs.VerstoneReady) && !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast))
                 {
