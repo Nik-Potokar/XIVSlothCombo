@@ -1023,11 +1023,11 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SAMPvP.Config.SamSotenHP, "Use Soten on enemies below selected HP.");
             //Fillers
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
-            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
-            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
+            {
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
+            }
             #endregion
             // ====================================================================================
             #region MONK
@@ -1076,24 +1076,25 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
 
+            
             if (preset == CustomComboPreset.SummonerPrimalBurstChoice)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase.", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase.", 2);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first).", 3);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase.", 4);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first)", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase", 4);
             }
 
             if (preset == CustomComboPreset.SummonerSwiftcastEgiFeature)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerSwiftcastPhase, "Garuda", "Swiftcast Slipstream.", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerSwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite.", 2);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerSwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready.", 3);
-            }          
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Garuda", "Swiftcast Slipstream", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready", 3);
+            }
 
             if (preset == CustomComboPreset.SMNLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SMN.Config.SMNLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
