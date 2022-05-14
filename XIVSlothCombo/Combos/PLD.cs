@@ -148,12 +148,17 @@
                     // oGCD features
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && incombat && lastComboMove != FastBlade && lastComboMove != RiotBlade)
+                        if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && incombat && IsOffCooldown(OriginalHook(SpiritsWithin)) && level >= Levels.SpiritsWithin)
                         {
-                            if (level >= Levels.SpiritsWithin && IsOffCooldown(SpiritsWithin))
+                            if (IsNotEnabled(CustomComboPreset.PaladinExpiacionScornOption) ||
+                                (IsEnabled(CustomComboPreset.PaladinExpiacionScornOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
                                 return OriginalHook(SpiritsWithin);
-
-                            if (level >= Levels.CircleOfScorn && IsOffCooldown(CircleOfScorn))
+                        }
+                        
+                        if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && incombat && IsOffCooldown(CircleOfScorn) && level >= Levels.CircleOfScorn)
+                        {
+                            if (IsNotEnabled(CustomComboPreset.PaladinExpiacionScornOption) ||
+                                (IsEnabled(CustomComboPreset.PaladinExpiacionScornOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
                                 return CircleOfScorn;
                         }
 

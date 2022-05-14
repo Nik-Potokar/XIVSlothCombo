@@ -945,11 +945,11 @@ namespace XIVSlothComboPlugin.Combos
                                 // Weave Amplifier and Ley Lines
                                 if (currentMP <= 2800)
                                 {
-                                    if (level >= Levels.Amplifier && IsOffCooldown(Amplifier))
+                                    if (IsOffCooldown(Amplifier))
                                     {
                                         return Amplifier;
                                     }
-                                    if (level >= Levels.LeyLines && IsOffCooldown(LeyLines))
+                                    if (IsOffCooldown(LeyLines))
                                     {
                                         return LeyLines;
                                     }
@@ -1286,7 +1286,7 @@ namespace XIVSlothComboPlugin.Combos
                                         {
                                             return Amplifier;
                                         }
-                                        if (IsEnabled(CustomComboPreset.BlackSimpleParadoxLeyLinesFeature) && IsOffCooldown(LeyLines))
+                                        if (IsOffCooldown(LeyLines))
                                         {
                                             return LeyLines;
                                         }
@@ -1398,7 +1398,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return Amplifier;
                             }
 
-                            if (IsOffCooldown(LeyLines))
+                            if (IsEnabled(CustomComboPreset.BlackSimpleParadoxLeyLinesFeature) && IsOffCooldown(LeyLines))
                             {
                                 return LeyLines;
                             }

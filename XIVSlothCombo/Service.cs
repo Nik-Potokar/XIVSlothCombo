@@ -131,5 +131,8 @@ namespace XIVSlothComboPlugin
         [PluginService]
         internal static PartyList PartyList { get; private set; } = null!;
 
+        [PluginService]
+        internal static GameGui GameGui { get; private set; } = null!;
+
     }
 }

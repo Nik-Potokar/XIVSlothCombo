@@ -52,9 +52,7 @@ namespace XIVSlothComboPlugin.Combos
             Rhizomata = 24309,
 
             // Role
-            Swiftcast = 756,
-            Egeiro = 24287,
-            LucidDreaming = 7562;
+            Egeiro = 24287;
 
         public static class Buffs
         {
@@ -109,6 +107,10 @@ namespace XIVSlothComboPlugin.Combos
                 Krasis = 86,
                 Pneuma = 90;
         }
+        public static class Range
+        {
+            public const byte Phlegma = 6;
+        }
 
         public static class Config
         {
@@ -117,6 +119,7 @@ namespace XIVSlothComboPlugin.Combos
                 SGE_ST_Dosis_EDosisHPPer = "SGE_ST_Dosis_EDosisHPPer",
                 SGE_ST_Dosis_Lucid = "SGE_ST_Dosis_Lucid",
                 SGE_ST_Dosis_Toxikon = "SGE_ST_Dosis_Toxikon",
+                SGE_AoE_Phlegma_Lucid = "SGE_AoE_Phlegma_Lucid",
                 SGE_ST_Heal_Zoe = "SGE_ST_Heal_Zoe",
                 SGE_ST_Heal_Haima = "SGE_ST_Heal_Haima",
                 SGE_ST_Heal_Krasis = "SGE_ST_Heal_Krasis",
@@ -136,7 +139,7 @@ namespace XIVSlothComboPlugin.Combos
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_KardiaFeature;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is SGE.Soteria &&
+                if (actionID is Soteria &&
                     (!HasEffect(Buffs.Kardia) || IsOnCooldown(Soteria))
                    ) return Kardia;
                 else return actionID;
@@ -154,6 +157,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID is Taurochole or Druochole or Ixochole or Kerachole &&
                     level >= Levels.Rhizomata &&
+                    IsOffCooldown(actionID) &&
                     GetJobGauge<SGEGauge>().Addersgall == 0
                    ) return Rhizomata;
                 else return actionID;
@@ -169,7 +173,19 @@ namespace XIVSlothComboPlugin.Combos
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauroFeature;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is SGE.Druochole && level >= Levels.Taurochole && IsOffCooldown(Taurochole)) return Taurochole;
+                if (actionID is Druochole && level >= Levels.Taurochole && IsOffCooldown(Taurochole)) return Taurochole;
+                else return actionID;
+            }
+        }
+
+        //SageZoePneumaFeature
+        //Places Zoe on top of Pneuma when both are available.
+        internal class SageZoePneumaFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ZoePneumaFeature;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Pneuma && level >= Levels.Pneuma && IsOffCooldown(Pneuma) && IsOffCooldown(Zoe)) return Zoe;
                 else return actionID;
             }
         }
@@ -183,26 +199,34 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID is Phlegma or Phlegma2 or Phlegma3)
                 {
-                    //Check for "out of Phlegma stacks" 
-                    if (GetCooldown(OriginalHook(Phlegma)).RemainingCharges == 0)
-                    {
-                        //Toxikon Checks
-                        if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Toxikon) &&
-                            level >= Levels.Toxikon &&
-                            HasBattleTarget() &&
-                            GetJobGauge<SGEGauge>().Addersting > 0
-                           ) return OriginalHook(Toxikon);
+                    //Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) &&
+                        level >= All.Levels.LucidDreaming &&
+                        IsOffCooldown(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_AoE_Phlegma_Lucid) &&
+                        CanSpellWeave(actionID)
+                       ) return All.LucidDreaming;
 
-                        if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && level >= Levels.Dyskrasia)
-                            return OriginalHook(Dyskrasia);
+                    var NoPhlegmaToxikon  = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaToxikon);
+                    var OutOfRangeToxikon = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_OutOfRangeToxikon);
+                    if ((NoPhlegmaToxikon || OutOfRangeToxikon) &&
+                        level >= Levels.Toxikon &&
+                        HasBattleTarget() && 
+                        GetJobGauge<SGEGauge>().Addersting > 0)
+                    {
+                        if ((NoPhlegmaToxikon && GetCooldown(OriginalHook(Phlegma)).RemainingCharges == 0) ||
+                            (OutOfRangeToxikon && (GetTargetDistance() > Range.Phlegma)))
+                           return OriginalHook(Toxikon);
                     }
-                    //Sub-Sub Feature. Allows running around in a dungeon/field with nothing targetted, saving charges.
-                    //Will switch back to Phlegma/Toxikon when targetting something, as those two are target only skills
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia) && //Check for parent until GUI fixes for an active child feature with a disabled parent
-                        IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Dyskrasia_NoTarget) &&
-                        level >= Levels.Dyskrasia &&
-                        CurrentTarget == null
-                       ) return OriginalHook(Dyskrasia);
+                    var NoPhlegmaDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaDyskrasia);
+                    var NoTargetDyskrasia  = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
+                    if ((NoPhlegmaDyskrasia || NoTargetDyskrasia) &&
+                        level >= Levels.Phlegma)
+                    {
+                        if ((NoPhlegmaDyskrasia && GetCooldown(OriginalHook(Phlegma)).RemainingCharges == 0) ||
+                            (NoTargetDyskrasia && CurrentTarget is null))
+                           return OriginalHook(Dyskrasia);
+                    }
                 }
                 return actionID;
             }
@@ -231,6 +255,10 @@ namespace XIVSlothComboPlugin.Combos
                     //If we're too low level to use Eukrasia, we can stop here.
                     if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && (level >= Levels.Eukrasia) && CurrentTarget is not null)
                     {
+
+                        //If we're already Eukrasian'd, the whole point of this section is moot
+                        if (HasEffect(Buffs.Eukrasia)) return OriginalHook(Dosis1); //OriginalHook will autoselect the correct Dosis for us
+
                         var OurTarget = CurrentTarget;
                         //Check if our Target is there and not an enemy
                         if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
@@ -254,9 +282,6 @@ namespace XIVSlothComboPlugin.Combos
                             //Ekrasia Dosis unlocks with Eukrasia, checked at the start
                             _ => FindEffect(Debuffs.EukrasianDosis1, OurTarget, LocalPlayer?.ObjectId),
                         };
-
-                        if (HasEffect(Buffs.Eukrasia))
-                            return OriginalHook(Dosis1); //OriginalHook will autoselect the correct Dosis for us
 
                         //Got our Debuff for our level, check for it and procede 
                         if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
@@ -298,10 +323,9 @@ namespace XIVSlothComboPlugin.Combos
         internal class SageSingleTargetHealFeature : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_HealFeature;
-
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is SGE.Diagnosis)
+                if (actionID is Diagnosis)
                 {
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) &&
                         level >= Levels.Druochole &&
@@ -377,10 +401,9 @@ namespace XIVSlothComboPlugin.Combos
         internal class SageAoEHealFeature : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_HealFeature;
-
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is SGE.Prognosis)
+                if (actionID is Prognosis)
                 {
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) &&
                         level >= Levels.Rhizomata &&
