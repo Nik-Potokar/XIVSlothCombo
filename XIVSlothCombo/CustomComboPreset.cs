@@ -1924,6 +1924,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Engagement", "Use Engagement on above specified action when in melee range", RDM.JobID, 243)]
         RDM_Engagement = 13243,
 
+        [ParentCombo(RDM_Engagement)]
+        [CustomComboInfo("Hold one charge", "Pool one charge of Engagement/Displacement for manual use", RDM.JobID, 246)]
+        RDM_PoolEngage = 13246,
+
         [ParentCombo(RDM_OGCD)]
         [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action", RDM.JobID, 244)]
         RDM_Corpsacorps = 13244,
@@ -1931,6 +1935,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(RDM_Corpsacorps)]
         [CustomComboInfo("Only in Melee Range", "Use Corps-a-corps only when in melee range", RDM.JobID, 245)]
         RDM_Corpsacorps_MeleeRange = 13245,
+
+        [ParentCombo(RDM_Corpsacorps)]
+        [CustomComboInfo("Hold one charge", "Pool one charge of Corp-a-corps for manual use", RDM.JobID, 247)]
+        RDM_PoolCorps = 13247,
 
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
         [CustomComboInfo("Verthunder II/Veraero II", "Replace Scatter/Impact with Verthunder II or Veraero II", RDM.JobID, 310)]
@@ -1943,6 +1951,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(RDM_AoE_Acceleration)]
         [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used or when below level 50", RDM.JobID, 321)]
         RDM_AoE_AccelSwiftCast = 13321,
+
+        [ParentCombo(RDM_AoE_Acceleration)]
+        [CustomComboInfo("Weave Acceleration", "Only use acceleration during weave windows", RDM.JobID, 322)]
+        RDM_AoE_WeaveAcceleration = 13322,
 
         //SECTION_4to5_MELEE
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Riposte)]
@@ -1957,7 +1969,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Hold for Double Melee Combo [Lv.90]", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
         RDM_ST_DoubleMeleeCombo = 13412,
 
-        //[ReplaceSkill(RDM.Moulinet)]
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
         [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
@@ -1970,10 +1981,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range before starting the melee combo", RDM.JobID, 430)]
         RDM_ST_CorpsGapClose = 13430,
 
-        [ParentCombo(RDM_ST_CorpsGapClose)]
-        [CustomComboInfo("Reserve one charge", "Pool one charge of Corp-a-corps for use", RDM.JobID, 431)]
-        RDM_ST_PoolCorps = 13431,
-
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3)]
         [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)]
         RDM_MeleeFinisher = 13510,
@@ -1984,6 +1991,7 @@ namespace XIVSlothComboPlugin
         RDM_LucidDreaming = 13610,
 
         [ReplaceSkill(All.Swiftcast)]
+        [ConflictingCombos(AllCasterRaiseFeature)]
         [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RDM_Verraise = 13620,
 
