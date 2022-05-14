@@ -324,7 +324,7 @@ namespace XIVSlothComboPlugin
         BlackDespairFeature = 2007,
 
         [ReplaceSkill(BLM.Flare)]
-        [CustomComboInfo("Simple AoE Feature", "Replaces Flare with a full one button rotation.", BLM.JobID, 0, "Dungeon Tesla Mode", "Asleep at the wheel? We've got you!")]
+        [CustomComboInfo("Simple AoE Feature", "Replaces Flare with a full one button rotation.", BLM.JobID, -1, "Dungeon Tesla Mode", "Asleep at the wheel? We've got you!")]
         BlackAoEComboFeature = 2008,
 
         [ReplaceSkill(BLM.Scathe)]
@@ -339,7 +339,7 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleTransposeFeature, BlackSimpleParadoxFeature)]
-        [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -2, "", "")]
+        [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -3, "", "")]
         BlackSimpleFeature = 2012,
 
         [ParentCombo(BlackSimpleFeature)]
@@ -376,24 +376,24 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature, BlackSimpleParadoxFeature)]
-        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -2, "", "")]
         BlackSimpleTransposeFeature = 2021,
 
         [ParentCombo(BlackSimpleTransposeFeature)]
-        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced BLM feature.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced BLM feature.", BLM.JobID, 0, "", "")]
         BlackSimpleTransposePoolingFeature = 2022,
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature, BlackSimpleTransposeFeature)]
-        [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9%% less damage than Simple BLM). Requires level 90.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9-13%% less damage than Simple BLM). Requires level 90.", BLM.JobID, -2, "", "")]
         BlackSimpleParadoxFeature = 2023,
 
         [ParentCombo(BlackSimpleTransposeFeature)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced BLM feature.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced BLM feature.", BLM.JobID, 0, "", "")]
         BlackSimpleTransposeLeyLinesFeature = 2024,
 
         [ParentCombo(BlackSimpleParadoxFeature)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Paradox BLM feature.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Paradox BLM feature.", BLM.JobID, 0, "", "")]
         BlackSimpleParadoxLeyLinesFeature = 2025,
 
         #endregion
@@ -1396,7 +1396,7 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MnkBasicCombo)]
-        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk).  Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, 0, "", "They call it 'basic' for a reason, you donkey")]
+        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk).  Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "They call it 'basic' for a reason, you donkey")]
         MnkBootshineCombo = 9006,
 
         [ReplaceSkill(MNK.MasterfulBlitz)]
@@ -1438,6 +1438,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(MnkBootshineCombo)]
         [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. A 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
+
+        [ParentCombo(MnkBootshineCombo)]
+        [CustomComboInfo("Main Combo on Demolish Option", "Replaces Demolish with the Main Combo, except without any oCDs added. Useful for saving burst.", MNK.JobID, -1, "", "")]
+        MnkDemolishComboFeature = 9026,
 
         [ParentCombo(MnkArmOfTheDestroyerCombo)]
         [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]

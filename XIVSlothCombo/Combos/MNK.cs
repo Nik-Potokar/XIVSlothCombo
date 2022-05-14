@@ -320,7 +320,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Bootshine)
+                if (actionID == Bootshine || (actionID == Demolish && IsEnabled(CustomComboPreset.MnkDemolishComboFeature)))
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MNKGauge>();
@@ -335,7 +335,7 @@ namespace XIVSlothComboPlugin.Combos
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
 
                     // Opener for MNK
-                    if (IsEnabled(CustomComboPreset.MnkLunarSolarOpenerOnMainComboFeature))
+                    if (actionID != Demolish && IsEnabled(CustomComboPreset.MnkLunarSolarOpenerOnMainComboFeature))
                     {
                         // Re-enter opener when Brotherhood is used
                         if (lastComboMove == Brotherhood)
@@ -434,7 +434,7 @@ namespace XIVSlothComboPlugin.Combos
                     // Buffs
                     if (inCombat && !inOpener)
                     {
-                        if (IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature))
+                        if (actionID != Demolish && IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature))
                         {
                             if (canWeave)
                             {
@@ -489,7 +489,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && HasEffect(Buffs.DisciplinedFist))
                             {
-                                if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature) || (IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
+                                if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
                                     return OriginalHook(Meditation);
                                 }
