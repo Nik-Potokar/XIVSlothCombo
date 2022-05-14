@@ -118,7 +118,6 @@ namespace XIVSlothComboPlugin.Combos
         public bool TryInvoke(uint actionID, byte level, uint lastComboMove, float comboTime, out uint newActionID)
         {
             newActionID = 0;
-
             // Movement
             if (this.MovingCounter == 0)
             {
@@ -132,6 +131,7 @@ namespace XIVSlothComboPlugin.Combos
 
             if (this.MovingCounter > 0)
                 this.MovingCounter--;
+
 
             if (!IsEnabled(this.Preset))
                 return false;
@@ -845,6 +845,14 @@ namespace XIVSlothComboPlugin.Combos
 
         public bool WasLastAbility(uint id)
             => ActionWatching.LastAbility == id;
+
+        /// <summary>
+        /// Returns if the player has set the spell as active in the Blue Mage Spellbook
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool IsSpellActive(uint id)
+            => Service.Configuration.ActiveBLUSpells.Contains(id);
 
     }
 }
