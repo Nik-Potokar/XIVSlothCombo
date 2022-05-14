@@ -62,7 +62,7 @@ namespace XIVSlothComboPlugin
         public HashSet<CustomComboPreset> EnabledActions4 { get; set; } = new();
 
         /// <summary>
-        /// Gets or sets a value indicating whether to allow and display secret combos.
+        /// Gets or sets a value indicating whether to output combat log to the chatbox.
         /// </summary>
         public bool EnabledOutputLog { get; set; } = false;
 
@@ -312,6 +312,8 @@ namespace XIVSlothComboPlugin
             if (array == Array.Empty<bool>()) return false;
             return array[index];
         }
+
+        public List<uint> ActiveBLUSpells { get; set; } = new List<uint>();
 
         private static int RoleIDToArrayIndex(byte key)
         {
