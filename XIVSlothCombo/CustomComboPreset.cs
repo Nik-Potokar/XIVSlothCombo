@@ -2550,9 +2550,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
-        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 0, "", "")]
         SummonerAstralFlowonSummonsFeature = 17034,
-        
 
         #endregion
         // ====================================================================================

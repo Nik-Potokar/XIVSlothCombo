@@ -550,13 +550,10 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
-                if (actionID is SummonEmerald or SummonRuby or SummonTopaz or SummonIfrit or SummonTitan or SummonGaruda or SummonIfrit2 or SummonTitan2 or SummonGaruda2)
-                {
-                    if (HasEffect(Buffs.TitansFavor) || HasEffect(Buffs.GarudasFavor) || HasEffect(Buffs.IfritsFavor) || lastComboMove == CrimsonCyclone)
-                        return OriginalHook(AstralFlow);
-                }
-
+                if ((actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonEmerald or SummonGaruda or SummonGaruda2 or SummonRuby or SummonIfrit or SummonIfrit2 && HasEffect(Buffs.TitansFavor)) ||
+                    (actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonEmerald or SummonGaruda or SummonGaruda2 && HasEffect(Buffs.GarudasFavor)) ||
+                    (actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonRuby or SummonIfrit or SummonIfrit2 && (HasEffect(Buffs.IfritsFavor) || lastComboMove == CrimsonCyclone)))
+                    return OriginalHook(AstralFlow);
                 return actionID;
             }
         }
