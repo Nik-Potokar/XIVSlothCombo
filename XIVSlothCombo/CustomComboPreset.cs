@@ -2463,7 +2463,7 @@ namespace XIVSlothComboPlugin
 
                         [ParentCombo(SCH_Aetherflow_Recite)]
                         [CustomComboInfo("On Indominability Option", "", SCH.JobID, 312)]
-                        SCH_Aetherflow_Recite_Indom = 13212,
+                        SCH_Aetherflow_Recite_Indom = 16312,
 
                     [ParentCombo(SCH_AetherflowFeature)]
                     [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 320, "", "Oh wow look at that that one...it looks so delicious")]
