@@ -1733,6 +1733,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Melee Intervene Option", "Uses Intervene when under Fight or Flight and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", PLD.JobID, 4, "", "")]
         PaladinMeleeInterveneOption = 11026,
 
+        [ParentCombo(PaladinExpiacionScornFeature)]
+        [CustomComboInfo("Expiacion and Circle of Scorn Option", "Uses Circle of Scorn and Expiacion when under Fight or Flight or when Fight or Flight is on cooldown", PLD.JobID, 4, "", "")]
+        PaladinExpiacionScornOption = 11027,
+
         #endregion
         // ====================================================================================
         #region REAPER
