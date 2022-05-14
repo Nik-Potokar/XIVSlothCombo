@@ -1241,6 +1241,7 @@ namespace XIVSlothComboPlugin
         #region MACHINIST
 
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MachinistSimpleFeature)]
         [CustomComboInfo("(Heated) Shot Combo", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "Alright, Hotshot -", "Is there really such a thing as a clean shot? Let's find out.")]
         MachinistMainCombo = 8000,
 
