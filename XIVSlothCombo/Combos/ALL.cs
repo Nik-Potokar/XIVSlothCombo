@@ -113,7 +113,7 @@
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is All.Reprisal)
+                if (actionID is Reprisal)
                 {
                     if (TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal))
                         return WHM.Stone1;
@@ -153,7 +153,7 @@
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is All.Addle)
+                if (actionID is Addle)
                 {
                     if (TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle))
                         return WAR.FellCleave;
@@ -188,7 +188,7 @@
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is All.Feint)
+                if (actionID is Feint)
                 {
                     if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
                         return BLM.Fire;
