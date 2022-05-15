@@ -976,8 +976,8 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
             {
-                    ConfigWindowFunctions.DrawRadioButton(RPR.Config.RPRPositionChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
-                    ConfigWindowFunctions.DrawRadioButton(RPR.Config.RPRPositionChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
             }
 
             if (preset == CustomComboPreset.ReaperShadowOfDeathFeature && enabled)
