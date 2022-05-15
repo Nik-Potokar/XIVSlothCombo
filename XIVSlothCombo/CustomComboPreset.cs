@@ -2029,19 +2029,24 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Displacement <> Corps-a-corps", "Replace Displacement with Corps-a-corps when out of range.", RDM.JobID, 810, "I take two steps forward, you take two steps back.", "We come together because opposites attract.")]
         RDM_CorpsDisplacement = 13810,
 
+        [ReplaceSkill(RDM.Embolden)]
+        //[ConflictingCombos(RDM_ST_ManaficationEmbolden)]
+        [CustomComboInfo("Embolden to Manafication", "Changes Embolden to Manafication when on cooldown.", RDM.JobID, 820, "You're approaching me?", "do do do do do do do do do")]
+        RDM_EmboldenManafication = 13820,
+
         #endregion
         // ====================================================================================
         #region SAGE
 
-            //SAGE_FEATURE_NUMBERING
+        //SAGE_FEATURE_NUMBERING
         //Numbering Scheme: 14[Feature][Option][Sub-Option]
         //Example: 14110 (Feature Number 1, Option 1, no suboption)
         //New features should be added to the appropriate sections.
 
-            #region SAGE DPS
+        #region SAGE DPS
 
-                #region Single Target DPS Feature
-                [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
+        #region Single Target DPS Feature
+        [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
                 [CustomComboInfo("Single Target DPS Feature", "Replaces Dosis with options below", SGE.JobID, 100)]
                 SGE_ST_DosisFeature = 14100,
                 
