@@ -2815,6 +2815,26 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Prioritize oGCD Heals/Shields on Cure II when available.", "Displays oGCD Heals/Shields over Afflatus.\n(Only applies to GCD options for Tetragrammaton and Divine Benison)", WHM.JobID, 0, "That, not this.", "Shields over flowers.")]
         WHMPrioritizeoGCDHealsShields = 19024,
 
+        [ReplaceSkill(WHM.Holy, WHM.Holy3)]
+        [CustomComboInfo("CDs on Holy/Holy3", "Collection of CDs and spell features on Holy/Holy3.", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
+        WHM_AoE_DPS_Feature = 19190,
+
+        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the AoE DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]
+        WHM_AoE_Lucid = 19191,
+
+        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [CustomComboInfo("Assize Feature", "Adds Assize as oGCD to Holy/Holy3", WHM.JobID, 0, "", "Size 'em up, knock 'em down")]
+        WHM_AoE_Assize = 19192,
+
+        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [CustomComboInfo("Lily Overcap Protection", "Adds Afflatus Rapture (AoE Heal) to Holy/Holy3 when at 3 lilies.", WHM.JobID, 0, "Feed the blood lily!", "Burn out the bad! Burn out the bad!")]
+        WHM_AoE_LilyOvercap = 19193,
+
+        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [CustomComboInfo("Adds Afflatus Misery to Holy/Holy3", "Adds Afflatus Misery to Holy/Holy3 when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
+        WHM_AoE_AfflatusMisery = 19194,
+
         #endregion
         // ====================================================================================
         #region DOH
