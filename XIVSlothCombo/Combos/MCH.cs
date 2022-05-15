@@ -158,7 +158,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
                     {
-                        if (battery == 100 && level >= 40 && level <= 79 && GetCooldown(CleanShot).CooldownRemaining > 0.7)
+                        if (battery == 100 && level is >= 40 and <= 79 && GetCooldown(CleanShot).CooldownRemaining > 0.7)
                             return RookAutoturret;
                         if (battery == 100 && level >= 80 && GetCooldown(CleanShot).CooldownRemaining > 0.7)
                             return AutomatonQueen;
@@ -464,7 +464,7 @@ namespace XIVSlothComboPlugin.Combos
                             //var chargeLimit = openerFinished || level < MCH.Levels.Ricochet ? 0 : 1;
 
                             if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) && gaussCharges > 0 &&
-                                level >= Levels.GaussRound && !usingReasmSoon)
+                                !usingReasmSoon)
                                 return GaussRound;
                             else if (ricochetCharges > 0 && level >= Levels.Ricochet && !usingReasmSoon)
                                 return Ricochet;
@@ -484,7 +484,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         return AirAnchor;
                     }
-                    else if ((IsOffCooldown(HotShot) || GetCooldownRemainingTime(HotShot) < 1) && level >= Levels.Hotshot && level < Levels.AirAnchor)
+                    else if ((IsOffCooldown(HotShot) || GetCooldownRemainingTime(HotShot) < 1) && level is >= Levels.Hotshot and < Levels.AirAnchor)
                         return HotShot;
 
                     if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1) && level >= Levels.Drill)
