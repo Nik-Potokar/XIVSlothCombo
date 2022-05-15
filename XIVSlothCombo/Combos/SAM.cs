@@ -609,7 +609,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (level < Levels.Oka && level >= Levels.Kasha)
+                    if (level is < Levels.Oka and >= Levels.Kasha)
                     {
                         if (lastComboMove == Shifu)
                             return Kasha;
