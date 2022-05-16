@@ -976,8 +976,8 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
             {
-                    ConfigWindowFunctions.DrawRadioButton(RPR.Config.RPRPositionChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
-                    ConfigWindowFunctions.DrawRadioButton(RPR.Config.RPRPositionChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
             }
 
             if (preset == CustomComboPreset.ReaperShadowOfDeathFeature && enabled)
@@ -988,7 +988,7 @@ namespace XIVSlothComboPlugin
             #region RED MAGE
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche only", "", 1);
 
             if (preset == CustomComboPreset.RDM_OGCD)
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "", 2);
@@ -997,7 +997,13 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "", 3);
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 4);
+
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Riposte/Moulinet only", "", 5);
+
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche & Riposte/Moulinet", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 6);
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte", "", 1);
@@ -1022,6 +1028,9 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
+                ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
                 ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
@@ -1082,11 +1091,19 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SAMPvP.Config.SamSotenHP, "Use Soten on enemies below selected HP.");
             //Fillers
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
-            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
-            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
+            {
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
+            }
+            #endregion
+            // ====================================================================================
+            #region MONK
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
+
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
             #endregion
             // ====================================================================================
             #region SCHOLAR
@@ -1132,14 +1149,24 @@ namespace XIVSlothComboPlugin
 
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
 
+            
             if (preset == CustomComboPreset.SummonerPrimalBurstChoice)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first)", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase", 4);
+            }
+
+            if (preset == CustomComboPreset.SummonerSwiftcastEgiFeature)
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Garuda", "Swiftcast Slipstream", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready", 3);
             }
 
             if (preset == CustomComboPreset.SMNLucidDreamingFeature)
@@ -1162,6 +1189,9 @@ namespace XIVSlothComboPlugin
             #region WHITE MAGE
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.WHM_AoE_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.WHMogcdHealsShieldsFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, WHM.Config.WHMogcdHealsShieldsFeature, "Set HP% of target to use Tetragrammaton");

@@ -566,7 +566,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == AspectedHelios)
                 {
-                    var heliosBuff = FindEffect(Buffs.AspectedHelios);
+                    var heliosBuff = GetBuffRemainingTime(Buffs.AspectedHelios);
                     var horoscopeCD = GetCooldown(Horoscope);
                     var celestialOppositionCD = GetCooldown(CelestialOpposition);
                     var incombat = HasCondition(ConditionFlag.InCombat);
@@ -598,7 +598,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Horoscope);
                     }
 
-                    if (HasEffect(Buffs.AspectedHelios) && heliosBuff.RemainingTime > 2)
+                    if (HasEffect(Buffs.AspectedHelios) && heliosBuff > 2)
                         return Helios;
                 }
 

@@ -306,7 +306,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var Disembowel = FindEffect(Buffs.PowerSurge);
+                var Disembowel = GetBuffRemainingTime(Buffs.PowerSurge);
                 var gauge = GetJobGauge<DRGGauge>();
 
                 if (actionID is FullThrust)
@@ -657,7 +657,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (comboTime > 0)
                     {
-                        if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.Disembowel && (Disembowel is null || (Disembowel.RemainingTime < 10)))
+                        if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.Disembowel && Disembowel < 10)
                             return DRG.Disembowel;
 
                         if (lastComboMove is DRG.Disembowel && level >= Levels.ChaoticSpring)

@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= Levels.Onslaught && GetRemainingCharges(Onslaught) > onslaughtChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) ||
-                                    (IsEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) && GetTargetDistance() <= 1))
+                                    (IsEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) && GetTargetDistance() <= 1 && GetCooldownRemainingTime(InnerRelease) > 40))
                                     return Onslaught;
                             }
                         }
