@@ -11,6 +11,7 @@ using System.Linq;
 using System.Numerics;
 using System.Timers;
 using XIVSlothComboPlugin.Attributes;
+using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -830,14 +831,7 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <returns></returns>
         public bool InPvP()
-            => Service.ClientState.TerritoryType == 250 || //Wolves Den
-            (Service.ClientState.TerritoryType == 376 && Service.PartyList.Length > 1) || //Borderland Ruins
-            (Service.ClientState.TerritoryType == 431 && Service.PartyList.Length > 1) || //Seal Rock
-            (Service.ClientState.TerritoryType == 554 && Service.PartyList.Length > 1) || //Fields of Glory
-            (Service.ClientState.TerritoryType == 888 && Service.PartyList.Length > 1) || //Onsal Hakair
-            (Service.ClientState.TerritoryType == 729 && Service.PartyList.Length > 1) || //Astragalos
-            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Length > 1) ||
-            PvPZones.TryGetValue(Service.ClientState.TerritoryType, out var _);   //Hidden Gorge
+            => GameMain.IsInPvPArea() || GameMain.IsInPvPInstance();   
 
         public bool LevelChecked(uint id)
         {
