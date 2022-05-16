@@ -436,7 +436,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && IsEnabled(CustomComboPreset.RDM_PoolCorps)) corpsacorpsPool = 1;
                     if (IsEnabled(CustomComboPreset.RDM_Engagement) && IsEnabled(CustomComboPreset.RDM_PoolEngage)) engagementPool = 1;
 
-                    if (actionID is Jolt or Jolt2 or Scatter or Impact or Fleche)
+                    if (actionID is Jolt or Jolt2 or Scatter or Impact or Fleche or Riposte or Moulinet)
                     {
                         if (IsEnabled(CustomComboPreset.RDM_Engagement) && GetCooldown(Engagement).RemainingCharges >= engagementPool 
                             && (GetCooldown(Engagement).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolEngage))
@@ -450,7 +450,8 @@ namespace XIVSlothComboPlugin.Combos
 
                         if ((actionID is Jolt or Jolt2) && (radioButton is 2 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
                         if ((actionID is Scatter or Impact) && (radioButton is 3 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
-                        if (actionID is Fleche && radioButton == 1 && placeOGCD == 0) // All actions are on cooldown, determine the lowest CD to display on Fleche.
+                        if ((actionID is Riposte or Moulinet) && (radioButton is 5 or 6) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
+                        if (actionID is Fleche && radioButton is 1 or 6 && placeOGCD == 0) // All actions are on cooldown, determine the lowest CD to display on Fleche.
                         {
                             placeOGCD = Fleche;
                             if (IsEnabled(CustomComboPreset.RDM_ContraSixte) && level >= Levels.ContreSixte
