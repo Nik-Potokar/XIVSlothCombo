@@ -6,6 +6,7 @@ using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Timers;
@@ -491,6 +492,22 @@ namespace XIVSlothComboPlugin.Combos
             => GetCooldown(actionID).RemainingCharges;
 
         /// <summary>
+        /// Gets the Resource Cost of the action.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns></returns>
+        public int GetResourceCost(uint actionID)
+            => Service.ComboCache.GetResourceCost(actionID);
+
+        /// <summary>
+        /// Gets the Resource Type of the action.
+        /// </summary>
+        /// <param name="actionID">Action ID to check.</param>
+        /// <returns></returns>
+        public bool IsResourceTypeNormal(uint actionID)
+            => Service.ComboCache.GetResourceCost(actionID) >= 100 || Service.ComboCache.GetResourceCost(actionID) == 0;
+
+        /// <summary>
         /// Get the maximum number of charges for an action.
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
@@ -557,10 +574,13 @@ namespace XIVSlothComboPlugin.Combos
             if (CurrentTarget is not BattleChara chara)
                 return 0;
 
+            if (CurrentTarget.ObjectId == LocalPlayer.ObjectId)
+                return 0;
+
             var position = new Vector2(chara.Position.X, chara.Position.Z);
             var selfPosition = new Vector2(LocalPlayer.Position.X, LocalPlayer.Position.Z);
 
-            return (Vector2.Distance(position, selfPosition) - chara.HitboxRadius) - LocalPlayer.HitboxRadius;
+            return Math.Max(0, (Vector2.Distance(position, selfPosition) - chara.HitboxRadius) - LocalPlayer.HitboxRadius);
         }
 
         /// <summary>
@@ -800,19 +820,24 @@ namespace XIVSlothComboPlugin.Combos
             P8
         }
 
+        public static Dictionary<uint, Lumina.Excel.GeneratedSheets.TerritoryType>? PvPZones = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?
+                        .Where(i => i.Bg.RawString.StartsWith("ffxiv/pvp"))
+                        .ToDictionary(i => i.RowId, i => i);
+
+
         /// <summary>
         /// Checks if the player is in a PVP enabled zone.
         /// </summary>
         /// <returns></returns>
         public bool InPvP()
-            => Service.ClientState.IsPvP ||
-            Service.ClientState.TerritoryType == 250 || //Wolves Den
+            => Service.ClientState.TerritoryType == 250 || //Wolves Den
             (Service.ClientState.TerritoryType == 376 && Service.PartyList.Length > 1) || //Borderland Ruins
             (Service.ClientState.TerritoryType == 431 && Service.PartyList.Length > 1) || //Seal Rock
             (Service.ClientState.TerritoryType == 554 && Service.PartyList.Length > 1) || //Fields of Glory
             (Service.ClientState.TerritoryType == 888 && Service.PartyList.Length > 1) || //Onsal Hakair
             (Service.ClientState.TerritoryType == 729 && Service.PartyList.Length > 1) || //Astragalos
-            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Length > 1);   //Hidden Gorge
+            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Length > 1) ||
+            PvPZones.TryGetValue(Service.ClientState.TerritoryType, out var _);   //Hidden Gorge
 
         public bool LevelChecked(uint id)
         {
@@ -854,5 +879,84 @@ namespace XIVSlothComboPlugin.Combos
         public bool IsSpellActive(uint id)
             => Service.Configuration.ActiveBLUSpells.Contains(id);
 
+        //public bool CanUseAction(uint id)
+        //{
+        //    if (!ActionWatching.ActionSheet.TryGetValue(id, out var actionFromSheet)) return false;
+        //    if (!LevelChecked(id)) return false;
+        //    if (!IsOffCooldown(id)) return false;
+        //    if (GetTargetDistance() < actionFromSheet.Range) return false;
+        //    if (IsResourceTypeNormal(id) && GetResourceCost(id) > LocalPlayer.CurrentMp) return false;
+
+        //    switch (JobID)
+        //    {
+        //        case AST.JobID:
+        //            if (id == AST.Astrodyne && GetJobGauge<ASTGauge>().Seals.Count() < 3) return false;
+        //            if (id == AST.Play && GetJobGauge<ASTGauge>().DrawnCard == Dalamud.Game.ClientState.JobGauge.Enums.CardType.NONE) return false;
+        //            if (id == AST.MinorArcana && GetJobGauge<ASTGauge>().DrawnCrownCard == Dalamud.Game.ClientState.JobGauge.Enums.CardType.NONE) return false;
+        //            break;
+        //        case BLM.JobID:
+        //            if ((id is BLM.Fire4 or BLM.Despair or BLM.Flare) && !GetJobGauge<BLMGauge>().InAstralFire) return false;
+        //            if ((id is BLM.Blizzard4 or BLM.Freeze or BLM.UmbralSoul) && !GetJobGauge<BLMGauge>().InUmbralIce) return false;
+        //            if (id is BLM.Amplifier && (!GetJobGauge<BLMGauge>().InUmbralIce && !GetJobGauge<BLMGauge>().InAstralFire)) return false;
+        //            if (id is BLM.Paradox && !GetJobGauge<BLMGauge>().IsParadoxActive) return false;
+        //            break;
+        //        case BRD.JobID:
+        //            if (GetJobGauge<BRDGauge>().SoulVoice < GetResourceCost(id)) return false;
+        //            break;
+        //        case DNC.JobID:
+        //            if (id is DNC.FanDance1 or DNC.FanDance2 && GetJobGauge<DNCGauge>().Feathers == 0) return false;
+        //            if (GetJobGauge<DNCGauge>().Esprit < GetResourceCost(id)) return false;
+        //            break;
+        //        case DRG.JobID:
+        //            if (id is DRG.Stardiver && !GetJobGauge<DRGGauge>().IsLOTDActive) return false;
+        //            break;
+        //        case DRK.JobID:
+
+        //            break;
+        //        case GNB.JobID:
+
+        //            break;
+        //        case MCH.JobID:
+        //            if ((id == MCH.AutomatonQueen || id == MCH.RookAutoturret) && GetJobGauge<MCHGauge>().Battery < GetResourceCost(id)) return false;
+        //            if (GetJobGauge<MCHGauge>().Heat < GetResourceCost(id)) return false;
+        //            break;
+        //        case MNK.JobID:
+
+        //            break;
+        //        case NIN.JobID:
+        //            if (GetJobGauge<NINGauge>().Ninki < GetResourceCost(id)) return false;
+        //            break;
+        //        case PLD.JobID:
+        //            if (GetJobGauge<PLDGauge>().OathGauge < GetResourceCost(id)) return false;
+        //            break;
+        //        case RDM.JobID:
+
+        //            break;
+        //        case RPR.JobID:
+
+        //            break;
+        //        case SAM.JobID:
+
+        //            break;
+        //        case SCH.JobID:
+
+        //            break;
+        //        case SGE.JobID:
+
+        //            break;
+        //        case SMN.JobID:
+
+        //            break;
+        //        case WAR.JobID:
+
+        //            break;
+        //        case WHM.JobID:
+
+        //            break;
+        //    }
+
+        //    return true;
+
+        //}
     }
 }
