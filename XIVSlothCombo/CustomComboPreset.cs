@@ -1855,14 +1855,14 @@ namespace XIVSlothComboPlugin
 
         #region Blood Stalk/Grim Swathe Combo Section
         [ReplaceSkill(RPR.BloodStalk, RPR.GrimSwathe)]
+        [CustomComboInfo("Gluttony on Blood Stalk/Grim Swathe Feature", "Blood Stalk and Grim Swathe will turn into Gluttony when it is available.", RPR.JobID, 0, "", "")]
+        ReaperBloodSwatheFeature = 12041,
+
+        [ParentCombo(ReaperBloodSwatheFeature)]
         [CustomComboInfo("Gibbet and Gallows/Guillotine on Blood Stalk/Grim Swathe Feature", "Adds Gibbet and Gallows on Blood Stalk.\nAdds Guillotine on Grim Swathe.", RPR.JobID, 0, "", "")]
         ReaperBloodStalkComboFeature = 12040,
 
-        [ParentCombo(ReaperBloodStalkComboFeature)]
-        [CustomComboInfo("Blood Stalk/Grim Swathe Option", "Blood Stalk and Grim Swathe will turn into Gluttony when it is available.", RPR.JobID, 0, "", "")]
-        ReaperBloodSwatheFeature = 12041,
-
-        [ParentCombo(ReaperBloodStalkComboFeature)]
+        [ParentCombo(ReaperBloodSwatheFeature)]
         [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud Combo (Void/Cross Reaping, Communio, and Lemure's Slice) on Blood Stalk and Grim Swathe.", RPR.JobID, 0, "", "")]
         ReaperEnshroudonStalkComboFeature = 12042,
         #endregion
@@ -1898,6 +1898,11 @@ namespace XIVSlothComboPlugin
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud Protection Feature", "Turns Enshroud into Gibbet/Gallows to protect Soul Reaver waste.", RPR.JobID, 0, "", "")]
         ReaperEnshroudProtectionFeature = 12057,
+
+        [ReplaceSkill(RPR.Gibbet,RPR.Gallows,RPR.Guillotine)]
+        [CustomComboInfo("Enshroud Combo on Gibbet/Gallows and Guillotine", "Adds Lemure's Slice and Communio to Gibbet/Gallows and Lemure's Scythe and Communio to Guillotine.", RPR.JobID, 0, "", "")]
+        ReaperEnshroudComboFeature = 12058,
+        
         #endregion
 
         #endregion
@@ -2557,7 +2562,7 @@ namespace XIVSlothComboPlugin
         SearingLightonRuinFeature = 17018,
 
         [ParentCombo(SearingLightonRuinFeature)]
-        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
         SummonerSearingLightBurstOption = 170181,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2577,14 +2582,11 @@ namespace XIVSlothComboPlugin
         EgisOnAOEFeature = 17022,
 
         [ParentCombo(EgisOnRuinFeature)]
-        [ConflictingCombos(SummonerSwiftcastFeatureIfrit)]
-        [CustomComboInfo("Swiftcast Garuda Option", "Always swiftcasts Slipstream if available.", SMN.JobID, 1, "No Raising for me!", "Always slips swiftstream, sometimes")]
-        SummonerSwiftcastFeatureGaruda = 17023,
+        [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
+        SummonerSwiftcastEgiFeature = 17023,
 
-        [ParentCombo(EgisOnRuinFeature)]
-        [ConflictingCombos(SummonerSwiftcastFeatureGaruda)]
-        [CustomComboInfo("Swiftcast Ifrit Option", "Always swiftcasts Ruby Rite if available.", SMN.JobID, 1, "No Raising for you!", "Always cancels the Ifrit phase entirely, doing nothing instead.")]
-        SummonerSwiftcastFeatureIfrit = 17024,
+        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 1, "", "")]
+        SummonerPrimalAbilitiesFeature = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
         [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0)]
@@ -2618,9 +2620,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
-        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 0, "", "")]
         SummonerAstralFlowonSummonsFeature = 17034,
-        
 
         #endregion
         // ====================================================================================
@@ -2988,18 +2989,18 @@ namespace XIVSlothComboPlugin
             #region SAM Burst Mode
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
-            [CustomComboInfo("Chiten to Burst Mode", "Adds Chiten to the Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
+            [CustomComboInfo("Add Chiten", "Adds Chiten to the Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
             SAMBurstChitenFeature = 80081,
 
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
-            [CustomComboInfo("Mineuchi to Burst Mode", "Adds Mineuchi to the Burst Mode.", SAM.JobID)]
+            [CustomComboInfo("Add Mineuchi", "Adds Mineuchi to the Burst Mode.", SAM.JobID)]
             SAMBurstStunFeature = 80082,
 
             [SecretCustomCombo]
             [ParentCombo(SAMBurstMode)]
-            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID)]
-            SamPVPMainComboFeature = 80083,
+            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID, 1)]
+            SamPVPMainComboFeature = 80083,        
             #endregion
 
         [SecretCustomCombo]
@@ -3009,7 +3010,7 @@ namespace XIVSlothComboPlugin
             #region PvP Features for Kasha Combo
             [SecretCustomCombo]
             [ParentCombo(SamPvPKashaFeatures)]
-            [CustomComboInfo("Soten Gap Closer Feature", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
+            [CustomComboInfo("Soten Gap Closer Option", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
             SamGapCloserFeature = 80085,
 
             [SecretCustomCombo]
@@ -3087,6 +3088,23 @@ namespace XIVSlothComboPlugin
             [ParentCombo(RPRBurstMode)]
             [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under a set HP perecentage.", RPR.JobID)]
             RPRPvPArcaneCircleOption = 80199,
+            #endregion
+
+        // MNK
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Phantom Rush Combo into all-in-one damage button.", MNK.JobID)]
+        MNKBurstMode = 80100,
+
+            #region MNK Burst Mode
+            [ParentCombo(MNKBurstMode)]
+            [SecretCustomCombo]
+            [CustomComboInfo("Add Thunderclap", "Adds Thunderclap to jump to Enemy Target when not buffed with Wind Resonance.", MNK.JobID)]
+            MNKThunderClapOption = 80101,
+
+            [ParentCombo(MNKBurstMode)]
+            [SecretCustomCombo]
+            [CustomComboInfo("Add Riddle of Earth", "Adds Riddle of Earth and Earth's Reply to the Burst Mode.", MNK.JobID)]
+            MNKRiddleOfEarthOption = 80102,
             #endregion
 
         #endregion
