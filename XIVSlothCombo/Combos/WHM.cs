@@ -281,14 +281,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionID == Medica2)
                     {
                         var gauge = GetJobGauge<WHMGauge>();
-                        var medica2Buff = FindEffect(Buffs.Medica2);
+                        var medica2Buff = GetBuffRemainingTime(Buffs.Medica2);
                         if (level < Levels.Medica2)
                             return Medica1;
                         if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryMedicaFeature) && gauge.BloodLily == 3)
                             return AfflatusMisery;
-                        if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff.RemainingTime > 2)
+                        if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff > 2)
                             return AfflatusRapture;
-                        if (HasEffect(Buffs.Medica2) && medica2Buff.RemainingTime > 2)
+                        if (HasEffect(Buffs.Medica2) && medica2Buff > 2)
                             return Medica1;
                     }
 
