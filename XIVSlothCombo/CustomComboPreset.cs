@@ -2007,7 +2007,7 @@ namespace XIVSlothComboPlugin
         RDM_AoE_ManaficationEmbolden = 13421,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
-        [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range before starting the melee combo", RDM.JobID, 430)]
+        [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range when you have enough mana to start the melee combo", RDM.JobID, 430)]
         RDM_ST_CorpsGapClose = 13430,
 
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3)]
