@@ -177,14 +177,14 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (nadiNONE || !lunarNadi)
                         {
-                            if (pbStacks.StackCount > 0)
+                            if (pbStacks?.StackCount > 0)
                             {
                                 return level >= Levels.ShadowOfTheDestroyer ? ShadowOfTheDestroyer : Rockbreaker;
                             }
                         }
                         if (lunarNadi)
                         {
-                            switch (pbStacks.StackCount)
+                            switch (pbStacks?.StackCount)
                             {
                                 case 3:
                                     return OriginalHook(ArmOfTheDestroyer);
@@ -584,29 +584,29 @@ namespace XIVSlothComboPlugin.Combos
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
                     if (!nadiNONE && !lunarNadi)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return DragonKick;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return Bootshine;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return DragonKick;
                     }
                     if (nadiNONE)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return DragonKick;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return Bootshine;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return DragonKick;
                     }
                     if (lunarNadi)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return TwinSnakes;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return DragonKick;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return Demolish;
                     }
 
