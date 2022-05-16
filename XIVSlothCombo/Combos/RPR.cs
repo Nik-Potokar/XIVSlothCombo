@@ -241,7 +241,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (gauge.Soul >= 50 && IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
                                     return Gluttony;
-                                return BloodStalk;
+                                return OriginalHook(BloodStalk);
                             }
 
                             if (IsEnabled(CustomComboPreset.ReaperSoulSliceFeature) && !enshrouded && !soulReaver && level >= Levels.SoulSlice && gauge.Soul <= 50 && GetRemainingCharges(SoulSlice) > 0)
@@ -329,15 +329,13 @@ namespace XIVSlothComboPlugin.Combos
 
         internal class ReaperBloodSwatheFeature : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodSwatheFeature; //switch around
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperBloodSwatheFeature;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var positionalChoice = Service.Configuration.GetCustomIntValue(Config.RPRPositionChoice);
                 var gauge = GetJobGauge<RPRGauge>();
 
-                if (actionID is GrimSwathe or BloodStalk && IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
-                    return Gluttony;
                 if (actionID is GrimSwathe)
                 {
                     if (IsEnabled(CustomComboPreset.ReaperEnshroudonStalkComboFeature) && HasEffect(Buffs.Enshrouded))
@@ -350,6 +348,8 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Guillotine);
                     }
 
+                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
+                        return Gluttony;
                     if (IsEnabled(CustomComboPreset.ReaperBloodStalkComboFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Guillotine)
                         return Guillotine;
                 }
@@ -375,6 +375,8 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
+                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
+                        return Gluttony;
                     if (IsEnabled(CustomComboPreset.ReaperBloodStalkComboFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Gibbet)
                     {
                         if (HasEffect(Buffs.EnhancedGibbet))
