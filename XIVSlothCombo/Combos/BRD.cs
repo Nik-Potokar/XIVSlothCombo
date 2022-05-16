@@ -733,7 +733,7 @@ namespace XIVSlothComboPlugin.Combos
                         var causticDuration = FindTargetEffect(Debuffs.CausticBite);
                         var stormbiteDuration = FindTargetEffect(Debuffs.Stormbite);
 
-                        var ragingStrikesDuration = FindEffect(Buffs.RagingStrikes);
+                        var ragingStrikesDuration = GetBuffRemainingTime(Buffs.RagingStrikes);
 
                         var ragingJawsRenewTime = Service.Configuration.GetCustomIntValue(Config.RagingJawsRenewTime);
 
@@ -750,7 +750,7 @@ namespace XIVSlothComboPlugin.Combos
                             (level >= Levels.IronJaws && poisonRecast(4)) ||
                             (level >= Levels.IronJaws && windRecast(4)) ||
                             (level >= Levels.IronJaws && IsEnabled(CustomComboPreset.BardSimpleRagingJaws) &&
-                                HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration.RemainingTime < ragingJawsRenewTime &&
+                                HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration < ragingJawsRenewTime &&
                                 poisonRecast(40) && windRecast(40))
                         );
 

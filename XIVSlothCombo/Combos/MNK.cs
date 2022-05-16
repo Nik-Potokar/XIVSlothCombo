@@ -144,7 +144,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (((GetRemainingCharges(PerfectBalance) == 2) ||
                                     (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire).RemainingTime < 10) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8)))
                                 {
                                     return PerfectBalance;
@@ -249,11 +249,11 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == TrueStrike)
                 {
                     var disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
-                    var disciplinedFistDuration = FindEffect(Buffs.DisciplinedFist);
+                    var disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
 
                     if (level >= Levels.TrueStrike)
                     {
-                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration.RemainingTime < 6 && level >= Levels.TwinSnakes))
+                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes))
                             return TwinSnakes;
                         return TrueStrike;
                     }
@@ -327,8 +327,8 @@ namespace XIVSlothComboPlugin.Combos
                     var canWeave = CanWeave(actionID, 0.5);
                     var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
 
-                    var twinsnakeDuration = FindEffect(Buffs.DisciplinedFist);
-                    var demolishDuration = FindTargetEffect(Debuffs.Demolish);
+                    var twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
+                    var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
 
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
@@ -453,7 +453,7 @@ namespace XIVSlothComboPlugin.Combos
                                         (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) > 40) ||
-                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire).RemainingTime > 6) ||
+                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 6) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) < 10)))
                                     {
                                         return PerfectBalance;
@@ -525,18 +525,18 @@ namespace XIVSlothComboPlugin.Combos
                                 bool demolishFirst = !TargetHasEffect(Debuffs.Demolish);
                                 if (!demolishFirst && HasEffect(Buffs.DisciplinedFist))
                                 {
-                                    demolishFirst = twinsnakeDuration.RemainingTime >= demolishDuration.RemainingTime;
+                                    demolishFirst = twinsnakeDuration >= demolishDuration;
                                 }
                                 return demolishFirst ? Demolish : TwinSnakes;
                             }
                         }
                         if (canSolar && (lunarNadi || !solarNadi))
                         {
-                            if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= 2.5))
+                            if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= 2.5))
                             {
                                 return TwinSnakes;
                             }
-                            if (!coeurlChakra && (demolishDuration.RemainingTime <= 2.5 || !TargetHasEffect(Debuffs.Demolish)))
+                            if (!coeurlChakra && (demolishDuration <= 2.5 || !TargetHasEffect(Debuffs.Demolish)))
                             {
                                 return Demolish;
                             }
@@ -552,7 +552,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(Config.MnkDisciplinedFistApply)))
+                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= Service.Configuration.GetCustomIntValue(Config.MnkDisciplinedFistApply)))
                         {
                             return TwinSnakes;
                         }
@@ -560,7 +560,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(Config.MnkDemolishApply)))
+                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= Service.Configuration.GetCustomIntValue(Config.MnkDemolishApply)))
                         {
                             return Demolish;
                         }
