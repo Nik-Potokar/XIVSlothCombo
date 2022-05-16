@@ -988,7 +988,7 @@ namespace XIVSlothComboPlugin
             #region RED MAGE
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche", "", 1);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche only", "", 1);
 
             if (preset == CustomComboPreset.RDM_OGCD)
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "", 2);
@@ -997,7 +997,13 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "", 3);
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 4);
+
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Riposte/Moulinet only", "", 5);
+
+            if (preset == CustomComboPreset.RDM_OGCD)
+                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche & Riposte/Moulinet", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 6);
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
                 ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte", "", 1);
@@ -1183,6 +1189,9 @@ namespace XIVSlothComboPlugin
             #region WHITE MAGE
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.WHM_AoE_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.WHMogcdHealsShieldsFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, WHM.Config.WHMogcdHealsShieldsFeature, "Set HP% of target to use Tetragrammaton");
