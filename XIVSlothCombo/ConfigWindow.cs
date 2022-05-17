@@ -1037,9 +1037,6 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
                 ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
-                ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
-
             #endregion
             // ====================================================================================
             #region SAGE
