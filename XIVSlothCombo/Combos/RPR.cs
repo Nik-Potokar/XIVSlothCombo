@@ -533,7 +533,7 @@ namespace XIVSlothComboPlugin.Combos
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperEnshroudtoCommunioFeature;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Enshroud && HasEffect(Buffs.Enshrouded))
+                if (actionID is Enshroud && HasEffect(Buffs.Enshrouded) && level >= Levels.Communio)
                     return Communio;
                 return actionID;
             }
