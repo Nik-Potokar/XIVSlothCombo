@@ -74,6 +74,8 @@ namespace XIVSlothComboPlugin
                 var comboTime = *(float*)Service.Address.ComboTimer;
                 var level = Service.ClientState.LocalPlayer?.Level ?? 0;
 
+                BlueMageService.PopulateBLUSpells();
+
                 foreach (var combo in this.customCombos)
                 {
                     if (combo.TryInvoke(actionID, level, lastComboMove, comboTime, out var newActionID))

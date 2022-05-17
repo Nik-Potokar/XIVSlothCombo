@@ -109,7 +109,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (!inCombat)
                     {
-                        if (gauge.Chakra < 5)
+                        if (gauge.Chakra < 5 && level >= Levels.Meditation)
                         {
                             return Meditation;
                         }
@@ -144,7 +144,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (((GetRemainingCharges(PerfectBalance) == 2) ||
                                     (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire).RemainingTime < 10) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8)))
                                 {
                                     return PerfectBalance;
@@ -159,7 +159,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return RiddleOfWind;
                             }
                         }
-                        if (IsEnabled(CustomComboPreset.MnkMeditationOnAoEComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && HasEffect(Buffs.DisciplinedFist) && canWeaveChakra)
+                        if (IsEnabled(CustomComboPreset.MnkMeditationOnAoEComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes) && canWeaveChakra)
                         {
                             return level >= Levels.Enlightenment ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
                         }
@@ -177,14 +177,14 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (nadiNONE || !lunarNadi)
                         {
-                            if (pbStacks.StackCount > 0)
+                            if (pbStacks?.StackCount > 0)
                             {
                                 return level >= Levels.ShadowOfTheDestroyer ? ShadowOfTheDestroyer : Rockbreaker;
                             }
                         }
                         if (lunarNadi)
                         {
-                            switch (pbStacks.StackCount)
+                            switch (pbStacks?.StackCount)
                             {
                                 case 3:
                                     return OriginalHook(ArmOfTheDestroyer);
@@ -249,11 +249,11 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == TrueStrike)
                 {
                     var disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
-                    var disciplinedFistDuration = FindEffect(Buffs.DisciplinedFist);
+                    var disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
 
                     if (level >= Levels.TrueStrike)
                     {
-                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration.RemainingTime < 6 && level >= Levels.TwinSnakes))
+                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes))
                             return TwinSnakes;
                         return TrueStrike;
                     }
@@ -320,22 +320,22 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Bootshine)
+                if (actionID == Bootshine || (actionID == Demolish && IsEnabled(CustomComboPreset.MnkDemolishComboFeature)))
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MNKGauge>();
                     var canWeave = CanWeave(actionID, 0.5);
                     var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
 
-                    var twinsnakeDuration = FindEffect(Buffs.DisciplinedFist);
-                    var demolishDuration = FindTargetEffect(Debuffs.Demolish);
+                    var twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
+                    var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
 
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
 
                     // Opener for MNK
-                    if (IsEnabled(CustomComboPreset.MnkLunarSolarOpenerOnMainComboFeature))
+                    if (actionID != Demolish && IsEnabled(CustomComboPreset.MnkLunarSolarOpenerOnMainComboFeature))
                     {
                         // Re-enter opener when Brotherhood is used
                         if (lastComboMove == Brotherhood)
@@ -398,7 +398,7 @@ namespace XIVSlothComboPlugin.Combos
                                         {
                                             return RiddleOfWind;
                                         }
-                                        if (level >= Levels.Meditation && gauge.Chakra == 5)
+                                        if (gauge.Chakra == 5)
                                         {
                                             return OriginalHook(Meditation);
                                         }
@@ -417,7 +417,7 @@ namespace XIVSlothComboPlugin.Combos
                     // Out of combat preparation
                     if (!inCombat)
                     {
-                        if (!inOpener && gauge.Chakra < 5)
+                        if (!inOpener && gauge.Chakra < 5 && level >= Levels.Meditation)
                         {
                             return Meditation;
                         }
@@ -434,7 +434,7 @@ namespace XIVSlothComboPlugin.Combos
                     // Buffs
                     if (inCombat && !inOpener)
                     {
-                        if (IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature))
+                        if (actionID != Demolish && IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature))
                         {
                             if (canWeave)
                             {
@@ -453,7 +453,7 @@ namespace XIVSlothComboPlugin.Combos
                                         (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) > 40) ||
-                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && FindEffect(Buffs.RiddleOfFire).RemainingTime > 6) ||
+                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 6) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) < 10)))
                                     {
                                         return PerfectBalance;
@@ -487,9 +487,9 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && HasEffect(Buffs.DisciplinedFist))
+                            if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
                             {
-                                if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature) || (IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
+                                if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
                                     return OriginalHook(Meditation);
                                 }
@@ -525,18 +525,18 @@ namespace XIVSlothComboPlugin.Combos
                                 bool demolishFirst = !TargetHasEffect(Debuffs.Demolish);
                                 if (!demolishFirst && HasEffect(Buffs.DisciplinedFist))
                                 {
-                                    demolishFirst = twinsnakeDuration.RemainingTime >= demolishDuration.RemainingTime;
+                                    demolishFirst = twinsnakeDuration >= demolishDuration;
                                 }
                                 return demolishFirst ? Demolish : TwinSnakes;
                             }
                         }
                         if (canSolar && (lunarNadi || !solarNadi))
                         {
-                            if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= 2.5))
+                            if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= 2.5))
                             {
                                 return TwinSnakes;
                             }
-                            if (!coeurlChakra && (demolishDuration.RemainingTime <= 2.5 || !TargetHasEffect(Debuffs.Demolish)))
+                            if (!coeurlChakra && (demolishDuration <= 2.5 || !TargetHasEffect(Debuffs.Demolish)))
                             {
                                 return Demolish;
                             }
@@ -552,7 +552,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(Config.MnkDisciplinedFistApply)))
+                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= Service.Configuration.GetCustomIntValue(Config.MnkDisciplinedFistApply)))
                         {
                             return TwinSnakes;
                         }
@@ -560,7 +560,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration.RemainingTime <= Service.Configuration.GetCustomIntValue(Config.MnkDemolishApply)))
+                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= Service.Configuration.GetCustomIntValue(Config.MnkDemolishApply)))
                         {
                             return Demolish;
                         }
@@ -584,29 +584,29 @@ namespace XIVSlothComboPlugin.Combos
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
                     if (!nadiNONE && !lunarNadi)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return DragonKick;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return Bootshine;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return DragonKick;
                     }
                     if (nadiNONE)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return DragonKick;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return Bootshine;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return DragonKick;
                     }
                     if (lunarNadi)
                     {
-                        if (pbStacks.StackCount == 3)
+                        if (pbStacks?.StackCount == 3)
                             return TwinSnakes;
-                        if (pbStacks.StackCount == 2)
+                        if (pbStacks?.StackCount == 2)
                             return DragonKick;
-                        if (pbStacks.StackCount == 1)
+                        if (pbStacks?.StackCount == 1)
                             return Demolish;
                     }
 
@@ -625,7 +625,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID == RiddleOfFire)
                 {
-                    if (level >= 68 && level < 70)
+                    if (level is >= 68 and < 70)
                         return RiddleOfFire;
                     if (RoFCD.IsCooldown && BrotherhoodCD.IsCooldown && level >= 70)
                         return RiddleOfFire;

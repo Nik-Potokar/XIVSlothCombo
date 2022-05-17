@@ -142,10 +142,10 @@ namespace XIVSlothComboPlugin.Combos
                 Phoenix = 80,
 
                 // summoner ruins lvls
-                RubyRuin1 = 22,
+                RubyRuin1 = 6,
                 RubyRuin2 = 30,
                 RubyRuin3 = 54,
-                TopazRuin1 = 22,
+                TopazRuin1 = 15,
                 TopazRuin2 = 30,
                 TopazRuin3 = 54,
                 EmeralRuin1 = 22,
@@ -159,7 +159,8 @@ namespace XIVSlothComboPlugin.Combos
                 SMNLucidDreamingFeature = "SMNLucidDreamingFeature",
                 SMNSearingLightChoice = "SMNSearingLightChoice",
                 SummonerBurstPhase = "SummonerBurstPhase",
-                SummonerPrimalChoice = "SummonerPrimalChoice";
+                SummonerPrimalChoice = "SummonerPrimalChoice",
+                SummonerSwiftcastPhase = "SummonerSwiftcastPhase";
         }
 
         internal class SummonerRaiseFeature : CustomCombo
@@ -242,6 +243,7 @@ namespace XIVSlothComboPlugin.Combos
                 var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SummonerPrimalChoice);
                 var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMNLucidDreamingFeature);
+                var swiftcasePhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
 
                 if (actionID is Ruin or Ruin2 && InCombat())
                 {
@@ -253,7 +255,9 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.SummonerSearingLightBurstOption))
                             {
                                 if ((SummonerBurstPhase == 1 && OriginalHook(Ruin) == AstralImpulse) ||
-                                    (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire))
+                                    (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire) ||
+                                    (SummonerBurstPhase == 3 && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
+                                    (SummonerBurstPhase == 4))
                                     return SearingLight;
                             }
 
@@ -271,10 +275,11 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (level < Levels.SearingLight)
                                         return Fester;
-                                    if (HasEffectAny(Buffs.SearingLight) &&
-                                        ((SummonerBurstPhase == 1 && OriginalHook(Ruin) == AstralImpulse) ||
+                                    if ((SummonerBurstPhase == 1 && OriginalHook(Ruin) == AstralImpulse) ||
                                         (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire) ||
-                                        IsNotEnabled(CustomComboPreset.SummonerPrimalBurstChoice)))
+                                        (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
+                                        (SummonerBurstPhase == 4 && HasEffect(Buffs.SearingLight) && !HasEffect(Buffs.TitansFavor)) ||
+                                        IsNotEnabled(CustomComboPreset.SummonerPrimalBurstChoice))
                                         return Fester;
                                 }
                             }
@@ -291,29 +296,56 @@ namespace XIVSlothComboPlugin.Combos
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnRuinFeature))
                     {
-                        //Swiftcast Garuda Feature                                 
-                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda) && level >= Levels.Slipstream)
+                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
                         {
-                            if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && HasEffect(Buffs.GarudasFavor) && gauge.IsGarudaAttuned)
-                                return All.Swiftcast;
-                            if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && 
-                                ((gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) ||
-                                (gauge.Attunement == 0 && HasEffect(Buffs.GarudasFavor)))) //Astral Flow if Swiftcast is not ready throughout Garuda
-                                return OriginalHook(AstralFlow);
-                        }
-
-                        //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
-                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastFeatureIfrit) && level >= Levels.RubyRuin1 && CanSpellWeave(actionID))
-                        {
-                            if (IsOffCooldown(All.Swiftcast) && level >= All.Levels.Swiftcast && gauge.IsIfritAttuned)
+                            //Swiftcast Garuda Feature
+                            if (swiftcasePhase == 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
                             {
-                                if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
-                                    (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && lastComboMove is CrimsonStrike or RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite))
+                                if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned)
                                     return All.Swiftcast;
+                                if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
+                                    ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
+                                    (gauge.Attunement == 0))) //Astral Flow if Swiftcast is not ready throughout Garuda
+                                    return OriginalHook(AstralFlow);
+                            }
+
+                            //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
+                            if (swiftcasePhase == 2 && level >= Levels.RubyRuin1 && CanSpellWeave(actionID))
+                            {
+                                if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned)
+                                {
+                                    if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
+                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && lastComboMove is CrimsonStrike or RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite))
+                                        return All.Swiftcast;
+                                }
+
+                            }
+
+                            //SpS Swiftcast
+                            if (swiftcasePhase == 3)
+                            {
+                                //Swiftcast Garuda Feature
+                                if (level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
+                                {
+                                    if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
+                                        return All.Swiftcast;
+                                    if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
+                                        ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
+                                        (gauge.Attunement == 0))) //Astral Flow if Swiftcast is not ready throughout Garuda
+                                        return OriginalHook(AstralFlow);
+                                }
+
+                                //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
+                                if (level >= Levels.RubyRuin1 && CanSpellWeave(actionID) && gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
+                                {
+                                    if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
+                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && lastComboMove is CrimsonStrike or RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite))
+                                        return All.Swiftcast;
+                                }
                             }
                         }
 
-                        if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && IsNotEnabled(CustomComboPreset.SummonerSwiftcastFeatureGaruda) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) || //Garuda
+                        if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && (IsNotEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) || swiftcasePhase == 2) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) || //Garuda
                             IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(Buffs.TitansFavor) && lastComboMove == TopazRite && CanSpellWeave(actionID) || //Titan
                             IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == CrimsonCyclone)) //Ifrit
                             return OriginalHook(AstralFlow);
@@ -330,7 +362,6 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
                                     return OriginalHook(SummonTopaz);
-
                                 if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
                                     return OriginalHook(SummonEmerald);
                             }
@@ -339,7 +370,6 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
                                     return OriginalHook(SummonEmerald);
-
                                 if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
                                     return OriginalHook(SummonTopaz);
                             }
@@ -350,23 +380,25 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.SummonerDemiSummonsFeature))
                     {
                         if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
-                            (level >= Levels.Aethercharge && level < Levels.Bahamut || //Pre Bahamut Phase
+                            (level is >= Levels.Aethercharge and < Levels.Bahamut || //Pre Bahamut Phase
                             gauge.IsBahamutReady && level >= Levels.Bahamut || //Bahamut Phase
                             gauge.IsPhoenixReady && level >= Levels.Phoenix)) //Phoenix Phase
                             return OriginalHook(Aethercharge);
 
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanSpellWeave(actionID))
                         {
-                            if (IsOffCooldown(OriginalHook(AstralFlow)) && level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is SMN.AstralImpulse))
+                            if (IsOffCooldown(OriginalHook(AstralFlow)) && 
+                                level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralImpulse))
                                 return OriginalHook(AstralFlow);
 
-                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && level >= Levels.Bahamut && lastComboMove is AstralImpulse or FountainOfFire)
+                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && 
+                                level >= Levels.Bahamut && lastComboMove is AstralImpulse or FountainOfFire)
                                 return OriginalHook(EnkindleBahamut);
                         }
 
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption))
                         {
-                            if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is SMN.FountainOfFire)
+                            if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is FountainOfFire)
                                 return OriginalHook(AstralFlow);
                         }
                     }
@@ -401,8 +433,8 @@ namespace XIVSlothComboPlugin.Combos
                                 IsOffCooldown(SearingLight) &&
                                 level >= Levels.SearingLight &&
                                 (searingChoice == 0 ||
-                                (OriginalHook(Tridisaster) is SMN.AstralFlare && gauge.SummonTimerRemaining > 0 && searingChoice == 1) ||
-                                (OriginalHook(Tridisaster) is SMN.BrandOfPurgatory && gauge.SummonTimerRemaining > 0 && searingChoice == 2) ||
+                                (OriginalHook(Tridisaster) is AstralFlare && gauge.SummonTimerRemaining > 0 && searingChoice == 1) ||
+                                (OriginalHook(Tridisaster) is BrandOfPurgatory && gauge.SummonTimerRemaining > 0 && searingChoice == 2) ||
                                 (OriginalHook(PreciousBrilliance) is (RubyCata or RubyOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 3) ||
                                 (OriginalHook(PreciousBrilliance) is (EmeraldCata or EmeraldOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 4) ||
                                 (OriginalHook(PreciousBrilliance) is (TopazCata or TopazOutburst) && gauge.SummonTimerRemaining > 0 && searingChoice == 5)))
@@ -425,24 +457,19 @@ namespace XIVSlothComboPlugin.Combos
                             //Demi Nuke
                             if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID))
                             {
-                                if (IsOffCooldown(OriginalHook(AstralFlow)) &&
-                                    level >= Levels.AstralFlow &&
-                                    (level < Levels.Bahamut || lastComboMove is SMN.AstralFlare) &&
-                                    gauge.AttunmentTimerRemaining > 0)
+                                if (IsOffCooldown(OriginalHook(AstralFlow)) && 
+                                    level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralFlare))
                                     return OriginalHook(AstralFlow);
 
-                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) &&
-                                    level >= Levels.Bahamut &&
-                                    OriginalHook(Tridisaster) is AstralFlare or BrandOfPurgatory &&
-                                    gauge.SummonTimerRemaining > 0)
+                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && 
+                                    level >= Levels.Bahamut && lastComboMove is AstralFlare or BrandOfPurgatory)
                                     return OriginalHook(EnkindleBahamut);
                             }
 
                             //Demi Nuke 2: Electric Boogaloo
                             if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
                             {
-                                if (IsOffCooldown(OriginalHook(AstralFlow)) &&
-                                    OriginalHook(Tridisaster) is SMN.BrandOfPurgatory)
+                                if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is BrandOfPurgatory)
                                     return OriginalHook(AstralFlow);
                             }
                         }
@@ -453,12 +480,9 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
                         {
                             if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
-                                (level >= Levels.Aethercharge && level < Levels.Bahamut || //Pre Bahamut Phase
-                                gauge.IsBahamutReady && level >= Levels.Bahamut || //Bahamut Phase
-                                gauge.IsPhoenixReady && level >= Levels.Phoenix) && //Phoenix Phase
-                                !gauge.IsIfritReady &&
-                                !gauge.IsTitanReady &&
-                                !gauge.IsGarudaReady)
+                                (level is >= Levels.Aethercharge and < Levels.Bahamut || //Pre Bahamut Phase
+                                 gauge.IsBahamutReady && level >= Levels.Bahamut || //Bahamut Phase
+                                 gauge.IsPhoenixReady && level >= Levels.Phoenix)) //Phoenix Phase
                                 return OriginalHook(Aethercharge);
 
                         }
@@ -507,7 +531,7 @@ namespace XIVSlothComboPlugin.Combos
                 var gauge = GetJobGauge<SMNGauge>();
                 if (actionID is Ruin or Ruin2 or Ruin3 or DreadwyrmTrance or AstralFlow or EnkindleBahamut or SearingLight or RadiantAegis or Outburst or Tridisaster or PreciousBrilliance or Gemshine)
                 {
-                    if (!HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0)
+                    if (!HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && GetCooldownRemainingTime(Ruin) == 0)
                         return SummonCarbuncle;
                 }
 
@@ -521,10 +545,27 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
-                if (actionID is SummonEmerald or SummonRuby or SummonTopaz or SummonIfrit or SummonTitan or SummonGaruda or SummonIfrit2 or SummonTitan2 or SummonGaruda2)
+                if ((actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonEmerald or SummonGaruda or SummonGaruda2 or SummonRuby or SummonIfrit or SummonIfrit2 && HasEffect(Buffs.TitansFavor)) ||
+                    (actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonEmerald or SummonGaruda or SummonGaruda2 && HasEffect(Buffs.GarudasFavor)) ||
+                    (actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonRuby or SummonIfrit or SummonIfrit2 && (HasEffect(Buffs.IfritsFavor) || lastComboMove == CrimsonCyclone)))
+                    return OriginalHook(AstralFlow);
+                return actionID;
+            }
+        }
+
+        internal class SummonerPrimalAbilitiesFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset => CustomComboPreset.SummonerPrimalAbilitiesFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is SummonBahamut or SummonPhoenix)
                 {
-                    if (HasEffect(Buffs.TitansFavor) || HasEffect(Buffs.GarudasFavor) || HasEffect(Buffs.IfritsFavor) || lastComboMove == CrimsonCyclone)
+                    if (IsOffCooldown(EnkindleBahamut) && OriginalHook(Ruin) is AstralImpulse)
+                        return OriginalHook(EnkindleBahamut);
+                    if (IsOffCooldown(EnkindlePhoenix) && OriginalHook(Ruin) is FountainOfFire)
+                        return OriginalHook(EnkindlePhoenix);
+                    if (OriginalHook(AstralFlow) is Deathflare or Rekindle)
                         return OriginalHook(AstralFlow);
                 }
 

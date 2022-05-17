@@ -1,1 +1,3 @@
-Welcome to XIVSlothCombo v3.0.14.0!
+Welcome to XIVSlothCombo v3.0.15.0!
+The hotly anticipated RPR Rework is here - please check your options!
+We've also overhauled BLU - please check your options!
