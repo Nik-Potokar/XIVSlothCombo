@@ -109,7 +109,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (!inCombat)
                     {
-                        if (gauge.Chakra < 5)
+                        if (gauge.Chakra < 5 && level >= Levels.Meditation)
                         {
                             return Meditation;
                         }
@@ -159,7 +159,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return RiddleOfWind;
                             }
                         }
-                        if (IsEnabled(CustomComboPreset.MnkMeditationOnAoEComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && HasEffect(Buffs.DisciplinedFist) && canWeaveChakra)
+                        if (IsEnabled(CustomComboPreset.MnkMeditationOnAoEComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes) && canWeaveChakra)
                         {
                             return level >= Levels.Enlightenment ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
                         }
@@ -417,7 +417,7 @@ namespace XIVSlothComboPlugin.Combos
                     // Out of combat preparation
                     if (!inCombat)
                     {
-                        if (!inOpener && gauge.Chakra < 5)
+                        if (!inOpener && gauge.Chakra < 5 && level >= Levels.Meditation)
                         {
                             return Meditation;
                         }
@@ -487,7 +487,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= Levels.Meditation && gauge.Chakra == 5 && HasEffect(Buffs.DisciplinedFist))
+                            if (IsEnabled(CustomComboPreset.MnkMeditationOnMainComboFeature) && level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
                             {
                                 if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MnkCDsOnMainComboFeature) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
