@@ -1098,14 +1098,6 @@ namespace XIVSlothComboPlugin
             }
             #endregion
             // ====================================================================================
-            #region MONK
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
-
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
-            #endregion
-            // ====================================================================================
             #region SCHOLAR
             if (preset is CustomComboPreset.SCH_ST_Broil_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Broil_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
