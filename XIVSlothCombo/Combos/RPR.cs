@@ -229,29 +229,30 @@ namespace XIVSlothComboPlugin.Combos
                                     (!HasEffect(Buffs.ArcaneCircle) && gauge.Shroud >= 90))) //Shroud pooling
                                     return Enshroud;
                             }
+                        }
 
-                            if (enshrouded)
+                        if (enshrouded)
+                        {
+                            if (IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature))
                             {
                                 if (IsEnabled(CustomComboPreset.CommunioOnSTOption) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= Levels.Communio)
                                     return Communio;
                                 if (IsEnabled(CustomComboPreset.LemureonSTOption) && gauge.VoidShroud >= 2 && level >= Levels.LemuresSlice)
                                     return OriginalHook(BloodStalk);
-                                if (IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature))
+                                if (HasEffect(Buffs.EnhancedVoidReaping))
+                                    return OriginalHook(Gibbet);
+                                if (HasEffect(Buffs.EnhancedCrossReaping))
+                                    return OriginalHook(Gallows);
+                                if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
                                 {
-                                    if (HasEffect(Buffs.EnhancedVoidReaping))
-                                        return OriginalHook(Gibbet);
-                                    if (HasEffect(Buffs.EnhancedCrossReaping))
+                                    if (positionalChoice is 1 or 3)
                                         return OriginalHook(Gallows);
-                                    if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
-                                    {
-                                        if (positionalChoice is 1 or 3)
-                                            return OriginalHook(Gallows);
-                                        if (positionalChoice is 2 or 4)
-                                            return OriginalHook(Gibbet);
-                                    }
+                                    if (positionalChoice is 2 or 4)
+                                        return OriginalHook(Gibbet);
                                 }
                             }
                         }
+
 
                         if (!(comboTime > 0) || lastComboMove is InfernalSlice || comboTime > 10)
                         {
@@ -320,7 +321,7 @@ namespace XIVSlothComboPlugin.Combos
                                     return Communio;
                                 if (IsEnabled(CustomComboPreset.ReaperLemureAOEFeature) && gauge.VoidShroud >= 2 && level >= Levels.LemuresScythe)
                                     return OriginalHook(GrimSwathe);
-                                if (gauge.LemureShroud > 1)
+                                if (gauge.LemureShroud > 0)
                                     return OriginalHook(Guillotine);
                             }
                         }
