@@ -978,10 +978,15 @@ namespace XIVSlothComboPlugin
             {
                     ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
                     ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 3);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 4);
             }
 
             if (preset == CustomComboPreset.ReaperShadowOfDeathFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 6, RPR.Config.RPRSoDRefreshRange, "Seconds remaining before refreshing Death's Design.", 150, SliderIncrements.Ones);
                 ConfigWindowFunctions.DrawSliderInt(0, 5, RPR.Config.RPRSoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
+            }
 
             #endregion
             // ====================================================================================
