@@ -1781,12 +1781,12 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window), but will pool Shroud outside of burst windows.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
         ReaperEnshroudPoolOption = 12009,
 
-        [ParentCombo(ReaperEnshroudonSTFeature)]
-        [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the combo when there are 2 Void Shroud charges.", RPR.JobID, 0, "", "")]
+        [ParentCombo(GibbetGallowsonSTFeature)]
+        [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the combo when there are 2 Void Shroud charges.", RPR.JobID, 1, "", "")]
         LemureonSTOption = 12010,
 
-        [ParentCombo(ReaperEnshroudonSTFeature)]
-        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the combo when there is 1 charge of Lemure Shroud left.", RPR.JobID, 0, "", "")]
+        [ParentCombo(GibbetGallowsonSTFeature)]
+        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the combo when there is 1 charge of Lemure Shroud left.", RPR.JobID, 1, "", "")]
         CommunioOnSTOption = 12011,
 
         [ParentCombo(ReaperSliceCombo)]
