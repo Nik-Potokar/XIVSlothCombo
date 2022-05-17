@@ -253,7 +253,6 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-
                         if (!(comboTime > 0) || lastComboMove is InfernalSlice || comboTime > 10)
                         {
                             if (IsEnabled(CustomComboPreset.GluttonyStalkonSTFeature) && !soulReaver && !enshrouded && gauge.Soul >= 50 && CanWeave(actionID) && level >= Levels.BloodStalk)
