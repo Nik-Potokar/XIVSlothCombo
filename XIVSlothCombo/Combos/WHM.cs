@@ -242,13 +242,13 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
                         {
-                            if (level >= Levels.Aero1 && level < Levels.Aero2)
+                            if (level is >= Levels.Aero1 and < Levels.Aero2)
                             {
                                 if ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3))
                                     return Aero1;
                             }
 
-                            if (level >= Levels.Aero2 && level < Levels.Dia)
+                            if (level is >= Levels.Aero2 and < Levels.Dia)
                             {
                                 if ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3))
                                     return Aero2;

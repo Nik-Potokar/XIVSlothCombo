@@ -1,7 +1,8 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+﻿using System.Linq;
+using Dalamud.Game.ClientState.Conditions;
+using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
-using System.Linq;
 
 namespace XIVSlothComboPlugin.Combos
 {
@@ -358,7 +359,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                     {
-                        if (typeof(AST.MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.MeleeCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(MeleeCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetObject(member);
                             GetTarget = false;
@@ -368,7 +369,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                     {
-                        if (typeof(AST.RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.RangedCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                        if (typeof(RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(RangedCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                         {
                             TargetObject(member);
                             GetTarget = false;
@@ -396,7 +397,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
                         {
-                            if (typeof(AST.TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.TankCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                            if (typeof(TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(TankCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                             {
                                 TargetObject(member);
                                 GetTarget = false;
@@ -406,7 +407,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                         if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
                         {
-                            if (typeof(AST.HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(AST.HealerCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
+                            if (typeof(HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(HealerCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
                             {
                                 TargetObject(member);
                                 GetTarget = false;
@@ -490,7 +491,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == FallMalefic || actionID == Malefic4 || actionID == Malefic3 || actionID == Malefic2 || actionID == Malefic1)
                 {
 
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var incombat = HasCondition(ConditionFlag.InCombat);
                     var combust3Debuff = FindTargetEffect(Debuffs.Combust3);
                     var combust2Debuff = FindTargetEffect(Debuffs.Combust2);
                     var combust1Debuff = FindTargetEffect(Debuffs.Combust1);
@@ -510,18 +511,18 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                     {
-                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
+                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6)
                             return Astrodyne;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                     {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30)
                             return Draw;
 
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                     {
-                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6)
                             return MinorArcana;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
@@ -531,7 +532,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                     {
-                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6)
                             return LordOfCrowns;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 72 && incombat)
@@ -540,13 +541,13 @@ namespace XIVSlothComboPlugin.Combos
                             return Combust3;
                     }
 
-                    if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 46 && level <= 71 && incombat)
+                    if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level is >= 46 and <= 71 && incombat)
                     {
                         if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
                             return Combust2;
                     }
 
-                    if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level >= 4 && level <= 45 && incombat)
+                    if (IsEnabled(CustomComboPreset.AstrologianDpsFeature) && !IsEnabled(CustomComboPreset.DisableCombustOnDpsFeature) && level is >= 4 and <= 45 && incombat)
                     {
                         if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
                             return Combust1;
@@ -568,7 +569,7 @@ namespace XIVSlothComboPlugin.Combos
                     var heliosBuff = GetBuffRemainingTime(Buffs.AspectedHelios);
                     var horoscopeCD = GetCooldown(Horoscope);
                     var celestialOppositionCD = GetCooldown(CelestialOpposition);
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var incombat = HasCondition(ConditionFlag.InCombat);
                     var gauge = GetJobGauge<ASTGauge>();
 
                     if (level < Levels.AspectedHelios)
@@ -613,7 +614,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Gravity || actionID == Gravity2)
                 {
 
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var incombat = HasCondition(ConditionFlag.InCombat);
                     var gauge = GetJobGauge<ASTGauge>();
                     var lucidDreaming = GetCooldown(All.LucidDreaming);
                     var minorarcanaCD = GetCooldown(MinorArcana);
@@ -629,23 +630,23 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                     {
-                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 50)
+                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6)
                             return Astrodyne;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                     {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30)
                             return Draw;
 
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                     {
-                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6)
                             return LordOfCrowns;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                     {
-                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6)
                             return MinorArcana;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
@@ -682,7 +683,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Combust1 || actionID == Combust2 || actionID == Combust3)
                 {
 
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var incombat = HasCondition(ConditionFlag.InCombat);
                     var combust3Debuff = FindTargetEffect(Debuffs.Combust3);
                     var combust2Debuff = FindTargetEffect(Debuffs.Combust2);
                     var combust1Debuff = FindTargetEffect(Debuffs.Combust1);
@@ -701,24 +702,24 @@ namespace XIVSlothComboPlugin.Combos
                         if (!lightspeed.IsCooldown && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.6)
                             return Lightspeed;
                     }
-                    if (!HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                    if (!HasCondition(ConditionFlag.InCombat))
                     {
                         return OriginalHook(Malefic1);
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                     {
-                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6 && level >= 50)
+                        if (!gauge.ContainsSeal(SealType.NONE) && incombat && fallmalefic.CooldownRemaining >= 0.6)
                             return Astrodyne;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                     {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        if (gauge.DrawnCard.Equals(CardType.NONE) && incombat && actionIDCD.CooldownRemaining >= 0.6 && drawCD.CooldownRemaining < 30)
                             return Draw;
 
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                     {
-                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        if (gauge.DrawnCrownCard == CardType.NONE && incombat && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.6)
                             return MinorArcana;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
@@ -728,7 +729,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) && level >= 70)
                     {
-                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6 && level >= 70)
+                        if (gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.6)
                             return LordOfCrowns;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 72 && incombat)
@@ -737,13 +738,13 @@ namespace XIVSlothComboPlugin.Combos
                             return Combust3;
                     }
 
-                    if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 46 && level <= 71 && incombat)
+                    if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level is >= 46 and <= 71 && incombat)
                     {
                         if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
                             return Combust2;
                     }
 
-                    if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level >= 4 && level <= 45 && incombat)
+                    if (IsEnabled(CustomComboPreset.AstrologianAlternateDpsFeature) && level is >= 4 and <= 45 && incombat)
                     {
                         if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
                             return Combust1;
@@ -762,7 +763,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == FallMalefic || actionID == Malefic4 || actionID == Malefic3 || actionID == Malefic2 || actionID == Malefic1)
                 {
 
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var incombat = HasCondition(ConditionFlag.InCombat);
                     var combust3Debuff = FindTargetEffect(Debuffs.Combust3);
                     var combust2Debuff = FindTargetEffect(Debuffs.Combust2);
                     var combust1Debuff = FindTargetEffect(Debuffs.Combust1);
@@ -785,18 +786,18 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) && level >= 50)
                     {
-                        if (!gauge.ContainsSeal(SealType.NONE) && lastComboMove == OriginalHook(actionID) && fallmalefic.CooldownRemaining >= 0.4 && level >= 50)
+                        if (!gauge.ContainsSeal(SealType.NONE) && lastComboMove == OriginalHook(actionID) && fallmalefic.CooldownRemaining >= 0.4)
                             return Astrodyne;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) && level >= 30)
                     {
-                        if (gauge.DrawnCard.Equals(CardType.NONE) && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30 && level >= 30)
+                        if (gauge.DrawnCard.Equals(CardType.NONE) && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && drawCD.CooldownRemaining < 30)
                             return Draw;
 
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) && level >= 70)
                     {
-                        if (gauge.DrawnCrownCard == CardType.NONE && lastComboMove == OriginalHook(actionID) && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4 && level >= 70)
+                        if (gauge.DrawnCrownCard == CardType.NONE && lastComboMove == OriginalHook(actionID) && minorarcanaCD.CooldownRemaining == 0 && actionIDCD.CooldownRemaining >= 0.4)
                             return MinorArcana;
                     }
                     if (IsEnabled(CustomComboPreset.AstrologianLucidFeature) && level >= All.Levels.LucidDreaming)
@@ -808,7 +809,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         var buff = HasEffect(Buffs.Divination);
                         var buffcd = GetCooldown(Divination);
-                        if (gauge.DrawnCrownCard == CardType.LORD && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buff || gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && level >= 70 && buffcd.IsCooldown)
+                        if (gauge.DrawnCrownCard == CardType.LORD && lastComboMove == OriginalHook(actionID) && actionIDCD.CooldownRemaining >= 0.4 && buff || gauge.DrawnCrownCard == CardType.LORD && incombat && actionIDCD.CooldownRemaining >= 0.4 && buffcd.IsCooldown)
                             return LordOfCrowns;
                     }
                     if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 72 && incombat)
@@ -817,13 +818,13 @@ namespace XIVSlothComboPlugin.Combos
                             return Combust3;
                     }
 
-                    if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 46 && level <= 71 && incombat)
+                    if (IsEnabled(CustomComboPreset.CustomValuesTest) && level is >= 46 and <= 71 && incombat)
                     {
                         if ((combust2Debuff is null) || (combust2Debuff.RemainingTime <= 3))
                             return Combust2;
                     }
 
-                    if (IsEnabled(CustomComboPreset.CustomValuesTest) && level >= 4 && level <= 45 && incombat)
+                    if (IsEnabled(CustomComboPreset.CustomValuesTest) && level is >= 4 and <= 45 && incombat)
                     {
                         if ((combust1Debuff is null) || (combust1Debuff.RemainingTime <= 3))
                             return Combust1;

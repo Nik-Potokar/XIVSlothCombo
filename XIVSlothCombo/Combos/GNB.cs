@@ -154,7 +154,7 @@ namespace XIVSlothComboPlugin.Combos
 
                             //Continuation
                             if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= Levels.Continuation &&
-                                (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)) && level >= Levels.Continuation)
+                                (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)))
                                 return OriginalHook(Continuation);
 
                             //Rough Divide Feature
@@ -183,7 +183,7 @@ namespace XIVSlothComboPlugin.Combos
                                     return SonicBreak;
 
                                 //sub level 54 functionality
-                                if (IsEnabled(CustomComboPreset.GunbreakerDZOnMainComboFeature) && level >= Levels.DangerZone && level < Levels.SonicBreak && IsOffCooldown(DangerZone))
+                                if (IsEnabled(CustomComboPreset.GunbreakerDZOnMainComboFeature) && level is >= Levels.DangerZone and < Levels.SonicBreak && IsOffCooldown(DangerZone))
                                     return OriginalHook(DangerZone);
                             }
                         }

@@ -216,7 +216,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if ((NoPhlegmaToxikon && GetCooldown(OriginalHook(Phlegma)).RemainingCharges == 0) ||
                             (OutOfRangeToxikon && (GetTargetDistance() > Range.Phlegma)))
-                           return OriginalHook(Toxikon);
+                            return OriginalHook(Toxikon);
                     }
                     var NoPhlegmaDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaDyskrasia);
                     var NoTargetDyskrasia  = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
@@ -225,7 +225,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if ((NoPhlegmaDyskrasia && GetCooldown(OriginalHook(Phlegma)).RemainingCharges == 0) ||
                             (NoTargetDyskrasia && CurrentTarget is null))
-                           return OriginalHook(Dyskrasia);
+                            return OriginalHook(Dyskrasia);
                     }
                 }
                 return actionID;

@@ -1037,9 +1037,6 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
                 ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
-                ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
-
             #endregion
             // ====================================================================================
             #region SAGE
@@ -1101,14 +1098,6 @@ namespace XIVSlothComboPlugin
                     ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
                     ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
             }
-            #endregion
-            // ====================================================================================
-            #region MONK
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
-
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
             #endregion
             // ====================================================================================
             #region SCHOLAR
