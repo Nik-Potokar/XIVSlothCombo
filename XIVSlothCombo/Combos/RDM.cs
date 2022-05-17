@@ -359,8 +359,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Situation 4: Level 58 or 59
-                        if (level < Levels.Manafication && level >= Levels.Embolden
-                            && System.Math.Min(black, white) >= 50 && IsOffCooldown(Embolden))
+                        if (level is < Levels.Manafication and >= Levels.Embolden && System.Math.Min(black, white) >= 50 && IsOffCooldown(Embolden))
                         {
                             return Embolden;
                         }
@@ -407,8 +406,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     //Below Manafication Level
-                    if (level < Levels.Manafication && level >= Levels.Embolden
-                        && System.Math.Min(black, white) >= 20 && IsOffCooldown(Embolden))
+                    if (level is < Levels.Manafication and >= Levels.Embolden && System.Math.Min(black, white) >= 20 && IsOffCooldown(Embolden))
                     {
                         return Embolden;
                     }

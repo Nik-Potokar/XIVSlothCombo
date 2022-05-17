@@ -398,7 +398,7 @@ namespace XIVSlothComboPlugin.Combos
                                         {
                                             return RiddleOfWind;
                                         }
-                                        if (level >= Levels.Meditation && gauge.Chakra == 5)
+                                        if (gauge.Chakra == 5)
                                         {
                                             return OriginalHook(Meditation);
                                         }
@@ -625,7 +625,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID == RiddleOfFire)
                 {
-                    if (level >= 68 && level < 70)
+                    if (level is >= 68 and < 70)
                         return RiddleOfFire;
                     if (RoFCD.IsCooldown && BrotherhoodCD.IsCooldown && level >= 70)
                         return RiddleOfFire;

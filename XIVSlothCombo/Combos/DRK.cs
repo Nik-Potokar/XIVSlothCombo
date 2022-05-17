@@ -110,7 +110,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (level >= Levels.EdgeOfDarkness)
                                     return OriginalHook(EdgeOfDarkness);
-                                if (level >= Levels.FloodOfDarkness && level < Levels.EdgeOfDarkness)
+                                if (level is >= Levels.FloodOfDarkness and < Levels.EdgeOfDarkness)
                                     return FloodOfDarkness;
                             }
                         }

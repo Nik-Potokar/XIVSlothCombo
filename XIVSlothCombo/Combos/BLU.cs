@@ -82,7 +82,7 @@ namespace XIVSlothComboPlugin.Combos
                         return Bristle;
 
                     if (IsSpellActive(SongOfTorment))
-                    return SongOfTorment;
+                        return SongOfTorment;
                 }
 
                 return actionID;
@@ -137,7 +137,7 @@ namespace XIVSlothComboPlugin.Combos
                         return ShockStrike;
 
                     if (IsSpellActive(PhantomFlurry))
-                    return PhantomFlurry;
+                        return PhantomFlurry;
                 }
 
                 return actionID;
@@ -178,7 +178,7 @@ namespace XIVSlothComboPlugin.Combos
                         return All.Swiftcast;
 
                     if(IsSpellActive(FinalSting))
-                    return FinalSting;
+                        return FinalSting;
                 }
 
                 return actionID;
@@ -206,7 +206,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (!swiftCD.IsCooldown)
                             return All.Swiftcast;
                         if (IsSpellActive(Ultravibration))
-                        return Ultravibration;
+                            return Ultravibration;
                     }
                 }
 
