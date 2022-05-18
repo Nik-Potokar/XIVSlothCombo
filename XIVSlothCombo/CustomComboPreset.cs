@@ -83,65 +83,60 @@ namespace XIVSlothComboPlugin
         #endregion
         // ====================================================================================
         #region GLOBAL FEATURES
-        //Tank Features
-        [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllTankFeatures = 100099,
 
-            #region Global Tank Features
+        #region Global Tank Features
+        [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        ALL_Tank_Menu = 100099,
+
             [ReplaceSkill(All.LowBlow, PLD.ShieldBash)]
-            [ParentCombo(AllTankFeatures)]
+            [ParentCombo(ALL_Tank_Menu)]
             [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
             ALL_Tank_Interrupt = 100000,
 
-            [ParentCombo(AllTankFeatures)]
+            [ParentCombo(ALL_Tank_Menu)]
             [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
             ALL_Tank_Reprisal = 100001,
             #endregion
 
-        //Healer Features
+        #region Global Healer Features
         [CustomComboInfo("Global Healer Features", "Features and options involving shared role actions for Healers.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllHealerFeatures = 100098,
+        ALL_Healer_Menu = 100098,
 
-            #region Global Healer Features
             [ReplaceSkill(AST.Ascend, WHM.Raise, SCH.Resurrection, SGE.Egeiro)]
             [ConflictingCombos(AstrologianAscendFeature, SCH_RaiseFeature, SGE_RaiseFeature, WHMRaiseFeature)]
-            [ParentCombo(AllHealerFeatures)]
+            [ParentCombo(ALL_Healer_Menu)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             ALL_Healer_Raise = 100010,
             #endregion
 
-        //Magical Ranged Features
+        #region Global Magical Ranged Features
         [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllCasterFeatures = 100097,
+        ALL_Caster_Menu = 100097,
 
-            #region Global Magical Ranged Features
-            [ParentCombo(AllCasterFeatures)]
+            [ParentCombo(ALL_Caster_Menu)]
             [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
             ALL_Caster_Addle = 100020,
 
-        //            [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
             [ConflictingCombos(SummonerRaiseFeature, RDM_Verraise)]
-            [ParentCombo(AllCasterFeatures)]
+            [ParentCombo(ALL_Caster_Menu)]
             [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
             ALL_Caster_Raise = 100021,
             #endregion
 
-        //Melee Features
+        #region Global Melee Features
         [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllMeleeFeatures = 100096,
+        ALL_Melee_Menu = 100096,
 
-            #region Global Melee Features
-            [ParentCombo(AllMeleeFeatures)]
+            [ParentCombo(ALL_Melee_Menu)]
             [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
             ALL_Melee_Feint = 100030,
             #endregion
 
-        //Ranged Physical Features
+        #region Global Ranged Physical Features
         [CustomComboInfo("Global Physical Ranged Features", "Features and options involving shared role actions for Physical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
-        AllRangedPhysicalFeatures = 100095,
+        ALL_Ranged_Menu = 100095,
 
-            #region Global Ranged Physical Features 
-            [ParentCombo(AllRangedPhysicalFeatures)]
+            [ParentCombo(ALL_Ranged_Menu)]
             [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
             ALL_Ranged_Mitigation = 100040,
             #endregion
@@ -149,7 +144,6 @@ namespace XIVSlothComboPlugin
         //Non-gameplay Features
         //[CustomComboInfo("Output Combat Log", "Outputs your performed actions to the chat.", ADV.JobID)]
         //AllOutputCombatLog = 100094,
-
 
         #endregion
         // ====================================================================================
