@@ -193,8 +193,8 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if ((IsEnabled(CustomComboPreset.DoubleSoDOption) && level >= Levels.PlentifulHarvest && enshrouded && GetCooldownRemainingTime(ArcaneCircle) < 9 &&
                             ((gauge.LemureShroud is 4 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30) || gauge.LemureShroud is 3 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 50)) || //double shroud windows
-                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) < sodRefreshRange && IsOffCooldown(ArcaneCircle)) || //Opener Condition
-                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) < sodRefreshRange && IsOnCooldown(ArcaneCircle)))  //non 2 minute windows  
+                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOffCooldown(ArcaneCircle)) || //Opener Condition
+                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOnCooldown(ArcaneCircle)))  //non 2 minute windows  
                             return ShadowOfDeath;
                     }
 

@@ -70,9 +70,9 @@ namespace XIVSlothComboPlugin.Combos
         }
 
 
-        internal class BluBuffedSoT : CustomCombo
+        internal class BLU_BuffedSoT : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluBuffedSoT;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_BuffedSoT;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -89,9 +89,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BluOpener : CustomCombo
+        internal class BLU_Opener : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluOpener;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_Opener;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -144,9 +144,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BluFinalSting : CustomCombo
+        internal class BLU_FinalSting : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluFinalSting;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_FinalSting;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -185,9 +185,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BluUltravibrationCombo : CustomCombo
+        internal class BLU_Ultravibrate : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluUltravibrate;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_Ultravibrate;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -214,9 +214,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BluDebuffCombo : CustomCombo
+        internal class BLU_DebuffCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluDebuffCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_DebuffCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -241,9 +241,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BluAddleFeature : CustomCombo
+        internal class BLU_Addle : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluAddleFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_Addle;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -260,9 +260,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BluPrimalFeature : CustomCombo
+        internal class BLU_PrimalCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluPrimalFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_PrimalCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -290,9 +290,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BluKnightCombo : CustomCombo
+        internal class BLU_KnightCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluKnightFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_KnightCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -307,9 +307,9 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-        internal class BluLightheadedCombo : CustomCombo
+        internal class BLU_LightHeadedCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluLightheadedCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_LightHeadedCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {

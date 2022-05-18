@@ -790,10 +790,10 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region BARD
-            if (preset == CustomComboPreset.BardSimpleRagingJaws)
+            if (preset == CustomComboPreset.BRD_Simple_RagingJaws)
                 ConfigWindowFunctions.DrawSliderInt(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
-            if (preset == CustomComboPreset.BardSimpleNoWasteMode)
+            if (preset == CustomComboPreset.BRD_Simple_NoWaste)
                 ConfigWindowFunctions.DrawSliderInt(1, 10, BRD.Config.NoWasteHPPercentage, "Remaining target HP percentage");
 
             #endregion
@@ -985,7 +985,7 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 8, RPRPVP.Config.RPRPvPImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.RPRPvPArcaneCircleOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(5, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
             {
