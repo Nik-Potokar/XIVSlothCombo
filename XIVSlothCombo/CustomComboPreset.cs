@@ -1676,7 +1676,7 @@ namespace XIVSlothComboPlugin
         PaladinProminenceCombo = 11003,
 
         [ParentCombo(PaladinReqMainComboFeature)]
-        [CustomComboInfo("Holy Spirit Feature", "Replace Royal Authority/Goring Blade combo with Holy Spirit and Prominence combo with Holy Circle while Requiescat is active", PLD.JobID, 0, "Auto-PLD", "Plays the whole job for you.\nJust stand there and take damage, right?")]
+        [CustomComboInfo("Holy Spirit Feature", "Replaces Royal Authority combo with Holy Spirit if you don't have the Fight or Flight buff", PLD.JobID, 0, "Auto-PLD", "Plays the whole job for you.\nJust stand there and take damage, right?")]
         PaladinRequiescatFeature = 11004,
 
         [ParentCombo(PaladinReqMainComboFeature)]
@@ -1714,7 +1714,7 @@ namespace XIVSlothComboPlugin
         PaladinFightOrFlightMainComboFeature = 11013,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("Requiescat Feature", "Adds Requiescat onto the main combo.", PLD.JobID, 2, "", "Just defend 4hed")]
+        [CustomComboInfo("Requiescat Feature", "Requiescat gets added onto the main combo when the Fight or Flight buff has 17 seconds remaining or less.", PLD.JobID, 2, "", "Just defend 4hed")]
         PaladinReqMainComboFeature = 11014,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
