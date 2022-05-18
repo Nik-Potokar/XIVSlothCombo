@@ -750,12 +750,25 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region ASTROLOGIAN
-            if (preset == CustomComboPreset.AstrologianLucidFeature)
+            if (preset is CustomComboPreset.AST_DPS_Feature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Malefic", "", 0);
+                ConfigWindowFunctions.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Combust", "Alternative DPS Mode. Leaves Malefic alone for pure DPS, becomes Malefic when features are on cooldown", 1);
+            }
+            if (preset is CustomComboPreset.AST_DPS_LucidOption)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.AstroEssentialDignity)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
+            if (preset is CustomComboPreset.AST_DPS_CombustOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.AST_DPS_DivinationOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+            if (preset is CustomComboPreset.AST_DPS_LightSpeedOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+            if (preset is CustomComboPreset.AstroEssentialDignity)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
 
             #endregion
             // ====================================================================================

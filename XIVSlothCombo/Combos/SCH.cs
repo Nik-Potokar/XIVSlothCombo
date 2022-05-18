@@ -240,7 +240,7 @@ namespace XIVSlothComboPlugin.Combos
                         level >= Levels.ChainStratagem &&
                         IsOffCooldown(ChainStratagem) &&
                         !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
-                        EnemyHealthPercentage() > GetOptionValue(Config.SCH_ST_Broil_ChainStratagem) &&
+                        GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_Broil_ChainStratagem) &&
                         CanSpellWeave(actionID)
                        ) return ChainStratagem;
 
@@ -280,10 +280,9 @@ namespace XIVSlothComboPlugin.Combos
                         if ((BioDebuffID is null) || (BioDebuffID?.RemainingTime <= 3))
                         {
                             //Advanced Options Enabled to procede with auto-bio
-                            //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
                             if (IsEnabled(CustomComboPreset.SCH_ST_Broil_BioHPPer))
                             {
-                                if (EnemyHealthPercentage() > GetOptionValue(Config.SCH_ST_Broil_BioHPPer)) return OriginalHook(Bio1);
+                                if (GetTargetHPPercent(OurTarget) > GetOptionValue(Config.SCH_ST_Broil_BioHPPer)) return OriginalHook(Bio1);
                             }
                             else return OriginalHook(Bio1);
                         }
