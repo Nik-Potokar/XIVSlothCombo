@@ -972,7 +972,7 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 8, RPRPVP.Config.RPRPvPImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.RPRPvPArcaneCircleOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(5, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
             {
