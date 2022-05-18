@@ -443,7 +443,6 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (HasEffect(Buffs.Kassatsu))
                             return JinCombo;
-                        return Jin;
                     }
 
                     if (!HasEffect(Buffs.Mudra))
@@ -701,7 +700,7 @@ namespace XIVSlothComboPlugin.Combos
                                     if (HasEffect(Buffs.Kassatsu) && level >= Levels.EnhancedKassatsu)
                                         return JinCombo;
 
-                                    else if (level >= Levels.Jin)
+                                    if (level >= Levels.Jin)
                                         return OriginalHook(JinCombo);
                                     
                                     if (level >= Levels.Chi)
