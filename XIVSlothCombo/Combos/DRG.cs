@@ -93,9 +93,9 @@ namespace XIVSlothComboPlugin.Combos
         }
 
 
-        internal class DragoonCoerthanTormentCombo : CustomCombo
+        internal class DRG_CoerthanTormentCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonCoerthanTormentCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_CoerthanTormentCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -114,9 +114,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class DragoonChaosThrustCombo : CustomCombo
+        internal class DRG_ChaosThrustCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonChaosThrustCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ChaosThrustCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -124,7 +124,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
 
                     //Piercing Talon Uptime Feature
-                    if (IsEnabled(CustomComboPreset.DragoonPiercingTalonChaosFeature) && level >= Levels.PiercingTalon)
+                    if (IsEnabled(CustomComboPreset.DRG_RangedUptimeChaos) && level >= Levels.PiercingTalon)
                     {
                         if (!InMeleeRange())
                             return PiercingTalon;
@@ -139,7 +139,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(ChaosThrust);
                     }
 
-                    if (IsEnabled(CustomComboPreset.DragoonFangThrustFeature) && (HasEffect(Buffs.SharperFangAndClaw) || HasEffect(Buffs.EnhancedWheelingThrust)))
+                    if (IsEnabled(CustomComboPreset.DRG_FangThrust) && (HasEffect(Buffs.SharperFangAndClaw) || HasEffect(Buffs.EnhancedWheelingThrust)))
                         return WheelingThrust;
 
                     if (HasEffect(Buffs.SharperFangAndClaw) && level >= Levels.FangAndClaw)
@@ -155,9 +155,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class DragoonFullThrustCombo : CustomCombo
+        internal class DRG_FullThrustCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonFullThrustCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_FullThrustCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -165,7 +165,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
 
                     //Piercing Talon Uptime Feature
-                    if (IsEnabled(CustomComboPreset.DragoonPiercingTalonFullFeature) && level >= Levels.PiercingTalon)
+                    if (IsEnabled(CustomComboPreset.DRG_RangedUptimeFullThrust) && level >= Levels.PiercingTalon)
                     {
                         if (!InMeleeRange())
                             return PiercingTalon;
@@ -193,9 +193,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class DragoonFullThrustComboPlus : CustomCombo
+        internal class DRG_FullThrustComboPlus : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonFullThrustComboPlus;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_FullThrustComboPlus;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -204,7 +204,7 @@ namespace XIVSlothComboPlugin.Combos
                     var canWeave = CanWeave(actionID);
 
                     //Piercing Talon Uptime Feature
-                    if (IsEnabled(CustomComboPreset.DragoonPiercingTalonPlusFeature) && level >= Levels.PiercingTalon)
+                    if (IsEnabled(CustomComboPreset.DRG_RangedUptimePlus) && level >= Levels.PiercingTalon)
                     {
                         if (!InMeleeRange())
                             return PiercingTalon;
@@ -213,7 +213,7 @@ namespace XIVSlothComboPlugin.Combos
                     //(High) Jump Plus Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonHighJumpPlusFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_HighJumpPlus))
                         {
                             if (
                                 level >= Levels.HighJump &&
@@ -229,7 +229,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Life Surge Plus Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonLifeSurgePlusFeature) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && CanWeave(actionID, 0.001) && GetRemainingCharges(LifeSurge) > 0)
+                        if (IsEnabled(CustomComboPreset.DRG_LifeSurgePlus) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && CanWeave(actionID, 0.001) && GetRemainingCharges(LifeSurge) > 0)
                         {
                             if (lastComboMove is VorpalThrust)
                             {
@@ -255,7 +255,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Mirage Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonMiragePlusFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_MiragePlus))
                         {
                             if (level >= Levels.MirageDive && HasEffect(Buffs.DiveReady) && canWeave)
                                 return MirageDive;
@@ -297,9 +297,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class DragoonSimple : CustomCombo
+        internal class DRG_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonSimple;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_SimpleMode;
             internal static bool inOpener = false;
             internal static bool openerFinished = false;
             internal static byte step = 0;
@@ -315,7 +315,7 @@ namespace XIVSlothComboPlugin.Combos
                     var canWeave = CanWeave(actionID);
 
                     // Lvl88+ Opener
-                    if (IsEnabled(CustomComboPreset.DragoonOpenerFeature) && level >= 88)
+                    if (IsEnabled(CustomComboPreset.DRG_Simple_Opener) && level >= 88)
                     {
                         if (inCombat && HasEffect(Buffs.TrueNorth) && !inOpener)
                         {
@@ -470,13 +470,13 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     // Piercing Talon Uptime Option
-                    if (IsEnabled(CustomComboPreset.DRGSimpleRangedUptimeST) && level >= Levels.PiercingTalon && !InMeleeRange())
+                    if (IsEnabled(CustomComboPreset.DRG_Simple_RangedUptime) && level >= Levels.PiercingTalon && !InMeleeRange())
                         return PiercingTalon;
 
                     //Lance Charge Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonLanceFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_Lance))
                         {
                             if (HasEffect(Buffs.PowerSurge) && canWeave)
                             {
@@ -489,7 +489,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Dragon Sight Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonDragonSightFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_DragonSight))
                         {
                             if (level >= Levels.DragonSight && HasEffect(Buffs.PowerSurge) && IsOffCooldown(DragonSight) && canWeave)
                                 return DragonSight;
@@ -499,7 +499,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Battle Litany Feature
                     if (CanWeave(actionID, 1.3))
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonLitanyFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_Litany))
                         {
                             if (HasEffect(Buffs.PowerSurge))
                             {
@@ -512,7 +512,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Geirskogul and Nastrond Feature Part 1
                     if (CanWeave(actionID, 0.001))
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_GeirskogulNastrond))
                         {
                             if (level >= Levels.Geirskogul && HasEffect(Buffs.PowerSurge) && IsOffCooldown(Geirskogul))
                                 return Geirskogul;
@@ -522,7 +522,7 @@ namespace XIVSlothComboPlugin.Combos
                     //(High) Jump Feature
                     if (CanWeave(actionID, 0.5))
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonHighJumpFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_HighJump))
                         {
                             if (HasEffect(Buffs.PowerSurge))
                             {
@@ -539,7 +539,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Life Surge Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonLifeSurgeFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_LifeSurge))
                         {
                             if (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is VorpalThrust && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
                                 return LifeSurge;
@@ -558,7 +558,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Wyrmwind Thrust Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonWyrmwindFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_Wyrmwind))
                         {
                             if (
                                 gauge.FirstmindsFocusCount is 2 && canWeave
@@ -570,7 +570,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (canWeave)
                     {
 
-                        if (IsEnabled(CustomComboPreset.DragoonGeirskogulNastrondFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_GeirskogulNastrond))
                         {
                             if (gauge.IsLOTDActive is true && level >= Levels.Nastrond && HasEffect(Buffs.PowerSurge) && IsOffCooldown(Nastrond) && CanWeave(actionID, 0.001))
                                 return Nastrond;
@@ -581,7 +581,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (canWeave)
                     {
 
-                        if (IsEnabled(CustomComboPreset.DragoonLifeLitanyDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_LifeLitanyDives))
                         {
                             if (gauge.IsLOTDActive is true && level >= Levels.DragonfireDive && HasEffect(Buffs.PowerSurge) && HasEffect(Buffs.BattleLitany) && IsOffCooldown(DragonfireDive) && canWeave)
                                 return DragonfireDive;
@@ -598,7 +598,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (canWeave)
                     {
 
-                        if (IsEnabled(CustomComboPreset.DragoonLitanyDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_LitanyDives))
                         {
                             if (level >= Levels.DragonfireDive && HasEffect(Buffs.PowerSurge) && HasEffect(Buffs.BattleLitany) && IsOffCooldown(DragonfireDive) && canWeave)
                                 return DragonfireDive;
@@ -615,7 +615,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (canWeave)
                     {
 
-                        if (IsEnabled(CustomComboPreset.DragoonLifeLitanyDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_LifeLitanyDives))
                         {
                             if (level >= Levels.DragonfireDive && HasEffect(Buffs.PowerSurge) && IsOffCooldown(DragonfireDive) && canWeave)
                                 return DragonfireDive;
@@ -632,7 +632,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (canWeave)
                     {
 
-                        if (IsEnabled(CustomComboPreset.DragoonLanceDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_LanceDives))
                         {
                             if (level >= Levels.DragonfireDive && HasEffect(Buffs.PowerSurge) && HasEffect(Buffs.LanceCharge) && IsOffCooldown(DragonfireDive) && canWeave)
                                 return DragonfireDive;
@@ -648,7 +648,7 @@ namespace XIVSlothComboPlugin.Combos
                     //Mirage Feature
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.DragoonMirageFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_Simple_Mirage))
                         {
                             if (level >= Levels.MirageDive && HasEffect(Buffs.PowerSurge) && HasEffect(Buffs.DiveReady) && CanWeave(actionID, 0.001))
                                 return MirageDive;
@@ -686,9 +686,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class DragoonSimpleAoE : CustomCombo
+        internal class DRG_AoE_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonSimpleAoE;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_AoE_SimpleMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -697,13 +697,13 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID is CoerthanTorment)
                 {
                     // Piercing Talon Uptime Option
-                    if (IsEnabled(CustomComboPreset.DRGSimpleRangedUptimeAoE) && level >= Levels.PiercingTalon && !InMeleeRange())
+                    if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_RangedUptime) && level >= Levels.PiercingTalon && !InMeleeRange())
                         return PiercingTalon;
 
                     if (canWeave)
                     {
                         //Buffs AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoEBuffsFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_Buffs))
                         {
 
                             if (level >= Levels.LanceCharge &&
@@ -715,7 +715,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return BattleLitany;
 
                             //Dragon Sight AoE Feature
-                            if (IsEnabled(CustomComboPreset.DragoonAoEDragonSightFeature))
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_DragonSight))
                             {
                                 if (level >= Levels.DragonSight &&
                                     IsOffCooldown(DragonSight))
@@ -724,7 +724,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Geirskogul and Nastrond AoE Feature Part 1
-                        if (IsEnabled(CustomComboPreset.DragoonAoEGeirskogulNastrondFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_GeirskogulNastrond))
                         {
                             if (level >= Levels.Geirskogul &&
                                 IsOffCooldown(Geirskogul))
@@ -733,7 +733,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //(High) Jump AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoEHighJumpFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_HighJump))
                         {
                             if (level >= Levels.HighJump &&
                                 IsOffCooldown(HighJump) && CanWeave(actionID, 1))
@@ -744,7 +744,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Life Surge AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoELifeSurgeFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_LifeSurge))
                         {
                             if ((HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye)) &&
                                 ((lastComboMove is CoerthanTorment && level >= Levels.CoerthanTorment) ||
@@ -759,14 +759,14 @@ namespace XIVSlothComboPlugin.Combos
 
 
                         //Wyrmwind Thrust AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoEWyrmwindFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_WyrmwindFeature))
                         {
                             if (gauge.FirstmindsFocusCount is 2)
                                 return WyrmwindThrust;
                         }
 
                         //Geirskogul and Nastrond AoE Feature Part 2
-                        if (IsEnabled(CustomComboPreset.DragoonAoEGeirskogulNastrondFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_GeirskogulNastrond))
                         {
                             if (gauge.IsLOTDActive is true && level >= Levels.Nastrond && IsOffCooldown(Nastrond))
                                 return Nastrond;
@@ -774,7 +774,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Dives AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoEDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_Dives))
                         {
                             if (level >= Levels.DragonfireDive && IsOffCooldown(DragonfireDive))
                                 return DragonfireDive;
@@ -788,7 +788,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Dives under Lance Charge
-                        if (IsEnabled(CustomComboPreset.DragoonAoELanceDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_LanceDives))
                         {
                             if (level >= Levels.DragonfireDive && IsOffCooldown(DragonfireDive) && HasEffect(Buffs.LanceCharge))
                                 return DragonfireDive;
@@ -801,7 +801,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Dives under Litany AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoELitanyDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_LitanyDives))
                         {
                             if (gauge.IsLOTDActive is true && level >= Levels.DragonfireDive && HasEffect(Buffs.PowerSurge) && HasEffect(Buffs.BattleLitany) && IsOffCooldown(DragonfireDive))
                                 return DragonfireDive;
@@ -815,7 +815,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Dives under Litany and Life of the Dragon AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoELifeLitanyDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_LifeLitanyDives))
                         {
                             if (gauge.IsLOTDActive is true && level >= Levels.DragonfireDive && HasEffect(Buffs.PowerSurge) && HasEffect(Buffs.BattleLitany) && IsOffCooldown(DragonfireDive))
                                 return DragonfireDive;
@@ -829,7 +829,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Dives under Lance Charge AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoELitanyDiveFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_LitanyDives))
                         {
                             if (level >= Levels.DragonfireDive && HasEffect(Buffs.PowerSurge) && HasEffect(Buffs.LanceCharge) && IsOffCooldown(DragonfireDive))
                                 return DragonfireDive;
@@ -843,7 +843,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Mirage AoE Feature
-                        if (IsEnabled(CustomComboPreset.DragoonAoEMirageFeature))
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_Mirage))
                         {
                             if (level >= Levels.MirageDive &&
                                 HasEffect(Buffs.DiveReady))
@@ -869,9 +869,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class DragoonFangAndClawFeature : CustomCombo
+        internal class DRG_FangAndClaw : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DragoonFangAndClawFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_FangAndClaw;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
