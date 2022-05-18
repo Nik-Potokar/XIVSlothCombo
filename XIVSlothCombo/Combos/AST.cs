@@ -543,33 +543,20 @@ namespace XIVSlothComboPlugin.Combos
                     //Combust
                     if (IsEnabled(CustomComboPreset.AST_DPS_CombustOption) &&
                         actionID is not Gravity and not Gravity2 &&
-                        level >= Levels.Combust && CurrentTarget is not null)
+                        level >= Levels.Combust &&
+                        (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy)
                     {
-                        var OurTarget = CurrentTarget;
-                        //Check if our Target is there and not an enemy
-                        if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
-                        {
-                            //If ToT is enabled, Check if ToT is not null
-                            if ((IsEnabled(CustomComboPreset.AST_DPS_CombustOption_ToT)) &&
-                                (CurrentTarget.TargetObject is not null) &&
-                                ((CurrentTarget.TargetObject as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy))
-                                //Set Ourtarget as the Target of Target
-                                OurTarget = CurrentTarget.TargetObject;
-                            //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
-                            else return actionID;
-                        }
-
                         //Determine which Combust debuff to check
                         var CombustDebuffID = level switch
                         {
                             //Using FindEffect b/c we have a custom Target variable
-                            >= Levels.Combust3 => FindEffect(Debuffs.Combust3, OurTarget, LocalPlayer?.ObjectId),
-                            >= Levels.Combust2 => FindEffect(Debuffs.Combust2, OurTarget, LocalPlayer?.ObjectId),
+                            >= Levels.Combust3 => FindTargetEffect(Debuffs.Combust3),
+                            >= Levels.Combust2 => FindTargetEffect(Debuffs.Combust2),
                             //Combust 1 level checked at the start, fine for default
-                            _ => FindEffect(Debuffs.Combust1, OurTarget, LocalPlayer?.ObjectId),
+                            _ => FindTargetEffect(Debuffs.Combust1),
                         };
                         if ((CombustDebuffID is null) || (CombustDebuffID?.RemainingTime <= 3) &&
-                            (GetTargetHPPercent(OurTarget) > GetOptionValue(Config.AST_DPS_CombustOption))
+                            (GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption))
                            ) return OriginalHook(Combust1);
 
                         //AlterateMode idles as Malefic

@@ -165,10 +165,6 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Combust Uptime Option", "Automated DoT Uptime", AST.JobID, 0, "DPS Less", "Oh, look, guys! Look! This one's actually healing!")]
             AST_DPS_CombustOption = 1018,
 
-                [ParentCombo(AST_DPS_CombustOption)]
-                [CustomComboInfo("Target of Target DoT Checking", "Performs additional checking for Target of Target\nThis does not change targets to your Target of Target", AST.JobID)]
-                AST_DPS_CombustOption_ToT = 1035,
-
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
             [ParentCombo(AST_DPS_Feature)]
             [ConflictingCombos(AstAutoCardTarget)] //Check this isn't done by the other features
@@ -203,11 +199,7 @@ namespace XIVSlothComboPlugin
             [ParentCombo(AST_DPS_Feature)]
             [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "Brainless Lord Feature", "You're like that tiny guy from Shrek. - E -")]
             AstrologianLazyLordFeature = 1014,
-
-        //[ReplaceSkill(AST.Combust, AST.Combust2, AST.Combust3)]
-        //[ConflictingCombos(AST_DPS_Feature)]
-        //[CustomComboInfo("Alternate DPS Feature (On Combust)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, 1, "Alternate Deeps, buddy", "Now we're really doing your job for you. Damn.")]
-        //AstrologianAlternateDpsFeature = 1016,
+        
         #endregion
 
         #region Healing
@@ -302,7 +294,7 @@ namespace XIVSlothComboPlugin
         AstrologianAstrodyneOnPlayFeature = 1015,
         #endregion
 
-        //Last number used is 35
+        //Last number used is 34
 
         #endregion
         // ====================================================================================
