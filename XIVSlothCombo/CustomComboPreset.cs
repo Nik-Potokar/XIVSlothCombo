@@ -1235,6 +1235,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst CDs on CD, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
         GunbreakerMeleeRoughDivideOption = 7027,
 
+        [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
+        GunbreakerAuroraProtectionFeature = 7028,
 
         #endregion
         // ====================================================================================

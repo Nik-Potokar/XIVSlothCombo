@@ -278,7 +278,7 @@ namespace XIVSlothComboPlugin.Combos
                                     if ((SummonerBurstPhase == 1 && OriginalHook(Ruin) == AstralImpulse) ||
                                         (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire) ||
                                         (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
-                                        (SummonerBurstPhase == 4 && HasEffect(Buffs.SearingLight) && !HasEffect(Buffs.TitansFavor)) ||
+                                        (SummonerBurstPhase == 4 && HasEffectAny(Buffs.SearingLight) && !HasEffect(Buffs.TitansFavor)) ||
                                         IsNotEnabled(CustomComboPreset.SummonerPrimalBurstChoice))
                                         return Fester;
                                 }

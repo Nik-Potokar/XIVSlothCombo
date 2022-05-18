@@ -27,8 +27,10 @@ namespace XIVSlothComboPlugin.Combos
             AbdomenTear = 16157,
             EyeGouge = 16158,
             BowShock = 16159,
+            HeartOfLight = 16160,
             BurstStrike = 16162,
             FatedCircle = 16163,
+            Aurora = 16151,
             DoubleDown = 25760,
             DangerZone = 16144,
             BlastingZone = 16165,
@@ -41,6 +43,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const ushort
                 NoMercy = 1831,
+                Aurora = 1835,
                 ReadyToRip = 1842,
                 ReadyToTear = 1843,
                 ReadyToGouge = 1844,
@@ -63,6 +66,7 @@ namespace XIVSlothComboPlugin.Combos
                 SolidBarrel = 26,
                 BurstStrike = 30,
                 DemonSlaughter = 40,
+                Aurora = 45,
                 SonicBreak = 54,
                 RoughDivide = 56,
                 GnashingFang = 60,
@@ -410,6 +414,17 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
+                return actionID;
+            }
+        }
+
+        internal class GunbreakerAuroraProtectionFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerAuroraProtectionFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == Aurora && HasEffect(Buffs.Aurora)) return WAR.NascentFlash;
                 return actionID;
             }
         }
