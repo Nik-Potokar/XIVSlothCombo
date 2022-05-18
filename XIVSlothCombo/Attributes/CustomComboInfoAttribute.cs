@@ -119,7 +119,7 @@ namespace XIVSlothComboPlugin.Attributes
                 40 => "Sage",
                 99 => "Global",
                 DOH.JobID => "Disciples of the Hand",
-                DOL.JobID => "Disciples of the Land",
+                DoL.JobID => "Disciples of the Land",
                 _ => "Unknown",
             };
         }
@@ -171,7 +171,7 @@ namespace XIVSlothComboPlugin.Attributes
                 40 => "Sage",
                 99 => "Global",
                 DOH.JobID => "Disciples of the Hand",
-                DOL.JobID => "Disciples of the Land",
+                DoL.JobID => "Disciples of the Land",
                 _ => "Unknown",
             };
         }

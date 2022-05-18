@@ -261,7 +261,7 @@ namespace XIVSlothComboPlugin
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.15.0\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.15.1\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
@@ -777,16 +777,16 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region BARD
-            if (preset == CustomComboPreset.BardSimpleRagingJaws)
+            if (preset == CustomComboPreset.BRD_Simple_RagingJaws)
                 ConfigWindowFunctions.DrawSliderInt(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
-            if (preset == CustomComboPreset.BardSimpleNoWasteMode)
+            if (preset == CustomComboPreset.BRD_Simple_NoWaste)
                 ConfigWindowFunctions.DrawSliderInt(1, 10, BRD.Config.NoWasteHPPercentage, "Remaining target HP percentage");
 
             #endregion
             // ====================================================================================
             #region DANCER
-            if (preset == CustomComboPreset.DancerDanceComboCompatibility)
+            if (preset == CustomComboPreset.DNC_DanceComboReplacer)
             {
                 var actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
 
@@ -807,40 +807,40 @@ namespace XIVSlothComboPlugin
 
             }
 
-            if (preset == CustomComboPreset.DancerEspritOvercapSTFeature)
+            if (preset == CustomComboPreset.DNC_ST_EspritOvercap)
                 ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_ST, "Esprit", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerEspritOvercapAoEFeature)
+            if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
                 ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Ones);
 
             #region Simple ST Sliders
-            if (preset == CustomComboPreset.DancerSimpleStandardFeature)
+            if (preset == CustomComboPreset.DNC_ST_Simple_SS)
                 ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleSSBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerSimpleTechnicalFeature)
+            if (preset == CustomComboPreset.DNC_ST_Simple_TS)
                 ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleTSBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerSimpleFeatherPoolingFeature)
+            if (preset == CustomComboPreset.DNC_ST_Simple_FeatherPooling)
                 ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleFeatherBurstPercent, "Target HP percentage to dump all pooled feathers below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerSimplePanicHealsFeature)
+            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerSimplePanicHealsFeature)
+            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
             #endregion
 
             #region Simple AoE Sliders
-            if (preset == CustomComboPreset.DancerSimpleAoEStandardFeature)
+            if (preset == CustomComboPreset.DNC_AoE_Simple_SS)
                 ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleSSAoEBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerSimpleAoETechnicalFeature)
+            if (preset == CustomComboPreset.DNC_AoE_Simple_TS)
                 ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleTSAoEBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerSimpleAoEPanicHealsFeature)
+            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DancerSimpleAoEPanicHealsFeature)
+            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
             #endregion
 
@@ -972,7 +972,7 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 8, RPRPVP.Config.RPRPvPImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.RPRPvPArcaneCircleOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(5, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
             {

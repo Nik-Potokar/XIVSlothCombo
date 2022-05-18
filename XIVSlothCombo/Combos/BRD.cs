@@ -119,25 +119,25 @@ namespace XIVSlothComboPlugin.Combos
 
 
         // Replace HS/BS with SS/RA when procced.
-        internal class BardStraightShotUpgradeFeature : CustomCombo
+        internal class BRD_StraightShotUpgrade : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardStraightShotUpgradeFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_StraightShotUpgrade;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == HeavyShot || actionID == BurstShot)
                 {
-                    if (IsEnabled(CustomComboPreset.BardApexFeature))
+                    if (IsEnabled(CustomComboPreset.BRD_Apex))
                     {
                         var gauge = GetJobGauge<BRDGauge>();
 
-                        if (gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                        if (gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
                             return ApexArrow;
                         if (level >= Levels.BlastArrow && HasEffect(Buffs.BlastArrowReady))
                             return BlastArrow;
                     }
 
-                    if (IsEnabled(CustomComboPreset.BardDoTMaintain))
+                    if (IsEnabled(CustomComboPreset.BRD_DoTMaintainance))
                     {
                         var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                         var venomous = TargetHasEffect(Debuffs.VenomousBite);
@@ -177,15 +177,15 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BardIronJawsFeature : CustomCombo
+        internal class BRD_IronJaws : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardIronJawsFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_IronJaws;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == IronJaws)
                 {
-                    if (IsEnabled(CustomComboPreset.BardIronJawsApexFeature) && level >= Levels.ApexArrow)
+                    if (IsEnabled(CustomComboPreset.BRD_IronJawsApex) && level >= Levels.ApexArrow)
                     {
                         var gauge = GetJobGauge<BRDGauge>();
 
@@ -270,9 +270,9 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-        internal class BardIronJawsAlternateFeature : CustomCombo
+        internal class BRD_IronJaws_Alternate : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardIronJawsAlternateFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_IronJaws_Alternate;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -355,9 +355,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BardApexFeature : CustomCombo
+        internal class BRD_Apex : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardApexFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_Apex;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -365,7 +365,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var gauge = GetJobGauge<BRDGauge>();
 
-                    if (level >= Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                    if (level >= Levels.ApexArrow && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
                         return ApexArrow;
                 }
 
@@ -373,9 +373,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BardoGCDAoEFeature : CustomCombo
+        internal class BRD_AoE_oGCD : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardoGCDAoEFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_AoE_oGCD;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -398,9 +398,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BardSimpleAoEFeature : CustomCombo
+        internal class BRD_AoE_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardSimpleAoEFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_AoE_SimpleMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -410,14 +410,14 @@ namespace XIVSlothComboPlugin.Combos
                     var soulVoice = gauge.SoulVoice;
                     var canWeave = CanWeave(actionID);
 
-                    if (IsEnabled(CustomComboPreset.SimpleAoESongOption) && canWeave)
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
                     {
                         var songTimerInSeconds = gauge.SongTimer / 1000;
 
                         if (songTimerInSeconds < 3 || gauge.Song == Song.NONE)
                         {
                             if (level >= Levels.WanderersMinuet &&
-                                IsOffCooldown(WanderersMinuet) && !(JustUsed(MagesBallad) || JustUsed(ArmysPaeon)) && !IsEnabled(CustomComboPreset.SimpleAoESongOptionExcludeWM))
+                                IsOffCooldown(WanderersMinuet) && !(JustUsed(MagesBallad) || JustUsed(ArmysPaeon)) && !IsEnabled(CustomComboPreset.BRD_AoE_Simple_SongsExcludeWM))
                                 return WanderersMinuet;
                             if (level >= Levels.MagesBallad &&
                                 IsOffCooldown(MagesBallad) && !(JustUsed(WanderersMinuet) || JustUsed(ArmysPaeon)))
@@ -442,7 +442,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (level >= Levels.Shadowbite && HasEffect(Buffs.ShadowbiteReady))
                         return Shadowbite;
-                    if (level >= Levels.ApexArrow && soulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                    if (level >= Levels.ApexArrow && soulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
                         return ApexArrow;
                     if (level >= Levels.BlastArrow && HasEffect(Buffs.BlastArrowReady))
                         return BlastArrow;
@@ -453,9 +453,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class BardoGCDSingleTargetFeature : CustomCombo
+        internal class BRD_ST_oGCD : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardoGCDSingleTargetFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_ST_oGCD;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -463,7 +463,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var gauge = GetJobGauge<BRDGauge>();
 
-                    if (IsEnabled(CustomComboPreset.BardSongsFeature) && (gauge.SongTimer < 1 || gauge.Song == Song.ARMY))
+                    if (IsEnabled(CustomComboPreset.BRD_oGCDSongs) && (gauge.SongTimer < 1 || gauge.Song == Song.ARMY))
                     {
                         if (level >= Levels.WanderersMinuet && IsOffCooldown(WanderersMinuet))
                             return WanderersMinuet;
@@ -486,24 +486,24 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-        internal class BardAoEComboFeature : CustomCombo
+        internal class BRD_AoE_Combo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardAoEComboFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_AoE_Combo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == QuickNock || actionID == Ladonsbite)
                 {
-                    if (IsEnabled(CustomComboPreset.BardApexFeature))
+                    if (IsEnabled(CustomComboPreset.BRD_Apex))
                     {
-                        if (level >= Levels.ApexArrow && GetJobGauge<BRDGauge>().SoulVoice == 100 && !IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                        if (level >= Levels.ApexArrow && GetJobGauge<BRDGauge>().SoulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
                             return ApexArrow;
 
                         if (level >= Levels.BlastArrow && HasEffect(Buffs.BlastArrowReady))
                             return BlastArrow;
                     }
 
-                    if (IsEnabled(CustomComboPreset.BardAoEComboFeature) && level >= Levels.Shadowbite && HasEffectAny(Buffs.ShadowbiteReady))
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Combo) && level >= Levels.Shadowbite && HasEffectAny(Buffs.ShadowbiteReady))
                     {
                         return Shadowbite;
                     }
@@ -512,9 +512,9 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-        internal class SimpleBardFeature : CustomCombo
+        internal class BRD_ST_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SimpleBardFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_ST_SimpleMode;
             internal static bool inOpener = false;
             internal static bool openerFinished = false;
             internal static byte step = 0;
@@ -541,15 +541,15 @@ namespace XIVSlothComboPlugin.Combos
                         openerFinished = false;
                     }
 
-                    if (IsEnabled(CustomComboPreset.BardSimpleInterrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
+                    if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                     {
                         return All.HeadGraze;
                     }
 
-                    var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BardSimpleNoWasteMode) ?
+                    var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BRD_Simple_NoWaste) ?
                         EnemyHealthPercentage() > Service.Configuration.GetCustomIntValue(Config.NoWasteHPPercentage) : true;
 
-                    if (IsEnabled(CustomComboPreset.SimpleSongOption) && isEnemyHealthHigh)
+                    if (IsEnabled(CustomComboPreset.BRD_Simple_Song) && isEnemyHealthHigh)
                     {
                         var songTimerInSeconds = gauge.SongTimer / 1000;
 
@@ -615,14 +615,14 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.BardSimpleBuffsFeature) && (gauge.Song != Song.NONE || level < Levels.MagesBallad) && isEnemyHealthHigh)
+                    if (IsEnabled(CustomComboPreset.BRD_Simple_Buffs) && (gauge.Song != Song.NONE || level < Levels.MagesBallad) && isEnemyHealthHigh)
                     {
                         if (((canWeaveBuffs && CombatEngageDuration().Minutes == 0) || (canWeaveDelayed && CombatEngageDuration().Minutes > 0)) && level >= Levels.RagingStrikes && IsOffCooldown(RagingStrikes) &&
                             (GetCooldown(BattleVoice).CooldownRemaining <= 5.38 || IsOffCooldown(BattleVoice) || level < Levels.BattleVoice))
                         {
                             return RagingStrikes;
                         }
-                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BardSimpleBuffsRadiantFeature) && level >= Levels.RadiantFinale &&
+                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && level >= Levels.RadiantFinale &&
                             IsOffCooldown(RadiantFinale) && (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet)) &&
                             (IsOffCooldown(BattleVoice) || GetCooldownRemainingTime(BattleVoice) < 0.7) && (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished) && IsOnCooldown(RagingStrikes))
                         {
@@ -663,7 +663,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (level >= Levels.Sidewinder && IsOffCooldown(Sidewinder) &&
                             (!openerFinished || (openerFinished && GetCooldownRemainingTime(BattleVoice) >= 3.5)))
                         {
-                            if (IsEnabled(CustomComboPreset.BardSimplePooling))
+                            if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling))
                             {
                                 if (gauge.Song == Song.WANDERER)
                                 {
@@ -688,7 +688,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             var bloodletterCharges = GetRemainingCharges(Bloodletter);
 
-                            if (IsEnabled(CustomComboPreset.BardSimplePooling) && level >= Levels.WanderersMinuet)
+                            if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling) && level >= Levels.WanderersMinuet)
                             {
                                 if (gauge.Song == Song.WANDERER)
                                 {
@@ -749,12 +749,12 @@ namespace XIVSlothComboPlugin.Combos
                         var useIronJaws = (
                             (level >= Levels.IronJaws && poisonRecast(4)) ||
                             (level >= Levels.IronJaws && windRecast(4)) ||
-                            (level >= Levels.IronJaws && IsEnabled(CustomComboPreset.BardSimpleRagingJaws) &&
+                            (level >= Levels.IronJaws && IsEnabled(CustomComboPreset.BRD_Simple_RagingJaws) &&
                                 HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration < ragingJawsRenewTime &&
                                 poisonRecast(40) && windRecast(40))
                         );
 
-                        var dotOpener = (IsEnabled(CustomComboPreset.BardSimpleDotOpener) && !openerFinished || !IsEnabled(CustomComboPreset.BardSimpleDotOpener));
+                        var dotOpener = (IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener) && !openerFinished || !IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener));
 
                         if (level < Levels.BiteUpgrade)
                         {
@@ -778,7 +778,7 @@ namespace XIVSlothComboPlugin.Combos
                                 }
                             }
 
-                            if (IsEnabled(CustomComboPreset.SimpleDoTOption))
+                            if (IsEnabled(CustomComboPreset.BRD_Simple_DoT))
                             {
                                 if (level >= Levels.Windbite && !windbite && dotOpener)
                                     return Windbite;
@@ -795,7 +795,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return IronJaws;
                             }
 
-                            if (IsEnabled(CustomComboPreset.SimpleDoTOption))
+                            if (IsEnabled(CustomComboPreset.BRD_Simple_DoT))
                             {
                                 if (level >= Levels.StormBite && !stormbite && dotOpener)
                                     return Stormbite;
@@ -806,7 +806,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (!IsEnabled(CustomComboPreset.BardRemoveApexArrowFeature))
+                    if (!IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
                     {
                         if (level >= Levels.BlastArrow && HasEffect(Buffs.BlastArrowReady))
                             return BlastArrow;
@@ -831,9 +831,9 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-        internal class BardBuffsFeature : CustomCombo
+        internal class BRD_Buffs : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardBuffsFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_Buffs;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -848,9 +848,9 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
-        internal class BardOneButtonSongs : CustomCombo
+        internal class BRD_OneButtonSongs : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BardOneButtonSongs;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_OneButtonSongs;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
