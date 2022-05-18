@@ -404,7 +404,7 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(Ninjutsu);
                     }
 
-                    if ((!HasEffect(Buffs.Doton) || (dotonBuff != null && dotonBuff?.RemainingTime <= 5)) && (jutsuCharges > 0 || HasEffect(Buffs.Mudra)) && level >= Levels.Doton && lastUsedJutsu != Doton && IsEnabled(CustomComboPreset.NinSimpleAoeMudras))
+                    if ((!HasEffect(Buffs.Doton) || dotonBuff is { RemainingTime: <= 5 }) && (jutsuCharges > 0 || HasEffect(Buffs.Mudra)) && level >= Levels.Doton && lastUsedJutsu != Doton && IsEnabled(CustomComboPreset.NinSimpleAoeMudras))
                     {
                         if (OriginalHook(Ninjutsu) == Doton)
                         {
@@ -701,11 +701,11 @@ namespace XIVSlothComboPlugin.Combos
                                     if (HasEffect(Buffs.Kassatsu) && level >= Levels.EnhancedKassatsu)
                                         return JinCombo;
 
-                                    if (level >= Levels.Chi)
-                                        return OriginalHook(ChiCombo);
-
                                     else if (level >= Levels.Jin)
                                         return OriginalHook(JinCombo);
+                                    
+                                    if (level >= Levels.Chi)
+                                        return OriginalHook(ChiCombo);
                                 }
                             }
 
