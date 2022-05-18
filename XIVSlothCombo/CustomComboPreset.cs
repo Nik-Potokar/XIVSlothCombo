@@ -91,11 +91,11 @@ namespace XIVSlothComboPlugin
             [ReplaceSkill(All.LowBlow, PLD.ShieldBash)]
             [ParentCombo(AllTankFeatures)]
             [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
-            AllTankInterruptFeature = 100000,
+            ALL_Tank_Interrupt = 100000,
 
             [ParentCombo(AllTankFeatures)]
             [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
-            AllTankReprisalFeature = 100001,
+            ALL_Tank_Reprisal = 100001,
             #endregion
 
         //Healer Features
@@ -107,7 +107,7 @@ namespace XIVSlothComboPlugin
             [ConflictingCombos(AstrologianAscendFeature, SCH_RaiseFeature, SGE_RaiseFeature, WHMRaiseFeature)]
             [ParentCombo(AllHealerFeatures)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
-            AllHealerRaiseFeature = 100010,
+            ALL_Healer_Raise = 100010,
             #endregion
 
         //Magical Ranged Features
@@ -117,13 +117,13 @@ namespace XIVSlothComboPlugin
             #region Global Magical Ranged Features
             [ParentCombo(AllCasterFeatures)]
             [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
-            AllCasterAddleFeature = 100020,
+            ALL_Caster_Addle = 100020,
 
         //            [ConflictingCombos(SummonerRaiseFeature, RedMageSwiftVerraise)]
             [ConflictingCombos(SummonerRaiseFeature, RDM_Verraise)]
             [ParentCombo(AllCasterFeatures)]
             [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
-            AllCasterRaiseFeature = 100021,
+            ALL_Caster_Raise = 100021,
             #endregion
 
         //Melee Features
@@ -133,7 +133,7 @@ namespace XIVSlothComboPlugin
             #region Global Melee Features
             [ParentCombo(AllMeleeFeatures)]
             [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
-            AllMeleeFeintFeature = 100030,
+            ALL_Melee_Feint = 100030,
             #endregion
 
         //Ranged Physical Features
@@ -143,7 +143,7 @@ namespace XIVSlothComboPlugin
             #region Global Ranged Physical Features 
             [ParentCombo(AllRangedPhysicalFeatures)]
             [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
-            AllRangedPhysicalMitigationFeature = 100040,
+            ALL_Ranged_Mitigation = 100040,
             #endregion
 
         //Non-gameplay Features
@@ -168,7 +168,7 @@ namespace XIVSlothComboPlugin
         AstrologianBeneficFeature = 1002,
 
         [ReplaceSkill(All.Swiftcast)]
-        [ConflictingCombos(AllHealerRaiseFeature)]
+        [ConflictingCombos(ALL_Healer_Raise)]
         [CustomComboInfo("AST Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
         AstrologianAscendFeature = 1003,
 
@@ -2029,7 +2029,7 @@ namespace XIVSlothComboPlugin
         RDM_LucidDreaming = 13610,
 
         [ReplaceSkill(All.Swiftcast)]
-        [ConflictingCombos(AllCasterRaiseFeature)]
+        [ConflictingCombos(ALL_Caster_Raise)]
         [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RDM_Verraise = 13620,
 
@@ -2213,7 +2213,7 @@ namespace XIVSlothComboPlugin
 
             #region Utility
             [ReplaceSkill(All.Swiftcast)]
-            [ConflictingCombos(AllHealerRaiseFeature)]
+            [ConflictingCombos(ALL_Healer_Raise)]
             [CustomComboInfo("Swiftcast Raise Feature", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 800)]
             SGE_RaiseFeature = 14800,
 
@@ -2498,7 +2498,7 @@ namespace XIVSlothComboPlugin
                     SCH_Aetherflow_Dissipation = 16320,
 
             [ReplaceSkill(All.Swiftcast)]
-            [ConflictingCombos(AllHealerRaiseFeature)]
+            [ConflictingCombos(ALL_Healer_Raise)]
             [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 400, "", "BRING OUT YOUR DEAD")]
             SCH_RaiseFeature = 16400,
 
@@ -2619,7 +2619,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
         SummonerEgiAttacksAOEFeature = 17026,
 
-        [ConflictingCombos(AllCasterRaiseFeature)]
+        [ConflictingCombos(ALL_Caster_Raise)]
         [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
@@ -2757,7 +2757,7 @@ namespace XIVSlothComboPlugin
         WhiteMageAfflatusFeature = 19003,
 
         [ReplaceSkill(All.Swiftcast)]
-        [ConflictingCombos(AllHealerRaiseFeature)]
+        [ConflictingCombos(ALL_Healer_Raise)]
         [CustomComboInfo("WHM Alternative Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
         WHMRaiseFeature = 19004,
 

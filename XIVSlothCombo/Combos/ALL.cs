@@ -87,9 +87,9 @@
 
 
         //Tank Features
-        internal class AllTankInterruptFeature : CustomCombo
+        internal class ALL_Tank_Interrupt : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankInterruptFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Tank_Interrupt;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -107,9 +107,9 @@
             }
         }
 
-        internal class AllTankReprisalFeature : CustomCombo
+        internal class ALL_Tank_Reprisal : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankReprisalFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Tank_Reprisal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -124,9 +124,9 @@
         }
 
         //Healer Features
-        internal class AllHealerRaiseFeature : CustomCombo
+        internal class ALL_Healer_Raise : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllHealerRaiseFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Healer_Raise;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -147,9 +147,9 @@
         }
 
         //Caster Features
-        internal class AllCasterAddleFeature : CustomCombo
+        internal class ALL_Caster_Addle : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterAddleFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Caster_Addle;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -163,9 +163,9 @@
             }
         }
 
-        internal class AllCasterRaiseFeature : CustomCombo
+        internal class ALL_Caster_Raise : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterRaiseFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Caster_Raise;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -182,9 +182,9 @@
         }
 
         //Melee DPS Features
-        internal class AllMeleeFeintFeature : CustomCombo
+        internal class ALL_Melee_Feint : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllMeleeFeintFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Melee_Feint;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -199,9 +199,9 @@
         }
 
         //Ranged Physical Features
-        internal class AllRangedPhysicalMitigationFeature : CustomCombo
+        internal class ALL_Ranged_Mitigation : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllRangedPhysicalMitigationFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Ranged_Mitigation;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
