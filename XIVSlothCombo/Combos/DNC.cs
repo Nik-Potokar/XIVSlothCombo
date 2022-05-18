@@ -575,7 +575,7 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-    internal class DancerSimpleAoeFeature : CustomCombo
+    internal class DNC_AoE_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AoE_SimpleMode;
 
