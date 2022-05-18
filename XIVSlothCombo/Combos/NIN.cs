@@ -442,7 +442,7 @@ namespace XIVSlothComboPlugin.Combos
                             return TenCombo;
 
                         if (HasEffect(Buffs.Kassatsu))
-                            return JinCombo;
+                            return OriginalHook(Jin);
                     }
 
                     if (!HasEffect(Buffs.Mudra))
