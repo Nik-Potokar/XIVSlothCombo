@@ -57,7 +57,7 @@
                         {
                             if (IsOffCooldown(SixSidedStar))
                                 return OriginalHook(SixSidedStar);
-                            if (IsEnabled(CustomComboPreset.MNKRiddleOfEarthOption) && HasEffect(Buffs.EarthResonance))
+                            if (IsEnabled(CustomComboPreset.MNKRiddleOfEarthOption) && HasEffect(Buffs.EarthResonance) && GetBuffRemainingTime(Buffs.EarthResonance) < 7)
                                 return OriginalHook(EarthsReply);
                             if (GetRemainingCharges(RisingPhoenix) > 0 && !HasEffect(Buffs.FireResonance) && (lastComboMove is Demolish || IsOffCooldown(Enlightenment)))
                                 return OriginalHook(RisingPhoenix);
