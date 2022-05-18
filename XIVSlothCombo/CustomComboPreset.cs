@@ -466,120 +466,120 @@ namespace XIVSlothComboPlugin
         #region BARD
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
-        [ConflictingCombos(SimpleBardFeature)]
-        [CustomComboInfo("Heavy Shot into Straight Shot", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID, 0, "This shot into that shot", "You're still using a bow? In this day and age?\nJust play MCH. They have guns, dude.")]
-        BardStraightShotUpgradeFeature = 3001,
+        [ConflictingCombos(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Heavy Shot into Straight Shot", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID, 0, "", "")]
+        BRD_StraightShotUpgrade = 3001,
 
-        [ConflictingCombos(SimpleBardFeature)]
-        [ParentCombo(BardStraightShotUpgradeFeature)]
-        [CustomComboInfo("DoT Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your DoTs on your current.", BRD.JobID, 0, "Butter Maintenance Option", "Slathers butter on your target if butter is not present.")]
-        BardDoTMaintain = 3002,
-
-        [ReplaceSkill(BRD.IronJaws)]
-        [ConflictingCombos(BardIronJawsAlternateFeature)]
-        [CustomComboInfo("Iron Jaws Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nAlternates between the two if Iron Jaws isn't available.", BRD.JobID, 0, "Jaws", "Wasn't this guy a James Bond villain in the '70s?")]
-        BardIronJawsFeature = 3003,
+        [ConflictingCombos(BRD_ST_SimpleMode)]
+        [ParentCombo(BRD_StraightShotUpgrade)]
+        [CustomComboInfo("DoT Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your DoTs on your current.", BRD.JobID, 0, "", "")]
+        BRD_DoTMaintainance = 3002,
 
         [ReplaceSkill(BRD.IronJaws)]
-        [ConflictingCombos(BardIronJawsFeature)]
-        [CustomComboInfo("Iron Jaws Alternate Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nIron Jaws will only show up when debuffs are about to expire.", BRD.JobID, 0, "Mr. Larson", "Oh, and Happy Gilmore!!")]
-        BardIronJawsAlternateFeature = 3004,
+        [ConflictingCombos(BRD_IronJaws_Alternate)]
+        [CustomComboInfo("Iron Jaws Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nAlternates between the two if Iron Jaws isn't available.", BRD.JobID, 0, "", "")]
+        BRD_IronJaws = 3003,
+
+        [ReplaceSkill(BRD.IronJaws)]
+        [ConflictingCombos(BRD_IronJaws)]
+        [CustomComboInfo("Iron Jaws Alternate Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nIron Jaws will only show up when debuffs are about to expire.", BRD.JobID, 0, "", "")]
+        BRD_IronJaws_Alternate = 3004,
 
         [ReplaceSkill(BRD.BurstShot, BRD.QuickNock)]
-        [ConflictingCombos(SimpleBardFeature)]
-        [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, 0, "Robin Hood Feature", "Steal from Lolorito and give to Garlemald, I guess?\nGood on ya.")]
-        BardApexFeature = 3005,
+        [ConflictingCombos(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Burst Shot/Quick Nock into Apex Arrow", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID, 0, "", "")]
+        BRD_Apex = 3005,
 
         [ReplaceSkill(BRD.Bloodletter)]
-        [ConflictingCombos(SimpleBardFeature)]
-        [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, 0, "oGCD's spilling everywhere", "The Algorithm between the lines. Trademark")]
-        BardoGCDSingleTargetFeature = 3006,
+        [ConflictingCombos(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter (+ Songs rotation) depending on their CD.", BRD.JobID, 0, "", "")]
+        BRD_ST_oGCD = 3006,
 
         [ReplaceSkill(BRD.RainOfDeath)]
-        [ConflictingCombos(BardAoEComboFeature)]
-        [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on Rain of Death depending on their CD.", BRD.JobID, 0, "", "Arrows! Everywhere! Run!")]
-        BardoGCDAoEFeature = 3007,
+        [ConflictingCombos(BRD_AoE_Combo)]
+        [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on Rain of Death depending on their CD.", BRD.JobID, 0, "", "")]
+        BRD_AoE_oGCD = 3007,
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [ConflictingCombos(BardSimpleAoEFeature)]
-        [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready", BRD.JobID, 0, "", "C-C-C-Combo!")]
-        BardAoEComboFeature = 3008,
+        [ConflictingCombos(BRD_AoE_SimpleMode)]
+        [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready", BRD.JobID, 0, "", "")]
+        BRD_AoE_Combo = 3008,
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
-        [ConflictingCombos(BardStraightShotUpgradeFeature, BardDoTMaintain, BardApexFeature, BardoGCDSingleTargetFeature, BardIronJawsApexFeature)]
-        [CustomComboInfo("Simple Bard", "Adds every single target ability to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "Sbimple Sbard", "Goodbye, brain. And then there's this feature, too!")]
-        SimpleBardFeature = 3009,
+        [ConflictingCombos(BRD_StraightShotUpgrade, BRD_DoTMaintainance, BRD_Apex, BRD_ST_oGCD, BRD_IronJawsApex)]
+        [CustomComboInfo("Simple Bard", "Adds every single target ability to one button,\nIf there are DoTs on target Simple Bard will try to maintain their uptime.", BRD.JobID, 0, "", "")]
+        BRD_ST_SimpleMode = 3009,
 
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Bard DoTs", "This option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID, 0, "", "If you don't look at the DoTs, they don't exist.")]
-        SimpleDoTOption = 3010,
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Simple Bard DoTs", "This option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID, 0, "", "")]
+        BRD_Simple_DoT = 3010,
 
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Bard Songs", "This option adds the bards songs to the Simple Bard feature.", BRD.JobID, 0, "Sing-song", "Look, a raid contribution feature!\nShame nobody will thank you for it")]
-        SimpleSongOption = 3011,
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Simple Bard Songs", "This option adds the bards songs to the Simple Bard feature.", BRD.JobID, 0, "", "")]
+        BRD_Simple_Song = 3011,
 
-        [ParentCombo(BardoGCDAoEFeature)]
-        [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, 0, "", "Get your MIDI files ready, it's song time.")]
-        BardSongsFeature = 3012,
+        [ParentCombo(BRD_AoE_oGCD)]
+        [CustomComboInfo("Song Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID, 0, "", "")]
+        BRD_oGCDSongs = 3012,
 
-        [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID, 0, "", "Buff me up, Judy")]
-        BardBuffsFeature = 3013,
+        [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID, 0, "", "")]
+        BRD_Buffs = 3013,
 
-        [CustomComboInfo("One Button Songs", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, 0, "EDM songs", "They all sound the same, anyway.")]
-        BardOneButtonSongs = 3014,
+        [CustomComboInfo("One Button Songs", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, 0, "", "")]
+        BRD_OneButtonSongs = 3014,
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite", BRD.JobID, 0, "", "Group attacks to make you feel like you're not the worst Ranged DPS in the room")]
-        BardSimpleAoEFeature = 3015,
+        [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite", BRD.JobID, 0, "", "")]
+        BRD_AoE_SimpleMode = 3015,
 
-        [ParentCombo(BardSimpleAoEFeature)]
-        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "Wow. You're performing to a crowd now, huh")]
-        SimpleAoESongOption = 3016,
+        [ParentCombo(BRD_AoE_SimpleMode)]
+        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "")]
+        BRD_AoE_Simple_Songs = 3016,
 
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Buffs", "Adds buffs onto the Simple Bard feature.", BRD.JobID, 0, "", "Buff for me, buff for you.")]
-        BardSimpleBuffsFeature = 3017,
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Simple Buffs", "Adds buffs onto the Simple Bard feature.", BRD.JobID, 0, "", "")]
+        BRD_Simple_Buffs = 3017,
 
-        [ParentCombo(BardSimpleBuffsFeature)]
-        [CustomComboInfo("Simple Buffs - Radiant", "Adds Radiant Finale to the Simple Buffs feature.", BRD.JobID, 0, "", "Nothing radiant about it, if you ask me.")]
-        BardSimpleBuffsRadiantFeature = 3018,
+        [ParentCombo(BRD_Simple_Buffs)]
+        [CustomComboInfo("Simple Buffs - Radiant", "Adds Radiant Finale to the Simple Buffs feature.", BRD.JobID, 0, "", "")]
+        BRD_Simple_BuffsRadiant = 3018,
 
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple No Waste Mode", "Adds enemy health checking on mobs for buffs, dots and songs.\nThey will not be reapplied if less than specified.", BRD.JobID, 0, "But Muh Parse", "Just slings all the shit, all the time!")]
-        BardSimpleNoWasteMode = 3019,
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Simple No Waste Mode", "Adds enemy health checking on mobs for buffs, dots and songs.\nThey will not be reapplied if less than specified.", BRD.JobID, 0, "", "")]
+        BRD_Simple_NoWaste = 3019,
 
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, 0, "Simple Interr-", "Excuse me, I wa-")]
-        BardSimpleInterrupt = 3020,
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, 0, "", "")]
+        BRD_Simple_Interrupt = 3020,
 
-        [CustomComboInfo("Disable Apex Arrow", "Removes Apex Arrow from Simple Bard and AoE Feature.", BRD.JobID, 0, "Disable Apex Legends", "Removing features? You? Surely not")]
-        BardRemoveApexArrowFeature = 3021,
+        [CustomComboInfo("Disable Apex Arrow", "Removes Apex Arrow from Simple Bard and AoE Feature.", BRD.JobID, 0, "", "")]
+        BRD_RemoveApexArrow = 3021,
 
         //[ConflictingCombos(BardoGCDSingleTargetFeature)]
         //[ParentCombo(SimpleBardFeature)]
-        //[CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "Totally hands-off feature", "It's like watching a YouTube video!")]
+        //[CustomComboInfo("Simple Opener", "Adds the optimum opener to simple bard.\nThis conflicts with pretty much everything outside of simple bard options due to the nature of the opener.", BRD.JobID, 0, "", "")]
         //BardSimpleOpener = 3022,
 
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple Pooling", "Pools bloodletter chargers to allow for optimum burst phases", BRD.JobID, 0, "Dancer pooling feature", "NOW you're Dancing.")]
-        BardSimplePooling = 3023,
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Simple Pooling", "Pools Bloodletter charges to allow for optimum burst phases.", BRD.JobID, 0, "", "")]
+        BRD_Simple_Pooling = 3023,
 
-        [ConflictingCombos(SimpleBardFeature)]
-        [ParentCombo(BardIronJawsFeature)]
-        [CustomComboInfo("Iron Jaws Apex", "Adds Apex and Blast Arrow to Iron Jaws when available", BRD.JobID, 0, "", "Arrows this, jaws that.\nTruly the apex of BRD technology")]
-        BardIronJawsApexFeature = 3024,
+        [ConflictingCombos(BRD_ST_SimpleMode)]
+        [ParentCombo(BRD_IronJaws)]
+        [CustomComboInfo("Iron Jaws Apex", "Adds Apex and Blast Arrow to Iron Jaws when available", BRD.JobID, 0, "", "")]
+        BRD_IronJawsApex = 3024,
 
-        [ParentCombo(SimpleBardFeature)]
-        [CustomComboInfo("Simple RagingJaws", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "No thanks, DoTs", "Wish you'd had changes like SMN in Endwalker? Wish no more!")]
-        BardSimpleRagingJaws = 3025,
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Simple Raging Jaws", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID, 0, "", "")]
+        BRD_Simple_RagingJaws = 3025,
 
-        [ParentCombo(SimpleDoTOption)]
-        [CustomComboInfo("Opener Only", "Until the first auto-refresh you can dot new targets automatically.", BRD.JobID, 0, "", "")]
-        BardSimpleDotOpener = 3026,
+        [ParentCombo(BRD_Simple_DoT)]
+        [CustomComboInfo("Opener Only", "Until the first auto-refresh you can DoT new targets automatically.", BRD.JobID, 0, "", "")]
+        BRD_Simple_DoTOpener = 3026,
 
-        [ParentCombo(SimpleAoESongOption)]
+        [ParentCombo(BRD_AoE_Simple_Songs)]
         [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
-        SimpleAoESongOptionExcludeWM = 3027,
+        BRD_AoE_Simple_SongsExcludeWM = 3027,
 
         #endregion
         // ====================================================================================
@@ -626,11 +626,11 @@ namespace XIVSlothComboPlugin
         #region Dance Features
         [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
         [CustomComboInfo("Dance Features", "Features and options involving Standard Step and Technical Step.\nCollapsing this category does NOT disable the features inside.", DNC.JobID, 0, "", "")]
-        DancerMenuDanceFeatures = 4020,
+        DNC_Dance_Menu = 4020,
 
             #region Combined Dance Feature
             [ReplaceSkill(DNC.StandardStep)]
-            [ParentCombo(DancerMenuDanceFeatures)]
+            [ParentCombo(DNC_Dance_Menu)]
             [ConflictingCombos(DNC_DanceStepCombo, DNC_DanceComboReplacer, DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
             [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS). Standard > Technical. This combos out into Tillana and Starfall Dance.", DNC.JobID, 0, "", "")]
             DNC_CombinedDances = 4022,
@@ -644,7 +644,7 @@ namespace XIVSlothComboPlugin
                 DancerFlourishOnCombinedDanceFeature = 4024,
                 #endregion
 
-            [ParentCombo(DancerMenuDanceFeatures)]
+            [ParentCombo(DNC_Dance_Menu)]
             [ConflictingCombos(DNC_DanceStepCombo, DNC_CombinedDances, DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
             [CustomComboInfo("Custom Dance Step Feature",
             "Change custom actions into dance steps while dancing." +
