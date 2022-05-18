@@ -937,34 +937,34 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Coerthan Torment Combo", "Replace Coerthan Torment with its combo chain.", DRG.JobID, 1, "", "")]
         DRG_CoerthanTormentCombo = 6100,
 
+        #region Chaos Thrust Combo
         [ReplaceSkill(DRG.ChaosThrust)]
         [ConflictingCombos(DRG_SimpleMode)]
         [CustomComboInfo("Chaos Thrust Combo", "Replace Chaos Thrust with its combo chain.", DRG.JobID, 2, "", "")]
         DRG_ChaosThrustCombo = 6200,
 
-            #region Chaos Thrust Combo
             [ParentCombo(DRG_ChaosThrustCombo)]
             [CustomComboInfo("Chaos Piercing Talon Uptime", "Replaces Chaos Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 3, "", "")]
             DRG_RangedUptimeChaos = 6201,
             #endregion
 
+        #region Full Thrust Combo
         [ReplaceSkill(DRG.FullThrust)]
         [ConflictingCombos(DRG_FullThrustComboPlus, DRG_SimpleMode)]
         [CustomComboInfo("Full Thrust Combo", "Replace Full Thrust with its combo chain.", DRG.JobID, 4, "", "")]
         DRG_FullThrustCombo = 6300,
 
-            #region Full Thrust Combo
             [ParentCombo(DRG_FullThrustCombo)]
             [CustomComboInfo("Full Piercing Talon Uptime", "Replaces Full Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 5, "", "")]
             DRG_RangedUptimeFullThrust = 6301,
-        #endregion
+            #endregion
 
+        #region Full Thrust Combo Plus
         [ReplaceSkill(DRG.FullThrust)]
         [ConflictingCombos(DRG_FullThrustCombo, DRG_SimpleMode)]
         [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust Plus Combo with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 6, "", "")]
         DRG_FullThrustComboPlus = 6400,
 
-            #region Full Thrust Combo Plus
             [ParentCombo(DRG_FullThrustComboPlus)]
             [CustomComboInfo("High Jump Plus Feature", "Includes High Jump in the rotation.", DRG.JobID, 7, "", "")]
             DRG_HighJumpPlus = 6401,
@@ -980,14 +980,14 @@ namespace XIVSlothComboPlugin
             [ParentCombo(DRG_FullThrustComboPlus)]
             [CustomComboInfo("Plus Piercing Talon Uptime", "Replaces Full Thrust with Piercing Talon when you are out of range.", DRG.JobID, 10, "", "")]
             DRG_RangedUptimePlus = 6403,
-        #endregion
+            #endregion
 
+        #region Simple Dragoon
         [ReplaceSkill(DRG.FullThrust)]
         [ConflictingCombos(DRG_FullThrustCombo, DRG_FullThrustComboPlus, DRG_ChaosThrustCombo, DRG_FangThrust, DRG_FangAndClaw)]
         [CustomComboInfo("Simple Dragoon", "Replaces Full Thrust with the entire DRG combo chain. Conflicts with every non-AoE feature.", DRG.JobID, 11, "", "")]
         DRG_SimpleMode = 6500,
 
-            #region Simple Dragoon
             [ParentCombo(DRG_SimpleMode)]
             [CustomComboInfo("Simple Opener", "Level 88+. Use True North on prepull to activate. Adds opener to the Simple Dragoon rotation. Not recommended for use in dungeons. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 12, "", "")]
             DRG_Simple_Opener = 6501,
@@ -1047,14 +1047,14 @@ namespace XIVSlothComboPlugin
             [ParentCombo(DRG_SimpleMode)]
             [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 25, "", "")]
             DRG_Simple_RangedUptime = 6513,
-        #endregion
+            #endregion
 
+        #region Simple Dragoon AoE
         [ReplaceSkill(DRG.CoerthanTorment)]
         [ConflictingCombos(DRG_CoerthanTormentCombo)]
         [CustomComboInfo("Simple Dragoon AoE", "One Button, many enemies hit.", DRG.JobID, 26, "", "")]
         DRG_AoE_SimpleMode = 6600,
 
-            #region Simple Dragoon AoE
             [ParentCombo(DRG_AoE_SimpleMode)]
             [CustomComboInfo("Wyrmwind Thrust AoE Feature", "Includes Wyrmwind Thrust to the Simple Dragoon AoE rotation.", DRG.JobID, 27, "", "")]
             DRG_AoE_Simple_WyrmwindFeature = 6601,
