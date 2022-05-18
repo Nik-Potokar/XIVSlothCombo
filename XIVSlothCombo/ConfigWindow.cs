@@ -790,10 +790,10 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region BARD
-            if (preset == CustomComboPreset.BardSimpleRagingJaws)
+            if (preset == CustomComboPreset.BRD_Simple_RagingJaws)
                 ConfigWindowFunctions.DrawSliderInt(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
-            if (preset == CustomComboPreset.BardSimpleNoWasteMode)
+            if (preset == CustomComboPreset.BRD_Simple_NoWaste)
                 ConfigWindowFunctions.DrawSliderInt(1, 10, BRD.Config.NoWasteHPPercentage, "Remaining target HP percentage");
 
             #endregion

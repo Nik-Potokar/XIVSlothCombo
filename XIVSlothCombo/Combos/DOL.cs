@@ -2,7 +2,7 @@
 
 namespace XIVSlothComboPlugin.Combos
 {
-    internal static class DOL
+    internal static class DoL
     {
         public const byte ClassID = 0;
         public const byte JobID = 51;
@@ -52,9 +52,9 @@ namespace XIVSlothComboPlugin.Combos
         }
     
 
-    internal class MinerEurekaFeature : CustomCombo
+    internal class DoL_Eureka : CustomCombo
     {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DolEurekaFeature;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DoL_Eureka;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -74,21 +74,21 @@ namespace XIVSlothComboPlugin.Combos
         }
     }
 
-        internal class FisherCast : CustomCombo
+        internal class FSH_Cast : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DolAny;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_Cast;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == Cast)
                 {
-                    if (IsEnabled(CustomComboPreset.DolCastHookFeature))
+                    if (IsEnabled(CustomComboPreset.FSH_CastHook))
                     {
                         if (HasCondition(ConditionFlag.Fishing))
                             return Hook;
                     }
 
-                    if (IsEnabled(CustomComboPreset.DolCastGigFeature))
+                    if (IsEnabled(CustomComboPreset.FSH_CastGig))
                     {
                         if (HasCondition(ConditionFlag.Diving))
                             return Gig;
@@ -97,7 +97,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID == SurfaceSlap)
                 {
-                    if (IsEnabled(CustomComboPreset.DolSurfaceTradeFeature))
+                    if (IsEnabled(CustomComboPreset.FSH_SurfaceTrade))
                     {
                         if (HasCondition(ConditionFlag.Diving))
                             return VeteranTrade;
@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID == PrizeCatch)
                 {
-                    if (IsEnabled(CustomComboPreset.DolPrizeBountyFeature))
+                    if (IsEnabled(CustomComboPreset.FSH_PrizeBounty))
                     {
                         if (HasCondition(ConditionFlag.Diving))
                             return NaturesBounty;
@@ -115,7 +115,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID == Snagging)
                 {
-                    if (IsEnabled(CustomComboPreset.DolSnaggingSalvageFeature))
+                    if (IsEnabled(CustomComboPreset.FSH_SnaggingSalvage))
                     {
                         if (HasCondition(ConditionFlag.Diving))
                             return Salvage;
@@ -124,7 +124,7 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID == CastLight)
                 {
-                    if (IsEnabled(CustomComboPreset.DolCastLightElectricCurrentFeature))
+                    if (IsEnabled(CustomComboPreset.FSH_CastLight_ElectricCurrent))
                     {
                         if (HasCondition(ConditionFlag.Diving))
                             return ElectricCurrent;
