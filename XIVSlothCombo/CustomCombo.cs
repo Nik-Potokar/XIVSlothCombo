@@ -144,7 +144,7 @@ namespace XIVSlothComboPlugin.Combos
                 classJobID = DOH.JobID;
 
             if (classJobID >= 16 && classJobID <= 18)
-                classJobID = DOL.JobID;
+                classJobID = DoL.JobID;
 
             if (this.JobID != ADV.JobID && this.ClassID != ADV.ClassID &&
                 this.JobID != classJobID && this.ClassID != classJobID)
