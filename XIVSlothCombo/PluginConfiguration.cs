@@ -83,7 +83,7 @@ namespace XIVSlothComboPlugin
         public bool HideChildren { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DancerDanceComboCompatibility"/> combo.
+        /// Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_DanceComboReplacer"/> combo.
         /// </summary>
         public uint[] DancerDanceCompatActionIDs { get; set; } = new uint[]
         {
