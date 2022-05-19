@@ -2577,7 +2577,7 @@ namespace XIVSlothComboPlugin
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
+        [CustomComboInfo("Energy Siphon/Painflare on AOE Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerDemiEgiOrder)]
