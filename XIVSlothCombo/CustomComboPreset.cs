@@ -2619,7 +2619,7 @@ namespace XIVSlothComboPlugin
         SummonerEgiAttacksAOEFeature = 17026,
 
         [ConflictingCombos(ALL_Caster_Raise)]
-        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 8, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
