@@ -434,9 +434,9 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (IsEnabled(CustomComboPreset.SummonerSearingLightBurstOption))
                                 {
-                                    if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Ruin) == AstralFlare) ||
-                                        (SummonerBurstPhase == 2 && OriginalHook(Ruin) == BrandOfPurgatory) ||
-                                        (SummonerBurstPhase == 3 && OriginalHook(Ruin) is AstralFlare or BrandOfPurgatory) ||
+                                    if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Tridisaster) == AstralFlare) ||
+                                        (SummonerBurstPhase == 2 && OriginalHook(Tridisaster) == BrandOfPurgatory) ||
+                                        (SummonerBurstPhase == 3 && OriginalHook(Tridisaster) is AstralFlare or BrandOfPurgatory) ||
                                         (SummonerBurstPhase == 4))
                                         return SearingLight;
                                 }
@@ -456,9 +456,9 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         if (level < Levels.SearingLight)
                                             return Painflare;
-                                        if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Ruin) == AstralImpulse) ||
-                                            (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire) ||
-                                            (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
+                                        if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Tridisaster) == AstralImpulse) ||
+                                            (SummonerBurstPhase == 2 && OriginalHook(Tridisaster) == FountainOfFire) ||
+                                            (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Tridisaster) is AstralImpulse or FountainOfFire) ||
                                             (SummonerBurstPhase == 4 && HasEffectAny(Buffs.SearingLight) && !HasEffect(Buffs.TitansFavor)) ||
                                             IsNotEnabled(CustomComboPreset.SummonerPrimalBurstChoice))
                                             return Painflare;
