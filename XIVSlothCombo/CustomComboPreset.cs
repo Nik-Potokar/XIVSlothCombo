@@ -2516,7 +2516,7 @@ namespace XIVSlothComboPlugin
         SummonerMainComboFeature = 17000,
 
         [ReplaceSkill(SMN.Tridisaster)]
-        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 0, "", "Can't deal with dungeons on your own? Fear not.")]
+        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
         SummonerAOEComboFeature = 17001,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
@@ -2531,25 +2531,25 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
-        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Slipstream", "2 Fast 2 Furious")]
+        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Slipstream", "2 Fast 2 Furious")]
         SummonerGarudaUniqueFeature = 17005,
 
-        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Fists of Fury", "Show MNK how it's done, will ya?")]
+        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Fists of Fury", "Show MNK how it's done, will ya?")]
         SummonerIfritUniqueFeature = 17006,
 
-        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
+        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 5, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
         SummonerTitanUniqueFeature = 17007,
 
         [ReplaceSkill(SMN.Fester)]
-        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks.", SMN.JobID, 0, "Festering", "Festering? Go take a shower, bro")]
+        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks.", SMN.JobID, 6, "Festering", "Festering? Go take a shower, bro")]
         SummonerEDFesterCombo = 17008,
 
         [ReplaceSkill(SMN.Painflare)]
-        [CustomComboInfo("ES Painflare", "Change Painflare into Energy Siphon when out of Aetherflow stacks.", SMN.JobID, 0, "Old age", "I sometimes get a painflare in my middle-back, too.")]
+        [CustomComboInfo("ES Painflare", "Change Painflare into Energy Siphon when out of Aetherflow stacks.", SMN.JobID, 7, "Old age", "I sometimes get a painflare in my middle-back, too.")]
         SummonerESPainflareCombo = 17009,
 
         // BONUS TWEAKS
-        [CustomComboInfo("Carbuncle Reminder Feature", "Reminds you to summon Carbuncle by replacing most actions with Summon Carbuncle.", SMN.JobID, 0)]
+        [CustomComboInfo("Carbuncle Reminder Feature", "Reminds you to summon Carbuncle by replacing most actions with Summon Carbuncle.", SMN.JobID, 8)]
         SummonerCarbuncleSummonFeature = 17010,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -2571,9 +2571,8 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
         EgisOnRuinFeature = 17015,
-
-        [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 1)]
+        
+        [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 2)]
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2588,9 +2587,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
         SummonerSearingLightBurstOption = 170181,
 
-        [ParentCombo(SummonerAOEComboFeature)]
+        /*[ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 2, "Our Eyes!", "Yay, we're all legally blind!")]
         BuffOnSimpleAoESummoner = 17019,
+        */
 
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
@@ -2603,12 +2603,11 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         EgisOnAOEFeature = 17022,
-
-        [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
+        
+        [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 2, "", "")]
         SummonerSwiftcastEgiFeature = 17023,
 
-        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 1, "", "")]
+        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 3, "", "")]
         SummonerPrimalAbilitiesFeature = 17024,
 
         [ParentCombo(SummonerEDMainComboFeature)]
@@ -2632,18 +2631,17 @@ namespace XIVSlothComboPlugin
         SummonerAOETargetRekindleOption = 17029,
 
         [ReplaceSkill(SMN.Ruin4)]
-        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 9, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
         SummonerSpecialRuinFeature = 17030,
 
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2)]
-        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 10, "", "")]
         SMNLucidDreamingFeature = 17031,
-
-        [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
+        
+        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 2, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
-        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 11, "", "")]
         SummonerAstralFlowonSummonsFeature = 17034,
 
         #endregion
