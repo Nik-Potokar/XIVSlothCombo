@@ -452,7 +452,7 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (IsNotEnabled(CustomComboPreset.SummonerEDPoolFeature))
                                         return Painflare;
-                                    if (IsEnabled(CustomComboPreset.SummonerEDPoolFeature))
+                                    if (IsEnabled(CustomComboPreset.SummonerEDPoolFeature) && IsNotEnabled(CustomComboPreset.SummonerSTPoolOnlyOption))
                                     {
                                         if (level < Levels.SearingLight)
                                             return Painflare;

@@ -2608,7 +2608,7 @@ namespace XIVSlothComboPlugin
         SummonerPrimalAbilitiesFeature = 17024,
 
         [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
+        [CustomComboInfo("Pooled OGCDs Feature", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
         SummonerEDPoolFeature = 17025,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2648,6 +2648,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SearingLightFeature)]
         [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on single target combo.", SMN.JobID, 2, "", "")]
         SearingLightSTOnlyOption = 17036,
+        
+        [ParentCombo(SummonerEDPoolFeature)]
+        [CustomComboInfo("Single target only Pooled OGCD Option", "Only use damage OGCDs on single target combo.", SMN.JobID, 2, "", "")]
+        SummonerSTPoolOnlyOption = 17037,
 
         #endregion
         // ====================================================================================
