@@ -2644,6 +2644,10 @@ namespace XIVSlothComboPlugin
         
         [CustomComboInfo("Egi and Demi summon order features", "Enables features related to changing egi or demi summons.", SMN.JobID, 2, "", "")]
         SummonerDemiEgiOrder = 17035,
+        
+        [ParentCombo(SearingLightFeature)]
+        [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on single target combo.", SMN.JobID, 2, "", "")]
+        SearingLightSTOnlyOption = 17036,
 
         #endregion
         // ====================================================================================
