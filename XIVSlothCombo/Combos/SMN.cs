@@ -456,9 +456,9 @@ namespace XIVSlothComboPlugin.Combos
                                     {
                                         if (level < Levels.SearingLight)
                                             return Painflare;
-                                        if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Tridisaster) == AstralImpulse) ||
-                                            (SummonerBurstPhase == 2 && OriginalHook(Tridisaster) == FountainOfFire) ||
-                                            (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Tridisaster) is AstralImpulse or FountainOfFire) ||
+                                        if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Tridisaster) == AstralFlare) ||
+                                            (SummonerBurstPhase == 2 && OriginalHook(Tridisaster) == BrandOfPurgatory) ||
+                                            (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Tridisaster) is AstralFlare or BrandOfPurgatory) ||
                                             (SummonerBurstPhase == 4 && HasEffectAny(Buffs.SearingLight) && !HasEffect(Buffs.TitansFavor)) ||
                                             IsNotEnabled(CustomComboPreset.SummonerPrimalBurstChoice))
                                             return Painflare;
