@@ -2607,9 +2607,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 3, "", "")]
         SummonerPrimalAbilitiesFeature = 17024,
 
-        [ParentCombo(SummonerEDMainComboFeature)]
-        [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0)]
-        SummonerEDPoolonMainFeature = 17025,
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
+        SummonerEDPoolFeature = 17025,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
