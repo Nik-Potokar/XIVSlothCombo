@@ -2609,7 +2609,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Pooled OGCDs Feature", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
-        SummonerEDPoolFeature = 17025,
+        SummonerOGCDPoolFeature = 17025,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
@@ -2649,7 +2649,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on single target combo.", SMN.JobID, 2, "", "")]
         SearingLightSTOnlyOption = 17036,
         
-        [ParentCombo(SummonerEDPoolFeature)]
+        [ParentCombo(SummonerOGCDPoolFeature)]
         [CustomComboInfo("Single target only Pooled OGCD Option", "Only use damage OGCDs on single target combo.", SMN.JobID, 2, "", "")]
         SummonerSTPoolOnlyOption = 17037,
 

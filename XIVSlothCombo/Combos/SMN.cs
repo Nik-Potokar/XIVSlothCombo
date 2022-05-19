@@ -269,9 +269,9 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (gauge.HasAetherflowStacks)
                             {
-                                if (IsNotEnabled(CustomComboPreset.SummonerEDPoolFeature))
+                                if (IsNotEnabled(CustomComboPreset.SummonerOGCDPoolFeature))
                                     return Fester;
-                                if (IsEnabled(CustomComboPreset.SummonerEDPoolFeature))
+                                if (IsEnabled(CustomComboPreset.SummonerOGCDPoolFeature))
                                 {
                                     if (level < Levels.SearingLight)
                                         return Fester;
@@ -450,9 +450,9 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (gauge.HasAetherflowStacks)
                                 {
-                                    if (IsNotEnabled(CustomComboPreset.SummonerEDPoolFeature))
+                                    if (IsNotEnabled(CustomComboPreset.SummonerOGCDPoolFeature))
                                         return Painflare;
-                                    if (IsEnabled(CustomComboPreset.SummonerEDPoolFeature) && IsNotEnabled(CustomComboPreset.SummonerSTPoolOnlyOption))
+                                    if (IsEnabled(CustomComboPreset.SummonerOGCDPoolFeature) && IsNotEnabled(CustomComboPreset.SummonerSTPoolOnlyOption))
                                     {
                                         if (level < Levels.SearingLight)
                                             return Painflare;
