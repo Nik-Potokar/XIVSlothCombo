@@ -536,7 +536,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 return TwinSnakes;
                             }
-                            if (!coeurlChakra && (demolishDuration <= 2.5 || !TargetHasEffect(Debuffs.Demolish)))
+                            if (!coeurlChakra && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= 2.5))
                             {
                                 return Demolish;
                             }
@@ -545,8 +545,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     // Monk Rotation
-                    if ((level >= Levels.DragonKick && HasEffect(Buffs.OpoOpoForm)) ||
-                        (HasEffect(Buffs.FormlessFist)) && !HasEffect(Buffs.LeadenFist))
+                    if ((level >= Levels.DragonKick && HasEffect(Buffs.OpoOpoForm)) || HasEffect(Buffs.FormlessFist))
                     {
                         return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
                     }
