@@ -2642,7 +2642,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 11, "", "")]
         SummonerAstralFlowonSummonsFeature = 17034,
         
-        [CustomComboInfo("Egi and Demi summon order features", "Enables features related to changing egi or demi summons.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Egi and Demi summon features", "Enables features related to changing egi or demi summons.", SMN.JobID, 2, "", "")]
         SummonerDemiEgiOrder = 17035,
         
         [ParentCombo(SearingLightFeature)]
