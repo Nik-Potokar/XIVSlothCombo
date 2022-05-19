@@ -2652,6 +2652,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerOGCDPoolFeature)]
         [CustomComboInfo("Single target only Pooled OGCD Option", "Only use damage OGCDs on single target combo.", SMN.JobID, 2, "", "")]
         SummonerSTPoolOnlyOption = 17037,
+        
+        [ParentCombo(SummonerSwiftcastEgiFeature)]
+        [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on single target combo.", SMN.JobID, 2, "", "")]
+        SummonerSTOnlySwiftcast = 17038,
 
         #endregion
         // ====================================================================================
