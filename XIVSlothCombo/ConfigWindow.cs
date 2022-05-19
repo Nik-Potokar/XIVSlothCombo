@@ -993,43 +993,29 @@ namespace XIVSlothComboPlugin
             #region RED MAGE
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche only", "", 1);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "", 2);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "", 3);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 4);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Riposte/Moulinet only", "", 5);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche & Riposte/Moulinet", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 6);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Scatter\n-Impact", "Select for one button rotation", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 4);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Riposte\n-Moulinet", "", 5);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche\n-Riposte\n-Moulinet", "", 6);
+            }
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte", "", 1);
-
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Jolt/Jolt II", "", 2);
-
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte & Jolt/Jolt II", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte\n-Jolt\n-Jolt II", "Select for one button rotation", 3);
+            }
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte & Moulinet", "", 1);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 2);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Moulinet, Jolt/Jolt II & Scatter/Impact", "", 3);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Veraero 1/2/3 and Verthunder 1/2/3", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet\n-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Veraero 1/2/3\n-Verthunder 1/2/3", "", 4);
+            }
 
             if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
