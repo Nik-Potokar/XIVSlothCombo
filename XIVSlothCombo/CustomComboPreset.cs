@@ -1840,13 +1840,13 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(ReaperScytheCombo)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the AoE combo when at 50 Shroud and greater and when current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
-        ReapearEnshroudonAOEFeature = 12026,
+        ReaperEnshroudonAOEFeature = 12026,
 
-        [ParentCombo(ReapearEnshroudonAOEFeature)]
+        [ParentCombo(ReaperGuillotineFeature)]
         [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the AoE combo when there are 2 Void Shrouds.", RPR.JobID, 0, "", "")]
         ReaperLemureAOEFeature = 12027,
 
-        [ParentCombo(ReapearEnshroudonAOEFeature)]
+        [ParentCombo(ReaperGuillotineFeature)]
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the AoE combo when there is 1 Lemure Shroud left.", RPR.JobID, 0, "", "")]
         ReaperComboCommunioAOEFeature = 12028,
 

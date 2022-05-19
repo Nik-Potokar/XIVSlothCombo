@@ -310,11 +310,12 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (deathsDesign)
                     {
-                        if (IsEnabled(CustomComboPreset.ReapearEnshroudonAOEFeature))
+
+                        if (IsEnabled(CustomComboPreset.ReaperEnshroudonAOEFeature) && !enshrouded && !soulReaver && level >= Levels.Enshroud && IsOffCooldown(Enshroud) && CanWeave(actionID) && gauge.Shroud >= 50)
+                            return Enshroud;
+                        if (enshrouded)
                         {
-                            if (!enshrouded && !soulReaver && level >= Levels.Enshroud && IsOffCooldown(Enshroud) && CanWeave(actionID) && gauge.Shroud >= 50)
-                                return Enshroud;
-                            if (enshrouded)
+                            if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature))
                             {
                                 if (IsEnabled(CustomComboPreset.ReaperComboCommunioAOEFeature) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= Levels.Communio)
                                     return Communio;
