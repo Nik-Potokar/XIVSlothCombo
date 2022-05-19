@@ -2581,7 +2581,7 @@ namespace XIVSlothComboPlugin
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Searing Light on Single target/Aoe combo", "Adds Searing Light to the Single target, and aoe Combos and will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light on Single target/Aoe combo", "Adds Searing Light to the Single target, and Aoe combos and will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
         SearingLightFeature = 17018,
 
         [ParentCombo(SearingLightFeature)]
