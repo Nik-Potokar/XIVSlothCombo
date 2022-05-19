@@ -310,12 +310,12 @@ namespace XIVSlothComboPlugin.Combos
                             }
 
                             //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
-                            if (swiftcasePhase == 2 && level >= Levels.RubyRuin1 && CanSpellWeave(actionID))
+                            if (swiftcasePhase == 2 && level >= Levels.RubyRuin1)
                             {
                                 if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned)
                                 {
                                     if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
-                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && lastComboMove is CrimsonStrike or RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite))
+                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
                                         return All.Swiftcast;
                                 }
 
@@ -336,10 +336,10 @@ namespace XIVSlothComboPlugin.Combos
                                 }
 
                                 //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
-                                if (level >= Levels.RubyRuin1 && CanSpellWeave(actionID) && gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
+                                if (level >= Levels.RubyRuin1 && gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
                                 {
                                     if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
-                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && lastComboMove is CrimsonStrike or RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite))
+                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
                                         return All.Swiftcast;
                                 }
                             }
@@ -398,7 +398,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption))
                         {
-                            if (IsOffCooldown(OriginalHook(AstralFlow)) && lastComboMove is FountainOfFire)
+                            if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire)
                                 return OriginalHook(AstralFlow);
                         }
                     }
