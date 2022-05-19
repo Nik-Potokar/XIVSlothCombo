@@ -2587,11 +2587,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
         SummonerSearingLightBurstOption = 170181,
 
-        /*[ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 2, "Our Eyes!", "Yay, we're all legally blind!")]
-        BuffOnSimpleAoESummoner = 17019,
-        */
-
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
         SummonerDemiSummonsFeature = 17020,
