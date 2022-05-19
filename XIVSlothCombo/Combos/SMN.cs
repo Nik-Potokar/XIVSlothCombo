@@ -250,7 +250,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (CanSpellWeave(actionID))
                     {
                         // Searing Light
-                        if (IsEnabled(CustomComboPreset.SearingLightonRuinFeature) && IsOffCooldown(SearingLight) && level >= Levels.SearingLight)
+                        if (IsEnabled(CustomComboPreset.SearingLightFeature) && IsOffCooldown(SearingLight) && level >= Levels.SearingLight)
                         {
                             if (IsEnabled(CustomComboPreset.SummonerSearingLightBurstOption))
                             {
@@ -430,7 +430,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (CanSpellWeave(actionID))
                         {
                             // Searing Light
-                            if (IsEnabled(CustomComboPreset.SearingLightonRuinFeature) && IsOffCooldown(SearingLight) && level >= Levels.SearingLight)
+                            if (IsEnabled(CustomComboPreset.SearingLightFeature) && IsOffCooldown(SearingLight) && level >= Levels.SearingLight)
                             {
                                 if (IsEnabled(CustomComboPreset.SummonerSearingLightBurstOption))
                                 {

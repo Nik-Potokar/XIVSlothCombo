@@ -2580,11 +2580,11 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
         SummonerESAOEFeature = 17017,
 
-        [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo and will be used on cooldown.", SMN.JobID, 1, "My eyes!", "I can't see!")]
-        SearingLightonRuinFeature = 17018,
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Searing Light on Single target/Aoe combo", "Adds Searing Light to the Single target, and aoe Combos and will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
+        SearingLightFeature = 17018,
 
-        [ParentCombo(SearingLightonRuinFeature)]
+        [ParentCombo(SearingLightFeature)]
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
         SummonerSearingLightBurstOption = 170181,
 
@@ -2636,7 +2636,7 @@ namespace XIVSlothComboPlugin
         SMNLucidDreamingFeature = 17031,
         
         [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 3, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 11, "", "")]
