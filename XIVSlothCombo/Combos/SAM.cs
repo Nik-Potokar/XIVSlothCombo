@@ -492,9 +492,10 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     if (IsEnabled(CustomComboPreset.YukionST) && gauge.Sen.HasFlag(Sen.SETSU) == false && level >= Levels.Yukikaze && HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
                                         return Yukikaze;
-                                    if (gauge.Sen.HasFlag(Sen.GETSU) == false)
+                                    if ((level < Levels.Kasha && ((GetBuffRemainingTime(Buffs.Fugetsu) < GetBuffRemainingTime(Buffs.Fuka)) || !HasEffect(Buffs.Fugetsu))) || (level >= Levels.Kasha && gauge.Sen.HasFlag(Sen.GETSU) == false))
                                         return Jinpu;
-                                    if (IsEnabled(CustomComboPreset.KashaonST) && gauge.Sen.HasFlag(Sen.KA) == false)
+                                    if (IsEnabled(CustomComboPreset.KashaonST) &&
+                                        ((level < Levels.Kasha && ((GetBuffRemainingTime(Buffs.Fuka) < GetBuffRemainingTime(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka))) || (level >= Levels.Kasha && gauge.Sen.HasFlag(Sen.KA) == false)))
                                         return Shifu;
                                     return Jinpu;
                                 }

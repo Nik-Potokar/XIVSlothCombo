@@ -1235,6 +1235,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst CDs on CD, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
         GunbreakerMeleeRoughDivideOption = 7027,
 
+        [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
+        GunbreakerAuroraProtectionFeature = 7028,
 
         #endregion
         // ====================================================================================
@@ -2573,7 +2575,7 @@ namespace XIVSlothComboPlugin
         EgisOnRuinFeature = 17015,
 
         [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.", SMN.JobID, 1)]
+        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.\nChoose options below for order of Egis summoned.", SMN.JobID, 1)]
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -3146,7 +3148,7 @@ namespace XIVSlothComboPlugin
 
             [ParentCombo(MNKBurstMode)]
             [SecretCustomCombo]
-            [CustomComboInfo("Add Riddle of Earth", "Adds Riddle of Earth and Earth's Reply to the Burst Mode.", MNK.JobID)]
+            [CustomComboInfo("Add Riddle of Earth", "Adds Riddle of Earth and Earth's Reply to the Burst Mode when in combat.", MNK.JobID)]
             MNKRiddleOfEarthOption = 80102,
             #endregion
 
