@@ -2572,7 +2572,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
         EgisOnRuinFeature = 17015,
         
-        [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 2)]
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2599,7 +2600,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         EgisOnAOEFeature = 17022,
         
-        [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 2, "", "")]
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
         SummonerSwiftcastEgiFeature = 17023,
 
         [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 3, "", "")]
@@ -2633,11 +2635,15 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 10, "", "")]
         SMNLucidDreamingFeature = 17031,
         
+        [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 2, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 11, "", "")]
         SummonerAstralFlowonSummonsFeature = 17034,
+        
+        [CustomComboInfo("Egi and Demi summon order features", "Enables features related to changing egi or demi summons.", SMN.JobID, 2, "", "")]
+        SummonerDemiEgiOrder = 17035,
 
         #endregion
         // ====================================================================================
