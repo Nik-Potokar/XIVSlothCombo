@@ -2518,7 +2518,7 @@ namespace XIVSlothComboPlugin
         SummonerMainComboFeature = 17000,
 
         [ReplaceSkill(SMN.Tridisaster)]
-        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 0, "", "Can't deal with dungeons on your own? Fear not.")]
+        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
         SummonerAOEComboFeature = 17001,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
@@ -3159,7 +3159,7 @@ namespace XIVSlothComboPlugin
 
             [ParentCombo(MNKBurstMode)]
             [SecretCustomCombo]
-            [CustomComboInfo("Add Riddle of Earth", "Adds Riddle of Earth and Earth's Reply to the Burst Mode.", MNK.JobID)]
+            [CustomComboInfo("Add Riddle of Earth", "Adds Riddle of Earth and Earth's Reply to the Burst Mode when in combat.", MNK.JobID)]
             MNKRiddleOfEarthOption = 80102,
             #endregion
 
