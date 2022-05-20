@@ -85,7 +85,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
         {
             ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
-            var output = Service.Configuration.GetCustomIntValue(config);
+            var output = Service.Configuration.GetCustomIntValue(config, outputValue);
             ImGui.PushItemWidth(itemWidth);
             var enabled = output == outputValue;
 
