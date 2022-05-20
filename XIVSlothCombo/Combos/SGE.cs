@@ -287,10 +287,9 @@ namespace XIVSlothComboPlugin.Combos
                         if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
                         {
                             //Advanced Options Enabled to procede with auto-Eukrasia
-                            //Incompatible with ToT due to Enemy checks that are using CurrentTarget.
                             if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
                             {
-                                if (EnemyHealthPercentage() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)) return Eukrasia;
+                                if (GetTargetHPPercent(OurTarget) > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)) return Eukrasia;
                             }
                             else return Eukrasia;
                         }
@@ -331,14 +330,14 @@ namespace XIVSlothComboPlugin.Combos
                         level >= Levels.Druochole &&
                         IsOffCooldown(Druochole) &&
                         GetJobGauge<SGEGauge>().Addersgall >= 1 &&
-                        EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Druochole)
+                        GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Druochole)
                        ) return Druochole;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) &&
                         level >= Levels.Taurochole &&
                         IsOffCooldown(Taurochole) &&
                         GetJobGauge<SGEGauge>().Addersgall >= 1 &&
-                        EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Taurochole)
+                        GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Taurochole)
                        ) return Taurochole;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) &&
@@ -358,36 +357,36 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) &&
                             level >= Levels.Soteria &&
                             IsOffCooldown(Soteria) &&
-                            EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Soteria)
+                            GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Soteria)
                            ) return Soteria;
 
                         if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) &&
                             level >= Levels.Zoe &&
                             IsOffCooldown(Zoe) &&
-                            EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Zoe)
+                            GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Zoe)
                            ) return Zoe;
 
                         if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) &&
                             level >= Levels.Krasis &&
-                            IsOffCooldown(Krasis) && EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Krasis)
+                            IsOffCooldown(Krasis) && GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Krasis)
                            ) return Krasis;
 
                         if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) &&
                             level >= Levels.Pepsis &&
-                            IsOffCooldown(Pepsis) && EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
+                            IsOffCooldown(Pepsis) && GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
                             FindTargetEffect(Buffs.EukrasianDiagnosis) is not null
                            ) return Pepsis;
 
                         if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) &&
                             level >= Levels.Haima &&
-                            IsOffCooldown(Haima) && EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Haima)
+                            IsOffCooldown(Haima) && GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Haima)
                            ) return Haima;
                     }
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) &&
                         level >= Levels.Eukrasia &&
                         FindTargetEffect(Buffs.EukrasianDiagnosis) is null &&
-                        EnemyHealthPercentage() <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
+                        GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
                     {
                         if (!HasEffect(Buffs.Eukrasia))
                             return Eukrasia;

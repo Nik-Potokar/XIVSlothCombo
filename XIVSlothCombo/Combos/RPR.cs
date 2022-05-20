@@ -119,7 +119,7 @@ namespace XIVSlothComboPlugin.Combos
                 var soulReaver = HasEffect(Buffs.SoulReaver);
                 var deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
                 var playerHP = PlayerHealthPercentageHp();
-                var enemyHP = EnemyHealthPercentage();
+                var enemyHP = GetTargetHPPercent();
                 var positionalChoice = Service.Configuration.GetCustomIntValue(Config.RPRPositionChoice);
                 var sodThreshold = Service.Configuration.GetCustomIntValue(Config.RPRSoDThreshold);
                 var sodRefreshRange = Service.Configuration.GetCustomIntValue(Config.RPRSoDRefreshRange);
@@ -294,7 +294,7 @@ namespace XIVSlothComboPlugin.Combos
                     var enshrouded = HasEffect(Buffs.Enshrouded);
                     var soulReaver = HasEffect(Buffs.SoulReaver);
                     var deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
-                    var enemyHP = EnemyHealthPercentage();
+                    var enemyHP = GetTargetHPPercent();
 
                     if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature) && soulReaver && level >= Levels.Guillotine)
                         return OriginalHook(Guillotine);

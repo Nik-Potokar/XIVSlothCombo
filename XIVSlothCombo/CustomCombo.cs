@@ -603,12 +603,19 @@ namespace XIVSlothComboPlugin.Combos
             return true;
         }
 
-        // Grabs current target HP %, including teammates.
-        public double EnemyHealthPercentage()
+        /// <summary>
+        /// Gets a value indicating target's HP Percent. CurrentTarget is default unless specified
+        /// </summary>
+        /// <returns>Double indicating percentage.</returns>
+        public double GetTargetHPPercent(GameObject? OurTarget = null)
         {
-            if (CurrentTarget is null)
-                return 0;
-            if (CurrentTarget is not BattleChara chara)
+            if (OurTarget is null)
+            {
+                //Fallback to CurrentTarget
+                OurTarget = CurrentTarget;
+                if (OurTarget is null) return 0;
+            }
+            if (OurTarget is not BattleChara chara)
                 return 0;
 
             double health = chara.CurrentHp;
