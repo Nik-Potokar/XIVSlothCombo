@@ -1235,6 +1235,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst CDs on CD, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
         GunbreakerMeleeRoughDivideOption = 7027,
 
+        [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
+        GunbreakerAuroraProtectionFeature = 7028,
 
         #endregion
         // ====================================================================================
@@ -1946,20 +1948,20 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
         RDM_VerfireVerstone = 13220,
 
-        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Fleche)]
-        [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action", RDM.JobID, 240)]
+        [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Fleche, RDM.Riposte, RDM.Moulinet)]
+        [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action(s)", RDM.JobID, 240)]
         RDM_OGCD = 13240,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Fleche", "Use Fleche on above specified action", RDM.JobID, 241)]
+        [CustomComboInfo("Fleche", "Use Fleche on above specified action(s)", RDM.JobID, 241)]
         RDM_Fleche = 13241,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Contra Sixte", "Use Contre Sixte on above specified action", RDM.JobID, 242)]
+        [CustomComboInfo("Contra Sixte", "Use Contre Sixte on above specified action(s)", RDM.JobID, 242)]
         RDM_ContraSixte = 13242,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Engagement", "Use Engagement on above specified action when in melee range", RDM.JobID, 243)]
+        [CustomComboInfo("Engagement", "Use Engagement on above specified action(s) when in melee range", RDM.JobID, 243)]
         RDM_Engagement = 13243,
 
         [ParentCombo(RDM_Engagement)]
@@ -1967,7 +1969,7 @@ namespace XIVSlothComboPlugin
         RDM_PoolEngage = 13246,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action", RDM.JobID, 244)]
+        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action(s)", RDM.JobID, 244)]
         RDM_Corpsacorps = 13244,
 
         [ParentCombo(RDM_Corpsacorps)]
@@ -1996,11 +1998,11 @@ namespace XIVSlothComboPlugin
 
         //SECTION_4to5_MELEE
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Riposte)]
-        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
+        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
         RDM_ST_MeleeCombo = 13410,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
-        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden on specified action\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
+        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
         RDM_ST_ManaficationEmbolden = 13411,
 
         [ParentCombo(RDM_ST_ManaficationEmbolden)]
@@ -2020,7 +2022,7 @@ namespace XIVSlothComboPlugin
         RDM_ST_CorpsGapClose = 13430,
 
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3)]
-        [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action", RDM.JobID, 510)]
+        [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action(s)", RDM.JobID, 510)]
         RDM_MeleeFinisher = 13510,
 
         //SECTION_6to7_QOL
@@ -2516,7 +2518,7 @@ namespace XIVSlothComboPlugin
         SummonerMainComboFeature = 17000,
 
         [ReplaceSkill(SMN.Tridisaster)]
-        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
+        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 0, "", "Can't deal with dungeons on your own? Fear not.")]
         SummonerAOEComboFeature = 17001,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
