@@ -1117,20 +1117,10 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SUMMONER
 
-            if (preset == CustomComboPreset.BuffOnSimpleAoESummoner)
-            {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 1", "Use Searing Light on cooldown, regardless of phase.", 0);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 2", "Use Searing Light only in Bahamut phase.", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 3", "Use Searing Light only in Phoenix phase.", 2);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 4", "Use Searing Light only in Ifrit phase.", 3);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 5", "Use Searing Light only in Garuda phase.", 4);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 6", "Use Searing Light only in Titan phase.", 5);
-            }
-
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
             {
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
 
             
