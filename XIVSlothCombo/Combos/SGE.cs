@@ -253,53 +253,34 @@ namespace XIVSlothComboPlugin.Combos
 
                     //Eukrasian Dosis.
                     //If we're too low level to use Eukrasia, we can stop here.
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && (level >= Levels.Eukrasia) && CurrentTarget is not null)
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && 
+                        level >= Levels.Eukrasia &&
+                        (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy)
                     {
-
                         //If we're already Eukrasian'd, the whole point of this section is moot
                         if (HasEffect(Buffs.Eukrasia)) return OriginalHook(Dosis1); //OriginalHook will autoselect the correct Dosis for us
-
-                        var OurTarget = CurrentTarget;
-                        //Check if our Target is there and not an enemy
-                        if ((CurrentTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy)
-                        {
-                            //If ToT is enabled, Check if ToT is not null
-                            if ((IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisToT)) &&
-                                (CurrentTarget.TargetObject is not null) &&
-                                ((CurrentTarget.TargetObject as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy))
-                                //Set Ourtarget as the Target of Target
-                                OurTarget = CurrentTarget.TargetObject;
-                            //Our Target of Target wasn't hostile, our target isn't hostile, time to exit, nothing to check debuff on, fuck this shit we're out
-                            else return actionID;
-                        }
 
                         //Determine which Dosis debuff to check
                         var DosisDebuffID = level switch
                         {
                             //Using FindEffect b/c we have a custom Target variable
-                            >= Levels.Dosis3 => FindEffect(Debuffs.EukrasianDosis3, OurTarget, LocalPlayer?.ObjectId),
-                            >= Levels.Dosis2 => FindEffect(Debuffs.EukrasianDosis2, OurTarget, LocalPlayer?.ObjectId),
+                            >= Levels.Dosis3 => FindTargetEffect(Debuffs.EukrasianDosis3),
+                            >= Levels.Dosis2 => FindTargetEffect(Debuffs.EukrasianDosis2),
                             //Ekrasia Dosis unlocks with Eukrasia, checked at the start
-                            _ => FindEffect(Debuffs.EukrasianDosis1, OurTarget, LocalPlayer?.ObjectId),
+                            _ => FindTargetEffect(Debuffs.EukrasianDosis1),
                         };
 
                         //Got our Debuff for our level, check for it and procede 
-                        if ((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
-                        {
-                            //Advanced Options Enabled to procede with auto-Eukrasia
-                            if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosisHPPer))
-                            {
-                                if (GetTargetHPPercent(OurTarget) > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)) return Eukrasia;
-                            }
-                            else return Eukrasia;
-                        }
+                        if (((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3)) &&
+                            (GetTargetHPPercent() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer))
+                           ) return Eukrasia;
                     }
 
                     //Toxikon
                     if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
                         level >= Levels.Toxikon &&
                         HasBattleTarget() &&
-                        ((GetOptionValue(Config.SGE_ST_Dosis_Toxikon) == 1 && this.IsMoving) || (GetOptionValue(Config.SGE_ST_Dosis_Toxikon) == 2)) &&
+                        ((!GetOptionBool(Config.SGE_ST_Dosis_Toxikon) && this.IsMoving) || GetOptionBool(Config.SGE_ST_Dosis_Toxikon)) &&
                         GetJobGauge<SGEGauge>().Addersting > 0
                        ) return OriginalHook(Toxikon);
                 }
