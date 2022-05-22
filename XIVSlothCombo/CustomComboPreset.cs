@@ -2256,7 +2256,7 @@ namespace XIVSlothComboPlugin
 
         [ConflictingCombos(WHMRaiseFeature)]
         [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID, 0, "Look up!", "It's this, but that.")]
-        WHMAlternativeRaise = 19005,
+        WHMAlternativeRaise = 19015,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]
@@ -2266,33 +2266,33 @@ namespace XIVSlothComboPlugin
         WHMMedicaFeature = 19007,
 
         [CustomComboInfo("Medica 2 Thin Air Feature", "Uses Thin Air before Medica 2 if available and not under the effect", WHM.JobID, 0, "Medica 2 is MP expensive", "Make it free if possible")]
-        WHMMedica2ThinAirFeature = 19008,
+        WHMMedica2ThinAirFeature = 19025,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Presence Of Mind Feature", "Adds Presence of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "This would imply you're actually paying attention.")]
-        WHMPresenceOfMindFeature = 19009,
+        WHMPresenceOfMindFeature = 19008,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Assize Feature", "Adds Assize as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "Size 'em up, knock 'em down")]
-        WHMAssizeFeature = 190010,
+        WHMAssizeFeature = 19009,
 
         [ParentCombo(WHMMedicaFeature)]
         [CustomComboInfo("Afflatus Misery On Medica Feature", "Adds Afflatus Misery onto the Medica Feature", WHM.JobID, 0, "", "Ah, back to beinig miserable.")]
-        WhiteMageAfflatusMiseryMedicaFeature = 19011,
+        WhiteMageAfflatusMiseryMedicaFeature = 19010,
 
         [ParentCombo(WHMMedicaFeature)]
         [CustomComboInfo("Afflatus Rapture On Medica Feature", "Adds Afflatus Rapture onto the Medica Feature", WHM.JobID, 0, "CRapture", "The final days are upon us!")]
-        WhiteMageAfflatusRaptureMedicaFeature = 19012,
+        WhiteMageAfflatusRaptureMedicaFeature = 19011,
 
         [CustomComboInfo("Afflatus Misery Feature", "Changes Cure 2 into Afflatus Misery.", WHM.JobID, 0, "", "Cures? Who needs 'em?")]
-        WhiteMageAfflatusMiseryCure2Feature = 19013,
+        WhiteMageAfflatusMiseryCure2Feature = 19012,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Adds DoT to Glare/Stone", "Adds DoT to DPS feature and refreshes it with 3 seconds remaining.", WHM.JobID, 0, "I'm an idiot", "Yes, one serving of less DPS, please.")]
-        WHMDotMainComboFeature = 19014,
+        WHMDotMainComboFeature = 19013,
 
         [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature/Alternative Feature", WHM.JobID, 0, "", "I can hardly breathe as it is!")]
-        WHMThinAirFeature = 19015,
+        WHMThinAirFeature = 19014,
 
         [ParentCombo(WHMCDsonMainComboGroup)]
         [CustomComboInfo("Lily Overcap Protection", "Adds Afflatus Rapture (AoE Heal) to glare when at 3 lilies.", WHM.JobID, 0, "Feed the blood lily!", "Burn out the bad! Burn out the bad!")]
