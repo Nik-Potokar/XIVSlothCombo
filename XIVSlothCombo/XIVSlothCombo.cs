@@ -110,6 +110,8 @@ namespace XIVSlothComboPlugin
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
             ActionWatching.Dispose();
+
+            Service.ClientState.Login -= PrintLoginMessage;
         }
 
         private void OnOpenConfigUi()
@@ -121,18 +123,6 @@ namespace XIVSlothComboPlugin
 
             switch (argumentsParts[0].ToLower())
             {
-                case "setall":
-                    {
-                        foreach (var preset in Enum.GetValues<CustomComboPreset>())
-                        {
-                            Service.Configuration.EnabledActions.Add(preset);
-                        }
-
-                        Service.ChatGui.Print("All SET");
-                        Service.Configuration.Save();
-                        break;
-                    }
-
                 case "unsetall":
                     {
                         foreach (var preset in Enum.GetValues<CustomComboPreset>())
@@ -147,69 +137,80 @@ namespace XIVSlothComboPlugin
 
                 case "set":
                     {
-                        var targetPreset = argumentsParts[1].ToLowerInvariant();
-                        foreach (var preset in Enum.GetValues<CustomComboPreset>())
+                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
-                            if (preset.ToString().ToLowerInvariant() != targetPreset)
-                                continue;
+                            var targetPreset = argumentsParts[1].ToLowerInvariant();
+                            foreach (var preset in Enum.GetValues<CustomComboPreset>())
+                            {
+                                if (preset.ToString().ToLowerInvariant() != targetPreset)
+                                    continue;
 
-                            Service.Configuration.EnabledActions.Add(preset);
-                            Service.ChatGui.Print($"{preset} SET");
+                                Service.Configuration.EnabledActions.Add(preset);
+                                Service.ChatGui.Print($"{preset} SET");
+                            }
+
+                            Service.Configuration.Save();
                         }
-
-                        Service.Configuration.Save();
-                        break;
-                    }
-
-                case "secrets":
-                    {
-                        Service.Configuration.EnableSecretCombos = !Service.Configuration.EnableSecretCombos;
-
-                        Service.ChatGui.Print(Service.Configuration.EnableSecretCombos
-                            ? $"Secret combos are now shown"
-                            : $"Secret combos are now hidden");
-
-                        Service.Configuration.Save();
+                        else
+                        {
+                            Service.ChatGui.PrintError("Features cannot be set in combat.");
+                        }
                         break;
                     }
 
                 case "toggle":
                     {
-                        var targetPreset = argumentsParts[1].ToLowerInvariant();
-                        foreach (var preset in Enum.GetValues<CustomComboPreset>())
+                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
-                            if (preset.ToString().ToLowerInvariant() != targetPreset)
-                                continue;
 
-                            if (Service.Configuration.EnabledActions.Contains(preset))
+
+                            var targetPreset = argumentsParts[1].ToLowerInvariant();
+                            foreach (var preset in Enum.GetValues<CustomComboPreset>())
                             {
-                                Service.Configuration.EnabledActions.Remove(preset);
-                                Service.ChatGui.Print($"{preset} UNSET");
+                                if (preset.ToString().ToLowerInvariant() != targetPreset)
+                                    continue;
+
+                                if (Service.Configuration.EnabledActions.Contains(preset))
+                                {
+                                    Service.Configuration.EnabledActions.Remove(preset);
+                                    Service.ChatGui.Print($"{preset} UNSET");
+                                }
+                                else
+                                {
+                                    Service.Configuration.EnabledActions.Add(preset);
+                                    Service.ChatGui.Print($"{preset} SET");
+                                }
                             }
-                            else
-                            {
-                                Service.Configuration.EnabledActions.Add(preset);
-                                Service.ChatGui.Print($"{preset} SET");
-                            }
+
+                            Service.Configuration.Save();
                         }
-
-                        Service.Configuration.Save();
+                        else
+                        {
+                            Service.ChatGui.PrintError("Features cannot be toggled in combat.");
+                        }
                         break;
                     }
 
                 case "unset":
                     {
-                        var targetPreset = argumentsParts[1].ToLowerInvariant();
-                        foreach (var preset in Enum.GetValues<CustomComboPreset>())
+                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
-                            if (preset.ToString().ToLowerInvariant() != targetPreset)
-                                continue;
+                            var targetPreset = argumentsParts[1].ToLowerInvariant();
+                            foreach (var preset in Enum.GetValues<CustomComboPreset>())
+                            {
+                                if (preset.ToString().ToLowerInvariant() != targetPreset)
+                                    continue;
 
-                            Service.Configuration.EnabledActions.Remove(preset);
-                            Service.ChatGui.Print($"{preset} UNSET");
+                                Service.Configuration.EnabledActions.Remove(preset);
+                                Service.ChatGui.Print($"{preset} UNSET");
+                            }
+
+                            Service.Configuration.Save();
                         }
-
-                        Service.Configuration.Save();
+                        else
+                        {
+                            Service.ChatGui.PrintError("Features cannot be unset in combat.");
+                        }
                         break;
                     }
 

@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Windowing;
@@ -89,9 +90,15 @@ namespace XIVSlothComboPlugin
         {
             if (ImGui.BeginTabBar("SlothBar"))
             {
-                if (ImGui.BeginTabItem("Features & Options"))
+                if (ImGui.BeginTabItem("PvE Features"))
                 {
-                    DrawMainWindow();
+                    DrawPVEWindow();
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem("PvP Features"))
+                {
+                    DrawPVPWindow();
                     ImGui.EndTabItem();
                 }
 
@@ -107,16 +114,154 @@ namespace XIVSlothComboPlugin
                     DrawAboutUs();
                     ImGui.EndTabItem();
                 }
+
+#if DEBUG
+                if (ImGui.BeginTabItem("Debug Mode"))
+                {
+                    DrawDebug();
+                    ImGui.EndTabItem();
+                }
+#endif
+
                 ImGui.EndTabBar();
             }
 
+        }
+
+#if DEBUG
+        internal class Debug : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; }
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                return actionID;
+            }
+        }
+        private void DrawDebug()
+        {
+            var LocalPlayer = Service.ClientState.LocalPlayer;
+            var comboClass = new Debug();
+
+            if (LocalPlayer != null)
+            {
+                if (Service.ClientState.LocalPlayer.TargetObject is BattleChara chara)
+                {
+                    foreach (var status in chara.StatusList)
+                    {
+                        ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
+                    }
+                }
+                foreach (var status in (Service.ClientState.LocalPlayer as BattleChara).StatusList)
+                {
+                    ImGui.TextUnformatted($"SELF STATUS CHECK: {Service.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
+                }
+
+                ImGui.TextUnformatted($"TARGET OBJECT KIND: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
+                ImGui.TextUnformatted($"TARGET IS BATTLE CHARA: {Service.ClientState.LocalPlayer.TargetObject is BattleChara}");
+                ImGui.TextUnformatted($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
+                ImGui.TextUnformatted($"IN COMBAT: {comboClass.InCombat()}");
+                ImGui.TextUnformatted($"IN MELEE RANGE: {comboClass.InMeleeRange()}");
+                ImGui.TextUnformatted($"DISTANCE FROM TARGET: {comboClass.GetTargetDistance()}");
+                ImGui.TextUnformatted($"TARGET HP VALUE: {comboClass.EnemyHealthCurrentHp()}");
+                ImGui.TextUnformatted($"LAST ACTION: {ActionWatching.GetActionName(ActionWatching.LastAction)}");
+                ImGui.TextUnformatted($"LAST WEAPONSKILL: {ActionWatching.GetActionName(ActionWatching.LastWeaponskill)}");
+                ImGui.TextUnformatted($"LAST SPELL: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
+                ImGui.TextUnformatted($"LAST ABILITY: {ActionWatching.GetActionName(ActionWatching.LastAbility)}");
+                ImGui.TextUnformatted($"ZONE: {Service.ClientState.TerritoryType}");
+                ImGui.TextUnformatted($"SELECTED BLU SPELLS: {string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
+
+            }
+            else
+            {
+                ImGui.TextUnformatted("Plese log in to use this tab.");
+            }
+        }
+#endif
+        private void DrawPVPWindow()
+        {
+            ImGui.Text("This tab allows you to select which PvP combos and features you wish to enable.");
+
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+            ImGui.PopFont();
+            ImGui.SameLine();
+            ImGui.TextUnformatted("These are PvP features. They will only work in PvP-enabled zones.");
+            ImGui.SameLine();
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+            ImGui.PopFont();
+
+            ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
+
+            ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
+
+            var i = 1;
+
+            foreach (var jobName in this.groupedPresets.Keys)
+            {
+                if (this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count() == 0) continue;
+
+                if (ImGui.CollapsingHeader(jobName))
+                {
+                    foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    {
+                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
+                        if (Service.Configuration.HideConflictedCombos)
+                        {
+                            //Presets that are contained within a ConflictedAttribute
+                            var conflictOriginals = Service.Configuration.GetConflicts(preset);
+
+                            //Presets with the ConflictedAttribute
+                            var conflictsSource = Service.Configuration.GetAllConflicts();
+
+                            if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
+                            {
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
+                                continue;
+                            }
+                            if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
+                            {
+                                Service.Configuration.EnabledActions.Remove(preset);
+                                Service.Configuration.Save();
+                            }
+                            else
+                            {
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
+                                
+                                continue;
+                            }
+
+                        }
+                        else
+                        {
+                            presetBox.Draw();
+                            ImGuiHelpers.ScaledDummy(12.0f);
+                        }
+                    }
+                }
+                else
+                {
+                    i += this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in this.groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    {
+                        i += AllChildren(this.presetChildren[preset.Preset]);
+                    }
+                }
+
+            }
+
+            ImGui.PopStyleVar();
+            ImGui.EndChild();
         }
 
         private static void DrawAboutUs()
         {
             ImGui.BeginChild("about", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.13.0\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.15.1\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
@@ -150,44 +295,6 @@ namespace XIVSlothComboPlugin
             ImGui.BeginChild("main", new Vector2(0, 0), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
 
-            #region PvPCombos
-
-            var showSecrets = Service.Configuration.EnableSecretCombos;
-            if (ImGui.Checkbox("Show PvP Combos", ref showSecrets))
-            {
-                Service.Configuration.EnableSecretCombos = showSecrets;
-                Service.Configuration.Save();
-            }
-
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Adds PVP Combos To The Combo Setup Screen");
-                ImGui.EndTooltip();
-            }
-            ImGui.NextColumn();
-
-            #endregion
-
-            #region TrustIncompatibles
-
-            //var showTrustIncompatible = Service.Configuration.EnableTrustIncompatibles;
-            //if (ImGui.Checkbox("Show Trust Incompatible Combos", ref showTrustIncompatible))
-            //{
-            //    Service.Configuration.EnableTrustIncompatibles = showTrustIncompatible;
-            //    Service.Configuration.Save();
-            //}
-
-            //if (ImGui.IsItemHovered())
-            //{
-            //    ImGui.BeginTooltip();
-            //    ImGui.TextUnformatted("These features won't work in a trust run due to technical restraints.");
-            //    ImGui.EndTooltip();
-            //}
-            //ImGui.NextColumn();
-
-            #endregion
-
             #region SubCombos
 
 
@@ -200,7 +307,7 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Hides all options a combo might have until you enable it.");
+                ImGui.TextUnformatted("Hides the sub-options of disabled features.");
                 ImGui.EndTooltip();
             }
             ImGui.NextColumn();
@@ -219,7 +326,25 @@ namespace XIVSlothComboPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Hides any combos that conflict with anything you have selected.");
+                ImGui.TextUnformatted("Hides any combos that conflict with others you have selected.");
+                ImGui.EndTooltip();
+            }
+
+            #endregion
+
+            #region Combat Log
+            var showCombatLog = Service.Configuration.EnabledOutputLog;
+
+            if (ImGui.Checkbox("Output Log to Chat", ref showCombatLog))
+            {
+                Service.Configuration.EnabledOutputLog = showCombatLog;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Every time you use an action, the plugin will print it to the chat.");
                 ImGui.EndTooltip();
             }
 
@@ -287,9 +412,9 @@ namespace XIVSlothComboPlugin
             ImGui.EndChild();
         }
 
-        private void DrawMainWindow()
+        private void DrawPVEWindow()
         {
-            ImGui.Text("This tab allows you to select which combos and features you wish to enable.");
+            ImGui.Text("This tab allows you to select which PvE combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
@@ -298,11 +423,13 @@ namespace XIVSlothComboPlugin
 
             foreach (var jobName in this.groupedPresets.Keys)
             {
-
                 if (ImGui.CollapsingHeader(jobName))
                 {
-                    foreach (var (preset, info) in this.groupedPresets[jobName])
+                    if (!PrintBLUMessage(jobName)) continue;
+
+                    foreach (var (preset, info) in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
+                        InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { this.DrawPreset(preset, info, ref i); } };
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             //Presets that are contained within a ConflictedAttribute
@@ -313,7 +440,8 @@ namespace XIVSlothComboPlugin
 
                             if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
                                 continue;
                             }
                             if (conflictOriginals.Any(x => Service.Configuration.IsEnabled(x)))
@@ -323,21 +451,23 @@ namespace XIVSlothComboPlugin
                             }
                             else
                             {
-                                this.DrawPreset(preset, info, ref i);
+                                presetBox.Draw();
+                                ImGuiHelpers.ScaledDummy(12.0f);
                                 continue;
                             }
 
                         }
                         else
                         {
-                            this.DrawPreset(preset, info, ref i);
+                            presetBox.Draw();
+                            ImGuiHelpers.ScaledDummy(12.0f);
                         }
                     }
                 }
                 else
                 {
-                    i += this.groupedPresets[jobName].Count;
-                    foreach(var preset in this.groupedPresets[jobName])
+                    i += this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in this.groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
                     {
                         i += AllChildren(this.presetChildren[preset.Preset]);
                     }
@@ -352,22 +482,33 @@ namespace XIVSlothComboPlugin
 
 
         }
+
+        private bool PrintBLUMessage(string jobName)
+        {
+            if (jobName == "Blue Mage")
+            {
+                if (Service.Configuration.ActiveBLUSpells.Count == 0)
+                {
+                    ImGui.Text("Please open the Blue Magic Spellbook to populate your active spells and enable features.");
+                    return false;
+                }
+                else
+                {
+                    ImGui.TextColored(ImGuiColors.ParsedPink, $"Please note that even if you do not have all the required spells active, you may still use these features.\nAny spells you do not have active will be skipped over so if a feature is not working as intended then\nplease try and enable more required spells.");
+                }
+            }
+
+            return true;
+        }
+
         private void DrawPreset(CustomComboPreset preset, CustomComboInfoAttribute info, ref int i)
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = Service.Configuration.IsSecret(preset);
-            var showSecrets = Service.Configuration.EnableSecretCombos;
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = Service.Configuration.GetParent(preset);
             var irlsloth = Service.Configuration.SpecialEvent;
-
-            if (secret && !showSecrets)
-            {
-                i++;
-                i += AllChildren(this.presetChildren[preset]);
-                return;
-            }
-                
+            var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
             ImGui.PushItemWidth(200);
 
@@ -415,27 +556,6 @@ namespace XIVSlothComboPlugin
 
             }
 
-
-
-            if (secret)
-            {
-                ImGui.SameLine();
-                ImGui.Text("  ");
-                ImGui.SameLine();
-                ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedOrange);
-                ImGui.Text(FontAwesomeIcon.SkullCrossbones.ToIconString());
-                ImGui.PopStyleColor();
-                ImGui.PopFont();
-
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.BeginTooltip();
-                    ImGui.TextUnformatted("This is a PVP Combo (Only Works in PVP Enabled Areas)");
-                    ImGui.EndTooltip();
-                }
-            }
-
             ImGui.PopItemWidth();
 
 
@@ -479,10 +599,6 @@ namespace XIVSlothComboPlugin
             {
                 var conflictText = conflicts.Select(conflict =>
                 {
-                    if (!showSecrets && Service.Configuration.IsSecret(conflict))
-                        return string.Empty;
-
-
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
                     if (irlsloth)
                     {
@@ -501,6 +617,23 @@ namespace XIVSlothComboPlugin
                     ImGui.TextColored(ImGuiColors.DalamudRed, $"Conflicts with: {conflictText}");
                     ImGui.Spacing();
                 }
+            }
+
+            if (blueAttr != null)
+            {
+                if (blueAttr.Actions.Count > 0)
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudOrange);
+                    ImGui.Text($"Missing active spells: {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetActionName(x)))}");
+                    ImGui.PopStyleColor();
+                }
+                else
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                    ImGui.Text($"All required spells active!");
+                    ImGui.PopStyleColor();
+                }
+
             }
 
             i++;
@@ -617,12 +750,25 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region ASTROLOGIAN
-            if (preset == CustomComboPreset.AstrologianLucidFeature)
+            if (preset is CustomComboPreset.AST_DPS_Feature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Malefic", "", 0);
+                ConfigWindowFunctions.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Combust", "Alternative DPS Mode. Leaves Malefic alone for pure DPS, becomes Malefic when features are on cooldown", 1);
+            }
+            if (preset is CustomComboPreset.AST_DPS_LucidOption)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.AstroEssentialDignity)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
+            if (preset is CustomComboPreset.AST_DPS_CombustOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.AST_DPS_DivinationOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+            if (preset is CustomComboPreset.AST_DPS_LightSpeedOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+            if (preset is CustomComboPreset.AstroEssentialDignity)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
 
             #endregion
             // ====================================================================================
@@ -644,16 +790,16 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region BARD
-            if (preset == CustomComboPreset.BardSimpleRagingJaws)
+            if (preset == CustomComboPreset.BRD_Simple_RagingJaws)
                 ConfigWindowFunctions.DrawSliderInt(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
 
-            if (preset == CustomComboPreset.BardSimpleNoWasteMode)
+            if (preset == CustomComboPreset.BRD_Simple_NoWaste)
                 ConfigWindowFunctions.DrawSliderInt(1, 10, BRD.Config.NoWasteHPPercentage, "Remaining target HP percentage");
 
             #endregion
             // ====================================================================================
             #region DANCER
-            if (preset == CustomComboPreset.DancerDanceComboCompatibility)
+            if (preset == CustomComboPreset.DNC_DanceComboReplacer)
             {
                 var actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
 
@@ -674,14 +820,53 @@ namespace XIVSlothComboPlugin
 
             }
 
+            if (preset == CustomComboPreset.DNC_ST_EspritOvercap)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_ST, "Esprit", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Ones);
+
+            #region Simple ST Sliders
+            if (preset == CustomComboPreset.DNC_ST_Simple_SS)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleSSBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_ST_Simple_TS)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleTSBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_ST_Simple_FeatherPooling)
+                ConfigWindowFunctions.DrawSliderInt(0, 5, DNC.Config.DNCSimpleFeatherBurstPercent, "Target HP percentage to dump all pooled feathers below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            #endregion
+
+            #region Simple AoE Sliders
+            if (preset == CustomComboPreset.DNC_AoE_Simple_SS)
+                ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleSSAoEBurstPercent, "Target HP percentage to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_AoE_Simple_TS)
+                ConfigWindowFunctions.DrawSliderInt(0, 10, DNC.Config.DNCSimpleTSAoEBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            #endregion
+
+            #region PvP Sliders
             if (preset == CustomComboPreset.DNCCuringWaltzOption)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###DNC", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCWaltzThreshold, "Caps at 90 to prevent waste.###DNCPvP", 150, SliderIncrements.Ones);
+            #endregion
 
             #endregion
             // ====================================================================================
             #region DARK KNIGHT
             if (preset == CustomComboPreset.DarkEoSPoolOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
             if (preset == CustomComboPreset.DarkPlungeFeature && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
             #endregion
@@ -700,7 +885,11 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region MONK
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
 
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
             #endregion
             // ====================================================================================
             #region NINJA
@@ -796,86 +985,98 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 8, RPRPVP.Config.RPRPvPImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.RPRPvPArcaneCircleOption && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(5, 90, RPRPVP.Config.RPRPvPArcaneCircleOption, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
+            {
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 3);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(RPR.Config.RPRPositionChoice, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 4);
+            }
+
+            if (preset == CustomComboPreset.ReaperShadowOfDeathFeature && enabled)
+            {
+                ConfigWindowFunctions.DrawSliderInt(0, 6, RPR.Config.RPRSoDRefreshRange, "Seconds remaining before refreshing Death's Design.", 150, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(0, 5, RPR.Config.RPRSoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
+            }
 
             #endregion
             // ====================================================================================
             #region RED MAGE
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche", "", 1);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "", 2);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "", 3);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Scatter\n-Impact", "Select for one button rotation", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 4);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Riposte\n-Moulinet", "", 5);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche\n-Riposte\n-Moulinet", "", 6);
+            }
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte", "", 1);
-
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Jolt/Jolt II", "", 2);
-
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte & Jolt/Jolt II", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte\n-Jolt\n-Jolt II", "Select for one button rotation", 3);
+            }
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte & Moulinet", "", 1);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 2);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Moulinet, Jolt/Jolt II & Scatter/Impact", "", 3);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Veraero 1/2/3 and Verthunder 1/2/3", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet\n-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Veraero 1/2/3\n-Verthunder 1/2/3", "", 4);
+            }
 
             if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP.", 300, SliderIncrements.Hundreds);
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
+                ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
 
             #endregion
             // ====================================================================================
             #region SAGE
 
-            if (preset == CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "Enemy HP %% Threshold");
+            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "Enemy HP % Threshold");
 
-            if (preset == CustomComboPreset.SGE_ST_Dosis_Lucid)
+            if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
+            if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
+            {
                 ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 1);
-
-            if (preset == CustomComboPreset.SGE_ST_Dosis_Toxikon)
                 ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 2);
+            }
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Soteria)
+            if (preset is CustomComboPreset.SGE_AoE_Phlegma_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_AoE_Phlegma_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+
+            if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Set HP percentage value for Soteria to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Zoe)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Set HP percentage value for Zoe to trigger");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Set HP percentage value for Pepsis to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Taurochole)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Set HP percentage value for Taurochole to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Haima)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Set HP percentage value for Haima to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Krasis)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Set HP percentage value for Krasis to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Druochole)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Set HP percentage value for Druochole to trigger");
 
-            if (preset == CustomComboPreset.SGE_ST_Heal_Diagnosis)
+            if (preset is CustomComboPreset.SGE_ST_Heal_Diagnosis)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
             #endregion
             // ====================================================================================
@@ -891,39 +1092,36 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SAMPvP.Config.SamSotenHP, "Use Soten on enemies below selected HP.");
             //Fillers
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
-            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
-            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
-                ConfigWindowFunctions.DrawRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
-            #endregion
-            // ====================================================================================
-            #region MONK
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
-
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
+            {
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
+            }
             #endregion
             // ====================================================================================
             #region SCHOLAR
-            if (preset == CustomComboPreset.SCH_ST_Broil_Lucid)
+            if (preset is CustomComboPreset.SCH_ST_Broil_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Broil_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-            if (preset == CustomComboPreset.SCH_ST_Broil_BioHPPer)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_BioHPPer, "Enemy HP %% Threshold");
-            if (preset == CustomComboPreset.SCH_ST_Broil_ChainStratagem)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_ChainStratagem, "Enemy HP%% Threshold");
-            if (preset == CustomComboPreset.SCH_FairyFeature)
+            if (preset is CustomComboPreset.SCH_ST_Broil_BioHPPer)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_BioHPPer, "Enemy HP % Threshold");
+            if (preset is CustomComboPreset.SCH_ST_Broil_ChainStratagem)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_ChainStratagem, "Enemy HP% Threshold");
+            if (preset is CustomComboPreset.SCH_FairyFeature)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 1);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 2);
             }
-            if (preset == CustomComboPreset.SCH_Aetherflow_Recite_Excog)
+            if (preset is CustomComboPreset.SCH_AetherflowFeature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only","", 1);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 2);
+            }
+            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Excog)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Always when available", "", 1);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Only when out of Aetherflow Stacks", "", 2);
             }
-            if (preset == CustomComboPreset.SCH_Aetherflow_Recite_Indom)
+            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Indom)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Always when available", "", 1);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Only when out of Aetherflow Stacks", "", 2);
@@ -932,26 +1130,26 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SUMMONER
 
-            if (preset == CustomComboPreset.BuffOnSimpleAoESummoner)
-            {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 1", "Use Searing Light on cooldown, regardless of phase.", 0);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 2", "Use Searing Light only in Bahamut phase.", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 3", "Use Searing Light only in Phoenix phase.", 2);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 4", "Use Searing Light only in Ifrit phase.", 3);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 5", "Use Searing Light only in Garuda phase.", 4);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 6", "Use Searing Light only in Titan phase.", 5);
-            }
-
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
 
+            
             if (preset == CustomComboPreset.SummonerPrimalBurstChoice)
             {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first)", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase", 4);
+            }
+
+            if (preset == CustomComboPreset.SummonerSwiftcastEgiFeature)
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Garuda", "Swiftcast Slipstream", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready", 3);
             }
 
             if (preset == CustomComboPreset.SMNLucidDreamingFeature)
@@ -974,6 +1172,9 @@ namespace XIVSlothComboPlugin
             #region WHITE MAGE
             if (preset == CustomComboPreset.WHMLucidDreamingFeature)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.WHM_AoE_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.WHMogcdHealsShieldsFeature)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, WHM.Config.WHMogcdHealsShieldsFeature, "Set HP% of target to use Tetragrammaton");

@@ -18,7 +18,8 @@
             Mineuchi = 29535,
             MeikyoShisui = 29536,
             Midare = 29529,
-            Kaeshi = 29531;
+            Kaeshi = 29531,
+            Zantetsuken = 29537;
 
         public static class Buffs
         {
@@ -27,11 +28,16 @@
                 Midare = 3203;
         }
 
+        public static class Debuffs
+        {
+            public const ushort
+                Kuzushi = 3202;
+        }
+
         public static class Config
         {
             public const string
-                SamSotenCharges = "SamSotenCharges";
-            public const string
+                SamSotenCharges = "SamSotenCharges",
                 SamSotenHP = "SamSotenHP";
 
         }
@@ -86,7 +92,7 @@
                 {
                     if (!InMeleeRange())
                     {
-                        if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(Soten) > 0 && EnemyHealthPercentage() <= SamSotenHP)
+                        if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(Soten) > 0 && GetTargetHPPercent() <= SamSotenHP)
                             return OriginalHook(Soten);
                         if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !IsOriginal(Yukikaze) && !HasEffect(Buffs.Midare) && IsOnCooldown(MeikyoShisui) && IsOnCooldown(OgiNamikiri) && OriginalHook(OgiNamikiri) != Kaeshi)
                             return SAM.Yukikaze;

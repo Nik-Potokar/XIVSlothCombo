@@ -86,32 +86,10 @@
         }
 
 
-        //Non-gameplay features
-        internal class OutputCombatLog : CustomCombo
-        {
-            private uint LastAction = 0;
-            private int LastActionCount = 0;
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllOutputCombatLog;
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {
-                if (ActionWatching.LastAction != LastAction || ActionWatching.LastActionUseCount != LastActionCount)
-                {
-                    LastAction = ActionWatching.LastAction;
-                    LastActionCount = ActionWatching.LastActionUseCount;
-
-                    Service.ChatGui.Print($"You just used: {GetActionName(ActionWatching.LastAction)} x{LastActionCount}");
-                }
-
-                return actionID;
-            }
-        }
-
-
         //Tank Features
-        internal class AllTankInterruptFeature : CustomCombo
+        internal class ALL_Tank_Interrupt : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankInterruptFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Tank_Interrupt;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -129,13 +107,13 @@
             }
         }
 
-        internal class AllTankReprisalFeature : CustomCombo
+        internal class ALL_Tank_Reprisal : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllTankReprisalFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Tank_Reprisal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is All.Reprisal)
+                if (actionID is Reprisal)
                 {
                     if (TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal))
                         return WHM.Stone1;
@@ -146,9 +124,9 @@
         }
 
         //Healer Features
-        internal class AllHealerRaiseFeature : CustomCombo
+        internal class ALL_Healer_Raise : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllHealerRaiseFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Healer_Raise;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -169,13 +147,13 @@
         }
 
         //Caster Features
-        internal class AllCasterAddleFeature : CustomCombo
+        internal class ALL_Caster_Addle : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterAddleFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Caster_Addle;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is All.Addle)
+                if (actionID is Addle)
                 {
                     if (TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle))
                         return WAR.FellCleave;
@@ -185,9 +163,9 @@
             }
         }
 
-        internal class AllCasterRaiseFeature : CustomCombo
+        internal class ALL_Caster_Raise : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllCasterRaiseFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Caster_Raise;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -204,13 +182,13 @@
         }
 
         //Melee DPS Features
-        internal class AllMeleeFeintFeature : CustomCombo
+        internal class ALL_Melee_Feint : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllMeleeFeintFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Melee_Feint;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is All.Feint)
+                if (actionID is Feint)
                 {
                     if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
                         return BLM.Fire;
@@ -221,9 +199,9 @@
         }
 
         //Ranged Physical Features
-        internal class AllRangedPhysicalMitigationFeature : CustomCombo
+        internal class ALL_Ranged_Mitigation : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AllRangedPhysicalMitigationFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Ranged_Mitigation;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {

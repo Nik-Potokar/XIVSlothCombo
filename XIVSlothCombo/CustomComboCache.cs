@@ -128,6 +128,19 @@ namespace XIVSlothComboPlugin
             return this.chargesCache[key] = (cur, max);
         }
 
+        internal unsafe int GetResourceCost(uint actionID)
+        {
+            var actionManager = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.Instance();
+            if (actionManager == null)
+                return 0;
+
+            var cost = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.GetActionCost(FFXIVClientStructs.FFXIV.Client.Game.ActionType.Spell, actionID, 0, 0, 0, 0);
+
+            return cost;
+
+        }
+
+
         private byte GetCooldownGroup(uint actionID)
         {
             if (this.cooldownGroupCache.TryGetValue(actionID, out var cooldownGroup))

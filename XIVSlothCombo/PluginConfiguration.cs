@@ -62,10 +62,9 @@ namespace XIVSlothComboPlugin
         public HashSet<CustomComboPreset> EnabledActions4 { get; set; } = new();
 
         /// <summary>
-        /// Gets or sets a value indicating whether to allow and display secret combos.
+        /// Gets or sets a value indicating whether to output combat log to the chatbox.
         /// </summary>
-        [JsonProperty("Debug")]
-        public bool EnableSecretCombos { get; set; } = false;
+        public bool EnabledOutputLog { get; set; } = false;
 
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace XIVSlothComboPlugin
         public bool HideChildren { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DancerDanceComboCompatibility"/> combo.
+        /// Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_DanceComboReplacer"/> combo.
         /// </summary>
         public uint[] DancerDanceCompatActionIDs { get; set; } = new uint[]
         {
@@ -111,7 +110,7 @@ namespace XIVSlothComboPlugin
         /// <param name="preset">Preset to check.</param>
         /// <returns>The boolean representation.</returns>
         public bool IsEnabled(CustomComboPreset preset)
-            => this.EnabledActions.Contains(preset) && (this.EnableSecretCombos || !this.IsSecret(preset));
+            => this.EnabledActions.Contains(preset);
 
         /// <summary>
         /// Gets a value indicating whether a preset is secret.
@@ -313,6 +312,8 @@ namespace XIVSlothComboPlugin
             if (array == Array.Empty<bool>()) return false;
             return array[index];
         }
+
+        public List<uint> ActiveBLUSpells { get; set; } = new List<uint>();
 
         private static int RoleIDToArrayIndex(byte key)
         {

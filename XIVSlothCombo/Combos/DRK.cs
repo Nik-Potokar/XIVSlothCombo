@@ -110,7 +110,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (level >= Levels.EdgeOfDarkness)
                                     return OriginalHook(EdgeOfDarkness);
-                                if (level >= Levels.FloodOfDarkness && level < Levels.EdgeOfDarkness)
+                                if (level is >= Levels.FloodOfDarkness and < Levels.EdgeOfDarkness)
                                     return FloodOfDarkness;
                             }
                         }
@@ -133,7 +133,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (IsEnabled(CustomComboPreset.DarkSaltedEarthFeature) && level >= Levels.SaltedEarth)
                                 {
                                     if ((IsOffCooldown(SaltedEarth) && !HasEffect(Buffs.SaltedEarth)) || //Salted Earth
-                                        (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && level >= Levels.SaltAndDarkness)) //Salt and Darkness
+                                        (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && level >= Levels.SaltAndDarkness) && GetBuffRemainingTime(Buffs.SaltedEarth) < 9) //Salt and Darkness
                                         return OriginalHook(SaltedEarth);
                                 }
 
@@ -241,7 +241,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (lastComboMove == Unleash && level >= Levels.StalwartSoul)
                     {
-                        if (IsEnabled(CustomComboPreset.DRKOvercapFeature) && gauge.Blood >= 90 && level >= Levels.Quietus && gauge.DarksideTimeRemaining > 0)
+                        if (IsEnabled(CustomComboPreset.DRKOvercapFeature) && gauge.Blood >= 90 && level >= Levels.Quietus)
                             return Quietus;
                         return StalwartSoul;
                     }
