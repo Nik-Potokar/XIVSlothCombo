@@ -85,7 +85,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
         {
             ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
-            var output = Service.Configuration.GetCustomIntValue(config);
+            var output = Service.Configuration.GetCustomIntValue(config, outputValue);
             ImGui.PushItemWidth(itemWidth);
             var enabled = output == outputValue;
 
@@ -103,6 +103,45 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             }
             ImGui.Unindent();
             ImGui.Spacing();
+        }
+
+        /// <summary>
+        /// Draws a checkbox in a horizontal configuration intended to be linked to other checkboxes sharing the same config value.
+        /// </summary>
+        /// <param name="config">The config ID.</param>
+        /// <param name="checkBoxName">The name of the feature.</param>
+        /// <param name="checkboxDescription">The description of the feature.</param>
+        /// <param name="outputValue">If the user ticks this box, this is the value the config will be set to.</param>
+        /// <param name="itemWidth"></param>
+        /// <param name="descriptionColor"></param>
+        public static void DrawHorizontalRadioButton(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        {
+            ImGui.Indent();
+            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
+            var output = Service.Configuration.GetCustomIntValue(config);
+            ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(15, 0));
+            ImGui.SameLine();
+            var enabled = output == outputValue;
+
+            ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+            if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
+            {
+                Service.Configuration.SetCustomIntValue(config, outputValue);
+                Service.Configuration.Save();
+            }
+
+
+            if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted(checkboxDescription);
+                ImGui.EndTooltip();
+            }
+            ImGui.PopStyleColor();
+
+            ImGui.Unindent();
         }
 
         public static void DrawPvPStatusMultiChoice(string config)

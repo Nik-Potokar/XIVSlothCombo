@@ -945,11 +945,11 @@ namespace XIVSlothComboPlugin.Combos
                                 // Weave Amplifier and Ley Lines
                                 if (currentMP <= 2800)
                                 {
-                                    if (level >= Levels.Amplifier && IsOffCooldown(Amplifier))
+                                    if (IsOffCooldown(Amplifier))
                                     {
                                         return Amplifier;
                                     }
-                                    if (level >= Levels.LeyLines && IsOffCooldown(LeyLines))
+                                    if (IsOffCooldown(LeyLines))
                                     {
                                         return LeyLines;
                                     }
@@ -1173,7 +1173,7 @@ namespace XIVSlothComboPlugin.Combos
                         // Transpose if F3 is available, or Thundercloud + Xenoglossy is available
                         if (currentMP < MP.AspectFire && lastComboMove != Manafont && IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) <= 118)
                         {
-                            if ((HasEffect(Buffs.LeyLines) && FindEffect(Buffs.LeyLines).RemainingTime >= 15) || HasEffect(Buffs.Firestarter) ||
+                            if ((HasEffect(Buffs.LeyLines) && GetBuffRemainingTime(Buffs.LeyLines) >= 15) || HasEffect(Buffs.Firestarter) ||
                                  lastComboMove == Xenoglossy || lastComboMove == Thunder3 || (IsOffCooldown(All.Swiftcast) && (gauge.PolyglotStacks == 2)))
                             {
                                 if (lastComboMove != Despair && lastComboMove != Fire4)
@@ -1286,7 +1286,7 @@ namespace XIVSlothComboPlugin.Combos
                                         {
                                             return Amplifier;
                                         }
-                                        if (IsEnabled(CustomComboPreset.BlackSimpleParadoxLeyLinesFeature) && IsOffCooldown(LeyLines))
+                                        if (IsOffCooldown(LeyLines))
                                         {
                                             return LeyLines;
                                         }
@@ -1398,7 +1398,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return Amplifier;
                             }
 
-                            if (IsOffCooldown(LeyLines))
+                            if (IsEnabled(CustomComboPreset.BlackSimpleParadoxLeyLinesFeature) && IsOffCooldown(LeyLines))
                             {
                                 return LeyLines;
                             }

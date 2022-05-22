@@ -99,13 +99,13 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is DRG.CoerthanTorment)
+                if (actionID is CoerthanTorment)
                 {
                     if (comboTime > 0)
                     {
                         if ((lastComboMove is DoomSpike or DraconianFury) && level >= Levels.SonicThrust)
                             return SonicThrust;
-                        if (lastComboMove is DRG.SonicThrust && level >= Levels.CoerthanTorment)
+                        if (lastComboMove is SonicThrust && level >= Levels.CoerthanTorment)
                             return CoerthanTorment;
                     }
                     return OriginalHook(DoomSpike);
@@ -135,7 +135,7 @@ namespace XIVSlothComboPlugin.Combos
                         if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.Disembowel)
                             return Disembowel;
 
-                        if (lastComboMove is DRG.Disembowel && level >= Levels.ChaosThrust)
+                        if (lastComboMove is Disembowel && level >= Levels.ChaosThrust)
                             return OriginalHook(ChaosThrust);
                     }
 
@@ -161,7 +161,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is DRG.FullThrust)
+                if (actionID is FullThrust)
                 {
 
                     //Piercing Talon Uptime Feature
@@ -176,7 +176,7 @@ namespace XIVSlothComboPlugin.Combos
                         if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.VorpalThrust)
                             return VorpalThrust;
 
-                        if (lastComboMove is DRG.VorpalThrust && level >= Levels.FullThrust)
+                        if (lastComboMove is VorpalThrust && level >= Levels.FullThrust)
                             return FullThrust;
                     }
 
@@ -199,7 +199,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is DRG.FullThrust)
+                if (actionID is FullThrust)
                 {
                     var canWeave = CanWeave(actionID);
 
@@ -221,8 +221,7 @@ namespace XIVSlothComboPlugin.Combos
                                ) return HighJump;
 
                             if (
-                                level >= Levels.Jump && level <= Levels.HighJump &&
-                                IsOffCooldown(Jump) && canWeave
+                                level is >= Levels.Jump and <= Levels.HighJump && IsOffCooldown(Jump) && canWeave
                                ) return Jump;
                         }
                     }
@@ -232,7 +231,7 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.DragoonLifeSurgePlusFeature) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && CanWeave(actionID, 0.001) && GetRemainingCharges(LifeSurge) > 0)
                         {
-                            if (lastComboMove is DRG.VorpalThrust)
+                            if (lastComboMove is VorpalThrust)
                             {
                                 if (HasEffect(Buffs.LanceCharge))
                                     return LifeSurge;
@@ -278,10 +277,10 @@ namespace XIVSlothComboPlugin.Combos
                         if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.VorpalThrust)
                             return VorpalThrust;
 
-                        if (lastComboMove is DRG.VorpalThrust && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0)
+                        if (lastComboMove is VorpalThrust && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0)
                             return LifeSurge;
 
-                        if (lastComboMove is DRG.VorpalThrust && level >= Levels.FullThrust)
+                        if (lastComboMove is VorpalThrust && level >= Levels.FullThrust)
                             return FullThrust;
                     }
 
@@ -307,10 +306,10 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var Disembowel = FindEffect(Buffs.PowerSurge);
+                var Disembowel = GetBuffRemainingTime(Buffs.PowerSurge);
                 var gauge = GetJobGauge<DRGGauge>();
 
-                if (actionID is DRG.FullThrust)
+                if (actionID is FullThrust)
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var canWeave = CanWeave(actionID);
@@ -342,7 +341,7 @@ namespace XIVSlothComboPlugin.Combos
 
                             if (step is 1)
                             {
-                                if (lastComboMove is DRG.TrueThrust) step++;
+                                if (lastComboMove is TrueThrust) step++;
                                 else return TrueThrust;
                             }
 
@@ -426,7 +425,7 @@ namespace XIVSlothComboPlugin.Combos
 
                             if (step is 15)
                             {
-                                if (lastComboMove is DRG.VorpalThrust) step++;
+                                if (lastComboMove is VorpalThrust) step++;
                                 else return VorpalThrust;
                             }
 
@@ -444,7 +443,7 @@ namespace XIVSlothComboPlugin.Combos
 
                             if (step is 18)
                             {
-                                if (lastComboMove is DRG.HeavensThrust) step++;
+                                if (lastComboMove is HeavensThrust) step++;
                                 else return HeavensThrust;
                             }
 
@@ -531,7 +530,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if (level >= Levels.HighJump && IsOffCooldown(HighJump))
                                     return HighJump;
 
-                                if (level >= Levels.Jump && level < Levels.HighJump && IsOffCooldown(Jump))
+                                if (level is >= Levels.Jump and < Levels.HighJump && IsOffCooldown(Jump))
                                     return Jump;
                             }
                         }
@@ -542,16 +541,16 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.DragoonLifeSurgeFeature))
                         {
-                            if (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is DRG.VorpalThrust && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
+                            if (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is VorpalThrust && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
                                 return LifeSurge;
 
-                            if (HasEffect(Buffs.RightEye) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is DRG.VorpalThrust && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
+                            if (HasEffect(Buffs.RightEye) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is VorpalThrust && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
                                 return LifeSurge;
 
-                            if (HasEffect(Buffs.BattleLitany) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is DRG.FangAndClaw && HasEffect(Buffs.EnhancedWheelingThrust) && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
+                            if (HasEffect(Buffs.BattleLitany) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is FangAndClaw && HasEffect(Buffs.EnhancedWheelingThrust) && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
                                 return LifeSurge;
 
-                            if (HasEffect(Buffs.BattleLitany) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is DRG.WheelingThrust && HasEffect(Buffs.SharperFangAndClaw) && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
+                            if (HasEffect(Buffs.BattleLitany) && HasEffect(Buffs.PowerSurge) && !HasEffect(Buffs.LifeSurge) && lastComboMove is WheelingThrust && HasEffect(Buffs.SharperFangAndClaw) && GetRemainingCharges(LifeSurge) > 0 && CanWeave(actionID, 0.001))
                                 return LifeSurge;
                         }
                     }
@@ -658,7 +657,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (comboTime > 0)
                     {
-                        if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.Disembowel && (Disembowel is null || (Disembowel.RemainingTime < 10)))
+                        if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.Disembowel && Disembowel < 10)
                             return DRG.Disembowel;
 
                         if (lastComboMove is DRG.Disembowel && level >= Levels.ChaoticSpring)
@@ -670,7 +669,7 @@ namespace XIVSlothComboPlugin.Combos
                         if ((lastComboMove is TrueThrust or RaidenThrust) && level >= Levels.VorpalThrust)
                             return VorpalThrust;
 
-                        if (lastComboMove is DRG.VorpalThrust && level >= Levels.FullThrust)
+                        if (lastComboMove is VorpalThrust && level >= Levels.FullThrust)
                             return FullThrust;
                     }
 
@@ -695,7 +694,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 var canWeave = CanWeave(actionID);
                 var gauge = GetJobGauge<DRGGauge>();
-                if (actionID is DRG.CoerthanTorment)
+                if (actionID is CoerthanTorment)
                 {
                     // Piercing Talon Uptime Option
                     if (IsEnabled(CustomComboPreset.DRGSimpleRangedUptimeAoE) && level >= Levels.PiercingTalon && !InMeleeRange())
@@ -740,8 +739,7 @@ namespace XIVSlothComboPlugin.Combos
                                 IsOffCooldown(HighJump) && CanWeave(actionID, 1))
                                 return HighJump;
 
-                            if (level >= Levels.Jump && level <= Levels.HighJump &&
-                                IsOffCooldown(Jump) && CanWeave(actionID, 1))
+                            if (level is >= Levels.Jump and <= Levels.HighJump && IsOffCooldown(Jump) && CanWeave(actionID, 1))
                                 return Jump;
                         }
 
@@ -749,9 +747,9 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.DragoonAoELifeSurgeFeature))
                         {
                             if ((HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye)) &&
-                                ((lastComboMove is DRG.CoerthanTorment && level >= Levels.CoerthanTorment) ||
-                                (lastComboMove is DRG.SonicThrust && level >= Levels.SonicThrust && level <= Levels.CoerthanTorment) ||
-                                (lastComboMove is DRG.DoomSpike && level <= Levels.SonicThrust)) &&
+                                ((lastComboMove is CoerthanTorment && level >= Levels.CoerthanTorment) ||
+                                (lastComboMove is SonicThrust && level is >= Levels.SonicThrust and <= Levels.CoerthanTorment) ||
+                                (lastComboMove is DoomSpike && level <= Levels.SonicThrust)) &&
                                 !HasEffect(Buffs.LifeSurge) &&
                                 GetRemainingCharges(LifeSurge) > 0 &&
                                 CanWeave(actionID, weaveTime: 0.3))
@@ -857,10 +855,10 @@ namespace XIVSlothComboPlugin.Combos
                         if (lastComboMove == OriginalHook(DoomSpike) && level >= Levels.SonicThrust)
                             return SonicThrust;
 
-                        if (lastComboMove is DRG.SonicThrust && level >= Levels.CoerthanTorment)
+                        if (lastComboMove is SonicThrust && level >= Levels.CoerthanTorment)
                             return CoerthanTorment;
 
-                        if ((lastComboMove is DRG.DraconianFury))
+                        if ((lastComboMove is DraconianFury))
                             return SonicThrust;
                     }
 
@@ -877,7 +875,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is DRG.FangAndClaw)
+                if (actionID is FangAndClaw)
                 {
                     if (HasEffect(Buffs.EnhancedWheelingThrust) && level >= Levels.WheelingThrust)
                         return WheelingThrust;

@@ -28,6 +28,8 @@ namespace XIVSlothComboPlugin.Combos
             Stone3 = 3568,
             Stone4 = 7431,
             Assize = 3571,
+            Holy = 139,
+            Holy3 = 25860,
 
             // DoT
             Dia = 16532,
@@ -79,6 +81,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const string
                 WHMLucidDreamingFeature = "WHMLucidDreamingFeature",
+                WHM_AoE_Lucid = "WHM_AoE_Lucid",
                 WHMogcdHealsShieldsFeature = "WHMogcdHealsShieldsFeature";
         }
 
@@ -152,7 +155,7 @@ namespace XIVSlothComboPlugin.Combos
                          && (GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29)) //Did I just use Divine Benison
                         return actionID;
                     if (IsEnabled(CustomComboPreset.WHMPrioritizeoGCDHealsShields) && IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)
-                        && IsOffCooldown(Tetragrammaton) && level >= Levels.Tetragrammaton && EnemyHealthPercentage() <= tetraHP)
+                        && IsOffCooldown(Tetragrammaton) && level >= Levels.Tetragrammaton && GetTargetHPPercent() <= tetraHP)
                         return actionID;
                     else if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryCure2Feature) && gauge.BloodLily == 3)
                         return AfflatusMisery;
@@ -237,13 +240,13 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
                         {
-                            if (level >= Levels.Aero1 && level < Levels.Aero2)
+                            if (level is >= Levels.Aero1 and < Levels.Aero2)
                             {
                                 if ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3))
                                     return Aero1;
                             }
 
-                            if (level >= Levels.Aero2 && level < Levels.Dia)
+                            if (level is >= Levels.Aero2 and < Levels.Dia)
                             {
                                 if ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3))
                                     return Aero2;
@@ -276,14 +279,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionID == Medica2)
                     {
                         var gauge = GetJobGauge<WHMGauge>();
-                        var medica2Buff = FindEffect(Buffs.Medica2);
+                        var medica2Buff = GetBuffRemainingTime(Buffs.Medica2);
                         if (level < Levels.Medica2)
                             return Medica1;
                         if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryMedicaFeature) && gauge.BloodLily == 3)
                             return AfflatusMisery;
-                        if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff.RemainingTime > 2)
+                        if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff > 2)
                             return AfflatusRapture;
-                        if (HasEffect(Buffs.Medica2) && medica2Buff.RemainingTime > 2)
+                        if (HasEffect(Buffs.Medica2) && medica2Buff > 2)
                             return Medica1;
                     }
 
@@ -362,7 +365,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.WHMBenisonOGCDOption) && CanSpellWeave(actionID)) { return DivineBenison; }
                         if (IsEnabled(CustomComboPreset.WHMBenisonGCDOption)) { return DivineBenison; }
                     }
-                    if (level >= Levels.Tetragrammaton && IsOffCooldown(Tetragrammaton) && EnemyHealthPercentage() <= tetraHP)
+                    if (level >= Levels.Tetragrammaton && IsOffCooldown(Tetragrammaton) && GetTargetHPPercent() <= tetraHP)
                     {
                         if (IsEnabled(CustomComboPreset.WHMTetraOnOGCDOption) && CanSpellWeave(actionID)) { return Tetragrammaton; }
                         if (IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)) { return Tetragrammaton; }
@@ -372,5 +375,33 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
+        internal class WHM_AoE_DPS_Feature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_AoE_DPS_Feature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Holy or Holy3)
+                {
+                    var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.WHM_AoE_Lucid);
+                    var gauge = GetJobGauge<WHMGauge>();
+
+                    if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.WHM_AoE_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                        return All.LucidDreaming;
+
+                    if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.WHM_AoE_Assize) && level >= Levels.Assize && IsOffCooldown(Assize))
+                        return Assize;
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_LilyOvercap) && level >= Levels.AfflatusRapture && ((gauge.Lily == 3 && gauge.BloodLily < 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
+                        return AfflatusRapture;
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_AfflatusMisery) && level >= Levels.AfflatusMisery && gauge.BloodLily >= 3 && CurrentTarget is Dalamud.Game.ClientState.Objects.Types.BattleNpc)
+                        return AfflatusMisery;
+                }
+
+                return actionID;
+            }
+        }
+
     }
 }

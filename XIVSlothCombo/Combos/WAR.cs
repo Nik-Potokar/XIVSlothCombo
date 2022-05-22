@@ -102,7 +102,7 @@ namespace XIVSlothComboPlugin.Combos
                         return Infuriate;
 
                     //Sub Storm's Eye level check
-                    if (IsEnabled(CustomComboPreset.WarriorIRonST) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level >= Levels.Berserk && level < Levels.StormsEye && InCombat())
+                    if (IsEnabled(CustomComboPreset.WarriorIRonST) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level is >= Levels.Berserk and < Levels.StormsEye && InCombat())
                         return OriginalHook(Berserk);
 
                     if (HasEffect(Buffs.SurgingTempest) && InCombat())
@@ -116,7 +116,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.WarriorOnslaughtFeature) && level >= Levels.Onslaught && GetRemainingCharges(Onslaught) > onslaughtChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) ||
-                                    (IsEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) && GetTargetDistance() <= 1))
+                                    (IsEnabled(CustomComboPreset.WarriorMeleeOnslaughtOption) && GetTargetDistance() <= 1 && GetCooldownRemainingTime(InnerRelease) > 40))
                                     return Onslaught;
                             }
                         }
@@ -202,7 +202,7 @@ namespace XIVSlothComboPlugin.Combos
                             return Infuriate;
 
                         //Sub Mythril Tempest level check
-                        if (IsEnabled(CustomComboPreset.WarriorIRonAOE) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level >= Levels.Berserk && level < Levels.MythrilTempest && InCombat())
+                        if (IsEnabled(CustomComboPreset.WarriorIRonAOE) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level is >= Levels.Berserk and < Levels.MythrilTempest && InCombat())
                             return OriginalHook(Berserk);
 
                         if (HasEffect(Buffs.SurgingTempest) && InCombat())
