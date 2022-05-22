@@ -127,7 +127,7 @@ namespace XIVSlothComboPlugin.Combos
                 //Gibbet and Gallows on SoD
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature) && IsEnabled(CustomComboPreset.GibbetGallowsonSoD) && soulReaver && level >= Levels.Gibbet)
                 {
-                    if (positionalChoice is 1 or 2)
+                    if (positionalChoice is 0 or 1 or 2)
                     {
                         if (HasEffect(Buffs.EnhancedGibbet))
                             return OriginalHook(Gibbet);
@@ -141,7 +141,7 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(Gallows);
                     if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                     {
-                        if (positionalChoice == 1)
+                        if (positionalChoice is 0 or 1)
                             return Gallows;
                         if (positionalChoice == 2)
                             return Gibbet;
@@ -152,7 +152,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Gibbet)
                     {
-                        if (positionalChoice is 1 or 2)
+                        if (positionalChoice is 0 or 1 or 2)
                         {
                             if (HasEffect(Buffs.EnhancedGibbet))
                                 return OriginalHook(Gibbet);
@@ -166,7 +166,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gibbet);
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice == 1)
+                            if (positionalChoice is 0 or 1)
                                 return Gallows;
                             if (positionalChoice == 2)
                                 return Gibbet;
@@ -245,7 +245,7 @@ namespace XIVSlothComboPlugin.Combos
                                     return OriginalHook(Gallows);
                                 if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
                                 {
-                                    if (positionalChoice is 1 or 3)
+                                    if (positionalChoice is 0 or 1 or 3)
                                         return OriginalHook(Gallows);
                                     if (positionalChoice is 2 or 4)
                                         return OriginalHook(Gibbet);
@@ -387,7 +387,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gallows);
                         if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
                         {
-                            if (positionalChoice is 1 or 3)
+                            if (positionalChoice is 0 or 1 or 3)
                                 return OriginalHook(Gallows);
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
@@ -404,7 +404,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gallows);
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice is 1 or 3)
+                            if (positionalChoice is 0 or 1 or 3)
                                 return OriginalHook(Gallows);
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
@@ -490,7 +490,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gallows);
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice is 1 or 3)
+                            if (positionalChoice is 0 or 1 or 3)
                                 return OriginalHook(Gallows);
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
