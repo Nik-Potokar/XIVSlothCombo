@@ -7,8 +7,6 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 36;
 
         public const uint
-            Addle = 7560,
-            Swiftcast = 7561,
             RoseOfDestruction = 23275,
             ShockStrike = 11429,
             FeatherRain = 11426,
@@ -32,7 +30,6 @@ namespace XIVSlothComboPlugin.Combos
             Devour = 18320,
             Offguard = 11411,
             BadBreath = 11388,
-            LucidDreaming = 7562,
             MagicHammer = 18305,
             WhiteKnightsTour = 18310,
             BlackKnightsTour = 18311,
@@ -42,7 +39,6 @@ namespace XIVSlothComboPlugin.Combos
         public static class Buffs
         {
             public const ushort
-                Swiftcast = 167,
                 MoonFlute = 1718,
                 Bristle = 1716,
                 Tingle = 2492,
@@ -56,7 +52,6 @@ namespace XIVSlothComboPlugin.Combos
             public const ushort
                 Slow = 9,
                 Bind = 13,
-                Addle = 1203,
                 SongOfTorment = 273,
                 DeepFreeze = 1731,
                 Offguard = 1717,
@@ -68,271 +63,254 @@ namespace XIVSlothComboPlugin.Combos
         public static class Levels
         {
             public const byte
-                LucidDreaming = 24;
+                Placeholder = 1;
         }
-    }
 
-    internal class BluBuffedSoT : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluBuffedSoT;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluBuffedSoT : CustomCombo
         {
-            if (actionID == BLU.SongOfTorment)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluBuffedSoT;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (!HasEffect(BLU.Buffs.Bristle))
-                    return BLU.Bristle;
-                return BLU.SongOfTorment;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class BluOpener : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluOpener;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == BLU.MoonFlute || actionID == BLU.Whistle)
-            {
-                if (GetCooldown(BLU.TripleTrident).CooldownRemaining < 3)
+                if (actionID == SongOfTorment)
                 {
-                    if (!HasEffect(BLU.Buffs.Whistle))
-                        return BLU.Whistle;
-                    if (!HasEffect(BLU.Buffs.Tingle))
-                        return BLU.Tingle;
-                    if (!HasEffect(BLU.Buffs.MoonFlute))
-                        return BLU.MoonFlute;
-                    if (!GetCooldown(BLU.JKick).IsCooldown)
-                        return BLU.JKick;
-                    if (!GetCooldown(BLU.TripleTrident).IsCooldown)
-                        return BLU.TripleTrident;
+                    if (!HasEffect(Buffs.Bristle))
+                        return Bristle;
+                    return SongOfTorment;
                 }
 
-                if (!HasEffect(BLU.Buffs.Whistle) && !GetCooldown(BLU.JKick).IsCooldown)
-                    return BLU.Whistle;
-                if (!HasEffect(BLU.Buffs.MoonFlute))
-                    return BLU.MoonFlute;
-                if (!GetCooldown(BLU.JKick).IsCooldown)
-                    return BLU.JKick;
-                if (!GetCooldown(BLU.Nightbloom).IsCooldown)
-                    return BLU.Nightbloom;
-                if (!GetCooldown(BLU.RoseOfDestruction).IsCooldown)
-                    return BLU.RoseOfDestruction;
-                if (!GetCooldown(BLU.FeatherRain).IsCooldown)
-                    return BLU.FeatherRain;
-                if (!HasEffect(BLU.Buffs.Bristle) && !GetCooldown(BLU.Swiftcast).IsCooldown)
-                    return BLU.Bristle;
-                if (!GetCooldown(BLU.Swiftcast).IsCooldown)
-                    return BLU.Swiftcast;
-                if (!GetCooldown(BLU.GlassDance).IsCooldown)
-                    return BLU.GlassDance;
-                if (GetCooldown(BLU.Surpanakha).CooldownRemaining < 95)
-                    return BLU.Surpanakha;
-                if (!GetCooldown(BLU.MatraMagic).IsCooldown && HasEffect(BLU.Buffs.DPSMimicry))
-                    return BLU.MatraMagic;
-                if (!GetCooldown(BLU.ShockStrike).IsCooldown)
-                    return BLU.ShockStrike;
-                return BLU.PhantomFlurry;
+                return actionID;
             }
-
-            return actionID;
         }
-    }
 
-    internal class BluFinalSting : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluFinalSting;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluOpener : CustomCombo
         {
-            if (actionID == BLU.FinalSting)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluOpener;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-
-                if (!HasEffect(BLU.Buffs.MoonFlute))
-                    return BLU.MoonFlute;
-                if (IsEnabled(CustomComboPreset.BluPrimals))
+                if (actionID == MoonFlute || actionID == Whistle)
                 {
+                    if (GetCooldown(TripleTrident).CooldownRemaining < 3)
+                    {
+                        if (!HasEffect(Buffs.Whistle))
+                            return Whistle;
+                        if (!HasEffect(Buffs.Tingle))
+                            return Tingle;
+                        if (!HasEffect(Buffs.MoonFlute))
+                            return MoonFlute;
+                        if (!GetCooldown(JKick).IsCooldown)
+                            return JKick;
+                        if (!GetCooldown(TripleTrident).IsCooldown)
+                            return TripleTrident;
+                    }
 
-                    if (!GetCooldown(BLU.RoseOfDestruction).IsCooldown)
-                        return BLU.RoseOfDestruction;
-                    if (!GetCooldown(BLU.FeatherRain).IsCooldown)
-                        return BLU.FeatherRain;
-                    if (!GetCooldown(BLU.GlassDance).IsCooldown)
-                        return BLU.GlassDance;
-                    if (!GetCooldown(BLU.JKick).IsCooldown)
-                        return BLU.JKick;
+                    if (!HasEffect(Buffs.Whistle) && !GetCooldown(JKick).IsCooldown)
+                        return Whistle;
+                    if (!HasEffect(Buffs.MoonFlute))
+                        return MoonFlute;
+                    if (!GetCooldown(JKick).IsCooldown)
+                        return JKick;
+                    if (!GetCooldown(Nightbloom).IsCooldown)
+                        return Nightbloom;
+                    if (!GetCooldown(RoseOfDestruction).IsCooldown)
+                        return RoseOfDestruction;
+                    if (!GetCooldown(FeatherRain).IsCooldown)
+                        return FeatherRain;
+                    if (!HasEffect(Buffs.Bristle) && !GetCooldown(All.Swiftcast).IsCooldown)
+                        return Bristle;
+                    if (!GetCooldown(All.Swiftcast).IsCooldown)
+                        return All.Swiftcast;
+                    if (!GetCooldown(GlassDance).IsCooldown)
+                        return GlassDance;
+                    if (GetCooldown(Surpanakha).CooldownRemaining < 95)
+                        return Surpanakha;
+                    if (!GetCooldown(MatraMagic).IsCooldown && HasEffect(Buffs.DPSMimicry))
+                        return MatraMagic;
+                    if (!GetCooldown(ShockStrike).IsCooldown)
+                        return ShockStrike;
+                    return PhantomFlurry;
                 }
 
-                if (!HasEffect(BLU.Buffs.Tingle))
-                    return BLU.Tingle;
-                if (!GetCooldown(BLU.ShockStrike).IsCooldown && IsEnabled(CustomComboPreset.BluPrimals))
-                    return BLU.ShockStrike;
-                if (!HasEffect(BLU.Buffs.Whistle))
-                    return BLU.Whistle;
-                if (!GetCooldown(BLU.Swiftcast).IsCooldown)
-                    return BLU.Swiftcast;
-                return BLU.FinalSting;
+                return actionID;
             }
-
-            return actionID;
         }
-    }
 
-    internal class BluRez : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluRez;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluFinalSting : CustomCombo
         {
-            if (actionID == BLU.AngelWhisper)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluFinalSting;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var swiftCD = GetCooldown(BLU.Swiftcast);
-                var angelCD = GetCooldown(BLU.AngelWhisper);
-                if (!swiftCD.IsCooldown && !angelCD.IsCooldown)
-                    return BLU.Swiftcast;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class BluUltravibrationCombo : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluUltravibrate;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-        {
-            if (actionID == BLU.Ultravibration)
-            {
-                var freezeDebuff = FindTargetEffect(BLU.Debuffs.DeepFreeze);
-                var swiftCD = GetCooldown(BLU.Swiftcast);
-                var ultraCD = GetCooldown(BLU.Ultravibration);
-
-                if (freezeDebuff is null && !ultraCD.IsCooldown)
-                    return BLU.RamsVoice;
-                if (freezeDebuff is not null)
+                if (actionID == FinalSting)
                 {
-                    if (!swiftCD.IsCooldown)
-                        return BLU.Swiftcast;
-                    return BLU.Ultravibration;
+
+                    if (!HasEffect(Buffs.MoonFlute))
+                        return MoonFlute;
+                    if (IsEnabled(CustomComboPreset.BluPrimals))
+                    {
+
+                        if (!GetCooldown(RoseOfDestruction).IsCooldown)
+                            return RoseOfDestruction;
+                        if (!GetCooldown(FeatherRain).IsCooldown)
+                            return FeatherRain;
+                        if (!GetCooldown(GlassDance).IsCooldown)
+                            return GlassDance;
+                        if (!GetCooldown(JKick).IsCooldown)
+                            return JKick;
+                    }
+
+                    if (!HasEffect(Buffs.Tingle))
+                        return Tingle;
+                    if (!GetCooldown(ShockStrike).IsCooldown && IsEnabled(CustomComboPreset.BluPrimals))
+                        return ShockStrike;
+                    if (!HasEffect(Buffs.Whistle))
+                        return Whistle;
+                    if (!GetCooldown(All.Swiftcast).IsCooldown)
+                        return All.Swiftcast;
+                    return FinalSting;
                 }
-            }
 
-            return actionID;
+                return actionID;
+            }
         }
-    }
 
-    internal class BluDebuffCombo : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluDebuffCombo;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluUltravibrationCombo : CustomCombo
         {
-            if (actionID == BLU.Devour || actionID == BLU.Offguard || actionID == BLU.BadBreath)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluUltravibrate;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var devourCD = GetCooldown(BLU.Devour);
-                var offguardDebuff = FindTargetEffect(BLU.Debuffs.Offguard);
-                var offguardCD = GetCooldown(BLU.Offguard);
-                var lucidCD = GetCooldown(BLU.LucidDreaming);
+                if (actionID == Ultravibration)
+                {
+                    var freezeDebuff = FindTargetEffect(Debuffs.DeepFreeze);
+                    var swiftCD = GetCooldown(All.Swiftcast);
+                    var ultraCD = GetCooldown(Ultravibration);
 
-                if (offguardDebuff is null && !offguardCD.IsCooldown)
-                    return BLU.Offguard;
-                if (TargetHasEffect(BLU.Debuffs.Malodorous) && HasEffect(BLU.Buffs.TankMimicry))
-                    return BLU.BadBreath;
-                if (!devourCD.IsCooldown && HasEffect(BLU.Buffs.TankMimicry))
-                    return BLU.Devour;
-                if (!lucidCD.IsCooldown && LocalPlayer.CurrentMp <= 9000)
-                    return BLU.LucidDreaming;
+                    if (freezeDebuff is null && !ultraCD.IsCooldown)
+                        return RamsVoice;
+                    if (freezeDebuff is not null)
+                    {
+                        if (!swiftCD.IsCooldown)
+                            return All.Swiftcast;
+                        return Ultravibration;
+                    }
+                }
+
+                return actionID;
             }
-
-            return actionID;
         }
-    }
 
-    internal class BluAddleFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluAddleFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluDebuffCombo : CustomCombo
         {
-            if (actionID == BLU.MagicHammer)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluDebuffCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var addleCD = GetCooldown(BLU.Addle);
-                var hammerCD = GetCooldown(BLU.MagicHammer);
+                if (actionID == Devour || actionID == Offguard || actionID == BadBreath)
+                {
+                    var devourCD = GetCooldown(Devour);
+                    var offguardDebuff = FindTargetEffect(Debuffs.Offguard);
+                    var offguardCD = GetCooldown(Offguard);
+                    var lucidCD = GetCooldown(All.LucidDreaming);
 
-                if (hammerCD.IsCooldown&& !addleCD.IsCooldown && !TargetHasEffect(BLU.Debuffs.Addle) && !TargetHasEffect(BLU.Debuffs.Conked))
-                    return BLU.Addle;
+                    if (offguardDebuff is null && !offguardCD.IsCooldown)
+                        return Offguard;
+                    if (TargetHasEffect(Debuffs.Malodorous) && HasEffect(Buffs.TankMimicry))
+                        return BadBreath;
+                    if (!devourCD.IsCooldown && HasEffect(Buffs.TankMimicry))
+                        return Devour;
+                    if (!lucidCD.IsCooldown && LocalPlayer.CurrentMp <= 9000 & level >= All.Levels.LucidDreaming)
+                        return All.LucidDreaming;
+                }
+
+                return actionID;
             }
-
-            return actionID;
         }
-    }
 
-    internal class BluPrimalFeature : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluPrimalFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluAddleFeature : CustomCombo
         {
-            if (actionID == BLU.FeatherRain)
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluAddleFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var rainCD = GetCooldown(BLU.FeatherRain);
-                var shockCD = GetCooldown(BLU.ShockStrike);
-                var glassCD = GetCooldown(BLU.GlassDance);
-                var kickCD = GetCooldown(BLU.JKick);
-                var roseCD = GetCooldown(BLU.RoseOfDestruction);
+                if (actionID == MagicHammer)
+                {
+                    var addleCD = GetCooldown(All.Addle);
+                    var hammerCD = GetCooldown(MagicHammer);
 
-                if (!rainCD.IsCooldown)
-                    return BLU.FeatherRain;
-                if (!shockCD.IsCooldown)
-                    return BLU.ShockStrike;
-                if (!roseCD.IsCooldown)
-                    return BLU.RoseOfDestruction;
-                if (!glassCD.IsCooldown)
-                    return BLU.GlassDance;
-                if (!kickCD.IsCooldown)
-                    return BLU.JKick;
+                    if (hammerCD.IsCooldown && !addleCD.IsCooldown && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(Debuffs.Conked))
+                        return All.Addle;
+                }
+
+                return actionID;
             }
-
-            return actionID;
         }
-    }
 
-    internal class BluKnightCombo : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluKnightFeature;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluPrimalFeature : CustomCombo
         {
-            if (actionID == BLU.WhiteKnightsTour || actionID == BLU.BlackKnightsTour)
-            {
-                if (TargetHasEffect(BLU.Debuffs.Slow))
-                    return BLU.BlackKnightsTour;
-                if (TargetHasEffect(BLU.Debuffs.Bind))
-                    return BLU.WhiteKnightsTour;
-            }
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluPrimalFeature;
 
-            return actionID;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == FeatherRain)
+                {
+                    var rainCD = GetCooldown(FeatherRain);
+                    var shockCD = GetCooldown(ShockStrike);
+                    var glassCD = GetCooldown(GlassDance);
+                    var kickCD = GetCooldown(JKick);
+                    var roseCD = GetCooldown(RoseOfDestruction);
+
+                    if (!rainCD.IsCooldown)
+                        return FeatherRain;
+                    if (!shockCD.IsCooldown)
+                        return ShockStrike;
+                    if (!roseCD.IsCooldown)
+                        return RoseOfDestruction;
+                    if (!glassCD.IsCooldown)
+                        return GlassDance;
+                    if (!kickCD.IsCooldown)
+                        return JKick;
+                }
+
+                return actionID;
+            }
         }
-    }
-    internal class BluLightheadedCombo : CustomCombo
-    {
-        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluLightheadedCombo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        internal class BluKnightCombo : CustomCombo
         {
-            if (actionID == BLU.PeripheralSynthesis)
-            {
-                if (!TargetHasEffect(BLU.Debuffs.Lightheaded))
-                    return BLU.PeripheralSynthesis;
-                if (TargetHasEffect(BLU.Debuffs.Lightheaded))
-                    return BLU.MustardBomb;
-            }
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluKnightFeature;
 
-            return actionID;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == WhiteKnightsTour || actionID == BlackKnightsTour)
+                {
+                    if (TargetHasEffect(Debuffs.Slow))
+                        return BlackKnightsTour;
+                    if (TargetHasEffect(Debuffs.Bind))
+                        return WhiteKnightsTour;
+                }
+
+                return actionID;
+            }
+        }
+        internal class BluLightheadedCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BluLightheadedCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == PeripheralSynthesis)
+                {
+                    if (!TargetHasEffect(Debuffs.Lightheaded))
+                        return PeripheralSynthesis;
+                    if (TargetHasEffect(Debuffs.Lightheaded))
+                        return MustardBomb;
+                }
+
+                return actionID;
+            }
         }
     }
 }

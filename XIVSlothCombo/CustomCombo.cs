@@ -6,6 +6,7 @@ using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Timers;
@@ -531,9 +532,11 @@ namespace XIVSlothComboPlugin.Combos
         /// at the later half of the gcd without causing clipping (aka Delayed Weaving)
         /// </summary>
         /// <param name="actionID">Action ID to check.</param>
+        /// <param name="start">Time (in seconds) to start to check for the weave window.</param>
+        /// <param name="end">Time (in seconds) to end the check for the weave window.</param>
         /// <returns>True or false.</returns>
-        protected static bool CanDelayedWeave(uint actionID)
-           => GetCooldown(actionID).CooldownRemaining < 1.250 && GetCooldown(actionID).CooldownRemaining > 0.6;
+        protected static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6)
+           => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
 
         /// <summary>
         /// Get a job gauge.
@@ -567,6 +570,8 @@ namespace XIVSlothComboPlugin.Combos
         /// <returns>Bool indicating whether you are in melee range.</returns>
         protected static bool InMeleeRange()
         {
+            if (LocalPlayer.TargetObject == null) return false;
+
             var distance = GetTargetDistance();
 
             if (distance == 0)
@@ -719,6 +724,11 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
+        protected static int GetOptionValue(string SliderID)
+        {
+            return Service.Configuration.GetCustomIntValue(SliderID);
+        }
+
         protected unsafe static FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* GetTarget(TargetType target)
         {
             GameObject? o = null;
@@ -791,14 +801,79 @@ namespace XIVSlothComboPlugin.Combos
             P8
         }
 
+        /// <summary>
+        /// Checks if the player is in a PVP enabled zone.
+        /// </summary>
+        /// <returns></returns>
         protected static bool InPvP()
             => Service.ClientState.IsPvP ||
             Service.ClientState.TerritoryType == 250 || //Wolves Den
-            Service.ClientState.TerritoryType == 376 || //Borderland Ruins
-            Service.ClientState.TerritoryType == 431 || //Seal Rock
-            Service.ClientState.TerritoryType == 554 || //Fields of Glory
-            Service.ClientState.TerritoryType == 888 || //Onsal Hakair
-            Service.ClientState.TerritoryType == 729 || //Astragalos
-            Service.ClientState.TerritoryType == 791;   //Hidden Gorge
+            (Service.ClientState.TerritoryType == 376 && Service.PartyList.Length > 1) || //Borderland Ruins
+            (Service.ClientState.TerritoryType == 431 && Service.PartyList.Length > 1) || //Seal Rock
+            (Service.ClientState.TerritoryType == 554 && Service.PartyList.Length > 1) || //Fields of Glory
+            (Service.ClientState.TerritoryType == 888 && Service.PartyList.Length > 1) || //Onsal Hakair
+            (Service.ClientState.TerritoryType == 729 && Service.PartyList.Length > 1) || //Astragalos
+            (Service.ClientState.TerritoryType == 791 && Service.PartyList.Length > 1);   //Hidden Gorge
+
+        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
+            .Where(i => i.RowId is not 7)
+            .ToDictionary(i => i.RowId, i => i);
+
+        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
+            .ToDictionary(i => i.RowId, i => i);
+
+        public int GetLevel(uint id)
+        {
+            if (ActionSheet.TryGetValue(id, out var action))
+            {
+                return action.ClassJobLevel;
+            }
+
+            return 0;
+        }
+
+        public string GetActionName(uint id)
+        {
+            if (ActionSheet.TryGetValue(id, out var action))
+            {
+                return action.Name;
+            }
+
+            return "UNKNOWN ABILITY";
+        }
+
+        public bool LevelChecked(uint id)
+        {
+            if (LocalPlayer.Level < GetLevel(id))
+                return false;
+
+            return true;
+        }
+
+        public string GetStatusName(uint id)
+        {
+            if (StatusSheet.TryGetValue(id, out var status))
+            {
+                return status.Name;
+            }
+
+            return "Unknown Status";
+        }
+
+        public bool WasLastAction(uint id)
+            => ActionWatching.LastAction == id;
+
+        public int LastActionCounter()
+            => ActionWatching.LastActionUseCount;
+
+        public bool WasLastWeaponskill(uint id)
+            => ActionWatching.LastWeaponskill == id;
+
+        public bool WasLastSpell(uint id)
+            => ActionWatching.LastSpell == id;
+
+        public bool WasLastAbility(uint id)
+            => ActionWatching.LastAbility == id;
+
     }
 }
