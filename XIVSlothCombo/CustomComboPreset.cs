@@ -2692,10 +2692,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("WHM Alternative Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
         WHMRaiseFeature = 19004,
 
-        [ConflictingCombos(WHMRaiseFeature)]
-        [CustomComboInfo("WHM Raise Feature alternative", "Raise Becomes Swiftcast when Swiftcast is available. Thin air feature also applies to this if enabled.", WHM.JobID, 0, "Look up!", "It's this, but that.")]
-        WHMAlternativeRaise = 19015,
-
         [ReplaceSkill(WHM.Stone1, WHM.Stone2, WHM.Stone3, WHM.Stone4, WHM.Glare1, WHM.Glare3)]
 
         [ParentCombo(WHMCDsonMainComboGroup)]
