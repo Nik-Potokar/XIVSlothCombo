@@ -188,7 +188,7 @@ namespace XIVSlothComboPlugin
         {
             float configValue;
 
-            if (!CustomFloatValues.TryGetValue(config, out configValue)) return defaultMinValue;
+            if (!CustomFloatValues.TryGetValue(config, out configValue)) { SetCustomFloatValue(config, defaultMinValue); return defaultMinValue; }
 
             return configValue;
         }
@@ -202,7 +202,7 @@ namespace XIVSlothComboPlugin
         {
             int configValue;
 
-            if (!CustomIntValues.TryGetValue(config, out configValue)) return defaultMinVal;
+            if (!CustomIntValues.TryGetValue(config, out configValue)) { SetCustomIntValue(config, defaultMinVal); return defaultMinVal; }
 
             return configValue;
         }
@@ -216,7 +216,7 @@ namespace XIVSlothComboPlugin
         {
             bool configValue;
 
-            if (!CustomBoolValues.TryGetValue(config, out configValue)) return false;
+            if (!CustomBoolValues.TryGetValue(config, out configValue)) { SetCustomBoolValue(config, false); return false; }
 
             return configValue;
         }
@@ -246,7 +246,7 @@ namespace XIVSlothComboPlugin
         {
             bool[]? configValue;
 
-            if (!CustomBoolArrayValues.TryGetValue(config, out configValue)) return Array.Empty<bool>();
+            if (!CustomBoolArrayValues.TryGetValue(config, out configValue)) { SetCustomBoolArrayValue(config, Array.Empty<bool>()); return Array.Empty<bool>(); }
 
             return configValue;
         }
