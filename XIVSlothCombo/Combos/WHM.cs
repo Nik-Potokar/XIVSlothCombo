@@ -335,10 +335,10 @@ namespace XIVSlothComboPlugin.Combos
                     var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.WHM_AoE_Lucid);
                     var gauge = GetJobGauge<WHMGauge>();
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoE_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                    if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
                         return All.LucidDreaming;
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoE_Assize) && level >= Levels.Assize && IsOffCooldown(Assize))
+                    if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_Assize) && level >= Levels.Assize && IsOffCooldown(Assize))
                         return Assize;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_LilyOvercap) && level >= Levels.AfflatusRapture && ((gauge.Lily == 3 && gauge.BloodLily < 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
