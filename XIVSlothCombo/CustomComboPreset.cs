@@ -167,7 +167,6 @@ namespace XIVSlothComboPlugin
 
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
             [ParentCombo(AST_DPS_Feature)]
-            [ConflictingCombos(AstAutoCardTarget)] //Check this isn't done by the other features
             [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "A bowlful of cards", "Oops! All AoE!")]
             AST_DPS_AoEOption = 1013,
 
@@ -2654,7 +2653,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 11, "", "")]
         SummonerAstralFlowonSummonsFeature = 17034,
         
-        [CustomComboInfo("Egi and Demi summon features", "Enables features related to changing egi or demi summons.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Egi and Demi summon features", "Features related to changing egi and demi summons.\nCollapsing this category does NOT disable the features inside.", SMN.JobID, 2, "", "")]
         SummonerDemiEgiOrder = 17035,
         
         [ParentCombo(SearingLightFeature)]
