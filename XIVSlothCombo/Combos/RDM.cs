@@ -137,7 +137,7 @@ namespace XIVSlothComboPlugin.Combos
                         && IsOffCooldown(Embolden) && IsOffCooldown(Manafication) && IsOffCooldown(All.Swiftcast)
                         && GetCooldown(Acceleration).RemainingCharges == 2 && GetCooldown(Corpsacorps).RemainingCharges == 2 && GetCooldown(Engagement).RemainingCharges == 2
                         && IsOffCooldown(Fleche) && IsOffCooldown(ContreSixte)
-                        && EnemyHealthPercentage() == 100 && !inCombat && !inOpener && !openerStarted)
+                        && GetTargetHPPercent() == 100 && !inCombat && !inOpener && !openerStarted)
                     {
                         readyOpener = true;
                         inOpener = false;

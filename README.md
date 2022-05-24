@@ -27,6 +27,4 @@ ________________________________________________________________________________
 
 We're building this as a side project but if you want something special added, let us know.
 
-### Big Thanks to [attick](https://github.com/attickdoor) and [daemitus](https://github.com/daemitus) for creating most of the original code, as well as [Grammernatzi](https://github.com/Grammernatzi) and [PrincessRTFM](https://github.com/PrincessRTFM) for providing a lot of extra tweaks and inspiration. Please show them support for their original work! <3 
-
-## Brought to you with love and sloth, by:<b> Aki, Iaotle, Codemned, damolitionn, k-kz, Taurenkey, Augporto, grimgal and many other contributors!
+### Brought to you with love and sloth, by:<b><br> Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal and many other contributors!

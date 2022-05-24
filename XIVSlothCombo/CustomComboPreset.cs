@@ -155,133 +155,145 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region ASTROLOGIAN
 
-        [ReplaceSkill(AST.Play)]
-        [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 0, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
-        AstrologianCardsOnDrawFeaturelikewhat = 1000,
+        #region DPS
+        [ReplaceSkill(AST.Malefic1, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust1, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
+        //[ConflictingCombos(AstrologianAlternateDpsFeature)]
+        [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 0, "Green DPS? Look no further", "Adds fatter deeps to your combo. Just pick another job already...")]
+        AST_DPS_Feature = 1004,
 
-        [ReplaceSkill(AST.CrownPlay)]
-        [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 0, "Bestow Royalty", "This one's for the Lords and Ladies, lemme get a HYEEEAAAAAH!")]
-        AstrologianCrownPlayFeature = 1001,
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Combust Uptime Option", "Automated DoT Uptime", AST.JobID, 0, "DPS Less", "Oh, look, guys! Look! This one's actually healing!")]
+            AST_DPS_CombustOption = 1018,
 
+            [ReplaceSkill(AST.Gravity, AST.Gravity2)]
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "A bowlful of cards", "Oops! All AoE!")]
+            AST_DPS_AoEOption = 1013,
+
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "Warp-speed", "GO FASTER! FASTER!")]
+            AST_DPS_LightSpeedOption = 1020,
+
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value", AST.JobID, 3, "Lucid SCREAMING Feature", "I heard once you could control your dreams... But then I woke up.")]
+            AST_DPS_LucidOption = 1008,
+
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "Divi-Balance Weave Option", "Perfectly Balanced")]
+            AST_DPS_DivinationOption = 1016,
+
+            [ConflictingCombos(AstAutoCardTarget)]
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "Kaiba Feature", "You just activated my trap card!")]
+            AstrologianAutoDrawFeature = 1011,
+
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "Astro-whine Feature", "Astro-whining again? Sorry, everyone's busy looking at the SGE's cool floating sticks.")]
+            AstrologianAstrodyneFeature = 1009,
+
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Crown Card Draw Weave Option", "Adds Auto Crown Card Draw", AST.JobID, 7, "Kaiba 2, Electric Boogaloo", "It's a trap!")]
+            AstrologianAutoCrownDrawFeature = 1012,
+
+            [ParentCombo(AST_DPS_Feature)]
+            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "Brainless Lord Feature", "You're like that tiny guy from Shrek. - E -")]
+            AstrologianLazyLordFeature = 1014,
+        
+        #endregion
+
+        #region Healing
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 0, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
-        AstrologianBeneficFeature = 1002,
-
-        [ReplaceSkill(All.Swiftcast)]
-        [ConflictingCombos(ALL_Healer_Raise)]
-        [CustomComboInfo("AST Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 0, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
-        AstrologianAscendFeature = 1003,
-
-        [ReplaceSkill(AST.Malefic1, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic)]
-        [ConflictingCombos(AstrologianAlternateDpsFeature, CustomValuesTest)]
-        [CustomComboInfo("DPS Feature(On Malefic)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, 0, "Green DPS? Look no further", "Adds fatter deeps to your combo. Just pick another job already...")]
-        AstrologianDpsFeature = 1004,
-
-        [ParentCombo(AstrologianDpsFeature)]
-        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", AST.JobID, 0, "Lucid SCREAMING Feature", "I heard once you could control your dreams... But then I woke up.")]
-        AstrologianLucidFeature = 1008,
-
-        [CustomComboInfo("Astrodyne Feature", "Adds Astrodyne to the DPS feature when ready", AST.JobID, 0, "Astro-whine Feature", "Astro-whining again? Sorry, everyone's busy looking at the SGE's cool floating sticks.")]
-        AstrologianAstrodyneFeature = 1009,
-
-        [ReplaceSkill(AST.AspectedHelios)]
-        [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 0, "HELIOSCOPTER", "HELIOSCOPTER HELIOSCOPTER")]
-        AstrologianHeliosFeature = 1010,
-
-        [ConflictingCombos(AstAutoCardTarget)]
-        [CustomComboInfo("Auto Card Draw", "Adds Auto Card Draw Onto Main DPS Feature", AST.JobID, 0, "Kaiba Feature", "You just activated my trap card!")]
-        AstrologianAutoDrawFeature = 1011,
-
-        [CustomComboInfo("Auto Crown Card Draw", "Adds Auto Crown Card Draw Onto Main DPS Feature ", AST.JobID, 0, "Kaiba 2, Electric Boogaloo", "It's a trap!")]
-        AstrologianAutoCrownDrawFeature = 1012,
-
-        [ConflictingCombos(AstAutoCardTarget)]
-        [CustomComboInfo("AoE DPS Feature", "Adds AutoDraws/Astrodyne to the AoE Gravity combo", AST.JobID, 0, "A bowlful of cards", "Oops! All AoE!")]
-        AstrologianDpsAoEFeature = 1013,
-
-        [CustomComboInfo("Lazy Lord Feature", "Adds Lord Of Crowns Onto Main DPS/AoE Feature", AST.JobID, 0, "Brainless Lord Feature", "You're like that tiny guy from Shrek. - E -")]
-        AstrologianLazyLordFeature = 1014,
-
-        [ReplaceSkill(AST.Play)]
-        [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 0, "Astro-whine on Play", "Seal me up and let me die, baby")]
-        AstrologianAstrodyneOnPlayFeature = 1015,
-
-        [ReplaceSkill(AST.Combust, AST.Combust2, AST.Combust3)]
-        [ConflictingCombos(AstrologianDpsFeature, CustomValuesTest)]
-        [CustomComboInfo("Alternate DPS Feature (On Combust)", "Adds Combust to the main malefic combo whenever the debuff is not present or about to expire", AST.JobID, 0, "Alternate Deeps, buddy", "Now we're really doing your job for you. Damn.")]
-        AstrologianAlternateDpsFeature = 1016,
-
-        [ConflictingCombos(AstrologianDpsFeature, AstrologianAlternateDpsFeature, DisableCombustOnDpsFeature)]
-        [CustomComboInfo("DPS Feature Custom Values Testing", "Same as DPSFeature (On Malefic).Allows you to customize target MaxHp & CurrentPercentageHp & CurrentHp checks. Testing Only! ", AST.JobID, 0, "Green DPS? But you looked further...", "Same as that other guy, but with NUMBERS.")]
-        CustomValuesTest = 1017,
-
-        [ParentCombo(AstrologianDpsFeature)]
-        [ConflictingCombos(AstrologianAlternateDpsFeature)]
-        [CustomComboInfo("Removes DoT From DPS Feature", "Removed DoT From the DPS Feature, You can still use all other features that are on malefic! ", AST.JobID, 0, "DPS Less", "Oh, look, guys! Look! This one's actually healing!")]
-        DisableCombustOnDpsFeature = 1018,
-
-        [CustomComboInfo("Lightspeed Feature", "Adds Lightspeed to the DPS Feature", AST.JobID, 0, "Warp-speed", "GO FASTER! FASTER!")]
-        AstrologianLightSpeedFeature = 1020,
-
-        [ParentCombo(AstrologianHeliosFeature)]
-        [CustomComboInfo("Celestial Opposition Feature", "Adds Celestial Opposition", AST.JobID, 0)]
-        AstrologianCelestialOppositionFeature = 1021,
-
-        [ParentCombo(AstrologianHeliosFeature)]
-        [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID, 0)]
-        AstrologianLazyLadyFeature = 1022,
-
-        [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Simple Heal", "Single target healing", AST.JobID, 0)]
+        [CustomComboInfo("Simple Heal", "Single target healing", AST.JobID, 2)]
         AstrologianSimpleSingleTargetHeal = 1023,
 
-        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
-        [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID, 0)]
-        AstroEssentialDignity = 1024,
+            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID)]
+            AstroEssentialDignity = 1024,
 
-        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
-        [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID, 0)]
-        CelestialIntersectionFeature = 1025,
+            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID)]
+            CelestialIntersectionFeature = 1025,
 
-        [ParentCombo(AstrologianHeliosFeature)]
-        [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID, 0)]
-        AstrologianHoroscopeFeature = 1026,
+            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID)]
+            AspectedBeneficFeature = 1027,
 
-        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
-        [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID, 0)]
-        AspectedBeneficFeature = 1027,
+            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
+            ExaltationFeature = 1028,
 
-        [ParentCombo(AstrologianSimpleSingleTargetHeal)]
-        [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID, 0)]
-        ExaltationFeature = 1028,
+        [ReplaceSkill(AST.AspectedHelios)]
+        [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 3, "HELIOSCOPTER", "HELIOSCOPTER HELIOSCOPTER")]
+        AstrologianHeliosFeature = 1010,
 
-        [ConflictingCombos(AstrologianAutoDrawFeature, AstrologianDpsAoEFeature)]
-        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
-        AstAutoCardTarget = 1029,
+            [ParentCombo(AstrologianHeliosFeature)]
+            [CustomComboInfo("Celestial Opposition Feature", "Adds Celestial Opposition", AST.JobID)]
+            AstrologianCelestialOppositionFeature = 1021,
 
-        [ParentCombo(AstAutoCardTarget)]
-        [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
-        AstrologianTargetLock = 1030,
+            [ParentCombo(AstrologianHeliosFeature)]
+            [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID)]
+            AstrologianLazyLadyFeature = 1022,
 
-        [ParentCombo(AstAutoCardTarget)]
-        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
-        AstrologianTargetExtraFeature = 1031,
+            [ParentCombo(AstrologianHeliosFeature)]
+            [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID)]
+            AstrologianHoroscopeFeature = 1026,
 
-        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
-        AstRedrawFeature = 1032,
+        [ReplaceSkill(AST.Benefic2)]
+        [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 4, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
+        AstrologianBeneficFeature = 1002,
+        #endregion
 
-        [ConflictingCombos(AstReFocusFeature)]
-        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
-        AstReTargetFeature = 1033,
+        #region Utility
+        [ReplaceSkill(All.Swiftcast)]
+        [ConflictingCombos(ALL_Healer_Raise)]
+        [CustomComboInfo("Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 5, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
+        AstrologianAscendFeature = 1003,
+        #endregion
 
-        [ConflictingCombos(AstReTargetFeature)]
-        [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
-        [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
-        AstReFocusFeature = 1034,
+        #region Cards against Sanity
+        [ReplaceSkill(AST.Play)]
+        [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
+        AstrologianCardsOnDrawFeaturelikewhat = 1000,
 
+            [ConflictingCombos(AstrologianAutoDrawFeature, AST_DPS_AoEOption)]
+            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+            AstAutoCardTarget = 1029,
+
+                [ParentCombo(AstAutoCardTarget)]
+                [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
+                AstrologianTargetLock = 1030,
+
+                [ParentCombo(AstAutoCardTarget)]
+                [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
+                AstrologianTargetExtraFeature = 1031,
+
+            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
+            AstRedrawFeature = 1032,
+
+            [ConflictingCombos(AstReFocusFeature)]
+            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
+            AstReTargetFeature = 1033,
+
+            [ConflictingCombos(AstReTargetFeature)]
+            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
+            AstReFocusFeature = 1034,
+
+        [ReplaceSkill(AST.CrownPlay)]
+        [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 17, "Bestow Royalty", "This one's for the Lords and Ladies, lemme get a HYEEEAAAAAH!")]
+        AstrologianCrownPlayFeature = 1001,
+
+        [ReplaceSkill(AST.Play)]
+        //Works With AstrologianCardsOnDrawFeaturelikewhat as a feature, or by itself if AstrologianCardsOnDrawFeaturelikewhat is disabled.
+        //Do not do ConflictingCombos with AstrologianCardsOnDrawFeaturelikewhat
+        [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "Astro-whine on Play", "Seal me up and let me die, baby")]
+        AstrologianAstrodyneOnPlayFeature = 1015,
+        #endregion
+
+        //Last number used is 34
 
         #endregion
         // ====================================================================================
@@ -1840,13 +1852,13 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(ReaperScytheCombo)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the AoE combo when at 50 Shroud and greater and when current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
-        ReapearEnshroudonAOEFeature = 12026,
+        ReaperEnshroudonAOEFeature = 12026,
 
-        [ParentCombo(ReapearEnshroudonAOEFeature)]
+        [ParentCombo(ReaperGuillotineFeature)]
         [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the AoE combo when there are 2 Void Shrouds.", RPR.JobID, 0, "", "")]
         ReaperLemureAOEFeature = 12027,
 
-        [ParentCombo(ReapearEnshroudonAOEFeature)]
+        [ParentCombo(ReaperGuillotineFeature)]
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the AoE combo when there is 1 Lemure Shroud left.", RPR.JobID, 0, "", "")]
         ReaperComboCommunioAOEFeature = 12028,
 
@@ -2054,10 +2066,10 @@ namespace XIVSlothComboPlugin
         //Example: 14110 (Feature Number 1, Option 1, no suboption)
         //New features should be added to the appropriate sections.
 
-        #region SAGE DPS
+            #region SAGE DPS
 
-        #region Single Target DPS Feature
-        [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
+                #region Single Target DPS Feature
+                [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
                 [CustomComboInfo("Single Target DPS Feature", "Replaces Dosis with options below", SGE.JobID, 100)]
                 SGE_ST_DosisFeature = 14100,
                 
@@ -2070,13 +2082,11 @@ namespace XIVSlothComboPlugin
                     SGE_ST_Dosis_EDosis = 14120,
 
                         [ParentCombo(SGE_ST_Dosis_EDosis)]
-                        [ConflictingCombos(SGE_ST_Dosis_EDosisToT)]
                         [CustomComboInfo("Enemy HP Limiter Options", "Stop using Eukrasian Dosis when Enemy HP values match\nEnable to see input boxes", SGE.JobID, 121)]
                         SGE_ST_Dosis_EDosisHPPer = 14121,
 
                         [ParentCombo(SGE_ST_Dosis_EDosis)]
-                        [ConflictingCombos(SGE_ST_Dosis_EDosisHPPer)]
-                        [CustomComboInfo("Target of Target Dosis Option", "Target of Target checking for Dosis", SGE.JobID, 122)]
+                        [CustomComboInfo("Target of Target Checking", "Performs additional checking for Target of Target\nThis will not help you apply DoT onto your Target of Target", SGE.JobID, 122)]
                         SGE_ST_Dosis_EDosisToT = 14122,
 
                     [ParentCombo(SGE_ST_DosisFeature)]
@@ -2460,13 +2470,12 @@ namespace XIVSlothComboPlugin
                     SCH_ST_Broil_Bio = 16150,
 
                         [ParentCombo(SCH_ST_Broil_Bio)]
-                        [ConflictingCombos(SCH_ST_Broil_BioToT)]
                         [CustomComboInfo("Enemy HP Limiter Options", "Stop using Bio when Enemy HP values match below:", SCH.JobID, 151)]
                         SCH_ST_Broil_BioHPPer = 16151,
 
                         [ParentCombo(SCH_ST_Broil_Bio)]
-                        [ConflictingCombos(SCH_ST_Broil_BioHPPer)]
-                        [CustomComboInfo("Target of Target Bio Option", "Target of Target checking for Bio", SCH.JobID, 152)]
+                        [ConflictingCombos(SCH_ST_Broil_ChainStratagem)]
+                        [CustomComboInfo("Target of Target Checking", "Performs additional checking for Target of Target\nThis will not help you apply DoT onto your Target of Target", SCH.JobID, 152)]
                         SCH_ST_Broil_BioToT = 16152,
             #endregion
 
@@ -2518,7 +2527,7 @@ namespace XIVSlothComboPlugin
         SummonerMainComboFeature = 17000,
 
         [ReplaceSkill(SMN.Tridisaster)]
-        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 0, "", "Can't deal with dungeons on your own? Fear not.")]
+        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
         SummonerAOEComboFeature = 17001,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
@@ -2533,25 +2542,25 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
-        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Slipstream", "2 Fast 2 Furious")]
+        [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Slipstream", "2 Fast 2 Furious")]
         SummonerGarudaUniqueFeature = 17005,
 
-        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Fists of Fury", "Show MNK how it's done, will ya?")]
+        [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Fists of Fury", "Show MNK how it's done, will ya?")]
         SummonerIfritUniqueFeature = 17006,
 
-        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 0, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
+        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 5, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
         SummonerTitanUniqueFeature = 17007,
 
         [ReplaceSkill(SMN.Fester)]
-        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks.", SMN.JobID, 0, "Festering", "Festering? Go take a shower, bro")]
+        [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks.", SMN.JobID, 6, "Festering", "Festering? Go take a shower, bro")]
         SummonerEDFesterCombo = 17008,
 
         [ReplaceSkill(SMN.Painflare)]
-        [CustomComboInfo("ES Painflare", "Change Painflare into Energy Siphon when out of Aetherflow stacks.", SMN.JobID, 0, "Old age", "I sometimes get a painflare in my middle-back, too.")]
+        [CustomComboInfo("ES Painflare", "Change Painflare into Energy Siphon when out of Aetherflow stacks.", SMN.JobID, 7, "Old age", "I sometimes get a painflare in my middle-back, too.")]
         SummonerESPainflareCombo = 17009,
 
         // BONUS TWEAKS
-        [CustomComboInfo("Carbuncle Reminder Feature", "Reminds you to summon Carbuncle by replacing most actions with Summon Carbuncle.", SMN.JobID, 0)]
+        [CustomComboInfo("Carbuncle Reminder Feature", "Reminds you to summon Carbuncle by replacing most actions with Summon Carbuncle.", SMN.JobID, 8)]
         SummonerCarbuncleSummonFeature = 17010,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -2573,26 +2582,22 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
         EgisOnRuinFeature = 17015,
-
-        [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Egi Summons on RuinI/II", "Adds Egi Summons to RuinI/II.\nChoose options below for order of Egis summoned.", SMN.JobID, 1)]
+        
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
         SummonerEgiSummonsonMainFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Energy Siphon/Painflare on Main Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
+        [CustomComboInfo("Energy Siphon/Painflare on AOE Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
         SummonerESAOEFeature = 17017,
 
-        [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Searing Light on Ruin", "Adds Searing Light to the Main Combo and will be used on cooldown.", SMN.JobID, 1, "My eyes!", "I can't see!")]
-        SearingLightonRuinFeature = 17018,
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Searing Light on Single target/Aoe combo", "Adds Searing Light to the Single target, and Aoe combos and will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
+        SearingLightFeature = 17018,
 
-        [ParentCombo(SearingLightonRuinFeature)]
+        [ParentCombo(SearingLightFeature)]
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
         SummonerSearingLightBurstOption = 170181,
-
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Searing Light AoE Option", "Adds Searing Light to the AOE Combo.", SMN.JobID, 2, "Our Eyes!", "Yay, we're all legally blind!")]
-        BuffOnSimpleAoESummoner = 17019,
 
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
@@ -2605,24 +2610,24 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         EgisOnAOEFeature = 17022,
-
-        [ParentCombo(EgisOnRuinFeature)]
+        
+        [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
         SummonerSwiftcastEgiFeature = 17023,
 
-        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 1, "", "")]
+        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 3, "", "")]
         SummonerPrimalAbilitiesFeature = 17024,
 
-        [ParentCombo(SummonerEDMainComboFeature)]
-        [CustomComboInfo("Pooled Festers Feature", "Pools Festers/Energy Drain to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 0)]
-        SummonerEDPoolonMainFeature = 17025,
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Pooled OGCDs Feature", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
+        SummonerOGCDPoolFeature = 17025,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
         SummonerEgiAttacksAOEFeature = 17026,
 
         [ConflictingCombos(ALL_Caster_Raise)]
-        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 0, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 8, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
         [ParentCombo(SummonerDemiSummonsFeature)]
@@ -2630,23 +2635,38 @@ namespace XIVSlothComboPlugin
         SummonerSingleTargetRekindleOption = 17028,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 6, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleOption = 17029,
 
         [ReplaceSkill(SMN.Ruin4)]
-        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 0, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
+        [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 9, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
         SummonerSpecialRuinFeature = 17030,
 
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2)]
-        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 10, "", "")]
         SMNLucidDreamingFeature = 17031,
-
-        [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 0, "", "")]
+        
+        [ParentCombo(SummonerDemiEgiOrder)]
+        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 3, "", "")]
         SummonerPrimalBurstChoice = 17032,
 
-        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 11, "", "")]
         SummonerAstralFlowonSummonsFeature = 17034,
+        
+        [CustomComboInfo("Egi and Demi summon features", "Features related to changing egi and demi summons.\nCollapsing this category does NOT disable the features inside.", SMN.JobID, 2, "", "")]
+        SummonerDemiEgiOrder = 17035,
+        
+        [ParentCombo(SearingLightFeature)]
+        [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on single target combo.", SMN.JobID, 2, "", "")]
+        SearingLightSTOnlyOption = 17036,
+        
+        [ParentCombo(SummonerOGCDPoolFeature)]
+        [CustomComboInfo("Single target only Pooled OGCD Option", "Only use damage OGCDs on single target combo.", SMN.JobID, 2, "", "")]
+        SummonerSTPoolOnlyOption = 17037,
+        
+        [ParentCombo(SummonerSwiftcastEgiFeature)]
+        [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on single target combo.", SMN.JobID, 2, "", "")]
+        SummonerSTOnlySwiftcast = 17038,
 
         #endregion
         // ====================================================================================
