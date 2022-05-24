@@ -66,7 +66,7 @@
                         return OriginalHook(Fire);
 
                     if (FindTargetEffect(Debuffs.AstralWarmth).StackCount < 3 &&
-                        IsOffCooldown(Paradox))
+                        GetRemainingCharges(Paradox) > 0)
                         return Paradox;
 
 
@@ -101,7 +101,7 @@
                         return OriginalHook(Blizzard);
 
                     if (FindTargetEffect(Debuffs.UmbralFreeze).StackCount < 3 &&
-                        IsOffCooldown(Paradox))
+                        GetRemainingCharges(Paradox) > 0)
                         return Paradox;
 
 
