@@ -750,12 +750,25 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region ASTROLOGIAN
-            if (preset == CustomComboPreset.AstrologianLucidFeature)
+            if (preset is CustomComboPreset.AST_DPS_Feature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Malefic", "", 0);
+                ConfigWindowFunctions.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Combust", "Alternative DPS Mode. Leaves Malefic alone for pure DPS, becomes Malefic when features are on cooldown", 1);
+            }
+            if (preset is CustomComboPreset.AST_DPS_LucidOption)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, AST.Config.ASTLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.AstroEssentialDignity)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
+            if (preset is CustomComboPreset.AST_DPS_CombustOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.AST_DPS_DivinationOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+            if (preset is CustomComboPreset.AST_DPS_LightSpeedOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AST_DPS_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+            if (preset is CustomComboPreset.AstroEssentialDignity)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, AST.Config.AstroEssentialDignity, "Set percentage value");
 
             #endregion
             // ====================================================================================
@@ -993,43 +1006,29 @@ namespace XIVSlothComboPlugin
             #region RED MAGE
 
             if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche only", "", 1);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II only", "", 2);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Scatter/Impact only", "", 3);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 4);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Riposte/Moulinet only", "", 5);
-
-            if (preset == CustomComboPreset.RDM_OGCD)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_OGCD_OnAction, "Use on Fleche & Riposte/Moulinet", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 6);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Scatter\n-Impact", "Select for one button rotation", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 4);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Riposte\n-Moulinet", "", 5);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche\n-Riposte\n-Moulinet", "", 6);
+            }
 
             if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte", "", 1);
-
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Jolt/Jolt II", "", 2);
-
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Use on Riposte & Jolt/Jolt II", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 3);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte\n-Jolt\n-Jolt II", "Select for one button rotation", 3);
+            }
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte & Moulinet", "", 1);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Jolt/Jolt II & Scatter/Impact", "", 2);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Riposte, Moulinet, Jolt/Jolt II & Scatter/Impact", "", 3);
-
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
-                ConfigWindowFunctions.DrawRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "Use on Veraero 1/2/3 and Verthunder 1/2/3", "[Choose Jolt or Impact for a one button rotation]\n---------------------------------------------------------------", 4);
+            {
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet", "", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet\n-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Veraero 1/2/3\n-Verthunder 1/2/3", "", 4);
+            }
 
             if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
@@ -1131,20 +1130,10 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SUMMONER
 
-            if (preset == CustomComboPreset.BuffOnSimpleAoESummoner)
-            {
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 1", "Use Searing Light on cooldown, regardless of phase.", 0);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 2", "Use Searing Light only in Bahamut phase.", 1);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 3", "Use Searing Light only in Phoenix phase.", 2);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 4", "Use Searing Light only in Ifrit phase.", 3);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 5", "Use Searing Light only in Garuda phase.", 4);
-                ConfigWindowFunctions.DrawRadioButton(SMN.Config.SMNSearingLightChoice, "Option 6", "Use Searing Light only in Titan phase.", 5);
-            }
-
             if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
             {
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan", "Summons Titan first, Garuda second, Ifrit third", 1);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda", "Summons Garuda first, Titan second, Ifrit third", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
 
             
