@@ -448,7 +448,7 @@ namespace XIVSlothComboPlugin.Combos
                             // ED & Fester
                             if (IsEnabled(CustomComboPreset.SummonerESAOEFeature))
                             {
-                                if (gauge.HasAetherflowStacks)
+                                if (gauge.HasAetherflowStacks && level >= Levels.Painflare)
                                 {
                                     if (IsNotEnabled(CustomComboPreset.SummonerOGCDPoolFeature))
                                         return Painflare;
