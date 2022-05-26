@@ -367,7 +367,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Guillotine);
                     }
 
-                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
+                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony && !HasEffect(Buffs.Enshrouded))
                         return Gluttony;
                     if (IsEnabled(CustomComboPreset.ReaperBloodStalkComboFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Guillotine)
                         return Guillotine;
@@ -394,7 +394,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
+                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony && !HasEffect(Buffs.Enshrouded))
                         return Gluttony;
                     if (IsEnabled(CustomComboPreset.ReaperBloodStalkComboFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Gibbet)
                     {
