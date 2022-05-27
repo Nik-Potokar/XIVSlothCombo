@@ -323,7 +323,30 @@ namespace XIVSlothComboPlugin.Combos
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnMainFeature))
                     {
-                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
+                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
+                        {
+                            if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
+                                return OriginalHook(SummonRuby);
+
+                            if (summonerPrimalChoice is 0 or 1)
+                            {
+                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
+                                    return OriginalHook(SummonTopaz);
+                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
+                                    return OriginalHook(SummonEmerald);
+                            }
+
+                            if (summonerPrimalChoice == 2)
+                            {
+                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
+                                    return OriginalHook(SummonEmerald);
+                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
+                                    return OriginalHook(SummonTopaz);
+                            }
+                        }
+                    }
+
+                                            if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
                         {
                             //Swiftcast Garuda Feature
                             if (swiftcastPhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
@@ -379,30 +402,7 @@ namespace XIVSlothComboPlugin.Combos
 
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(Gemshine);
-
-                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
-                        {
-                            if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
-                                return OriginalHook(SummonRuby);
-
-                            if (summonerPrimalChoice is 0 or 1)
-                            {
-                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
-                                    return OriginalHook(SummonTopaz);
-                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
-                                    return OriginalHook(SummonEmerald);
-                            }
-
-                            if (summonerPrimalChoice == 2)
-                            {
-                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
-                                    return OriginalHook(SummonEmerald);
-                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
-                                    return OriginalHook(SummonTopaz);
-                            }
-                        }
-                    }
-
+                    
                     if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature) && level >= Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(Buffs.FurtherRuin))
                         return Ruin4;
                 }
@@ -508,7 +508,30 @@ namespace XIVSlothComboPlugin.Combos
                         // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
-                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
+                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
+                        {
+                            if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
+                                return OriginalHook(SummonRuby);
+
+                            if (summonerPrimalChoice is 0 or 1)
+                            {
+                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
+                                    return OriginalHook(SummonTopaz);
+                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
+                                    return OriginalHook(SummonEmerald);
+                            }
+
+                            if (summonerPrimalChoice == 2)
+                            {
+                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
+                                    return OriginalHook(SummonEmerald);
+                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
+                                    return OriginalHook(SummonTopaz);
+                            }
+                        }
+                    }
+                    
+                                            if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
                         {
                             //Swiftcast Garuda Feature
                             if (swiftcasePhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
@@ -565,29 +588,7 @@ namespace XIVSlothComboPlugin.Combos
                         //Precious Brilliance
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(PreciousBrilliance);
-
-                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
-                        {
-                            if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
-                                return OriginalHook(SummonRuby);
-
-                            if (summonerPrimalChoice is 0 or 1)
-                            {
-                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
-                                    return OriginalHook(SummonTopaz);
-                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
-                                    return OriginalHook(SummonEmerald);
-                            }
-
-                            if (summonerPrimalChoice == 2)
-                            {
-                                if (gauge.IsGarudaReady && level >= Levels.SummonEmerald)
-                                    return OriginalHook(SummonEmerald);
-                                if (gauge.IsTitanReady && level >= Levels.SummonTopaz)
-                                    return OriginalHook(SummonTopaz);
-                            }
-                        }
-                    }
+                    
                         if (IsEnabled(CustomComboPreset.SummonerRuin4ToTridisasterFeature) && level >= Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(Buffs.FurtherRuin))
                             return Ruin4;
                     }

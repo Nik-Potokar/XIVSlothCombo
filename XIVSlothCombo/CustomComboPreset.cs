@@ -2538,8 +2538,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Demi AOE Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [ParentCombo(EgisOnMainFeature)]
-        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
+        [ParentCombo(SummonerMainComboFeature)]
+        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 2, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
         [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Slipstream", "2 Fast 2 Furious")]
@@ -2600,7 +2600,7 @@ namespace XIVSlothComboPlugin
         SummonerSearingLightBurstOption = 170181,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
+        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 2, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
@@ -2622,8 +2622,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Pooled OGCDs Feature", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
         SummonerOGCDPoolFeature = 17025,
 
-        [ParentCombo(EgisOnAOEFeature)]
-        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
+        [ParentCombo(SummonerAOEComboFeature)]
+        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 4)]
         SummonerEgiAttacksAOEFeature = 17026,
 
         [ConflictingCombos(ALL_Caster_Raise)]
