@@ -346,62 +346,62 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                                            if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
+                    if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
+                    {
+                        //Swiftcast Garuda Feature
+                        if (swiftcastPhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
+                        {
+                            if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned)
+                                return All.Swiftcast;
+                            if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
+                                ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
+                                 (gauge.Attunement == 0))) //Astral Flow if Swiftcast is not ready throughout Garuda
+                                return OriginalHook(AstralFlow);
+                        }
+
+                        //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
+                        if (swiftcastPhase == 2)
+                        {
+                            if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned)
+                            {
+                                if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
+                                    (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
+                                    return All.Swiftcast;
+                            }
+
+                        }
+
+                        //SpS Swiftcast
+                        if (swiftcastPhase == 3)
                         {
                             //Swiftcast Garuda Feature
-                            if (swiftcastPhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
+                            if (level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
                             {
-                                if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned)
+                                if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
                                     return All.Swiftcast;
                                 if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
                                     ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
-                                    (gauge.Attunement == 0))) //Astral Flow if Swiftcast is not ready throughout Garuda
+                                     (gauge.Attunement == 0))) //Astral Flow if Swiftcast is not ready throughout Garuda
                                     return OriginalHook(AstralFlow);
                             }
 
                             //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
-                            if (swiftcastPhase == 2)
+                            if (gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
                             {
-                                if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned)
-                                {
-                                    if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
-                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
-                                        return All.Swiftcast;
-                                }
-
-                            }
-
-                            //SpS Swiftcast
-                            if (swiftcastPhase == 3)
-                            {
-                                //Swiftcast Garuda Feature
-                                if (level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
-                                {
-                                    if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
-                                        return All.Swiftcast;
-                                    if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
-                                        ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
-                                        (gauge.Attunement == 0))) //Astral Flow if Swiftcast is not ready throughout Garuda
-                                        return OriginalHook(AstralFlow);
-                                }
-
-                                //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
-                                if (gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
-                                {
-                                    if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
-                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
-                                        return All.Swiftcast;
-                                }
+                                if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
+                                    (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
+                                    return All.Swiftcast;
                             }
                         }
+                    }
 
-                        if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && (IsNotEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) || swiftcastPhase == 2) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) || //Garuda
-                            IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(Buffs.TitansFavor) && lastComboMove == TopazRite && CanSpellWeave(actionID) || //Titan
-                            IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == CrimsonCyclone)) //Ifrit
-                            return OriginalHook(AstralFlow);
+                    if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && (IsNotEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) || swiftcastPhase == 2) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) || //Garuda
+                        IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(Buffs.TitansFavor) && lastComboMove == TopazRite && CanSpellWeave(actionID) || //Titan
+                        IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == CrimsonCyclone)) //Ifrit
+                        return OriginalHook(AstralFlow);
 
-                        if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                            return OriginalHook(Gemshine);
+                    if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
+                        return OriginalHook(Gemshine);
                     
                     if (IsEnabled(CustomComboPreset.SummonerRuin4ToRuin3Feature) && level >= Levels.Ruin4 && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(Buffs.FurtherRuin))
                         return Ruin4;
@@ -531,7 +531,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
                     
-                                            if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
+                    if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
                         {
                             //Swiftcast Garuda Feature
                             if (swiftcasePhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
