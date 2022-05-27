@@ -167,7 +167,6 @@ namespace XIVSlothComboPlugin
 
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
             [ParentCombo(AST_DPS_Feature)]
-            [ConflictingCombos(AstAutoCardTarget)] //Check this isn't done by the other features
             [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "A bowlful of cards", "Oops! All AoE!")]
             AST_DPS_AoEOption = 1013,
 
