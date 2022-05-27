@@ -218,7 +218,10 @@
                             {
                                 if (IsNotEnabled(CustomComboPreset.PaladinMeleeInterveneOption) ||
                                     (IsEnabled(CustomComboPreset.PaladinMeleeInterveneOption) && HasEffect(Buffs.FightOrFlight) && GetTargetDistance() <= 1))
-                                    return Intervene;
+                                {
+                                    if (!IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) || GetCooldownRemainingTime(Requiescat) >= 3)
+                                        return Intervene;
+                                }
                             }
                         }
                     }
@@ -264,7 +267,7 @@
 
                         if (lastComboMove is RiotBlade && level >= Levels.RageOfHalone)
                         {
-                            if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption) && level > Levels.GoringBlade &&
+                            if (IsEnabled(CustomComboPreset.PaladinRoyalGoringOption) && level >= Levels.GoringBlade &&
                                 ((GetDebuffRemainingTime(Debuffs.BladeOfValor) > 0 && GetDebuffRemainingTime(Debuffs.BladeOfValor) < 5) ||
                                 (FindTargetEffect(Debuffs.BladeOfValor) is null && GetDebuffRemainingTime(Debuffs.GoringBlade) < 5)))
                                 return GoringBlade;
