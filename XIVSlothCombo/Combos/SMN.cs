@@ -321,7 +321,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     
                     // Egi Features
-                    if (IsEnabled(CustomComboPreset.EgisOnRuinFeature))
+                    if (IsEnabled(CustomComboPreset.EgisOnMainFeature))
                     {
                         if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
                         {

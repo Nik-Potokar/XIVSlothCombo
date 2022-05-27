@@ -2538,7 +2538,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Demi AOE Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [ParentCombo(EgisOnRuinFeature)]
+        [ParentCombo(EgisOnMainFeature)]
         [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
@@ -2581,7 +2581,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(SummonerMainComboFeature)]
         [CustomComboInfo("Egi Summons on Main Combo", "Various options for egis.", SMN.JobID, 1)]
-        EgisOnRuinFeature = 17015,
+        EgisOnMainFeature = 17015,
         
         [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
