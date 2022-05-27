@@ -2534,8 +2534,8 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Demi Attacks on Main Combo", "Adds Astral Flow to the Main Combo.", SMN.JobID, 0, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
         SummonerSingleTargetDemiFeature = 17002,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
+        [ParentCombo(SummonerDemiAoESummonsFeature)]
+        [CustomComboInfo("Demi AOE Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
         [ParentCombo(EgisOnRuinFeature)]
@@ -2580,12 +2580,12 @@ namespace XIVSlothComboPlugin
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
+        [CustomComboInfo("Egi Summons on Main Combo", "Various options for egis.", SMN.JobID, 1)]
         EgisOnRuinFeature = 17015,
         
         [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
-        SummonerEgiSummonsonMainFeature = 17016,
+        SummonerEgiSummonsOrderFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Energy Siphon/Painflare on AOE Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
@@ -2604,11 +2604,11 @@ namespace XIVSlothComboPlugin
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        [CustomComboInfo("Demi Summons on AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         SummonerDemiAoESummonsFeature = 17021,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 4, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         EgisOnAOEFeature = 17022,
         
         [ParentCombo(SummonerDemiEgiOrder)]
@@ -2622,7 +2622,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Pooled OGCDs Feature", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
         SummonerOGCDPoolFeature = 17025,
 
-        [ParentCombo(SummonerAOEComboFeature)]
+        [ParentCombo(EgisOnAOEFeature)]
         [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
         SummonerEgiAttacksAOEFeature = 17026,
 
@@ -2634,7 +2634,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Rekindle on Main Combo option", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerSingleTargetRekindleOption = 17028,
 
-        [ParentCombo(SummonerAOEComboFeature)]
+        [ParentCombo(SummonerDemiAoESummonsFeature)]
         [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 6, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleOption = 17029,
 

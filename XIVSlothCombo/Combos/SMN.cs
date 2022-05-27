@@ -380,7 +380,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(Gemshine);
 
-                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsonMainFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
+                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
                         {
                             if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
                                 return OriginalHook(SummonRuby);
@@ -508,7 +508,7 @@ namespace XIVSlothComboPlugin.Combos
                         // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
-                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast) && level >= All.Levels.Swiftcast)
+                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast) && level >= All.Levels.Swiftcast)
                         {
                             //Swiftcast Garuda Feature
                             if (swiftcasePhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
@@ -566,7 +566,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(PreciousBrilliance);
 
-                        if (IsEnabled(CustomComboPreset.EgisOnAOEFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
+                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
                         {
                             if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
                                 return OriginalHook(SummonRuby);
