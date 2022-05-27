@@ -2584,7 +2584,7 @@ namespace XIVSlothComboPlugin
         EgisOnMainFeature = 17015,
         
         [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
+        [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.\nThis feature does nothing if you do not have Egi Summons on Main or AOE combo features enabled.", SMN.JobID, 0)]
         SummonerEgiSummonsOrderFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
