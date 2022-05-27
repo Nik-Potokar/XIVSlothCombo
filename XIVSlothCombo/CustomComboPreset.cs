@@ -2580,7 +2580,7 @@ namespace XIVSlothComboPlugin
         SummonerEDMainComboFeature = 17014,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons on Main Combo", "Various options for egis.", SMN.JobID, 1)]
+        [CustomComboInfo("Egi Summons on Main Combo", "Adds Egi Summons to Main Combo", SMN.JobID, 1)]
         EgisOnMainFeature = 17015,
         
         [ParentCombo(SummonerDemiEgiOrder)]
