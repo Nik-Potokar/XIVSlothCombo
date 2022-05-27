@@ -508,7 +508,7 @@ namespace XIVSlothComboPlugin.Combos
                         // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
-                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast) && level >= All.Levels.Swiftcast)
+                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
                         {
                             //Swiftcast Garuda Feature
                             if (swiftcasePhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
