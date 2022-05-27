@@ -408,6 +408,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Paradox BLM feature.", BLM.JobID, 0, "", "")]
         BlackSimpleParadoxLeyLinesFeature = 2025,
 
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Swiftcast/Triplecast Moving Option", "Use Swiftcast/Triplecast when moving.", BLM.JobID, 0, "", "")]
+        BlackSimpleCastMovementFeature = 2026,
+
+        [ParentCombo(BlackSimpleCastMovementFeature)]
+        [CustomComboInfo("Scathe Moving Option", "Use Scathe/Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        BlackSimpleScatheMovementFeature = 2027,
+
         #endregion
         // ====================================================================================
         #region BLUE MAGE

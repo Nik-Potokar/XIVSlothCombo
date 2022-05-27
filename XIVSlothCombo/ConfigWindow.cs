@@ -775,13 +775,13 @@ namespace XIVSlothComboPlugin
             #region BLACK MAGE
 
             if (preset == CustomComboPreset.BlackAoEFoulOption)
-            {
                 ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
-            }
+
             if (preset == CustomComboPreset.BlackSimpleFeature || preset == CustomComboPreset.BlackSimpleTransposeFeature)
-            {
-                ConfigWindowFunctions.DrawSliderFloat(3.0f, 8.0f, BLM.Config.BlmAstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
-            }
+                ConfigWindowFunctions.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BlmAstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
+
+            if (preset == CustomComboPreset.BlackSimpleCastMovementFeature)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BlmMovementTime, "Seconds of movement before using the movement feature.");
 
             #endregion
             // ====================================================================================
@@ -885,11 +885,13 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region MONK
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
 
             if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
+                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
+
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
+
             #endregion
             // ====================================================================================
             #region NINJA
