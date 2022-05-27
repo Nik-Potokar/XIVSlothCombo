@@ -153,7 +153,7 @@
                     if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.2)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= Levels.FightOrFlight && lastComboMove is FastBlade && IsOffCooldown(FightOrFlight))
-                            return FightOrFlight; 
+                            return FightOrFlight;
                         if (!inOpener && IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= Levels.Requiescat && HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) < 17 && IsOffCooldown(Requiescat))
                             return Requiescat;
                     }
