@@ -135,7 +135,7 @@
                         inOpener = false;
                         openerFinished = false;
                     }
-                    else if (level >= Levels.Requiescat && !openerFinished && !inOpener)
+                    else if (IsEnabled(CustomComboPreset.PaladinFoFOpenerFeature) && level >= Levels.Requiescat && !openerFinished && !inOpener)
                     {
                         inOpener = true;
                     }
@@ -153,13 +153,15 @@
                     if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.2)
                     {
                         if (IsEnabled(CustomComboPreset.PaladinFightOrFlightFeature) && level >= Levels.FightOrFlight && lastComboMove is FastBlade && IsOffCooldown(FightOrFlight))
-                            return FightOrFlight;
+                            return FightOrFlight; 
+                        if (!inOpener && IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= Levels.Requiescat && HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) < 17 && IsOffCooldown(Requiescat))
+                            return Requiescat;
                     }
 
                     // oGCD features
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.PaladinFoFOpenerFeature) && inOpener)
+                        if (inOpener)
                         {
                             if (lastComboMove is Confiteor || (!HasEffect(Buffs.Requiescat) && IsOnCooldown(Requiescat) && GetCooldownRemainingTime(Requiescat) <= 59))
                             {
@@ -198,21 +200,18 @@
                         }
                         else
                         {
-                            if (IsEnabled(CustomComboPreset.PaladinReqMainComboFeature) && level >= Levels.Requiescat && incombat && IsOffCooldown(Requiescat))
-                                return Requiescat;
+                            if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && level >= Levels.SpiritsWithin && incombat && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                            {
+                                if (IsNotEnabled(CustomComboPreset.PaladinExpiacionScornOption) ||
+                                    (IsEnabled(CustomComboPreset.PaladinExpiacionScornOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
+                                    return OriginalHook(SpiritsWithin);
+                            }
 
                             if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && level >= Levels.CircleOfScorn && incombat && IsOffCooldown(CircleOfScorn))
                             {
                                 if (IsNotEnabled(CustomComboPreset.PaladinExpiacionScornOption) ||
                                     (IsEnabled(CustomComboPreset.PaladinExpiacionScornOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
                                     return CircleOfScorn;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.PaladinExpiacionScornFeature) && level >= Levels.SpiritsWithin && incombat && IsOffCooldown(OriginalHook(SpiritsWithin)))
-                            {
-                                if (IsNotEnabled(CustomComboPreset.PaladinExpiacionScornOption) ||
-                                    (IsEnabled(CustomComboPreset.PaladinExpiacionScornOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
-                                    return OriginalHook(SpiritsWithin);
                             }
 
                             if (IsEnabled(CustomComboPreset.PaladinInterveneFeature) && level >= Levels.Intervene && GetRemainingCharges(Intervene) > interveneChargesRemaining)
@@ -227,7 +226,7 @@
                     // GCDs
                     if (IsEnabled(CustomComboPreset.PaladinRequiescatFeature))
                     {
-                        if (IsEnabled(CustomComboPreset.PaladinFoFOpenerFeature) && inOpener)
+                        if (inOpener)
                         {
                             if (lastComboMove is GoringBlade && HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) <= 3)
                                 return HolySpirit;
