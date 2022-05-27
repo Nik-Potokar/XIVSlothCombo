@@ -1751,6 +1751,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Expiacion and Circle of Scorn Option", "Uses Circle of Scorn and Expiacion when under Fight or Flight or when Fight or Flight is on cooldown", PLD.JobID, 4, "", "")]
         PaladinExpiacionScornOption = 11027,
 
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [CustomComboInfo("FoF Opener Feature", "Adds the FoF opener to the main combo. Requires level 68.", PLD.JobID, 0, "", "")]
+        PaladinFoFOpenerFeature = 11028,
+
+        [ParentCombo(PaladinFoFOpenerFeature)]
+        [CustomComboInfo("Intervene Option", "Adds Intervene to the FoF opener.", PLD.JobID, 0, "", "")]
+        PaladinFoFOpenerInterveneOption = 11029,
+
         #endregion
         // ====================================================================================
         #region REAPER
