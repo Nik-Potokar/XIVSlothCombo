@@ -413,8 +413,12 @@ namespace XIVSlothComboPlugin
         BlackSimpleCastMovementFeature = 2026,
 
         [ParentCombo(BlackSimpleCastMovementFeature)]
-        [CustomComboInfo("Scathe Moving Option", "Use Scathe/Xenoglossy when moving.", BLM.JobID, 0, "", "")]
-        BlackSimpleScatheMovementFeature = 2027,
+        [CustomComboInfo("Xenoglossy Moving Option", "Use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        BlackSimpleXenoglossyMovementFeature = 2027,
+
+        [ParentCombo(BlackSimpleCastMovementFeature)]
+        [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving.", BLM.JobID, 0, "", "")]
+        BlackSimpleScatheMovementFeature = 2028,
 
         #endregion
         // ====================================================================================

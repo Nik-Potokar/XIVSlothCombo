@@ -638,11 +638,11 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (inCombat && LocalPlayer.CurrentCastTime == 0.0f)
                             {
-                                if (gauge.IsParadoxActive && gauge.InUmbralIce)
+                                if (level >= Levels.Paradox && gauge.IsParadoxActive && gauge.InUmbralIce)
                                 {
                                     return Paradox;
                                 }
-                                if (IsEnabled(CustomComboPreset.BlackSimpleScatheMovementFeature) && level >= Levels.Xenoglossy && gauge.PolyglotStacks > 0)
+                                if (IsEnabled(CustomComboPreset.BlackSimpleXenoglossyMovementFeature) && level >= Levels.Xenoglossy && gauge.PolyglotStacks > 0)
                                 {
                                     return Xenoglossy;
                                 }
@@ -667,6 +667,10 @@ namespace XIVSlothComboPlugin.Combos
                                 if (GetRemainingCharges(Triplecast) >= 1)
                                 {
                                     return Triplecast;
+                                }
+                                if (HasEffect(Buffs.Firestarter) && gauge.InAstralFire)
+                                {
+                                    return Fire3;
                                 }
                                 if (IsEnabled(CustomComboPreset.BlackSimpleScatheMovementFeature))
                                 {
