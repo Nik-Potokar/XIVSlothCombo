@@ -2021,10 +2021,6 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Hold for Double Melee Combo [Lv.90]", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
         RDM_ST_DoubleMeleeCombo = 13412,
 
-        [ParentCombo(RDM_ST_ManaficationEmbolden)]
-        [CustomComboInfo("Unbalance Mana", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 413)]
-        RDM_ST_Unbalance = 13413,
-
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
         [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
@@ -2036,6 +2032,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(RDM_ST_MeleeCombo)]
         [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range and you have enough mana to start the melee combo", RDM.JobID, 430)]
         RDM_ST_CorpsGapClose = 13430,
+
+        [ParentCombo(RDM_ST_MeleeCombo)]
+        [CustomComboInfo("Unbalance Mana", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 410)]
+        RDM_ST_Unbalance = 13440,
 
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3)]
         [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action(s)", RDM.JobID, 510)]

@@ -501,13 +501,13 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (IsEnabled(CustomComboPreset.RDM_Engagement) 
                             && (GetCooldown(Engagement).RemainingCharges > engagementPool
-                                || (HasCharges(Engagement) && GetCooldown(Engagement).ChargeCooldownRemaining < 3))
+                                || (GetCooldown(Engagement).RemainingCharges == 1 && GetCooldown(Engagement).CooldownRemaining < 3))
                             && level >= Levels.Engagement 
                             && distance <= 3) 
                             placeOGCD = Engagement;
                         if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) 
                             && (GetCooldown(Corpsacorps).RemainingCharges > corpsacorpsPool
-                                || (HasCharges(Corpsacorps) && GetCooldown(Corpsacorps).ChargeCooldownRemaining < 3))
+                                || (GetCooldown(Corpsacorps).RemainingCharges == 1 && GetCooldown(Corpsacorps).CooldownRemaining < 3))
                             && ((GetCooldown(Corpsacorps).RemainingCharges >= GetCooldown(Engagement).RemainingCharges) || level < Levels.Engagement) // Try to alternate between Corps-a-corps and Engagement
                             && level >= Levels.Corpsacorps 
                             && distance <= corpacorpsRange) 
@@ -668,10 +668,21 @@ namespace XIVSlothComboPlugin.Combos
                                 return Corpsacorps;
 
                             if (IsEnabled(CustomComboPreset.RDM_ST_Unbalance)
+                                && level >= Levels.Acceleration
                                 && black == white
-                                && black >= 50
-                                && GetCooldown(Acceleration).RemainingCharges > 0)
-                                return Acceleration;
+                                && black >= 50)
+                            {
+                                if (HasEffect(Buffs.Acceleration) || WasLastAction(Buffs.Acceleration))
+                                {
+                                    if (useAero && level >= Levels.Veraero3) return Veraero3;
+                                    if (useThunder && level >= Levels.Verthunder3) return Verthunder3;
+                                    if (useAero && level < Levels.Veraero3) return Veraero;
+                                    if (useThunder && level < Levels.Verthunder3) return Verthunder;
+                                }
+
+                                if (GetCooldown(Acceleration).RemainingCharges > 0)
+                                    return Acceleration;
+                            }
 
                             if (distance <= 3) 
                                 return OriginalHook(Riposte);
