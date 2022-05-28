@@ -318,11 +318,19 @@ namespace XIVSlothComboPlugin.Combos
                             && lastComboMove is not Verholy
                             && lastComboMove is not Scorch
                             && System.Math.Max(black, white) <= 50
-                            && System.Math.Max(black, white) >= 42
+                            && (System.Math.Max(black, white) >= 42
+                                || (IsEnabled(CustomComboPreset.RDM_ST_Unbalance) && black == white && black >= 38 && GetCooldown(Acceleration).RemainingCharges > 0))
                             && System.Math.Min(black, white) >= 31
                             && IsOffCooldown(Manafication)
                             && (IsOffCooldown(Embolden) || GetCooldown(Embolden).CooldownRemaining <= 3))
                         {
+                            if (IsEnabled(CustomComboPreset.RDM_ST_Unbalance)
+                                && black == white
+                                && black <= 44
+                                && black >= 38
+                                && GetCooldown(Acceleration).RemainingCharges > 0)
+                                return Acceleration;
+
                             return Manafication;
                         }
                         if (IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
@@ -368,6 +376,12 @@ namespace XIVSlothComboPlugin.Combos
                             && (IsOffCooldown(Manafication) || level < Levels.Manafication)
                             && IsOffCooldown(Embolden))
                         {
+                            if (IsEnabled(CustomComboPreset.RDM_ST_Unbalance)
+                                && black == white
+                                && black <= 44
+                                && GetCooldown(Acceleration).RemainingCharges > 0)
+                                return Acceleration;
+
                             return Embolden;
                         }
                         if ((IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) || level < 90) 
@@ -652,6 +666,13 @@ namespace XIVSlothComboPlugin.Combos
                                 && level >= Levels.Corpsacorps && GetCooldown(Corpsacorps).RemainingCharges >= 1 
                                 && distance > 3) 
                                 return Corpsacorps;
+
+                            if (IsEnabled(CustomComboPreset.RDM_ST_Unbalance)
+                                && black == white
+                                && black >= 50
+                                && GetCooldown(Acceleration).RemainingCharges > 0)
+                                return Acceleration;
+
                             if (distance <= 3) 
                                 return OriginalHook(Riposte);
                         }

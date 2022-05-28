@@ -2021,6 +2021,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Hold for Double Melee Combo [Lv.90]", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
         RDM_ST_DoubleMeleeCombo = 13412,
 
+        [ParentCombo(RDM_ST_ManaficationEmbolden)]
+        [CustomComboInfo("Unbalance Mana", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 413)]
+        RDM_ST_Unbalance = 13413,
+
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
         [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
