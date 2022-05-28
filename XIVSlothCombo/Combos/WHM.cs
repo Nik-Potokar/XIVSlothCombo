@@ -20,7 +20,7 @@ namespace XIVSlothComboPlugin.Combos
             Tetragrammaton = 3570,
             DivineBenison = 7432,
 
-            // dps
+            // dps test
             Glare1 = 16533,
             Glare3 = 25859,
             Stone1 = 119,
