@@ -500,14 +500,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionID is Jolt or Jolt2 or Scatter or Impact or Fleche or Riposte or Moulinet)
                     {
                         if (IsEnabled(CustomComboPreset.RDM_Engagement) 
-                            && GetCooldown(Engagement).RemainingCharges > engagementPool 
-                            && (GetCooldown(Engagement).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolEngage))
+                            && (GetCooldown(Engagement).RemainingCharges > engagementPool
+                                || (HasCharges(Engagement) && GetCooldown(Engagement).ChargeCooldownRemaining < 3))
                             && level >= Levels.Engagement 
                             && distance <= 3) 
                             placeOGCD = Engagement;
                         if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) 
-                            && GetCooldown(Corpsacorps).RemainingCharges > corpsacorpsPool
-                            && (GetCooldown(Corpsacorps).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolCorps))
+                            && (GetCooldown(Corpsacorps).RemainingCharges > corpsacorpsPool
+                                || (HasCharges(Corpsacorps) && GetCooldown(Corpsacorps).ChargeCooldownRemaining < 3))
                             && ((GetCooldown(Corpsacorps).RemainingCharges >= GetCooldown(Engagement).RemainingCharges) || level < Levels.Engagement) // Try to alternate between Corps-a-corps and Engagement
                             && level >= Levels.Corpsacorps 
                             && distance <= corpacorpsRange) 
