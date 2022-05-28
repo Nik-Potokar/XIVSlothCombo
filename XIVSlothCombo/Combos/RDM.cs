@@ -660,7 +660,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (((System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 && level >= Levels.Redoublement)
                             || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < Levels.Redoublement)
                             || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 20 && level < Levels.Zwerchhau))
-                            && (!HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
+                            && !HasEffect(Buffs.Dualcast))
                         {
                             if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) 
                                 && level >= Levels.Corpsacorps && GetCooldown(Corpsacorps).RemainingCharges >= 1 
