@@ -380,7 +380,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(Gemshine);
 
-                        if (IsEnabled(CustomComboPreset.SummonerEgiSummonsonMainFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
+                        if (IsEnabled(CustomComboPreset.SummonerEgiOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
                         {
                             if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
                                 return OriginalHook(SummonRuby);
@@ -508,12 +508,12 @@ namespace XIVSlothComboPlugin.Combos
                         // Egi Features
                     if (IsEnabled(CustomComboPreset.EgisOnAOEFeature))
                     {
-                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast) && level >= All.Levels.Swiftcast)
+                        if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
                         {
                             //Swiftcast Garuda Feature
                             if (swiftcasePhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
                             {
-                                if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned)
+                                if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
                                     return All.Swiftcast;
                                 if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
                                     ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
@@ -526,8 +526,8 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned)
                                 {
-                                    if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
-                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
+                                    if ((IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
+                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1)) && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
                                         return All.Swiftcast;
                                 }
 
@@ -539,7 +539,7 @@ namespace XIVSlothComboPlugin.Combos
                                 //Swiftcast Garuda Feature
                                 if (level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
                                 {
-                                    if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
+                                    if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast) && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
                                         return All.Swiftcast;
                                     if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
                                         ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
@@ -550,8 +550,8 @@ namespace XIVSlothComboPlugin.Combos
                                 //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
                                 if (gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
                                 {
-                                    if (IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
-                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1))
+                                    if ((IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
+                                        (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && gauge.Attunement >= 1)) && IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
                                         return All.Swiftcast;
                                 }
                             }
@@ -566,7 +566,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (IsEnabled(CustomComboPreset.SummonerEgiAttacksAOEFeature) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                             return OriginalHook(PreciousBrilliance);
 
-                        if (IsEnabled(CustomComboPreset.EgisOnAOEFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
+                        if (IsEnabled(CustomComboPreset.SummonerEgiOrderFeature) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
                         {
                             if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && level >= Levels.SummonRuby)
                                 return OriginalHook(SummonRuby);
