@@ -486,13 +486,13 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionID is Jolt or Jolt2 or Scatter or Impact or Fleche or Riposte or Moulinet)
                     {
                         if (IsEnabled(CustomComboPreset.RDM_Engagement) 
-                            && GetCooldown(Engagement).RemainingCharges >= engagementPool 
+                            && GetCooldown(Engagement).RemainingCharges > engagementPool 
                             && (GetCooldown(Engagement).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolEngage))
                             && level >= Levels.Engagement 
                             && distance <= 3) 
                             placeOGCD = Engagement;
                         if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) 
-                            && GetCooldown(Corpsacorps).RemainingCharges >= corpsacorpsPool
+                            && GetCooldown(Corpsacorps).RemainingCharges > corpsacorpsPool
                             && (GetCooldown(Corpsacorps).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolCorps))
                             && ((GetCooldown(Corpsacorps).RemainingCharges >= GetCooldown(Engagement).RemainingCharges) || level < Levels.Engagement) // Try to alternate between Corps-a-corps and Engagement
                             && level >= Levels.Corpsacorps 
@@ -593,19 +593,21 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (black >= white && level >= Levels.Verholy)
                             {
-                                if (HasEffect(Buffs.VerstoneReady) 
-                                    && (!HasEffect(Buffs.VerfireReady) || HasEffect(Buffs.Embolden)) 
-                                    && (black - white <= 9))
+                                if ((!HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.Embolden) < 10)
+                                    && !HasEffect(Buffs.VerfireReady)
+                                    && (HasEffect(Buffs.VerstoneReady) && GetBuffRemainingTime(Buffs.VerstoneReady) >= 10)
+                                    && (black - white <= 18))
                                     return Verflare;
 
                                 return Verholy;
                             }
                             else if (level >= Levels.Verflare)
                             {
-                                if (!HasEffect(Buffs.VerstoneReady) 
-                                    && (HasEffect(Buffs.VerfireReady) || HasEffect(Buffs.Embolden)) 
+                                if ((!HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.Embolden) < 10)
+                                    && (HasEffect(Buffs.VerfireReady) && GetBuffRemainingTime(Buffs.VerfireReady) >= 10)
+                                    && !HasEffect(Buffs.VerstoneReady)
                                     && level >= Levels.Verholy 
-                                    && (white - black <= 9))
+                                    && (white - black <= 18))
                                     return Verholy;
 
                                 return Verflare;
