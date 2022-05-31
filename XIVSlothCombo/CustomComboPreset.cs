@@ -2589,7 +2589,7 @@ namespace XIVSlothComboPlugin
         
         [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
-        SummonerEgiSummonsonMainFeature = 17016,
+        SummonerEgiOrderFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Energy Siphon/Painflare on AOE Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]

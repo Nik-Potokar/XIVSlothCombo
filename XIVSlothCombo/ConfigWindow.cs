@@ -1130,7 +1130,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SUMMONER
 
-            if (preset == CustomComboPreset.SummonerEgiSummonsonMainFeature)
+            if (preset == CustomComboPreset.SummonerEgiOrderFeature)
             {
                 ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
                 ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
