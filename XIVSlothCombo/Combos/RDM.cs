@@ -38,6 +38,7 @@ namespace XIVSlothComboPlugin.Combos
             EnchantedMoulinet = 7530,
             Corpsacorps = 7506,
             Displacement = 7515,
+            MagickBarrier = 25857,
 
             //Buffs
             Acceleration = 7518,
@@ -91,6 +92,7 @@ namespace XIVSlothComboPlugin.Combos
                 Scorch = 80,
                 Veraero3 = 82,
                 Verthunder3 = 82,
+                MagickBarrier = 86,
                 Resolution = 90;
         }
 
@@ -880,6 +882,22 @@ namespace XIVSlothComboPlugin.Combos
                     && IsOnCooldown(Embolden) 
                     && IsOffCooldown(Manafication))
                     return Manafication;
+
+                return actionID;
+            }
+        }
+
+        internal class RDM_MagickBarrierAddle : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_MagickBarrierAddle;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is MagickBarrier
+                    && level >= All.Levels.Addle
+                    && (IsOnCooldown(MagickBarrier) || level < Levels.MagickBarrier)
+                    && IsOffCooldown(All.Addle)
+                    && !TargetHasEffectAny(All.Debuffs.Addle))
+                    return All.Addle;
 
                 return actionID;
             }

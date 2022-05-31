@@ -2057,9 +2057,12 @@ namespace XIVSlothComboPlugin
         RDM_CorpsDisplacement = 13810,
 
         [ReplaceSkill(RDM.Embolden)]
-        //[ConflictingCombos(RDM_ST_ManaficationEmbolden)]
         [CustomComboInfo("Embolden to Manafication", "Changes Embolden to Manafication when on cooldown.", RDM.JobID, 820, "You're approaching me?", "do do do do do do do do do")]
         RDM_EmboldenManafication = 13820,
+
+        [ReplaceSkill(RDM.MagickBarrier)]
+        [CustomComboInfo("Magick Barrier to Addle", "Changes Magick Barrier to Addle when on cooldown.", RDM.JobID, 820, "Shields up, Red Alert", "Bewooo bewooo bewoo...")]
+        RDM_MagickBarrierAddle = 13821,
 
         #endregion
         // ====================================================================================
@@ -2070,10 +2073,10 @@ namespace XIVSlothComboPlugin
         //Example: 14110 (Feature Number 1, Option 1, no suboption)
         //New features should be added to the appropriate sections.
 
-            #region SAGE DPS
+        #region SAGE DPS
 
-                #region Single Target DPS Feature
-                [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
+        #region Single Target DPS Feature
+        [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
                 [CustomComboInfo("Single Target DPS Feature", "Replaces Dosis with options below", SGE.JobID, 100)]
                 SGE_ST_DosisFeature = 14100,
                 
