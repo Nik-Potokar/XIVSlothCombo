@@ -255,7 +255,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
         AstrologianCardsOnDrawFeaturelikewhat = 1000,
 
-            [ConflictingCombos(AstrologianAutoDrawFeature, AST_DPS_AoEOption)]
+            [ConflictingCombos(AstrologianAutoDrawFeature)]
             [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
             [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
             AstAutoCardTarget = 1029,
