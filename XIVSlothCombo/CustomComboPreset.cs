@@ -152,45 +152,45 @@ namespace XIVSlothComboPlugin
         #region DPS
         [ReplaceSkill(AST.Malefic1, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust1, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
         //[ConflictingCombos(AstrologianAlternateDpsFeature)]
-        [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 0, "Green DPS? Look no further", "Adds fatter deeps to your combo. Just pick another job already...")]
+        [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 0, "", "")]
         AST_DPS_Feature = 1004,
 
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Combust Uptime Option", "Automated DoT Uptime", AST.JobID, 0, "DPS Less", "Oh, look, guys! Look! This one's actually healing!")]
+            [CustomComboInfo("Combust Uptime Option", "Automated DoT Uptime", AST.JobID, 0, "", "")]
             AST_DPS_CombustOption = 1018,
 
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "A bowlful of cards", "Oops! All AoE!")]
+            [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
             AST_DPS_AoEOption = 1013,
 
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "Warp-speed", "GO FASTER! FASTER!")]
+            [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
             AST_DPS_LightSpeedOption = 1020,
 
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value", AST.JobID, 3, "Lucid SCREAMING Feature", "I heard once you could control your dreams... But then I woke up.")]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value", AST.JobID, 3, "", "")]
             AST_DPS_LucidOption = 1008,
 
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "Divi-Balance Weave Option", "Perfectly Balanced")]
+            [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "", "")]
             AST_DPS_DivinationOption = 1016,
 
             [ConflictingCombos(AstAutoCardTarget)]
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "Kaiba Feature", "You just activated my trap card!")]
+            [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
             AstrologianAutoDrawFeature = 1011,
 
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "Astro-whine Feature", "Astro-whining again? Sorry, everyone's busy looking at the SGE's cool floating sticks.")]
+            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "", "")]
             AstrologianAstrodyneFeature = 1009,
 
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Crown Card Draw Weave Option", "Adds Auto Crown Card Draw", AST.JobID, 7, "Kaiba 2, Electric Boogaloo", "It's a trap!")]
+            [CustomComboInfo("Crown Card Draw Weave Option", "Adds Auto Crown Card Draw", AST.JobID, 7, "", "")]
             AstrologianAutoCrownDrawFeature = 1012,
 
             [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "Brainless Lord Feature", "You're like that tiny guy from Shrek. - E -")]
+            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "", "")]
             AstrologianLazyLordFeature = 1014,
         
         #endregion
@@ -217,7 +217,7 @@ namespace XIVSlothComboPlugin
             ExaltationFeature = 1028,
 
         [ReplaceSkill(AST.AspectedHelios)]
-        [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 3, "HELIOSCOPTER", "HELIOSCOPTER HELIOSCOPTER")]
+        [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 3, "", "")]
         AstrologianHeliosFeature = 1010,
 
             [ParentCombo(AstrologianHeliosFeature)]
@@ -233,20 +233,20 @@ namespace XIVSlothComboPlugin
             AstrologianHoroscopeFeature = 1026,
 
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 4, "Sprout's Benedict Cumberbatch", "Changes Big Benedict into Little Benedict when you visit the sprout universe.")]
+        [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 4, "", "")]
         AstrologianBeneficFeature = 1002,
         #endregion
 
         #region Utility
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
-        [CustomComboInfo("Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 5, "Rez-bot-3000", "Does your job for you, but faster. You're welcome, little sloth.")]
+        [CustomComboInfo("Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 5, "", "")]
         AstrologianAscendFeature = 1003,
         #endregion
 
         #region Cards against Sanity
         [ReplaceSkill(AST.Play)]
-        [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
+        [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "", "")]
         AstrologianCardsOnDrawFeaturelikewhat = 1000,
 
             [ConflictingCombos(AstrologianAutoDrawFeature)]
@@ -277,13 +277,13 @@ namespace XIVSlothComboPlugin
             AstReFocusFeature = 1034,
 
         [ReplaceSkill(AST.CrownPlay)]
-        [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 17, "Bestow Royalty", "This one's for the Lords and Ladies, lemme get a HYEEEAAAAAH!")]
+        [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 17, "", "")]
         AstrologianCrownPlayFeature = 1001,
 
         [ReplaceSkill(AST.Play)]
         //Works With AstrologianCardsOnDrawFeaturelikewhat as a feature, or by itself if AstrologianCardsOnDrawFeaturelikewhat is disabled.
         //Do not do ConflictingCombos with AstrologianCardsOnDrawFeaturelikewhat
-        [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "Astro-whine on Play", "Seal me up and let me die, baby")]
+        [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "", "")]
         AstrologianAstrodyneOnPlayFeature = 1015,
         #endregion
 
