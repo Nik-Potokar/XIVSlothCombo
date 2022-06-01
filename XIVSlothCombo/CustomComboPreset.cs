@@ -655,11 +655,11 @@ namespace XIVSlothComboPlugin
 
                 [ParentCombo(DNC_CombinedDances)]
                 [CustomComboInfo("Devilment Plus Option", "Adds Devilment right after Technical finish.", DNC.JobID, 0, "", "")]
-                DancerDevilmentOnCombinedDanceFeature = 4023,
+                DNC_CombinedDances_Devilment = 4023,
 
                 [ParentCombo(DNC_CombinedDances)]
                 [CustomComboInfo("Flourish Plus Option", "Adds Flourish to the Combined Dance Feature.", DNC.JobID, 0, "", "")]
-                DancerFlourishOnCombinedDanceFeature = 4024,
+                DNC_CombinedDances_Flourish = 4024,
                 #endregion
 
             [ParentCombo(DNC_Dance_Menu)]
