@@ -453,7 +453,7 @@ namespace XIVSlothComboPlugin.Combos
                             {
                                 if (IsNotEnabled(CustomComboPreset.SummonerOGCDPoolFeature))
                                     return Painflare;
-                                if (IsEnabled(CustomComboPreset.SummonerOGCDPoolFeature) && IsNotEnabled(CustomComboPreset.SummonerSTPoolOnlyOption))
+                                if (IsEnabled(CustomComboPreset.SummonerOGCDPoolFeature) && IsNotEnabled(CustomComboPreset.SummonerSTOnlyPoolOption))
                                 {
                                     if (level < Levels.SearingLight)
                                         return Painflare;
@@ -497,7 +497,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     //Demi
-                    if (IsEnabled(CustomComboPreset.SummonerDemiAoESummonsFeature))
+                    if (IsEnabled(CustomComboPreset.SummonerDemiAOESummonsFeature))
                     {
                         if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 &&
                             IsOffCooldown(OriginalHook(Aethercharge)) &&
@@ -514,7 +514,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (swiftcasePhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
                         {
                             if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned &&
-                                IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
+                                IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcastOption))
                                 return All.Swiftcast;
                             if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
                                 ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
@@ -530,7 +530,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if ((IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
                                      (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) &&
                                       gauge.Attunement >= 1)) &&
-                                    IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
+                                    IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcastOption))
                                     return All.Swiftcast;
                             }
 
@@ -543,7 +543,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
                             {
                                 if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast) &&
-                                    IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
+                                    IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcastOption))
                                     return All.Swiftcast;
                                 if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) &&
                                     ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
@@ -557,7 +557,7 @@ namespace XIVSlothComboPlugin.Combos
                                 if ((IsNotEnabled(CustomComboPreset.SummonerIfritUniqueFeature) ||
                                      (IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) &&
                                       gauge.Attunement >= 1)) &&
-                                    IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcast))
+                                    IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcastOption))
                                     return All.Swiftcast;
                             }
                         }

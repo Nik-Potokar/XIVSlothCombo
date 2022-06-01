@@ -2527,7 +2527,7 @@ namespace XIVSlothComboPlugin
         SummonerMainComboFeature = 17000,
 
         [ReplaceSkill(SMN.Tridisaster)]
-        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
+        [CustomComboInfo("Enable AoE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple A0E)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
         SummonerAOEComboFeature = 17001,
 
         [ParentCombo(SummonerMainComboFeature)]
@@ -2568,7 +2568,7 @@ namespace XIVSlothComboPlugin
         SummonerRuin4ToRuin3Feature = 17011,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin 4 to the AOE Combo when there are currently no summons active.", SMN.JobID, 0, "", "More Ruin this, more ruin that! Now in sharing size!")]
+        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin 4 to the AoE Combo when there are currently no summons active.", SMN.JobID, 0, "", "More Ruin this, more ruin that! Now in sharing size!")]
         SummonerRuin4ToTridisasterFeature = 17012,
 
         [ParentCombo(SummonerEDFesterCombo)]
@@ -2588,7 +2588,7 @@ namespace XIVSlothComboPlugin
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Searing Light on Single target/Aoe combo", "Adds Searing Light to the Single target, and Aoe combos and will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light on Single target/AoE combo", "Adds Searing Light to the Single target, and AoE combos and will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
         SearingLightFeature = 17018,
 
         [ParentCombo(SearingLightFeature)]
@@ -2600,8 +2600,8 @@ namespace XIVSlothComboPlugin
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
-        SummonerDemiAoESummonsFeature = 17021,
+        [CustomComboInfo("Demi Summons AoE Combo", "Adds Demi Summons to the AoE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        SummonerDemiAOESummonsFeature = 17021,
 
         [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
@@ -2615,7 +2615,7 @@ namespace XIVSlothComboPlugin
         SummonerOGCDPoolFeature = 17025,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to the AoE Combo.", SMN.JobID, 2)]
+        [CustomComboInfo("Precious Brilliance on AoE Combo", "Adds Egi attacks (Precious Brilliance) to the AoE Combo.", SMN.JobID, 2)]
         SummonerEgiAttacksAOEFeature = 17026,
 
         [ConflictingCombos(ALL_Caster_Raise)]
@@ -2627,7 +2627,7 @@ namespace XIVSlothComboPlugin
         SummonerSingleTargetRekindleOption = 17028,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 5, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        [CustomComboInfo("Rekindle on AoE Combo option", "Adds Rekindle to the AoE Combo.", SMN.JobID, 5, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleOption = 17029,
 
         [ReplaceSkill(SMN.Ruin4)]
@@ -2654,11 +2654,11 @@ namespace XIVSlothComboPlugin
         
         [ParentCombo(SummonerOGCDPoolFeature)]
         [CustomComboInfo("Single target only Pooled OGCD Option", "Only use damage OGCDs on single target combo.", SMN.JobID, 2, "", "")]
-        SummonerSTPoolOnlyOption = 17037,
+        SummonerSTOnlyPoolOption = 17037,
         
         [ParentCombo(SummonerSwiftcastEgiFeature)]
         [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on single target combo.", SMN.JobID, 2, "", "")]
-        SummonerSTOnlySwiftcast = 17038,
+        SummonerSTOnlySwiftcastOption = 17038,
 
         #endregion
         // ====================================================================================
