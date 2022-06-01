@@ -774,14 +774,14 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BLACK MAGE
 
-            if (preset == CustomComboPreset.BlackAoEFoulOption)
-                ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
+            if (preset == CustomComboPreset.BLM_AoE_Simple_Foul)
+                ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BLM_PolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
 
-            if (preset == CustomComboPreset.BlackSimpleFeature || preset == CustomComboPreset.BlackSimpleTransposeFeature)
-                ConfigWindowFunctions.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BlmAstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
+            if (preset == CustomComboPreset.BLM_SimpleMode || preset == CustomComboPreset.BLM_Simple_Transpose)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
 
-            if (preset == CustomComboPreset.BlackSimpleCastMovementFeature)
-                ConfigWindowFunctions.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BlmMovementTime, "Seconds of movement before using the movement feature.");
+            if (preset == CustomComboPreset.BLM_Simple_CastMovement)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BLM_MovementTime, "Seconds of movement before using the movement feature.");
 
             #endregion
             // ====================================================================================
