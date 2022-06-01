@@ -103,7 +103,7 @@ namespace XIVSlothComboPlugin
         ALL_Healer_Menu = 100098,
 
             [ReplaceSkill(AST.Ascend, WHM.Raise, SCH.Resurrection, SGE.Egeiro)]
-            [ConflictingCombos(AstrologianAscendFeature, SCH_RaiseFeature, SGE_RaiseFeature, WHMRaiseFeature)]
+            [ConflictingCombos(AST_Raise_Alternative, SCH_RaiseFeature, SGE_RaiseFeature, WHMRaiseFeature)]
             [ParentCombo(ALL_Healer_Menu)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             ALL_Healer_Raise = 100010,
@@ -153,138 +153,137 @@ namespace XIVSlothComboPlugin
         [ReplaceSkill(AST.Malefic1, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust1, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
         //[ConflictingCombos(AstrologianAlternateDpsFeature)]
         [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 0, "", "")]
-        AST_DPS_Feature = 1004,
+        AST_ST_DPS = 1004,
 
-            [ParentCombo(AST_DPS_Feature)]
-            [CustomComboInfo("Combust Uptime Option", "Automated DoT Uptime", AST.JobID, 0, "", "")]
-            AST_DPS_CombustOption = 1018,
+            [ParentCombo(AST_ST_DPS)]
+            [CustomComboInfo("Combust Uptime Option", "Adds Combust to the DPS feature if it's not present on current target, or is about to expire.", AST.JobID, 0, "", "")]
+            AST_ST_DPS_CombustUptime = 1018,
 
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
-            [ParentCombo(AST_DPS_Feature)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
-            AST_DPS_AoEOption = 1013,
+            AST_AoE_DPS = 1013,
 
-            [ParentCombo(AST_DPS_Feature)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
-            AST_DPS_LightSpeedOption = 1020,
+            AST_DPS_LightSpeed = 1020,
 
-            [ParentCombo(AST_DPS_Feature)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value", AST.JobID, 3, "", "")]
-            AST_DPS_LucidOption = 1008,
+            AST_DPS_Lucid = 1008,
 
-            [ParentCombo(AST_DPS_Feature)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "", "")]
-            AST_DPS_DivinationOption = 1016,
+            AST_DPS_Divination = 1016,
 
-            [ConflictingCombos(AstAutoCardTarget)]
-            [ParentCombo(AST_DPS_Feature)]
+            [ConflictingCombos(AST_Cards_DrawOnPlay_AutoCardTarget)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
-            AstrologianAutoDrawFeature = 1011,
+            AST_DPS_AutoDraw = 1011,
 
-            [ParentCombo(AST_DPS_Feature)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "", "")]
-            AstrologianAstrodyneFeature = 1009,
+            AST_DPS_Astrodyne = 1009,
 
-            [ParentCombo(AST_DPS_Feature)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Crown Card Draw Weave Option", "Adds Auto Crown Card Draw", AST.JobID, 7, "", "")]
-            AstrologianAutoCrownDrawFeature = 1012,
+            AST_DPS_AutoCrownDraw = 1012,
 
-            [ParentCombo(AST_DPS_Feature)]
+            [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "", "")]
-            AstrologianLazyLordFeature = 1014,
-        
-        #endregion
+            AST_DPS_LazyLord = 1014,
+            #endregion
 
         #region Healing
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Simple Heal", "Single target healing", AST.JobID, 2)]
-        AstrologianSimpleSingleTargetHeal = 1023,
+        [CustomComboInfo("Simple Heals (Single Target)", "", AST.JobID, 2)]
+        AST_ST_SimpleHeals = 1023,
 
-            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID)]
-            AstroEssentialDignity = 1024,
+            AST_ST_SimpleHeals_EssentialDignity = 1024,
 
-            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID)]
-            CelestialIntersectionFeature = 1025,
+            AST_ST_SimpleHeals_CelestialIntersection = 1025,
 
-            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID)]
-            AspectedBeneficFeature = 1027,
+            AST_ST_SimpleHeals_AspectedBenefic = 1027,
 
-            [ParentCombo(AstrologianSimpleSingleTargetHeal)]
+            [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
-            ExaltationFeature = 1028,
+            AST_ST_SimpleHeals_Exaltation = 1028,
 
         [ReplaceSkill(AST.AspectedHelios)]
         [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 3, "", "")]
-        AstrologianHeliosFeature = 1010,
+        AST_AoE_SimpleHeals_AspectedHelios = 1010,
 
-            [ParentCombo(AstrologianHeliosFeature)]
+            [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
             [CustomComboInfo("Celestial Opposition Feature", "Adds Celestial Opposition", AST.JobID)]
-            AstrologianCelestialOppositionFeature = 1021,
+            AST_AoE_SimpleHeals_CelestialOpposition = 1021,
 
-            [ParentCombo(AstrologianHeliosFeature)]
+            [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
             [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID)]
-            AstrologianLazyLadyFeature = 1022,
+            AST_AoE_SimpleHeals_LazyLady = 1022,
 
-            [ParentCombo(AstrologianHeliosFeature)]
+            [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
             [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID)]
-            AstrologianHoroscopeFeature = 1026,
+            AST_AoE_SimpleHeals_Horoscope = 1026,
 
         [ReplaceSkill(AST.Benefic2)]
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 4, "", "")]
-        AstrologianBeneficFeature = 1002,
+        AST_Benefic = 1002,
         #endregion
 
         #region Utility
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
         [CustomComboInfo("Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 5, "", "")]
-        AstrologianAscendFeature = 1003,
+        AST_Raise_Alternative = 1003,
         #endregion
 
-        #region Cards against Sanity
+        #region Cards
         [ReplaceSkill(AST.Play)]
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "", "")]
-        AstrologianCardsOnDrawFeaturelikewhat = 1000,
+        AST_Cards_DrawOnPlay = 1000,
 
-            [ConflictingCombos(AstrologianAutoDrawFeature)]
-            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [ConflictingCombos(AST_DPS_AutoDraw)]
+            [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
-            AstAutoCardTarget = 1029,
+            AST_Cards_DrawOnPlay_AutoCardTarget = 1029,
 
-                [ParentCombo(AstAutoCardTarget)]
+                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
                 [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
-                AstrologianTargetLock = 1030,
+                AST_Cards_DrawOnPlay_TargetLock = 1030,
 
-                [ParentCombo(AstAutoCardTarget)]
+                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
                 [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
-                AstrologianTargetExtraFeature = 1031,
+                AST_Cards_DrawOnPlay_TargetExtra = 1031,
 
-            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
-            AstRedrawFeature = 1032,
+            AST_Cards_Redraw = 1032,
 
-            [ConflictingCombos(AstReFocusFeature)]
-            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [ConflictingCombos(AST_Cards_DrawOnPlay_ReFocusTarget)]
+            [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
-            AstReTargetFeature = 1033,
+            AST_Cards_DrawOnPlay_ReTargetPrev = 1033,
 
-            [ConflictingCombos(AstReTargetFeature)]
-            [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
+            [ConflictingCombos(AST_Cards_DrawOnPlay_ReTargetPrev)]
+            [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
-            AstReFocusFeature = 1034,
+            AST_Cards_DrawOnPlay_ReFocusTarget = 1034,
 
         [ReplaceSkill(AST.CrownPlay)]
         [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 17, "", "")]
-        AstrologianCrownPlayFeature = 1001,
+        AST_Cards_CrownPlay = 1001,
 
         [ReplaceSkill(AST.Play)]
-        //Works With AstrologianCardsOnDrawFeaturelikewhat as a feature, or by itself if AstrologianCardsOnDrawFeaturelikewhat is disabled.
-        //Do not do ConflictingCombos with AstrologianCardsOnDrawFeaturelikewhat
+        //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
+        //Do not do ConflictingCombos with AST_Cards_DrawOnPlay
         [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "", "")]
-        AstrologianAstrodyneOnPlayFeature = 1015,
+        AST_Cards_AstrodyneOnPlay = 1015,
         #endregion
 
         //Last number used is 34
