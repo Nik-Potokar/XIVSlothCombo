@@ -1,3 +1,4 @@
+using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
 namespace XIVSlothComboPlugin.Combos
@@ -101,6 +102,7 @@ namespace XIVSlothComboPlugin.Combos
         {
             public const string BlmPolyglotsStored = "BlmPolyglotsStored";
             public const string BlmAstralFireRefresh = "BlmAstralFireRefresh";
+            public const string BlmMovementTime = "BlmMovementTime";
         }
 
 
@@ -434,6 +436,8 @@ namespace XIVSlothComboPlugin.Combos
 
             internal static bool inOpener = false;
             internal static bool openerFinished = false;
+            internal static double movementTime = 0.0f;
+            internal static DateTime previousTime;
 
             internal delegate bool DotRecast(int value);
 
@@ -611,6 +615,67 @@ namespace XIVSlothComboPlugin.Combos
                                 }
 
                                 openerFinished = true;
+                            }
+                        }
+                    }
+
+                    // Handle movement
+                    if (IsEnabled(CustomComboPreset.BlackSimpleCastMovementFeature) && inCombat)
+                    {
+                        var movementTimeThreshold = Service.Configuration.GetCustomFloatValue(Config.BlmMovementTime);
+                        double deltaTime = (DateTime.Now - previousTime).TotalSeconds;
+                        previousTime = DateTime.Now;
+                        if (IsMoving)
+                        {
+                            movementTime = movementTime + deltaTime > movementTimeThreshold + 0.02 ? movementTimeThreshold + 0.02 : movementTime + deltaTime;
+                        }
+                        else
+                        {
+                            movementTime = movementTime - deltaTime < 0 ? 0 : movementTime - (deltaTime * 2);
+                        }
+
+                        if (movementTime > movementTimeThreshold && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))
+                        {
+                            if (inCombat && LocalPlayer.CurrentCastTime == 0.0f)
+                            {
+                                if (level >= Levels.Paradox && gauge.IsParadoxActive && gauge.InUmbralIce)
+                                {
+                                    return Paradox;
+                                }
+                                if (IsEnabled(CustomComboPreset.BlackSimpleXenoglossyMovementFeature) && level >= Levels.Xenoglossy && gauge.PolyglotStacks > 0)
+                                {
+                                    return Xenoglossy;
+                                }
+                                if (HasEffect(Buffs.Thundercloud))
+                                {
+                                    if (level < Levels.Thunder3)
+                                    {
+                                        if (lastComboMove != Thunder && thunderRecast(4) && !TargetHasEffect(Debuffs.Thunder2))
+                                        {
+                                            return Thunder;
+                                        }
+                                    }
+                                    else if (lastComboMove != Thunder3 && thunder3Recast(4) && !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
+                                    {
+                                        return Thunder3;
+                                    }
+                                }
+                                if (IsOffCooldown(All.Swiftcast))
+                                {
+                                    return All.Swiftcast;
+                                }
+                                if (GetRemainingCharges(Triplecast) >= 1)
+                                {
+                                    return Triplecast;
+                                }
+                                if (HasEffect(Buffs.Firestarter) && gauge.InAstralFire)
+                                {
+                                    return Fire3;
+                                }
+                                if (IsEnabled(CustomComboPreset.BlackSimpleScatheMovementFeature))
+                                {
+                                    return Scathe;
+                                }
                             }
                         }
                     }
