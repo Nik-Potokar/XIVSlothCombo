@@ -282,113 +282,113 @@ namespace XIVSlothComboPlugin
         #region BLACK MAGE
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_SimpleMode)]
+        [ConflictingCombos(BlackSimpleFeature)]
         [CustomComboInfo("Scathe Feature", "Replaces Scathe with Fire 4 or Blizzard 4 depending on Astral Fire/Umbral Ice.", BLM.JobID, 2, "", "")]
-        BLM_Enochian = 2000,
+        BlackEnochianFeature = 2000,
 
         [ReplaceSkill(BLM.Transpose)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "", "")]
-        BLM_Mana = 2001,
+        BlackManaFeature = 2001,
 
         [ReplaceSkill(BLM.LeyLines)]
         [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Ley Lines when Ley Lines is active.", BLM.JobID, 0, "", "")]
-        BLM_LeyLines = 2002,
+        BlackLeyLinesFeature = 2002,
 
         [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
         [CustomComboInfo("Blizzard 1/2/3 Feature", "Replaces Blizzard 1 with Blizzard 3 when out of Umbral Ice. Replaces Freeze with Blizzard 2 when synced.", BLM.JobID, 0, "", "")]
-        BLM_Blizzard = 2003,
+        BlackBlizzardFeature = 2003,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_SimpleMode)]
+        [ConflictingCombos(BlackEnochianFeature, BlackSimpleFeature)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID, 0, "", "")]
-        BLM_ScatheXeno = 2004,
+        BlackScatheFeature = 2004,
 
         [ReplaceSkill(BLM.Fire)]
         [CustomComboInfo("Fire 1/3 Feature", "Replaces Fire 1 with Fire 3 outside of Astral Fire or when Firestarter proc is up.", BLM.JobID, 0, "", "")]
-        BLM_Fire_1to3 = 2005,
+        BlackFire13Feature = 2005,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ParentCombo(BLM_Enochian)]
+        [ParentCombo(BlackEnochianFeature)]
         [CustomComboInfo("Thundercloud Option", "Replaces Scathe with Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available.", BLM.JobID, 0, "", "")]
-        BLM_Thunder = 2006,
+        BlackThunderFeature = 2006,
 
         [ReplaceSkill(BLM.Fire4)]
-        [ParentCombo(BLM_Enochian)]
+        [ParentCombo(BlackEnochianFeature)]
         [CustomComboInfo("Despair Option", "Replaces Fire 4 with Despair when below 2400 MP.", BLM.JobID, 0, "", "")]
-        BLM_Despair = 2007,
+        BlackDespairFeature = 2007,
 
         [ReplaceSkill(BLM.Flare)]
         [CustomComboInfo("Simple AoE Feature", "Replaces Flare with a full one button rotation.", BLM.JobID, -1, "", "")]
-        BLM_AoE_SimpleMode = 2008,
+        BlackAoEComboFeature = 2008,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ParentCombo(BLM_Enochian)]
+        [ParentCombo(BlackEnochianFeature)]
         [CustomComboInfo("Aspect Swap Option", "Replaces Scathe with Blizzard 3 when at 0 MP in Astral Fire or with Fire 3 when at 10000 MP in Umbral Ice with 3 Umbral Hearts.", BLM.JobID, 0, "", "")]
-        BLM_AspectSwap = 2010,
+        BlackAspectSwapFeature = 2010,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ParentCombo(BLM_Thunder)]
+        [ParentCombo(BlackThunderFeature)]
         [CustomComboInfo("Thunder 1/3 Option", "Replaces Scathe with Thunder 1/3 when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
-        BLM_ThunderUptime = 2011,
+        BlackThunderUptimeFeature = 2011,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_ScatheXeno, BLM_Simple_Transpose, BLM_Paradox)]
+        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleTransposeFeature, BlackSimpleParadoxFeature)]
         [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -3, "", "")]
-        BLM_SimpleMode = 2012,
+        BlackSimpleFeature = 2012,
 
-        [ParentCombo(BLM_SimpleMode)]
+        [ParentCombo(BlackSimpleFeature)]
         [CustomComboInfo("CDs Option", "Adds Manafont, Sharpcast, Amplifier onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Buffs = 2013,
+        BlackSimpleBuffsFeature = 2013,
 
-        [ParentCombo(BLM_SimpleMode)]
+        [ParentCombo(BlackSimpleFeature)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_BuffsLeyLines = 2014,
+        BlackSimpleBuffsLeylinesFeature = 2014,
 
-        [ParentCombo(BLM_SimpleMode)]
+        [ParentCombo(BlackSimpleFeature)]
         [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Casts = 2015,
+        BlackSimpleCastsFeature = 2015,
 
-        [ParentCombo(BLM_Simple_Casts)]
+        [ParentCombo(BlackSimpleCastsFeature)]
         [CustomComboInfo("Pool Triplecast / Swiftcast Option", "Keep one triplecast usage and swiftcast for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_CastPooling = 2016,
+        BlackSimpleCastPoolingFeature = 2016,
 
-        [ParentCombo(BLM_SimpleMode)]
+        [ParentCombo(BlackSimpleFeature)]
         [CustomComboInfo("Pool Xenoglossy Option", "Keep one xenoglossy usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_XenoPooling = 2017,
+        BlackSimplePoolingFeature = 2017,
 
-        [ParentCombo(BLM_SimpleMode)]
+        [ParentCombo(BlackSimpleFeature)]
         [CustomComboInfo("Fire 3 Opener", "Adds the Fire 3 Opener to Simple BLM.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Opener = 2018,
+        BlackSimpleOpenerFeature = 2018,
 
-        [ParentCombo(BLM_Simple_Opener)]
+        [ParentCombo(BlackSimpleOpenerFeature)]
         [CustomComboInfo("Fire 3 Opener - 1 Triplecast", "Modifies the Simple Fire 3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
-        BLM_Simple_OpenerAlternate = 2019,
+        BlackSimpleAltOpenerFeature = 2019,
 
-        [ParentCombo(BLM_AoE_SimpleMode)]
+        [ParentCombo(BlackAoEComboFeature)]
         [CustomComboInfo("Foul / Manafont Flare Option", "Adds Foul when available during Astral Fire. Weaves Manafont after Foul for additional Flare", BLM.JobID, 0, "", "")]
-        BLM_AoE_Simple_Foul = 2020,
+        BlackAoEFoulOption = 2020,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
+        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature, BlackSimpleParadoxFeature)]
         [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -2, "", "")]
-        BLM_Simple_Transpose = 2021,
+        BlackSimpleTransposeFeature = 2021,
 
-        [ParentCombo(BLM_Simple_Transpose)]
+        [ParentCombo(BlackSimpleTransposeFeature)]
         [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_TransposePooling = 2022,
+        BlackSimpleTransposePoolingFeature = 2022,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_ScatheXeno, BLM_SimpleMode, BLM_Simple_Transpose)]
+        [ConflictingCombos(BlackEnochianFeature, BlackScatheFeature, BlackSimpleFeature, BlackSimpleTransposeFeature)]
         [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9-13%% less damage than Simple BLM). Requires level 90.", BLM.JobID, -2, "", "")]
-        BLM_Paradox = 2023,
+        BlackSimpleParadoxFeature = 2023,
 
-        [ParentCombo(BLM_Simple_Transpose)]
+        [ParentCombo(BlackSimpleTransposeFeature)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_TransposeLeyLines = 2024,
+        BlackSimpleTransposeLeyLinesFeature = 2024,
 
-        [ParentCombo(BLM_Paradox)]
+        [ParentCombo(BlackSimpleParadoxFeature)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Paradox BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_ParadoxLeyLines = 2025,
+        BlackSimpleParadoxLeyLinesFeature = 2025,
 
         #endregion
         // ====================================================================================

@@ -761,11 +761,11 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BLACK MAGE
 
-            if (preset == CustomComboPreset.BLM_AoE_Simple_Foul)
+            if (preset == CustomComboPreset.BlackAoEFoulOption)
             {
                 ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
             }
-            if (preset == CustomComboPreset.BLM_SimpleMode || preset == CustomComboPreset.BLM_Simple_Transpose)
+            if (preset == CustomComboPreset.BlackSimpleFeature || preset == CustomComboPreset.BlackSimpleTransposeFeature)
             {
                 ConfigWindowFunctions.DrawSliderFloat(3.0f, 8.0f, BLM.Config.BlmAstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
             }
