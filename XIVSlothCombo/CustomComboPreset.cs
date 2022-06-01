@@ -619,7 +619,7 @@ namespace XIVSlothComboPlugin
 
             [ParentCombo(DNC_ST_MultiButton)]
             [CustomComboInfo("Fan Dance Option", "Adds Fan Dance 3/4 when available.", DNC.JobID, 0, "", "")]
-            DNC_FanDance34_MainCombo = 4004,
+            DNC_ST_FanDance34 = 4004,
             #endregion
 
         #region AoE Multibutton
@@ -638,7 +638,7 @@ namespace XIVSlothComboPlugin
 
             [ParentCombo(DNC_AoE_MultiButton)]
             [CustomComboInfo("AoE Fan Dance Option", "Adds Fan Dance 3/4 when available.", DNC.JobID, 0, "", "")]
-            DancerFanDanceOnAoEComboFeature = 4014,
+            DNC_AoE_FanDance34 = 4014,
             #endregion
 
         #region Dance Features

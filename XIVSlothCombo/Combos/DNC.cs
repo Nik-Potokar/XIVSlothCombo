@@ -277,7 +277,7 @@ namespace XIVSlothComboPlugin.Combos
                         return FanDance1;
 
                     // ST Fan Dance 3/4 on combo
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance34_MainCombo))
+                    if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
                     {
                         if (HasEffect(Buffs.ThreeFoldFanDance) && level >= Levels.FanDance3)
                             return FanDance3;
@@ -331,7 +331,7 @@ namespace XIVSlothComboPlugin.Combos
                         return FanDance2;
 
                     // AoE Fan Dance 3/4 on combo
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance34_MainCombo))
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
                     {
                         if (HasEffect(Buffs.ThreeFoldFanDance))
                             return FanDance3;
