@@ -476,7 +476,7 @@ namespace XIVSlothComboPlugin.Combos
                         return All.HeadGraze;
 
                 // Simple ST Standard (activates dance with no target, or when target is over HP% threshold)
-                if (!HasTarget() || EnemyHealthPercentage() > standardStepBurstThreshold)
+                if (!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold)
                 {
                     if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && IsOffCooldown(StandardStep)
                         && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer > 5))
@@ -484,7 +484,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
 
                 // Simple ST Tech (activates dance with no target, or when target is over HP% threshold)
-                if (!HasTarget() || EnemyHealthPercentage() > technicalStepBurstThreshold)
+                if (!HasTarget() || GetTargetHPPercent() > technicalStepBurstThreshold)
                 {
                     if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
                         return TechnicalStep;
@@ -518,7 +518,7 @@ namespace XIVSlothComboPlugin.Combos
                         var minFeathers = IsEnabled(CustomComboPreset.DNC_ST_Simple_FeatherPooling) && level >= Levels.TechnicalStep ? 3 : 0;
 
                         // Simple ST Feather Overcap & Burst
-                        if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || EnemyHealthPercentage() < featherBurstThreshold && gauge.Feathers > 0)
+                        if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0)
                             return FanDance1;
                     }
 
@@ -617,7 +617,7 @@ namespace XIVSlothComboPlugin.Combos
                         return All.HeadGraze;
 
                     // Simple AoE Standard (activates dance with no target, or when target is over HP% threshold)
-                    if (!HasTarget() || EnemyHealthPercentage() > standardStepBurstThreshold)
+                    if (!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold)
                     {
                         if (level >= Levels.StandardStep && IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && IsOffCooldown(StandardStep)
                             && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer > 5))
@@ -625,7 +625,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     // Simple AoE Tech (activates dance with no target, or when target is over HP% threshold)
-                    if (!HasTarget() || EnemyHealthPercentage() > technicalStepBurstThreshold)
+                    if (!HasTarget() || GetTargetHPPercent() > technicalStepBurstThreshold)
                     {
                         if (level >= Levels.TechnicalStep && IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
                             return TechnicalStep;

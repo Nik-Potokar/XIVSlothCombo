@@ -119,7 +119,7 @@ namespace XIVSlothComboPlugin.Combos
                 var soulReaver = HasEffect(Buffs.SoulReaver);
                 var deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
                 var playerHP = PlayerHealthPercentageHp();
-                var enemyHP = EnemyHealthPercentage();
+                var enemyHP = GetTargetHPPercent();
                 var positionalChoice = Service.Configuration.GetCustomIntValue(Config.RPRPositionChoice);
                 var sodThreshold = Service.Configuration.GetCustomIntValue(Config.RPRSoDThreshold);
                 var sodRefreshRange = Service.Configuration.GetCustomIntValue(Config.RPRSoDRefreshRange);
@@ -127,7 +127,7 @@ namespace XIVSlothComboPlugin.Combos
                 //Gibbet and Gallows on SoD
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature) && IsEnabled(CustomComboPreset.GibbetGallowsonSoD) && soulReaver && level >= Levels.Gibbet)
                 {
-                    if (positionalChoice is 1 or 2)
+                    if (positionalChoice is 0 or 1 or 2)
                     {
                         if (HasEffect(Buffs.EnhancedGibbet))
                             return OriginalHook(Gibbet);
@@ -141,7 +141,7 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(Gallows);
                     if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                     {
-                        if (positionalChoice == 1)
+                        if (positionalChoice is 0 or 1)
                             return Gallows;
                         if (positionalChoice == 2)
                             return Gibbet;
@@ -152,7 +152,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Gibbet)
                     {
-                        if (positionalChoice is 1 or 2)
+                        if (positionalChoice is 0 or 1 or 2)
                         {
                             if (HasEffect(Buffs.EnhancedGibbet))
                                 return OriginalHook(Gibbet);
@@ -166,7 +166,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gibbet);
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice == 1)
+                            if (positionalChoice is 0 or 1)
                                 return Gallows;
                             if (positionalChoice == 2)
                                 return Gibbet;
@@ -245,7 +245,7 @@ namespace XIVSlothComboPlugin.Combos
                                     return OriginalHook(Gallows);
                                 if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
                                 {
-                                    if (positionalChoice is 1 or 3)
+                                    if (positionalChoice is 0 or 1 or 3)
                                         return OriginalHook(Gallows);
                                     if (positionalChoice is 2 or 4)
                                         return OriginalHook(Gibbet);
@@ -294,7 +294,7 @@ namespace XIVSlothComboPlugin.Combos
                     var enshrouded = HasEffect(Buffs.Enshrouded);
                     var soulReaver = HasEffect(Buffs.SoulReaver);
                     var deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
-                    var enemyHP = EnemyHealthPercentage();
+                    var enemyHP = GetTargetHPPercent();
 
                     if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature) && soulReaver && level >= Levels.Guillotine)
                         return OriginalHook(Guillotine);
@@ -310,11 +310,12 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (deathsDesign)
                     {
-                        if (IsEnabled(CustomComboPreset.ReapearEnshroudonAOEFeature))
+
+                        if (IsEnabled(CustomComboPreset.ReaperEnshroudonAOEFeature) && !enshrouded && !soulReaver && level >= Levels.Enshroud && IsOffCooldown(Enshroud) && CanWeave(actionID) && gauge.Shroud >= 50)
+                            return Enshroud;
+                        if (enshrouded)
                         {
-                            if (!enshrouded && !soulReaver && level >= Levels.Enshroud && IsOffCooldown(Enshroud) && CanWeave(actionID) && gauge.Shroud >= 50)
-                                return Enshroud;
-                            if (enshrouded)
+                            if (IsEnabled(CustomComboPreset.ReaperGuillotineFeature))
                             {
                                 if (IsEnabled(CustomComboPreset.ReaperComboCommunioAOEFeature) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= Levels.Communio)
                                     return Communio;
@@ -366,7 +367,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Guillotine);
                     }
 
-                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
+                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony && !HasEffect(Buffs.Enshrouded))
                         return Gluttony;
                     if (IsEnabled(CustomComboPreset.ReaperBloodStalkComboFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Guillotine)
                         return Guillotine;
@@ -386,14 +387,14 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gallows);
                         if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
                         {
-                            if (positionalChoice is 1 or 3)
+                            if (positionalChoice is 0 or 1 or 3)
                                 return OriginalHook(Gallows);
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
                         }
                     }
 
-                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony)
+                    if (IsOffCooldown(Gluttony) && level >= Levels.Gluttony && !HasEffect(Buffs.Enshrouded))
                         return Gluttony;
                     if (IsEnabled(CustomComboPreset.ReaperBloodStalkComboFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Gibbet)
                     {
@@ -403,7 +404,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gallows);
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice is 1 or 3)
+                            if (positionalChoice is 0 or 1 or 3)
                                 return OriginalHook(Gallows);
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
@@ -489,7 +490,7 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Gallows);
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice is 1 or 3)
+                            if (positionalChoice is 0 or 1 or 3)
                                 return OriginalHook(Gallows);
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);

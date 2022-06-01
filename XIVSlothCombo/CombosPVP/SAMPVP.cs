@@ -92,7 +92,7 @@
                 {
                     if (!InMeleeRange())
                     {
-                        if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(Soten) > 0 && EnemyHealthPercentage() <= SamSotenHP)
+                        if (IsEnabled(CustomComboPreset.SamGapCloserFeature) && GetRemainingCharges(Soten) > 0 && GetTargetHPPercent() <= SamSotenHP)
                             return OriginalHook(Soten);
                         if (IsEnabled(CustomComboPreset.SamAOEMeleeFeature) && !IsOriginal(Yukikaze) && !HasEffect(Buffs.Midare) && IsOnCooldown(MeikyoShisui) && IsOnCooldown(OgiNamikiri) && OriginalHook(OgiNamikiri) != Kaeshi)
                             return SAM.Yukikaze;

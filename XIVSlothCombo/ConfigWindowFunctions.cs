@@ -71,6 +71,29 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
+        /// <summary>
+        /// Draws a slider that lets the user set a given value for their feature.
+        /// </summary>
+        /// <param name="minValue">The absolute minimum value you'll let the user pick.</param>
+        /// <param name="maxValue">The absolute maximum value you'll let the user pick.</param>
+        /// <param name="config">The config ID.</param>
+        /// <param name="sliderDescription">Description of the slider. Appends to the right of the slider.</param>
+        /// <param name="itemWidth">How long the slider should be.</param>
+        public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
+        {
+            var output = Service.Configuration.GetCustomFloatValue(config, minValue);
+            var inputChanged = false;
+            ImGui.PushItemWidth(itemWidth);
+            inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue, "%.1f");
+
+            if (inputChanged)
+            {
+                Service.Configuration.SetCustomFloatValue(config, output);
+                Service.Configuration.Save();
+            }
+
+            ImGui.Spacing();
+        }
 
         /// <summary>
         /// Draws a checkbox intended to be linked to other checkboxes sharing the same config value.
@@ -85,7 +108,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
         {
             ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
-            var output = Service.Configuration.GetCustomIntValue(config);
+            var output = Service.Configuration.GetCustomIntValue(config, outputValue);
             ImGui.PushItemWidth(itemWidth);
             var enabled = output == outputValue;
 

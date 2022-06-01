@@ -692,10 +692,10 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var canWeave = CanWeave(actionID);
-                var gauge = GetJobGauge<DRGGauge>();
                 if (actionID is CoerthanTorment)
                 {
+                    var canWeave = CanWeave(actionID);
+                    var gauge = GetJobGauge<DRGGauge>();
                     // Piercing Talon Uptime Option
                     if (IsEnabled(CustomComboPreset.DRG_AoE_Simple_RangedUptime) && level >= Levels.PiercingTalon && !InMeleeRange())
                         return PiercingTalon;
@@ -782,7 +782,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (gauge.IsLOTDActive is true && level >= Levels.Stardiver && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.5))
                                 return Stardiver;
 
-                            if (level >= Levels.SpineshatterDive && GetRemainingCharges(SpineshatterDive) > 0 && canWeave)
+                            if (level >= Levels.SpineshatterDive && GetRemainingCharges(SpineshatterDive) > 0)
                                 return SpineshatterDive;
 
                         }
