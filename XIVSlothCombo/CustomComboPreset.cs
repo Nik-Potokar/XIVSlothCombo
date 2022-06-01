@@ -255,7 +255,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "Pot of Greed", "Draw some cards, or something. Idk, you're the one that chose to play AST.")]
         AstrologianCardsOnDrawFeaturelikewhat = 1000,
 
-            [ConflictingCombos(AstrologianAutoDrawFeature, AST_DPS_AoEOption)]
+            [ConflictingCombos(AstrologianAutoDrawFeature)]
             [ParentCombo(AstrologianCardsOnDrawFeaturelikewhat)]
             [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
             AstAutoCardTarget = 1029,
@@ -407,6 +407,18 @@ namespace XIVSlothComboPlugin
         [ParentCombo(BlackSimpleParadoxFeature)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Paradox BLM feature.", BLM.JobID, 0, "", "")]
         BlackSimpleParadoxLeyLinesFeature = 2025,
+
+        [ParentCombo(BlackSimpleFeature)]
+        [CustomComboInfo("Swiftcast/Triplecast Moving Option", "Use Swiftcast/Triplecast when moving.", BLM.JobID, 0, "", "")]
+        BlackSimpleCastMovementFeature = 2026,
+
+        [ParentCombo(BlackSimpleCastMovementFeature)]
+        [CustomComboInfo("Xenoglossy Moving Option", "Use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        BlackSimpleXenoglossyMovementFeature = 2027,
+
+        [ParentCombo(BlackSimpleCastMovementFeature)]
+        [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving.", BLM.JobID, 0, "", "")]
+        BlackSimpleScatheMovementFeature = 2028,
 
         #endregion
         // ====================================================================================
@@ -1751,6 +1763,14 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Expiacion and Circle of Scorn Option", "Uses Circle of Scorn and Expiacion when under Fight or Flight or when Fight or Flight is on cooldown", PLD.JobID, 4, "", "")]
         PaladinExpiacionScornOption = 11027,
 
+        [ParentCombo(PaladinRoyalAuthorityCombo)]
+        [CustomComboInfo("FoF Opener Feature", "Adds the FoF opener to the main combo. Requires level 68.", PLD.JobID, 0, "", "")]
+        PaladinFoFOpenerFeature = 11028,
+
+        [ParentCombo(PaladinFoFOpenerFeature)]
+        [CustomComboInfo("Intervene Option", "Adds Intervene to the FoF opener.", PLD.JobID, 0, "", "")]
+        PaladinFoFOpenerInterveneOption = 11029,
+
         #endregion
         // ====================================================================================
         #region REAPER
@@ -1936,126 +1956,133 @@ namespace XIVSlothComboPlugin
 
         //SECTION_1_OPENERS
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2)]
-        [CustomComboInfo("Balance Opener [Lv.90]", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
+        [CustomComboInfo("Balance Opener Feature [Lv.90]", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
         RDM_Balance_Opener = 13110,
 
         [ParentCombo(RDM_Balance_Opener)]
-        [CustomComboInfo("Use Opener at any Mana", "Removes 0/0 Mana reqirement to reset opener\n**All other actions must be off cooldown**", RDM.JobID, 111)]
+        [CustomComboInfo("Use Opener at any Mana Option", "Removes 0/0 Mana reqirement to reset opener\n**All other actions must be off cooldown**", RDM.JobID, 111)]
         RDM_Opener_Any_Mana = 13111,
 
         //SECTION_2to3_ROTATION
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2)]
-        [CustomComboInfo("Verthunder/Veraero", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210)]
+        [CustomComboInfo("Verthunder/Veraero Feature", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210)]
         RDM_VerthunderVeraero = 13210,
 
         [ParentCombo(RDM_VerthunderVeraero)]
-        [CustomComboInfo("Single Target Acceleration", "Add Acceleration when no Verfire/Verstone proc is available", RDM.JobID, 211)]
+        [CustomComboInfo("Single Target Acceleration Option", "Add Acceleration when no Verfire/Verstone proc is available", RDM.JobID, 211)]
         RDM_ST_Acceleration = 13211,
 
         [ParentCombo(RDM_ST_Acceleration)]
-        [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used", RDM.JobID, 212)]
+        [CustomComboInfo("Include Swiftcast Option", "Add Swiftcast when all Acceleration charges are used", RDM.JobID, 212)]
         RDM_ST_AccelSwiftCast = 13212,
 
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2)]
-        [CustomComboInfo("Verfire/Verstone", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
+        [CustomComboInfo("Verfire/Verstone Feature", "Replace Jolt with Verfire and Verstone", RDM.JobID,220)]
         RDM_VerfireVerstone = 13220,
 
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Fleche, RDM.Riposte, RDM.Moulinet)]
-        [CustomComboInfo("Weave OGCD Damage", "Use oGCD actions on specified action(s)", RDM.JobID, 240)]
+        [CustomComboInfo("Weave oGCD Damage Feature", "Use oGCD actions on specified action(s)", RDM.JobID, 240)]
         RDM_OGCD = 13240,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Fleche", "Use Fleche on above specified action(s)", RDM.JobID, 241)]
+        [CustomComboInfo("Fleche Option", "Use Fleche on above specified action(s)", RDM.JobID, 241)]
         RDM_Fleche = 13241,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Contra Sixte", "Use Contre Sixte on above specified action(s)", RDM.JobID, 242)]
+        [CustomComboInfo("Contra Sixte Option", "Use Contre Sixte on above specified action(s)", RDM.JobID, 242)]
         RDM_ContraSixte = 13242,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Engagement", "Use Engagement on above specified action(s) when in melee range", RDM.JobID, 243)]
+        [CustomComboInfo("Engagement Option", "Use Engagement on above specified action(s) when in melee range", RDM.JobID, 243)]
         RDM_Engagement = 13243,
 
         [ParentCombo(RDM_Engagement)]
-        [CustomComboInfo("Hold one charge", "Pool one charge of Engagement/Displacement for manual use", RDM.JobID, 246)]
+        [CustomComboInfo("Hold one charge Option", "Pool one charge of Engagement/Displacement for manual use", RDM.JobID, 246)]
         RDM_PoolEngage = 13246,
 
         [ParentCombo(RDM_OGCD)]
-        [CustomComboInfo("Corps-a-corps", "Use Corps-a-corps on above specified action(s)", RDM.JobID, 244)]
+        [CustomComboInfo("Corps-a-corps Option", "Use Corps-a-corps on above specified action(s)", RDM.JobID, 244)]
         RDM_Corpsacorps = 13244,
 
         [ParentCombo(RDM_Corpsacorps)]
-        [CustomComboInfo("Only in Melee Range", "Use Corps-a-corps only when in melee range", RDM.JobID, 245)]
+        [CustomComboInfo("Only in Melee Range Option", "Use Corps-a-corps only when in melee range", RDM.JobID, 245)]
         RDM_Corpsacorps_MeleeRange = 13245,
 
         [ParentCombo(RDM_Corpsacorps)]
-        [CustomComboInfo("Hold one charge", "Pool one charge of Corp-a-corps for manual use", RDM.JobID, 247)]
+        [CustomComboInfo("Hold one charge Option", "Pool one charge of Corp-a-corps for manual use", RDM.JobID, 247)]
         RDM_PoolCorps = 13247,
 
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
-        [CustomComboInfo("Verthunder II/Veraero II", "Replace Scatter/Impact with Verthunder II or Veraero II", RDM.JobID, 310)]
+        [CustomComboInfo("Verthunder II/Veraero II Feature", "Replace Scatter/Impact with Verthunder II or Veraero II", RDM.JobID, 310)]
         RDM_VerthunderIIVeraeroII = 13310,
 
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
-        [CustomComboInfo("AoE Acceleration", "Use Acceleration on Scatter/Impact for increased damage", RDM.JobID, 320)]
+        [CustomComboInfo("AoE Acceleration Feature", "Use Acceleration on Scatter/Impact for increased damage", RDM.JobID, 320)]
         RDM_AoE_Acceleration = 13320,
 
         [ParentCombo(RDM_AoE_Acceleration)]
-        [CustomComboInfo("Include Swiftcast", "Add Swiftcast when all Acceleration charges are used or when below level 50", RDM.JobID, 321)]
+        [CustomComboInfo("Include Swiftcast Option", "Add Swiftcast when all Acceleration charges are used or when below level 50", RDM.JobID, 321)]
         RDM_AoE_AccelSwiftCast = 13321,
 
         [ParentCombo(RDM_AoE_Acceleration)]
-        [CustomComboInfo("Weave Acceleration", "Only use acceleration during weave windows", RDM.JobID, 322)]
+        [CustomComboInfo("Weave Acceleration Option", "Only use acceleration during weave windows", RDM.JobID, 322)]
         RDM_AoE_WeaveAcceleration = 13322,
 
         //SECTION_4to5_MELEE
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Riposte)]
-        [CustomComboInfo("Single Target Melee Combo", "Stack Reposte Combo on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
+        [CustomComboInfo("Single Target Melee Combo Feature", "Stack Reposte Combo on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410)]
         RDM_ST_MeleeCombo = 13410,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
-        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
+        [CustomComboInfo("Use Manafication and Embolden Option", "Add Manafication and Embolden on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 411)]
         RDM_ST_ManaficationEmbolden = 13411,
 
         [ParentCombo(RDM_ST_ManaficationEmbolden)]
-        [CustomComboInfo("Hold for Double Melee Combo [Lv.90]", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
+        [CustomComboInfo("Hold for Double Melee Combo Option [Lv.90]", "Hold both actions until you can perform a double melee combo", RDM.JobID, 412)]
         RDM_ST_DoubleMeleeCombo = 13412,
 
         [ReplaceSkill(RDM.Scatter, RDM.Impact)]
-        [CustomComboInfo("AoE Melee Combo", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
+        [CustomComboInfo("AoE Melee Combo Feature", "Use Moulinet on Scatter/Impact when over 60/60 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
 
         [ParentCombo(RDM_AoE_MeleeCombo)]
-        [CustomComboInfo("Use Manafication and Embolden", "Add Manafication and Embolden to Scatter/Impact\n**Must be in range of Moulinet**", RDM.JobID, 411)]
+        [CustomComboInfo("Use Manafication and Embolden Option", "Add Manafication and Embolden to Scatter/Impact\n**Must be in range of Moulinet**", RDM.JobID, 411)]
         RDM_AoE_ManaficationEmbolden = 13421,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
-        [CustomComboInfo("Gap close with Corps-a-corps", "Use Corp-a-corps when out of melee range and you have enough mana to start the melee combo", RDM.JobID, 430)]
+        [CustomComboInfo("Gap close with Corps-a-corps Option", "Use Corp-a-corps when out of melee range and you have enough mana to start the melee combo", RDM.JobID, 430)]
         RDM_ST_CorpsGapClose = 13430,
 
+        [ParentCombo(RDM_ST_MeleeCombo)]
+        [CustomComboInfo("Unbalance Mana Option", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 410)]
+        RDM_ST_Unbalance = 13440,
+
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3)]
-        [CustomComboInfo("Melee Finisher", "Add Verflare/Verholy and other finishing moves to specified action(s)", RDM.JobID, 510)]
+        [CustomComboInfo("Melee Finisher Feature", "Add Verflare/Verholy and other finishing moves to specified action(s)", RDM.JobID, 510)]
         RDM_MeleeFinisher = 13510,
 
         //SECTION_6to7_QOL
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3, RDM.Scatter, RDM.Impact)]
-        [CustomComboInfo("Lucid Dreaming", "Use Lucid Dreaming on Jolt 1/2, Veraero 1/2/3, Verthunder 1/2/3, and Scatter/Impact when below threshold.", RDM.JobID, 610, "Lucid Dreaming the day away", "OOM? Git gud.")]
+        [CustomComboInfo("Lucid Dreaming Feature", "Use Lucid Dreaming on Jolt 1/2, Veraero 1/2/3, Verthunder 1/2/3, and Scatter/Impact when below threshold.", RDM.JobID, 610, "Lucid Dreaming the day away", "OOM? Git gud.")]
         RDM_LucidDreaming = 13610,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Caster_Raise)]
-        [CustomComboInfo("Verraise", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
+        [CustomComboInfo("Verraise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "Swifty Verraise", "You're panicing right now, aren't you?")]
         RDM_Verraise = 13620,
 
         //SECTION_8to9_OTHERS                   
         [ReplaceSkill(RDM.Displacement)]
-        [CustomComboInfo("Displacement <> Corps-a-corps", "Replace Displacement with Corps-a-corps when out of range.", RDM.JobID, 810, "I take two steps forward, you take two steps back.", "We come together because opposites attract.")]
+        [CustomComboInfo("Displacement <> Corps-a-corps Feature", "Replace Displacement with Corps-a-corps when out of range.", RDM.JobID, 810, "I take two steps forward, you take two steps back.", "We come together because opposites attract.")]
         RDM_CorpsDisplacement = 13810,
 
         [ReplaceSkill(RDM.Embolden)]
-        //[ConflictingCombos(RDM_ST_ManaficationEmbolden)]
-        [CustomComboInfo("Embolden to Manafication", "Changes Embolden to Manafication when on cooldown.", RDM.JobID, 820, "You're approaching me?", "do do do do do do do do do")]
+        [CustomComboInfo("Embolden to Manafication Feature", "Changes Embolden to Manafication when on cooldown.", RDM.JobID, 820, "You're approaching me?", "do do do do do do do do do")]
         RDM_EmboldenManafication = 13820,
+
+        [ReplaceSkill(RDM.MagickBarrier)]
+        [CustomComboInfo("Magick Barrier to Addle Feature", "Changes Magick Barrier to Addle when on cooldown.", RDM.JobID, 820, "Shields up, Red Alert", "Bewooo bewooo bewoo...")]
+        RDM_MagickBarrierAddle = 13821,
 
         #endregion
         // ====================================================================================
@@ -2066,10 +2093,10 @@ namespace XIVSlothComboPlugin
         //Example: 14110 (Feature Number 1, Option 1, no suboption)
         //New features should be added to the appropriate sections.
 
-            #region SAGE DPS
+        #region SAGE DPS
 
-                #region Single Target DPS Feature
-                [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
+        #region Single Target DPS Feature
+        [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
                 [CustomComboInfo("Single Target DPS Feature", "Replaces Dosis with options below", SGE.JobID, 100)]
                 SGE_ST_DosisFeature = 14100,
                 
@@ -2080,14 +2107,6 @@ namespace XIVSlothComboPlugin
                     [ParentCombo(SGE_ST_DosisFeature)]
                     [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime", SGE.JobID, 120)]
                     SGE_ST_Dosis_EDosis = 14120,
-
-                        [ParentCombo(SGE_ST_Dosis_EDosis)]
-                        [CustomComboInfo("Enemy HP Limiter Options", "Stop using Eukrasian Dosis when Enemy HP values match\nEnable to see input boxes", SGE.JobID, 121)]
-                        SGE_ST_Dosis_EDosisHPPer = 14121,
-
-                        [ParentCombo(SGE_ST_Dosis_EDosis)]
-                        [CustomComboInfo("Target of Target Checking", "Performs additional checking for Target of Target\nThis will not help you apply DoT onto your Target of Target", SGE.JobID, 122)]
-                        SGE_ST_Dosis_EDosisToT = 14122,
 
                     [ParentCombo(SGE_ST_DosisFeature)]
                     [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving", SGE.JobID, 130)]
@@ -2444,39 +2463,30 @@ namespace XIVSlothComboPlugin
 
             #region SCHOLAR_DPS
 
-            [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4)]
-            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils with options below", SCH.JobID, 100)]
-            SCH_ST_BroilFeature = 16100,
+            [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio1, SCH.Bio2, SCH.Biolysis)]
+            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100)]
+            SCH_DPS_Feature = 16100,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
+                    [ParentCombo(SCH_DPS_Feature)]
                     [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
-                    SCH_ST_Broil_Lucid = 16110,
+                    SCH_DPS_LucidOption = 16110,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
-                    [ConflictingCombos(SCH_ST_Broil_BioToT)]
+                    [ParentCombo(SCH_DPS_Feature)]
                     [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 120)]
-                    SCH_ST_Broil_ChainStratagem = 16120,
+                    SCH_DPS_ChainStratagemOption = 16120,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
-                    [CustomComboInfo("Aetherflow Weave Feature", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 130)]
-                    SCH_ST_Broil_Aetherflow = 16130,
+                    [ParentCombo(SCH_DPS_Feature)]
+                    [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 130)]
+                    SCH_DPS_AetherflowOption = 16130,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
-                    [CustomComboInfo("Ruin II Moving Feature", "Use Ruin 2 when you have to move", SCH.JobID, 140)]
-                    SCH_ST_Broil_Ruin2Movement = 16140,
+                    [ParentCombo(SCH_DPS_Feature)]
+                    [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140)]
+                    SCH_DPS_Ruin2MovementOption = 16140,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
+                    [ParentCombo(SCH_DPS_Feature)]
                     [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150)]
-                    SCH_ST_Broil_Bio = 16150,
-
-                        [ParentCombo(SCH_ST_Broil_Bio)]
-                        [CustomComboInfo("Enemy HP Limiter Options", "Stop using Bio when Enemy HP values match below:", SCH.JobID, 151)]
-                        SCH_ST_Broil_BioHPPer = 16151,
-
-                        [ParentCombo(SCH_ST_Broil_Bio)]
-                        [ConflictingCombos(SCH_ST_Broil_ChainStratagem)]
-                        [CustomComboInfo("Target of Target Checking", "Performs additional checking for Target of Target\nThis will not help you apply DoT onto your Target of Target", SCH.JobID, 152)]
-                        SCH_ST_Broil_BioToT = 16152,
+                    SCH_DPS_BioOption = 16150,
+                        
             #endregion
 
             #region SCHOLAR HEALING

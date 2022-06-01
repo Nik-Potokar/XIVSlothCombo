@@ -38,6 +38,7 @@ namespace XIVSlothComboPlugin.Combos
             EnchantedMoulinet = 7530,
             Corpsacorps = 7506,
             Displacement = 7515,
+            MagickBarrier = 25857,
 
             //Buffs
             Acceleration = 7518,
@@ -91,6 +92,7 @@ namespace XIVSlothComboPlugin.Combos
                 Scorch = 80,
                 Veraero3 = 82,
                 Verthunder3 = 82,
+                MagickBarrier = 86,
                 Resolution = 90;
         }
 
@@ -318,11 +320,19 @@ namespace XIVSlothComboPlugin.Combos
                             && lastComboMove is not Verholy
                             && lastComboMove is not Scorch
                             && System.Math.Max(black, white) <= 50
-                            && System.Math.Max(black, white) >= 42
+                            && (System.Math.Max(black, white) >= 42
+                                || (IsEnabled(CustomComboPreset.RDM_ST_Unbalance) && black == white && black >= 38 && GetCooldown(Acceleration).RemainingCharges > 0))
                             && System.Math.Min(black, white) >= 31
                             && IsOffCooldown(Manafication)
                             && (IsOffCooldown(Embolden) || GetCooldown(Embolden).CooldownRemaining <= 3))
                         {
+                            if (IsEnabled(CustomComboPreset.RDM_ST_Unbalance)
+                                && black == white
+                                && black <= 44
+                                && black >= 38
+                                && GetCooldown(Acceleration).RemainingCharges > 0)
+                                return Acceleration;
+
                             return Manafication;
                         }
                         if (IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
@@ -368,6 +378,12 @@ namespace XIVSlothComboPlugin.Combos
                             && (IsOffCooldown(Manafication) || level < Levels.Manafication)
                             && IsOffCooldown(Embolden))
                         {
+                            if (IsEnabled(CustomComboPreset.RDM_ST_Unbalance)
+                                && black == white
+                                && black <= 44
+                                && GetCooldown(Acceleration).RemainingCharges > 0)
+                                return Acceleration;
+
                             return Embolden;
                         }
                         if ((IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) || level < 90) 
@@ -486,14 +502,14 @@ namespace XIVSlothComboPlugin.Combos
                     if (actionID is Jolt or Jolt2 or Scatter or Impact or Fleche or Riposte or Moulinet)
                     {
                         if (IsEnabled(CustomComboPreset.RDM_Engagement) 
-                            && GetCooldown(Engagement).RemainingCharges >= engagementPool 
-                            && (GetCooldown(Engagement).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolEngage))
+                            && (GetCooldown(Engagement).RemainingCharges > engagementPool
+                                || (GetCooldown(Engagement).RemainingCharges == 1 && GetCooldown(Engagement).CooldownRemaining < 3))
                             && level >= Levels.Engagement 
                             && distance <= 3) 
                             placeOGCD = Engagement;
                         if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) 
-                            && GetCooldown(Corpsacorps).RemainingCharges >= corpsacorpsPool
-                            && (GetCooldown(Corpsacorps).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolCorps))
+                            && (GetCooldown(Corpsacorps).RemainingCharges > corpsacorpsPool
+                                || (GetCooldown(Corpsacorps).RemainingCharges == 1 && GetCooldown(Corpsacorps).CooldownRemaining < 3))
                             && ((GetCooldown(Corpsacorps).RemainingCharges >= GetCooldown(Engagement).RemainingCharges) || level < Levels.Engagement) // Try to alternate between Corps-a-corps and Engagement
                             && level >= Levels.Corpsacorps 
                             && distance <= corpacorpsRange) 
@@ -593,19 +609,21 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (black >= white && level >= Levels.Verholy)
                             {
-                                if (HasEffect(Buffs.VerstoneReady) 
-                                    && (!HasEffect(Buffs.VerfireReady) || HasEffect(Buffs.Embolden)) 
-                                    && (black - white <= 9))
+                                if ((!HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.Embolden) < 10)
+                                    && !HasEffect(Buffs.VerfireReady)
+                                    && (HasEffect(Buffs.VerstoneReady) && GetBuffRemainingTime(Buffs.VerstoneReady) >= 10)
+                                    && (black - white <= 18))
                                     return Verflare;
 
                                 return Verholy;
                             }
                             else if (level >= Levels.Verflare)
                             {
-                                if (!HasEffect(Buffs.VerstoneReady) 
-                                    && (HasEffect(Buffs.VerfireReady) || HasEffect(Buffs.Embolden)) 
+                                if ((!HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.Embolden) < 10)
+                                    && (HasEffect(Buffs.VerfireReady) && GetBuffRemainingTime(Buffs.VerfireReady) >= 10)
+                                    && !HasEffect(Buffs.VerstoneReady)
                                     && level >= Levels.Verholy 
-                                    && (white - black <= 9))
+                                    && (white - black <= 18))
                                     return Verholy;
 
                                 return Verflare;
@@ -644,12 +662,30 @@ namespace XIVSlothComboPlugin.Combos
                         if (((System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 && level >= Levels.Redoublement)
                             || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < Levels.Redoublement)
                             || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 20 && level < Levels.Zwerchhau))
-                            && (!HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
+                            && !HasEffect(Buffs.Dualcast))
                         {
                             if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) 
                                 && level >= Levels.Corpsacorps && GetCooldown(Corpsacorps).RemainingCharges >= 1 
                                 && distance > 3) 
                                 return Corpsacorps;
+
+                            if (IsEnabled(CustomComboPreset.RDM_ST_Unbalance)
+                                && level >= Levels.Acceleration
+                                && black == white
+                                && black >= 50)
+                            {
+                                if (HasEffect(Buffs.Acceleration) || WasLastAction(Buffs.Acceleration))
+                                {
+                                    if (useAero && level >= Levels.Veraero3) return Veraero3;
+                                    if (useThunder && level >= Levels.Verthunder3) return Verthunder3;
+                                    if (useAero && level < Levels.Veraero3) return Veraero;
+                                    if (useThunder && level < Levels.Verthunder3) return Verthunder;
+                                }
+
+                                if (GetCooldown(Acceleration).RemainingCharges > 0)
+                                    return Acceleration;
+                            }
+
                             if (distance <= 3) 
                                 return OriginalHook(Riposte);
                         }
@@ -846,6 +882,22 @@ namespace XIVSlothComboPlugin.Combos
                     && IsOnCooldown(Embolden) 
                     && IsOffCooldown(Manafication))
                     return Manafication;
+
+                return actionID;
+            }
+        }
+
+        internal class RDM_MagickBarrierAddle : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_MagickBarrierAddle;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is MagickBarrier
+                    && level >= All.Levels.Addle
+                    && (IsOnCooldown(MagickBarrier) || level < Levels.MagickBarrier)
+                    && IsOffCooldown(All.Addle)
+                    && !TargetHasEffectAny(All.Debuffs.Addle))
+                    return All.Addle;
 
                 return actionID;
             }

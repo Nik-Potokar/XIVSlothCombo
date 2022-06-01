@@ -126,157 +126,6 @@ namespace XIVSlothComboPlugin.Combos
                 AST_DPS_CombustOption = "AST_DPS_CombustOption";
         }
 
-        public static class MeleeCardTargets
-        {
-            public const string
-                Monk = "monk",
-                Dragoon = "dragoon",
-                Ninja = "ninja",
-                Reaper = "reaper",
-                Samurai = "samurai",
-                Pugilist = "pugilist",
-                Lancer = "lancer",
-                Rogue = "rogue";
-        }
-
-        public static class RangedCardTargets
-        {
-            public const string
-                Bard = "bard",
-                Machinist = "machinist",
-                Dancer = "dancer",
-                RedMage = "red mage",
-                BlackMage = "black mage",
-                Summoner = "summoner",
-                BlueMage = "blue mage",
-                Archer = "archer",
-                Thaumaturge = "thaumaturge",
-                Arcanist = "arcanist";
-
-        }
-
-        public static class TankCardTargets
-        {
-            public const string
-                Paladin = "paladin",
-                Warrior = "warrior",
-                DarkKnight = "dark knight",
-                Gunbreaker = "gunbreaker",
-                Gladiator = "gladiator",
-                Marauder = "marauder";
-        }
-
-        public static class HealerCardTargets
-        {
-            public const string
-                WhiteMage = "white mage",
-                Astrologian = "astrologian",
-                Scholar = "scholar",
-                Sage = "sage",
-                Conjurer = "conjurer";
-        }
-
-        public static class MeleeCardTargetsCN
-        {
-            public const string
-                Monk = "武僧",
-                Dragoon = "龙骑士",
-                Ninja = "忍者",
-                Reaper = "钐镰客",
-                Samurai = "武士",
-                Pugilist = "格斗家",
-                Lancer = "枪术师",
-                Rogue = "双剑师";
-        }
-
-        public static class RangedCardTargetsCN
-        {
-            public const string
-                Bard = "吟游诗人",
-                Machinist = "机工士",
-                Dancer = "舞者",
-                RedMage = "赤魔法师",
-                BlackMage = "黑魔法师",
-                Summoner = "召唤师",
-                BlueMage = "青魔法师",
-                Archer = "弓箭手",
-                Thaumaturge = "咒术师",
-                Arcanist = "秘术师";
-
-        }
-
-        public static class TankCardTargetsCN
-        {
-            public const string
-                Paladin = "骑士",
-                Warrior = "战士",
-                DarkKnight = "暗黑骑士",
-                Gunbreaker = "绝枪战士",
-                Gladiator = "剑术师",
-                Marauder = "斧术师";
-        }
-
-        public static class HealerCardTargetsCN
-        {
-            public const string
-                WhiteMage = "白魔法师",
-                Astrologian = "占星术士",
-                Scholar = "学者",
-                Sage = "贤者",
-                Conjurer = "幻术师";
-        }
-
-        public static class MeleeCardTargetsJP
-        {
-            public const string
-                Monk = "モンク",
-                Dragoon = "竜騎士",
-                Ninja = "忍者",
-                Reaper = "リーパー",
-                Samurai = "侍",
-                Pugilist = "格闘士",
-                Lancer = "槍術士",
-                Rogue = "双剣士";
-        }
-
-        public static class RangedCardTargetsJP
-        {
-            public const string
-                Bard = "吟遊詩人",
-                Machinist = "機工士",
-                Dancer = "踊り子",
-                RedMage = "赤魔道士",
-                BlackMage = "黒魔道士",
-                Summoner = "召喚士",
-                BlueMage = "青魔道士",
-                Archer = "弓術士",
-                Thaumaturge = "呪術士",
-                Arcanist = "巴術士";
-
-        }
-
-        public static class TankCardTargetsJP
-        {
-            public const string
-                Paladin = "ナイト",
-                Warrior = "戦士",
-                DarkKnight = "暗黒騎士",
-                Gunbreaker = "ガンブレイカー",
-                Gladiator = "剣術士",
-                Marauder = "斧術士";
-        }
-
-        public static class HealerCardTargetsJP
-        {
-            public const string
-                WhiteMage = "白魔道士",
-                Astrologian = "占星術師",
-                Scholar = "学者",
-                Sage = "賢者",
-                Conjurer = "幻術士";
-        }
-
-
         internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
         {
             private new bool GetTarget = true;
@@ -365,24 +214,18 @@ namespace XIVSlothComboPlugin.Combos
                     if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
                     if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
 
-                    if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
+                    if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR && JobNames.Melee.Contains(job))
                     {
-                        if (typeof(MeleeCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(MeleeCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(MeleeCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
-                        {
-                            TargetObject(member);
-                            GetTarget = false;
-                            return true;
-                        }
-
+                        TargetObject(member);
+                        GetTarget = false;
+                        return true;
                     }
-                    if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
+
+                    if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE && JobNames.Ranged.Contains(job))
                     {
-                        if (typeof(RangedCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(RangedCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(RangedCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
-                        {
-                            TargetObject(member);
-                            GetTarget = false;
-                            return true;
-                        }
+                        TargetObject(member);
+                        GetTarget = false;
+                        return true;
                     }
                 }
 
@@ -403,28 +246,20 @@ namespace XIVSlothComboPlugin.Combos
                         if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
                         if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
 
-                        if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR)
-                        {
-                            if (typeof(TankCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(TankCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(TankCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
-                            {
-                                TargetObject(member);
-                                GetTarget = false;
-                                return true;
-                            }
-
+                        if (cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR && JobNames.Tank.Contains(job))
+                        { 
+                            TargetObject(member);
+                            GetTarget = false;
+                            return true;
                         }
-                        if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE)
-                        {
-                            if (typeof(HealerCardTargets).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(HealerCardTargetsCN).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job) || typeof(HealerCardTargetsJP).GetFields().Select(x => x.GetRawConstantValue().ToString()).Contains(job))
-                            {
-                                TargetObject(member);
-                                GetTarget = false;
-                                return true;
-                            }
 
+                        if (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE && JobNames.Healer.Contains(job))
+                        { 
+                            TargetObject(member);
+                            GetTarget = false;
+                            return true;
                         }
                     }
-
                 }
 
                 return false;

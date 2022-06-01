@@ -775,13 +775,13 @@ namespace XIVSlothComboPlugin
             #region BLACK MAGE
 
             if (preset == CustomComboPreset.BlackAoEFoulOption)
-            {
                 ConfigWindowFunctions.DrawSliderInt(0, 2, BLM.Config.BlmPolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
-            }
+
             if (preset == CustomComboPreset.BlackSimpleFeature || preset == CustomComboPreset.BlackSimpleTransposeFeature)
-            {
-                ConfigWindowFunctions.DrawSliderFloat(3.0f, 8.0f, BLM.Config.BlmAstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
-            }
+                ConfigWindowFunctions.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BlmAstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
+
+            if (preset == CustomComboPreset.BlackSimpleCastMovementFeature)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BlmMovementTime, "Seconds of movement before using the movement feature.");
 
             #endregion
             // ====================================================================================
@@ -885,11 +885,13 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region MONK
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
 
             if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawSliderInt(5, 10, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
+                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
+
+            if (preset == CustomComboPreset.MnkBootshineCombo)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
+
             #endregion
             // ====================================================================================
             #region NINJA
@@ -1040,16 +1042,16 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SAGE
 
-            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosisHPPer)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "Enemy HP % Threshold");
+            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
             {
-                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 1);
-                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 2);
+                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 0);
+                ConfigWindowFunctions.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 1);
             }
 
             if (preset is CustomComboPreset.SGE_AoE_Phlegma_Lucid)
@@ -1100,31 +1102,36 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SCHOLAR
-            if (preset is CustomComboPreset.SCH_ST_Broil_Lucid)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Broil_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-            if (preset is CustomComboPreset.SCH_ST_Broil_BioHPPer)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_BioHPPer, "Enemy HP % Threshold");
-            if (preset is CustomComboPreset.SCH_ST_Broil_ChainStratagem)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Broil_ChainStratagem, "Enemy HP% Threshold");
+            if (preset is CustomComboPreset.SCH_DPS_Feature)
+            {
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_ST_DPS_AltMode, "On Ruin I / Broils", "", 0);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_ST_DPS_AltMode, "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown", 1);
+            }
+            if (preset is CustomComboPreset.SCH_DPS_LucidOption)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_DPS_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.SCH_DPS_BioOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_BioOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+            if (preset is CustomComboPreset.SCH_DPS_ChainStratagemOption)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_ChainStratagemOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
             if (preset is CustomComboPreset.SCH_FairyFeature)
             {
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 1);
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 2);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 0);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 1);
             }
             if (preset is CustomComboPreset.SCH_AetherflowFeature)
             {
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only","", 1);
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 2);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only","", 0);
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 1);
             }
             if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Excog)
             {
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Only when out of Aetherflow Stacks", "", 0);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Always when available", "", 1);
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Only when out of Aetherflow Stacks", "", 2);
             }
             if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Indom)
             {
+                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Only when out of Aetherflow Stacks", "", 0);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Always when available", "", 1);
-                ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Only when out of Aetherflow Stacks", "", 2);
             }
             #endregion
             // ====================================================================================
