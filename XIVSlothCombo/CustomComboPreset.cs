@@ -2530,16 +2530,16 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
         SummonerAOEComboFeature = 17001,
 
-        [ParentCombo(SummonerDemiSummonsFeature)]
-        [CustomComboInfo("Demi Attacks on Main Combo", "Adds Astral Flow to the Main Combo.", SMN.JobID, 0, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
+        [ParentCombo(SummonerMainComboFeature)]
+        [CustomComboInfo("Demi Attacks on Main Combo", "Adds Deathflare/Ahk Morn/Revelation to the Main Combo.", SMN.JobID, 4, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
         SummonerSingleTargetDemiFeature = 17002,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
+        [CustomComboInfo("Demi Attacks on AoE Combo", "Adds Deathflare/Ahk Morn/Revelation to the AoE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
         SummonerAOEDemiFeature = 17003,
 
-        [ParentCombo(EgisOnRuinFeature)]
-        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
+        [ParentCombo(SummonerMainComboFeature)]
+        [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to the Main Combo.", SMN.JobID, 2, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
         SummonerEgiAttacksFeature = 17004,
 
         [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Slipstream", "2 Fast 2 Furious")]
@@ -2564,11 +2564,11 @@ namespace XIVSlothComboPlugin
         SummonerCarbuncleSummonFeature = 17010,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Ruin 4 on Main Combo", "Adds Ruin4 on Main Combo when there are currently no summons active.", SMN.JobID, 1, "Ruin -> Ruin -> Ruin", "Ruin this, ruin that. Can't you see I'm busy ruining the plugin?!")]
+        [CustomComboInfo("Ruin 4 on Main Combo", "Adds Ruin 4 to the Main Combo when there are currently no summons active.", SMN.JobID, 0, "Ruin -> Ruin -> Ruin", "Ruin this, ruin that. Can't you see I'm busy ruining the plugin?!")]
         SummonerRuin4ToRuin3Feature = 17011,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on AOE Combo when there are currently no summons active.", SMN.JobID, 0, "", "More Ruin this, more ruin that! Now in sharing size!")]
+        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin 4 to the AOE Combo when there are currently no summons active.", SMN.JobID, 0, "", "More Ruin this, more ruin that! Now in sharing size!")]
         SummonerRuin4ToTridisasterFeature = 17012,
 
         [ParentCombo(SummonerEDFesterCombo)]
@@ -2576,19 +2576,15 @@ namespace XIVSlothComboPlugin
         SummonerFesterPainflareRuinFeature = 17013,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID, 1)]
+        [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to the Main Combo. Will use on cooldown.", SMN.JobID, 1)]
         SummonerEDMainComboFeature = 17014,
 
-        [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
-        EgisOnRuinFeature = 17015,
-        
         [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
         SummonerEgiOrderFeature = 17016,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Energy Siphon/Painflare on AOE Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
+        [CustomComboInfo("Energy Siphon/Painflare on AoE Combo", "Adds Energy Siphon/Painflare to the AoE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
         SummonerESAOEFeature = 17017,
 
         [ParentCombo(SummonerDemiEgiOrder)]
@@ -2600,17 +2596,13 @@ namespace XIVSlothComboPlugin
         SummonerSearingLightBurstOption = 170181,
 
         [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
+        [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 3, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
         SummonerDemiSummonsFeature = 17020,
 
         [ParentCombo(SummonerAOEComboFeature)]
         [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
         SummonerDemiAoESummonsFeature = 17021,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
-        EgisOnAOEFeature = 17022,
-        
         [ParentCombo(SummonerDemiEgiOrder)]
         [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
         SummonerSwiftcastEgiFeature = 17023,
@@ -2623,19 +2615,19 @@ namespace XIVSlothComboPlugin
         SummonerOGCDPoolFeature = 17025,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
+        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to the AoE Combo.", SMN.JobID, 2)]
         SummonerEgiAttacksAOEFeature = 17026,
 
         [ConflictingCombos(ALL_Caster_Raise)]
         [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 8, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
         SummonerRaiseFeature = 17027,
 
-        [ParentCombo(SummonerDemiSummonsFeature)]
-        [CustomComboInfo("Rekindle on Main Combo option", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        [ParentCombo(SummonerMainComboFeature)]
+        [CustomComboInfo("Rekindle on Main Combo option", "Adds Rekindle to the Main Combo.", SMN.JobID, 5, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerSingleTargetRekindleOption = 17028,
 
         [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 6, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 5, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SummonerAOETargetRekindleOption = 17029,
 
         [ReplaceSkill(SMN.Ruin4)]
