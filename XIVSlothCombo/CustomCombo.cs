@@ -1,4 +1,4 @@
-using Dalamud.Game.ClientState.Conditions;
+﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -751,10 +751,9 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
-        public int GetOptionValue(string SliderID)
-        {
-            return Service.Configuration.GetCustomIntValue(SliderID);
-        }
+        public static int GetOptionValue(string SliderID) => Service.Configuration.GetCustomIntValue(SliderID);
+
+        public static bool GetOptionBool(string SliderID) => Convert.ToBoolean(GetOptionValue(SliderID));
 
         protected unsafe static FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* GetTarget(TargetType target)
         {
@@ -1017,5 +1016,5 @@ namespace XIVSlothComboPlugin.Combos
         //    return true;
 
         //}
+        }
     }
-}

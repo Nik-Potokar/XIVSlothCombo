@@ -2081,14 +2081,6 @@ namespace XIVSlothComboPlugin
                     [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime", SGE.JobID, 120)]
                     SGE_ST_Dosis_EDosis = 14120,
 
-                        [ParentCombo(SGE_ST_Dosis_EDosis)]
-                        [CustomComboInfo("Enemy HP Limiter Options", "Stop using Eukrasian Dosis when Enemy HP values match\nEnable to see input boxes", SGE.JobID, 121)]
-                        SGE_ST_Dosis_EDosisHPPer = 14121,
-
-                        [ParentCombo(SGE_ST_Dosis_EDosis)]
-                        [CustomComboInfo("Target of Target Checking", "Performs additional checking for Target of Target\nThis will not help you apply DoT onto your Target of Target", SGE.JobID, 122)]
-                        SGE_ST_Dosis_EDosisToT = 14122,
-
                     [ParentCombo(SGE_ST_DosisFeature)]
                     [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving", SGE.JobID, 130)]
                     SGE_ST_Dosis_Toxikon = 14130,
@@ -2444,39 +2436,30 @@ namespace XIVSlothComboPlugin
 
             #region SCHOLAR_DPS
 
-            [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4)]
-            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils with options below", SCH.JobID, 100)]
-            SCH_ST_BroilFeature = 16100,
+            [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio1, SCH.Bio2, SCH.Biolysis)]
+            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100)]
+            SCH_DPS_Feature = 16100,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
+                    [ParentCombo(SCH_DPS_Feature)]
                     [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
-                    SCH_ST_Broil_Lucid = 16110,
+                    SCH_DPS_LucidOption = 16110,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
-                    [ConflictingCombos(SCH_ST_Broil_BioToT)]
+                    [ParentCombo(SCH_DPS_Feature)]
                     [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 120)]
-                    SCH_ST_Broil_ChainStratagem = 16120,
+                    SCH_DPS_ChainStratagemOption = 16120,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
-                    [CustomComboInfo("Aetherflow Weave Feature", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 130)]
-                    SCH_ST_Broil_Aetherflow = 16130,
+                    [ParentCombo(SCH_DPS_Feature)]
+                    [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 130)]
+                    SCH_DPS_AetherflowOption = 16130,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
-                    [CustomComboInfo("Ruin II Moving Feature", "Use Ruin 2 when you have to move", SCH.JobID, 140)]
-                    SCH_ST_Broil_Ruin2Movement = 16140,
+                    [ParentCombo(SCH_DPS_Feature)]
+                    [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140)]
+                    SCH_DPS_Ruin2MovementOption = 16140,
 
-                    [ParentCombo(SCH_ST_BroilFeature)]
+                    [ParentCombo(SCH_DPS_Feature)]
                     [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150)]
-                    SCH_ST_Broil_Bio = 16150,
-
-                        [ParentCombo(SCH_ST_Broil_Bio)]
-                        [CustomComboInfo("Enemy HP Limiter Options", "Stop using Bio when Enemy HP values match below:", SCH.JobID, 151)]
-                        SCH_ST_Broil_BioHPPer = 16151,
-
-                        [ParentCombo(SCH_ST_Broil_Bio)]
-                        [ConflictingCombos(SCH_ST_Broil_ChainStratagem)]
-                        [CustomComboInfo("Target of Target Checking", "Performs additional checking for Target of Target\nThis will not help you apply DoT onto your Target of Target", SCH.JobID, 152)]
-                        SCH_ST_Broil_BioToT = 16152,
+                    SCH_DPS_BioOption = 16150,
+                        
             #endregion
 
             #region SCHOLAR HEALING
