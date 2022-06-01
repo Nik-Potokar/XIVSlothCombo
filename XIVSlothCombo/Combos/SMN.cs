@@ -293,9 +293,9 @@ namespace XIVSlothComboPlugin.Combos
                             return All.LucidDreaming;
 
                         //Demi Nuke
-                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanSpellWeave(actionID) && (gauge.IsBahamutReady || gauge.IsPhoenixReady))
+                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanSpellWeave(actionID) && IsOnCooldown(OriginalHook(SummonBahamut)) && GetCooldown(OriginalHook(SummonBahamut)).CooldownElapsed <= 15)
                         {
-                            if (IsOffCooldown(OriginalHook(AstralFlow)) && 
+                            if (IsOffCooldown(Deathflare) && 
                                 level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralImpulse))
                                 return OriginalHook(AstralFlow);
 
@@ -305,7 +305,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Demi Nuke 2: Electric Boogaloo
-                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption) && gauge.IsPhoenixReady)
+                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption) && IsOnCooldown(OriginalHook(SummonBahamut)) && GetCooldown(OriginalHook(SummonBahamut)).CooldownElapsed <= 15)
                         {
                             if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire)
                                 return OriginalHook(AstralFlow);
@@ -477,10 +477,9 @@ namespace XIVSlothComboPlugin.Combos
                             return All.LucidDreaming;
 
                         //Demi Nuke
-                        if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID) &&
-                            (gauge.IsBahamutReady || gauge.IsPhoenixReady))
+                        if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID) && IsOnCooldown(OriginalHook(SummonBahamut)) && GetCooldown(OriginalHook(SummonBahamut)).CooldownElapsed <= 15)
                         {
-                            if (IsOffCooldown(OriginalHook(AstralFlow)) &&
+                            if (IsOffCooldown(Deathflare) &&
                                 level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralFlare))
                                 return OriginalHook(AstralFlow);
 
@@ -490,7 +489,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Demi Nuke 2: Electric Boogaloo
-                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption) && gauge.IsPhoenixReady)
+                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption) && IsOnCooldown(OriginalHook(SummonBahamut)) && GetCooldown(OriginalHook(SummonBahamut)).CooldownElapsed <= 15)
                         {
                             if (IsOffCooldown(Rekindle) && lastComboMove is BrandOfPurgatory)
                                 return OriginalHook(AstralFlow);
