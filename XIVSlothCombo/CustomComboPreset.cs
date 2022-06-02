@@ -1141,111 +1141,111 @@ namespace XIVSlothComboPlugin
         #region GUNBREAKER
 
         [ReplaceSkill(GNB.SolidBarrel)]
-        [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Gunbreaker)", GNB.JobID, 0, "Floppy Barrel Combo", "Not so solid NOW, are ya?")]
+        [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Gunbreaker)", GNB.JobID, 0, "", "")]
         GNB_ST_MainCombo = 7000,
 
         [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, 0, "Fashing Gnang", "Why grandma, what big teeth you have!")]
+        [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, 0, "", "")]
         GNB_ST_Gnashing = 7001,
 
         [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
+        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
         GNB_ST_MainCombo_CooldownsGroup = 7002,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
+        [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "", "")]
         GNB_ST_DoubleDown = 7003,
 
         [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "", "")]
         GNB_ST_RoughDivide = 7004,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
+        [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0, "", "")]
         GNB_ST_BlastingZone = 7005,
 
         [ReplaceSkill(GNB.DemonSlaughter)]
-        [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "dEmOn SlAuGhTeR", "Demon Slaughter? Really? What is this, RPR?")]
+        [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "", "")]
         GNB_AoE_MainCombo = 7006,
 
         [ReplaceSkill(GNB.SolidBarrel, GNB.DemonSlaughter)]
-        [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, 0, "Pew Pew Forever", "The whole nine yards")]
+        [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, 0, "", "")]
         GNB_AmmoOvercap = 7007,
 
         [ReplaceSkill(GNB.GnashingFang)]
-        [CustomComboInfo("Gnashing Fang Continuation Combo", "Adds Continuation to Gnashing Fang.", GNB.JobID, 0, "More Mercy", "More, no wait, less, no wait, MORE Mercy! No, wait...")]
+        [CustomComboInfo("Gnashing Fang Continuation Combo", "Adds Continuation to Gnashing Fang.", GNB.JobID, 0, "", "")]
         GNB_ST_GnashingFangContinuation = 7008,
 
         [ParentCombo(GNB_ST_GnashingFangContinuation)]
-        [CustomComboInfo("No Mercy on Gnashing Fang", "Adds No Mercy to Gnashing Fang when it's ready.", GNB.JobID, 0, "Blue DPS be like", "This one comes with teeth.")]
+        [CustomComboInfo("No Mercy on Gnashing Fang", "Adds No Mercy to Gnashing Fang when it's ready.", GNB.JobID, 0, "", "")]
         GNB_ST_GnashingFang_NoMercy = 7009,
 
         [ParentCombo(GNB_ST_GnashingFangContinuation)]
-        [CustomComboInfo("Double Down on Gnashing Fang", "Adds Double Down to Gnashing Fang when No Mercy buff is up.", GNB.JobID, 0, "My hotbars are a (tiny) mess!", "Thanks plogon!")]
+        [CustomComboInfo("Double Down on Gnashing Fang", "Adds Double Down to Gnashing Fang when No Mercy buff is up.", GNB.JobID, 0, "", "")]
         GNB_ST_GnashingFang_DoubleDown = 7010,
 
         [ParentCombo(GNB_ST_GnashingFangContinuation)]
-        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike and Hypervelocity added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "More Teeth", "Gnashing fang, but like, if a shark did it. Or something.")]
+        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike and Hypervelocity added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "", "")]
         GNB_ST_GnashingFang_Cooldowns = 7011,
 
         [ReplaceSkill(GNB.BurstStrike)]
-        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike.", GNB.JobID, 0, "Swish, swoosh", "Now we're cooking with gas! Hyper!")]
+        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike.", GNB.JobID, 0, "", "")]
         GNB_ST_BurstStrikeContinuation = 7012,
 
         [ReplaceSkill(GNB.BurstStrike)]
-        [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "P4S Vampire man Bloodfest Feature", "Again with the edgelord names?\nTut, tut, Yoshi-P. Do better.")]
+        [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "", "")]
         GNB_ST_Bloodfest_Overcap = 7013,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
+        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0, "", "")]
         GNB_ST_Bloodfest = 7014,
 
         [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
+        [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "", "")]
         GNB_RangedUptime = 7015,
 
         [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("No Mercy AOE Option", "Adds No Mercy to AOE Combo when it's available.", GNB.JobID, 0, "")]
+        [CustomComboInfo("No Mercy AOE Option", "Adds No Mercy to AOE Combo when it's available.", GNB.JobID, 0, "", "")]
         GNB_AoE_NoMercy = 7016,
 
         [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
+        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "", "")]
         GNB_AoE_BowShock = 7017,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to main combo when at full ammo.", GNB.JobID, 0)]
+        [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to main combo when at full ammo.", GNB.JobID, 0, "", "")]
         GNB_ST_NoMercy = 7018,
 
         [ParentCombo(GNB_ST_Gnashing)]
-        [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
+        [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0, "", "")]
         GNB_ST_GnashingFang_Starter = 7019,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Bow Shock on Main Combo", "Adds Bow Shock to the Main Combo", GNB.JobID, 0)]
+        [CustomComboInfo("Bow Shock on Main Combo", "Adds Bow Shock to the Main Combo", GNB.JobID, 0, "", "")]
         GNB_ST_BowShock = 7020,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the Main Combo", GNB.JobID, 0)]
+        [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the Main Combo", GNB.JobID, 0, "", "")]
         GNB_ST_SonicBreak = 7021,
 
         [ReplaceSkill(GNB.NoMercy)]
-        [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0)]
+        [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0, "", "")]
         GNB_NoMercy_Cooldowns = 7022,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
+        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0, "", "")]
         GNB_NoMercy_BurstStrike = 7023,
 
         [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("Bloodfest AOE Option", "Adds Bloodfest to AOE Combo when it's available. Will dump Ammo through Fated Circle to prepare for Bloodfest.", GNB.JobID, 0, "")]
+        [CustomComboInfo("Bloodfest AOE Option", "Adds Bloodfest to AOE Combo when it's available. Will dump Ammo through Fated Circle to prepare for Bloodfest.", GNB.JobID, 0, "", "")]
         GNB_AoE_Bloodfest = 7024,
 
         [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("Double Down AOE Option", "Adds Double Down to AOE Combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "")]
+        [CustomComboInfo("Double Down AOE Option", "Adds Double Down to AOE Combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "", "")]
         GNB_AoE_DoubleDown = 7025,
 
         [ReplaceSkill(GNB.BurstStrike)]
-        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "")]
+        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "", "")]
         GNB_BurstStrike_DoubleDown = 7026,
 
         [ParentCombo(GNB_ST_RoughDivide)]
