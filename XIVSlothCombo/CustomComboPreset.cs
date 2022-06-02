@@ -1406,15 +1406,15 @@ namespace XIVSlothComboPlugin
         #region MONK
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [CustomComboInfo("Arm of the Destroyer Combo", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "Punching, but wide. It's like having extra hands!")]
+        [CustomComboInfo("Arm of the Destroyer Combo", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "")]
         MnkArmOfTheDestroyerCombo = 9000,
 
         [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 0, "", "Shine ya shoes, guv'na?")]
+        [CustomComboInfo("Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 0, "", "")]
         MnkBootshineFeature = 9001,
 
         [ReplaceSkill(MNK.TrueStrike)]
-        [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "I've had it with these MF snakes on this MF plane!")]
+        [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "")]
         MnkTwinSnakesFeature = 9011,
 
         [ReplaceSkill(MNK.Bootshine)]
@@ -1423,44 +1423,44 @@ namespace XIVSlothComboPlugin
         MnkBasicCombo = 9002,
 
         [ReplaceSkill(MNK.PerfectBalance)]
-        [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, 0, "", "They say life is like walking a tightrope...")]
+        [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, 0, "", "")]
         MonkPerfectBalanceFeature = 9003,
 
         [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID, 0, "The tin", "Does what it says on the tin")]
+        [CustomComboInfo("Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID, 0, "", "")]
         MnkBootshineBalanceFeature = 9004,
 
         [ReplaceSkill(MNK.HowlingFist, MNK.Enlightenment)]
-        [CustomComboInfo("Howling Fist/Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, 0, "", "Imagine using your fist to scream at someone. Welcome to MNK!\nEnjoy your stay.")]
+        [CustomComboInfo("Howling Fist/Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, 0, "", "")]
         MonkHowlingFistMeditationFeature = 9005,
 
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MnkBasicCombo)]
-        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk).  Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "They call it 'basic' for a reason, you donkey")]
+        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk). Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
         MnkBootshineCombo = 9006,
 
         [ReplaceSkill(MNK.MasterfulBlitz)]
-        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterful Blitz when Perfect Balance Is Active", MNK.JobID, 0, "", "Try not to fall over, eh")]
+        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterful Blitz when Perfect Balance Is Active", MNK.JobID, 0, "", "")]
         MnkPerfectBalancePlus = 9007,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the Main Combo", MNK.JobID, 0, "", "It's maths, but for your Single Target combo!")]
+        [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the Main Combo", MNK.JobID, 0, "", "")]
         MonkMasterfulBlitzOnMainCombo = 9008,
 
         [ParentCombo(MnkArmOfTheDestroyerCombo)]
-        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE Combo.", MNK.JobID, 0, "", "It's maths, but for your AoE combo!")]
+        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE Combo.", MNK.JobID, 0, "", "")]
         MonkMasterfulBlitzOnAoECombo = 9009,
 
         [ReplaceSkill(MNK.RiddleOfFire)]
-        [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Riddle me this, brotha'")]
+        [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
         MnkRiddleOfFireBrotherhoodFeature = 9012,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "Been passed on for dance partner again? Don't worry, you have some buffs of your own.")]
+        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
         MnkCDsOnMainComboFeature = 9013,
 
         [ParentCombo(MnkCDsOnMainComboFeature)]
-        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the Main Combo.", MNK.JobID, 0, "", "Easy, breezy.")]
+        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the Main Combo.", MNK.JobID, 0, "", "")]
         MnkRiddleOfWindOnMainComboFeature = 9014,
 
         [ParentCombo(MnkCDsOnMainComboFeature)]
@@ -1476,7 +1476,7 @@ namespace XIVSlothComboPlugin
         MnkMeditationOnMainComboFeature = 9017,
 
         [ParentCombo(MnkBootshineCombo)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire. A 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MnkLunarSolarOpenerOnMainComboFeature = 9018,
 
         [ParentCombo(MnkBootshineCombo)]
