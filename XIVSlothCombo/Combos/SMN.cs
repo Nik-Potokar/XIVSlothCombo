@@ -244,7 +244,7 @@ namespace XIVSlothComboPlugin.Combos
                 var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMNLucidDreamingFeature);
                 var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
-                var demiActive = IsOnCooldown(OriginalHook(SummonBahamut)) && GetCooldown(OriginalHook(SummonBahamut)).CooldownElapsed <= 15;
+                var demiActive = GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed is <= 15 or > 0;
 
                 if (actionID is Ruin or Ruin2 && InCombat())
                 {
@@ -294,22 +294,23 @@ namespace XIVSlothComboPlugin.Combos
                             return All.LucidDreaming;
 
                         //Demi Nuke
-                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature) && CanSpellWeave(actionID) && demiActive)
+                        if (demiActive)
                         {
-                            if (IsOffCooldown(Deathflare) && 
-                                level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralImpulse))
-                                return OriginalHook(AstralFlow);
+                            if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature))
+                            {
+                                if (IsOffCooldown(Deathflare) && level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralImpulse))
+                                    return OriginalHook(AstralFlow);
 
-                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && 
-                                level >= Levels.Bahamut && lastComboMove is AstralImpulse or FountainOfFire)
-                                return OriginalHook(EnkindleBahamut);
-                        }
+                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && level >= Levels.Bahamut && lastComboMove is AstralImpulse or FountainOfFire)
+                                    return OriginalHook(EnkindleBahamut);
+                            }
 
-                        //Demi Nuke 2: Electric Boogaloo
-                        if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption) && demiActive)
-                        {
-                            if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire)
-                                return OriginalHook(AstralFlow);
+                            //Demi Nuke 2: Electric Boogaloo
+                            if (IsEnabled(CustomComboPreset.SummonerSingleTargetRekindleOption))
+                            {
+                                if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire)
+                                    return OriginalHook(AstralFlow);
+                            }
                         }
                     }
 
@@ -424,7 +425,7 @@ namespace XIVSlothComboPlugin.Combos
                 var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
                 var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SummonerPrimalChoice);
                 var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
-                var demiActive = IsOnCooldown(OriginalHook(SummonBahamut)) && GetCooldown(OriginalHook(SummonBahamut)).CooldownElapsed <= 15;
+                var demiActive = GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed is <= 15 or > 0;
 
                 if (actionID is Tridisaster or Outburst && InCombat())
                 {
@@ -448,7 +449,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
 
-                        // ED & Fester
+                        // ES & Painflare
                         if (IsEnabled(CustomComboPreset.SummonerESAOEFeature))
                         {
                             if (gauge.HasAetherflowStacks && level >= Levels.Painflare)
@@ -479,22 +480,23 @@ namespace XIVSlothComboPlugin.Combos
                             return All.LucidDreaming;
 
                         //Demi Nuke
-                        if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature) && CanSpellWeave(actionID) && demiActive)
+                        if (demiActive)
                         {
-                            if (IsOffCooldown(Deathflare) &&
-                                level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralFlare))
-                                return OriginalHook(AstralFlow);
+                            if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature))
+                            {
+                                if (IsOffCooldown(Deathflare) && level >= Levels.AstralFlow && (level < Levels.Bahamut || lastComboMove is AstralFlare))
+                                    return OriginalHook(AstralFlow);
 
-                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) &&
-                                level >= Levels.Bahamut && lastComboMove is AstralFlare or BrandOfPurgatory)
-                                return OriginalHook(EnkindleBahamut);
-                        }
-
-                        //Demi Nuke 2: Electric Boogaloo
-                        if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption) && demiActive)
-                        {
-                            if (IsOffCooldown(Rekindle) && lastComboMove is BrandOfPurgatory)
-                                return OriginalHook(AstralFlow);
+                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && level >= Levels.Bahamut && lastComboMove is AstralFlare or BrandOfPurgatory)
+                                    return OriginalHook(EnkindleBahamut);
+                            }
+                            
+                            //Demi Nuke 2: Electric Boogaloo
+                            if (IsEnabled(CustomComboPreset.SummonerAOETargetRekindleOption))
+                            {
+                                if (IsOffCooldown(Rekindle) && lastComboMove is BrandOfPurgatory)
+                                    return OriginalHook(AstralFlow);
+                            }
                         }
                     }
 
