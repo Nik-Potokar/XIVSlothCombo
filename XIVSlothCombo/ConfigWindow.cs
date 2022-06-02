@@ -895,7 +895,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region NINJA
-            if (preset == CustomComboPreset.NinjaSimpleMudras)
+            if (preset == CustomComboPreset.NIN_Simple_Mudras)
             {
                 var mudrapath = Service.Configuration.MudraPathSelection;
 
@@ -931,25 +931,25 @@ namespace XIVSlothComboPlugin
                 ImGui.Spacing();
 
             }
-            if (preset == CustomComboPreset.NinSimpleTrickFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.TrickCooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+            if (preset == CustomComboPreset.NIN_ST_Simple_Trick)
+                ConfigWindowFunctions.DrawSliderInt(0, 15, NIN.Config.Trick_CooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
 
 
-            if (preset == CustomComboPreset.NinjaHuraijinFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.HutonRemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
+            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_Huraijin)
+                ConfigWindowFunctions.DrawSliderInt(0, 60, NIN.Config.Huton_RemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
 
 
-            if (preset == CustomComboPreset.NinAeolianMugFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.MugNinkiGauge, $"Set the amount of Ninki to be at or under for this feature (level {NIN.TraitLevels.Shukiho} onwards)");
+            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_Mug)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, NIN.Config.Mug_NinkiGauge, $"Set the amount of Ninki to be at or under for this feature (level {NIN.TraitLevels.Shukiho} onwards)");
 
-            if (preset == CustomComboPreset.NinjaArmorCrushOnMainCombo)
-                ConfigWindowFunctions.DrawSliderInt(0, 30, NIN.Config.HutonRemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_ArmorCrush)
+                ConfigWindowFunctions.DrawSliderInt(0, 30, NIN.Config.Huton_RemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
 
-            if (preset == CustomComboPreset.NinNinkiBhavacakraPooling)
-                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.NinkiBhavaPooling, "The minimum value of Ninki to have before spending.");
+            if (preset == CustomComboPreset.NIN_NinkiPooling_Bhavacakra)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.Ninki_BhavaPooling, "The minimum value of Ninki to have before spending.");
 
-            if (preset == CustomComboPreset.NinNinkiBunshinPooling)
-                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.NinkiBunshinPooling, "The minimum value of Ninki to have before spending.");
+            if (preset == CustomComboPreset.NIN_NinkiPooling_Bunshin)
+                ConfigWindowFunctions.DrawSliderInt(50, 100, NIN.Config.Ninki_BunshinPooling, "The minimum value of Ninki to have before spending.");
 
             #endregion
             // ====================================================================================
