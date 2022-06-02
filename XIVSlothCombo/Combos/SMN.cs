@@ -423,7 +423,7 @@ namespace XIVSlothComboPlugin.Combos
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMNLucidDreamingFeature);
                 var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
                 var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SummonerPrimalChoice);
-                var swiftcasePhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
+                var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
                 var demiActive = IsOnCooldown(OriginalHook(SummonBahamut)) && GetCooldown(OriginalHook(SummonBahamut)).CooldownElapsed <= 15;
 
                 if (actionID is Tridisaster or Outburst && InCombat())
@@ -513,7 +513,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (IsEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) && level >= All.Levels.Swiftcast)
                     {
                         //Swiftcast Garuda Feature
-                        if (swiftcasePhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
+                        if (swiftcastPhase is 0 or 1 && level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
                         {
                             if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned &&
                                 IsNotEnabled(CustomComboPreset.SummonerSTOnlySwiftcastOption))
@@ -525,7 +525,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
-                        if (swiftcasePhase == 2)
+                        if (swiftcastPhase == 2)
                         {
                             if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned)
                             {
@@ -539,7 +539,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //SpS Swiftcast
-                        if (swiftcasePhase == 3)
+                        if (swiftcastPhase == 3)
                         {
                             //Swiftcast Garuda Feature
                             if (level >= Levels.Slipstream && HasEffect(Buffs.GarudasFavor))
@@ -565,7 +565,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && (IsNotEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) || swiftcasePhase == 2) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) || //Garuda
+                    if (IsEnabled(CustomComboPreset.SummonerGarudaUniqueFeature) && (IsNotEnabled(CustomComboPreset.SummonerSwiftcastEgiFeature) || swiftcastPhase == 2) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) || //Garuda
                         IsEnabled(CustomComboPreset.SummonerTitanUniqueFeature) && HasEffect(Buffs.TitansFavor) && lastComboMove == TopazCata && CanSpellWeave(actionID) || //Titan
                         IsEnabled(CustomComboPreset.SummonerIfritUniqueFeature) && (gauge.IsIfritAttuned && HasEffect(Buffs.IfritsFavor) || gauge.IsIfritAttuned && lastComboMove == CrimsonCyclone)) //Ifrit
                         return OriginalHook(AstralFlow);
