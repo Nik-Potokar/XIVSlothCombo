@@ -244,7 +244,6 @@ namespace XIVSlothComboPlugin.Combos
                 var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
                 var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMNLucidDreamingFeature);
                 var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
-                var demiActive = GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed is <= 15 or > 0;
 
                 if (actionID is Ruin or Ruin2 && InCombat())
                 {
@@ -294,7 +293,7 @@ namespace XIVSlothComboPlugin.Combos
                             return All.LucidDreaming;
 
                         //Demi Nuke
-                        if (demiActive)
+                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
                         {
                             if (IsEnabled(CustomComboPreset.SummonerSingleTargetDemiFeature))
                             {
@@ -425,7 +424,6 @@ namespace XIVSlothComboPlugin.Combos
                 var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
                 var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SummonerPrimalChoice);
                 var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
-                var demiActive = GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed is <= 15 or > 0;
 
                 if (actionID is Tridisaster or Outburst && InCombat())
                 {
@@ -480,7 +478,7 @@ namespace XIVSlothComboPlugin.Combos
                             return All.LucidDreaming;
 
                         //Demi Nuke
-                        if (demiActive)
+                        if (OriginalHook(Tridisaster) is AstralFlare or BrandOfPurgatory)
                         {
                             if (IsEnabled(CustomComboPreset.SummonerAOEDemiFeature))
                             {
