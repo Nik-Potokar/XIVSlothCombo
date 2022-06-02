@@ -1142,118 +1142,118 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(GNB.SolidBarrel)]
         [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Gunbreaker)", GNB.JobID, 0, "Floppy Barrel Combo", "Not so solid NOW, are ya?")]
-        GunbreakerSolidBarrelCombo = 7000,
+        GNB_ST_MainCombo = 7000,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, 0, "Fashing Gnang", "Why grandma, what big teeth you have!")]
-        GunbreakerGnashingFangOnMain = 7001,
+        GNB_ST_Gnashing = 7001,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "Gee Whiz!", "Mom, I can't manage my oGCDs!")]
-        GunbreakerMainComboCDsGroup = 7002,
+        GNB_ST_MainCombo_CooldownsGroup = 7002,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "ALL the deeps", "For when you're both feeling merciless and are stuffed full of powder. BANG!")]
-        GunbreakerDDonMain = 7003,
+        GNB_ST_DoubleDown = 7003,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "Divide... Roughly", "Ayo pour one out for the homie Squall")]
-        GunbreakerRoughDivideFeature = 7004,
+        GNB_ST_RoughDivide = 7004,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0)]
-        GunbreakerDZOnMainComboFeature = 7005,
+        GNB_ST_BlastingZone = 7005,
 
         [ReplaceSkill(GNB.DemonSlaughter)]
         [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "dEmOn SlAuGhTeR", "Demon Slaughter? Really? What is this, RPR?")]
-        GunbreakerDemonSlaughterCombo = 7006,
+        GNB_AoE_MainCombo = 7006,
 
         [ReplaceSkill(GNB.SolidBarrel, GNB.DemonSlaughter)]
         [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, 0, "Pew Pew Forever", "The whole nine yards")]
-        GunbreakerAmmoOvercapFeature = 7007,
+        GNB_AmmoOvercap = 7007,
 
         [ReplaceSkill(GNB.GnashingFang)]
         [CustomComboInfo("Gnashing Fang Continuation Combo", "Adds Continuation to Gnashing Fang.", GNB.JobID, 0, "More Mercy", "More, no wait, less, no wait, MORE Mercy! No, wait...")]
-        GunbreakerGnashingFangCombo = 7008,
+        GNB_ST_GnashingFangContinuation = 7008,
 
-        [ParentCombo(GunbreakerGnashingFangCombo)]
+        [ParentCombo(GNB_ST_GnashingFangContinuation)]
         [CustomComboInfo("No Mercy on Gnashing Fang", "Adds No Mercy to Gnashing Fang when it's ready.", GNB.JobID, 0, "Blue DPS be like", "This one comes with teeth.")]
-        GunbreakerNoMercyonGF = 7009,
+        GNB_ST_GnashingFang_NoMercy = 7009,
 
-        [ParentCombo(GunbreakerGnashingFangCombo)]
+        [ParentCombo(GNB_ST_GnashingFangContinuation)]
         [CustomComboInfo("Double Down on Gnashing Fang", "Adds Double Down to Gnashing Fang when No Mercy buff is up.", GNB.JobID, 0, "My hotbars are a (tiny) mess!", "Thanks plogon!")]
-        GunbreakerDDOnGF = 7010,
+        GNB_ST_GnashingFang_DoubleDown = 7010,
 
-        [ParentCombo(GunbreakerGnashingFangCombo)]
+        [ParentCombo(GNB_ST_GnashingFangContinuation)]
         [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike and Hypervelocity added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "More Teeth", "Gnashing fang, but like, if a shark did it. Or something.")]
-        GunbreakerCDsOnGF = 7011,
+        GNB_ST_GnashingFang_Cooldowns = 7011,
 
         [ReplaceSkill(GNB.BurstStrike)]
         [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike.", GNB.JobID, 0, "Swish, swoosh", "Now we're cooking with gas! Hyper!")]
-        GunbreakerBurstStrikeConFeature = 7012,
+        GNB_ST_BurstStrikeContinuation = 7012,
 
         [ReplaceSkill(GNB.BurstStrike)]
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "P4S Vampire man Bloodfest Feature", "Again with the edgelord names?\nTut, tut, Yoshi-P. Do better.")]
-        GunbreakerBloodfestOvercapFeature = 7013,
+        GNB_ST_Bloodfest_Overcap = 7013,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0)]
-        GunbreakerBloodfestonST = 7014,
+        GNB_ST_Bloodfest = 7014,
 
-        [ParentCombo(GunbreakerSolidBarrelCombo)]
+        [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "Stubby-armed GNB", "Can't reach?")]
-        GunbreakerRangedUptimeFeature = 7015,
+        GNB_RangedUptime = 7015,
 
-        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("No Mercy AOE Option", "Adds No Mercy to AOE Combo when it's available.", GNB.JobID, 0, "")]
-        GunbreakerNoMercyAOEOption = 7016,
+        GNB_AoE_NoMercy = 7016,
 
-        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "AoE cattleprod enabler")]
-        GunbreakerBowShockFeature = 7017,
+        GNB_AoE_BowShock = 7017,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to main combo when at full ammo.", GNB.JobID, 0)]
-        GunbreakerNoMercyonST = 7018,
+        GNB_ST_NoMercy = 7018,
 
-        [ParentCombo(GunbreakerGnashingFangOnMain)]
+        [ParentCombo(GNB_ST_Gnashing)]
         [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0)]
-        GunbreakerGFStartonMain = 7019,
+        GNB_ST_GnashingFang_Starter = 7019,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Bow Shock on Main Combo", "Adds Bow Shock to the Main Combo", GNB.JobID, 0)]
-        GunbreakerBSOnMainComboFeature = 7020,
+        GNB_ST_BowShock = 7020,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the Main Combo", GNB.JobID, 0)]
-        GunbreakerSBOnMainComboFeature = 7021,
+        GNB_ST_SonicBreak = 7021,
 
         [ReplaceSkill(GNB.NoMercy)]
         [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0)]
-        GunbreakerCDsonNMFeature = 7022,
+        GNB_NoMercy_Cooldowns = 7022,
 
-        [ParentCombo(GunbreakerMainComboCDsGroup)]
+        [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0)]
-        GunbreakerBSinNMFeature = 7023,
+        GNB_NoMercy_BurstStrike = 7023,
 
-        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("Bloodfest AOE Option", "Adds Bloodfest to AOE Combo when it's available. Will dump Ammo through Fated Circle to prepare for Bloodfest.", GNB.JobID, 0, "")]
-        GunbreakerBloodfestAOEOption = 7024,
+        GNB_AoE_Bloodfest = 7024,
 
-        [ParentCombo(GunbreakerDemonSlaughterCombo)]
+        [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("Double Down AOE Option", "Adds Double Down to AOE Combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "")]
-        GunbreakerDoubleDownAOEOption = 7025,
+        GNB_AoE_DoubleDown = 7025,
 
         [ReplaceSkill(GNB.BurstStrike)]
         [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "")]
-        GunbreakerDDonBurstStrikeFeature = 7026,
+        GNB_BurstStrike_DoubleDown = 7026,
 
-        [ParentCombo(GunbreakerRoughDivideFeature)]
+        [ParentCombo(GNB_ST_RoughDivide)]
         [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst CDs on CD, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
-        GunbreakerMeleeRoughDivideOption = 7027,
+        GNB_ST_MeleeRoughDivide = 7027,
 
         [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
-        GunbreakerAuroraProtectionFeature = 7028,
+        GNB_AuroraProtection = 7028,
 
         #endregion
         // ====================================================================================

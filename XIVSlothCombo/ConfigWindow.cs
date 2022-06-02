@@ -876,8 +876,8 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region GUNBREAKER
-            if (preset == CustomComboPreset.GunbreakerRoughDivideFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 1, GNB.Config.GnbKeepRoughDivideCharges, "How many charges to keep ready? (0 = Use All)");
+            if (preset == CustomComboPreset.GNB_ST_RoughDivide && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, GNB.Config.GNB_RoughDivide_HeldCharges, "How many charges to keep ready? (0 = Use All)");
             #endregion
             // ====================================================================================
             #region MACHINIST

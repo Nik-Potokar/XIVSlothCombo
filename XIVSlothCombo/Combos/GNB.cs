@@ -82,23 +82,23 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                GnbKeepRoughDivideCharges = "GnbKeepRoughDivideCharges";
+                GNB_RoughDivide_HeldCharges = "GNB_RoughDivide_HeldCharges";
         }
 
 
-        internal class GunbreakerSolidBarrelCombo : CustomCombo
+        internal class GNB_ST_MainCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerSolidBarrelCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_MainCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == SolidBarrel)
                 {
                     var gauge = GetJobGauge<GNBGauge>();
-                    var roughDivideChargesRemaining = Service.Configuration.GetCustomIntValue(Config.GnbKeepRoughDivideCharges);
+                    var roughDivideChargesRemaining = Service.Configuration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
                     var quarterWeave = GetCooldown(actionID).CooldownRemaining < 1 && GetCooldown(actionID).CooldownRemaining > 0.2;
 
-                    if (IsEnabled(CustomComboPreset.GunbreakerRangedUptimeFeature))
+                    if (IsEnabled(CustomComboPreset.GNB_RangedUptime))
                     {
                         if (!InMeleeRange())
                             return LightningShot;
@@ -106,7 +106,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (comboTime > 0)
                     {
-                        if (quarterWeave && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && IsEnabled(CustomComboPreset.GunbreakerNoMercyonST))
+                        if (quarterWeave && IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup) && IsEnabled(CustomComboPreset.GNB_ST_NoMercy))
                         {
                             if (level >= Levels.NoMercy && IsOffCooldown(NoMercy))
                             {
@@ -123,16 +123,16 @@ namespace XIVSlothComboPlugin.Combos
                         //oGCDs
                         if (CanWeave(actionID))
                         {
-                            if (IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && IsEnabled(CustomComboPreset.GunbreakerBloodfestonST))
+                            if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup) && IsEnabled(CustomComboPreset.GNB_ST_Bloodfest))
                             {
                                 if (gauge.Ammo == 0 && IsOffCooldown(Bloodfest) && level >= Levels.Bloodfest && IsOnCooldown(GnashingFang))
                                     return Bloodfest;
                             }
 
                             //Blasting Zone outside of NM
-                            if (IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
+                            if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
                             {
-                                if (IsEnabled(CustomComboPreset.GunbreakerDZOnMainComboFeature) && !HasEffect(Buffs.NoMercy) &&
+                                if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && !HasEffect(Buffs.NoMercy) &&
                                     ((IsOnCooldown(GnashingFang) && gauge.AmmoComboStep != 1 && GetCooldown(GnashingFang).CooldownRemaining > 20) || //Post Gnashing Fang
                                     (level < Levels.GnashingFang) && IsOnCooldown(NoMercy))) //Pre Gnashing Fang
                                     return OriginalHook(DangerZone);
@@ -141,61 +141,61 @@ namespace XIVSlothComboPlugin.Combos
                             //60 second weaves
                             if (IsOnCooldown(DoubleDown))
                             {
-                                if (IsEnabled(CustomComboPreset.GunbreakerDZOnMainComboFeature) && IsOffCooldown(DangerZone))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && IsOffCooldown(DangerZone))
                                     return OriginalHook(DangerZone);
-                                if (IsEnabled(CustomComboPreset.GunbreakerBSOnMainComboFeature) && IsOffCooldown(BowShock))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && IsOffCooldown(BowShock))
                                     return BowShock;
                             }
 
                             //30 second weaves
                             if (IsOnCooldown(SonicBreak))
                             {
-                                if (IsEnabled(CustomComboPreset.GunbreakerBSOnMainComboFeature) && level >= Levels.BowShock && IsOffCooldown(BowShock))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && level >= Levels.BowShock && IsOffCooldown(BowShock))
                                     return BowShock;
-                                if (IsEnabled(CustomComboPreset.GunbreakerDZOnMainComboFeature) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
                                     return OriginalHook(DangerZone);
                             }
 
                             //Continuation
-                            if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= Levels.Continuation &&
+                            if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && level >= Levels.Continuation &&
                                 (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)))
                                 return OriginalHook(Continuation);
 
                             //Rough Divide Feature
-                            if (level >= Levels.RoughDivide && IsEnabled(CustomComboPreset.GunbreakerRoughDivideFeature) && GetRemainingCharges(RoughDivide) > roughDivideChargesRemaining)
+                            if (level >= Levels.RoughDivide && IsEnabled(CustomComboPreset.GNB_ST_RoughDivide) && GetRemainingCharges(RoughDivide) > roughDivideChargesRemaining)
                             {
-                                if (IsNotEnabled(CustomComboPreset.GunbreakerMeleeRoughDivideOption) ||
-                                    (IsEnabled(CustomComboPreset.GunbreakerMeleeRoughDivideOption) && GetTargetDistance() <= 1 && HasEffect(Buffs.NoMercy) && IsOnCooldown(OriginalHook(DangerZone)) && IsOnCooldown(BowShock) && IsOnCooldown(Bloodfest)))
+                                if (IsNotEnabled(CustomComboPreset.GNB_ST_MeleeRoughDivide) ||
+                                    (IsEnabled(CustomComboPreset.GNB_ST_MeleeRoughDivide) && GetTargetDistance() <= 1 && HasEffect(Buffs.NoMercy) && IsOnCooldown(OriginalHook(DangerZone)) && IsOnCooldown(BowShock) && IsOnCooldown(Bloodfest)))
                                     return RoughDivide;
                             }
                         }
 
                         // 60s window features
-                        if (GetCooldownRemainingTime(NoMercy) > 57 || HasEffect(Buffs.NoMercy) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup))
+                        if (GetCooldownRemainingTime(NoMercy) > 57 || HasEffect(Buffs.NoMercy) && IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup))
                         {
                             if (level >= Levels.DoubleDown)
                             {
-                                if (IsEnabled(CustomComboPreset.GunbreakerDDonMain) && IsOffCooldown(DoubleDown) && gauge.Ammo >= 2 && !HasEffect(Buffs.ReadyToRip) && gauge.AmmoComboStep >= 1)
+                                if (IsEnabled(CustomComboPreset.GNB_ST_DoubleDown) && IsOffCooldown(DoubleDown) && gauge.Ammo >= 2 && !HasEffect(Buffs.ReadyToRip) && gauge.AmmoComboStep >= 1)
                                     return DoubleDown;
-                                if (IsEnabled(CustomComboPreset.GunbreakerSBOnMainComboFeature) && IsOffCooldown(SonicBreak) && IsOnCooldown(DoubleDown))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) && IsOffCooldown(SonicBreak) && IsOnCooldown(DoubleDown))
                                     return SonicBreak;
                             }
 
                             if (level < Levels.DoubleDown)
                             {
-                                if (IsEnabled(CustomComboPreset.GunbreakerSBOnMainComboFeature) && level >= Levels.SonicBreak && IsOffCooldown(SonicBreak) && !HasEffect(Buffs.ReadyToRip) && IsOnCooldown(GnashingFang))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) && level >= Levels.SonicBreak && IsOffCooldown(SonicBreak) && !HasEffect(Buffs.ReadyToRip) && IsOnCooldown(GnashingFang))
                                     return SonicBreak;
 
                                 //sub level 54 functionality
-                                if (IsEnabled(CustomComboPreset.GunbreakerDZOnMainComboFeature) && level is >= Levels.DangerZone and < Levels.SonicBreak && IsOffCooldown(DangerZone))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && level is >= Levels.DangerZone and < Levels.SonicBreak && IsOffCooldown(DangerZone))
                                     return OriginalHook(DangerZone);
                             }
                         }
 
                         //Pre Gnashing Fang stuff
-                        if (IsEnabled(CustomComboPreset.GunbreakerGnashingFangOnMain) && level >= Levels.GnashingFang)
+                        if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && level >= Levels.GnashingFang)
                         {
-                            if (IsEnabled(CustomComboPreset.GunbreakerGFStartonMain) && IsOffCooldown(GnashingFang) && gauge.AmmoComboStep == 0 &&
+                            if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Starter) && IsOffCooldown(GnashingFang) && gauge.AmmoComboStep == 0 &&
                                 ((gauge.Ammo == MaxCartridges(level) && GetCooldownRemainingTime(NoMercy) > 55) || //Regular 60 second GF/NM timing
                                 (gauge.Ammo > 0 && GetCooldownRemainingTime(NoMercy) > 17 && GetCooldownRemainingTime(NoMercy) < 35) || //Regular 30 second window                                                                        
                                 (gauge.Ammo == 3 && GetCooldownRemainingTime(Bloodfest) < 2 && GetCooldownRemainingTime(NoMercy) < 2) || //3 minute window
@@ -205,7 +205,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return OriginalHook(GnashingFang);
                         }
 
-                        if (IsEnabled(CustomComboPreset.GunbreakerBSinNMFeature) && IsEnabled(CustomComboPreset.GunbreakerMainComboCDsGroup))
+                        if (IsEnabled(CustomComboPreset.GNB_NoMercy_BurstStrike) && IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup))
                         {
                             if ((HasEffect(Buffs.NoMercy) || HasEffect(All.Buffs.Medicated)) && gauge.AmmoComboStep == 0 && level >= Levels.BurstStrike)
                             {
@@ -225,12 +225,12 @@ namespace XIVSlothComboPlugin.Combos
                             return BrutalShell;
                         if (lastComboMove == BrutalShell && level >= Levels.SolidBarrel)
                         {
-                            if (IsEnabled(CustomComboPreset.GunbreakerAmmoOvercapFeature))
+                            if (IsEnabled(CustomComboPreset.GNB_AmmoOvercap))
                             {
                                 if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                                     return Hypervelocity;
                                 if (level >= Levels.BurstStrike && (gauge.Ammo == MaxCartridges(level) ||
-                                    (IsEnabled(CustomComboPreset.GunbreakerBloodfestonST) && GetCooldownRemainingTime(Bloodfest) < 6 && gauge.Ammo != 0 && IsOnCooldown(NoMercy) && level >= Levels.Bloodfest))) //Burns Ammo for Bloodfest
+                                    (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && GetCooldownRemainingTime(Bloodfest) < 6 && gauge.Ammo != 0 && IsOnCooldown(NoMercy) && level >= Levels.Bloodfest))) //Burns Ammo for Bloodfest
                                     return BurstStrike;
                             }
 
@@ -245,9 +245,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class GunbreakerGnashingFangCombo : CustomCombo
+        internal class GNB_ST_GnashingFangContinuation : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerGnashingFangCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_GnashingFangContinuation;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -255,15 +255,15 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     var gauge = GetJobGauge<GNBGauge>();
 
-                    if (IsOffCooldown(NoMercy) && CanDelayedWeave(actionID) && IsOffCooldown(GnashingFang) && IsEnabled(CustomComboPreset.GunbreakerNoMercyonGF))
+                    if (IsOffCooldown(NoMercy) && CanDelayedWeave(actionID) && IsOffCooldown(GnashingFang) && IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_NoMercy))
                         return NoMercy;
                     if (HasEffect(Buffs.NoMercy) && IsOnCooldown(GnashingFang))
                     {
                         if (level >= Levels.DoubleDown)
                         {
-                            if (IsEnabled(CustomComboPreset.GunbreakerDDOnGF) && IsOffCooldown(DoubleDown) && gauge.Ammo is 2 or 3 && !HasEffect(Buffs.ReadyToRip))
+                            if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_DoubleDown) && IsOffCooldown(DoubleDown) && gauge.Ammo is 2 or 3 && !HasEffect(Buffs.ReadyToRip))
                                 return DoubleDown;
-                            if (IsOnCooldown(DoubleDown) && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF))
+                            if (IsOnCooldown(DoubleDown) && IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Cooldowns))
                             {
                                 if (CanWeave(actionID))
                                 {
@@ -278,7 +278,7 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        if (level < Levels.DoubleDown && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF))
+                        if (level < Levels.DoubleDown && IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Cooldowns))
                         {
                             if (level >= Levels.SonicBreak && IsOffCooldown(SonicBreak) && !HasEffect(Buffs.ReadyToRip))
                                 return SonicBreak;
@@ -294,7 +294,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (CanWeave(actionID))
                     {
-                        if (level >= Levels.DangerZone && IsOnCooldown(GnashingFang) && !HasEffect(Buffs.NoMercy) && IsOffCooldown(DangerZone) && gauge.AmmoComboStep != 1 && IsEnabled(CustomComboPreset.GunbreakerCDsOnGF))
+                        if (level >= Levels.DangerZone && IsOnCooldown(GnashingFang) && !HasEffect(Buffs.NoMercy) && IsOffCooldown(DangerZone) && gauge.AmmoComboStep != 1 && IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Cooldowns))
                             return OriginalHook(DangerZone);
                         if ((HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)) && level >= Levels.Continuation)
                             return OriginalHook(Continuation);
@@ -302,7 +302,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if ((gauge.AmmoComboStep == 0 && IsOffCooldown(GnashingFang)) || gauge.AmmoComboStep is 1 or 2)
                         return OriginalHook(GnashingFang);
-                    if (IsEnabled(CustomComboPreset.GunbreakerCDsOnGF))
+                    if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Cooldowns))
                     {
                         if (HasEffect(Buffs.NoMercy) && HasEffect(All.Buffs.Medicated) && gauge.AmmoComboStep == 0)
                         {
@@ -322,9 +322,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class GunbreakerBurstStrikeConFeature : CustomCombo
+        internal class GNB_ST_BurstStrikeContinuation : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerBurstStrikeConFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_BurstStrikeContinuation;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -334,9 +334,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class GunbreakerDemonSlaughterCombo : CustomCombo
+        internal class GNB_AoE_MainCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerDemonSlaughterCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_AoE_MainCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -345,21 +345,21 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.GunbreakerNoMercyAOEOption) && IsOffCooldown(NoMercy) && level >= Levels.NoMercy)
+                        if (IsEnabled(CustomComboPreset.GNB_AoE_NoMercy) && IsOffCooldown(NoMercy) && level >= Levels.NoMercy)
                             return NoMercy;
-                        if (IsEnabled(CustomComboPreset.GunbreakerBloodfestAOEOption) && gauge.Ammo == 0 && IsOffCooldown(Bloodfest) && level >= Levels.Bloodfest)
+                        if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && gauge.Ammo == 0 && IsOffCooldown(Bloodfest) && level >= Levels.Bloodfest)
                             return Bloodfest;
                     }
 
-                    if (IsEnabled(CustomComboPreset.GunbreakerDoubleDownAOEOption) && gauge.Ammo >= 2 && IsOffCooldown(DoubleDown) && level >= Levels.DoubleDown)
+                    if (IsEnabled(CustomComboPreset.GNB_AoE_DoubleDown) && gauge.Ammo >= 2 && IsOffCooldown(DoubleDown) && level >= Levels.DoubleDown)
                         return DoubleDown;
-                    if (IsEnabled(CustomComboPreset.GunbreakerBloodfestAOEOption) && gauge.Ammo != 0 && GetCooldownRemainingTime(Bloodfest) < 6 && level >= Levels.FatedCircle)
+                    if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && gauge.Ammo != 0 && GetCooldownRemainingTime(Bloodfest) < 6 && level >= Levels.FatedCircle)
                         return FatedCircle;
                     if (comboTime > 0 && lastComboMove == DemonSlice && level >= Levels.DemonSlaughter)
                     {
-                        if (IsEnabled(CustomComboPreset.GunbreakerAmmoOvercapFeature) && level >= Levels.FatedCircle && gauge.Ammo == MaxCartridges(level))
+                        if (IsEnabled(CustomComboPreset.GNB_AmmoOvercap) && level >= Levels.FatedCircle && gauge.Ammo == MaxCartridges(level))
                             return FatedCircle;
-                        if (IsEnabled(CustomComboPreset.GunbreakerBowShockFeature) && level >= Levels.BowShock && IsOffCooldown(BowShock))
+                        if (IsEnabled(CustomComboPreset.GNB_AoE_BowShock) && level >= Levels.BowShock && IsOffCooldown(BowShock))
                             return BowShock;
                         return DemonSlaughter;
                     }
@@ -371,9 +371,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class GunbreakerBloodfestOvercapFeature : CustomCombo
+        internal class GNB_ST_Bloodfest_Overcap : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerBloodfestOvercapFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_Bloodfest_Overcap;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -384,9 +384,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class GunbreakerDDonBurstStrikeFeature : CustomCombo
+        internal class GNB_BurstStrike_DoubleDown : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerDDonBurstStrikeFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_BurstStrike_DoubleDown;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -397,9 +397,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class GunbreakerCDsonNMFeature : CustomCombo
+        internal class GNB_NoMercy_Cooldowns : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerCDsonNMFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_NoMercy_Cooldowns;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -418,9 +418,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class GunbreakerAuroraProtectionFeature : CustomCombo
+        internal class GNB_AuroraProtection : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GunbreakerAuroraProtectionFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_AuroraProtection;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
