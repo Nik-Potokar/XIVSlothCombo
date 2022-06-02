@@ -1407,109 +1407,109 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [CustomComboInfo("Arm of the Destroyer Combo", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "")]
-        MnkArmOfTheDestroyerCombo = 9000,
+        MNK_AoE_SimpleMode = 9000,
 
         [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 0, "", "")]
-        MnkBootshineFeature = 9001,
+        [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 0, "", "")]
+        MNK_DragonKick_Bootshine = 9001,
 
         [ReplaceSkill(MNK.TrueStrike)]
         [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "")]
-        MnkTwinSnakesFeature = 9011,
+        MNK_TwinSnakes = 9011,
 
         [ReplaceSkill(MNK.Bootshine)]
-        [ConflictingCombos(MnkBootshineCombo)]
-        [CustomComboInfo("Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, 0, "", "I presses the buttons, I does the deeps")]
-        MnkBasicCombo = 9002,
+        [ConflictingCombos(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, 0, "", "")]
+        MNK_BasicCombo = 9002,
 
         [ReplaceSkill(MNK.PerfectBalance)]
         [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, 0, "", "")]
-        MonkPerfectBalanceFeature = 9003,
+        MNK_PerfectBalance = 9003,
 
         [ReplaceSkill(MNK.DragonKick)]
         [CustomComboInfo("Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID, 0, "", "")]
-        MnkBootshineBalanceFeature = 9004,
+        MNK_BootshineBalance = 9004,
 
         [ReplaceSkill(MNK.HowlingFist, MNK.Enlightenment)]
         [CustomComboInfo("Howling Fist/Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, 0, "", "")]
-        MonkHowlingFistMeditationFeature = 9005,
+        MNK_HowlingFistMeditation = 9005,
 
         [ReplaceSkill(MNK.Bootshine)]
-        [ConflictingCombos(MnkBasicCombo)]
+        [ConflictingCombos(MNK_BasicCombo)]
         [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk). Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
-        MnkBootshineCombo = 9006,
+        MNK_ST_SimpleMode = 9006,
 
         [ReplaceSkill(MNK.MasterfulBlitz)]
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterful Blitz when Perfect Balance Is Active", MNK.JobID, 0, "", "")]
-        MnkPerfectBalancePlus = 9007,
+        MNK_PerfectBalance_Plus = 9007,
 
-        [ParentCombo(MnkBootshineCombo)]
+        [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the Main Combo", MNK.JobID, 0, "", "")]
-        MonkMasterfulBlitzOnMainCombo = 9008,
+        MNK_ST_Simple_MasterfulBlitz = 9008,
 
-        [ParentCombo(MnkArmOfTheDestroyerCombo)]
+        [ParentCombo(MNK_AoE_SimpleMode)]
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE Combo.", MNK.JobID, 0, "", "")]
-        MonkMasterfulBlitzOnAoECombo = 9009,
+        MNK_AoE_Simple_MasterfulBlitz = 9009,
 
         [ReplaceSkill(MNK.RiddleOfFire)]
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
-        MnkRiddleOfFireBrotherhoodFeature = 9012,
+        MNK_Riddle_Brotherhood = 9012,
 
-        [ParentCombo(MnkBootshineCombo)]
+        [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
-        MnkCDsOnMainComboFeature = 9013,
+        MNK_ST_Simple_CDs = 9013,
 
-        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [ParentCombo(MNK_ST_Simple_CDs)]
         [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the Main Combo.", MNK.JobID, 0, "", "")]
-        MnkRiddleOfWindOnMainComboFeature = 9014,
+        MNK_ST_Simple_CDs_RiddleOfWind = 9014,
 
-        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [ParentCombo(MNK_ST_Simple_CDs)]
         [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the Main Combo.", MNK.JobID, 0, "", "")]
-        MnkPerfectBalanceOnMainComboFeature = 9015,
+        MNK_ST_Simple_CDs_PerfectBalance = 9015,
 
-        [ParentCombo(MnkCDsOnMainComboFeature)]
+        [ParentCombo(MNK_ST_Simple_CDs)]
         [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the Main Combo.", MNK.JobID, 0, "", "")]
-        MnkBrotherhoodOnMainComboFeature = 9016,
+        MNK_ST_Simple_CDs_Brotherhood = 9016,
 
-        [ParentCombo(MnkBootshineCombo)]
+        [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the Main Combo.", MNK.JobID, 0, "", "")]
-        MnkMeditationOnMainComboFeature = 9017,
+        MNK_ST_Simple_Meditation = 9017,
 
-        [ParentCombo(MnkBootshineCombo)]
+        [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
-        MnkLunarSolarOpenerOnMainComboFeature = 9018,
+        MNK_ST_Simple_LunarSolarOpener = 9018,
 
-        [ParentCombo(MnkBootshineCombo)]
+        [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Main Combo on Demolish Option", "Replaces Demolish with the Main Combo, except without any oCDs added. Useful for saving burst.", MNK.JobID, -1, "", "")]
-        MnkDemolishComboFeature = 9026,
+        MNK_ST_Simple_Demolish = 9026,
 
-        [ParentCombo(MnkArmOfTheDestroyerCombo)]
+        [ParentCombo(MNK_AoE_SimpleMode)]
         [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
-        MnkCDsOnAoEComboFeature = 9019,
+        MNK_AoE_Simple_CDs = 9019,
 
-        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [ParentCombo(MNK_AoE_Simple_CDs)]
         [CustomComboInfo("Riddle of Wind on AoE Combo", "Adds Riddle of Wind to the AoE Combo.", MNK.JobID, 0, "", "")]
-        MnkRiddleOfWindOnAoEComboFeature = 9020,
+        MNK_AoE_Simple_CDs_RiddleOfWind = 9020,
 
-        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [ParentCombo(MNK_AoE_Simple_CDs)]
         [CustomComboInfo("Perfect Balance on AoE Combo", "Adds Perfect Balance to the AoE Combo.", MNK.JobID, 0, "", "")]
-        MnkPerfectBalanceOnAoEComboFeature = 9021,
+        MNK_AoE_Simple_CDs_PerfectBalance = 9021,
 
-        [ParentCombo(MnkCDsOnAoEComboFeature)]
+        [ParentCombo(MNK_AoE_Simple_CDs)]
         [CustomComboInfo("Brotherhood on AoE Combo", "Adds Brotherhood to the AoE Combo.", MNK.JobID, 0, "", "")]
-        MnkBrotherhoodOnAoEComboFeature = 9022,
+        MNK_AoE_Simple_CDs_Brotherhood = 9022,
 
-        [ParentCombo(MnkArmOfTheDestroyerCombo)]
+        [ParentCombo(MNK_AoE_SimpleMode)]
         [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
-        MnkMeditationOnAoEComboFeature = 9023,
+        MNK_AoE_Simple_Meditation = 9023,
 
-        [ParentCombo(MnkArmOfTheDestroyerCombo)]
+        [ParentCombo(MNK_AoE_SimpleMode)]
         [CustomComboInfo("Thunderclap on AoE Combo", "Adds Thunderclap when out of combat to the AoE Combo.", MNK.JobID, 0, "", "")]
-        MnkThunderclapOnAoEComboFeature = 9024,
+        MNK_AoE_Simple_Thunderclap = 9024,
 
-        [ParentCombo(MnkBootshineCombo)]
+        [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the Main Combo.", MNK.JobID, 0, "", "")]
-        MnkThunderclapOnMainComboFeature = 9025,
+        MNK_ST_Simple_Thunderclap = 9025,
 
         #endregion
         // ====================================================================================

@@ -886,11 +886,11 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region MONK
 
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MnkDemolishApply, "Seconds remaining before refreshing Demolish.");
+            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
 
-            if (preset == CustomComboPreset.MnkBootshineCombo)
-                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MnkDisciplinedFistApply, "Seconds remaining before refreshing Disciplined Fist.");
+            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+                ConfigWindowFunctions.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_DisciplinedFist_Apply, "Seconds remaining before refreshing Disciplined Fist.");
 
             #endregion
             // ====================================================================================
