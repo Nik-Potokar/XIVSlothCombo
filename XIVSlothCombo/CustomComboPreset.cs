@@ -1939,14 +1939,17 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region RED MAGE
 
-        //RED_MAGE_FEATURE_NUMBERING
-        //Numbering Scheme: 13[Section][Feature Number][Sub-Feature]
-        //Example: 13110 (Section 1: Openers, Feature Number 1, Sub-feature 0)
-        //New features should be added to the appropriate sections.
-        //If more than 10 sub features, use the next feature number if available
-        //The three digets after RDM.JobID can be used to reorder items in the list
+        /* RDM Feature Numbering
+        
+        Numbering Scheme: 13[Section][Feature Number][Sub-Feature]
+        Example: 13110 (Section 1: Openers, Feature Number 1, Sub-feature 0)
+        New features should be added to the appropriate sections.
+        If more than 10 sub features, use the next feature number if available
+        The three digets after RDM.JobID can be used to reorder items in the list
 
-        //SECTION_1_OPENERS
+        */
+
+        #region Section 1 - Openers
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2)]
         [CustomComboInfo("Balance Opener Feature [Lv.90]", "Replaces Jolt with the Balance opener ending with Resolution\n**Must move into melee range before melee combo**", RDM.JobID, 110, "", "")]
         RDM_Balance_Opener = 13110,
@@ -1954,8 +1957,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(RDM_Balance_Opener)]
         [CustomComboInfo("Use Opener at any Mana Option", "Removes 0/0 Mana reqirement to reset opener\n**All other actions must be off cooldown**", RDM.JobID, 111, "", "")]
         RDM_Opener_Any_Mana = 13111,
+        #endregion
 
-        //SECTION_2to3_ROTATION
+        #region Sections 2 to 3 - Rotation
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2)]
         [CustomComboInfo("Verthunder/Veraero Feature", "Replace Jolt with Verthunder and Veraero", RDM.JobID, 210, "", "")]
         RDM_VerthunderVeraero = 13210,
@@ -2019,8 +2023,9 @@ namespace XIVSlothComboPlugin
         [ParentCombo(RDM_AoE_Acceleration)]
         [CustomComboInfo("Weave Acceleration Option", "Only use acceleration during weave windows", RDM.JobID, 322, "", "")]
         RDM_AoE_WeaveAcceleration = 13322,
+        #endregion
 
-        //SECTION_4to5_MELEE
+        # region Sections 4 to 5 - Melee
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Riposte)]
         [CustomComboInfo("Single Target Melee Combo Feature", "Stack Reposte Combo on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410, "", "")]
         RDM_ST_MeleeCombo = 13410,
@@ -2052,8 +2057,9 @@ namespace XIVSlothComboPlugin
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Scatter, RDM.Impact, RDM.Riposte, RDM.Moulinet, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3)]
         [CustomComboInfo("Melee Finisher Feature", "Add Verflare/Verholy and other finishing moves to specified action(s)", RDM.JobID, 510, "", "")]
         RDM_MeleeFinisher = 13510,
+        #endregion
 
-        //SECTION_6to7_QOL
+        #region Sections 6 to 7 - QoL
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Veraero, RDM.Veraero2, RDM.Veraero3, RDM.Verthunder, RDM.Verthunder2, RDM.Verthunder3, RDM.Scatter, RDM.Impact)]
         [CustomComboInfo("Lucid Dreaming Feature", "Use Lucid Dreaming on Jolt 1/2, Veraero 1/2/3, Verthunder 1/2/3, and Scatter/Impact when below threshold.", RDM.JobID, 610, "", "")]
         RDM_LucidDreaming = 13610,
@@ -2062,8 +2068,9 @@ namespace XIVSlothComboPlugin
         [ConflictingCombos(ALL_Caster_Raise)]
         [CustomComboInfo("Verraise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620, "", "")]
         RDM_Verraise = 13620,
+        #endregion
 
-        //SECTION_8to9_OTHERS                   
+        #region Sections 8 to 9 - Miscellaneous
         [ReplaceSkill(RDM.Displacement)]
         [CustomComboInfo("Displacement <> Corps-a-corps Feature", "Replace Displacement with Corps-a-corps when out of range.", RDM.JobID, 810, "", "")]
         RDM_CorpsDisplacement = 13810,
@@ -2075,6 +2082,7 @@ namespace XIVSlothComboPlugin
         [ReplaceSkill(RDM.MagickBarrier)]
         [CustomComboInfo("Magick Barrier to Addle Feature", "Changes Magick Barrier to Addle when on cooldown.", RDM.JobID, 820, "", "")]
         RDM_MagickBarrierAddle = 13821,
+        #endregion
 
         #endregion
         // ====================================================================================
