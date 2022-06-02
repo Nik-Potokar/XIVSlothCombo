@@ -1517,87 +1517,87 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(NIN.ArmorCrush)]
         [ConflictingCombos(NinSimpleSingleTarget)]
-        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID, 3, "One, Two, Three", "It's a Ninja's life for me")]
+        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID, 3, "", "")]
         NinjaArmorCrushCombo = 10000,
 
         [ReplaceSkill(NIN.AeolianEdge)]
         [ConflictingCombos(NinSimpleSingleTarget)]
-        [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID, 2, "Edgy Edge Combo", "Knife go stab")]
+        [CustomComboInfo("Aeolian Edge Combo", "Replace Aeolian Edge with its combo chain.", NIN.JobID, 2, "", "")]
         NinjaAeolianEdgeCombo = 10001,
 
-        //[CustomComboInfo("Simple AoE", "Replaces Death Blossom with the AoE rotation.", NIN.JobID)]
+        //[CustomComboInfo("Simple AoE", "Replaces Death Blossom with the AoE rotation.", NIN.JobID, 0, "", "")]
         //NinjaHakkeMujinsatsuCombo = 10002,
 
-        //[CustomComboInfo("Dream to Assassinate", "Replace Dream Within a Dream with Assassinate when Assassinate Ready.", NIN.JobID)]
+        //[CustomComboInfo("Dream to Assassinate", "Replace Dream Within a Dream with Assassinate when Assassinate Ready.", NIN.JobID, 0, "", "")]
         //NinjaAssassinateFeature = 10003,
 
         [ReplaceSkill(NIN.Kassatsu)]
-        [CustomComboInfo("Kassatsu to Trick", "Replaces Kassatsu with Trick Attack while Suiton or Hidden is up.\nCooldown tracking plugin recommended.", NIN.JobID, 4, "Katsu Curry to Trick", "This is how we eat at a restaurant and don't pay the bill.\nRUN!")]
+        [CustomComboInfo("Kassatsu to Trick", "Replaces Kassatsu with Trick Attack while Suiton or Hidden is up.\nCooldown tracking plugin recommended.", NIN.JobID, 4, "", "")]
         NinjaKassatsuTrickFeature = 10004,
 
         [ReplaceSkill(NIN.TenChiJin)]
-        [CustomComboInfo("Ten Chi Jin to Meisui", "Replaces Ten Chi Jin (the move) with Meisui while Suiton is up.\nCooldown tracking plugin recommended.", NIN.JobID, 5, "Ten Chin Scratches to Chop-Suey", "Does something, probably.\nHow do you deal with all these attack names?")]
+        [CustomComboInfo("Ten Chi Jin to Meisui", "Replaces Ten Chi Jin (the move) with Meisui while Suiton is up.\nCooldown tracking plugin recommended.", NIN.JobID, 5, "", "")]
         NinjaTCJMeisuiFeature = 10005,
 
         [ReplaceSkill(NIN.Chi)]
-        [CustomComboInfo("Kassatsu Chi/Jin Feature", "Replaces Chi with Jin while Kassatsu is up if you have Enhanced Kassatsu.", NIN.JobID, 6, "", "Swaps your Katsu curry with a Chi Chin-scratch.")]
+        [CustomComboInfo("Kassatsu Chi/Jin Feature", "Replaces Chi with Jin while Kassatsu is up if you have Enhanced Kassatsu.", NIN.JobID, 6, "", "")]
         NinjaKassatsuChiJinFeature = 10006,
 
         [ReplaceSkill(NIN.Hide)]
-        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat.", NIN.JobID, 7, "Stand and Deliver", "John Cena is a thief, now?")]
+        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat.", NIN.JobID, 7, "", "")]
         NinjaHideMugFeature = 10007,
 
         [ReplaceSkill(NIN.AeolianEdge)]
-        [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID, 8, "Hand signs and all that", "Do the Naruto thing, I think.\nIdk I don't watch anime, sorry")]
+        [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID, 8, "", "")]
         NinjaNinjutsuFeature = 10008,
 
         [ConflictingCombos(NinSimpleSingleTarget)]
-        [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, 9, "Full-on Sign Language", "NOW you're really communicating with the party.")]
+        [CustomComboInfo("GCDs to Ninjutsu Feature", "Every GCD combo becomes Ninjutsu while Mudras are being used.", NIN.JobID, 9, "", "")]
         NinjaGCDNinjutsuFeature = 10009,
 
         [ReplaceSkill(NIN.Huraijin)]
-        [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, 10, "Pikachu / Raichu Feature", "Does something? Maybe? Evolutions? Combos? Probably.")]
+        [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID, 10, "", "")]
         NinjaHuraijinRaijuFeature = 10010,
 
         [ParentCombo(NinjaHuraijinRaijuFeature)]
-        [CustomComboInfo("Huraijin / Raiju Feature Option 1", "Replaces Huraijin with Fleeting Raiju when available.", NIN.JobID, 11, "Pikachu / Raichu Option 1", "Does the same thing probably, who knows.")]
+        [CustomComboInfo("Huraijin / Raiju Feature Option 1", "Replaces Huraijin with Fleeting Raiju when available.", NIN.JobID, 11, "", "")]
         NinjaHuraijinRaijuFeature1 = 10011,
 
         [ParentCombo(NinjaHuraijinRaijuFeature)]
-        [CustomComboInfo("Huraijin / Raiju Feature Option 2", "Replaces Huraijin with Forked Raiju when available.", NIN.JobID, 12, "Pikachu / Raichu Option 2", "What we DO know, is that all NIN mains just slam their heads on the keyboard to do combos, anyway.")]
+        [CustomComboInfo("Huraijin / Raiju Feature Option 2", "Replaces Huraijin with Forked Raiju when available.", NIN.JobID, 12, "", "")]
         NinjaHuraijinRaijuFeature2 = 10012,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Armor Crush Feature", "Adds Armor Crush onto main combo.", NIN.JobID, 13, "", "Act like you can crush armor with your kitchen knives or whatever.")]
+        [CustomComboInfo("Armor Crush Feature", "Adds Armor Crush onto main combo.", NIN.JobID, 13, "", "")]
         NinjaArmorCrushOnMainCombo = 10013,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Raiju Feature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID, 14, "Raichu Feature", "Thunderbolt!")]
+        [CustomComboInfo("Raiju Feature", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID, 14, "", "")]
         NinjaFleetingRaijuFeature = 10014,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, 15, "", "Smells like a hurricane. No idea.")]
+        [CustomComboInfo("HuraijinToMainCombo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, 15, "", "")]
         NinjaHuraijinFeature = 10015,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("BunshinOnMainCombo", "Adds Bunshin whenever its off cd and you have gauge for it on main combo.", NIN.JobID, 16, "What do you call a Viera that's been cut off at the knees?", "Bun-shin KEK")]
+        [CustomComboInfo("BunshinOnMainCombo", "Adds Bunshin whenever its off cd and you have gauge for it on main combo.", NIN.JobID, 16, "", "")]
         NinjaBunshinFeature = 10016,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, 17, "BAKLAVA!", "BAKLAVA!")]
+        [CustomComboInfo("BavacakraOnMainCombo", "Adds Bavacakra you have gauge for it on main combo.", NIN.JobID, 17, "", "")]
         NinjaBhavacakraFeature = 10017,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID, 18, "", "Would probably make more sense for NIN to be a Ranged DPS, anyway.")]
+        [CustomComboInfo("Throwing Dagger Uptime Feature", "Replace Aeolian Edge with Throwing Daggers when targer is our of range.", NIN.JobID, 18, "", "")]
         NinjaRangedUptimeFeature = 10018,
 
         [ReplaceSkill(NIN.Ten, NIN.Chi, NIN.Jin)]
-        [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID, 19, "Simple Murder", "Murder, made simple. For the everyday user.")]
+        [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID, 19, "", "")]
         NinjaSimpleMudras = 10020,
 
         [ReplaceSkill(NIN.TenChiJin)]
         [ParentCombo(NinjaTCJMeisuiFeature)]
-        [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID, 20, "", "Does literally nothing. Ever")]
+        [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID, 20, "", "")]
         NinTCJFeature = 10021,
 
         [ReplaceSkill(NIN.SpinningEdge)]
@@ -1606,51 +1606,51 @@ namespace XIVSlothComboPlugin
         NinSimpleSingleTarget = 10022,
 
         [ReplaceSkill(NIN.DeathBlossom)]
-        [CustomComboInfo("Simple Ninja AoE", "Turns Death Blossom into a one-button full AoE rotation.", NIN.JobID, 1, "Dote-on AoE", "Uses /dote on every target.")]
+        [CustomComboInfo("Simple Ninja AoE", "Turns Death Blossom into a one-button full AoE rotation.", NIN.JobID, 1, "", "")]
         NinSimpleAoE = 10023,
 
         [ParentCombo(NinSimpleSingleTarget)]
-        [CustomComboInfo("Include Trick Attack", "Add or disable Trick Attack as part of the feature.", NIN.JobID, 1, "Surprise!", "It's like the Uno Reverse card of XIV!")]
+        [CustomComboInfo("Include Trick Attack", "Add or disable Trick Attack as part of the feature.", NIN.JobID, 1, "", "")]
         NinSimpleTrickFeature = 10024,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Assassinate/Dream Within a Dream Feature", "Adds Assassinate and Dream Within a Dream to the combo.", NIN.JobID, 0, "Fever Dream", "Frothinig at the mouth")]
+        [CustomComboInfo("Assassinate/Dream Within a Dream Feature", "Adds Assassinate and Dream Within a Dream to the combo.", NIN.JobID, 0, "", "")]
         NinAeolianAssassinateFeature = 10025,
 
         [ParentCombo(NinjaAeolianEdgeCombo)]
-        [CustomComboInfo("Mug Feature", "Adds Mug to the combo.", NIN.JobID, 0, "Petty Theft", "Embarrassing.")]
+        [CustomComboInfo("Mug Feature", "Adds Mug to the combo.", NIN.JobID, 0, "", "")]
         NinAeolianMugFeature = 10026,
 
         [ParentCombo(NinSimpleTrickFeature)]
-        [CustomComboInfo("Kassatsu for Suiton Feature", "Allows the use of Kassatsu to set up Suiton. Suiton is prioritised above Hyosho Ranryu under this effect \nand your trick cooldown window has elapsed.", NIN.JobID)]
+        [CustomComboInfo("Kassatsu for Suiton Feature", "Allows the use of Kassatsu to set up Suiton. Suiton is prioritised above Hyosho Ranryu under this effect \nand your trick cooldown window has elapsed.", NIN.JobID, 0, "", "")]
         NinSimpleTrickKassatsuFeature = 10027,
 
         [ParentCombo(NinSimpleAoE)]
-        [CustomComboInfo("Hellfrog Medium Feature", "Adds Hellfrog Medium to the combo if you have Ninki to spend.", NIN.JobID)]
+        [CustomComboInfo("Hellfrog Medium Feature", "Adds Hellfrog Medium to the combo if you have Ninki to spend.", NIN.JobID, 0, "", "")]
         NinSimpleHellfrogFeature = 10028,
 
         [ParentCombo(NinSimpleAoE)]
-        [CustomComboInfo("Mudra Feature", "Adds Doton and Katon/Goka Mekkyaku to the combo.", NIN.JobID)]
+        [CustomComboInfo("Mudra Feature", "Adds Doton and Katon/Goka Mekkyaku to the combo.", NIN.JobID, 0, "", "")]
         NinSimpleAoeMudras = 10029,
 
         [ParentCombo(NinSimpleAoE)]
-        [CustomComboInfo("Bunshin Feature", "Adds Bunshin and Phantom Kamaitachi to the combo.", NIN.JobID)]
+        [CustomComboInfo("Bunshin Feature", "Adds Bunshin and Phantom Kamaitachi to the combo.", NIN.JobID, 0, "", "")]
         NinSimpleAoeBunshin = 10030,
 
         [ParentCombo(NinSimpleSingleTarget)]
-        [CustomComboInfo("Add Mug", "Adds Mug to this Simple Feature.", NIN.JobID, 2)]
+        [CustomComboInfo("Add Mug", "Adds Mug to this Simple Feature.", NIN.JobID, 2, "", "")]
         NinSimpleMug = 10031,
 
         [ReplaceSkill(NIN.Huraijin)]
-        [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash", NIN.JobID, 8)]
+        [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash", NIN.JobID, 8, "", "")]
         NinHuraijinArmorCrush = 10032,
 
         [ParentCombo(NinSimpleSingleTarget)]
-        [CustomComboInfo("Ninki Pooling Feature - Bunshin", "Allows you to have a minimum amount of Ninki saved before spending on Bunshin.", NIN.JobID)]
+        [CustomComboInfo("Ninki Pooling Feature - Bunshin", "Allows you to have a minimum amount of Ninki saved before spending on Bunshin.", NIN.JobID, 0, "", "")]
         NinNinkiBunshinPooling = 10033,
 
         [ParentCombo(NinSimpleSingleTarget)]
-        [CustomComboInfo("Ninki Pooling Feature - Bhavacakra", "Allows you to have a minimum amount of Ninki saved before spending on Bhavacakra.", NIN.JobID)]
+        [CustomComboInfo("Ninki Pooling Feature - Bhavacakra", "Allows you to have a minimum amount of Ninki saved before spending on Bhavacakra.", NIN.JobID, 0, "", "")]
         NinNinkiBhavacakraPooling = 10034,
 
         #endregion
