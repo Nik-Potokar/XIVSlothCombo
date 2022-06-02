@@ -2453,77 +2453,77 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SCHOLAR
 
-        //SCHOLAR_FEATURE_NUMBERING
-        //Numbering Scheme: 16[Feature][Option][Sub-Option]
-        //Example: 16110 (Feature Number 1, Option 1, no suboption)
-        //New features should be added to the appropriate sections.
+        /* SCH Feature Numbering
 
-        #region SCHOLAR_DPS
+        Numbering Scheme: 16[Feature][Option][Sub-Option]
+        Example: 16110 (Feature Number 1, Option 1, no suboption)
+        New features should be added to the appropriate sections.
 
+        */
+
+        #region DPS
         [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio1, SCH.Bio2, SCH.Biolysis)]
-            [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100)]
-            SCH_DPS_Feature = 16100,
+        [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100)]
+        SCH_DPS_Feature = 16100,
 
-                    [ParentCombo(SCH_DPS_Feature)]
-                    [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
-                    SCH_DPS_LucidOption = 16110,
+            [ParentCombo(SCH_DPS_Feature)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
+            SCH_DPS_LucidOption = 16110,
 
-                    [ParentCombo(SCH_DPS_Feature)]
-                    [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 120)]
-                    SCH_DPS_ChainStratagemOption = 16120,
+            [ParentCombo(SCH_DPS_Feature)]
+            [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 120)]
+            SCH_DPS_ChainStratagemOption = 16120,
 
-                    [ParentCombo(SCH_DPS_Feature)]
-                    [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 130)]
-                    SCH_DPS_AetherflowOption = 16130,
+            [ParentCombo(SCH_DPS_Feature)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 130)]
+            SCH_DPS_AetherflowOption = 16130,
 
-                    [ParentCombo(SCH_DPS_Feature)]
-                    [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140)]
-                    SCH_DPS_Ruin2MovementOption = 16140,
+            [ParentCombo(SCH_DPS_Feature)]
+            [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140)]
+            SCH_DPS_Ruin2MovementOption = 16140,
 
-                    [ParentCombo(SCH_DPS_Feature)]
-                    [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150)]
-                    SCH_DPS_BioOption = 16150,
-                        
+            [ParentCombo(SCH_DPS_Feature)]
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150)]
+            SCH_DPS_BioOption = 16150,        
             #endregion
 
-            #region SCHOLAR HEALING
+        #region Healing
+        [ReplaceSkill(SCH.FeyBlessing)]
+        [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "Stupid little fairy thing")]
+        SCH_ConsolationFeature = 16210,
 
-            [ReplaceSkill(SCH.FeyBlessing)]
-            [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "Stupid little fairy thing")]
-            SCH_ConsolationFeature = 16210,
+        #endregion
 
-            #endregion
+        #region Utilities
+        [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
+        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 300, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
+        SCH_AetherflowFeature = 16300,
 
-            #region SCHOLAR UTILITIES
-            [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
-            [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 300, "", "Stop trying to pretend you're a SMN. You're not fooling anyone")]
-            SCH_AetherflowFeature = 16300,
+            [ParentCombo(SCH_AetherflowFeature)]
+            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 310)]
+            SCH_Aetherflow_Recite = 16310,
 
-                    [ParentCombo(SCH_AetherflowFeature)]
-                    [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 310)]
-                    SCH_Aetherflow_Recite = 16310,
+                [ParentCombo(SCH_Aetherflow_Recite)]
+                [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 311)]
+                SCH_Aetherflow_Recite_Excog = 16311,
 
-                        [ParentCombo(SCH_Aetherflow_Recite)]
-                        [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 311)]
-                        SCH_Aetherflow_Recite_Excog = 16311,
+                [ParentCombo(SCH_Aetherflow_Recite)]
+                [CustomComboInfo("On Indominability Option", "", SCH.JobID, 312)]
+                SCH_Aetherflow_Recite_Indom = 16312,
 
-                        [ParentCombo(SCH_Aetherflow_Recite)]
-                        [CustomComboInfo("On Indominability Option", "", SCH.JobID, 312)]
-                        SCH_Aetherflow_Recite_Indom = 16312,
+            [ParentCombo(SCH_AetherflowFeature)]
+            [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 320, "", "Oh wow look at that that one...it looks so delicious")]
+            SCH_Aetherflow_Dissipation = 16320,
 
-                    [ParentCombo(SCH_AetherflowFeature)]
-                    [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 320, "", "Oh wow look at that that one...it looks so delicious")]
-                    SCH_Aetherflow_Dissipation = 16320,
+        [ReplaceSkill(All.Swiftcast)]
+        [ConflictingCombos(ALL_Healer_Raise)]
+        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 400, "", "BRING OUT YOUR DEAD")]
+        SCH_RaiseFeature = 16400,
 
-            [ReplaceSkill(All.Swiftcast)]
-            [ConflictingCombos(ALL_Healer_Raise)]
-            [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 400, "", "BRING OUT YOUR DEAD")]
-            SCH_RaiseFeature = 16400,
-
-            [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
-            [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 500, "", "You're really gonna forget? Really?")]
-            SCH_FairyFeature = 16500,
-            #endregion
+        [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
+        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 500, "", "You're really gonna forget? Really?")]
+        SCH_FairyFeature = 16500,
+        #endregion
 
         #endregion
         // ====================================================================================
