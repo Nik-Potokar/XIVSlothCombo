@@ -1933,7 +1933,6 @@ namespace XIVSlothComboPlugin
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID, 0, "", "")]
         ReaperEnshroudtoCommunioFeature = 12059,
-
         #endregion
 
         #endregion
