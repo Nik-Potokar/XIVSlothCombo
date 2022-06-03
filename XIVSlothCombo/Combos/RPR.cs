@@ -173,7 +173,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && !InMeleeRange() && level >= Levels.Harpe)
+                    if (IsEnabled(CustomComboPreset.ReaperRangedFillerOption) && !InMeleeRange() && level >= Levels.Harpe && HasBattleTarget())
                     {
                         if (HasEffect(Buffs.Enshrouded) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && level >= Levels.Communio)
                             return Communio;

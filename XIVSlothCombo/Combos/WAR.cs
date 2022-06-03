@@ -92,12 +92,8 @@ namespace XIVSlothComboPlugin.Combos
                     var surgingThreshold = Service.Configuration.GetCustomIntValue(Config.WarSurgingRefreshRange);
                     var onslaughtChargesRemaining = Service.Configuration.GetCustomIntValue(Config.WarKeepOnslaughtCharges);
 
-                    if (IsEnabled(CustomComboPreset.WARRangedUptimeFeature) && level >= Levels.Tomahawk)
-                    {
-                        if (!InMeleeRange())
-                            return Tomahawk;
-                    }
-
+                    if (IsEnabled(CustomComboPreset.WARRangedUptimeFeature) && level >= Levels.Tomahawk && !InMeleeRange() && HasBattleTarget())
+                        return Tomahawk;
                     if (IsEnabled(CustomComboPreset.WarriorInfuriateonST) && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 40 && CanWeave(actionID))
                         return Infuriate;
 
