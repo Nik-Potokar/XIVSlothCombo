@@ -206,9 +206,9 @@ namespace XIVSlothComboPlugin.Combos
                             return All.SecondWind;
                     }
 
-                    if (IsEnabled(CustomComboPreset.ArcaneCircleonSTFeature))
+                    if (InCombat())
                     {
-                        if (IsOffCooldown(ArcaneCircle) && CanWeave(actionID) && level >= Levels.ArcaneCircle)
+                        if (IsEnabled(CustomComboPreset.ArcaneCircleonSTFeature) && IsOffCooldown(ArcaneCircle) && CanWeave(actionID) && level >= Levels.ArcaneCircle)
                             return ArcaneCircle;
                         if (IsEnabled(CustomComboPreset.PlentifulHarvestonSTOption) && HasEffect(Buffs.ImmortalSacrifice) && GetBuffRemainingTime(Buffs.ImmortalSacrifice) < 26 && !soulReaver && !enshrouded && level >= Levels.PlentifulHarvest)
                             return PlentifulHarvest;
@@ -300,7 +300,7 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(Guillotine);
                     if (IsEnabled(CustomComboPreset.ReaperWhorlOfDeathFeature) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 3 && !soulReaver && enemyHP > 5 && level >= Levels.WhorlOfDeath)
                         return WhorlOfDeath;
-                    if (IsEnabled(CustomComboPreset.ArcaneCircleonAOEFeature))
+                    if (IsEnabled(CustomComboPreset.ArcaneCircleonAOEFeature) && InCombat())
                     {
                         if (IsOffCooldown(ArcaneCircle) && CanWeave(actionID) && level >= Levels.ArcaneCircle)
                             return ArcaneCircle;
@@ -502,9 +502,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class ReaperEnshroudComboFeature : CustomCombo
+        internal class ReaperCommunioOnGGGFeature : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperEnshroudComboFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ReaperCommunioOnGGGFeature;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<RPRGauge>();
@@ -513,7 +513,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= Levels.Communio)
                         return Communio;
-                    if (gauge.VoidShroud >= 2 && level >= Levels.LemuresSlice)
+                    if (IsEnabled(CustomComboPreset.ReaperLemureOnGGGOption) && gauge.VoidShroud >= 2 && level >= Levels.LemuresSlice)
                         return OriginalHook(BloodStalk);
                 }
 
@@ -521,7 +521,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= Levels.Communio)
                         return Communio;
-                    if (gauge.VoidShroud >= 2 && level >= Levels.LemuresScythe)
+                    if (IsEnabled(CustomComboPreset.ReaperLemureOnGGGOption) && gauge.VoidShroud >= 2 && level >= Levels.LemuresScythe)
                         return OriginalHook(GrimSwathe);
                 }
 

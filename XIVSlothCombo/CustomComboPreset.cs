@@ -1827,7 +1827,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the combo when available and when current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
         ArcaneCircleonSTFeature = 12012,
 
-        [ParentCombo(ArcaneCircleonSTFeature)]
+        [ParentCombo(ReaperSliceCombo)]
         [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the combo when available.", RPR.JobID, 0, "", "")]
         PlentifulHarvestonSTOption = 12013,
 
@@ -1837,7 +1837,7 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(RPR.ShadowOfDeath)]
         [ParentCombo(GibbetGallowsonSTFeature)]
-        [CustomComboInfo("Gibbet and Gallows on SoD Option", "Adds Gibbet and Gallows to Shadow of Death as well.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Gibbet and Gallows on SoD Option", "Adds Gibbet and Gallows to Shadow of Death as well if chosen in positional preferences.", RPR.JobID, 0, "", "")]
         GibbetGallowsonSoD = 12015,
 
         [ParentCombo(ReaperSliceCombo)]
@@ -1883,7 +1883,7 @@ namespace XIVSlothComboPlugin
         ReaperComboCommunioAOEFeature = 12028,
 
         [ParentCombo(ReaperScytheCombo)]
-        [CustomComboInfo("Gluttony and Blood Stalk Option", "Adds Gluttony and Blood Stalk to the AoE combo when current target is afflicted with Death's Design and Soul Gauge < 50.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Gluttony and Grim Swathe Option", "Adds Gluttony and Grim Swathe to the AoE combo when current target is afflicted with Death's Design and Soul Gauge < 50.", RPR.JobID, 0, "", "")]
         GluttonyStalkonAOEFeature = 12029,
         #endregion
 
@@ -1934,8 +1934,12 @@ namespace XIVSlothComboPlugin
         ReaperEnshroudProtectionFeature = 12057,
 
         [ReplaceSkill(RPR.Gibbet,RPR.Gallows,RPR.Guillotine)]
-        [CustomComboInfo("Enshroud Combo on Gibbet/Gallows and Guillotine", "Adds Lemure's Slice and Communio to Gibbet/Gallows and Lemure's Scythe and Communio to Guillotine.", RPR.JobID, 0, "", "")]
-        ReaperEnshroudComboFeature = 12058,
+        [CustomComboInfo("Communio on Gibbet/Gallows and Guillotine Feature", "Adds Communio to Gibbet/Gallows and Guillotine.", RPR.JobID, 0, "", "")]
+        ReaperCommunioOnGGGFeature = 12058,
+
+        [ParentCombo(ReaperCommunioOnGGGFeature)]
+        [CustomComboInfo("Lemure's Slice/Scythe Option", "Adds Lemure's Slice to Gibbet/Gallows and Lemure's Scythe to Guillotine.", RPR.JobID, 0, "", "")]
+        ReaperLemureOnGGGOption = 12060,
 
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID, 0, "", "")]
