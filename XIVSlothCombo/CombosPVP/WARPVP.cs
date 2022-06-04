@@ -23,10 +23,9 @@ namespace XIVSlothComboPlugin
                 InnerRelease = 1303;
         }
 
-
-        internal class WARBurstMode : CustomCombo
+        internal class WARPvP_BurstMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WARBurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WARPvP_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
@@ -34,14 +33,14 @@ namespace XIVSlothComboPlugin
                 {
                     var canWeave = CanWeave(actionID);
 
-                    if (!GetCooldown(Bloodwhetting).IsCooldown && (IsEnabled(CustomComboPreset.WARBurstOption) || canWeave))
+                    if (!GetCooldown(Bloodwhetting).IsCooldown && (IsEnabled(CustomComboPreset.WARPvP_BurstMode_Bloodwhetting) || canWeave))
                         return OriginalHook(Bloodwhetting);
 
                     if (!GetCooldown(PrimalRend).IsCooldown)
                         return OriginalHook(PrimalRend);
 
                     if (!InMeleeRange() && !GetCooldown(Blota).IsCooldown && !TargetHasEffectAny(PVPCommon.Debuffs.Stun) &&
-                        (IsNotEnabled(CustomComboPreset.WARBurstBlotaOption) || GetCooldown(PrimalRend).CooldownRemaining >= 5))
+                        (IsNotEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) || GetCooldown(PrimalRend).CooldownRemaining >= 5))
                         return OriginalHook(Blota);
 
                     if (!GetCooldown(Onslaught).IsCooldown && canWeave)

@@ -13,8 +13,7 @@ namespace XIVSlothComboPlugin.Combos
             RepellingShot = 29399,
             WardensPaean = 29400,
             PitchPerfect = 29392,
-            BlastArrow = 29394,
-            FinalFantasia = 29401;
+            BlastArrow = 29394;
 
         public static class Buffs
         {
@@ -25,9 +24,9 @@ namespace XIVSlothComboPlugin.Combos
                 BlastArrowReady = 3142;
         }
 
-        internal class BurstShotFeaturePVP : CustomCombo
+        internal class BRDPvP_BurstMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRDBurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRDPvP_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -35,7 +34,6 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == PowerfulShot)
                 {
                     var canWeave = CanWeave(actionID, 0.5);
-                    //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
                     if (canWeave)
                     {

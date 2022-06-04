@@ -156,11 +156,10 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                SMNLucidDreamingFeature = "SMNLucidDreamingFeature",
-                SMNSearingLightChoice = "SMNSearingLightChoice",
-                SummonerBurstPhase = "SummonerBurstPhase",
-                SummonerPrimalChoice = "SummonerPrimalChoice",
-                SummonerSwiftcastPhase = "SummonerSwiftcastPhase";
+                SMN_Lucid = "SMN_Lucid",
+                SMN_BurstPhase = "SMN_BurstPhase",
+                SMN_PrimalChoice = "SMN_PrimalChoice",
+                SMN_SwiftcastPhase = "SMN_SwiftcastPhase";
         }
 
         internal class SMN_Raise : CustomCombo
@@ -240,10 +239,10 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<SMNGauge>();
-                var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SummonerPrimalChoice);
-                var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
-                var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMNLucidDreamingFeature);
-                var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
+                var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SMN_PrimalChoice);
+                var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SMN_BurstPhase);
+                var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMN_Lucid);
+                var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
 
                 if (actionID is Ruin or Ruin2 && InCombat())
                 {
@@ -420,10 +419,10 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<SMNGauge>();
-                var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMNLucidDreamingFeature);
-                var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SummonerBurstPhase);
-                var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SummonerPrimalChoice);
-                var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SummonerSwiftcastPhase);
+                var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMN_Lucid);
+                var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SMN_BurstPhase);
+                var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SMN_PrimalChoice);
+                var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
 
                 if (actionID is Tridisaster or Outburst && InCombat())
                 {

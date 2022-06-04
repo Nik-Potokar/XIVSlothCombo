@@ -37,13 +37,12 @@ namespace XIVSlothComboPlugin
         public static class Config
         {
             public const string
-                DNCWaltzThreshold = "DNCWaltzThreshold";
+                DNCPvP_WaltzThreshold = "DNCPvP_WaltzThreshold";
         }
 
-
-        internal class DNCBurstMode : CustomCombo
+        internal class DNCPvP_BurstMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNCBurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNCPvP_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -58,11 +57,11 @@ namespace XIVSlothComboPlugin
                     var acclaimStacks = GetBuffStacks(Buffs.Acclaim);
                     bool canWeave = CanWeave(actionID);
                     var distance = GetTargetDistance();
-                    var HPThreshold = Service.Configuration.GetCustomIntValue(Config.DNCWaltzThreshold);
+                    var HPThreshold = Service.Configuration.GetCustomIntValue(Config.DNCPvP_WaltzThreshold);
                     var HP = PlayerHealthPercentageHp();
 
                     // Honing Dance Option
-                    if (IsEnabled(CustomComboPreset.DNCHoningDanceOption) && honingDanceReady && HasTarget() && distance <= 5)
+                    if (IsEnabled(CustomComboPreset.DNCPvP_BurstMode_HoningDance) && honingDanceReady && HasTarget() && distance <= 5)
                     {
                         if (HasEffect(Buffs.Acclaim) && acclaimStacks < 4)
                             return WHM.Assize;
@@ -73,7 +72,7 @@ namespace XIVSlothComboPlugin
                     if (canWeave)
                     {
                         // Curing Waltz Option
-                        if (IsEnabled(CustomComboPreset.DNCCuringWaltzOption) && curingWaltzReady && HP <= HPThreshold)
+                        if (IsEnabled(CustomComboPreset.DNCPvP_BurstMode_CuringWaltz) && curingWaltzReady && HP <= HPThreshold)
                             return OriginalHook(CuringWaltz);
 
                         // Fan Dance weave
