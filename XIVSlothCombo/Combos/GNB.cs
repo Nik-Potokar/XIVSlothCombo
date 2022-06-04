@@ -62,6 +62,7 @@ namespace XIVSlothComboPlugin.Combos
             public const byte
                 NoMercy = 2,
                 BrutalShell = 4,
+                LightningShot = 15,
                 DangerZone = 18,
                 SolidBarrel = 26,
                 BurstStrike = 30,
@@ -98,11 +99,8 @@ namespace XIVSlothComboPlugin.Combos
                     var roughDivideChargesRemaining = Service.Configuration.GetCustomIntValue(Config.GnbKeepRoughDivideCharges);
                     var quarterWeave = GetCooldown(actionID).CooldownRemaining < 1 && GetCooldown(actionID).CooldownRemaining > 0.2;
 
-                    if (IsEnabled(CustomComboPreset.GunbreakerRangedUptimeFeature))
-                    {
-                        if (!InMeleeRange())
-                            return LightningShot;
-                    }
+                    if (IsEnabled(CustomComboPreset.GunbreakerRangedUptimeFeature) && !InMeleeRange() && HasBattleTarget() && level >= Levels.LightningShot)
+                        return LightningShot;
 
                     if (comboTime > 0)
                     {

@@ -163,12 +163,8 @@ namespace XIVSlothComboPlugin.Combos
                     var SamFillerCombo = Service.Configuration.GetCustomIntValue(Config.SamFillerCombo);
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
 
-                    if (IsEnabled(CustomComboPreset.SamuraiRangedUptimeFeature) && level >= Levels.Enpi && !inEvenFiller && !inOddFiller)
-                    {
-                        if (!InMeleeRange())
-                            return Enpi;
-                    }
-
+                    if (IsEnabled(CustomComboPreset.SamuraiRangedUptimeFeature) && level >= Levels.Enpi && !inEvenFiller && !inOddFiller && !InMeleeRange() && HasBattleTarget())
+                        return Enpi;
                     if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SamuraiTrueNorthFeature) && GetBuffStacks(Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0)
                         return All.TrueNorth;
 
