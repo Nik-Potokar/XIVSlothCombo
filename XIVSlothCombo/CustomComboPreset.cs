@@ -3005,7 +3005,7 @@ namespace XIVSlothComboPlugin
         // RDM
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
-        RDMBurstMode = 80030,
+        RDMPvP_BurstMode = 80030,
 
         // WAR
         [SecretCustomCombo]
