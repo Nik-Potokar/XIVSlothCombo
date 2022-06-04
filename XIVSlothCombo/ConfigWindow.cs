@@ -1100,23 +1100,23 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SCHOLAR
-            if (preset is CustomComboPreset.SCH_DPS_Feature)
+            if (preset is CustomComboPreset.SCH_DPS)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_ST_DPS_AltMode, "On Ruin I / Broils", "", 0);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_ST_DPS_AltMode, "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown", 1);
             }
-            if (preset is CustomComboPreset.SCH_DPS_LucidOption)
+            if (preset is CustomComboPreset.SCH_DPS_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_DPS_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
-            if (preset is CustomComboPreset.SCH_DPS_BioOption)
+            if (preset is CustomComboPreset.SCH_DPS_Bio)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_BioOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
-            if (preset is CustomComboPreset.SCH_DPS_ChainStratagemOption)
+            if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_ChainStratagemOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
-            if (preset is CustomComboPreset.SCH_FairyFeature)
+            if (preset is CustomComboPreset.SCH_FairyReminder)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 0);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 1);
             }
-            if (preset is CustomComboPreset.SCH_AetherflowFeature)
+            if (preset is CustomComboPreset.SCH_Aetherflow)
             {
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only","", 0);
                 ConfigWindowFunctions.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 1);

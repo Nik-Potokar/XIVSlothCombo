@@ -103,7 +103,7 @@ namespace XIVSlothComboPlugin
         ALL_Healer_Menu = 100098,
 
             [ReplaceSkill(AST.Ascend, WHM.Raise, SCH.Resurrection, SGE.Egeiro)]
-            [ConflictingCombos(AST_Raise_Alternative, SCH_RaiseFeature, SGE_Raise, WHMRaiseFeature)]
+            [ConflictingCombos(AST_Raise_Alternative, SCH_Raise, SGE_Raise, WHMRaiseFeature)]
             [ParentCombo(ALL_Healer_Menu)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             ALL_Healer_Raise = 100010,
@@ -1949,13 +1949,11 @@ namespace XIVSlothComboPlugin
         #region RED MAGE
 
         /* RDM Feature Numbering
-        
         Numbering Scheme: 13[Section][Feature Number][Sub-Feature]
         Example: 13110 (Section 1: Openers, Feature Number 1, Sub-feature 0)
         New features should be added to the appropriate sections.
         If more than 10 sub features, use the next feature number if available
         The three digets after RDM.JobID can be used to reorder items in the list
-
         */
 
         #region Section 1 - Openers
@@ -2097,8 +2095,7 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region SAGE
 
-        /*
-        SGE Feature Numbering
+        /* SGE Feature Numbering
         Numbering Scheme: 14[Feature][Option][Sub-Option]
         Example: 14110 (Feature Number 1, Option 1, no suboption)
         New features should be added to the appropriate sections.
@@ -2462,51 +2459,49 @@ namespace XIVSlothComboPlugin
         #region SCHOLAR
 
         /* SCH Feature Numbering
-
         Numbering Scheme: 16[Feature][Option][Sub-Option]
         Example: 16110 (Feature Number 1, Option 1, no suboption)
         New features should be added to the appropriate sections.
-
         */
 
         #region DPS
         [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio1, SCH.Bio2, SCH.Biolysis)]
         [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
-        SCH_DPS_Feature = 16100,
+        SCH_DPS = 16100,
 
-            [ParentCombo(SCH_DPS_Feature)]
+            [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110, "", "")]
-            SCH_DPS_LucidOption = 16110,
+            SCH_DPS_Lucid = 16110,
 
-            [ParentCombo(SCH_DPS_Feature)]
+            [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on Cooldown with overlap protection", SCH.JobID, 120, "", "")]
-            SCH_DPS_ChainStratagemOption = 16120,
+            SCH_DPS_ChainStrat = 16120,
 
-            [ParentCombo(SCH_DPS_Feature)]
+            [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 130, "", "")]
-            SCH_DPS_AetherflowOption = 16130,
+            SCH_DPS_Aetherflow = 16130,
 
-            [ParentCombo(SCH_DPS_Feature)]
+            [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140, "", "")]
-            SCH_DPS_Ruin2MovementOption = 16140,
+            SCH_DPS_Ruin2Movement = 16140,
 
-            [ParentCombo(SCH_DPS_Feature)]
+            [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150, "", "")]
-            SCH_DPS_BioOption = 16150,        
+            SCH_DPS_Bio = 16150,        
             #endregion
 
         #region Healing
         [ReplaceSkill(SCH.FeyBlessing)]
         [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "")]
-        SCH_ConsolationFeature = 16210,
+        SCH_Consolation = 16210,
         #endregion
 
         #region Utilities
         [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
         [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 300, "", "")]
-        SCH_AetherflowFeature = 16300,
+        SCH_Aetherflow = 16300,
 
-            [ParentCombo(SCH_AetherflowFeature)]
+            [ParentCombo(SCH_Aetherflow)]
             [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 310, "", "")]
             SCH_Aetherflow_Recite = 16310,
 
@@ -2518,18 +2513,18 @@ namespace XIVSlothComboPlugin
                 [CustomComboInfo("On Indominability Option", "", SCH.JobID, 312, "", "")]
                 SCH_Aetherflow_Recite_Indom = 16312,
 
-            [ParentCombo(SCH_AetherflowFeature)]
+            [ParentCombo(SCH_Aetherflow)]
             [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 320, "", "")]
             SCH_Aetherflow_Dissipation = 16320,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
         [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 400, "", "")]
-        SCH_RaiseFeature = 16400,
+        SCH_Raise = 16400,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
         [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 500, "", "")]
-        SCH_FairyFeature = 16500,
+        SCH_FairyReminder = 16500,
         #endregion
 
         #endregion
