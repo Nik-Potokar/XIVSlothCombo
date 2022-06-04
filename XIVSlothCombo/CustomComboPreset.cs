@@ -3165,18 +3165,18 @@ namespace XIVSlothComboPlugin
         // MNK
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Phantom Rush Combo into all-in-one damage button.", MNK.JobID)]
-        MNKBurstMode = 80100,
+        MNKPvP_Burst = 80100,
 
             #region MNK Burst Mode
-            [ParentCombo(MNKBurstMode)]
+            [ParentCombo(MNKPvP_Burst)]
             [SecretCustomCombo]
             [CustomComboInfo("Add Thunderclap", "Adds Thunderclap to jump to Enemy Target when not buffed with Wind Resonance.", MNK.JobID)]
-            MNKThunderClapOption = 80101,
+            MNKPvP_Burst_Thunderclap = 80101,
 
-            [ParentCombo(MNKBurstMode)]
+            [ParentCombo(MNKPvP_Burst)]
             [SecretCustomCombo]
             [CustomComboInfo("Add Riddle of Earth", "Adds Riddle of Earth and Earth's Reply to the Burst Mode when in combat.", MNK.JobID)]
-            MNKRiddleOfEarthOption = 80102,
+            MNKPvP_Burst_RiddleOfEarth = 80102,
             #endregion
 
         #endregion
