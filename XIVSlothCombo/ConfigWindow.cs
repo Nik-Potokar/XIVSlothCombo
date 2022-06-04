@@ -957,14 +957,12 @@ namespace XIVSlothComboPlugin
             //if (preset == CustomComboPreset.PaladinAtonementDropFeature && enabled)
             //    ConfigWindowFunctions.DrawSliderInt(2, 3, PLD.Config.PLDAtonementCharges, "How many Atonements to cast right before FoF (Atonement Drop)?");
 
-            if (preset == CustomComboPreset.PaladinInterveneFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLDKeepInterveneCharges, "How many charges to keep ready? (0 = Use All)");
+            if (preset == CustomComboPreset.PLD_ST_RoyalAuth_Intervene && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, PLD.Config.PLD_Intervene_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
             //if (preset == CustomComboPreset.SkillCooldownRemaining)
             //{
             //    var SkillCooldownRemaining = Service.Configuration.SkillCooldownRemaining;
-
-
 
             //    var inputChanged = false;
             //    ImGui.PushItemWidth(75);
