@@ -1005,7 +1005,7 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region RED MAGE
 
-            if (preset == CustomComboPreset.RDM_OGCD)
+            if (preset == CustomComboPreset.RDM_oGCD)
             {
                 ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche", "", 1);
                 ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
@@ -1030,8 +1030,8 @@ namespace XIVSlothComboPlugin
                 ConfigWindowFunctions.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Veraero 1/2/3\n-Verthunder 1/2/3", "", 4);
             }
 
-            if (preset == CustomComboPreset.RDM_LucidDreaming && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_LucidDreaming_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.RDM_Lucid && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 10000, RDM.Config.RDM_Lucid_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
                 ConfigWindowFunctions.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
