@@ -1195,7 +1195,7 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region PVP VALUES
-            if (preset == CustomComboPreset.PVPEmergencyHeals)
+            if (preset == CustomComboPreset.PvP_EmergencyHeals)
             {
                 var pc = Service.ClientState.LocalPlayer;
                 if (pc != null)
@@ -1219,10 +1219,10 @@ namespace XIVSlothComboPlugin
                 }
             }
 
-            if (preset == CustomComboPreset.PVPEmergencyGuard)
+            if (preset == CustomComboPreset.PvP_EmergencyGuard)
                 ConfigWindowFunctions.DrawSliderInt(1, 100, PVPCommon.Config.EmergencyGuardThreshold, "Set the percentage to be at or under for the feature to kick in.");
 
-            if (preset == CustomComboPreset.PVPQuickPurify)
+            if (preset == CustomComboPreset.PvP_QuickPurify)
                 ConfigWindowFunctions.DrawPvPStatusMultiChoice(PVPCommon.Config.QuickPurifyStatuses);
 
             #endregion

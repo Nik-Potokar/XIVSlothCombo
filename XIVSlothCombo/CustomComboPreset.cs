@@ -3184,19 +3184,19 @@ namespace XIVSlothComboPlugin
         #region PvPGlobals
         [SecretCustomCombo]
         [CustomComboInfo("Emergency Heals", "Uses Recuperate when your HP is under a certain threshold and you have the MP.", ADV.JobID, 1)]
-        PVPEmergencyHeals = 90000,
+        PvP_EmergencyHeals = 90000,
 
         [SecretCustomCombo]
         [CustomComboInfo("Emergency Guard", "Uses Guard when your HP is under a certain threshold.", ADV.JobID, 2)]
-        PVPEmergencyGuard = 90001,
+        PvP_EmergencyGuard = 90001,
 
         [SecretCustomCombo]
         [CustomComboInfo("Quick Purify", "Uses Purify when afflicted with any selected debuff.", ADV.JobID, 4)]
-        PVPQuickPurify = 90002,
+        PvP_QuickPurify = 90002,
 
         [SecretCustomCombo]
         [CustomComboInfo("Prevent Mash Cancelling", "Stops you cancelling your guard if you're mashing buttons", ADV.JobID, 3)]
-        PVPMashCancel = 90003,
+        PvP_MashCancel = 90003,
 
         #endregion
     }
