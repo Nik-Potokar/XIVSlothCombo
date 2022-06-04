@@ -664,7 +664,7 @@ namespace XIVSlothComboPlugin.Combos
                                 {
                                     return All.Swiftcast;
                                 }
-                                if (GetRemainingCharges(Triplecast) >= 1)
+                                if (level >= Levels.Triplecast && GetRemainingCharges(Triplecast) >= 1)
                                 {
                                     return Triplecast;
                                 }
