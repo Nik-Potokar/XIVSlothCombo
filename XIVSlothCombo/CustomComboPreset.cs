@@ -3046,12 +3046,12 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [ParentCombo(DNCPvP_BurstMode)]
         [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
-        DNCHoningDanceOption = 80071,
+        DNCPvP_BurstMode_HoningDance = 80071,
 
         [SecretCustomCombo]
         [ParentCombo(DNCPvP_BurstMode)]
         [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
-        DNCCuringWaltzOption = 80072,
+        DNCPvP_BurstMode_CuringWaltz = 80072,
 
         // SAM
         [SecretCustomCombo]

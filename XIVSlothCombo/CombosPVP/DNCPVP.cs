@@ -61,7 +61,7 @@ namespace XIVSlothComboPlugin
                     var HP = PlayerHealthPercentageHp();
 
                     // Honing Dance Option
-                    if (IsEnabled(CustomComboPreset.DNCHoningDanceOption) && honingDanceReady && HasTarget() && distance <= 5)
+                    if (IsEnabled(CustomComboPreset.DNCPvP_BurstMode_HoningDance) && honingDanceReady && HasTarget() && distance <= 5)
                     {
                         if (HasEffect(Buffs.Acclaim) && acclaimStacks < 4)
                             return WHM.Assize;
@@ -72,7 +72,7 @@ namespace XIVSlothComboPlugin
                     if (canWeave)
                     {
                         // Curing Waltz Option
-                        if (IsEnabled(CustomComboPreset.DNCCuringWaltzOption) && curingWaltzReady && HP <= HPThreshold)
+                        if (IsEnabled(CustomComboPreset.DNCPvP_BurstMode_CuringWaltz) && curingWaltzReady && HP <= HPThreshold)
                             return OriginalHook(CuringWaltz);
 
                         // Fan Dance weave

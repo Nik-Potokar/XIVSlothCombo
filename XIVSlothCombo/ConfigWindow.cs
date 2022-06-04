@@ -858,7 +858,7 @@ namespace XIVSlothComboPlugin
             #endregion
 
             #region PvP Sliders
-            if (preset == CustomComboPreset.DNCCuringWaltzOption)
+            if (preset == CustomComboPreset.DNCPvP_BurstMode_CuringWaltz)
                 ConfigWindowFunctions.DrawSliderInt(0, 90, DNCPVP.Config.DNCPvP_WaltzThreshold, "Caps at 90 to prevent waste.###DNCPvP", 150, SliderIncrements.Ones);
             #endregion
 
