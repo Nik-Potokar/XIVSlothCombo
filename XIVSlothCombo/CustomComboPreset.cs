@@ -2582,7 +2582,7 @@ namespace XIVSlothComboPlugin
         SMN_AoE_MainCombo_Ruin4 = 17012,
 
         [ParentCombo(SMN_EDFester)]
-        [CustomComboInfo("Ruin 4 Fester Feature", "Changes Fester to Ruin 4 when out of Aetherflow stacks, Energy Drain is on cooldown, and Ruin 4 is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
+        [CustomComboInfo("Ruin 4 Fester Option", "Changes Fester to Ruin 4 when out of Aetherflow stacks, Energy Drain is on cooldown, and Ruin 4 is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
         SMN_EDFester_Ruin4 = 17013,
 
         [ParentCombo(SMN_ST_MainCombo)]
@@ -2671,7 +2671,7 @@ namespace XIVSlothComboPlugin
         SMN_DemiEgiMenu_SwiftcastEgi_Only = 17038,
         
         [ParentCombo(SMN_ESPainflare)]
-        [CustomComboInfo("Ruin 4 Painflare Feature", "Changes Painflare to Ruin 4 when out of Aetherflow stacks, Energy Siphon is on cooldown, and Ruin 4 is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
+        [CustomComboInfo("Ruin 4 Painflare Option", "Changes Painflare to Ruin 4 when out of Aetherflow stacks, Energy Siphon is on cooldown, and Ruin 4 is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
         SMN_ESPainflare_Ruin4 = 17039,
 
         #endregion
