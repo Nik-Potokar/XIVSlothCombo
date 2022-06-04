@@ -141,7 +141,7 @@
                     }
 
                     // Uptime Features
-                    if (!InMeleeRange() && HasBattleTarget() && !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth))
+                    if (!InMeleeRange() && !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth))
                     {
                         if (IsEnabled(CustomComboPreset.PaladinRangedUptimeFeature) && level >= Levels.ShieldLob && !HasEffect(Buffs.Requiescat))
                             return ShieldLob;
