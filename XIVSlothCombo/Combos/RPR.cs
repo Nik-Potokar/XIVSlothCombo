@@ -127,6 +127,8 @@ namespace XIVSlothComboPlugin.Combos
                 //Gibbet and Gallows on SoD
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature) && IsEnabled(CustomComboPreset.GibbetGallowsonSoD) && soulReaver && level >= Levels.Gibbet)
                 {
+                    if (IsEnabled(CustomComboPreset.ReaperTrueNorthFeature) && GetBuffStacks(Buffs.SoulReaver) is 2 && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID))
+                        return All.TrueNorth;
                     if (positionalChoice is 0 or 1 or 2)
                     {
                         if (HasEffect(Buffs.EnhancedGibbet))
@@ -150,6 +152,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID is Slice)
                 {
+                    if (IsEnabled(CustomComboPreset.ReaperTrueNorthFeature) && GetBuffStacks(Buffs.SoulReaver) is 2 && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID))
+                        return All.TrueNorth;
                     if (IsEnabled(CustomComboPreset.GibbetGallowsonSTFeature) && HasEffect(Buffs.SoulReaver) && level >= Levels.Gibbet)
                     {
                         if (positionalChoice is 0 or 1 or 2)
@@ -310,7 +314,6 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (deathsDesign)
                     {
-
                         if (IsEnabled(CustomComboPreset.ReaperEnshroudonAOEFeature) && !enshrouded && !soulReaver && level >= Levels.Enshroud && IsOffCooldown(Enshroud) && CanWeave(actionID) && gauge.Shroud >= 50)
                             return Enshroud;
                         if (enshrouded)
@@ -375,6 +378,8 @@ namespace XIVSlothComboPlugin.Combos
 
                 if (actionID is BloodStalk)
                 {
+                    if (IsEnabled(CustomComboPreset.ReaperTrueNorthFeature) && GetBuffStacks(Buffs.SoulReaver) is 2 && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && CanWeave(Slice))
+                        return All.TrueNorth;
                     if (IsEnabled(CustomComboPreset.ReaperEnshroudonStalkComboFeature) && HasEffect(Buffs.Enshrouded))
                     {
                         if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && level >= Levels.Communio)
@@ -482,6 +487,8 @@ namespace XIVSlothComboPlugin.Combos
                 var positionalChoice = Service.Configuration.GetCustomIntValue(Config.RPRPositionChoice);
                 if (actionID is Enshroud)
                 {
+                    if (IsEnabled(CustomComboPreset.ReaperTrueNorthFeature) && GetBuffStacks(Buffs.SoulReaver) is 2 && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && CanWeave(Slice))
+                        return All.TrueNorth;
                     if (HasEffect(Buffs.SoulReaver))
                     {
                         if (HasEffect(Buffs.EnhancedGibbet))

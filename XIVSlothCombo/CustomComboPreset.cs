@@ -1945,6 +1945,10 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID, 0, "", "")]
         ReaperEnshroudtoCommunioFeature = 12059,
 
+        [ReplaceSkill(RPR.Slice,RPR.ShadowOfDeath,RPR.Enshroud)]
+        [CustomComboInfo("True North Feature", "Adds True North to Slice, Shadow of Death, Enshroud, and Blood Stalk when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
+        ReaperTrueNorthFeature = 12061,
+
         #endregion
 
         #endregion
