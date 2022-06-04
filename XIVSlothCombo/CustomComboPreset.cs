@@ -3000,7 +3000,7 @@ namespace XIVSlothComboPlugin
         // BRD
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
-        BRDBurstMode = 80020,
+        BRD_BurstMode = 80020,
 
         // RDM
         [SecretCustomCombo]
