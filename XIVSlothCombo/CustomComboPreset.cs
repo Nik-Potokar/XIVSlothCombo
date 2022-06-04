@@ -2983,18 +2983,18 @@ namespace XIVSlothComboPlugin
 
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
-        MCHBurstMode = 80010,
+        MCHPvP_BurstMode = 80010,
 
             #region MCH Burst Mode
             [SecretCustomCombo]
-            [ParentCombo(MCHBurstMode)]
+            [ParentCombo(MCHPvP_BurstMode)]
             [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
-            MCHAltDrill = 80011,
+            MCHPvP_AltDrill = 80011,
 
             [SecretCustomCombo]
-            [ParentCombo(MCHBurstMode)]
+            [ParentCombo(MCHPvP_BurstMode)]
             [CustomComboInfo("Alternate Analysis Mode", "Uses analysis with Air Anchor instead of Chain Saw.", MCHPVP.JobID)]
-            MCHAltAnalysis = 80012,
+            MCH_AltAnalysis = 80012,
             #endregion
 
         // BRD

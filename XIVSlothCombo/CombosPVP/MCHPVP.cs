@@ -36,10 +36,9 @@ namespace XIVSlothComboPlugin.Combos
                 Wildfire = 1323;
         }
 
-
-        internal class HeatedCleanShotFeature : CustomCombo
+        internal class MCHPvP_BurstMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCHBurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCHPvP_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -57,9 +56,9 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(HeatBlast);
 
                     if ((HasEffect(Buffs.DrillPrimed) ||
-                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHAltAnalysis)) ||
-                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHAltAnalysis))) &&
-                        !HasEffect(Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHAltDrill)
+                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCH_AltAnalysis)) ||
+                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCH_AltAnalysis))) &&
+                        !HasEffect(Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHPvP_AltDrill)
                         || IsOnCooldown(Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
                         return OriginalHook(Analysis);
 
