@@ -103,7 +103,7 @@ namespace XIVSlothComboPlugin
         ALL_Healer_Menu = 100098,
 
             [ReplaceSkill(AST.Ascend, WHM.Raise, SCH.Resurrection, SGE.Egeiro)]
-            [ConflictingCombos(AST_Raise_Alternative, SCH_Raise, SGE_Raise, WHMRaiseFeature)]
+            [ConflictingCombos(AST_Raise_Alternative, SCH_Raise, SGE_Raise, WHM_Raise)]
             [ParentCombo(ALL_Healer_Menu)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             ALL_Healer_Raise = 100010,
@@ -2767,121 +2767,121 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(WHM.Stone1, WHM.Stone2, WHM.Stone3, WHM.Stone4, WHM.Glare1, WHM.Glare3)]
         [CustomComboInfo("CDs on Glare/Stone", "Collection of CDs and spell features on Glare/Stone.", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
-        WHMCDsonMainComboGroup = 19099,
+        WHM_ST_MainCombo = 19099,
 
         [ReplaceSkill(WHM.AfflatusSolace)]
         [CustomComboInfo("Solace into Misery", "Replaces Afflatus Solace with Afflatus Misery when Misery is ready to be used", WHM.JobID, 0, "Misery", "I'd be miserable too if this were one of my DPS options.")]
-        WhiteMageSolaceMiseryFeature = 19000,
+        WHM_SolaceMisery = 19000,
 
         [ReplaceSkill(WHM.AfflatusRapture)]
         [CustomComboInfo("Rapture into Misery", "Replaces Afflatus Rapture with Afflatus Misery when Misery is ready to be used", WHM.JobID, 0, "Misery, but with freinds", "Let's cry together!")]
-        WhiteMageRaptureMiseryFeature = 19001,
+        WHM_RaptureMisery = 19001,
 
         [ReplaceSkill(WHM.Cure2)]
         [CustomComboInfo("Cure 2 to Cure Level Sync", "Changes Cure 2 to Cure when below level 30 in synced content.", WHM.JobID, 0, "Weenie Cure", "Bet you forgot Cure 1 existed for a sec, huh")]
-        WhiteMageCureFeature = 19002,
+        WHM_CureSync = 19002,
 
         [ReplaceSkill(WHM.Cure2)]
         [CustomComboInfo("Afflatus Feature", "Changes Cure 2 into Afflatus Solace, and Medica into Afflatus Rapture, when lilies are up.", WHM.JobID, 0, "Inflatus Feature", "Pumps you full of air. Boing!")]
-        WhiteMageAfflatusFeature = 19003,
+        WHM_Afflatus = 19003,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
         [CustomComboInfo("WHM Alternative Raise Feature", "Changes Swiftcast to Raise", WHM.JobID, 0, "What you're really here for", "You're the best at this. You got this.")]
-        WHMRaiseFeature = 19004,
+        WHM_Raise = 19004,
 
         [ReplaceSkill(WHM.Stone1, WHM.Stone2, WHM.Stone3, WHM.Stone4, WHM.Glare1, WHM.Glare3)]
-        [ParentCombo(WHMCDsonMainComboGroup)]
+        [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]
-        WHMLucidDreamingFeature = 19006,
+        WHM_ST_MainCombo_Lucid = 19006,
 
         [ReplaceSkill(WHM.Medica2)]
         [CustomComboInfo("Medica Feature", "Replaces Medica2 whenever you are under Medica2 regen with Medica1", WHM.JobID, 0, "Big Brain AoE Heals", "God bless us all, eh")]
-        WHMMedicaFeature = 19007,
+        WHM_Medica = 19007,
 
-        [ParentCombo(WHMCDsonMainComboGroup)]
+        [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Presence Of Mind Feature", "Adds Presence of mind as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "This would imply you're actually paying attention.")]
-        WHMPresenceOfMindFeature = 19008,
+        WHM_ST_MainCombo_PresenceOfMind = 19008,
 
-        [ParentCombo(WHMCDsonMainComboGroup)]
+        [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Assize Feature", "Adds Assize as oGCD onto main DPS Feature(Glare3)", WHM.JobID, 0, "", "Size 'em up, knock 'em down")]
-        WHMAssizeFeature = 19009,
+        WHM_ST_MainCombo_Assize = 19009,
 
-        [ParentCombo(WHMMedicaFeature)]
+        [ParentCombo(WHM_Medica)]
         [CustomComboInfo("Afflatus Misery On Medica Feature", "Adds Afflatus Misery onto the Medica Feature", WHM.JobID, 0, "", "Ah, back to beinig miserable.")]
-        WhiteMageAfflatusMiseryMedicaFeature = 19010,
+        WHM_Medica_Misery = 19010,
 
-        [ParentCombo(WHMMedicaFeature)]
+        [ParentCombo(WHM_Medica)]
         [CustomComboInfo("Afflatus Rapture On Medica Feature", "Adds Afflatus Rapture onto the Medica Feature", WHM.JobID, 0, "CRapture", "The final days are upon us!")]
-        WhiteMageAfflatusRaptureMedicaFeature = 19011,
+        WHM_Medica_Rapture = 19011,
 
         [ReplaceSkill(WHM.Cure2)]
         [CustomComboInfo("Afflatus Misery Feature", "Changes Cure 2 into Afflatus Misery.", WHM.JobID, 0, "", "Cures? Who needs 'em?")]
-        WhiteMageAfflatusMiseryCure2Feature = 19012,
+        WHM_Cure2_Misery = 19012,
 
-        [ParentCombo(WHMCDsonMainComboGroup)]
+        [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Adds DoT to Glare/Stone", "Adds DoT to DPS feature and refreshes it with 3 seconds remaining.", WHM.JobID, 0, "I'm an idiot", "Yes, one serving of less DPS, please.")]
-        WHMDotMainComboFeature = 19013,
+        WHM_ST_MainCombo_DoT = 19013,
 
         [ReplaceSkill(WHM.Raise)]
         [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the WHM Raise Feature/Alternative Feature", WHM.JobID, 0, "", "I can hardly breathe as it is!")]
-        WHMThinAirFeature = 19014,
+        WHM_ThinAirRaise = 19014,
 
-        [ParentCombo(WHMCDsonMainComboGroup)]
+        [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Lily Overcap Protection", "Adds Afflatus Rapture (AoE Heal) to glare when at 3 lilies.", WHM.JobID, 0, "Feed the blood lily!", "Burn out the bad! Burn out the bad!")]
-        WHMLilyOvercapFeature = 19016,
+        WHM_ST_MainCombo_LilyOvercap = 19016,
 
-        [ParentCombo(WHMCDsonMainComboGroup)]
+        [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Adds Afflatus Misery to Glare/Stone", "Adds Afflatus Misery to Glare when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
-        WHMAfflatusMiseryOGCDFeature = 19017,
+        WHM_ST_MainCombo_Misery_oGCD = 19017,
 
-        [ParentCombo(WhiteMageAfflatusFeature)]
+        [ParentCombo(WHM_Afflatus)]
         [CustomComboInfo("oGCD Heals/Shields", "Adds oGCD Healing and Shields to Cure II", WHM.JobID, 0, "To benediction, or to not benediction.", "That is the question. Whether 'tis nobler... NM, you dead.")]
-        WHMogcdHealsShieldsFeature = 19018,
+        WHM_Afflatus_oGCDHeals = 19018,
 
-        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [ParentCombo(WHM_Afflatus_oGCDHeals)]
         [CustomComboInfo("Use Tetragrammaton on oGCD.", "Only shows Tetragrammaton during oGCD weave window when HP conditions are met.", WHM.JobID, 0, "Longest word ever.", "Buffalo buffalo buffalo buffalo Buffalo buffalo buffalo.")]
-        WHMTetraOnOGCDOption = 19019,
+        WHM_Afflatus_oGCDHeals_TetraWeave = 19019,
 
-        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [ParentCombo(WHM_Afflatus_oGCDHeals)]
         [CustomComboInfo("Use Tetragrammaton on GCD.", "Shows Tetragrammaton when HP conditions are met.", WHM.JobID, 0, "Clip it! Clip it good!", "Clip it up! Into shape!")]
-        WHMTetraOnGCDOption = 19020,
+        WHM_Afflatus_oGCDHeals_Tetra = 19020,
 
-        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [ParentCombo(WHM_Afflatus_oGCDHeals)]
         [CustomComboInfo("Use Devine Benison on oGCD", "Only shows Devine Benison during oGCD weave window when target is not already under the effect.", WHM.JobID, 0, "oGCD Shield? Why not?!", "Tsun-tsun")]
-        WHMBenisonOGCDOption = 19021,
+        WHM_Afflatus_oGCDHeals_BenisonWeave = 19021,
 
-        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [ParentCombo(WHM_Afflatus_oGCDHeals)]
         [CustomComboInfo("Use Devine Benison on GCD", "Shows Devine Benison when target is not already under the effect.", WHM.JobID, 0, "It's dangerous to go alone.", "Take this.")]
-        WHMBenisonGCDOption = 19022,
+        WHM_Afflatus_oGCDHeals_Benison = 19022,
 
-        [ParentCombo(WHMCDsonMainComboGroup)]
+        [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("No Swift Opener Option", "Delays all oGCDs until after 3rd Glare 3 cast.\n>> Glare III ONLY <<", WHM.JobID, 0, "Cover me, Porkins.", "Almost there... Almost there...")]
-        WHMNoSwiftOpenerOption = 19023,
+        WHM_ST_MainCombo_NoSwiftOpener = 19023,
 
-        [ParentCombo(WHMogcdHealsShieldsFeature)]
+        [ParentCombo(WHM_Afflatus_oGCDHeals)]
         [CustomComboInfo("Prioritize oGCD Heals/Shields on Cure II when available.", "Displays oGCD Heals/Shields over Afflatus.\n(Only applies to GCD options for Tetragrammaton and Divine Benison)", WHM.JobID, 0, "That, not this.", "Shields over flowers.")]
-        WHMPrioritizeoGCDHealsShields = 19024,
+        WHM_Afflatus_oGCDHeals_Prio = 19024,
 
         [ReplaceSkill(WHM.Holy, WHM.Holy3)]
         [CustomComboInfo("CDs on Holy/Holy3", "Collection of CDs and spell features on Holy/Holy3.", WHM.JobID, 0, "Weak", "WHM DPS rotation too much?")]
-        WHM_AoE_DPS_Feature = 19190,
+        WHM_AoE_DPS = 19190,
 
-        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [ParentCombo(WHM_AoE_DPS)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the AoE DPS feature when below set MP value.", WHM.JobID, 0, "Dream within a Dream", "Awake, yet wholly asleep")]
-        WHM_AoE_Lucid = 19191,
+        WHM_AoE_DPS_Lucid = 19191,
 
-        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [ParentCombo(WHM_AoE_DPS)]
         [CustomComboInfo("Assize Feature", "Adds Assize as oGCD to Holy/Holy3", WHM.JobID, 0, "", "Size 'em up, knock 'em down")]
-        WHM_AoE_Assize = 19192,
+        WHM_AoE_DPS_Assize = 19192,
 
-        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [ParentCombo(WHM_AoE_DPS)]
         [CustomComboInfo("Lily Overcap Protection", "Adds Afflatus Rapture (AoE Heal) to Holy/Holy3 when at 3 lilies.", WHM.JobID, 0, "Feed the blood lily!", "Burn out the bad! Burn out the bad!")]
-        WHM_AoE_LilyOvercap = 19193,
+        WHM_AoE_DPS_LilyOvercap = 19193,
 
-        [ParentCombo(WHM_AoE_DPS_Feature)]
+        [ParentCombo(WHM_AoE_DPS)]
         [CustomComboInfo("Adds Afflatus Misery to Holy/Holy3", "Adds Afflatus Misery to Holy/Holy3 when Blood Lily is in full bloom.", WHM.JobID, 0, "Take this!", "**Throws Blood**")]
-        WHM_AoE_AfflatusMisery = 19194,
+        WHM_AoE_DPS_Misery = 19194,
 
         #endregion
         // ====================================================================================

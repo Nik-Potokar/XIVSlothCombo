@@ -1175,14 +1175,14 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region WHITE MAGE
-            if (preset == CustomComboPreset.WHMLucidDreamingFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHMLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.WHM_AoE_Lucid)
+            if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 ConfigWindowFunctions.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.WHMogcdHealsShieldsFeature)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, WHM.Config.WHMogcdHealsShieldsFeature, "Set HP% of target to use Tetragrammaton");
+            if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% of target to use Tetragrammaton");
 
             #endregion
             // ====================================================================================

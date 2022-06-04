@@ -8,6 +8,8 @@ namespace XIVSlothComboPlugin.Combos
         public const byte JobID = 24;
 
         public const uint
+
+            // Heals
             Cure = 120,
             Medica = 124,
             Cure2 = 135,
@@ -20,7 +22,7 @@ namespace XIVSlothComboPlugin.Combos
             Tetragrammaton = 3570,
             DivineBenison = 7432,
 
-            // dps
+            // DPS
             Glare1 = 16533,
             Glare3 = 25859,
             Stone1 = 119,
@@ -36,11 +38,9 @@ namespace XIVSlothComboPlugin.Combos
             Aero1 = 121,
             Aero2 = 132,
 
-            // buff
+            // Buffs
             ThinAir = 7430,
             PresenceOfMind = 136;
-
-
 
         public static class Buffs
         {
@@ -57,7 +57,6 @@ namespace XIVSlothComboPlugin.Combos
             Dia = 1871,
             Aero = 143,
             Aero2 = 144;
-
         }
 
         public static class Levels
@@ -82,15 +81,14 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                WHMLucidDreamingFeature = "WHMLucidDreamingFeature",
+                WHM_ST_Lucid = "WHM_ST_Lucid",
                 WHM_AoE_Lucid = "WHM_AoE_Lucid",
-                WHMogcdHealsShieldsFeature = "WHMogcdHealsShieldsFeature";
+                WHM_oGCDHeals = "WHM_oGCDHeals";
         }
 
-
-        internal class WhiteMageSolaceMiseryFeature : CustomCombo
+        internal class WHM_SolaceMisery : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageSolaceMiseryFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_SolaceMisery;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -106,9 +104,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class WhiteMageRaptureMiseryFeature : CustomCombo
+        internal class WHM_RaptureMisery : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageRaptureMiseryFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_RaptureMisery;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -124,9 +122,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class WhiteMageCureFeature : CustomCombo
+        internal class WHM_CureSync : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageCureFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_CureSync;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -140,26 +138,26 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class WhiteMageAfflatusFeature : CustomCombo
+        internal class WHM_Afflatus : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WhiteMageAfflatusFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_Afflatus;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<WHMGauge>();
-                var tetraHP = Service.Configuration.GetCustomIntValue(Config.WHMogcdHealsShieldsFeature);
+                var tetraHP = Service.Configuration.GetCustomIntValue(Config.WHM_oGCDHeals);
 
 
                 if (actionID == Cure2)
                 {
-                    if (IsEnabled(CustomComboPreset.WHMPrioritizeoGCDHealsShields) && IsEnabled(CustomComboPreset.WHMBenisonGCDOption) //Is the priority option enabled
+                    if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison) //Is the priority option enabled
                         && level >= Levels.DivineBenison && !TargetHasEffectAny(Buffs.DivineBenison) && HasCharges(DivineBenison) //Can I use Divine Benison
                          && (GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29)) //Did I just use Divine Benison
                         return actionID;
-                    if (IsEnabled(CustomComboPreset.WHMPrioritizeoGCDHealsShields) && IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)
+                    if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra)
                         && IsOffCooldown(Tetragrammaton) && level >= Levels.Tetragrammaton && GetTargetHPPercent() <= tetraHP)
                         return actionID;
-                    else if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryCure2Feature) && gauge.BloodLily == 3)
+                    else if (IsEnabled(CustomComboPreset.WHM_Cure2_Misery) && gauge.BloodLily == 3)
                         return AfflatusMisery;
                     if (level >= Levels.AfflatusSolace && gauge.Lily > 0)
                         return AfflatusSolace;
@@ -180,7 +178,7 @@ namespace XIVSlothComboPlugin.Combos
 
             internal class WHMRaiseFeature : CustomCombo
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMRaiseFeature;
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_Raise;
 
                 protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {
@@ -189,7 +187,7 @@ namespace XIVSlothComboPlugin.Combos
                         var thinairCD = GetCooldown(ThinAir);
                         var hasThinAirBuff = HasEffect(Buffs.ThinAir);
 
-                        if (IsEnabled(CustomComboPreset.WHMThinAirFeature) && thinairCD.RemainingCharges > 0 && HasEffect(All.Buffs.Swiftcast) && !hasThinAirBuff && level >= Levels.ThinAir)
+                        if (IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && thinairCD.RemainingCharges > 0 && HasEffect(All.Buffs.Swiftcast) && !hasThinAirBuff && level >= Levels.ThinAir)
                             return ThinAir;
                         if (HasEffect(All.Buffs.Swiftcast))
                             return Raise;
@@ -201,7 +199,7 @@ namespace XIVSlothComboPlugin.Combos
 
             internal class WHMCDsonMainComboGroup : CustomCombo
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMCDsonMainComboGroup;
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
                 internal static uint glare3Count = 0;
                 internal static bool usedGlare3 = false;
 
@@ -213,7 +211,7 @@ namespace XIVSlothComboPlugin.Combos
                         var diaDebuff = FindTargetEffect(Debuffs.Dia);
                         var aero1Debuff = FindTargetEffect(Debuffs.Aero);
                         var aero2Debuff = FindTargetEffect(Debuffs.Aero2);
-                        var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.WHMLucidDreamingFeature);
+                        var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.WHM_ST_Lucid);
                         var gauge = GetJobGauge<WHMGauge>();
 
                         //WHM_NO_SWIFT_OPENER_MACHINE
@@ -228,19 +226,19 @@ namespace XIVSlothComboPlugin.Combos
                         //CHECK_GLARE3_USE_RESET
                         if (usedGlare3 == true && GetCooldownRemainingTime(Glare3) < 1) usedGlare3 = false; // Resets block to allow CHECK_GLARE3_USE
                                                                                                                 //BYPASS_COUNTER_WHEN_DISABLED
-                        if (IsNotEnabled(CustomComboPreset.WHMNoSwiftOpenerOption) || level < Levels.Glare3) glare3Count = 3;
+                        if (IsNotEnabled(CustomComboPreset.WHM_ST_MainCombo_NoSwiftOpener) || level < Levels.Glare3) glare3Count = 3;
 
                         if (CanSpellWeave(actionID) && glare3Count >= 3)
                         {
-                            if (IsEnabled(CustomComboPreset.WHMPresenceOfMindFeature) && level >= Levels.PresenceOfMind && IsOffCooldown(PresenceOfMind))
+                            if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind) && level >= Levels.PresenceOfMind && IsOffCooldown(PresenceOfMind))
                                 return PresenceOfMind;
-                            if (IsEnabled(CustomComboPreset.WHMAssizeFeature) && level >= Levels.Assize && IsOffCooldown(Assize))
+                            if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Assize) && level >= Levels.Assize && IsOffCooldown(Assize))
                                 return Assize;
-                            if (IsEnabled(CustomComboPreset.WHMLucidDreamingFeature) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                            if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
                                 return All.LucidDreaming;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WHMDotMainComboFeature) && inCombat)
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && inCombat)
                         {
                             if (level is >= Levels.Aero1 and < Levels.Aero2)
                             {
@@ -261,10 +259,10 @@ namespace XIVSlothComboPlugin.Combos
                             }
                         }
 
-                        if (IsEnabled(CustomComboPreset.WHMLilyOvercapFeature) && level >= Levels.AfflatusRapture && ((gauge.Lily == 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && level >= Levels.AfflatusRapture && ((gauge.Lily == 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
                             return AfflatusRapture;
 
-                        if (IsEnabled(CustomComboPreset.WHMAfflatusMiseryOGCDFeature) && level >= Levels.AfflatusMisery && gauge.BloodLily >= 3 && glare3Count >= 3)
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Misery_oGCD) && level >= Levels.AfflatusMisery && gauge.BloodLily >= 3 && glare3Count >= 3)
                             return AfflatusMisery;
                     }
 
@@ -274,7 +272,7 @@ namespace XIVSlothComboPlugin.Combos
 
             internal class WHMMedicaFeature : CustomCombo
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMMedicaFeature;
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_Medica;
 
                 protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {
@@ -284,9 +282,9 @@ namespace XIVSlothComboPlugin.Combos
                         var medica2Buff = GetBuffRemainingTime(Buffs.Medica2);
                         if (level < Levels.Medica2)
                             return Medica1;
-                        if (IsEnabled(CustomComboPreset.WhiteMageAfflatusMiseryMedicaFeature) && gauge.BloodLily == 3)
+                        if (IsEnabled(CustomComboPreset.WHM_Medica_Misery) && gauge.BloodLily == 3)
                             return AfflatusMisery;
-                        if (IsEnabled(CustomComboPreset.WhiteMageAfflatusRaptureMedicaFeature) && level >= Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff > 2)
+                        if (IsEnabled(CustomComboPreset.WHM_Medica_Rapture) && level >= Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff > 2)
                             return AfflatusRapture;
                         if (HasEffect(Buffs.Medica2) && medica2Buff > 2)
                             return Medica1;
@@ -298,35 +296,36 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
-        internal class WHMogcdHealsShieldsFeature : CustomCombo
+        internal class WHM_Afflatus_oGCDHeals : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMogcdHealsShieldsFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_Afflatus_oGCDHeals;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var tetraHP = Service.Configuration.GetCustomIntValue(Config.WHMogcdHealsShieldsFeature);
+                var tetraHP = Service.Configuration.GetCustomIntValue(Config.WHM_oGCDHeals);
 
                 if (actionID == Cure2)
                 {
                     if (level >= Levels.DivineBenison && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison)
                         && (GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29))
                     {
-                        if (IsEnabled(CustomComboPreset.WHMBenisonOGCDOption) && CanSpellWeave(actionID)) { return DivineBenison; }
-                        if (IsEnabled(CustomComboPreset.WHMBenisonGCDOption)) { return DivineBenison; }
+                        if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_BenisonWeave) && CanSpellWeave(actionID)) { return DivineBenison; }
+                        if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison)) { return DivineBenison; }
                     }
                     if (level >= Levels.Tetragrammaton && IsOffCooldown(Tetragrammaton) && GetTargetHPPercent() <= tetraHP)
                     {
-                        if (IsEnabled(CustomComboPreset.WHMTetraOnOGCDOption) && CanSpellWeave(actionID)) { return Tetragrammaton; }
-                        if (IsEnabled(CustomComboPreset.WHMTetraOnGCDOption)) { return Tetragrammaton; }
+                        if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra) && CanSpellWeave(actionID)) { return Tetragrammaton; }
+                        if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra)) { return Tetragrammaton; }
                     }
                 }
 
                 return actionID;
             }
         }
-        internal class WHM_AoE_DPS_Feature : CustomCombo
+
+        internal class WHM_AoE_DPS : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_AoE_DPS_Feature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_AoE_DPS;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -335,16 +334,16 @@ namespace XIVSlothComboPlugin.Combos
                     var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.WHM_AoE_Lucid);
                     var gauge = GetJobGauge<WHMGauge>();
 
-                    if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                    if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
                         return All.LucidDreaming;
 
-                    if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_Assize) && level >= Levels.Assize && IsOffCooldown(Assize))
+                    if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && level >= Levels.Assize && IsOffCooldown(Assize))
                         return Assize;
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoE_LilyOvercap) && level >= Levels.AfflatusRapture && ((gauge.Lily == 3 && gauge.BloodLily < 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_LilyOvercap) && level >= Levels.AfflatusRapture && ((gauge.Lily == 3 && gauge.BloodLily < 3) || (gauge.Lily == 2 && gauge.LilyTimer >= 17000)))
                         return AfflatusRapture;
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoE_AfflatusMisery) && level >= Levels.AfflatusMisery && gauge.BloodLily >= 3 && CurrentTarget is Dalamud.Game.ClientState.Objects.Types.BattleNpc)
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && level >= Levels.AfflatusMisery && gauge.BloodLily >= 3 && CurrentTarget is Dalamud.Game.ClientState.Objects.Types.BattleNpc)
                         return AfflatusMisery;
                 }
 
@@ -353,5 +352,4 @@ namespace XIVSlothComboPlugin.Combos
         }
 
     }
-
 }
