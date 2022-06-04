@@ -3036,7 +3036,7 @@ namespace XIVSlothComboPlugin
         // SGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
-        SGEBurstMode = 80060,
+        SGEPvP_BurstMode = 80060,
 
         // DNC
         [SecretCustomCombo]
