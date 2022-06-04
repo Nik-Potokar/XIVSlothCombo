@@ -3023,15 +3023,15 @@ namespace XIVSlothComboPlugin
         WARPvP_BurstMode_Blota = 80042,
         
         // NIN
-        [ConflictingCombos(NINAoEBurstMode)]
+        [ConflictingCombos(NINPvP_AoE_BurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
-        NINBurstMode = 80050,
+        NINPvP_ST_BurstMode = 80050,
 
-        [ConflictingCombos(NINBurstMode)]
+        [ConflictingCombos(NINPvP_ST_BurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
-        NINAoEBurstMode = 80051,
+        NINPvP_AoE_BurstMode = 80051,
 
         // SGE
         [SecretCustomCombo]
