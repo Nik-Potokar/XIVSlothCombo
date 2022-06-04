@@ -1081,21 +1081,21 @@ namespace XIVSlothComboPlugin
             #endregion
             // ====================================================================================
             #region SAMURAI
-            if (preset == CustomComboPreset.SamuraiOvercapFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamKenkiOvercapAmount, "Set the Kenki overcap amount for ST combos.");
-            if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamAOEKenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
+            if (preset == CustomComboPreset.SAM_ST_Overcap && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SAM_ST_KenkiOvercapAmount, "Set the Kenki overcap amount for ST combos.");
+            if (preset == CustomComboPreset.SAM_AoE_Overcap && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SAM_AoE_KenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
             //PVP
             if (preset == CustomComboPreset.SAMPvP_BurstMode && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 2, SAMPvP.Config.SAMPvP_SotenCharges, "How many charges of Soten to keep ready? (0 = Use All).");
             if (preset == CustomComboPreset.SAMPvP_KashaFeatures_GapCloser && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 100, SAMPvP.Config.SAMPvP_SotenHP, "Use Soten on enemies below selected HP.");
             //Fillers
-            if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
+            if (preset == CustomComboPreset.SAM_ST_GekkoCombo_FillerCombos)
             {
-                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.14+", "2 Filler GCDs", 1);
-                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
-                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SamFillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.14+", "2 Filler GCDs", 1);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
+                    ConfigWindowFunctions.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range. \nHakaze will be delayed by half a GCD after Enpi.", 3);
             }
             #endregion
             // ====================================================================================
