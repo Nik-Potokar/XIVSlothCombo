@@ -3094,18 +3094,18 @@ namespace XIVSlothComboPlugin
         //BLM
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Fire and Blizzard into all-in-one damage buttons.", BLM.JobID)]
-        BLMBurstMode = 80090,
+        BLMPvP_BurstMode = 80090,
 
             #region BLM Burst Mode
-            [ParentCombo(BLMBurstMode)]
+            [ParentCombo(BLMPvP_BurstMode)]
             [SecretCustomCombo]
             [CustomComboInfo("Add Night Wing", "Adds Night Wing to the Burst Mode", BLM.JobID)]
-            BLMNightWing = 80091,
+            BLMPvP_BurstMode_NightWing = 80091,
 
-            [ParentCombo(BLMBurstMode)]
+            [ParentCombo(BLMPvP_BurstMode)]
             [SecretCustomCombo]
             [CustomComboInfo("Add Aetherial Manipulation", "Uses Aetherial Manipulation to gap close if Burst is off cooldown.", BLM.JobID)]
-            BLMAetherialManip = 80092,
+            BLMPvP_BurstMode_AetherialManip = 80092,
             #endregion
 
         // RPR
