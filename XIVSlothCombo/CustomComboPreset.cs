@@ -1764,7 +1764,7 @@ namespace XIVSlothComboPlugin
         PaladinExpiacionScornOption = 11027,
 
         [ParentCombo(PaladinRoyalAuthorityCombo)]
-        [CustomComboInfo("FoF Opener Feature", "Adds the FoF opener to the main combo. Requires level 68.", PLD.JobID, 0, "", "")]
+        [CustomComboInfo("FoF Opener Feature", "Adds the FoF opener to the main combo. Will execute the full FoF opener by default, but if FoF is activated 18s pre-pull, the 18s pre-pull opener will be executed. Requires level 68.", PLD.JobID, 0, "", "")]
         PaladinFoFOpenerFeature = 11028,
 
         [ParentCombo(PaladinFoFOpenerFeature)]
