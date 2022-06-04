@@ -24,9 +24,9 @@ namespace XIVSlothComboPlugin.Combos
                 BlastArrowReady = 3142;
         }
 
-        internal class BRD_BurstMode : CustomCombo
+        internal class BRDPvP_BurstMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_BurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRDPvP_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
