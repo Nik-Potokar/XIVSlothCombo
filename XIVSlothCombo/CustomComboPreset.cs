@@ -3010,17 +3010,17 @@ namespace XIVSlothComboPlugin
         // WAR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
-        WARBurstMode = 80040,
+        WARPvP_BurstMode = 80040,
 
         [SecretCustomCombo]
-        [ParentCombo(WARBurstMode)]
+        [ParentCombo(WARPvP_BurstMode)]
         [CustomComboInfo("Bloodwhetting Option", "Allows usage of bloodwhetting anytime, not just inbetween GCDs.", WARPVP.JobID)]
-        WARBurstOption = 80041,
+        WARPvP_BurstMode_Bloodwhetting = 80041,
 
         [SecretCustomCombo]
-        [ParentCombo(WARBurstMode)]
+        [ParentCombo(WARPvP_BurstMode)]
         [CustomComboInfo("Blota Option", "Removes blota from main combo if Primal Rend has 5 seconds or less on its cooldown.", WARPVP.JobID)]
-        WARBurstBlotaOption = 80042,
+        WARPvP_BurstMode_Blota = 80042,
         
         // NIN
         [ConflictingCombos(NINAoEBurstMode)]
