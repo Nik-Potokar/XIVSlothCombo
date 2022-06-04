@@ -2989,12 +2989,12 @@ namespace XIVSlothComboPlugin
             [SecretCustomCombo]
             [ParentCombo(MCHPvP_BurstMode)]
             [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
-            MCHPvP_AltDrill = 80011,
+            MCHPvP_BurstMode_AltDrill = 80011,
 
             [SecretCustomCombo]
             [ParentCombo(MCHPvP_BurstMode)]
             [CustomComboInfo("Alternate Analysis Mode", "Uses analysis with Air Anchor instead of Chain Saw.", MCHPVP.JobID)]
-            MCH_AltAnalysis = 80012,
+            MCHPvP_BurstMode_AltAnalysis = 80012,
             #endregion
 
         // BRD

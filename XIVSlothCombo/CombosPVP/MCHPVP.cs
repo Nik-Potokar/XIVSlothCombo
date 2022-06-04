@@ -56,9 +56,9 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(HeatBlast);
 
                     if ((HasEffect(Buffs.DrillPrimed) ||
-                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCH_AltAnalysis)) ||
-                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCH_AltAnalysis))) &&
-                        !HasEffect(Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHPvP_AltDrill)
+                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis)) ||
+                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis))) &&
+                        !HasEffect(Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltDrill)
                         || IsOnCooldown(Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
                         return OriginalHook(Analysis);
 
