@@ -2558,7 +2558,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Fists of Fury", "Show MNK how it's done, will ya?")]
         SMN_Ifrit_Cyclone = 17006,
 
-        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 5, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
+        [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 3, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
         SMN_Titan_MountainBuster = 17007,
 
         [ReplaceSkill(SMN.Fester)]
@@ -2582,8 +2582,8 @@ namespace XIVSlothComboPlugin
         SMN_AoE_MainCombo_Ruin4 = 17012,
 
         [ParentCombo(SMN_EDFester)]
-        [CustomComboInfo("Ruin IV Fester/PainFlare Feature", "Change Fester/PainFlare into Ruin4 when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
-        SMN_EDFester_PainflareRuin4 = 17013,
+        [CustomComboInfo("Ruin 4 Fester Feature", "Changes Fester to Ruin 4 when out of Aetherflow stacks, Energy Drain is on cooldown, and Ruin 4 is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
+        SMN_EDFester_Ruin4 = 17013,
 
         [ParentCombo(SMN_ST_MainCombo)]
         [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to the Main Combo. Will use on cooldown.", SMN.JobID, 1)]
@@ -2617,7 +2617,7 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
         SMN_DemiEgiMenu_SwiftcastEgi = 17023,
 
-        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 3, "", "")]
+        [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 10, "", "")]
         SMN_DemiAbilities = 17024,
 
         [ParentCombo(SMN_DemiEgiMenu)]
@@ -2669,6 +2669,10 @@ namespace XIVSlothComboPlugin
         [ParentCombo(SMN_DemiEgiMenu_SwiftcastEgi)]
         [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on single target combo.", SMN.JobID, 2, "", "")]
         SMN_DemiEgiMenu_SwiftcastEgi_Only = 17038,
+        
+        [ParentCombo(SMN_ESPainflare)]
+        [CustomComboInfo("Ruin 4 Painflare Feature", "Changes Painflare to Ruin 4 when out of Aetherflow stacks, Energy Siphon is on cooldown, and Ruin 4 is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
+        SMN_ESPainflare_Ruin4 = 17039,
 
         #endregion
         // ====================================================================================

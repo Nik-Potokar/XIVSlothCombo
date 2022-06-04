@@ -203,7 +203,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Fester)
                 {
                     var gauge = GetJobGauge<SMNGauge>();
-                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergyDrain) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_EDFester_PainflareRuin4))
+                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergyDrain) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_EDFester_Ruin4))
                         return Ruin4;
                     if (level >= Levels.EnergyDrain && !gauge.HasAetherflowStacks)
                         return EnergyDrain;
@@ -222,7 +222,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Painflare)
                 {
                     var gauge = GetJobGauge<SMNGauge>();
-                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_EDFester_PainflareRuin4))
+                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
                         return Ruin4;
                     if (level >= Levels.EnergySiphon && !gauge.HasAetherflowStacks)
                         return EnergySiphon;
