@@ -1086,10 +1086,10 @@ namespace XIVSlothComboPlugin
             if (preset == CustomComboPreset.SamuraiOvercapFeatureAoe && enabled)
                 ConfigWindowFunctions.DrawSliderInt(0, 85, SAM.Config.SamAOEKenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
             //PVP
-            if (preset == CustomComboPreset.SAMBurstMode && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 2, SAMPvP.Config.SamSotenCharges, "How many charges of Soten to keep ready? (0 = Use All).");
-            if (preset == CustomComboPreset.SamGapCloserFeature && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 100, SAMPvP.Config.SamSotenHP, "Use Soten on enemies below selected HP.");
+            if (preset == CustomComboPreset.SAMPvP_BurstMode && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 2, SAMPvP.Config.SAMPvP_SotenCharges, "How many charges of Soten to keep ready? (0 = Use All).");
+            if (preset == CustomComboPreset.SAMPvP_KashaFeatures_GapCloser && enabled)
+                ConfigWindowFunctions.DrawSliderInt(0, 100, SAMPvP.Config.SAMPvP_SotenHP, "Use Soten on enemies below selected HP.");
             //Fillers
             if (preset == CustomComboPreset.SamuraiFillersonMainCombo)
             {

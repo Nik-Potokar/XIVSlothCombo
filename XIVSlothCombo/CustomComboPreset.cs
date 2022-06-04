@@ -3056,39 +3056,39 @@ namespace XIVSlothComboPlugin
         // SAM
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.\nWill only cast Midare and Ogi Namikiri when you're not moving.\nWill not use if target is guarding.", SAM.JobID)]
-        SAMBurstMode = 80080,
+        SAMPvP_BurstMode = 80080,
 
             #region SAM Burst Mode
             [SecretCustomCombo]
-            [ParentCombo(SAMBurstMode)]
+            [ParentCombo(SAMPvP_BurstMode)]
             [CustomComboInfo("Add Chiten", "Adds Chiten to the Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
-            SAMBurstChitenFeature = 80081,
+            SAMPvP_BurstMode_Chiten = 80081,
 
             [SecretCustomCombo]
-            [ParentCombo(SAMBurstMode)]
+            [ParentCombo(SAMPvP_BurstMode)]
             [CustomComboInfo("Add Mineuchi", "Adds Mineuchi to the Burst Mode.", SAM.JobID)]
-            SAMBurstStunFeature = 80082,
+            SAMPvP_BurstMode_Stun = 80082,
 
             [SecretCustomCombo]
-            [ParentCombo(SAMBurstMode)]
+            [ParentCombo(SAMPvP_BurstMode)]
             [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID, 1)]
-            SamPVPMainComboFeature = 80083,        
+            SAMPvP_BurstMode_MainCombo = 80083,        
             #endregion
 
         [SecretCustomCombo]
         [CustomComboInfo("PvP Features for Kasha Combo", "Collection of Features for Kasha Combo.", SAM.JobID)]
-        SamPvPKashaFeatures = 80084,
+        SAMPvP_KashaFeatures = 80084,
 
             #region PvP Features for Kasha Combo
             [SecretCustomCombo]
-            [ParentCombo(SamPvPKashaFeatures)]
+            [ParentCombo(SAMPvP_KashaFeatures)]
             [CustomComboInfo("Soten Gap Closer Option", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
-            SamGapCloserFeature = 80085,
+            SAMPvP_KashaFeatures_GapCloser = 80085,
 
             [SecretCustomCombo]
-            [ParentCombo(SamPvPKashaFeatures)]
-            [CustomComboInfo("AOE Melee Protection", "Makes the AOE combos unusable if not in melee range of target.", SAM.JobID)]
-            SamAOEMeleeFeature = 80086,
+            [ParentCombo(SAMPvP_KashaFeatures)]
+            [CustomComboInfo("AoE Melee Protection", "Makes the AOE combos unusable if not in melee range of target.", SAM.JobID)]
+            SAMPvP_KashaFeatures_AoEMeleeProtection = 80086,
             #endregion
             
         //BLM
