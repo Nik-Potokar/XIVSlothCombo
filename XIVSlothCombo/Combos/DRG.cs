@@ -589,7 +589,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (gauge.IsLOTDActive is true && level >= Levels.Stardiver && HasEffect(Buffs.PowerSurge) && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.3))
                                 return Stardiver;
 
-                            if (HasEffect(Buffs.BattleLitany) && gauge.IsLOTDActive is true && level >= Levels.SpineshatterDive && HasEffect(Buffs.PowerSurge) && GetRemainingCharges(SpineshatterDive) == 2 && canWeave)
+                            if (HasEffect(Buffs.BattleLitany) && gauge.IsLOTDActive is true && level >= Levels.SpineshatterDive && HasEffect(Buffs.PowerSurge) && GetRemainingCharges(SpineshatterDive) > 0 && canWeave)
                                 return SpineshatterDive;
                         }
                     }

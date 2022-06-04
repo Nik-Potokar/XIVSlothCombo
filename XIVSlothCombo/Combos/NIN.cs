@@ -393,7 +393,7 @@ namespace XIVSlothComboPlugin.Combos
                     var jutsuCharges = jutsuCooldown.RemainingCharges;
                     var gauge = GetJobGauge<NINGauge>();
 
-                    lastUsedJutsu = OriginalHook(Ninjutsu) != Ninjutsu ? OriginalHook(Ninjutsu) : lastUsedJutsu;                    
+                    lastUsedJutsu = OriginalHook(Ninjutsu) != Ninjutsu ? OriginalHook(Ninjutsu) : lastUsedJutsu;
 
                     if (gauge.HutonTimer == 0 && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu) && level >= Levels.Huraijin)
                         return Huraijin;
@@ -441,8 +441,8 @@ namespace XIVSlothComboPlugin.Combos
                         if (OriginalHook(Ninjutsu) == FumaShuriken)
                             return TenCombo;
 
-                        if (HasEffect(Buffs.Kassatsu))
-                            return OriginalHook(Jin);
+
+                        return OriginalHook(Jin);
                     }
 
                     if (!HasEffect(Buffs.Mudra))
@@ -525,15 +525,16 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == Hide)
                 {
-                    if (HasEffect(Buffs.Suiton) || HasEffect(Buffs.Hidden))
-                    {
-                        return TrickAttack;
-                    }
-
                     if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                     {
                         return Mug;
                     }
+
+                    if (HasEffect(Buffs.Hidden))
+                    {
+                        return TrickAttack;
+                    }
+
                 }
 
                 return actionID;
@@ -700,11 +701,11 @@ namespace XIVSlothComboPlugin.Combos
                                     if (HasEffect(Buffs.Kassatsu) && level >= Levels.EnhancedKassatsu)
                                         return JinCombo;
 
-                                    if (level >= Levels.Jin)
-                                        return OriginalHook(JinCombo);
-                                    
                                     if (level >= Levels.Chi)
                                         return OriginalHook(ChiCombo);
+
+                                    if (level >= Levels.Jin)
+                                        return OriginalHook(JinCombo);
                                 }
                             }
 

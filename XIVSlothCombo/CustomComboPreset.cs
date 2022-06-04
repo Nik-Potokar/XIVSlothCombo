@@ -1551,7 +1551,7 @@ namespace XIVSlothComboPlugin
         NinjaKassatsuChiJinFeature = 10006,
 
         [ReplaceSkill(NIN.Hide)]
-        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat.", NIN.JobID, 7, "Stand and Deliver", "John Cena is a thief, now?")]
+        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat. Outside of combat will replace Hide with Trick Attack whilst hidden.", NIN.JobID, 7, "Stand and Deliver", "John Cena is a thief, now?")]
         NinjaHideMugFeature = 10007,
 
         [ReplaceSkill(NIN.AeolianEdge)]

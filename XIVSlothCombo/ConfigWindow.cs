@@ -165,11 +165,16 @@ namespace XIVSlothComboPlugin
                 ImGui.TextUnformatted($"DISTANCE FROM TARGET: {comboClass.GetTargetDistance()}");
                 ImGui.TextUnformatted($"TARGET HP VALUE: {comboClass.EnemyHealthCurrentHp()}");
                 ImGui.TextUnformatted($"LAST ACTION: {ActionWatching.GetActionName(ActionWatching.LastAction)}");
+                ImGui.TextUnformatted($"LAST ACTION COST: {comboClass.GetResourceCost(ActionWatching.LastAction)}");
+                ImGui.TextUnformatted($"LAST ACTION TYPE: {ActionWatching.GetAttackType(ActionWatching.LastAction)}");
                 ImGui.TextUnformatted($"LAST WEAPONSKILL: {ActionWatching.GetActionName(ActionWatching.LastWeaponskill)}");
                 ImGui.TextUnformatted($"LAST SPELL: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
                 ImGui.TextUnformatted($"LAST ABILITY: {ActionWatching.GetActionName(ActionWatching.LastAbility)}");
                 ImGui.TextUnformatted($"ZONE: {Service.ClientState.TerritoryType}");
-                ImGui.TextUnformatted($"SELECTED BLU SPELLS: {string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
+                ImGui.BeginChild("BLUSPELLS", new Vector2(250, 100), false);
+                ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
+                ImGui.EndChild();
+               
 
             }
             else
@@ -414,6 +419,11 @@ namespace XIVSlothComboPlugin
 
         private void DrawPVEWindow()
         {
+            if (Service.ClassLocked)
+            {
+                ImGui.Text("Equip your job stone to re-unlock features.");
+                return;
+            }
             ImGui.Text("This tab allows you to select which PvE combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
 

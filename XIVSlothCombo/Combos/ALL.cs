@@ -134,12 +134,12 @@
                 {
                     if (IsOffCooldown(Swiftcast))
                         return Swiftcast;
-                    if (HasEffect(Buffs.Swiftcast))
-                    {
-                        if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHMThinAirFeature) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && level >= WHM.Levels.ThinAir)
-                            return WHM.ThinAir;
-                        return actionID;
-                    }
+
+                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHMThinAirFeature) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && level >= WHM.Levels.ThinAir)
+                        return WHM.ThinAir;
+
+                    return actionID;
+
                 }
 
                 return actionID;
