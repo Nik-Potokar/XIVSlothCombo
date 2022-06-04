@@ -117,7 +117,7 @@ namespace XIVSlothComboPlugin
             [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
             ALL_Caster_Addle = 100020,
 
-            [ConflictingCombos(SummonerRaiseFeature, RDM_Verraise)]
+            [ConflictingCombos(SMN_Raise, RDM_Verraise)]
             [ParentCombo(ALL_Caster_Menu)]
             [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
             ALL_Caster_Raise = 100021,
@@ -2531,149 +2531,149 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2)]
         [CustomComboInfo("Enable Single Target Combo Features", "Enables features tied to Ruin, or Ruin II.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
-        SummonerMainComboFeature = 17000,
+        SMN_ST_MainCombo = 17000,
 
         [ReplaceSkill(SMN.Tridisaster)]
-        [CustomComboInfo("Enable AOE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
-        SummonerAOEComboFeature = 17001,
+        [CustomComboInfo("Enable AoE Combo Features", "Enables features tied to Tridisaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple AOE)", SMN.JobID, 1, "", "Can't deal with dungeons on your own? Fear not.")]
+        SMN_AoE_MainCombo = 17001,
 
-        [ParentCombo(SummonerDemiSummonsFeature)]
+        [ParentCombo(SMN_ST_MainCombo_DemiSummons)]
         [CustomComboInfo("Demi Attacks on Main Combo", "Adds Astral Flow to the Main Combo.", SMN.JobID, 0, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
-        SummonerSingleTargetDemiFeature = 17002,
+        SMN_ST_MainCombo_DemiSummons_Attacks = 17002,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("AOE Demi Attacks on AOE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
-        SummonerAOEDemiFeature = 17003,
+        [ParentCombo(SMN_AoE_MainCombo)]
+        [CustomComboInfo("AoE Demi Attacks on AoE Combo", "Adds Astral Flare/Brand of Purgatory to the AOE Combo.", SMN.JobID, 4, "BRRRR", "Upgrade!")]
+        SMN_AoE_MainCombo_Demis = 17003,
 
-        [ParentCombo(EgisOnRuinFeature)]
+        [ParentCombo(SMN_ST_MainCombo_EgiSummons)]
         [CustomComboInfo("Gemshine on Main Combo", "Adds Egi Attacks (Gemshine) to Main Combo.", SMN.JobID, 1, "Eggy-bread", "No idea when you're in burst phase?\nHint: It's all the time, really")]
-        SummonerEgiAttacksFeature = 17004,
+        SMN_ST_MainCombo_EgiSummons_Attacks = 17004,
 
         [CustomComboInfo("Garuda Slipstream Feature", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Slipstream", "2 Fast 2 Furious")]
-        SummonerGarudaUniqueFeature = 17005,
+        SMN_Garuda_Slipstream = 17005,
 
         [CustomComboInfo("Ifrit Cyclone Feature", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 4, "Fists of Fury", "Show MNK how it's done, will ya?")]
-        SummonerIfritUniqueFeature = 17006,
+        SMN_Ifrit_Cyclone = 17006,
 
         [CustomComboInfo("Titan Mountain Buster Feature", "Adds Mountain Buster on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 5, "Mountain, BUSTA", "Bring the mountain to Mohammed, as they say")]
-        SummonerTitanUniqueFeature = 17007,
+        SMN_Titan_MountainBuster = 17007,
 
         [ReplaceSkill(SMN.Fester)]
         [CustomComboInfo("ED Fester", "Change Fester into Energy Drain when out of Aetherflow stacks.", SMN.JobID, 6, "Festering", "Festering? Go take a shower, bro")]
-        SummonerEDFesterCombo = 17008,
+        SMN_EDFester = 17008,
 
         [ReplaceSkill(SMN.Painflare)]
         [CustomComboInfo("ES Painflare", "Change Painflare into Energy Siphon when out of Aetherflow stacks.", SMN.JobID, 7, "Old age", "I sometimes get a painflare in my middle-back, too.")]
-        SummonerESPainflareCombo = 17009,
+        SMN_ESPainflare = 17009,
 
         // BONUS TWEAKS
         [CustomComboInfo("Carbuncle Reminder Feature", "Reminds you to summon Carbuncle by replacing most actions with Summon Carbuncle.", SMN.JobID, 8)]
-        SummonerCarbuncleSummonFeature = 17010,
+        SMN_CarbuncleReminder = 17010,
 
-        [ParentCombo(SummonerMainComboFeature)]
+        [ParentCombo(SMN_ST_MainCombo)]
         [CustomComboInfo("Ruin 4 on Main Combo", "Adds Ruin4 on Main Combo when there are currently no summons active.", SMN.JobID, 1, "Ruin -> Ruin -> Ruin", "Ruin this, ruin that. Can't you see I'm busy ruining the plugin?!")]
-        SummonerRuin4ToRuin3Feature = 17011,
+        SMN_ST_MainCombo_Ruin4 = 17011,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on AOE Combo when there are currently no summons active.", SMN.JobID, 0, "", "More Ruin this, more ruin that! Now in sharing size!")]
-        SummonerRuin4ToTridisasterFeature = 17012,
+        [ParentCombo(SMN_AoE_MainCombo)]
+        [CustomComboInfo("Ruin 4 On Tri-disaster Feature", "Adds Ruin4 on AoE Combo when there are currently no summons active.", SMN.JobID, 0, "", "More Ruin this, more ruin that! Now in sharing size!")]
+        SMN_AoE_MainCombo_Ruin4 = 17012,
 
-        [ParentCombo(SummonerEDFesterCombo)]
+        [ParentCombo(SMN_EDFester)]
         [CustomComboInfo("Ruin IV Fester/PainFlare Feature", "Change Fester/PainFlare into Ruin4 when out of Aetherflow stacks, ED/ES is on cooldown, and Ruin IV is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
-        SummonerFesterPainflareRuinFeature = 17013,
+        SMN_EDFester_PainflareRuin4 = 17013,
 
-        [ParentCombo(SummonerMainComboFeature)]
+        [ParentCombo(SMN_ST_MainCombo)]
         [CustomComboInfo("Energy Drain/Fester on Main Combo", "Adds ED/Fester to Ruin. Will use on cooldown.", SMN.JobID, 1)]
-        SummonerEDMainComboFeature = 17014,
+        SMN_ST_MainCombo_EDFester = 17014,
 
-        [ParentCombo(SummonerMainComboFeature)]
-        [CustomComboInfo("Egi Summons combo Features", "Various options for egis.", SMN.JobID, 1)]
-        EgisOnRuinFeature = 17015,
+        [ParentCombo(SMN_ST_MainCombo)]
+        [CustomComboInfo("Egi Summons Combo Features", "Various options for egis.", SMN.JobID, 1)]
+        SMN_ST_MainCombo_EgiSummons = 17015,
         
-        [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Egi Summon order", "Sets the order you summon egis.", SMN.JobID, 0)]
-        SummonerEgiOrderFeature = 17016,
+        [ParentCombo(SMN_DemiEgiMenu)]
+        [CustomComboInfo("Egi Summon Order", "Sets the order you summon egis.", SMN.JobID, 0)]
+        SMN_DemiEgiMenu_EgiOrder = 17016,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Energy Siphon/Painflare on AOE Combo", "Adds Energy Siphon/Painflare to AOE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
-        SummonerESAOEFeature = 17017,
+        [ParentCombo(SMN_AoE_MainCombo)]
+        [CustomComboInfo("Energy Siphon/Painflare on AoE Combo", "Adds Energy Siphon/Painflare to AoE Combo", SMN.JobID, 1, "", "We'll play the game for you. Shush, now")]
+        SMN_AoE_MainCombo_ESPainflare = 17017,
 
-        [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Searing Light on Single target/Aoe combo", "Adds Searing Light to the Single target, and Aoe combos and will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
-        SearingLightFeature = 17018,
+        [ParentCombo(SMN_DemiEgiMenu)]
+        [CustomComboInfo("Searing Light on Single Target/AoE combo", "Adds Searing Light to the Single target, and AoE combos. Will be used on cooldown.", SMN.JobID, 2, "My eyes!", "I can't see!")]
+        SMN_SearingLight = 17018,
 
-        [ParentCombo(SearingLightFeature)]
+        [ParentCombo(SMN_SearingLight)]
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
-        SummonerSearingLightBurstOption = 170181,
+        SMN_SearingLight_Burst = 170181,
 
-        [ParentCombo(SummonerMainComboFeature)]
+        [ParentCombo(SMN_ST_MainCombo)]
         [CustomComboInfo("Demi Summons on Main Combo", "Adds Demi Summons to the Main Combo.", SMN.JobID, 1, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
-        SummonerDemiSummonsFeature = 17020,
+        SMN_ST_MainCombo_DemiSummons = 17020,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Demi Summons AOE Combo", "Adds Demi Summons to the AOE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
-        SummonerDemiAoESummonsFeature = 17021,
+        [ParentCombo(SMN_AoE_MainCombo)]
+        [CustomComboInfo("Demi Summons AoE Combo", "Adds Demi Summons to the AoE Combo.", SMN.JobID, 3, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        SMN_AoE_MainCombo_DemiSummons = 17021,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Egi Summons on AOE Combo", "Adds Egi Summons to AOE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
-        EgisOnAOEFeature = 17022,
+        [ParentCombo(SMN_AoE_MainCombo)]
+        [CustomComboInfo("Egi Summons on AoE Combo", "Adds Egi Summons to AoE Combo", SMN.JobID, 5, "Nickelback Demi Feature", "Oh fuck, the whole band is here! Run!")]
+        SMN_AoE_MainCombo_EgiSummons = 17022,
         
-        [ParentCombo(SummonerDemiEgiOrder)]
+        [ParentCombo(SMN_DemiEgiMenu)]
         [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal Summon.", SMN.JobID, 1, "", "")]
-        SummonerSwiftcastEgiFeature = 17023,
+        SMN_DemiEgiMenu_SwiftcastEgi = 17023,
 
         [CustomComboInfo("Astral Flow/Enkindle on Bahamut/Phoenix", "Adds Astral Flow and Enkindle to Bahamut/Phoenix.", SMN.JobID, 3, "", "")]
-        SummonerPrimalAbilitiesFeature = 17024,
+        SMN_DemiAbilities = 17024,
 
-        [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Pooled OGCDs Feature", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
-        SummonerOGCDPoolFeature = 17025,
+        [ParentCombo(SMN_DemiEgiMenu)]
+        [CustomComboInfo("Pooled oGCDs Feature", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.", SMN.JobID, 1)]
+        SMN_DemiEgiMenu_oGCDPooling = 17025,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Precious Brilliance on AOE Combo", "Adds Egi attacks (Precious Brilliance) to AOE Combo.", SMN.JobID, 6)]
-        SummonerEgiAttacksAOEFeature = 17026,
+        [ParentCombo(SMN_AoE_MainCombo)]
+        [CustomComboInfo("Precious Brilliance on AoE Combo", "Adds Egi attacks (Precious Brilliance) to AoE Combo.", SMN.JobID, 6)]
+        SMN_AoE_MainCombo_EgiAttacks = 17026,
 
         [ConflictingCombos(ALL_Caster_Raise)]
-        [CustomComboInfo("SMN Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 8, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
-        SummonerRaiseFeature = 17027,
+        [CustomComboInfo("Alternative Raise Feature", "Changes Swiftcast to Raise when on cooldown", SMN.JobID, 8, "Shittier RezMage", "Just play RDM oh my gawwddddddddddddd")]
+        SMN_Raise = 17027,
 
-        [ParentCombo(SummonerDemiSummonsFeature)]
+        [ParentCombo(SMN_ST_MainCombo_DemiSummons)]
         [CustomComboInfo("Rekindle on Main Combo option", "Adds Rekindle to the Main Combo.", SMN.JobID, 0, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
-        SummonerSingleTargetRekindleOption = 17028,
+        SMN_ST_MainCombo_DemiSummons_Rekindle = 17028,
 
-        [ParentCombo(SummonerAOEComboFeature)]
-        [CustomComboInfo("Rekindle on AOE Combo option", "Adds Rekindle to the AOE Combo.", SMN.JobID, 6, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
-        SummonerAOETargetRekindleOption = 17029,
+        [ParentCombo(SMN_AoE_MainCombo)]
+        [CustomComboInfo("Rekindle on AoE Combo option", "Adds Rekindle to the AoE Combo.", SMN.JobID, 6, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        SMN_AoE_MainCombo_Rekindle = 17029,
 
         [ReplaceSkill(SMN.Ruin4)]
         [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 9, "Yo Dawg I Heard You Like Ruin Feature", "Ruin while you Ruin")]
-        SummonerSpecialRuinFeature = 17030,
+        SMN_RuinMobility = 17030,
 
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2)]
         [CustomComboInfo("Lucid Dreaming Feature", "Adds Lucid dreaming to the Main Combo when below set MP value.", SMN.JobID, 10, "", "")]
-        SMNLucidDreamingFeature = 17031,
+        SMN_Lucid = 17031,
         
-        [ParentCombo(SummonerDemiEgiOrder)]
-        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Festers and Searing Lights will only be used during Bahamut/Phoenix windows.", SMN.JobID, 3, "", "")]
-        SummonerPrimalBurstChoice = 17032,
+        [ParentCombo(SMN_DemiEgiMenu)]
+        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Fester and Searing Light will only be used during Bahamut/Phoenix windows.", SMN.JobID, 3, "", "")]
+        SMN_DemiEgiMenu_BurstChoice = 17032,
 
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 11, "", "")]
-        SummonerAstralFlowonSummonsFeature = 17034,
+        SMN_Egi_AstralFlow = 17034,
         
-        [CustomComboInfo("Egi and Demi summon features", "Features related to changing egi and demi summons.\nCollapsing this category does NOT disable the features inside.", SMN.JobID, 2, "", "")]
-        SummonerDemiEgiOrder = 17035,
+        [CustomComboInfo("Egi and Demi Summon features", "Features related to changing Egi and Demi summons.\nCollapsing this category does NOT disable the features inside.", SMN.JobID, 2, "", "")]
+        SMN_DemiEgiMenu = 17035,
         
-        [ParentCombo(SearingLightFeature)]
-        [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on single target combo.", SMN.JobID, 2, "", "")]
-        SearingLightSTOnlyOption = 17036,
+        [ParentCombo(SMN_SearingLight)]
+        [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on Single Target combo.", SMN.JobID, 2, "", "")]
+        SMN_SearingLight_STOnly = 17036,
         
-        [ParentCombo(SummonerOGCDPoolFeature)]
-        [CustomComboInfo("Single target only Pooled OGCD Option", "Only use damage OGCDs on single target combo.", SMN.JobID, 2, "", "")]
-        SummonerSTPoolOnlyOption = 17037,
+        [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
+        [CustomComboInfo("Single target only Pooled oGCD Option", "Only use damage oGCDs on single target combo.", SMN.JobID, 2, "", "")]
+        SMN_DemiEgiMenu_oGCDPooling_Only = 17037,
         
-        [ParentCombo(SummonerSwiftcastEgiFeature)]
+        [ParentCombo(SMN_DemiEgiMenu_SwiftcastEgi)]
         [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on single target combo.", SMN.JobID, 2, "", "")]
-        SummonerSTOnlySwiftcast = 17038,
+        SMN_DemiEgiMenu_SwiftcastEgi_Only = 17038,
 
         #endregion
         // ====================================================================================

@@ -1135,30 +1135,30 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region SUMMONER
 
-            if (preset == CustomComboPreset.SummonerEgiOrderFeature)
+            if (preset == CustomComboPreset.SMN_DemiEgiMenu_EgiOrder)
             {
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerPrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
 
             
-            if (preset == CustomComboPreset.SummonerPrimalBurstChoice)
+            if (preset == CustomComboPreset.SMN_DemiEgiMenu_BurstChoice)
             {
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first)", 3);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerBurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase", 4);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first)", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase", 4);
             }
 
-            if (preset == CustomComboPreset.SummonerSwiftcastEgiFeature)
+            if (preset == CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi)
             {
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Garuda", "Swiftcast Slipstream", 1);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite", 2);
-                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SummonerSwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready", 3);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "Garuda", "Swiftcast Slipstream", 1);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite", 2);
+                ConfigWindowFunctions.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready", 3);
             }
 
-            if (preset == CustomComboPreset.SMNLucidDreamingFeature)
-                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SMN.Config.SMNLucidDreamingFeature, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset == CustomComboPreset.SMN_Lucid)
+                ConfigWindowFunctions.DrawSliderInt(4000, 9500, SMN.Config.SMN_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================
