@@ -211,7 +211,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.BlackThunderUptimeFeature) && !thunder3DebuffOnTarget && lastComboMove != Thunder3 && LocalPlayer.CurrentMp >= 400)
                                 return Thunder3;
 
-                            if (gauge.IsParadoxActive && level >= 90)
+                            if (gauge.IsParadoxActive && level >= Levels.Paradox)
                                 return Paradox;
 
                             if (IsEnabled(CustomComboPreset.BlackAspectSwapFeature) && gauge.UmbralHearts == 3 && LocalPlayer.CurrentMp >= 10000)
