@@ -314,7 +314,7 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
 
-            internal class MachinistHotShotDrillChainsawFeature : CustomCombo
+            internal class MCH_HotShotDrillChainSaw : CustomCombo
             {
                 protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HotShotDrillChainSaw;
 
