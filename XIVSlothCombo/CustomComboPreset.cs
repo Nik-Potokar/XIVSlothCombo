@@ -1573,7 +1573,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(NIN_AeolianEdgeCombo)]
         [CustomComboInfo("Raiju on Main Combo", "Adds Fleeting Raiju to Aeolian Edge Combo.", NIN.JobID, 14, "", "")]
-        IN_AeolianEdgeCombo_Fleeting = 10014,
+        NIN_AeolianEdgeCombo_Fleeting = 10014,
 
         [ParentCombo(NIN_AeolianEdgeCombo)]
         [CustomComboInfo("Huraijin on Main Combo", "Adds Huraijin to main combo if Huton buff is not present", NIN.JobID, 15, "", "")]
