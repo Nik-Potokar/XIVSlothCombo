@@ -109,12 +109,12 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                Trick_CooldownRemaining = "Trick_CooldownRemaining",
-                Huton_RemainingTimer = "Huton_RemainingTimer",
-                Huton_RemainingArmorCrush = "Huton_RemainingArmorCrush",
-                Mug_NinkiGauge = "Mug_NinkiGauge",
-                Ninki_BhavaPooling = "Ninki_BhavaPooling",
-                Ninki_BunshinPooling = "Ninki_BunshinPooling";
+                Trick_CooldownRemaining = "TrickCooldownRemaining",
+                Huton_RemainingTimer = "HutonRemainingTimer",
+                Huton_RemainingArmorCrush = "HutonRemainingArmorCrush",
+                Mug_NinkiGauge = "MugNinkiGauge",
+                Ninki_BhavaPooling = "NinkiBhavaPooling",
+                Ninki_BunshinPooling = "NinkiBunshinPooling";
         }
 
         internal class NIN_AeolianEdgeCombo : CustomCombo

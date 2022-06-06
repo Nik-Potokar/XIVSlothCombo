@@ -118,8 +118,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                AST_LucidDreaming = "AST_LucidDreaming",
-                AST_EssentialDignity = "AST_EssentialDignity",
+                AST_LucidDreaming = "ASTLucidDreamingFeature",
+                AST_EssentialDignity = "ASTCustomEssentialDignity",
                 AST_DPS_AltMode = "AST_DPS_AltMode",
                 AST_DPS_DivinationOption = "AST_DPS_DivinationOption",
                 AST_DPS_LightSpeedOption = "AST_DPS_LightSpeedOption",

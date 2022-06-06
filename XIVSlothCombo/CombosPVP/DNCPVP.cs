@@ -37,7 +37,7 @@ namespace XIVSlothComboPlugin
         public static class Config
         {
             public const string
-                DNCPvP_WaltzThreshold = "DNCPvP_WaltzThreshold";
+                DNCPvP_WaltzThreshold = "DNCWaltzThreshold";
         }
 
         internal class DNCPvP_BurstMode : CustomCombo

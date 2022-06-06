@@ -97,11 +97,11 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                SAM_ST_KenkiOvercapAmount = "SAM_ST_KenkiOvercapAmount";
+                SAM_ST_KenkiOvercapAmount = "SamKenkiOvercapAmount";
             public const string
-                SAM_AoE_KenkiOvercapAmount = "SAM_AoE_KenkiOvercapAmount";
+                SAM_AoE_KenkiOvercapAmount = "SamAOEKenkiOvercapAmount";
             public const string
-                SAM_FillerCombo = "SAM_FillerCombo";
+                SAM_FillerCombo = "SamFillerCombo";
         }
 
 

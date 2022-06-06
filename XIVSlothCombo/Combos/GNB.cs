@@ -82,7 +82,7 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                GNB_RoughDivide_HeldCharges = "GNB_RoughDivide_HeldCharges";
+                GNB_RoughDivide_HeldCharges = "GnbKeepRoughDivideCharges";
         }
 
 

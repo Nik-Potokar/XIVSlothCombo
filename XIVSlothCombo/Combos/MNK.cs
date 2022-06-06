@@ -83,9 +83,9 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                MNK_Demolish_Apply = "MNK_Demolish_Apply";
+                MNK_Demolish_Apply = "MnkDemolishApply";
             public const string
-                MNK_DisciplinedFist_Apply = "MNK_DisciplinedFist_Apply";
+                MNK_DisciplinedFist_Apply = "MnkDisciplinedFistApply";
         }
 
         internal class MNK_AoE_SimpleMode : CustomCombo

@@ -73,8 +73,8 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                DrkKeepPlungeCharges = "DrkKeepPlungeCharges",
-                DrkMPManagement = "DrkMPManagement";
+                DRK_KeepPlungeCharges = "DrkKeepPlungeCharges",
+                DRK_MPManagement = "DrkMPManagement";
         }
     
 
@@ -87,8 +87,8 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == Souleater)
             {
                 var gauge = GetJobGauge<DRKGauge>();
-                var plungeChargesRemaining = Service.Configuration.GetCustomIntValue(Config.DrkKeepPlungeCharges);
-                var mpRemaining = Service.Configuration.GetCustomIntValue(Config.DrkMPManagement);
+                var plungeChargesRemaining = Service.Configuration.GetCustomIntValue(Config.DRK_KeepPlungeCharges);
+                var mpRemaining = Service.Configuration.GetCustomIntValue(Config.DRK_MPManagement);
 
                 if (IsEnabled(CustomComboPreset.DRK_RangedUptime) && level >= Levels.Unmend)
                 {

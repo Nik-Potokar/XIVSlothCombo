@@ -156,11 +156,11 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                SMN_Lucid = "SMN_Lucid",
-                SMN_SearingChoice = "SMN_SearingChoice",
-                SMN_BurstPhase = "SMN_BurstPhase",
-                SMN_PrimalChoice = "SMN_PrimalChoice",
-                SMN_SwiftcastPhase = "SMN_SwiftcastPhase";
+                SMN_Lucid = "SMNLucidDreamingFeature",
+                SMN_SearingChoice = "SMNSearingLightChoice",
+                SMN_BurstPhase = "SummonerBurstPhase",
+                SMN_PrimalChoice = "SummonerPrimalChoice",
+                SMN_SwiftcastPhase = "SummonerSwiftcastPhase";
         }
 
         internal class SMN_Raise : CustomCombo

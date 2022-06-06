@@ -73,9 +73,9 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                WAR_InfuriateRange = "WAR_InfuriateRange",
-                WAR_SurgingRefreshRange = "WAR_SurgingRefreshRange",
-                WAR_KeepOnslaughtCharges = "WAR_KeepOnslaughtCharges";
+                WAR_InfuriateRange = "WarInfuriateRange",
+                WAR_SurgingRefreshRange = "WarSurgingRefreshRange",
+                WAR_KeepOnslaughtCharges = "WarKeepOnslaughtCharges";
         }
 
         // Replace Storm's Path with Storm's Path combo and overcap feature on main combo to fellcleave

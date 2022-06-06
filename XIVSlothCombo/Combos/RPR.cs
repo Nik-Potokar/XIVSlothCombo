@@ -103,9 +103,9 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                RPR_PositionalChoice = "RPR_PositionalChoice",
-                RPR_SoDThreshold = "RPR_SoDThreshold",
-                RPR_SoDRefreshRange = "RPR_SoDRefreshRange";
+                RPR_PositionalChoice = "RPRPositionChoice",
+                RPR_SoDThreshold = "RPRSoDThreshold",
+                RPR_SoDRefreshRange = "RPRSoDRefreshRange";
         }
 
         internal class RPR_ST_SliceCombo : CustomCombo
