@@ -139,7 +139,7 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(Ninjutsu);
                     }
 
-                    if (IsEnabled(CustomComboPreset.IN_AeolianEdgeCombo_Fleeting))
+                    if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_Fleeting))
                     {
                         if (HasEffect(Buffs.RaijuReady))
                             return FleetingRaiju;
