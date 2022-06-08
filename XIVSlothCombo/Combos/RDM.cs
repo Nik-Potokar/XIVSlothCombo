@@ -781,14 +781,14 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 //END_RDM_VERTHUNDERVERAERO
 
-                //RDM_VERTHUNDERIIVVERAEROII
+                //RDM_VERTHUNDERIIVERAEROII
                 if (IsEnabled(CustomComboPreset.RDM_VerthunderIIVeraeroII) 
                     && actionID is Scatter or Impact)
                 {
                     if (useThunder2) return Verthunder2;
                     if (useAero2) return Veraero2;
                 }
-                //END_RDM_VERTHUNDERIIVVERAEROII
+                //END_RDM_VERTHUNDERIIVERAEROII
 
 
                 //NO_CONDITIONS_MET
