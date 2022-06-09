@@ -45,9 +45,7 @@ namespace XIVSlothComboPlugin
         /// <summary> Gets or sets the configuration version. </summary>
         public int Version { get; set; } = 5;
 
-        /// <summary>
-        /// Gets or sets the collection of enabled combos.
-        /// </summary>
+        /// <summary> Gets or sets the collection of enabled combos. </summary>
         [JsonProperty("EnabledActionsV5")]
         public HashSet<CustomComboPreset> EnabledActions { get; set; } = new();
 
@@ -58,23 +56,11 @@ namespace XIVSlothComboPlugin
         /// <summary> Gets or sets a value indicating whether to output combat log to the chatbox. </summary>
         public bool EnabledOutputLog { get; set; } = false;
 
-        /// <summary> Gets or sets a value indicating wheteher to allow and display trust incompatible combos. </summary>
-        public bool EnableTrustIncompatibles { get; set; } = false;
-
         /// <summary> Gets or sets a value indicating whether to hide combos which conflict with enabled presets. </summary>
         public bool HideConflictedCombos { get; set; } = false;
 
         /// <summary> Gets or sets a value indicating whether to hide the children of a feature if it is disabled. </summary>
         public bool HideChildren { get; set; } = false;
-
-        /// <summary> Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_DanceComboReplacer"/> combo. </summary>
-        public uint[] DancerDanceCompatActionIDs { get; set; } = new uint[]
-        {
-            DNC.Cascade,
-            DNC.Flourish,
-            DNC.FanDance1,
-            DNC.FanDance2,
-        };
 
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
@@ -94,12 +80,6 @@ namespace XIVSlothComboPlugin
         /// <returns>The boolean representation.</returns>
         public bool IsSecret(CustomComboPreset preset)
             => SecretCombos.Contains(preset);
-
-        /// <summary> Gets a value indicating whether a preset is trust incompatible. </summary>
-        /// <param name="preset">Preset to check.</param>
-        /// <returns>The boolean representation.</returns>
-        public bool IsTrustIncompatible(CustomComboPreset preset)
-            => TrustIncompatibles.Contains(preset);
 
         /// <summary> Gets an array of conflicting combo presets. </summary>
         /// <param name="preset">Preset to check.</param>
@@ -121,71 +101,17 @@ namespace XIVSlothComboPlugin
         public List<CustomComboPreset[]> GetAllConflictOriginals()
             => ConflictingCombos.Values.ToList();
 
-        /// <summary> Handles Mudra path selection for NIN_Simple_Mudras. </summary>
-        public int MudraPathSelection { get; set; } = 0;
-
         /// <summary> Handles 'special event' feature naming. </summary>
         public bool SpecialEvent { get; set; } = false;
 
         /// <summary> Hide MotD. </summary>
         public bool HideMessageOfTheDay { get; set; } = false;
 
+        #region Image Caching
         [JsonProperty]
         public Dictionary<string, byte[]> ImageCache { get; set; } = new();
 
-        [JsonProperty]
-        private static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
-
-        [JsonProperty]
-        private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
-
-        [JsonProperty]
-        private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
-
-        [JsonProperty]
-        private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
-        public float GetCustomFloatValue(string config, float defaultMinValue = 0)
-        {
-            float configValue;
-
-            if (!CustomFloatValues.TryGetValue(config, out configValue)) { SetCustomFloatValue(config, defaultMinValue); return defaultMinValue; }
-
-            return configValue;
-        }
-
-        public void SetCustomFloatValue(string config, float value)
-        {
-            CustomFloatValues[config] = value;
-        }
-
-        public int GetCustomIntValue(string config, int defaultMinVal = 0)
-        {
-            int configValue;
-
-            if (!CustomIntValues.TryGetValue(config, out configValue)) { SetCustomIntValue(config, defaultMinVal); return defaultMinVal; }
-
-            return configValue;
-        }
-
-        public void SetCustomIntValue(string config, int value)
-        {
-            CustomIntValues[config] = value;
-        }
-
-        public bool GetCustomBoolValue(string config)
-        {
-            bool configValue;
-
-            if (!CustomBoolValues.TryGetValue(config, out configValue)) { SetCustomBoolValue(config, false); return false; }
-
-            return configValue;
-        }
-
-        public void SetCustomBoolValue(string config, bool value)
-        {
-            CustomBoolValues[config] = value;
-        }
-
+        /// <summary> Gets an image in the cache. </summary>
         public byte[]? GetImageInCache(string url)
         {
             byte[]? output;
@@ -195,12 +121,82 @@ namespace XIVSlothComboPlugin
             return output;
         }
 
+        /// <summary> Sets an image in the cache. </summary>
         public void SetImageInCache(string url, byte[] image)
         {
             ImageCache[url] = image;
 
         }
+        #endregion
 
+        #region Custom Float Values
+        [JsonProperty]
+        private static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
+
+        /// <summary> Gets a custom float value. </summary>
+        public float GetCustomFloatValue(string config, float defaultMinValue = 0)
+        {
+            float configValue;
+
+            if (!CustomFloatValues.TryGetValue(config, out configValue)) { SetCustomFloatValue(config, defaultMinValue); return defaultMinValue; }
+
+            return configValue;
+        }
+
+        /// <summary> Sets a custom float value. </summary>
+        public void SetCustomFloatValue(string config, float value)
+        {
+            CustomFloatValues[config] = value;
+        }
+        #endregion
+
+        #region Custom Int Values
+        [JsonProperty]
+        private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
+
+        /// <summary> Gets a custom integer value. </summary>
+        public int GetCustomIntValue(string config, int defaultMinVal = 0)
+        {
+            int configValue;
+
+            if (!CustomIntValues.TryGetValue(config, out configValue)) { SetCustomIntValue(config, defaultMinVal); return defaultMinVal; }
+
+            return configValue;
+        }
+
+        /// <summary> Sets a custom integer value. </summary>
+        public void SetCustomIntValue(string config, int value)
+        {
+            CustomIntValues[config] = value;
+        }
+        #endregion
+
+        #region Custom Bool Values
+        [JsonProperty]
+        private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
+
+        /// <summary> Gets a custom boolean value. </summary>
+        public bool GetCustomBoolValue(string config)
+        {
+            bool configValue;
+
+            if (!CustomBoolValues.TryGetValue(config, out configValue)) { SetCustomBoolValue(config, false); return false; }
+
+            return configValue;
+        }
+
+        /// <summary> Sets a custom boolean value. </summary>
+        public void SetCustomBoolValue(string config, bool value)
+        {
+            CustomBoolValues[config] = value;
+        }
+        #endregion
+
+        #region Custom Bool Array Values
+        [JsonProperty]
+        private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
+
+        /// <summary> Gets a custom boolean array value. </summary>
         public bool[] GetCustomBoolArrayValue(string config)
         {
             bool[]? configValue;
@@ -210,105 +206,28 @@ namespace XIVSlothComboPlugin
             return configValue;
         }
 
+        /// <summary> Sets a custom boolean array value. </summary>
         public void SetCustomBoolArrayValue(string config, bool[] value)
         {
             CustomBoolArrayValues[config] = value;
         }
+        #endregion
 
-        public bool GetJobGridValue(string config, byte jobID)
-        {
-            var index = JobIDToArrayIndex(jobID);
-            var array = GetCustomBoolArrayValue(config);
-
-            if (index == -1) return false;
-            if (array == Array.Empty<bool>()) return false;
-            return array[index];
-        }
-
-        private static int JobIDToArrayIndex(byte key)
-        {
-            return key switch
-            {
-                PLD.JobID => 0,
-                PLD.ClassID => 0,
-                WAR.JobID => 1,
-                WAR.ClassID => 1,
-                DRK.JobID => 2,
-                GNB.JobID => 3,
-                WHM.JobID => 4,
-                WHM.ClassID => 4,
-                SCH.JobID => 5,
-                SCH.ClassID => 5,
-                AST.JobID => 6,
-                SGE.JobID => 7,
-                MNK.JobID => 8,
-                MNK.ClassID => 8,
-                DRG.JobID => 9,
-                DRG.ClassID => 9,
-                NIN.JobID => 10,
-                NIN.ClassID => 10,
-                SAM.JobID => 11,
-                RPR.JobID => 12,
-                BRD.JobID => 13,
-                BRD.ClassID => 13,
-                MCH.JobID => 14,
-                DNC.JobID => 15,
-                BLM.JobID => 16,
-                BLM.ClassID => 16,
-                SMN.JobID => 17,
-                RDM.JobID => 18,
-                BLU.JobID => 19,
-                _ => -1
-            };
-        }
-
-        public bool GetRoleGridValue(string config, byte jobID)
-        {
-            var index = JobIDToArrayIndex(jobID);
-            var array = GetCustomBoolArrayValue(config);
-
-            if (index == -1) return false;
-            if (array == Array.Empty<bool>()) return false;
-            return array[index];
-        }
-
+        #region Job-specific
+        /// <summary> Gets active Blue Mage (BLU) spells. </summary>
         public List<uint> ActiveBLUSpells { get; set; } = new List<uint>();
 
-        private static int RoleIDToArrayIndex(byte key)
+        /// <summary> Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_DanceComboReplacer"/> combo. </summary>
+        public uint[] DancerDanceCompatActionIDs { get; set; } = new uint[]
         {
-            return key switch
-            {
-                PLD.JobID => 0,
-                PLD.ClassID => 0,
-                WAR.JobID => 1,
-                WAR.ClassID => 1,
-                DRK.JobID => 2,
-                GNB.JobID => 3,
-                WHM.JobID => 4,
-                WHM.ClassID => 4,
-                SCH.JobID => 5,
-                SCH.ClassID => 5,
-                AST.JobID => 6,
-                SGE.JobID => 7,
-                MNK.JobID => 8,
-                MNK.ClassID => 8,
-                DRG.JobID => 9,
-                DRG.ClassID => 9,
-                NIN.JobID => 10,
-                NIN.ClassID => 10,
-                SAM.JobID => 11,
-                RPR.JobID => 12,
-                BRD.JobID => 13,
-                BRD.ClassID => 13,
-                MCH.JobID => 14,
-                DNC.JobID => 15,
-                BLM.JobID => 16,
-                BLM.ClassID => 16,
-                SMN.JobID => 17,
-                RDM.JobID => 18,
-                BLU.JobID => 19,
-                _ => -1
-            };
-        }
+            DNC.Cascade,
+            DNC.Flourish,
+            DNC.FanDance1,
+            DNC.FanDance2,
+        };
+
+        /// <summary> Handles Mudra path selection for NIN_Simple_Mudras. </summary>
+        public int MudraPathSelection { get; set; } = 0;
+        #endregion
     }
 }
