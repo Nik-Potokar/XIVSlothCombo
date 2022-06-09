@@ -242,9 +242,9 @@ namespace XIVSlothComboPlugin
                 else
                 {
                     i += groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count();
-                    foreach (var (Preset, Info) in groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    foreach (var preset in groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
                     {
-                        i += AllChildren(presetChildren[Preset]);
+                        i += AllChildren(presetChildren[preset.Preset]);
                     }
                 }
             }
@@ -404,6 +404,7 @@ namespace XIVSlothComboPlugin
                 ImGui.EndTooltip();
             }
             ImGui.NextColumn();
+
             #endregion
 
             ImGui.EndChild();

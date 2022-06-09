@@ -2,19 +2,14 @@
 using Dalamud.Utility;
 using ImGuiNET;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Numerics;
-using System.Threading.Tasks;
-using Log = Dalamud.Logging.PluginLog;
 
 namespace XIVSlothComboPlugin.ConfigFunctions
+
 {
     public static class ConfigWindowFunctions
     {
-        /// <summary>
-        /// Draws a slider that lets the user set a given value for their feature.
-        /// </summary>
+        /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
         /// <param name="minValue">The absolute minimum value you'll let the user pick.</param>
         /// <param name="maxValue">The absolute maximum value you'll let the user pick.</param>
         /// <param name="config">The config ID.</param>
@@ -28,7 +23,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.PushItemWidth(itemWidth);
             inputChanged |= ImGui.SliderInt($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
-
             if (inputChanged)
             {
                 if (output % sliderIncrement != 0)
@@ -36,20 +30,16 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                     output = output.RoundOff(sliderIncrement);
                     if (output < minValue) output = minValue;
                     if (output > maxValue) output = maxValue;
-
                 }
+
                 PluginConfiguration.SetCustomIntValue(config, output);
                 Service.Configuration.Save();
             }
 
-
-
             ImGui.Spacing();
         }
 
-        /// <summary>
-        /// Draws a slider that lets the user set a given value for their feature.
-        /// </summary>
+        /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
         /// <param name="minValue">The absolute minimum value you'll let the user pick.</param>
         /// <param name="maxValue">The absolute maximum value you'll let the user pick.</param>
         /// <param name="config">The config ID.</param>
@@ -71,9 +61,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
-        /// <summary>
-        /// Draws a slider that lets the user set a given value for their feature.
-        /// </summary>
+        /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
         /// <param name="minValue">The absolute minimum value you'll let the user pick.</param>
         /// <param name="maxValue">The absolute maximum value you'll let the user pick.</param>
         /// <param name="config">The config ID.</param>
@@ -95,9 +83,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
-        /// <summary>
-        /// Draws a checkbox intended to be linked to other checkboxes sharing the same config value.
-        /// </summary>
+        /// <summary> Draws a checkbox intended to be linked to other checkboxes sharing the same config value. </summary>
         /// <param name="config">The config ID.</param>
         /// <param name="checkBoxName">The name of the feature.</param>
         /// <param name="checkboxDescription">The description of the feature.</param>
@@ -128,9 +114,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Spacing();
         }
 
-        /// <summary>
-        /// Draws a checkbox in a horizontal configuration intended to be linked to other checkboxes sharing the same config value.
-        /// </summary>
+        /// <summary> Draws a checkbox in a horizontal configuration intended to be linked to other checkboxes sharing the same config value. </summary>
         /// <param name="config">The config ID.</param>
         /// <param name="checkBoxName">The name of the feature.</param>
         /// <param name="checkboxDescription">The description of the feature.</param>
@@ -154,7 +138,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomIntValue(config, outputValue);
                 Service.Configuration.Save();
             }
-
 
             if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
             {
@@ -185,7 +168,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
             ImGui.NextColumn();
 
-
             if (ImGui.Checkbox($"Deep Freeze###{config}1", ref values[1]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
@@ -193,7 +175,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             }
 
             ImGui.NextColumn();
-
 
             if (ImGui.Checkbox($"Half Asleep###{config}2", ref values[2]))
             {
@@ -203,7 +184,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
             ImGui.NextColumn();
 
-
             if (ImGui.Checkbox($"Sleep###{config}3", ref values[3]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
@@ -211,7 +191,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             }
 
             ImGui.NextColumn();
-
 
             if (ImGui.Checkbox($"Bind###{config}4", ref values[4]))
             {
@@ -221,7 +200,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
             ImGui.NextColumn();
 
-
             if (ImGui.Checkbox($"Heavy###{config}5", ref values[5]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
@@ -229,7 +207,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             }
 
             ImGui.NextColumn();
-
 
             if (ImGui.Checkbox($"Silence###{config}6", ref values[6]))
             {
@@ -371,6 +348,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.PopStyleColor();
             ImGui.Spacing();
         }
+
         public static void DrawJobGridMultiChoice(string config)
         {
             var values = PluginConfiguration.GetCustomBoolArrayValue(config);
@@ -386,7 +364,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Warrior###{config}1", ref values[1]))
@@ -394,7 +371,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Dark Knight###{config}2", ref values[2]))
@@ -402,7 +378,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Gunbreaker###{config}3", ref values[3]))
@@ -410,18 +385,17 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
             ImGui.NextColumn();
 
             ImGui.PopStyleColor();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+
             if (ImGui.Checkbox($"White Mage###{config}", ref values[4]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Scholar###{config}5", ref values[5]))
@@ -429,7 +403,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Astrologian###{config}6", ref values[6]))
@@ -437,7 +410,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Sage###{config}7", ref values[7]))
@@ -445,18 +417,17 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
             ImGui.NextColumn();
 
             ImGui.PopStyleColor();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+
             if (ImGui.Checkbox($"Monk###{config}8", ref values[8]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Dragoon###{config}9", ref values[9]))
@@ -464,7 +435,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Ninja###{config}10", ref values[10]))
@@ -472,7 +442,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Samurai###{config}11", ref values[11]))
@@ -480,7 +449,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Reaper###{config}12", ref values[12]))
@@ -488,7 +456,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.PopStyleColor();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
             ImGui.NextColumn();
@@ -498,7 +465,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Machinist###{config}14", ref values[14]))
@@ -506,7 +472,6 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
 
             if (ImGui.Checkbox($"Dancer###{config}15", ref values[15]))
@@ -514,14 +479,13 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             ImGui.NextColumn();
             ImGui.NextColumn();
             ImGui.NextColumn();
-
 
             ImGui.PopStyleColor();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+
             if (ImGui.Checkbox($"Black Mage###{config}16", ref values[16]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
@@ -542,6 +506,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 Service.Configuration.Save();
             }
             ImGui.NextColumn();
+
             if (ImGui.Checkbox($"Blue Mage###{config}19", ref values[19]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
@@ -565,8 +530,8 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 else
                     values[i] = false;
             }
-            ImGui.Columns(5, null, false);
 
+            ImGui.Columns(5, null, false);
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
 
             if (ImGui.Checkbox($"Paladin###{config}0", ref values[0]))
@@ -604,6 +569,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
             ImGui.PopStyleColor();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+
             if (ImGui.Checkbox($"White Mage###{config}4", ref values[4]))
             {
                 PluginConfiguration.SetCustomIntValue(config, 4);
@@ -639,6 +605,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
 
             ImGui.PopStyleColor();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DPSRed);
+
             if (ImGui.Checkbox($"Monk###{config}8", ref values[8]))
             {
                 PluginConfiguration.SetCustomIntValue(config, 8);
@@ -707,9 +674,9 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.NextColumn();
             ImGui.NextColumn();
 
-
             ImGui.PopStyleColor();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPurple);
+
             if (ImGui.Checkbox($"Black Mage###{config}16", ref values[16]))
             {
                 PluginConfiguration.SetCustomIntValue(config, 16);
@@ -730,6 +697,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
                 Service.Configuration.Save();
             }
             ImGui.NextColumn();
+
             if (ImGui.Checkbox($"Blue Mage###{config}19", ref values[19]))
             {
                 PluginConfiguration.SetCustomIntValue(config, 19);
@@ -740,6 +708,7 @@ namespace XIVSlothComboPlugin.ConfigFunctions
             ImGui.Columns(1);
             ImGui.Spacing();
         }
+
         public static int RoundOff(this int i, uint sliderIncrement)
         {
             double sliderAsDouble = Convert.ToDouble(sliderIncrement);
