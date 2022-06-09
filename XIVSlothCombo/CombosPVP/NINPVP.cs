@@ -46,10 +46,9 @@ namespace XIVSlothComboPlugin
                 SealedMeisui = 3198;
         }
 
-
-        internal class NINBurstMode : CustomCombo
+        internal class NINPvP_ST_BurstMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINBurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINPvP_ST_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
@@ -103,9 +102,9 @@ namespace XIVSlothComboPlugin
             }
         }
 
-        internal class NINAoEBurstMode : CustomCombo
+        internal class NINPvP_AoE_BurstMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINAoEBurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINPvP_AoE_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {

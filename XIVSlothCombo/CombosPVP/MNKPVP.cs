@@ -36,29 +36,31 @@
                 PressurePoint = 3172;
         }
 
-        internal class MNKBurstMode : CustomCombo
+        internal class MNKPvP_Burst : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNKBurstMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNKPvP_Burst;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is Bootshine or TrueStrike or SnapPunch or DragonKick or TwinSnakes or Demolish or PhantomRush)
                 {
-                    //uint globalAction = PVPCommon.ExecutePVPGlobal.ExecuteGlobal(actionID);
 
                     if (!TargetHasEffectAny(PVPCommon.Buffs.Guard))
                     {
-                        if (IsEnabled(CustomComboPreset.MNKRiddleOfEarthOption) && IsOffCooldown(RiddleOfEarth) && PlayerHealthPercentageHp() <= 95)
+                        if (IsEnabled(CustomComboPreset.MNKPvP_Burst_RiddleOfEarth) && IsOffCooldown(RiddleOfEarth) && PlayerHealthPercentageHp() <= 95)
                             return OriginalHook(RiddleOfEarth);
-                        if (IsEnabled(CustomComboPreset.MNKThunderClapOption) && !HasEffect(Buffs.WindResonance) && GetRemainingCharges(ThunderClap) > 0)
+
+                        if (IsEnabled(CustomComboPreset.MNKPvP_Burst_Thunderclap) && !HasEffect(Buffs.WindResonance) && GetRemainingCharges(ThunderClap) > 0)
                             return OriginalHook(ThunderClap);
 
                         if (CanWeave(actionID))
                         {
                             if (IsOffCooldown(SixSidedStar))
                                 return OriginalHook(SixSidedStar);
-                            if (IsEnabled(CustomComboPreset.MNKRiddleOfEarthOption) && HasEffect(Buffs.EarthResonance) && GetBuffRemainingTime(Buffs.EarthResonance) < 6)
+
+                            if (IsEnabled(CustomComboPreset.MNKPvP_Burst_RiddleOfEarth) && HasEffect(Buffs.EarthResonance) && GetBuffRemainingTime(Buffs.EarthResonance) < 6)
                                 return OriginalHook(EarthsReply);
+
                             if (GetRemainingCharges(RisingPhoenix) > 0 && !HasEffect(Buffs.FireResonance) && (lastComboMove is Demolish || IsOffCooldown(Enlightenment)))
                                 return OriginalHook(RisingPhoenix);
                         }
@@ -67,6 +69,7 @@
                         {
                             if (lastComboMove is Demolish)
                                 return OriginalHook(PhantomRush);
+
                             if (IsOffCooldown(Enlightenment))
                                 return OriginalHook(Enlightenment);
                         }
