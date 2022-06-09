@@ -1,4 +1,4 @@
-using Dalamud.Game.ClientState.Conditions;
+﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -524,7 +524,7 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
         /// <returns>True or false.</returns>
         public bool CanWeave(uint actionID, double weaveTime = 0.7)
-           => GetCooldown(actionID).CooldownRemaining > weaveTime;
+           => (GetCooldown(actionID).CooldownRemaining > weaveTime) || (HasPacification() && HasSilence());
 
         /// <summary>
         /// Checks if the provided action ID has cooldown remaining enough to weave against it
@@ -751,10 +751,9 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
-        public int GetOptionValue(string SliderID)
-        {
-            return Service.Configuration.GetCustomIntValue(SliderID);
-        }
+        public static int GetOptionValue(string SliderID) => Service.Configuration.GetCustomIntValue(SliderID);
+
+        public static bool GetOptionBool(string SliderID) => Convert.ToBoolean(GetOptionValue(SliderID));
 
         protected unsafe static FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* GetTarget(TargetType target)
         {
@@ -838,8 +837,13 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         /// <returns></returns>
         public bool InPvP()
-            => GameMain.IsInPvPArea() || GameMain.IsInPvPInstance();   
+            => GameMain.IsInPvPArea() || GameMain.IsInPvPInstance();
 
+        /// <summary>
+        /// Checks if the player is high enough level to use the passed ID.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
         public bool LevelChecked(uint id)
         {
             if (LocalPlayer.Level < GetLevel(id))
@@ -848,116 +852,272 @@ namespace XIVSlothComboPlugin.Combos
             return true;
         }
 
+        /// <summary>
+        /// Returns the name of an action from its ID.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
         public string GetActionName(uint id)
             => ActionWatching.GetActionName(id);
 
+        /// <summary>
+        /// Returns the name of a status effect from its ID.
+        /// </summary>
+        /// <param name="id">ID of the status.</param>
+        /// <returns></returns>
         public string GetStatusName(uint id)
             => ActionWatching.GetStatusName(id);
 
+        /// <summary>
+        /// Returns the level required for an action from its ID.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
         public int GetLevel(uint id)
             => ActionWatching.GetLevel(id);
 
+        /// <summary>
+        /// Checks if the last action performed was the passed ID.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
         public bool WasLastAction(uint id)
             => ActionWatching.LastAction == id;
 
+        /// <summary>
+        /// Returns how many times in a row the last action was used.
+        /// </summary>
+        /// <returns></returns>
         public int LastActionCounter()
             => ActionWatching.LastActionUseCount;
 
+        /// <summary>
+        /// Checks if the last weaponskill used was the passed ID. Does not have to be the last action performed, just the last weaponskill used.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
         public bool WasLastWeaponskill(uint id)
             => ActionWatching.LastWeaponskill == id;
 
+        /// <summary>
+        /// Checks if the last spell used was the passed ID. Does not have to be the last action performed, just the last spell used.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
         public bool WasLastSpell(uint id)
             => ActionWatching.LastSpell == id;
 
+        /// <summary>
+        /// Checks if the last ability used was the passed ID. Does not have to be the last action performed, just the last ability used.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
         public bool WasLastAbility(uint id)
             => ActionWatching.LastAbility == id;
 
         /// <summary>
         /// Returns if the player has set the spell as active in the Blue Mage Spellbook
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">ID of the BLU spell.</param>
         /// <returns></returns>
         public bool IsSpellActive(uint id)
             => Service.Configuration.ActiveBLUSpells.Contains(id);
 
-        //public bool CanUseAction(uint id)
-        //{
-        //    if (!ActionWatching.ActionSheet.TryGetValue(id, out var actionFromSheet)) return false;
-        //    if (!LevelChecked(id)) return false;
-        //    if (!IsOffCooldown(id)) return false;
-        //    if (GetTargetDistance() < actionFromSheet.Range) return false;
-        //    if (IsResourceTypeNormal(id) && GetResourceCost(id) > LocalPlayer.CurrentMp) return false;
+        //Class Names
+        public class JobNames
+        {
+            public static readonly List<string> Melee = new() {
+                //English
+                "monk", "dragoon", "ninja", "reaper", "samurai", "pugilist", "lancer", "rogue",
+                //Chinese
+                "武僧", "龙骑士", "忍者", "钐镰客", "武士", "格斗家", "枪术师", "双剑师",
+                //Japanese
+                "モンク", "竜騎士", "忍者", "リーパー", "侍", "格闘士", "槍術士", "双剣士",
+                //French (ninja is french for ninja)
+                "moine", "chevalier dragon", "faucheur", "samouraï", "pugiliste", "maître d'hast", "surineur",
+                //German (dragoon/ninja/samurai are as is)
+                "mönch", "schnitter", "faustkämpfer", "pikenier", "schurke"
+            };
 
-        //    switch (JobID)
-        //    {
-        //        case AST.JobID:
-        //            if (id == AST.Astrodyne && GetJobGauge<ASTGauge>().Seals.Count() < 3) return false;
-        //            if (id == AST.Play && GetJobGauge<ASTGauge>().DrawnCard == Dalamud.Game.ClientState.JobGauge.Enums.CardType.NONE) return false;
-        //            if (id == AST.MinorArcana && GetJobGauge<ASTGauge>().DrawnCrownCard == Dalamud.Game.ClientState.JobGauge.Enums.CardType.NONE) return false;
-        //            break;
-        //        case BLM.JobID:
-        //            if ((id is BLM.Fire4 or BLM.Despair or BLM.Flare) && !GetJobGauge<BLMGauge>().InAstralFire) return false;
-        //            if ((id is BLM.Blizzard4 or BLM.Freeze or BLM.UmbralSoul) && !GetJobGauge<BLMGauge>().InUmbralIce) return false;
-        //            if (id is BLM.Amplifier && (!GetJobGauge<BLMGauge>().InUmbralIce && !GetJobGauge<BLMGauge>().InAstralFire)) return false;
-        //            if (id is BLM.Paradox && !GetJobGauge<BLMGauge>().IsParadoxActive) return false;
-        //            break;
-        //        case BRD.JobID:
-        //            if (GetJobGauge<BRDGauge>().SoulVoice < GetResourceCost(id)) return false;
-        //            break;
-        //        case DNC.JobID:
-        //            if (id is DNC.FanDance1 or DNC.FanDance2 && GetJobGauge<DNCGauge>().Feathers == 0) return false;
-        //            if (GetJobGauge<DNCGauge>().Esprit < GetResourceCost(id)) return false;
-        //            break;
-        //        case DRG.JobID:
-        //            if (id is DRG.Stardiver && !GetJobGauge<DRGGauge>().IsLOTDActive) return false;
-        //            break;
-        //        case DRK.JobID:
+            public static readonly List<string> Ranged = new() {
+                //English
+                "bard", "machinist", "dancer", "red mage", "black mage", "summoner", "blue mage", "archer", "thaumaturge", "arcanist",
+                //Chinese
+                "吟游诗人", "机工士", "舞者", "赤魔法师", "黑魔法师", "召唤师", "青魔法师", "弓箭手", "咒术师", "秘术师",
+                //Japanese
+                "吟遊詩人", "機工士", "踊り子", "赤魔道士", "黒魔道士", "召喚士", "青魔道士", "弓術士", "呪術士", "巴術士",
+                //French (archer skipped)
+                "barde", "machiniste", "danseur", "mage rouge", "mage noir", "invocateur", "mage bleu", "occultiste", "arcaniste",
+                //German (barde skipped)
+                "maschinist", "tänzser", "rotmagier", "schwarzmagier", "beschwörer", "blaumagier", "waldäufer", "thaumaturg", "hermetiker"
+            };
 
-        //            break;
-        //        case GNB.JobID:
+            public static readonly List<string> Tank = new()
+            {
+                //English
+                "paladin", "warrior", "dark knight", "gunbreaker", "gladiator", "marauder",
+                //Chinese
+                "骑士", "战士", "暗黑骑士", "绝枪战士", "剑术师", "斧术师",
+                //Japanese
+                "ナイト", "戦士", "暗黒騎士", "ガンブレイカー", "剣術士", "斧術士",
+                //French (paladin)
+                "guerrier", "chevalier noir", "pistosabreur", "gladiateur", "maraudeur",
+                //German (paladin/gladiator are as is)
+                "krieger", "dunkelritter", "revolverklinge", "marodeur"
+            };
 
-        //            break;
-        //        case MCH.JobID:
-        //            if ((id == MCH.AutomatonQueen || id == MCH.RookAutoturret) && GetJobGauge<MCHGauge>().Battery < GetResourceCost(id)) return false;
-        //            if (GetJobGauge<MCHGauge>().Heat < GetResourceCost(id)) return false;
-        //            break;
-        //        case MNK.JobID:
+            public static readonly List<string> Healer = new()
+            {
+                //English
+                "white mage", "astrologian", "scholar", "sage", "conjurer",
+                //Chinese
+                "白魔法师", "占星术士", "学者", "贤者", "幻术师",
+                //Japanese
+                "白魔道士", "占星術師", "学者", "賢者", "幻術士",
+                //French (sage is the same as en)
+                "mage blanc", "astromancien", "érudits", "élémentaliste",
+                //German
+                "weißmagier", "weissmagier", "gelehrter", "astrologe", "weiser", "druide"
+            };
+        }
 
-        //            break;
-        //        case NIN.JobID:
-        //            if (GetJobGauge<NINGauge>().Ninki < GetResourceCost(id)) return false;
-        //            break;
-        //        case PLD.JobID:
-        //            if (GetJobGauge<PLDGauge>().OathGauge < GetResourceCost(id)) return false;
-        //            break;
-        //        case RDM.JobID:
+        /// <summary>
+        /// Checks if the character has the Silence status.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasSilence()
+        {
+            foreach (var status in ActionWatching.GetStatusesByName("Silence"))
+            {
+                if (HasEffectAny((ushort)status)) return true;
+            }
 
-        //            break;
-        //        case RPR.JobID:
+            return false;
+        }
 
-        //            break;
-        //        case SAM.JobID:
+        /// <summary>
+        /// Checks if the character has the Pacification status.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasPacification()
+        {
+            foreach (var status in ActionWatching.GetStatusesByName("Pacification"))
+            {
+                if (HasEffectAny((ushort)status)) return true;
+            }
 
-        //            break;
-        //        case SCH.JobID:
+            return false;
+        }
 
-        //            break;
-        //        case SGE.JobID:
+        /// <summary>
+        /// Checks if the character has the Amnesia status.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasAmnesia()
+        {
+            foreach (var status in ActionWatching.GetStatusesByName("Amnesia"))
+            {
+                if (HasEffectAny((ushort)status)) return true;
+            }
 
-        //            break;
-        //        case SMN.JobID:
+            return false;
+        }
 
-        //            break;
-        //        case WAR.JobID:
+        /// <summary>
+        /// Checks if the action can be used. Checks many conditions to ensure accuracy.
+        /// </summary>
+        /// <param name="id">ID of the action.</param>
+        /// <returns></returns>
+        public bool CanUseAction(uint id)
+        {
+            if (!ActionWatching.ActionSheet.TryGetValue(id, out var actionFromSheet)) return false;
+            try { GetCooldown(id); } catch { return false; }
+            if (actionFromSheet.ClassJob.Value == null) return false;
+            if (actionFromSheet.ClassJob.Value.RowId != JobID && actionFromSheet.ClassJob.Value.RowId != ClassID) return false;
+            if (LocalPlayer.ClassJob.Id == ClassID && actionFromSheet.ClassJob.Value.RowId == JobID) return false;
+            if (!LevelChecked(id)) return false;
+            if ((!GetCooldown(id).HasCharges && !IsOffCooldown(id) && GetCooldown(id).CooldownTotal > 3) || (GetCooldown(id).HasCharges && GetRemainingCharges(id) == 0)) return false;
+            if (GetTargetDistance() > actionFromSheet.Range && actionFromSheet.Range > 0) return false;
 
-        //            break;
-        //        case WHM.JobID:
+            if (ActionWatching.GetAttackType(id) == ActionWatching.ActionAttackType.Ability && HasAmnesia()) return false;
+            if (ActionWatching.GetAttackType(id) == ActionWatching.ActionAttackType.Spell && HasSilence()) return false;
+            if (ActionWatching.GetAttackType(id) == ActionWatching.ActionAttackType.Weaponskill && HasPacification()) return false;
 
-        //            break;
-        //    }
 
-        //    return true;
+            //Deal with job stuff first, such as free casts and non-MP costs
+            switch (JobID)
+            {
+                case AST.JobID:
+                    if (id == AST.Astrodyne && GetJobGauge<ASTGauge>().Seals.Count() < 3) return false;
+                    if (id == AST.Play && GetJobGauge<ASTGauge>().DrawnCard == Dalamud.Game.ClientState.JobGauge.Enums.CardType.NONE) return false;
+                    if (id == AST.MinorArcana && GetJobGauge<ASTGauge>().DrawnCrownCard == Dalamud.Game.ClientState.JobGauge.Enums.CardType.NONE) return false;
+                    break;
+                case BLM.JobID:
+                    if ((id is BLM.Fire4 or BLM.Despair or BLM.Flare) && !GetJobGauge<BLMGauge>().InAstralFire) return false;
+                    if ((id is BLM.Blizzard4 or BLM.Freeze or BLM.UmbralSoul) && !GetJobGauge<BLMGauge>().InUmbralIce) return false;
+                    if (id is BLM.Amplifier && (!GetJobGauge<BLMGauge>().InUmbralIce && !GetJobGauge<BLMGauge>().InAstralFire)) return false;
+                    if (id is BLM.Paradox && !GetJobGauge<BLMGauge>().IsParadoxActive) return false;
+                    break;
+                case BRD.JobID:
+                    if (GetJobGauge<BRDGauge>().SoulVoice < GetResourceCost(id)) return false;
+                    break;
+                case DNC.JobID:
+                    if (id is DNC.FanDance1 or DNC.FanDance2 && GetJobGauge<DNCGauge>().Feathers == 0) return false;
+                    if (GetJobGauge<DNCGauge>().Esprit < GetResourceCost(id)) return false;
+                    break;
+                case DRG.JobID:
+                    if (id is DRG.Stardiver && !GetJobGauge<DRGGauge>().IsLOTDActive) return false;
+                    break;
+                case DRK.JobID:
+                    if ((id is DRK.EdgeOfShadow or DRK.FloodOfShadow) && !GetJobGauge<DRKGauge>().HasDarkArts && LocalPlayer.CurrentMp < GetResourceCost(id)) return false;
+                    if ((id is DRK.Bloodspiller or DRK.Quietus) && !HasEffect(DRK.Buffs.Delirium) && GetJobGauge<DRKGauge>().Blood < GetResourceCost(id)) return false;
+                    if (GetJobGauge<DRKGauge>().Blood < GetResourceCost(id) && !IsResourceTypeNormal(id)) return false;
+                    break;
+                case GNB.JobID:
 
-        //}
-    }
+                    break;
+                case MCH.JobID:
+                    if ((id == MCH.AutomatonQueen || id == MCH.RookAutoturret) && GetJobGauge<MCHGauge>().Battery < GetResourceCost(id)) return false;
+                    if (GetJobGauge<MCHGauge>().Heat < GetResourceCost(id)) return false;
+                    break;
+                case MNK.JobID:
+
+                    break;
+                case NIN.JobID:
+                    if (GetJobGauge<NINGauge>().Ninki < GetResourceCost(id)) return false;
+                    break;
+                case PLD.JobID:
+                    if (GetJobGauge<PLDGauge>().OathGauge < GetResourceCost(id) && !IsResourceTypeNormal(id)) return false;
+                    break;
+                case RDM.JobID:
+
+                    break;
+                case RPR.JobID:
+
+                    break;
+                case SAM.JobID:
+
+                    break;
+                case SCH.JobID:
+
+                    break;
+                case SGE.JobID:
+
+                    break;
+                case SMN.JobID:
+
+                    break;
+                case WAR.JobID:
+
+                    break;
+                case WHM.JobID:
+
+                    break;
+            }
+            if (IsResourceTypeNormal(id) && GetResourceCost(id) > LocalPlayer.CurrentMp) return false;
+
+            return true;
+
+        }
+    } 
 }

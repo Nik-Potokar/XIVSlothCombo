@@ -9,11 +9,11 @@ namespace XIVSlothComboPlugin
 {
     public static class ActionWatching
     {
-        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
+        public static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
             .Where(i => i.RowId is not 7)
             .ToDictionary(i => i.RowId, i => i);
 
-        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
+        public static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
             .ToDictionary(i => i.RowId, i => i);
 
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
@@ -135,7 +135,42 @@ namespace XIVSlothComboPlugin
 
             return "Unknown Status";
         }
+
+        public static List<uint> GetStatusesByName(string status)
+        {
+            List<uint> output = new List<uint>();
+            foreach (var item in StatusSheet?.Where(x => x.Value.Name.ToString().Equals(status, StringComparison.CurrentCultureIgnoreCase)))
+            {
+                output.Add(item.Key);
+            }
+
+            return output;
+        }
+
+        public static ActionAttackType GetAttackType(uint id)
+        {
+            if (!ActionSheet.TryGetValue(id, out var action)) return ActionAttackType.Unknown;
+
+            return action.ActionCategory.Value.Name.RawString switch
+            {
+                "Spell" => ActionAttackType.Spell,
+                "Weaponskill" => ActionAttackType.Weaponskill,
+                "Ability" => ActionAttackType.Ability,
+                _ => ActionAttackType.Unknown
+            };
+
+        }
+
+        public enum ActionAttackType
+        {
+            Ability,
+            Spell,
+            Weaponskill,
+            Unknown
+        }
+
     }
+
 
     internal unsafe static class ActionManagerHelper
     {
@@ -145,6 +180,9 @@ namespace XIVSlothComboPlugin
             (IntPtr)ActionManager.fpUseAction;
         internal static IntPtr FpUseActionLocation =>
             (IntPtr)ActionManager.fpUseActionLocation;
+
+        internal static IntPtr CheckActionResources =>
+            (IntPtr)ActionManager.fpCheckActionResources;
 
         public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero
             ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;

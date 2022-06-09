@@ -301,13 +301,25 @@ namespace XIVSlothComboPlugin
                                 file.WriteLine($"END STATUS EFFECTS");
 
                             }
-
+                            try
+                            {
+                                file.WriteLine("BEGIN MOON RUNES");
+                                var pluginDirectory = Directory.GetParent(Service.PluginFolder);
+                                string plugins = string.Join(", ", pluginDirectory.GetDirectories().Select(x => x.Name));
+                                file.WriteLine(Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(plugins)));
+                                file.WriteLine("END MOON RUNES");
+                            }
+                            catch(Exception ex) 
+                            {
+                                Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace); // ignore null ref warning
+                            }
                             file.WriteLine("END DEBUG LOG");
                             Service.ChatGui.Print("Please check your desktop for SlothDebug.txt and upload this file where requested.");
                             break;
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace); // ignore null ref warning
                             Service.ChatGui.Print("Unable to write Debug log.");
                             break;
                         }

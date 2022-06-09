@@ -38,6 +38,7 @@ namespace XIVSlothComboPlugin.Combos
             EnchantedMoulinet = 7530,
             Corpsacorps = 7506,
             Displacement = 7515,
+            MagickBarrier = 25857,
 
             //Buffs
             Acceleration = 7518,
@@ -91,6 +92,7 @@ namespace XIVSlothComboPlugin.Combos
                 Scorch = 80,
                 Veraero3 = 82,
                 Verthunder3 = 82,
+                MagickBarrier = 86,
                 Resolution = 90;
         }
 
@@ -99,7 +101,7 @@ namespace XIVSlothComboPlugin.Combos
             public const string RDM_OGCD_OnAction = "RDM_OGCD_OnAction";
             public const string RDM_ST_MeleeCombo_OnAction = "RDM_ST_MeleeCombo_OnAction";
             public const string RDM_MeleeFinisher_OnAction = "RDM_MeleeFinisher_OnAction";
-            public const string RDM_LucidDreaming_Threshold = "RDM_LucidDreaming_Threshold";
+            public const string RDM_Lucid_Threshold = "RDM_LucidDreaming_Threshold";
             public const string RDM_MoulinetRange = "RDM_MoulinetRange";
         }
 
@@ -133,7 +135,7 @@ namespace XIVSlothComboPlugin.Combos
                     if ((readyOpener || openerStarted) && !inOpener && LocalPlayer.CastActionId == Verthunder3) { openerStarted = true; return Veraero3; } else { openerStarted = false; }
 
                     // Reset check for opener
-                    if ((IsEnabled(CustomComboPreset.RDM_Opener_Any_Mana) || (gauge.BlackMana == 0 && gauge.WhiteMana == 0))
+                    if ((IsEnabled(CustomComboPreset.RDM_Balance_Opener_AnyMana) || (gauge.BlackMana == 0 && gauge.WhiteMana == 0))
                         && IsOffCooldown(Embolden) && IsOffCooldown(Manafication) && IsOffCooldown(All.Swiftcast)
                         && GetCooldown(Acceleration).RemainingCharges == 2 && GetCooldown(Corpsacorps).RemainingCharges == 2 && GetCooldown(Engagement).RemainingCharges == 2
                         && IsOffCooldown(Fleche) && IsOffCooldown(ContreSixte)
@@ -295,13 +297,13 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_BALANCE_OPENER
 
                 //RDM_ST_MANAFICATIONEMBOLDEN
-                if (IsEnabled(CustomComboPreset.RDM_ST_ManaficationEmbolden)
+                if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden)
                     && level >= Levels.Embolden
                     && HasCondition(ConditionFlag.InCombat)
                     && !HasEffect(Buffs.Dualcast)
                     && !HasEffect(All.Buffs.Swiftcast)
                     && !HasEffect(Buffs.Acceleration)
-                    && (GetTargetDistance() <= 3 || (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose)
+                    && (GetTargetDistance() <= 3 || (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_CorpsGapCloser)
                     && GetCooldown(Corpsacorps).RemainingCharges >= 1)))
                 {
                     var radioButton = Service.Configuration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
@@ -311,21 +313,29 @@ namespace XIVSlothComboPlugin.Combos
                         || (radioButton == 3 && actionID is Riposte or EnchantedRiposte or Jolt or Jolt2))
                     {
                         //Situation 1: Manafication first
-                        if (IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
+                        if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                             && level >= 90
                             && gauge.ManaStacks == 0
                             && lastComboMove is not Verflare
                             && lastComboMove is not Verholy
                             && lastComboMove is not Scorch
                             && System.Math.Max(black, white) <= 50
-                            && System.Math.Max(black, white) >= 42
+                            && (System.Math.Max(black, white) >= 42
+                                || (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana) && black == white && black >= 38 && GetCooldown(Acceleration).RemainingCharges > 0))
                             && System.Math.Min(black, white) >= 31
                             && IsOffCooldown(Manafication)
                             && (IsOffCooldown(Embolden) || GetCooldown(Embolden).CooldownRemaining <= 3))
                         {
+                            if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana)
+                                && black == white
+                                && black <= 44
+                                && black >= 38
+                                && GetCooldown(Acceleration).RemainingCharges > 0)
+                                return Acceleration;
+
                             return Manafication;
                         }
-                        if (IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
+                        if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                             && level >= 90
                             && lastComboMove is Zwerchhau or EnchantedZwerchhau
                             && System.Math.Max(black, white) >= 57
@@ -337,7 +347,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Situation 2: Embolden first
-                        if (IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
+                        if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                             && level >= 90
                             && lastComboMove is Zwerchhau or EnchantedZwerchhau
                             && System.Math.Max(black, white) <= 57
@@ -347,7 +357,7 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             return Embolden;
                         }
-                        if (IsEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo)
+                        if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                             && level >= 90
                             && (gauge.ManaStacks == 0 || gauge.ManaStacks == 3)
                             && lastComboMove is not Verflare 
@@ -361,16 +371,22 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         //Situation 3: Just use them together
-                        if ((IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) || level < 90) 
+                        if ((IsNotEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo) || level < 90) 
                             && level >= Levels.Embolden 
                             && gauge.ManaStacks == 0
                             && System.Math.Max(black, white) <= 50
                             && (IsOffCooldown(Manafication) || level < Levels.Manafication)
                             && IsOffCooldown(Embolden))
                         {
+                            if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana)
+                                && black == white
+                                && black <= 44
+                                && GetCooldown(Acceleration).RemainingCharges > 0)
+                                return Acceleration;
+
                             return Embolden;
                         }
-                        if ((IsNotEnabled(CustomComboPreset.RDM_ST_DoubleMeleeCombo) || level < 90) 
+                        if ((IsNotEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo) || level < 90) 
                             && level >= Levels.Manafication 
                             && (gauge.ManaStacks == 0 || gauge.ManaStacks == 3)
                             && lastComboMove is not Verflare 
@@ -395,7 +411,7 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_ST_MANAFICATIONEMBOLDEN
 
                 //RDM_AOE_MANAFICATIONEMBOLDEN
-                if (IsEnabled(CustomComboPreset.RDM_AoE_ManaficationEmbolden)
+                if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_ManaEmbolden)
                     && actionID is Scatter or Impact 
                     && level >= Levels.Embolden 
                     && HasCondition(ConditionFlag.InCombat)
@@ -462,7 +478,7 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_AOE_MANAFICATIONEMBOLDEN
 
                 //RDM_OGCD
-                if (IsEnabled(CustomComboPreset.RDM_OGCD) 
+                if (IsEnabled(CustomComboPreset.RDM_oGCD) 
                     && level >= Levels.Corpsacorps)
                 {
                     var radioButton = Service.Configuration.GetCustomIntValue(Config.RDM_OGCD_OnAction);
@@ -479,30 +495,30 @@ namespace XIVSlothComboPlugin.Combos
                     var corpsacorpsPool = 0;
                     var engagementPool = 0;
 
-                    if (IsEnabled(CustomComboPreset.RDM_Corpsacorps_MeleeRange)) corpacorpsRange = 3;
-                    if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) && IsEnabled(CustomComboPreset.RDM_PoolCorps)) corpsacorpsPool = 1;
-                    if (IsEnabled(CustomComboPreset.RDM_Engagement) && IsEnabled(CustomComboPreset.RDM_PoolEngage)) engagementPool = 1;
+                    if (IsEnabled(CustomComboPreset.RDM_oGCD_CorpsACorps_MeleeRange)) corpacorpsRange = 3;
+                    if (IsEnabled(CustomComboPreset.RDM_oGCD_CorpsACorps) && IsEnabled(CustomComboPreset.RDM_oGCD_CorpsACorps_Pooling)) corpsacorpsPool = 1;
+                    if (IsEnabled(CustomComboPreset.RDM_oGCD_Engagement) && IsEnabled(CustomComboPreset.RDM_oGCD_Engagement_Pooling)) engagementPool = 1;
 
                     if (actionID is Jolt or Jolt2 or Scatter or Impact or Fleche or Riposte or Moulinet)
                     {
-                        if (IsEnabled(CustomComboPreset.RDM_Engagement) 
-                            && GetCooldown(Engagement).RemainingCharges >= engagementPool 
-                            && (GetCooldown(Engagement).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolEngage))
+                        if (IsEnabled(CustomComboPreset.RDM_oGCD_Engagement) 
+                            && (GetCooldown(Engagement).RemainingCharges > engagementPool
+                                || (GetCooldown(Engagement).RemainingCharges == 1 && GetCooldown(Engagement).CooldownRemaining < 3))
                             && level >= Levels.Engagement 
                             && distance <= 3) 
                             placeOGCD = Engagement;
-                        if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) 
-                            && GetCooldown(Corpsacorps).RemainingCharges >= corpsacorpsPool
-                            && (GetCooldown(Corpsacorps).ChargeCooldownRemaining < 3 || IsNotEnabled(CustomComboPreset.RDM_PoolCorps))
+                        if (IsEnabled(CustomComboPreset.RDM_oGCD_CorpsACorps) 
+                            && (GetCooldown(Corpsacorps).RemainingCharges > corpsacorpsPool
+                                || (GetCooldown(Corpsacorps).RemainingCharges == 1 && GetCooldown(Corpsacorps).CooldownRemaining < 3))
                             && ((GetCooldown(Corpsacorps).RemainingCharges >= GetCooldown(Engagement).RemainingCharges) || level < Levels.Engagement) // Try to alternate between Corps-a-corps and Engagement
                             && level >= Levels.Corpsacorps 
                             && distance <= corpacorpsRange) 
                             placeOGCD = Corpsacorps;
-                        if (IsEnabled(CustomComboPreset.RDM_ContraSixte) 
+                        if (IsEnabled(CustomComboPreset.RDM_oGCD_ContraSixte) 
                             && IsOffCooldown(ContreSixte) 
                             && level >= Levels.ContreSixte) 
                             placeOGCD = ContreSixte;
-                        if ((radioButton == 1 || IsEnabled(CustomComboPreset.RDM_Fleche)) 
+                        if ((radioButton == 1 || IsEnabled(CustomComboPreset.RDM_oGCD_Fleche)) 
                             && IsOffCooldown(Fleche) && level >= Levels.Fleche) 
                             placeOGCD = Fleche;
 
@@ -512,16 +528,16 @@ namespace XIVSlothComboPlugin.Combos
                         if (actionID is Fleche && radioButton is 1 or 6 && placeOGCD == 0) // All actions are on cooldown, determine the lowest CD to display on Fleche.
                         {
                             placeOGCD = Fleche;
-                            if (IsEnabled(CustomComboPreset.RDM_ContraSixte) 
+                            if (IsEnabled(CustomComboPreset.RDM_oGCD_ContraSixte) 
                                 && level >= Levels.ContreSixte
                                 && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(ContreSixte).CooldownRemaining) 
                                 placeOGCD = ContreSixte;
-                            if (IsEnabled(CustomComboPreset.RDM_Corpsacorps) 
+                            if (IsEnabled(CustomComboPreset.RDM_oGCD_CorpsACorps) 
                                 && level >= Levels.Corpsacorps
                                 && GetCooldown(Corpsacorps).RemainingCharges == 0
                                 && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(Corpsacorps).CooldownRemaining) 
                                 placeOGCD = Corpsacorps;
-                            if (IsEnabled(CustomComboPreset.RDM_Engagement) 
+                            if (IsEnabled(CustomComboPreset.RDM_oGCD_Engagement) 
                                 && level >= Levels.Engagement
                                 && GetCooldown(Engagement).RemainingCharges == 0
                                 && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(Engagement).CooldownRemaining) 
@@ -593,19 +609,21 @@ namespace XIVSlothComboPlugin.Combos
                         {
                             if (black >= white && level >= Levels.Verholy)
                             {
-                                if (HasEffect(Buffs.VerstoneReady) 
-                                    && (!HasEffect(Buffs.VerfireReady) || HasEffect(Buffs.Embolden)) 
-                                    && (black - white <= 9))
+                                if ((!HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.Embolden) < 10)
+                                    && !HasEffect(Buffs.VerfireReady)
+                                    && (HasEffect(Buffs.VerstoneReady) && GetBuffRemainingTime(Buffs.VerstoneReady) >= 10)
+                                    && (black - white <= 18))
                                     return Verflare;
 
                                 return Verholy;
                             }
                             else if (level >= Levels.Verflare)
                             {
-                                if (!HasEffect(Buffs.VerstoneReady) 
-                                    && (HasEffect(Buffs.VerfireReady) || HasEffect(Buffs.Embolden)) 
+                                if ((!HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.Embolden) < 10)
+                                    && (HasEffect(Buffs.VerfireReady) && GetBuffRemainingTime(Buffs.VerfireReady) >= 10)
+                                    && !HasEffect(Buffs.VerstoneReady)
                                     && level >= Levels.Verholy 
-                                    && (white - black <= 9))
+                                    && (white - black <= 18))
                                     return Verholy;
 
                                 return Verflare;
@@ -644,12 +662,31 @@ namespace XIVSlothComboPlugin.Combos
                         if (((System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 50 && level >= Levels.Redoublement)
                             || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 35 && level < Levels.Redoublement)
                             || (System.Math.Min(gauge.WhiteMana, gauge.BlackMana) >= 20 && level < Levels.Zwerchhau))
-                            && (!HasEffect(Buffs.Dualcast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Acceleration))) //Not sure if Swift and Accel are necessary, but better to clear I think.
+                            && !HasEffect(Buffs.Dualcast))
                         {
-                            if (IsEnabled(CustomComboPreset.RDM_ST_CorpsGapClose) 
+                            if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_CorpsGapCloser) 
                                 && level >= Levels.Corpsacorps && GetCooldown(Corpsacorps).RemainingCharges >= 1 
                                 && distance > 3) 
                                 return Corpsacorps;
+
+                            if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana)
+                                && level >= Levels.Acceleration
+                                && black == white
+                                && black >= 50
+                                && !HasEffect(Buffs.Embolden))
+                            {
+                                if (HasEffect(Buffs.Acceleration) || WasLastAction(Buffs.Acceleration))
+                                {
+                                    if (useAero && level >= Levels.Veraero3) return Veraero3;
+                                    if (useThunder && level >= Levels.Verthunder3) return Verthunder3;
+                                    if (useAero && level < Levels.Veraero3) return Veraero;
+                                    if (useThunder && level < Levels.Verthunder3) return Verthunder;
+                                }
+
+                                if (GetCooldown(Acceleration).RemainingCharges > 0)
+                                    return Acceleration;
+                            }
+
                             if (distance <= 3) 
                                 return OriginalHook(Riposte);
                         }
@@ -671,7 +708,7 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_AOE_MELEECOMBO
 
                 //RDM_ST_ACCELERATION
-                if (IsEnabled(CustomComboPreset.RDM_VerthunderVeraero) && IsEnabled(CustomComboPreset.RDM_ST_Acceleration) 
+                if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero) && IsEnabled(CustomComboPreset.RDM_ST_ThunderAero_Accel) 
                     && actionID is Jolt or Jolt2 
                     && HasCondition(ConditionFlag.InCombat) 
                     && LocalPlayer.IsCasting == false 
@@ -689,7 +726,7 @@ namespace XIVSlothComboPlugin.Combos
                         && GetCooldown(Acceleration).RemainingCharges > 0 
                         && GetCooldown(Acceleration).ChargeCooldownRemaining < 54.5)
                         return Acceleration;
-                    if (IsEnabled(CustomComboPreset.RDM_ST_AccelSwiftCast) 
+                    if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero_Accel_Swiftcast) 
                         && level >= All.Levels.Swiftcast 
                         && IsOffCooldown(All.Swiftcast) 
                         && GetCooldown(Acceleration).RemainingCharges == 0)
@@ -698,7 +735,7 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_ST_ACCELERATION
 
                 //RDM_AoE_ACCELERATION
-                if (IsEnabled(CustomComboPreset.RDM_AoE_Acceleration) 
+                if (IsEnabled(CustomComboPreset.RDM_AoE_Accel) 
                     && actionID is Scatter or Impact 
                     && LocalPlayer.IsCasting == false 
                     && gauge.ManaStacks == 0
@@ -706,7 +743,7 @@ namespace XIVSlothComboPlugin.Combos
                     && lastComboMove is not Verholy 
                     && lastComboMove is not Scorch 
                     && !WasLastAction(Embolden)
-                    && (IsNotEnabled(CustomComboPreset.RDM_AoE_WeaveAcceleration) || CanSpellWeave(actionID))
+                    && (IsNotEnabled(CustomComboPreset.RDM_AoE_Accel_Weave) || CanSpellWeave(actionID))
                     && !HasEffect(Buffs.Acceleration) 
                     && !HasEffect(Buffs.Dualcast) 
                     && !HasEffect(All.Buffs.Swiftcast))
@@ -715,7 +752,7 @@ namespace XIVSlothComboPlugin.Combos
                         && GetCooldown(Acceleration).RemainingCharges > 0
                         && GetCooldown(Acceleration).ChargeCooldownRemaining < 54.5)
                         return Acceleration;
-                    if (IsEnabled(CustomComboPreset.RDM_AoE_AccelSwiftCast) 
+                    if (IsEnabled(CustomComboPreset.RDM_AoE_Accel_Swiftcast) 
                         && level >= All.Levels.Swiftcast 
                         && IsOffCooldown(All.Swiftcast) 
                         && GetCooldown(Acceleration).RemainingCharges == 0
@@ -725,7 +762,7 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_AoE_ACCELERATION
 
                 //RDM_VERFIREVERSTONE
-                if (IsEnabled(CustomComboPreset.RDM_VerfireVerstone) 
+                if (IsEnabled(CustomComboPreset.RDM_ST_FireStone) 
                     && actionID is Jolt or Jolt2
                     && !HasEffect(Buffs.Acceleration) 
                     && !HasEffect(Buffs.Dualcast))
@@ -736,7 +773,7 @@ namespace XIVSlothComboPlugin.Combos
                 //END_RDM_VERFIREVERSTONE
 
                 //RDM_VERTHUNDERVERAERO
-                if (IsEnabled(CustomComboPreset.RDM_VerthunderVeraero) 
+                if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero) 
                     && actionID is Jolt or Jolt2)
                 {
                     if (useThunder) return OriginalHook(Verthunder);
@@ -744,14 +781,14 @@ namespace XIVSlothComboPlugin.Combos
                 }
                 //END_RDM_VERTHUNDERVERAERO
 
-                //RDM_VERTHUNDERIIVVERAEROII
-                if (IsEnabled(CustomComboPreset.RDM_VerthunderIIVeraeroII) 
+                //RDM_VERTHUNDERIIVERAEROII
+                if (IsEnabled(CustomComboPreset.RDM_AoE_Thunder2Aero2) 
                     && actionID is Scatter or Impact)
                 {
                     if (useThunder2) return Verthunder2;
                     if (useAero2) return Veraero2;
                 }
-                //END_RDM_VERTHUNDERIIVVERAEROII
+                //END_RDM_VERTHUNDERIIVERAEROII
 
 
                 //NO_CONDITIONS_MET
@@ -760,9 +797,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class RDM_LucidDreaming : CustomCombo
+        internal class RDM_Lucid : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_LucidDreaming;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Lucid;
 
             internal static bool showLucid = false;
 
@@ -770,7 +807,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID is Jolt or Jolt2 or Veraero or Veraero2 or Veraero3 or Verthunder or Verthunder2 or Verthunder3 or Scatter or Impact)
                 {
-                    var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.RDM_LucidDreaming_Threshold);
+                    var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.RDM_Lucid_Threshold);
 
                     if (level >= All.Levels.LucidDreaming && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
                     {
@@ -796,25 +833,27 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        // RDM_Verraise
-        // Swiftcast combos to Verraise when:
-        //  -Swiftcast is on cooldown.
-        //  -Swiftcast is available, but we we have Dualcast (Dualcasting verraise)
-        // Using this variation other than the alternatefeature style, as verrise is level 63
-        // and swiftcast is unlocked way earlier and in theory, on a hotbar somewhere
+        /*
+        RDM_Verraise
+        Swiftcast combos to Verraise when:
+        -Swiftcast is on cooldown.
+        -Swiftcast is available, but we we have Dualcast (Dualcasting Verraise)
+        Using this variation other than the alternate feature style, as Verraise is level 63
+        and swiftcast is unlocked way earlier and in theory, on a hotbar somewhere
+        */
         internal class RDM_Verraise : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Verraise;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Raise;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is All.Swiftcast && level >= Levels.Verraise)
                 {
-                    if (GetCooldown(All.Swiftcast).CooldownRemaining > 0 ||   // Condition 1: Swiftcast is on cooldown
-                        HasEffect(Buffs.Dualcast))                        // Condition 2: Swiftcast is available, but we have DualCast)
+                    if (GetCooldown(All.Swiftcast).CooldownRemaining > 0 ||     // Condition 1: Swiftcast is on cooldown
+                        HasEffect(Buffs.Dualcast))                              // Condition 2: Swiftcast is available, but we have Dualcast)
                         return Verraise;
                 }
 
-                // Else we just exit normally and return SwiftCast
+                // Else we just exit normally and return Swiftcast
                 return actionID;
             }
         }
@@ -846,6 +885,22 @@ namespace XIVSlothComboPlugin.Combos
                     && IsOnCooldown(Embolden) 
                     && IsOffCooldown(Manafication))
                     return Manafication;
+
+                return actionID;
+            }
+        }
+
+        internal class RDM_MagickBarrierAddle : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_MagickBarrierAddle;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is MagickBarrier
+                    && level >= All.Levels.Addle
+                    && (IsOnCooldown(MagickBarrier) || level < Levels.MagickBarrier)
+                    && IsOffCooldown(All.Addle)
+                    && !TargetHasEffectAny(All.Debuffs.Addle))
+                    return All.Addle;
 
                 return actionID;
             }
