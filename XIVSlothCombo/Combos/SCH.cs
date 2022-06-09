@@ -6,7 +6,7 @@ namespace XIVSlothComboPlugin.Combos
 {
     internal static class SCH
     {
-        public const byte ClassID = 15;
+        public const byte ClassID = 26;
         public const byte JobID = 28;
 
         public const uint

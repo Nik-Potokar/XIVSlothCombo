@@ -4,7 +4,7 @@ namespace XIVSlothComboPlugin
 {
     internal static class NINPVP
     {
-        public const byte ClassID = 18;
+        public const byte ClassID = 29;
         public const byte JobID = 30;
 
         internal const uint
