@@ -163,9 +163,9 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
 
-            internal class WarriorStormsEyeCombo : CustomCombo
+            internal class War_ST_StormsEye : CustomCombo
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorStormsEyeCombo;
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.War_ST_StormsEye;
 
                 protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {
@@ -187,7 +187,7 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            internal class WarriorMythrilTempestCombo : CustomCombo
+            internal class WAR_AoE_Overpower : CustomCombo
             {
                 protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_AoE_Overpower;
 
@@ -243,9 +243,9 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
 
-            internal class WarriorNascentFlashFeature : CustomCombo
+            internal class WAR_NascentFlash : CustomCombo
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WarriorNascentFlashFeature;
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_NascentFlash;
 
                 protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {

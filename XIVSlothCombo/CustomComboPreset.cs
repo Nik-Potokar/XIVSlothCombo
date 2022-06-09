@@ -2687,7 +2687,7 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(WAR.StormsEye)]
         [CustomComboInfo("Storms Eye Combo", "Replace Storms Eye with its combo chain", WAR.JobID, 0, "", "Ow! My fucking eye!")]
-        WarriorStormsEyeCombo = 18001,
+        War_ST_StormsEye = 18001,
 
         [ReplaceSkill(WAR.Overpower)]
         [CustomComboInfo("Overpower Combo", "Add combos to Overpower", WAR.JobID, 0, "Underpower", "Bet you wish you had damage like DRK right now, huh")]
@@ -2699,7 +2699,7 @@ namespace XIVSlothComboPlugin
 
         [ReplaceSkill(WAR.NascentFlash)]
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, 0, "Nasty-ass Flash", "Jeez. Keep it to yourself.")]
-        WarriorNascentFlashFeature = 18005,
+        WAR_NascentFlash = 18005,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest", WAR.JobID, 0, "", "I use this feature when I'm moving house.")]
