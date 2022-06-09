@@ -70,6 +70,8 @@ namespace XIVSlothComboPlugin
                 if (Service.ClientState.LocalPlayer == null)
                     return this.OriginalHook(actionID);
 
+                if (ClassLocked()) return this.OriginalHook(actionID);
+
                 var lastComboMove = *(uint*)Service.Address.LastComboMove;
                 var comboTime = *(float*)Service.Address.ComboTimer;
                 var level = Service.ClientState.LocalPlayer?.Level ?? 0;
@@ -89,6 +91,22 @@ namespace XIVSlothComboPlugin
                 PluginLog.Error(ex, "Don't crash the game");
                 return this.OriginalHook(actionID);
             }
+        }
+
+        private bool ClassLocked()
+        {
+            if (Service.ClientState.LocalPlayer.Level <= 35) Service.ClassLocked = false;
+
+            if ((Service.ClientState.LocalPlayer.ClassJob.Id >= 8 &&
+                Service.ClientState.LocalPlayer.ClassJob.Id <= 25) ||
+                Service.ClientState.LocalPlayer.ClassJob.Id is 27 or 28 ||
+                Service.ClientState.LocalPlayer.ClassJob.Id >= 30) Service.ClassLocked = false;
+
+            if ((Service.ClientState.LocalPlayer.ClassJob.Id is 1 or 2 or 3 or 4 or 5 or 6 or 7 or 26 or 29) &&
+                !Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BoundByDuty] &&
+                Service.ClientState.LocalPlayer.Level > 35) Service.ClassLocked = true;
+
+            return Service.ClassLocked;
         }
 
         private ulong IsIconReplaceableDetour(uint actionID) => 1;
