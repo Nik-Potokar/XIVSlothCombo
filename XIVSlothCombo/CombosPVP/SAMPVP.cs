@@ -37,8 +37,8 @@
         public static class Config
         {
             public const string
-                SAMPvP_SotenCharges = "SAMPvP_SotenCharges",
-                SAMPvP_SotenHP = "SAMPvP_SotenHP";
+                SAMPvP_SotenCharges = "SamSotenCharges",
+                SAMPvP_SotenHP = "SamSotenHP";
 
         }
 

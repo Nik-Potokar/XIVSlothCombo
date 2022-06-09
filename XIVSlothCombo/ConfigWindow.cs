@@ -791,10 +791,10 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region BARD
             if (preset == CustomComboPreset.BRD_Simple_RagingJaws)
-                ConfigWindowFunctions.DrawSliderInt(3, 5, BRD.Config.RagingJawsRenewTime, "Remaining time (In seconds)");
+                ConfigWindowFunctions.DrawSliderInt(3, 5, BRD.Config.BRD_RagingJawsRenewTime, "Remaining time (In seconds)");
 
             if (preset == CustomComboPreset.BRD_Simple_NoWaste)
-                ConfigWindowFunctions.DrawSliderInt(1, 10, BRD.Config.NoWasteHPPercentage, "Remaining target HP percentage");
+                ConfigWindowFunctions.DrawSliderInt(1, 10, BRD.Config.BRD_NoWasteHPPercentage, "Remaining target HP percentage");
 
             #endregion
             // ====================================================================================
@@ -866,9 +866,9 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region DARK KNIGHT
             if (preset == CustomComboPreset.DRK_EoSPooling && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DrkMPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
+                ConfigWindowFunctions.DrawSliderInt(0, 3000, DRK.Config.DRK_MPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
             if (preset == CustomComboPreset.DRK_Plunge && enabled)
-                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DrkKeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
+                ConfigWindowFunctions.DrawSliderInt(0, 1, DRK.Config.DRK_KeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
             #endregion
             // ====================================================================================
             #region DRAGOON

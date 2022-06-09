@@ -69,7 +69,6 @@ namespace XIVSlothComboPlugin.Combos
                 Placeholder = 1;
         }
 
-
         internal class BLU_BuffedSoT : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_BuffedSoT;
@@ -101,38 +100,53 @@ namespace XIVSlothComboPlugin.Combos
                     {
                         if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle))
                             return Whistle;
+
                         if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle))
                             return Tingle;
+
                         if (!HasEffect(Buffs.MoonFlute) && IsSpellActive(MoonFlute))
                             return MoonFlute;
+
                         if (!GetCooldown(JKick).IsCooldown && IsSpellActive(JKick))
                             return JKick;
+
                         if (!GetCooldown(TripleTrident).IsCooldown)
                             return TripleTrident;
                     }
 
                     if (!HasEffect(Buffs.Whistle) && !GetCooldown(JKick).IsCooldown && IsSpellActive(Whistle))
                         return Whistle;
+
                     if (!HasEffect(Buffs.MoonFlute) && IsSpellActive(MoonFlute))
                         return MoonFlute;
+
                     if (!GetCooldown(JKick).IsCooldown && IsSpellActive(JKick))
                         return JKick;
+
                     if (!GetCooldown(Nightbloom).IsCooldown && IsSpellActive(Nightbloom))
                         return Nightbloom;
+
                     if (!GetCooldown(RoseOfDestruction).IsCooldown && IsSpellActive(RoseOfDestruction))
                         return RoseOfDestruction;
+
                     if (!GetCooldown(FeatherRain).IsCooldown && IsSpellActive(FeatherRain))
                         return FeatherRain;
+
                     if (!HasEffect(Buffs.Bristle) && !GetCooldown(All.Swiftcast).IsCooldown && IsSpellActive(Bristle))
                         return Bristle;
+
                     if (!GetCooldown(All.Swiftcast).IsCooldown)
                         return All.Swiftcast;
+
                     if (!GetCooldown(GlassDance).IsCooldown && IsSpellActive(GlassDance))
                         return GlassDance;
+
                     if (GetCooldown(Surpanakha).CooldownRemaining < 95 && IsSpellActive(Surpanakha))
                         return Surpanakha;
+
                     if (!GetCooldown(MatraMagic).IsCooldown && HasEffect(Buffs.DPSMimicry) && IsSpellActive(MatraMagic))
                         return MatraMagic;
+
                     if (!GetCooldown(ShockStrike).IsCooldown && IsSpellActive(ShockStrike))
                         return ShockStrike;
 
@@ -152,28 +166,36 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == FinalSting)
                 {
-                    if (IsEnabled(CustomComboPreset.BluSoloMode) && HasCondition(ConditionFlag.BoundByDuty) && !HasEffect(Buffs.BasicInstinct) && GetPartyMembers().Length == 0 && IsSpellActive(BasicInstinct))
+                    if (IsEnabled(CustomComboPreset.BLU_SoloMode) && HasCondition(ConditionFlag.BoundByDuty) && !HasEffect(Buffs.BasicInstinct) && GetPartyMembers().Length == 0 && IsSpellActive(BasicInstinct))
                         return BasicInstinct;
+
                     if (!HasEffect(Buffs.MoonFlute) && IsSpellActive(MoonFlute))
                         return MoonFlute;
-                    if (IsEnabled(CustomComboPreset.BluPrimals))
+
+                    if (IsEnabled(CustomComboPreset.BLU_Primals))
                     {
                         if (!GetCooldown(RoseOfDestruction).IsCooldown && IsSpellActive(RoseOfDestruction))
                             return RoseOfDestruction;
+
                         if (!GetCooldown(FeatherRain).IsCooldown && IsSpellActive(FeatherRain))
                             return FeatherRain;
+
                         if (!GetCooldown(GlassDance).IsCooldown && IsSpellActive(GlassDance))
                             return GlassDance;
+
                         if (!GetCooldown(JKick).IsCooldown && IsSpellActive(JKick))
                             return JKick;
                     }
 
                     if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle))
                         return Tingle;
-                    if (!GetCooldown(ShockStrike).IsCooldown && IsEnabled(CustomComboPreset.BluPrimals) && IsSpellActive(ShockStrike))
+
+                    if (!GetCooldown(ShockStrike).IsCooldown && IsEnabled(CustomComboPreset.BLU_Primals) && IsSpellActive(ShockStrike))
                         return ShockStrike;
+
                     if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle))
                         return Whistle;
+
                     if (!GetCooldown(All.Swiftcast).IsCooldown)
                         return All.Swiftcast;
 
@@ -197,14 +219,17 @@ namespace XIVSlothComboPlugin.Combos
                     var swiftCD = GetCooldown(All.Swiftcast);
                     var ultraCD = GetCooldown(Ultravibration);
 
-                    if (IsEnabled(CustomComboPreset.BluHydroPull) && !InMeleeRange() && IsSpellActive(HydroPull))
+                    if (IsEnabled(CustomComboPreset.BLU_HydroPull) && !InMeleeRange() && IsSpellActive(HydroPull))
                         return HydroPull;
+
                     if (freezeDebuff is null && !ultraCD.IsCooldown && IsSpellActive(RamsVoice))
                         return RamsVoice;
+
                     if (freezeDebuff is not null)
                     {
                         if (!swiftCD.IsCooldown)
                             return All.Swiftcast;
+
                         if (IsSpellActive(Ultravibration))
                             return Ultravibration;
                     }
@@ -229,10 +254,13 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (offguardDebuff is null && !offguardCD.IsCooldown && IsSpellActive(Offguard))
                         return Offguard;
+
                     if (TargetHasEffect(Debuffs.Malodorous) && HasEffect(Buffs.TankMimicry) && IsSpellActive(BadBreath))
                         return BadBreath;
+
                     if (!devourCD.IsCooldown && HasEffect(Buffs.TankMimicry) && IsSpellActive(Devour))
                         return Devour;
+
                     if (!lucidCD.IsCooldown && LocalPlayer.CurrentMp <= 9000 & level >= All.Levels.LucidDreaming)
                         return All.LucidDreaming;
                 }
@@ -276,12 +304,16 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (!rainCD.IsCooldown && IsSpellActive(FeatherRain))
                         return FeatherRain;
+
                     if (!shockCD.IsCooldown && IsSpellActive(ShockStrike))
                         return ShockStrike;
+
                     if (!roseCD.IsCooldown && IsSpellActive(RoseOfDestruction))
                         return RoseOfDestruction;
+
                     if (!glassCD.IsCooldown && IsSpellActive(GlassDance))
                         return GlassDance;
+
                     if (!kickCD.IsCooldown && IsSpellActive(JKick))
                         return JKick;
                 }
@@ -300,6 +332,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (TargetHasEffect(Debuffs.Slow) && IsSpellActive(BlackKnightsTour))
                         return BlackKnightsTour;
+
                     if (TargetHasEffect(Debuffs.Bind) && IsSpellActive(WhiteKnightsTour))
                         return WhiteKnightsTour;
                 }
@@ -307,6 +340,7 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
         }
+
         internal class BLU_LightHeadedCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_LightHeadedCombo;
@@ -317,6 +351,7 @@ namespace XIVSlothComboPlugin.Combos
                 {
                     if (!TargetHasEffect(Debuffs.Lightheaded) && IsSpellActive(PeripheralSynthesis))
                         return PeripheralSynthesis;
+
                     if (TargetHasEffect(Debuffs.Lightheaded) && IsSpellActive(MustardBomb))
                         return MustardBomb;
                 }

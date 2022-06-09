@@ -100,9 +100,9 @@ namespace XIVSlothComboPlugin.Combos
         }
         public static class Config
         {
-            public const string BLM_PolyglotsStored = "BLM_PolyglotsStored";
-            public const string BLM_AstralFireRefresh = "BLM_AstralFireRefresh";
-            public const string BLM_MovementTime = "BLM_MovementTime";
+            public const string BLM_PolyglotsStored = "BlmPolyglotsStored   ";
+            public const string BLM_AstralFireRefresh = "BlmAstralFireRefresh   ";
+            public const string BLM_MovementTime = "BlmMovementTime";
         }
 
 

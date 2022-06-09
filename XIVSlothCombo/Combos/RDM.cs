@@ -101,7 +101,7 @@ namespace XIVSlothComboPlugin.Combos
             public const string RDM_OGCD_OnAction = "RDM_OGCD_OnAction";
             public const string RDM_ST_MeleeCombo_OnAction = "RDM_ST_MeleeCombo_OnAction";
             public const string RDM_MeleeFinisher_OnAction = "RDM_MeleeFinisher_OnAction";
-            public const string RDM_Lucid_Threshold = "RDM_Lucid_Threshold";
+            public const string RDM_Lucid_Threshold = "RDM_LucidDreaming_Threshold";
             public const string RDM_MoulinetRange = "RDM_MoulinetRange";
         }
 

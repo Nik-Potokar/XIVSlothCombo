@@ -81,9 +81,9 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                WHM_ST_Lucid = "WHM_ST_Lucid",
+                WHM_ST_Lucid = "WHMLucidDreamingFeature",
                 WHM_AoE_Lucid = "WHM_AoE_Lucid",
-                WHM_oGCDHeals = "WHM_oGCDHeals";
+                WHM_oGCDHeals = "WHMogcdHealsShieldsFeature";
         }
 
         internal class WHM_SolaceMisery : CustomCombo

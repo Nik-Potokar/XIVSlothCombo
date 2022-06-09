@@ -46,9 +46,9 @@ namespace XIVSlothComboPlugin
         public static class Config
         {
             public const string
-                RPRPvP_ImmortalStackThreshold = "RPRPvP_ImmortalStackThreshold";
+                RPRPvP_ImmortalStackThreshold = "RPRPvPImmortalStackThreshold";
             public const string
-                RPRPvP_ArcaneCircleThreshold = "RPRPvP_ArcaneCircleThreshold";
+                RPRPvP_ArcaneCircleThreshold = "RPRPvPArcaneCircleOption";
         }
 
 

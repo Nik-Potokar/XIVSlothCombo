@@ -87,7 +87,7 @@
         public static class Config
         {
             public const string
-                PLD_Intervene_HoldCharges = "PLD_Intervene_HoldCharges";
+                PLD_Intervene_HoldCharges = "PLDKeepInterveneCharges";
         }
 
         internal class PLD_GoringBladeCombo : CustomCombo
