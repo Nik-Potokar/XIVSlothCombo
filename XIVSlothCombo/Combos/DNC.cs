@@ -277,7 +277,7 @@ namespace XIVSlothComboPlugin.Combos
                         return FanDance1;
 
                     // ST Fan Dance 3/4 on combo
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance34_MainCombo))
+                    if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
                     {
                         if (HasEffect(Buffs.ThreeFoldFanDance) && level >= Levels.FanDance3)
                             return FanDance3;
@@ -331,7 +331,7 @@ namespace XIVSlothComboPlugin.Combos
                         return FanDance2;
 
                     // AoE Fan Dance 3/4 on combo
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance34_MainCombo))
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
                     {
                         if (HasEffect(Buffs.ThreeFoldFanDance))
                             return FanDance3;
@@ -389,14 +389,14 @@ namespace XIVSlothComboPlugin.Combos
                 var flourishCD = GetCooldown(Flourish);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
-                if (IsEnabled(CustomComboPreset.DancerDevilmentOnCombinedDanceFeature) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
+                if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                 {
                     if (level is >= Levels.Devilment and < Levels.TechnicalStep ||
                         (level >= Levels.TechnicalStep && techstepCD.IsCooldown))
                         return Devilment;
                 }
 
-                if (IsEnabled(CustomComboPreset.DancerFlourishOnCombinedDanceFeature) && !gauge.IsDancing && !flourishCD.IsCooldown &&
+                if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) && !gauge.IsDancing && !flourishCD.IsCooldown &&
                     incombat && level >= Levels.Flourish && standardCD.IsCooldown)
                     return Flourish;
 
