@@ -303,7 +303,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == PerfectBalance)
                 {
-                    if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= 60)
+                    if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= Levels.MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
                 }
 
@@ -621,21 +621,12 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var RoFCD = GetCooldown(RiddleOfFire);
-                var BrotherhoodCD = GetCooldown(Brotherhood);
-
-                if (actionID == RiddleOfFire)
-                {
-                    if (level is >= 68 and < 70)
-                        return RiddleOfFire;
-                    if (RoFCD.IsCooldown && BrotherhoodCD.IsCooldown && level >= 70)
-                        return RiddleOfFire;
-                    if (RoFCD.IsCooldown && !BrotherhoodCD.IsCooldown && level >= 70)
-                        return Brotherhood;
-
-                    return RiddleOfFire;
-                }
-                return actionID;
+                if (actionID is RiddleOfFire
+                    && level >= Levels.Brotherhood
+                    && IsOnCooldown(RiddleOfFire)
+                    && IsOffCooldown(Brotherhood)
+                   ) return Brotherhood;
+                else return actionID;
             }
         }
 
@@ -645,16 +636,8 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == HowlingFist || actionID == Enlightenment)
-                {
-                    var gauge = GetJobGauge<MNKGauge>();
-
-                    if (gauge.Chakra < 5)
-                    {
-                        return Meditation;
-                    }
-                }
-                return actionID;
+                if (actionID is HowlingFist or Enlightenment && GetJobGauge<MNKGauge>().Chakra < 5) return Meditation;
+                else return actionID;
             }
         }
     }
