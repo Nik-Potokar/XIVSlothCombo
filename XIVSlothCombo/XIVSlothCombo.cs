@@ -12,9 +12,7 @@ using System.Threading.Tasks;
 
 namespace XIVSlothComboPlugin
 {
-    /// <summary>
-    /// Main plugin implementation.
-    /// </summary>
+    /// <summary> Main plugin implementation. </summary>
     public sealed partial class XIVSlothCombo : IDalamudPlugin
     {
         private const string Command = "/scombo";
@@ -24,9 +22,7 @@ namespace XIVSlothComboPlugin
 
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="XIVSlothCombo"/> class.
-        /// </summary>
+        /// <summary> Initializes a new instance of the <see cref="XIVSlothCombo"/> class. </summary>
         /// <param name="pluginInterface">Dalamud plugin interface.</param>
         public XIVSlothCombo(DalamudPluginInterface pluginInterface)
         {
@@ -250,6 +246,7 @@ namespace XIVSlothComboPlugin
 
                         break;
                     }
+
                 case "enabled": // list all currently enabled features
                     {
                         foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
@@ -259,6 +256,7 @@ namespace XIVSlothComboPlugin
                         }
                         break;
                     }
+
                 case "debug": // debug logging
                     {
                         try
@@ -329,6 +327,7 @@ namespace XIVSlothComboPlugin
                             break;
                         }
                     }
+
                 default:
                     this.configWindow.Toggle();
                     break;
