@@ -2918,73 +2918,11 @@ namespace XIVSlothComboPlugin
         // ====================================================================================
         #region PvP Combos
 
-        //[SecretCustomCombo]
-        //[CustomComboInfo("BurstShotFeature", "Adds Shadowbite/EmpyArrow/PitchPerfect(3stacks)/SideWinder(When Target is low hp)/ApexArrow when gauge is 100 all on one button combo.", BRDPvP.JobID)]
-        //BurstShotFeaturePVP = 80000,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("SongsFeature", "Replaces WanderersMinnuet and Peons song all on one button in an optimal order", BRDPvP.JobID)]
-        //SongsFeaturePVP = 80001,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("SouleaterComboFeature", "Adds EoS as oGCD onto main combo and Bloodspiller when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
-        //SouleaterComboFeature = 80002,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("StalwartSoulComboFeature", "Adds FoS as oGCD onto main combo and Quietus when at 50 gauge or under delirium buff.", DRKPVP.JobID)]
-        //StalwartSoulComboFeature = 80003,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("StormsPathComboFeature", "Replaces Storm's Path Combo with FellCleave/IC when at 50 gauge or under IR", WARPVP.JobID)]
-        //StormsPathComboFeature = 80004,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("SteelCycloneFeature", "Replaces Steel Cyclone Combo with Decimate/CC when at 50 gauge or under IR", WARPVP.JobID)]
-        //SteelCycloneFeature = 80005,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("RoyalAuthorityComboFeature", "Adds HolySpirit To the main combo", PLDPVP.JobID)]
-        //RoyalAuthorityComboFeature = 80006,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("ProminenceComboFeature", "Adds HolyCircle to the main AoE Combo", PLDPVP.JobID)]
-        //ProminenceComboFeature = 80007,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("GnashingFangComboFeature", "Adds BowShock(When target is meleeRange) and Burststrike at 2 ammo gauge to the main combo", GNBPVP.JobID)]
-        //SolidBarrelComboFeature = 80008,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("DemonSlaughterComboFeature", "Adds BowShock(When target is meleeRange) and Fated Circle at 2 ammo gauge to the main AoE combo", GNBPVP.JobID)]
-        //DemonSlaughterComboFeature = 80009,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("InfernalSliceComboFeature", "Adds Gluttony/BloodStalk/Smite/EnshroudComboRotation on InfernalSliceCombo", RPRPVP.JobID)]
-        //InfernalSliceComboFeature = 80012,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("NightmareScytheComboFeature", "Adds Gluttony/GrimSwathe/Smite/EnshroudComboRotation on InfernalScytheCombo", RPRPVP.JobID)]
-        //NightmareScytheComboFeature = 80013,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("NinjaAeolianEdgePvpCombo", "Adds Cha/Assassinate/Smite on AeolianEdge combo", NINPVP.JobID)]
-        //NinjaAeolianEdgePvpCombo = 80014,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("MnkBootshinePvPFeature", "Adds Axekick/Smite/TornadoKick on main combo", MNKPVP.JobID)]
-        //MnkBootshinePvPFeature = 80015,
-
-        //[SecretCustomCombo]
-        //[CustomComboInfo("BlackEnochianPVPFeature", "Enochian Stance Switcher", BLMPVP.JobID)]
-        //BlackEnochianPVPFeature = 80016,
-
-        // MCH
-
+        #region MCH
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
         MCHPvP_BurstMode = 80010,
 
-            #region MCH Burst Mode
             [SecretCustomCombo]
             [ParentCombo(MCHPvP_BurstMode)]
             [CustomComboInfo("Alternate Drill Mode", "Saves drill for use after wildfire.", MCHPVP.JobID)]
@@ -2994,34 +2932,37 @@ namespace XIVSlothComboPlugin
             [ParentCombo(MCHPvP_BurstMode)]
             [CustomComboInfo("Alternate Analysis Mode", "Uses analysis with Air Anchor instead of Chain Saw.", MCHPVP.JobID)]
             MCHPvP_BurstMode_AltAnalysis = 80012,
-            #endregion
+        #endregion
 
-        // BRD
+        #region BRD
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
         BRDPvP_BurstMode = 80020,
+        #endregion
 
-        // RDM
+        #region RDM
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
         RDMPvP_BurstMode = 80030,
+        #endregion
 
-        // WAR
+        #region WAR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
         WARPvP_BurstMode = 80040,
 
-        [SecretCustomCombo]
-        [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Bloodwhetting Option", "Allows usage of bloodwhetting anytime, not just inbetween GCDs.", WARPVP.JobID)]
-        WARPvP_BurstMode_Bloodwhetting = 80041,
+            [SecretCustomCombo]
+            [ParentCombo(WARPvP_BurstMode)]
+            [CustomComboInfo("Bloodwhetting Option", "Allows usage of bloodwhetting anytime, not just inbetween GCDs.", WARPVP.JobID)]
+            WARPvP_BurstMode_Bloodwhetting = 80041,
 
-        [SecretCustomCombo]
-        [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Blota Option", "Removes blota from main combo if Primal Rend has 5 seconds or less on its cooldown.", WARPVP.JobID)]
-        WARPvP_BurstMode_Blota = 80042,
-        
-        // NIN
+            [SecretCustomCombo]
+            [ParentCombo(WARPvP_BurstMode)]
+            [CustomComboInfo("Blota Option", "Removes blota from main combo if Primal Rend has 5 seconds or less on its cooldown.", WARPVP.JobID)]
+            WARPvP_BurstMode_Blota = 80042,
+        #endregion
+
+        #region NIN
         [ConflictingCombos(NINPvP_AoE_BurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
@@ -3031,33 +2972,37 @@ namespace XIVSlothComboPlugin
         [SecretCustomCombo]
         [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
         NINPvP_AoE_BurstMode = 80051,
+        #endregion
 
-        // SGE
+        #region SGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
         SGEPvP_BurstMode = 80060,
+        #endregion
 
-        // DNC
+        #region DNC
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Fountain Combo into an all-in-one damage button.", DNC.JobID)]
         DNCPvP_BurstMode = 80070,
 
-        [SecretCustomCombo]
-        [ParentCombo(DNCPvP_BurstMode)]
-        [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
-        DNCPvP_BurstMode_HoningDance = 80071,
+            [SecretCustomCombo]
+            [ParentCombo(DNCPvP_BurstMode)]
+            [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
+            DNCPvP_BurstMode_HoningDance = 80071,
 
-        [SecretCustomCombo]
-        [ParentCombo(DNCPvP_BurstMode)]
-        [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
-        DNCPvP_BurstMode_CuringWaltz = 80072,
+            [SecretCustomCombo]
+            [ParentCombo(DNCPvP_BurstMode)]
+            [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
+            DNCPvP_BurstMode_CuringWaltz = 80072,
+        #endregion
 
-        // SAM
+        #region SAM
+
+        #region Burst Mode
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare:Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.\nWill only cast Midare and Ogi Namikiri when you're not moving.\nWill not use if target is guarding.", SAM.JobID)]
         SAMPvP_BurstMode = 80080,
 
-            #region SAM Burst Mode
             [SecretCustomCombo]
             [ParentCombo(SAMPvP_BurstMode)]
             [CustomComboInfo("Add Chiten", "Adds Chiten to the Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
@@ -3071,14 +3016,14 @@ namespace XIVSlothComboPlugin
             [SecretCustomCombo]
             [ParentCombo(SAMPvP_BurstMode)]
             [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID, 1)]
-            SAMPvP_BurstMode_MainCombo = 80083,        
-            #endregion
+            SAMPvP_BurstMode_MainCombo = 80083,
+        #endregion
 
+        #region Kasha Features
         [SecretCustomCombo]
         [CustomComboInfo("PvP Features for Kasha Combo", "Collection of Features for Kasha Combo.", SAM.JobID)]
         SAMPvP_KashaFeatures = 80084,
 
-            #region PvP Features for Kasha Combo
             [SecretCustomCombo]
             [ParentCombo(SAMPvP_KashaFeatures)]
             [CustomComboInfo("Soten Gap Closer Option", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
@@ -3088,14 +3033,15 @@ namespace XIVSlothComboPlugin
             [ParentCombo(SAMPvP_KashaFeatures)]
             [CustomComboInfo("AoE Melee Protection", "Makes the AOE combos unusable if not in melee range of target.", SAM.JobID)]
             SAMPvP_KashaFeatures_AoEMeleeProtection = 80086,
-            #endregion
-            
-        //BLM
+        #endregion
+
+        #endregion
+
+        #region BLM
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Fire and Blizzard into all-in-one damage buttons.", BLM.JobID)]
         BLMPvP_BurstMode = 80090,
 
-            #region BLM Burst Mode
             [ParentCombo(BLMPvP_BurstMode)]
             [SecretCustomCombo]
             [CustomComboInfo("Add Night Wing", "Adds Night Wing to the Burst Mode", BLM.JobID)]
@@ -3105,14 +3051,13 @@ namespace XIVSlothComboPlugin
             [SecretCustomCombo]
             [CustomComboInfo("Add Aetherial Manipulation", "Uses Aetherial Manipulation to gap close if Burst is off cooldown.", BLM.JobID)]
             BLMPvP_BurstMode_AetherialManip = 80092,
-            #endregion
+        #endregion
 
-        // RPR
+        #region RPR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.\nAdds Soul Slice to the main combo.", RPR.JobID)]
         RPRPvP_Burst = 80190,
 
-            #region RPR Burst Mode
             [SecretCustomCombo]
             [ParentCombo(RPRPvP_Burst)]
             [CustomComboInfo("Grim Swathe Option", "Weaves Grim Swathe onto the main combo when available.", RPR.JobID)]
@@ -3161,12 +3106,11 @@ namespace XIVSlothComboPlugin
             RPRPvP_Burst_ArcaneCircle = 80199,
             #endregion
 
-        // MNK
+        #region MNK
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Phantom Rush Combo into all-in-one damage button.", MNK.JobID)]
         MNKPvP_Burst = 80100,
 
-            #region MNK Burst Mode
             [ParentCombo(MNKPvP_Burst)]
             [SecretCustomCombo]
             [CustomComboInfo("Add Thunderclap", "Adds Thunderclap to jump to Enemy Target when not buffed with Wind Resonance.", MNK.JobID)]
