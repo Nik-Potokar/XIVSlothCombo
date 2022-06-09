@@ -11,9 +11,7 @@ using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
-    /// <summary>
-    /// Plugin configuration.
-    /// </summary>
+    /// <summary> Plugin configuration. </summary>
     [Serializable]
     public class PluginConfiguration : IPluginConfiguration
     {
@@ -44,9 +42,7 @@ namespace XIVSlothComboPlugin
 
         }
 
-        /// <summary>
-        /// Gets or sets the configuration version.
-        /// </summary>
+        /// <summary> Gets or sets the configuration version. </summary>
         public int Version { get; set; } = 5;
 
         /// <summary>
@@ -55,36 +51,23 @@ namespace XIVSlothComboPlugin
         [JsonProperty("EnabledActionsV5")]
         public HashSet<CustomComboPreset> EnabledActions { get; set; } = new();
 
-        /// <summary>
-        /// Gets or sets the collection of enabled combos.
-        /// </summary>
+        /// <summary> Gets or sets the collection of enabled combos. </summary>
         [JsonProperty("EnabledActionsV4")]
         public HashSet<CustomComboPreset> EnabledActions4 { get; set; } = new();
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to output combat log to the chatbox.
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether to output combat log to the chatbox. </summary>
         public bool EnabledOutputLog { get; set; } = false;
 
-
-        /// <summary>
-        /// Gets or sets a value indicating wheteher to allow and display trust incompatible combos.
-        /// </summary>
+        /// <summary> Gets or sets a value indicating wheteher to allow and display trust incompatible combos. </summary>
         public bool EnableTrustIncompatibles { get; set; } = false;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to hide combos which conflict with enabled presets.
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether to hide combos which conflict with enabled presets. </summary>
         public bool HideConflictedCombos { get; set; } = false;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to hide the children of a feature if it is disabled.
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether to hide the children of a feature if it is disabled. </summary>
         public bool HideChildren { get; set; } = false;
 
-        /// <summary>
-        /// Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_DanceComboReplacer"/> combo.
-        /// </summary>
+        /// <summary> Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_DanceComboReplacer"/> combo. </summary>
         public uint[] DancerDanceCompatActionIDs { get; set; } = new uint[]
         {
             DNC.Cascade,
@@ -93,81 +76,70 @@ namespace XIVSlothComboPlugin
             DNC.FanDance2,
         };
 
-        /// <summary>
-        /// Gets or sets the offset of the melee range check. Default is 0.
-        /// </summary>
+        /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
 
-        /// <summary>
-        /// Save the configuration to disk.
-        /// </summary>
+        /// <summary> Save the configuration to disk. </summary>
         public void Save()
             => Service.Interface.SavePluginConfig(this);
 
-        /// <summary>
-        /// Gets a value indicating whether a preset is enabled.
-        /// </summary>
+        /// <summary> Gets a value indicating whether a preset is enabled. </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>The boolean representation.</returns>
         public bool IsEnabled(CustomComboPreset preset)
             => this.EnabledActions.Contains(preset);
 
-        /// <summary>
-        /// Gets a value indicating whether a preset is secret.
-        /// </summary>
+        /// <summary> Gets a value indicating whether a preset is secret. </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>The boolean representation.</returns>
         public bool IsSecret(CustomComboPreset preset)
             => SecretCombos.Contains(preset);
 
-        /// <summary>
-        /// Gets a value indicating whether a preset is trust incompatible.
-        /// </summary>
+        /// <summary> Gets a value indicating whether a preset is trust incompatible. </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>The boolean representation.</returns>
         public bool IsTrustIncompatible(CustomComboPreset preset)
             => TrustIncompatibles.Contains(preset);
 
-        /// <summary>
-        /// Gets an array of conflicting combo presets.
-        /// </summary>
+        /// <summary> Gets an array of conflicting combo presets. </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>The conflicting presets.</returns>
         public CustomComboPreset[] GetConflicts(CustomComboPreset preset)
             => ConflictingCombos[preset];
 
-        /// <summary>
-        /// Gets the parent combo preset if it exists, or null.
-        /// </summary>
+        /// <summary> Gets the parent combo preset if it exists, or null. </summary>
         /// <param name="preset">Preset to check.</param>
         /// <returns>The parent preset.</returns>
         public CustomComboPreset? GetParent(CustomComboPreset preset)
             => ParentCombos[preset];
 
-        /// <summary>
-        /// Gets the full list of conflicted combos
-        /// </summary>
+        /// <summary> Gets the full list of conflicted combos. </summary>
         public List<CustomComboPreset> GetAllConflicts()
             => ConflictingCombos.Keys.ToList();
 
-        /// <summary>
-        /// Get all the info from conflicted combos
-        /// </summary>
+        /// <summary> Get all the info from conflicted combos. </summary>
         public List<CustomComboPreset[]> GetAllConflictOriginals()
             => ConflictingCombos.Values.ToList();
 
+        /// <summary> Get enemy HP%. </summary>
         public float EnemyHealthPercentage { get; set; } = 0;
 
+        /// <summary> Get enemy max HP. </summary>
         public float EnemyHealthMaxHp { get; set; } = 0;
 
+        /// <summary> Get enemy current HP. </summary>
         public float EnemyCurrentHp { get; set; } = 0;
 
+        /// <summary> Get remaining cooldown time for an action. </summary>
         public float SkillCooldownRemaining { get; set; } = 0;
 
+        /// <summary> Handles Mudra path selection for NIN_Simple_Mudras. </summary>
         public int MudraPathSelection { get; set; } = 0;
 
+        /// <summary> Handles 'special event' feature naming. </summary>
         public bool SpecialEvent { get; set; } = false;
 
+        /// <summary> Hide MotD. </summary>
         public bool HideMessageOfTheDay { get; set; } = false;
 
         [JsonProperty]
@@ -225,7 +197,6 @@ namespace XIVSlothComboPlugin
         {
             CustomBoolValues[config] = value;
         }
-
 
         public byte[]? GetImageInCache(string url)
         {
