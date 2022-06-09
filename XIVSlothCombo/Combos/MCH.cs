@@ -74,10 +74,9 @@ namespace XIVSlothComboPlugin.Combos
                 ChainSaw = 90;
         }
 
-
-        internal class MachinistMainCombo : CustomCombo
+        internal class MCH_ST_MainCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistMainCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_MainCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -95,13 +94,13 @@ namespace XIVSlothComboPlugin.Combos
                     var barrelCD = GetCooldown(BarrelStabilizer);
                     var battery = GetJobGauge<MCHGauge>().Battery;
                     var heat = GetJobGauge<MCHGauge>().Heat;
-                    if (IsEnabled(CustomComboPreset.BarrelStabilizerDrift))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_BarrelStabilizer_DriftProtection))
                     {
                         if (level >= Levels.BarrelStabilizer && heat < 20 && GetCooldown(actionID).CooldownRemaining > 0.7 && IsOffCooldown(BarrelStabilizer))
                             return BarrelStabilizer;
                     }
 
-                    if (IsEnabled(CustomComboPreset.MachinistHeatBlastOnMainCombo) && gauge.IsOverheated)
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_HeatBlast) && gauge.IsOverheated)
                     {
                         if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.HeatBlast) // prioritize heatblast
                             return HeatBlast;
@@ -112,7 +111,7 @@ namespace XIVSlothComboPlugin.Combos
                         else
                             return Ricochet;
                     }
-                    if (IsEnabled(CustomComboPreset.MachinistDrillAirOnMainCombo))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_Cooldowns))
                     {
                         if (HasEffect(Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
                             return AirAnchor;
@@ -121,7 +120,7 @@ namespace XIVSlothComboPlugin.Combos
                         if (HasEffect(Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= 90)
                             return ChainSaw;
                     }
-                    if (IsEnabled(CustomComboPreset.MachinistRicochetGaussChargesMainCombo))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGaussCharges))
                     {
                         if (level >= Levels.Ricochet && HasCharges(Ricochet) && GetCooldown(CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
                             return Ricochet;
@@ -129,15 +128,15 @@ namespace XIVSlothComboPlugin.Combos
                             return GaussRound;
 
                     }
-                    if (IsEnabled(CustomComboPreset.MachinistRicochetGaussMainCombo))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGauss))
                     {
-                        if (level >= Levels.Ricochet && ricochetCD.CooldownRemaining <= 30 && GetCooldown(CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
+                        if (level >= Levels.Ricochet && ricochetCD.RemainingCharges > 1 && GetCooldown(CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
                             return Ricochet;
-                        if (level >= Levels.GaussRound && gaussCD.CooldownRemaining <= 30 && GetCooldown(CleanShot).CooldownRemaining > 0.6)
+                        if (level >= Levels.GaussRound && gaussCD.RemainingCharges > 1 && GetCooldown(CleanShot).CooldownRemaining > 0.6)
                             return GaussRound;
 
                     }
-                    if (IsEnabled(CustomComboPreset.MachinistAlternateMainCombo))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainComboAlternate))
                     {
                         if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= 76)
                             return AirAnchor;
@@ -156,7 +155,7 @@ namespace XIVSlothComboPlugin.Combos
                                 return Drill;
                         }
                     }
-                    if (IsEnabled(CustomComboPreset.MachinistOverChargeOption))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_OverCharge))
                     {
                         if (battery == 100 && level is >= 40 and <= 79 && GetCooldown(CleanShot).CooldownRemaining > 0.7)
                             return RookAutoturret;
@@ -177,9 +176,10 @@ namespace XIVSlothComboPlugin.Combos
 
             }
         }
-        internal class MachinistHeatblastGaussRicochetFeature : CustomCombo
+
+        internal class MCH_HeatblastGaussRicochet : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistHeatblastGaussRicochetFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HeatblastGaussRicochet;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -192,10 +192,10 @@ namespace XIVSlothComboPlugin.Combos
 
                     var gauge = GetJobGauge<MCHGauge>();
                     var heat = GetJobGauge<MCHGauge>().Heat;
-                    if (IsEnabled(CustomComboPreset.MachinistAutoBarrel) && heat < 50 && IsOffCooldown(BarrelStabilizer) && level >= 66)
+                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel) && heat < 50 && IsOffCooldown(BarrelStabilizer) && level >= 66)
                         return BarrelStabilizer;
 
-                    if (!wildfireCD.IsCooldown && level >= Levels.Wildfire && heat >= 50 && IsEnabled(CustomComboPreset.MachinistWildfireFeature))
+                    if (!wildfireCD.IsCooldown && level >= Levels.Wildfire && heat >= 50 && IsEnabled(CustomComboPreset.MCH_ST_Wildfire))
                         return Wildfire;
 
                     if (!gauge.IsOverheated && level >= Levels.Hypercharge)
@@ -216,9 +216,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class MachinistGaussRoundRicochetFeature : CustomCombo
+        internal class MCH_GaussRoundRicochet : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistGaussRoundRicochetFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_GaussRoundRicochet;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -244,9 +244,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class MachinistSpreadShotFeature : CustomCombo
+        internal class MCH_AoE_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistSpreadShotFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -255,7 +255,7 @@ namespace XIVSlothComboPlugin.Combos
                     var canWeave = CanWeave(actionID);
 
                     var battery = GetJobGauge<MCHGauge>().Battery;
-                    if (IsEnabled(CustomComboPreset.MachinistAoEOverChargeOption) && canWeave)
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave)
                     {
                         if (battery == 100 && level >= Levels.QueenOverdrive)
                             return AutomatonQueen;
@@ -264,13 +264,13 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     var gauge = GetJobGauge<MCHGauge>();
 
-                    if (IsEnabled(CustomComboPreset.MachinistAoEHyperchargeFeature) && canWeave)
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave)
                     {
                         if (gauge.Heat >= 50 && level >= Levels.Hypercharge && !gauge.IsOverheated)
                             return Hypercharge;
                     }
 
-                    if (IsEnabled(CustomComboPreset.MachinistAoEGaussRicochetFeature) && canWeave && (IsEnabled(CustomComboPreset.MachinistAoEGaussOption) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);
                         var ricochetCharges = GetRemainingCharges(Ricochet);
@@ -287,7 +287,7 @@ namespace XIVSlothComboPlugin.Combos
                         return AutoCrossbow;
 
                     var bioblaster = GetCooldown(BioBlaster);
-                    if (!bioblaster.IsCooldown && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MachinistBioblasterFeature))
+                    if (!bioblaster.IsCooldown && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
                         return BioBlaster;
 
 
@@ -298,9 +298,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class MachinistOverdriveFeature : CustomCombo
+        internal class MCH_Overdrive : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistOverdriveFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_Overdrive;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -314,9 +314,9 @@ namespace XIVSlothComboPlugin.Combos
                 return actionID;
             }
 
-            internal class MachinistHotShotDrillChainsawFeature : CustomCombo
+            internal class MCH_HotShotDrillChainSaw : CustomCombo
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistHotShotDrillChainsawFeature;
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HotShotDrillChainSaw;
 
                 protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {
@@ -338,9 +338,10 @@ namespace XIVSlothComboPlugin.Combos
                 }
             }
         }
-        internal class MachinistAutoCrossBowGaussRicochetFeature : CustomCombo
+
+        internal class MCH_AutoCrossbowGaussRicochet : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistAutoCrossBowGaussRicochetFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AutoCrossbowGaussRicochet;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -352,7 +353,7 @@ namespace XIVSlothComboPlugin.Combos
                     var heat = GetJobGauge<MCHGauge>().Heat;
 
                     var gauge = GetJobGauge<MCHGauge>();
-                    if (IsEnabled(CustomComboPreset.MachinistAutoBarrel) && heat < 50 && IsOffCooldown(BarrelStabilizer) && level >= 66)
+                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel) && heat < 50 && IsOffCooldown(BarrelStabilizer) && level >= 66)
                         return BarrelStabilizer;
                     if (!gauge.IsOverheated && level >= Levels.Hypercharge)
                         return Hypercharge;
@@ -370,9 +371,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class MachinistSimpleFeature : CustomCombo
+        internal class MCH_ST_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MachinistSimpleFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
             internal static bool openerFinished = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -389,17 +390,17 @@ namespace XIVSlothComboPlugin.Combos
 
                     }
 
-                    if (canWeaveNormal && IsEnabled(CustomComboPreset.MachinistSimpleStabilizer) && gauge.Heat <= 55 &&
+                    if (canWeaveNormal && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 55 &&
                             IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer &&
                             GetCooldown(Wildfire).CooldownRemaining < 8)
                         return BarrelStabilizer;
 
-                    if (canWeaveNormal && IsEnabled(CustomComboPreset.MachinistSimpleInterrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
+                    if (canWeaveNormal && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                     {
                         return All.HeadGraze;
                     }
 
-                    if (canWeaveNormal && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MachinistSimpleGadget))
+                    if (canWeaveNormal && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget))
                     {
                         //overflow protection
                         if (gauge.Battery == 100)
@@ -442,7 +443,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
 
                     if (canWeaveNormal && gauge.Heat >= 50 && openerFinished && IsOffCooldown(Wildfire) && level >= Levels.Wildfire &&
-                            IsEnabled(CustomComboPreset.MachinistSimpleWildCharge))
+                            IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge))
                     {
                         if (CombatEngageDuration().Minutes == 0 && GetRemainingCharges(Reassemble) == 0 && CanDelayedWeave(actionID)) return Wildfire;
                         else if (CombatEngageDuration().Minutes > 0 && (GetCooldownRemainingTime(ChainSaw) > 50 || level < Levels.ChainSaw)) return Wildfire;
@@ -450,11 +451,11 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (gauge.IsOverheated && level >= Levels.HeatBlast)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleGaussRicochet) && CanWeave(actionID, 0.6)) //gauss and ricochet weave
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.6)) //gauss and ricochet weave
                         {
                             var gaussCharges = GetRemainingCharges(GaussRound);
                             var ricochetCharges = GetRemainingCharges(Ricochet);
-                            var usingReasmSoon = IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && GetRemainingCharges(Reassemble) > 0 && openerFinished &&
+                            var usingReasmSoon = IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && GetRemainingCharges(Reassemble) > 0 && openerFinished &&
                                 (
                                  (GetCooldownRemainingTime(Drill) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
                                  (GetCooldownRemainingTime(AirAnchor) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
@@ -475,11 +476,11 @@ namespace XIVSlothComboPlugin.Combos
 
                     if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MachinistSimpleAssemblingAirAnchor) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
                             GetRemainingCharges(Reassemble) > 0)
                         {
-                            if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingAirAnchorMaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MachinistSimpleAssemblingAirAnchorMaxCharges)) return Reassemble;
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges)) return Reassemble;
 
                         }
                         return AirAnchor;
@@ -489,27 +490,27 @@ namespace XIVSlothComboPlugin.Combos
 
                     if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1) && level >= Levels.Drill)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && IsEnabled(CustomComboPreset.MachinistSimpleAssemblingDrill) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) &&
                             !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
-                            if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingDrillMaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MachinistSimpleAssemblingDrillMaxCharges)) return Reassemble;
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges)) return Reassemble;
                         }
                         return Drill;
                     }
 
                     if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1) && level >= Levels.ChainSaw && openerFinished)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && IsEnabled(CustomComboPreset.MachinistSimpleAssemblingChainSaw) && !HasEffect(Buffs.Reassembled) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_Simple_Assembling_ChainSaw) && !HasEffect(Buffs.Reassembled) &&
                             GetRemainingCharges(Reassemble) > 0)
                         {
-                            if (IsEnabled(CustomComboPreset.MachinistSimpleAssemblingChainSawMaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MachinistSimpleAssemblingChainSawMaxCharges)) return Reassemble;
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges)) return Reassemble;
                         }
                         return ChainSaw;
                     }
 
-                    if (canWeaveNormal && gauge.Heat >= 50 && openerFinished && IsEnabled(CustomComboPreset.MachinistSimpleWildCharge))
+                    if (canWeaveNormal && gauge.Heat >= 50 && openerFinished && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge))
                     {
                         if (level >= Levels.Hypercharge && !gauge.IsOverheated)
                         {
@@ -551,11 +552,11 @@ namespace XIVSlothComboPlugin.Combos
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.MachinistSimpleGaussRicochet) && CanWeave(actionID, 0.6)) //gauss and ricochet weave
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.6)) //gauss and ricochet weave
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);
                         var ricochetCharges = GetRemainingCharges(Ricochet);
-                        var usingReasmSoon = IsEnabled(CustomComboPreset.MachinistSimpleAssembling) && GetRemainingCharges(Reassemble) > 0 && openerFinished &&
+                        var usingReasmSoon = IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && GetRemainingCharges(Reassemble) > 0 && openerFinished &&
                             (
                              (GetCooldownRemainingTime(Drill) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
                              (GetCooldownRemainingTime(AirAnchor) < 2.5 && (!gauge.IsOverheated || gauge.OverheatTimeRemaining < 2.5)) ||
@@ -577,7 +578,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (lastComboMove == SlugShot && level >= Levels.CleanShot)
                     {
-                        if (IsEnabled(CustomComboPreset.MachinistSimpleAssembling) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) &&
                             level < Levels.Drill && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
                             return Reassemble;

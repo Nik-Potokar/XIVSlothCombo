@@ -118,20 +118,20 @@ namespace XIVSlothComboPlugin.Combos
         public static class Config
         {
             public const string
-                ASTLucidDreamingFeature = "ASTLucidDreamingFeature",
-                AstroEssentialDignity = "ASTCustomEssentialDignity",
+                AST_LucidDreaming = "ASTLucidDreamingFeature",
+                AST_EssentialDignity = "ASTCustomEssentialDignity",
                 AST_DPS_AltMode = "AST_DPS_AltMode",
                 AST_DPS_DivinationOption = "AST_DPS_DivinationOption",
                 AST_DPS_LightSpeedOption = "AST_DPS_LightSpeedOption",
                 AST_DPS_CombustOption = "AST_DPS_CombustOption";
         }
 
-        internal class AstrologianCardsOnDrawFeaturelikewhat : CustomCombo
+        internal class AST_Cards_DrawOnPlay : CustomCombo
         {
             private new bool GetTarget = true;
 
             private new GameObject? CurrentTarget;
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_DrawOnPlay;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -141,12 +141,12 @@ namespace XIVSlothComboPlugin.Combos
                     var haveCard = HasEffect(Buffs.Balance) || HasEffect(Buffs.Bole) || HasEffect(Buffs.Arrow) || HasEffect(Buffs.Spear) || HasEffect(Buffs.Ewer) || HasEffect(Buffs.Spire);
                     var cardDrawn = gauge.DrawnCard;
 
-                    if (!gauge.ContainsSeal(SealType.NONE) && IsEnabled(CustomComboPreset.AstrologianAstrodyneOnPlayFeature) && (gauge.DrawnCard != CardType.NONE || GetCooldown(Draw).CooldownRemaining > 30))
+                    if (!gauge.ContainsSeal(SealType.NONE) && IsEnabled(CustomComboPreset.AST_Cards_AstrodyneOnPlay) && (gauge.DrawnCard != CardType.NONE || GetCooldown(Draw).CooldownRemaining > 30))
                         return Astrodyne;
 
                     if (haveCard)
                     {
-                        if (HasEffect(Buffs.ClarifyingDraw) && IsEnabled(CustomComboPreset.AstRedrawFeature))
+                        if (HasEffect(Buffs.ClarifyingDraw) && IsEnabled(CustomComboPreset.AST_Cards_Redraw))
                         {
                             if ((cardDrawn == CardType.BALANCE && gauge.Seals.Contains(SealType.SUN)) ||
                                 (cardDrawn == CardType.ARROW && gauge.Seals.Contains(SealType.MOON)) ||
@@ -157,9 +157,9 @@ namespace XIVSlothComboPlugin.Combos
 
                                 return Redraw;
                         }
-                        if (IsEnabled(CustomComboPreset.AstAutoCardTarget))
+                        if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_AutoCardTarget))
                         {
-                            if (GetTarget || (IsEnabled(CustomComboPreset.AstrologianTargetLock)))
+                            if (GetTarget || (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_TargetLock)))
                                 SetTarget();
 
 
@@ -168,15 +168,15 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(Play);
                     }
 
-                    if (!GetTarget && (IsEnabled(CustomComboPreset.AstReFocusFeature) || IsEnabled(CustomComboPreset.AstReTargetFeature)))
+                    if (!GetTarget && (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReFocusTarget) || IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReTargetPrev)))
                     {
-                        if (IsEnabled(CustomComboPreset.AstReTargetFeature))
+                        if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReTargetPrev))
                         {
                             TargetObject(CurrentTarget);
                         }
 
 
-                        if (IsEnabled(CustomComboPreset.AstReFocusFeature))
+                        if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReFocusTarget))
                             TargetObject(TargetType.FocusTarget);
                     }
 
@@ -229,7 +229,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.AstrologianTargetExtraFeature))
+                if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_TargetExtra))
                 {
                     for (int i = 1; i <= maxPartySize; i++)
                     {
@@ -267,10 +267,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-
-        internal class AstrologianCrownPlayFeature : CustomCombo
+        internal class AST_Cards_CrownPlay : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianCrownPlayFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_CrownPlay;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -288,9 +287,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class AstrologianBeneficFeature : CustomCombo
+        internal class AST_Benefic : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianBeneficFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Benefic;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -299,9 +298,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class AstrologianAscendFeature : CustomCombo
+        internal class AST_Raise_Alternative : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAscendFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Raise_Alternative;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -310,34 +309,34 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class AstrologianDpsFeature : CustomCombo
+        internal class AST_ST_DPS : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_DPS_Feature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_ST_DPS;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 bool AlternateMode = System.Convert.ToBoolean(GetOptionValue(Config.AST_DPS_AltMode)); //(0 or 1 radio values)
                 if (((!AlternateMode && actionID is FallMalefic or Malefic4 or Malefic3 or Malefic2 or Malefic1) || 
                      (AlternateMode && actionID is Combust1 or Combust2 or Combust3 ) ||
-                     (IsEnabled(CustomComboPreset.AST_DPS_AoEOption) && actionID is Gravity or Gravity2)) && 
+                     (IsEnabled(CustomComboPreset.AST_AoE_DPS) && actionID is Gravity or Gravity2)) && 
                     InCombat())
                 {
-                    if (IsEnabled(CustomComboPreset.AST_DPS_LightSpeedOption) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_LightSpeed) &&
                         level >= Levels.Lightspeed &&
                         IsOffCooldown(Lightspeed) &&
                         GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_LightSpeedOption) &&
                         CanSpellWeave(actionID)
                        ) return Lightspeed;
 
-                    if (IsEnabled(CustomComboPreset.AST_DPS_LucidOption) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_Lucid) &&
                         level >= All.Levels.LucidDreaming &&
                         IsOffCooldown(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= GetOptionValue(Config.ASTLucidDreamingFeature) &&
+                        LocalPlayer.CurrentMp <= GetOptionValue(Config.AST_LucidDreaming) &&
                         CanSpellWeave(actionID)
                        ) return All.LucidDreaming;
 
                     //Divination
-                    if (IsEnabled(CustomComboPreset.AST_DPS_DivinationOption) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_Divination) &&
                         level >= Levels.Divination &&
                         IsOffCooldown(Divination) &&
                         !HasEffect(Buffs.Divination) && //Overwrite protection
@@ -346,14 +345,14 @@ namespace XIVSlothComboPlugin.Combos
                        ) return Divination;
 
                     //Astrodyne
-                    if (IsEnabled(CustomComboPreset.AstrologianAstrodyneFeature) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_Astrodyne) &&
                         level >= Levels.Astrodyne &&
                         !GetJobGauge<ASTGauge>().ContainsSeal(SealType.NONE) &&
                         CanSpellWeave(actionID)
                         ) return Astrodyne;
                     
                     //Card Draw
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoDrawFeature) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         level >= Levels.Draw &&
                         GetJobGauge<ASTGauge>().DrawnCard.Equals(CardType.NONE) &&
                         GetCooldown(Draw).RemainingCharges > 0 &&
@@ -361,7 +360,7 @@ namespace XIVSlothComboPlugin.Combos
                        ) return Draw;
 
                     //Minor Arcana
-                    if (IsEnabled(CustomComboPreset.AstrologianAutoCrownDrawFeature) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoCrownDraw) &&
                         level >= Levels.MinorArcana &&
                         GetJobGauge<ASTGauge>().DrawnCrownCard == CardType.NONE &&
                         IsOffCooldown(MinorArcana) &&
@@ -369,14 +368,14 @@ namespace XIVSlothComboPlugin.Combos
                        ) return MinorArcana;
 
                     //Lord of Crowns
-                    if (IsEnabled(CustomComboPreset.AstrologianLazyLordFeature) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_LazyLord) &&
                         level >= Levels.CrownPlay &&
                         GetJobGauge<ASTGauge>().DrawnCrownCard is CardType.LORD &&
                         CanSpellWeave(actionID)
                        ) return LordOfCrowns;
 
                     //Combust
-                    if (IsEnabled(CustomComboPreset.AST_DPS_CombustOption) &&
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) &&
                         actionID is not Gravity and not Gravity2 &&
                         level >= Levels.Combust &&
                         (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy)
@@ -402,9 +401,9 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class AstrologianHeliosFeature : CustomCombo
+        internal class AST_AoE_SimpleHeals_AspectedHelios : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianHeliosFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_AoE_SimpleHeals_AspectedHelios;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -414,18 +413,18 @@ namespace XIVSlothComboPlugin.Combos
                     if (level < Levels.AspectedHelios)
                         return Helios;
 
-                    if (IsEnabled(CustomComboPreset.AstrologianLazyLadyFeature) &&
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
                         level >= Levels.CrownPlay &&
                         InCombat() &&
                         GetJobGauge<ASTGauge>().DrawnCrownCard == CardType.LADY 
                        ) return LadyOfCrown;
 
-                    if (IsEnabled(CustomComboPreset.AstrologianCelestialOppositionFeature) &&
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_CelestialOpposition) &&
                         level >= Levels.CelestialOpposition &&
                         IsOffCooldown(CelestialOpposition) 
                        ) return CelestialOpposition;
 
-                    if (IsEnabled(CustomComboPreset.AstrologianHoroscopeFeature))
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Horoscope))
                     {
                         if (level >= Levels.Horoscope && 
                             IsOffCooldown(Horoscope)
@@ -448,13 +447,13 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class AstrologianAstrodyneOnPlayFeature : CustomCombo
+        internal class AST_Cards_AstrodyneOnPlay : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianAstrodyneOnPlayFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_AstrodyneOnPlay;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Play && !IsEnabled(CustomComboPreset.AstrologianCardsOnDrawFeaturelikewhat))
+                if (actionID == Play && !IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay))
                 {
                     var gauge = GetJobGauge<ASTGauge>();
                     if (!gauge.ContainsSeal(SealType.NONE))
@@ -465,14 +464,14 @@ namespace XIVSlothComboPlugin.Combos
             }
         }
 
-        internal class AstrologianSimpleSingleTargetHeal : CustomCombo
+        internal class AST_ST_SimpleHeals : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AstrologianSimpleSingleTargetHeal;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_ST_SimpleHeals;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is Benefic2)
                 {
-                    if (IsEnabled(CustomComboPreset.AspectedBeneficFeature) && level >= Levels.AspectedBenefic)
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_AspectedBenefic) && level >= Levels.AspectedBenefic)
                     {
                         var aspectedBeneficHoT = FindTargetEffect(Buffs.AspectedBenefic);
                         var NeutralSectShield = FindTargetEffect(Buffs.NeutralSectShield);
@@ -482,18 +481,18 @@ namespace XIVSlothComboPlugin.Combos
                            ) return AspectedBenefic;
                     }
 
-                    if (IsEnabled(CustomComboPreset.AstroEssentialDignity) &&
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
                         level >= Levels.EssentialDignity && 
                         GetCooldown(EssentialDignity).RemainingCharges > 0 && 
-                        GetTargetHPPercent() <= GetOptionValue(Config.AstroEssentialDignity)
+                        GetTargetHPPercent() <= GetOptionValue(Config.AST_EssentialDignity)
                        ) return EssentialDignity;
 
-                    if (IsEnabled(CustomComboPreset.ExaltationFeature) && 
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Exaltation) && 
                         level >= Levels.Exaltation &&
                         IsOffCooldown(Exaltation)
                        ) return Exaltation;
 
-                    if (IsEnabled(CustomComboPreset.CelestialIntersectionFeature) &&
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_CelestialIntersection) &&
                         level >= Levels.CelestialIntersection &&
                         GetCooldown(CelestialIntersection).RemainingCharges > 0
                        ) return CelestialIntersection;
