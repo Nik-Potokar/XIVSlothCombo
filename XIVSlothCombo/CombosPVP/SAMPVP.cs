@@ -54,7 +54,7 @@
                     (IsEnabled(CustomComboPreset.SAMPvP_BurstMode_MainCombo) && actionID is Yukikaze or Gekko or Kasha or Hyosetsu or Oka or Mangetsu))
                 {
 
-                    if (!TargetHasEffectAny(PVPCommon.Buffs.Guard))
+                    if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
                     {
                         if (IsOffCooldown(MeikyoShisui))
                             return OriginalHook(MeikyoShisui);

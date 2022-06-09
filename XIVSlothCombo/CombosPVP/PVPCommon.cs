@@ -2,7 +2,7 @@
 
 namespace XIVSlothComboPlugin
 {
-    internal static class PVPCommon
+    internal static class PvPCommon
     {
         public const uint
             Teleport = 5,

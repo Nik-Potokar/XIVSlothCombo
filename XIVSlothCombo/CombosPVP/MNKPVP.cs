@@ -45,7 +45,7 @@
                 if (actionID is Bootshine or TrueStrike or SnapPunch or DragonKick or TwinSnakes or Demolish or PhantomRush)
                 {
 
-                    if (!TargetHasEffectAny(PVPCommon.Buffs.Guard))
+                    if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
                     {
                         if (IsEnabled(CustomComboPreset.MNKPvP_Burst_RiddleOfEarth) && IsOffCooldown(RiddleOfEarth) && PlayerHealthPercentageHp() <= 95)
                             return OriginalHook(RiddleOfEarth);

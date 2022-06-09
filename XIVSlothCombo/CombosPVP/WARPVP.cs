@@ -39,7 +39,7 @@ namespace XIVSlothComboPlugin
                     if (!GetCooldown(PrimalRend).IsCooldown)
                         return OriginalHook(PrimalRend);
 
-                    if (!InMeleeRange() && !GetCooldown(Blota).IsCooldown && !TargetHasEffectAny(PVPCommon.Debuffs.Stun) &&
+                    if (!InMeleeRange() && !GetCooldown(Blota).IsCooldown && !TargetHasEffectAny(PvPCommon.Debuffs.Stun) &&
                         (IsNotEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) || GetCooldown(PrimalRend).CooldownRemaining >= 5))
                         return OriginalHook(Blota);
 

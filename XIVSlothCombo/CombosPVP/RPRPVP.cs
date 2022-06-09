@@ -74,9 +74,9 @@ namespace XIVSlothComboPlugin
                     var immortalStacks = GetBuffStacks(Buffs.ImmortalSacrifice);
                     var immortalThreshold = PluginConfiguration.GetCustomIntValue(Config.RPRPvP_ImmortalStackThreshold);
                     bool soulsow = HasEffect(Buffs.Soulsow);
-                    bool canBind = !TargetHasEffect(PVPCommon.Debuffs.Bind);
+                    bool canBind = !TargetHasEffect(PvPCommon.Debuffs.Bind);
                     bool GCDStopped = !GetCooldown(OriginalHook(Slice)).IsCooldown;
-                    bool enemyGuarded = TargetHasEffectAny(PVPCommon.Buffs.Guard);
+                    bool enemyGuarded = TargetHasEffectAny(PvPCommon.Buffs.Guard);
                     var HP = PlayerHealthPercentageHp();
                     bool canWeave = CanWeave(actionID);
                     var distance = GetTargetDistance();

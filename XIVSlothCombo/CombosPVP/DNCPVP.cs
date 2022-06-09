@@ -2,7 +2,7 @@ using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
-    internal static class DNCPVP
+    internal static class DNCPvP
     {
         public const byte JobID = 38;
 
