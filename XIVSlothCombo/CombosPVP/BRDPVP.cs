@@ -2,7 +2,7 @@ namespace XIVSlothComboPlugin.Combos
 {
     internal static class BRDPvP
     {
-        public const byte ClassID = 41;
+        public const byte ClassID = 5;
         public const byte JobID = 23;
 
         public const uint
