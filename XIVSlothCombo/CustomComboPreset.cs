@@ -2681,11 +2681,11 @@ namespace XIVSlothComboPlugin
         #region WARRIOR
 
         [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storms Path Combo", "All in one main combo feature adds Storm's Eye/Path. \nIf all sub options and Fell Cleave/Decimate Options are toggled will turn into a full one button rotation (Simple Warrior)", WAR.JobID, 0, "", "Follow the yellow-brick road.")]
+        [CustomComboInfo("Storms Path Combo", "All in one main combo feature adds Storm's Eye/Path. \nIf all sub options and Fell Cleave/Decimate Options are toggled will turn into a full one button rotation (Simple Warrior)", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath = 18000,
 
         [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storms Eye Combo", "Replace Storms Eye with its combo chain", WAR.JobID, 0, "", "Ow! My fucking eye!")]
+        [CustomComboInfo("Storms Eye Combo", "Replace Storms Eye with its combo chain", WAR.JobID, 0, "", "")]
         War_ST_StormsEye = 18001,
 
         [ReplaceSkill(WAR.Overpower)]
@@ -2693,67 +2693,67 @@ namespace XIVSlothComboPlugin
         WAR_AoE_Overpower = 18002,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, 0, "", "Taming the beast... for now.")]
+        [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_OvercapProtection = 18003,
 
         [ReplaceSkill(WAR.NascentFlash)]
-        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, 0, "Nasty-ass Flash", "Jeez. Keep it to yourself.")]
+        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, 0, "", "")]
         WAR_NascentFlash = 18005,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest", WAR.JobID, 0, "", "I use this feature when I'm moving house.")]
+        [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Upheaval = 18007,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, 0, "", "Going back to our roots. Let's get Primal!")]
+        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_PrimalRend = 18008,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, 0, "Orange-y feature", "Orange flavour. Mm.")]
+        [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_Orogeny = 18009,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used and Fell Cleave/Steel Cyclone during Inner Release.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "MORE CLEAVE!")]
+        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used and Fell Cleave/Steel Cyclone during Inner Release.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Spender = 18011,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff", WAR.JobID, 0, "", "Onslaught! Full Power!")]
+        [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Onslaught = 18012,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Infuriate AOE Feature", "Adds Infuriate to AoE Combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0)]
+        [CustomComboInfo("Infuriate AOE Feature", "Adds Infuriate to AoE Combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_Infuriate = 18013,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Inner Release AoE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0)]
+        [CustomComboInfo("Inner Release AoE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_InnerRelease = 18014,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "Tomahawk!", "You heard me! Tomahawk! Ka-chow!")]
+        [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_RangedUptime = 18016,
 
         [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
-        [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID)]
+        [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID, 0, "", "")]
         WAR_InfuriateFellCleave = 18018,
 
         [ReplaceSkill(WAR.InnerRelease)]
-        [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID)]
+        [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 0, "", "")]
         WAR_PrimalRend_InnerRelease = 18019,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo.", WAR.JobID)]
+        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_InnerRelease = 18020,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID)]
+        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Infuriate = 18021,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
-        [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
+        [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "", "")]
         WAR_InfuriateFellCleave_IRFirst = 18022,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "Don't blow it all in one place.", "Save some for later.")]
+        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
         [ParentCombo(WAR_ST_StormsPath_Onslaught)]
