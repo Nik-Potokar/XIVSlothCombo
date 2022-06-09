@@ -672,7 +672,8 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana)
                                 && level >= Levels.Acceleration
                                 && black == white
-                                && black >= 50)
+                                && black >= 50
+                                && !HasEffect(Buffs.Embolden))
                             {
                                 if (HasEffect(Buffs.Acceleration) || WasLastAction(Buffs.Acceleration))
                                 {
