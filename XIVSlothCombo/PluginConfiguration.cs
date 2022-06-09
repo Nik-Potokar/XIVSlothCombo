@@ -121,18 +121,6 @@ namespace XIVSlothComboPlugin
         public List<CustomComboPreset[]> GetAllConflictOriginals()
             => ConflictingCombos.Values.ToList();
 
-        /// <summary> Get enemy HP%. </summary>
-        public float EnemyHealthPercentage { get; set; } = 0;
-
-        /// <summary> Get enemy max HP. </summary>
-        public float EnemyHealthMaxHp { get; set; } = 0;
-
-        /// <summary> Get enemy current HP. </summary>
-        public float EnemyCurrentHp { get; set; } = 0;
-
-        /// <summary> Get remaining cooldown time for an action. </summary>
-        public float SkillCooldownRemaining { get; set; } = 0;
-
         /// <summary> Handles Mudra path selection for NIN_Simple_Mudras. </summary>
         public int MudraPathSelection { get; set; } = 0;
 
