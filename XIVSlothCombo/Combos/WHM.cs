@@ -284,7 +284,7 @@ namespace XIVSlothComboPlugin.Combos
                             return Medica1;
                         if (IsEnabled(CustomComboPreset.WHM_Medica_Misery) && gauge.BloodLily == 3)
                             return AfflatusMisery;
-                        if (IsEnabled(CustomComboPreset.WHM_Medica_Rapture) && level >= Levels.AfflatusRapture && gauge.Lily > 0 && medica2Buff > 2)
+                        if (IsEnabled(CustomComboPreset.WHM_Medica_Rapture) && level >= Levels.AfflatusRapture && gauge.Lily > 0)
                             return AfflatusRapture;
                         if (HasEffect(Buffs.Medica2) && medica2Buff > 2)
                             return Medica1;
