@@ -414,29 +414,13 @@ namespace XIVSlothComboPlugin.Combos
                         !WasLastWeaponskill(OriginalHook(CleanShot)) && (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire))
                     {
                         //overflow protection
-                        if (gauge.Battery == 100)
+                        if (gauge.Battery == 100 && level >= Levels.RookOverdrive)
                         {
-                            if (level >= Levels.QueenOverdrive)
-                            {
-                                return AutomatonQueen;
-                            }
-
-                            if (level >= Levels.RookOverdrive)
-                            {
-                                return RookAutoturret;
-                            }
+                            return OriginalHook(RookAutoturret);
                         }
-                        else if (gauge.Battery >= 50 && (CombatEngageDuration().Seconds >= 55 || CombatEngageDuration().Seconds <= 05 || CombatEngageDuration().Minutes == 0))
+                        else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 55 || CombatEngageDuration().Seconds <= 05 || CombatEngageDuration().Minutes == 0))
                         {
-                            if (level >= Levels.QueenOverdrive)
-                            {
-                                return AutomatonQueen;
-                            }
-
-                            if (level >= Levels.RookOverdrive)
-                            {
-                                return RookAutoturret;
-                            }
+                            return OriginalHook(RookAutoturret);
                         } 
 
                     }
