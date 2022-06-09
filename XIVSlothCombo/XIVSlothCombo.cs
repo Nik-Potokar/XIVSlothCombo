@@ -311,7 +311,7 @@ namespace XIVSlothComboPlugin
                             }
                             catch(Exception ex) 
                             {
-                                Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace);
+                                Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace); // ignore null ref warning
                             }
                             file.WriteLine("END DEBUG LOG");
                             Service.ChatGui.Print("Please check your desktop for SlothDebug.txt and upload this file where requested.");
@@ -319,7 +319,7 @@ namespace XIVSlothComboPlugin
                         }
                         catch (Exception ex)
                         {
-                            Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace);
+                            Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace); // ignore null ref warning
                             Service.ChatGui.Print("Unable to write Debug log.");
                             break;
                         }
