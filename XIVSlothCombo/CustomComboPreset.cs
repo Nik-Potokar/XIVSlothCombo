@@ -435,7 +435,7 @@ namespace XIVSlothComboPlugin
         [BlueInactive(BLU.RoseOfDestruction, BLU.FeatherRain, BLU.GlassDance, BLU.JKick)]
         [ParentCombo(BLU_FinalSting)]
         [CustomComboInfo("Off CD Primal Additions", "Adds any Primals that are off CD to the Final Sting Combo. \nPrimals Used: Feather Rain, Shock Strike, Glass Dance, J Kick, Rose of Destruction. ", BLU.JobID)]
-        BluPrimals = 70003,
+        BLU_Primals = 70003,
 
         [BlueInactive(BLU.RamsVoice, BLU.Ultravibration)]
         [ReplaceSkill(BLU.Ultravibration)]
@@ -470,13 +470,12 @@ namespace XIVSlothComboPlugin
         [BlueInactive(BLU.BasicInstinct)]
         [ParentCombo(BLU_FinalSting)]
         [CustomComboInfo("Solo Mode", "Uses Basic Instinct if you're in an instance and on your own.", BLU.JobID)]
-        BluSoloMode = 70011,
+        BLU_SoloMode = 70011,
 
         [BlueInactive(BLU.HydroPull)]
         [ParentCombo(BLU_Ultravibrate)]
         [CustomComboInfo("Hydro Pull Setup", "Uses Hydro Pull before using Ram's Voice.", BLU.JobID)]
-        BluHydroPull = 70012,
-
+        BLU_HydroPull = 70012,
 
         #endregion
         // ====================================================================================
