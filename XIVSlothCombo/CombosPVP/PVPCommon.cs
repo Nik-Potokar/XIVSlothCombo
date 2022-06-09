@@ -43,11 +43,11 @@ namespace XIVSlothComboPlugin
 
         internal class GlobalEmergencyHeals : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PVPEmergencyHeals;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_EmergencyHeals;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if ((HasEffect(Buffs.Guard) || JustUsed(Guard)) && IsEnabled(CustomComboPreset.PVPMashCancel))
+                if ((HasEffect(Buffs.Guard) || JustUsed(Guard)) && IsEnabled(CustomComboPreset.PvP_MashCancel))
                 {
                     if (actionID == Guard) return Guard;
                     else return OriginalHook(11);
@@ -86,11 +86,11 @@ namespace XIVSlothComboPlugin
 
         internal class GlobalEmergencyGuard : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PVPEmergencyGuard;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_EmergencyGuard;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if ((HasEffect(Buffs.Guard) || JustUsed(Guard)) && IsEnabled(CustomComboPreset.PVPMashCancel))
+                if ((HasEffect(Buffs.Guard) || JustUsed(Guard)) && IsEnabled(CustomComboPreset.PvP_MashCancel))
                 {
                     if (actionID == Guard) return Guard;
                     else return OriginalHook(11);
@@ -128,11 +128,11 @@ namespace XIVSlothComboPlugin
 
         internal class QuickPurify : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PVPQuickPurify;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_QuickPurify;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if ((HasEffect(Buffs.Guard) || JustUsed(Guard)) && IsEnabled(CustomComboPreset.PVPMashCancel))
+                if ((HasEffect(Buffs.Guard) || JustUsed(Guard)) && IsEnabled(CustomComboPreset.PvP_MashCancel))
                 {
                     if (actionID == Guard) return Guard;
                     else return OriginalHook(11);
