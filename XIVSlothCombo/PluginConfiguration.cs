@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Dalamud.Configuration;
 using Dalamud.Utility;
-using ImGuiScene;
 using Newtonsoft.Json;
 using XIVSlothComboPlugin.Attributes;
 using XIVSlothComboPlugin.Combos;
@@ -18,33 +16,33 @@ namespace XIVSlothComboPlugin
         private static readonly HashSet<CustomComboPreset> SecretCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset[]> ConflictingCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset?> ParentCombos;  // child: parent
-        private static readonly HashSet<CustomComboPreset> TrustIncompatibles;
 
         static PluginConfiguration()
         {
+            // Secret combos
             SecretCombos = Enum.GetValues<CustomComboPreset>()
                 .Where(preset => preset.GetAttribute<SecretCustomComboAttribute>() != default)
                 .ToHashSet();
 
+            // Conflicting combos
             ConflictingCombos = Enum.GetValues<CustomComboPreset>()
                 .ToDictionary(
                     preset => preset,
                     preset => preset.GetAttribute<ConflictingCombosAttribute>()?.ConflictingPresets ?? Array.Empty<CustomComboPreset>());
 
+            // Parent combos
             ParentCombos = Enum.GetValues<CustomComboPreset>()
                 .ToDictionary(
                     preset => preset,
                     preset => preset.GetAttribute<ParentComboAttribute>()?.ParentPreset);
-
-            TrustIncompatibles = Enum.GetValues<CustomComboPreset>()
-                .Where(preset => preset.GetAttribute<TrustIncompatibleAttribute>() != default)
-                .ToHashSet();
-
         }
 
+        #region Version
         /// <summary> Gets or sets the configuration version. </summary>
         public int Version { get; set; } = 5;
+        #endregion
 
+        #region EnabledActions
         /// <summary> Gets or sets the collection of enabled combos. </summary>
         [JsonProperty("EnabledActionsV5")]
         public HashSet<CustomComboPreset> EnabledActions { get; set; } = new();
@@ -52,7 +50,9 @@ namespace XIVSlothComboPlugin
         /// <summary> Gets or sets the collection of enabled combos. </summary>
         [JsonProperty("EnabledActionsV4")]
         public HashSet<CustomComboPreset> EnabledActions4 { get; set; } = new();
+        #endregion
 
+        #region Settings Options
         /// <summary> Gets or sets a value indicating whether to output combat log to the chatbox. </summary>
         public bool EnabledOutputLog { get; set; } = false;
 
@@ -64,34 +64,34 @@ namespace XIVSlothComboPlugin
 
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
+        #endregion
 
-        /// <summary> Save the configuration to disk. </summary>
-        public void Save()
-            => Service.Interface.SavePluginConfig(this);
-
+        #region Combo Preset Checks
         /// <summary> Gets a value indicating whether a preset is enabled. </summary>
-        /// <param name="preset">Preset to check.</param>
-        /// <returns>The boolean representation.</returns>
+        /// <param name="preset"> Preset to check. </param>
+        /// <returns> The boolean representation. </returns>
         public bool IsEnabled(CustomComboPreset preset)
             => this.EnabledActions.Contains(preset);
 
         /// <summary> Gets a value indicating whether a preset is secret. </summary>
-        /// <param name="preset">Preset to check.</param>
-        /// <returns>The boolean representation.</returns>
+        /// <param name="preset"> Preset to check. </param>
+        /// <returns> The boolean representation. </returns>
         public bool IsSecret(CustomComboPreset preset)
             => SecretCombos.Contains(preset);
 
-        /// <summary> Gets an array of conflicting combo presets. </summary>
-        /// <param name="preset">Preset to check.</param>
-        /// <returns>The conflicting presets.</returns>
-        public CustomComboPreset[] GetConflicts(CustomComboPreset preset)
-            => ConflictingCombos[preset];
-
         /// <summary> Gets the parent combo preset if it exists, or null. </summary>
-        /// <param name="preset">Preset to check.</param>
-        /// <returns>The parent preset.</returns>
+        /// <param name="preset"> Preset to check. </param>
+        /// <returns> The parent preset. </returns>
         public CustomComboPreset? GetParent(CustomComboPreset preset)
             => ParentCombos[preset];
+        #endregion
+
+        #region Conflicting Combos
+        /// <summary> Gets an array of conflicting combo presets. </summary>
+        /// <param name="preset"> Preset to check. </param>
+        /// <returns> The conflicting presets. </returns>
+        public CustomComboPreset[] GetConflicts(CustomComboPreset preset)
+            => ConflictingCombos[preset];
 
         /// <summary> Gets the full list of conflicted combos. </summary>
         public List<CustomComboPreset> GetAllConflicts()
@@ -100,12 +100,7 @@ namespace XIVSlothComboPlugin
         /// <summary> Get all the info from conflicted combos. </summary>
         public List<CustomComboPreset[]> GetAllConflictOriginals()
             => ConflictingCombos.Values.ToList();
-
-        /// <summary> Handles 'special event' feature naming. </summary>
-        public bool SpecialEvent { get; set; } = false;
-
-        /// <summary> Hide MotD. </summary>
-        public bool HideMessageOfTheDay { get; set; } = false;
+        #endregion
 
         #region Custom Float Values
         [JsonProperty]
@@ -199,6 +194,18 @@ namespace XIVSlothComboPlugin
 
         /// <summary> Handles Mudra path selection for NIN_Simple_Mudras. </summary>
         public int MudraPathSelection { get; set; } = 0;
+        #endregion
+
+        #region Other (SpecialEvent, MotD, Save)
+        /// <summary> Handles 'special event' feature naming. </summary>
+        public bool SpecialEvent { get; set; } = false;
+
+        /// <summary> Hide MotD. </summary>
+        public bool HideMessageOfTheDay { get; set; } = false;
+
+        /// <summary> Save the configuration to disk. </summary>
+        public void Save()
+            => Service.Interface.SavePluginConfig(this);
         #endregion
     }
 }
