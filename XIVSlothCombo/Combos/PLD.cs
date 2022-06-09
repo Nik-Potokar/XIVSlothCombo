@@ -125,10 +125,8 @@
             {
                 if (actionID is RageOfHalone or RoyalAuthority)
                 {
-                    var interveneChargesRemaining = Service.Configuration.GetCustomIntValue(Config.PLD_Intervene_HoldCharges);
-                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
-                    if (!incombat)
+                    if (!InCombat())
                     {
                         inOpener = false;
                         openerFinished = false;
@@ -198,20 +196,21 @@
                         }
                         else
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && level >= Levels.SpiritsWithin && incombat && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && level >= Levels.SpiritsWithin && InCombat() && IsOffCooldown(OriginalHook(SpiritsWithin)))
                             {
                                 if (IsNotEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) ||
                                     (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
                                     return OriginalHook(SpiritsWithin);
                             }
 
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && level >= Levels.CircleOfScorn && incombat && IsOffCooldown(CircleOfScorn))
+                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && level >= Levels.CircleOfScorn && InCombat() && IsOffCooldown(CircleOfScorn))
                             {
                                 if (IsNotEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) ||
                                     (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
                                     return CircleOfScorn;
                             }
 
+                            var interveneChargesRemaining = GetOptionValue(Config.PLD_Intervene_HoldCharges);
                             if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene) && level >= Levels.Intervene && GetRemainingCharges(Intervene) > interveneChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene_Melee) ||
@@ -288,8 +287,6 @@
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-
                 if (actionID is Prominence)
                 {
                     if (CanWeave(actionID))
@@ -297,7 +294,7 @@
                         if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Requiescat) && level >= Levels.Requiescat && IsOffCooldown(Requiescat))
                             return Requiescat;
 
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_ExpiacionScorn) && incombat)
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_ExpiacionScorn) && InCombat())
                         {
                             if (level >= Levels.SpiritsWithin && IsOffCooldown(SpiritsWithin))
                                 return OriginalHook(SpiritsWithin);
