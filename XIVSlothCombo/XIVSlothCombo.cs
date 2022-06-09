@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace XIVSlothComboPlugin
@@ -263,21 +264,38 @@ namespace XIVSlothComboPlugin
                     {
                         try
                         {
+                            var specificJob = argumentsParts.Length == 2 ? argumentsParts[1].ToLower() : "";
+
                             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
                             using StreamWriter file = new($"{desktopPath}/SlothDebug.txt", append: false);
 
                             file.WriteLine("START DEBUG LOG");
-                            file.WriteLine($"Current Job: {Service.ClientState.LocalPlayer.ClassJob.Id}");
+                            file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}");
+                            file.WriteLine($"Current Job: {Service.ClientState.LocalPlayer.ClassJob.GameData.Name}");
                             file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}");
                             file.WriteLine($"Current Party Size: {Service.PartyList.Length}");
                             file.WriteLine($"START ENABLED FEATURES");
 
                             int i = 0;
-                            foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
+                            if (string.IsNullOrEmpty(specificJob))
                             {
-                                if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
-                                file.WriteLine($"{(int)preset} - {preset}");
+                                foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
+                                {
+                                    if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
+                                    file.WriteLine($"{(int)preset} - {preset}");
+                                }
+                            }
+                            else
+                            {
+                                foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
+                                {
+                                    if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
+                                    if (preset.ToString().Substring(0, 3).ToLower() == specificJob ||
+                                        preset.ToString().Substring(0, 3).ToLower() == "all" ||
+                                        preset.ToString().Substring(0, 3).ToLower() == "pvp")
+                                    file.WriteLine($"{(int)preset} - {preset}");
+                                }
                             }
                             file.WriteLine($"END ENABLED FEATURES");
                             file.WriteLine($"Redundant IDs found: {i}");
@@ -301,25 +319,13 @@ namespace XIVSlothComboPlugin
                                 file.WriteLine($"END STATUS EFFECTS");
 
                             }
-                            try
-                            {
-                                file.WriteLine("BEGIN MOON RUNES");
-                                var pluginDirectory = Directory.GetParent(Service.PluginFolder);
-                                string plugins = string.Join(", ", pluginDirectory.GetDirectories().Select(x => x.Name));
-                                file.WriteLine(Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(plugins)));
-                                file.WriteLine("END MOON RUNES");
-                            }
-                            catch(Exception ex) 
-                            {
-                                Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace); // ignore null ref warning
-                            }
                             file.WriteLine("END DEBUG LOG");
                             Service.ChatGui.Print("Please check your desktop for SlothDebug.txt and upload this file where requested.");
                             break;
                         }
                         catch (Exception ex)
                         {
-                            Dalamud.Logging.PluginLog.Error(ex, ex.StackTrace); // ignore null ref warning
+                            Dalamud.Logging.PluginLog.Error(ex, "Debug Log");
                             Service.ChatGui.Print("Unable to write Debug log.");
                             break;
                         }
