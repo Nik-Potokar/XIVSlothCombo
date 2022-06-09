@@ -70,7 +70,7 @@ namespace XIVSlothComboPlugin
             public bool Execute()
             {
                 var jobMaxHp = LocalPlayer.MaxHp;
-                var threshold = Service.Configuration.GetCustomIntValue(Config.EmergencyHealThreshold);
+                var threshold = PluginConfiguration.GetCustomIntValue(Config.EmergencyHealThreshold);
                 var maxHPThreshold = jobMaxHp - 15000;
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)maxHPThreshold;
 
@@ -113,7 +113,7 @@ namespace XIVSlothComboPlugin
             public bool Execute()
             {
                 var jobMaxHp = LocalPlayer.MaxHp;
-                var threshold = Service.Configuration.GetCustomIntValue(Config.EmergencyGuardThreshold);
+                var threshold = PluginConfiguration.GetCustomIntValue(Config.EmergencyGuardThreshold);
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
                 if (HasEffect(3180)) return false; //DRG LB buff
@@ -154,7 +154,7 @@ namespace XIVSlothComboPlugin
 
             public bool Execute()
             {
-                var selectedStatuses = Service.Configuration.GetCustomBoolArrayValue(Config.QuickPurifyStatuses);
+                var selectedStatuses = PluginConfiguration.GetCustomBoolArrayValue(Config.QuickPurifyStatuses);
 
                 if (HasEffect(3180)) return false; //DRG LB buff
 

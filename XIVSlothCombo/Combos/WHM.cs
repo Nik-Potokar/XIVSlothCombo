@@ -145,7 +145,7 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<WHMGauge>();
-                var tetraHP = Service.Configuration.GetCustomIntValue(Config.WHM_oGCDHeals);
+                var tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
 
 
                 if (actionID == Cure2)
@@ -211,7 +211,7 @@ namespace XIVSlothComboPlugin.Combos
                         var diaDebuff = FindTargetEffect(Debuffs.Dia);
                         var aero1Debuff = FindTargetEffect(Debuffs.Aero);
                         var aero2Debuff = FindTargetEffect(Debuffs.Aero2);
-                        var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.WHM_ST_Lucid);
+                        var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_ST_Lucid);
                         var gauge = GetJobGauge<WHMGauge>();
 
                         //WHM_NO_SWIFT_OPENER_MACHINE
@@ -302,7 +302,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var tetraHP = Service.Configuration.GetCustomIntValue(Config.WHM_oGCDHeals);
+                var tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
 
                 if (actionID == Cure2)
                 {
@@ -331,7 +331,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID is Holy or Holy3)
                 {
-                    var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.WHM_AoE_Lucid);
+                    var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid);
                     var gauge = GetJobGauge<WHMGauge>();
 
                     if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)

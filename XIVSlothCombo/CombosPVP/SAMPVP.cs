@@ -48,7 +48,7 @@
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var sotenCharges = Service.Configuration.GetCustomIntValue(Config.SAMPvP_SotenCharges);
+                var sotenCharges = PluginConfiguration.GetCustomIntValue(Config.SAMPvP_SotenCharges);
                 
                 if ((IsNotEnabled(CustomComboPreset.SAMPvP_BurstMode_MainCombo) && actionID == MeikyoShisui) ||
                     (IsEnabled(CustomComboPreset.SAMPvP_BurstMode_MainCombo) && actionID is Yukikaze or Gekko or Kasha or Hyosetsu or Oka or Mangetsu))
@@ -92,7 +92,7 @@
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var SamSotenHP = Service.Configuration.GetCustomIntValue(Config.SAMPvP_SotenHP);
+                var SamSotenHP = PluginConfiguration.GetCustomIntValue(Config.SAMPvP_SotenHP);
 
                 if (actionID is Yukikaze or Gekko or Kasha or Hyosetsu or Mangetsu or Oka)
                 {

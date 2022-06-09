@@ -120,7 +120,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 //MAIN_COMBO_VARIABLES
                 RDMGauge gauge = GetJobGauge<RDMGauge>();
-                var moulinetRange = Service.Configuration.GetCustomIntValue(Config.RDM_MoulinetRange);
+                var moulinetRange = PluginConfiguration.GetCustomIntValue(Config.RDM_MoulinetRange);
                 int black = gauge.BlackMana;
                 int white = gauge.WhiteMana;
                 //END_MAIN_COMBO_VARIABLES
@@ -306,7 +306,7 @@ namespace XIVSlothComboPlugin.Combos
                     && (GetTargetDistance() <= 3 || (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_CorpsGapCloser)
                     && GetCooldown(Corpsacorps).RemainingCharges >= 1)))
                 {
-                    var radioButton = Service.Configuration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
+                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
 
                     if ((radioButton == 1 && actionID is Riposte or EnchantedRiposte)
                         || (radioButton == 2 && actionID is Jolt or Jolt2)
@@ -481,7 +481,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.RDM_oGCD) 
                     && level >= Levels.Corpsacorps)
                 {
-                    var radioButton = Service.Configuration.GetCustomIntValue(Config.RDM_OGCD_OnAction);
+                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_OGCD_OnAction);
                     //Radio Button Settings:
                     //1: Fleche
                     //2: Jolt
@@ -598,7 +598,7 @@ namespace XIVSlothComboPlugin.Combos
                 //RDM_MELEEFINISHER
                 if (IsEnabled(CustomComboPreset.RDM_MeleeFinisher))
                 {
-                    var radioButton = Service.Configuration.GetCustomIntValue(Config.RDM_MeleeFinisher_OnAction);
+                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_MeleeFinisher_OnAction);
 
                     if ((radioButton == 1 && actionID is Riposte or EnchantedRiposte or Moulinet or EnchantedMoulinet)
                         || (radioButton == 2 && actionID is Jolt or Jolt2 or Scatter or Impact)
@@ -644,7 +644,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo) 
                     && LocalPlayer.IsCasting == false)
                 {
-                    var radioButton = Service.Configuration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
+                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
                     var distance = GetTargetDistance();
 
                     if ((radioButton == 1 && actionID is Riposte or EnchantedRiposte)
@@ -807,7 +807,7 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID is Jolt or Jolt2 or Veraero or Veraero2 or Veraero3 or Verthunder or Verthunder2 or Verthunder3 or Scatter or Impact)
                 {
-                    var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.RDM_Lucid_Threshold);
+                    var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.RDM_Lucid_Threshold);
 
                     if (level >= All.Levels.LucidDreaming && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
                     {

@@ -88,8 +88,8 @@ namespace XIVSlothComboPlugin.Combos
                 if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath) && actionID == StormsPath)
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
-                    var surgingThreshold = Service.Configuration.GetCustomIntValue(Config.WAR_SurgingRefreshRange);
-                    var onslaughtChargesRemaining = Service.Configuration.GetCustomIntValue(Config.WAR_KeepOnslaughtCharges);
+                    var surgingThreshold = PluginConfiguration.GetCustomIntValue(Config.WAR_SurgingRefreshRange);
+                    var onslaughtChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepOnslaughtCharges);
 
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && level >= Levels.Tomahawk)
                     {
@@ -292,7 +292,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID is InnerBeast or FellCleave or SteelCyclone or Decimate)
                 {
                     var rageGauge = GetJobGauge<WARGauge>();
-                    var rageThreshold = Service.Configuration.GetCustomIntValue(Config.WAR_InfuriateRange);
+                    var rageThreshold = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateRange);
                     var hasNascent = HasEffect(Buffs.NascentChaos);
                     var hasInnerRelease = HasEffect(Buffs.InnerRelease);
 

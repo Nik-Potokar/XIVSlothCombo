@@ -87,8 +87,8 @@ namespace XIVSlothComboPlugin.Combos
             if (actionID == Souleater)
             {
                 var gauge = GetJobGauge<DRKGauge>();
-                var plungeChargesRemaining = Service.Configuration.GetCustomIntValue(Config.DRK_KeepPlungeCharges);
-                var mpRemaining = Service.Configuration.GetCustomIntValue(Config.DRK_MPManagement);
+                var plungeChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_KeepPlungeCharges);
+                var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_MPManagement);
 
                 if (IsEnabled(CustomComboPreset.DRK_RangedUptime) && level >= Levels.Unmend)
                 {

@@ -112,17 +112,16 @@ namespace XIVSlothComboPlugin
         private static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
 
         /// <summary> Gets a custom float value. </summary>
-        public float GetCustomFloatValue(string config, float defaultMinValue = 0)
+        public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
         {
-            float configValue;
 
-            if (!CustomFloatValues.TryGetValue(config, out configValue)) { SetCustomFloatValue(config, defaultMinValue); return defaultMinValue; }
+            if (!CustomFloatValues.TryGetValue(config, out float configValue)) { SetCustomFloatValue(config, defaultMinValue); return defaultMinValue; }
 
             return configValue;
         }
 
         /// <summary> Sets a custom float value. </summary>
-        public void SetCustomFloatValue(string config, float value)
+        public static void SetCustomFloatValue(string config, float value)
         {
             CustomFloatValues[config] = value;
         }
@@ -133,17 +132,15 @@ namespace XIVSlothComboPlugin
         private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
 
         /// <summary> Gets a custom integer value. </summary>
-        public int GetCustomIntValue(string config, int defaultMinVal = 0)
+        public static int GetCustomIntValue(string config, int defaultMinVal = 0)
         {
-            int configValue;
-
-            if (!CustomIntValues.TryGetValue(config, out configValue)) { SetCustomIntValue(config, defaultMinVal); return defaultMinVal; }
+            if (!CustomIntValues.TryGetValue(config, out int configValue)) { SetCustomIntValue(config, defaultMinVal); return defaultMinVal; }
 
             return configValue;
         }
 
         /// <summary> Sets a custom integer value. </summary>
-        public void SetCustomIntValue(string config, int value)
+        public static void SetCustomIntValue(string config, int value)
         {
             CustomIntValues[config] = value;
         }
@@ -154,17 +151,15 @@ namespace XIVSlothComboPlugin
         private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
         /// <summary> Gets a custom boolean value. </summary>
-        public bool GetCustomBoolValue(string config)
+        public static bool GetCustomBoolValue(string config)
         {
-            bool configValue;
-
-            if (!CustomBoolValues.TryGetValue(config, out configValue)) { SetCustomBoolValue(config, false); return false; }
+            if (!CustomBoolValues.TryGetValue(config, out bool configValue)) { SetCustomBoolValue(config, false); return false; }
 
             return configValue;
         }
 
         /// <summary> Sets a custom boolean value. </summary>
-        public void SetCustomBoolValue(string config, bool value)
+        public static void SetCustomBoolValue(string config, bool value)
         {
             CustomBoolValues[config] = value;
         }
@@ -175,17 +170,15 @@ namespace XIVSlothComboPlugin
         private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
 
         /// <summary> Gets a custom boolean array value. </summary>
-        public bool[] GetCustomBoolArrayValue(string config)
+        public static bool[] GetCustomBoolArrayValue(string config)
         {
-            bool[]? configValue;
-
-            if (!CustomBoolArrayValues.TryGetValue(config, out configValue)) { SetCustomBoolArrayValue(config, Array.Empty<bool>()); return Array.Empty<bool>(); }
+            if (!CustomBoolArrayValues.TryGetValue(config, out bool[]? configValue)) { SetCustomBoolArrayValue(config, Array.Empty<bool>()); return Array.Empty<bool>(); }
 
             return configValue;
         }
 
         /// <summary> Sets a custom boolean array value. </summary>
-        public void SetCustomBoolArrayValue(string config, bool[] value)
+        public static void SetCustomBoolArrayValue(string config, bool[] value)
         {
             CustomBoolArrayValues[config] = value;
         }

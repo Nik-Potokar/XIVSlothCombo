@@ -751,7 +751,7 @@ namespace XIVSlothComboPlugin.Combos
 
         }
 
-        public static int GetOptionValue(string SliderID) => Service.Configuration.GetCustomIntValue(SliderID);
+        public static int GetOptionValue(string SliderID) => PluginConfiguration.GetCustomIntValue(SliderID);
 
         public static bool GetOptionBool(string SliderID) => Convert.ToBoolean(GetOptionValue(SliderID));
 

@@ -551,7 +551,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= Service.Configuration.GetCustomIntValue(Config.MNK_DisciplinedFist_Apply)))
+                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= PluginConfiguration.GetCustomIntValue(Config.MNK_DisciplinedFist_Apply)))
                         {
                             return TwinSnakes;
                         }
@@ -559,7 +559,7 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= Service.Configuration.GetCustomIntValue(Config.MNK_Demolish_Apply)))
+                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomIntValue(Config.MNK_Demolish_Apply)))
                         {
                             return Demolish;
                         }

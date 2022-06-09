@@ -95,7 +95,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == SolidBarrel)
                 {
                     var gauge = GetJobGauge<GNBGauge>();
-                    var roughDivideChargesRemaining = Service.Configuration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
+                    var roughDivideChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
                     var quarterWeave = GetCooldown(actionID).CooldownRemaining < 1 && GetCooldown(actionID).CooldownRemaining > 0.2;
 
                     if (IsEnabled(CustomComboPreset.GNB_RangedUptime))

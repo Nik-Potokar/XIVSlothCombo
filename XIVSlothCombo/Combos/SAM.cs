@@ -114,7 +114,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Yukikaze)
                 {
                     var gauge = GetJobGauge<SAMGauge>();
-                    var SamKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(Config.SAM_ST_KenkiOvercapAmount);
+                    var SamKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_KenkiOvercapAmount);
 
                     if (CanWeave(actionID))
                     {
@@ -155,13 +155,13 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Gekko)
                 {
                     var gauge = GetJobGauge<SAMGauge>();
-                    var SamKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(Config.SAM_ST_KenkiOvercapAmount);
+                    var SamKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_KenkiOvercapAmount);
                     var meikyoBuff = HasEffect(Buffs.MeikyoShisui);
                     var oneSeal = OriginalHook(Iaijutsu) == Higanbana;
                     var twoSeal = OriginalHook(Iaijutsu) == TenkaGoken;
                     var threeSeal = OriginalHook(Iaijutsu) == Setsugekka;
                     var meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
-                    var SamFillerCombo = Service.Configuration.GetCustomIntValue(Config.SAM_FillerCombo);
+                    var SamFillerCombo = PluginConfiguration.GetCustomIntValue(Config.SAM_FillerCombo);
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
 
                     if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_RangedUptime) && level >= Levels.Enpi && !inEvenFiller && !inOddFiller)
@@ -568,7 +568,7 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<SAMGauge>();
-                var SamKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(Config.SAM_ST_KenkiOvercapAmount);
+                var SamKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_KenkiOvercapAmount);
 
                 if (actionID == Kasha)
                 {
@@ -608,7 +608,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Mangetsu)
                 {
                     var gauge = GetJobGauge<SAMGauge>();
-                    var SamAOEKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(Config.SAM_AoE_KenkiOvercapAmount);
+                    var SamAOEKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_AoE_KenkiOvercapAmount);
 
                     //oGCD Features
                     if (CanSpellWeave(actionID))
@@ -692,7 +692,7 @@ namespace XIVSlothComboPlugin.Combos
                 if (actionID == Oka)
                 {
                     var gauge = GetJobGauge<SAMGauge>();
-                    var SamAOEKenkiOvercapAmount = Service.Configuration.GetCustomIntValue(Config.SAM_AoE_KenkiOvercapAmount);
+                    var SamAOEKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_AoE_KenkiOvercapAmount);
 
                     if (CanWeave(actionID))
                     {

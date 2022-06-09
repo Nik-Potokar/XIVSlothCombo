@@ -120,9 +120,9 @@ namespace XIVSlothComboPlugin.Combos
                 var deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
                 var playerHP = PlayerHealthPercentageHp();
                 var enemyHP = GetTargetHPPercent();
-                var positionalChoice = Service.Configuration.GetCustomIntValue(Config.RPR_PositionalChoice);
-                var sodThreshold = Service.Configuration.GetCustomIntValue(Config.RPR_SoDThreshold);
-                var sodRefreshRange = Service.Configuration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
+                var positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
+                var sodThreshold = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDThreshold);
+                var sodRefreshRange = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
 
                 //Gibbet and Gallows on SoD
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) && soulReaver && level >= Levels.Gibbet)
@@ -386,7 +386,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var positionalChoice = Service.Configuration.GetCustomIntValue(Config.RPR_PositionalChoice);
+                var positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
                 var gauge = GetJobGauge<RPRGauge>();
 
                 if (actionID is GrimSwathe)
@@ -531,7 +531,7 @@ namespace XIVSlothComboPlugin.Combos
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_EnshroudProtection;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var positionalChoice = Service.Configuration.GetCustomIntValue(Config.RPR_PositionalChoice);
+                var positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
                 if (actionID is Enshroud)
                 {
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && CanWeave(Slice))

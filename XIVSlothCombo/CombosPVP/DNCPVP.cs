@@ -57,7 +57,7 @@ namespace XIVSlothComboPlugin
                     var acclaimStacks = GetBuffStacks(Buffs.Acclaim);
                     bool canWeave = CanWeave(actionID);
                     var distance = GetTargetDistance();
-                    var HPThreshold = Service.Configuration.GetCustomIntValue(Config.DNCPvP_WaltzThreshold);
+                    var HPThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCPvP_WaltzThreshold);
                     var HP = PlayerHealthPercentageHp();
 
                     // Honing Dance Option

@@ -239,10 +239,10 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<SMNGauge>();
-                var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SMN_PrimalChoice);
-                var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SMN_BurstPhase);
-                var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMN_Lucid);
-                var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
+                var summonerPrimalChoice = PluginConfiguration.GetCustomIntValue(Config.SMN_PrimalChoice);
+                var SummonerBurstPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_BurstPhase);
+                var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.SMN_Lucid);
+                var swiftcastPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
 
                 if (actionID is Ruin or Ruin2 && InCombat())
                 {
@@ -419,10 +419,10 @@ namespace XIVSlothComboPlugin.Combos
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<SMNGauge>();
-                var lucidThreshold = Service.Configuration.GetCustomIntValue(Config.SMN_Lucid);
-                var SummonerBurstPhase = Service.Configuration.GetCustomIntValue(Config.SMN_BurstPhase);
-                var summonerPrimalChoice = Service.Configuration.GetCustomIntValue(Config.SMN_PrimalChoice);
-                var swiftcastPhase = Service.Configuration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
+                var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.SMN_Lucid);
+                var SummonerBurstPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_BurstPhase);
+                var summonerPrimalChoice = PluginConfiguration.GetCustomIntValue(Config.SMN_PrimalChoice);
+                var swiftcastPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
 
                 if (actionID is Tridisaster or Outburst && InCombat())
                 {

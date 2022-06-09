@@ -338,7 +338,7 @@ namespace XIVSlothComboPlugin.Combos
                     var thunder2Debuff = TargetHasEffect(Debuffs.Thunder2);
                     var thunder2Timer = FindTargetEffect(Debuffs.Thunder2);
                     var currentMP = LocalPlayer.CurrentMp;
-                    var polyToStore = Service.Configuration.GetCustomIntValue(Config.BLM_PolyglotsStored);
+                    var polyToStore = PluginConfiguration.GetCustomIntValue(Config.BLM_PolyglotsStored);
 
                     // Polyglot usage
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && level >= Levels.Manafont && level >= Levels.Foul)
@@ -449,7 +449,7 @@ namespace XIVSlothComboPlugin.Combos
                     var gauge = GetJobGauge<BLMGauge>();
                     var canWeave = CanSpellWeave(actionID);
                     var currentMP = LocalPlayer.CurrentMp;
-                    var astralFireRefresh = Service.Configuration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
+                    var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
 
                     var thunder = TargetHasEffect(Debuffs.Thunder);
                     var thunder3 = TargetHasEffect(Debuffs.Thunder3);
@@ -622,7 +622,7 @@ namespace XIVSlothComboPlugin.Combos
                     // Handle movement
                     if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement) && inCombat)
                     {
-                        var movementTimeThreshold = Service.Configuration.GetCustomFloatValue(Config.BLM_MovementTime);
+                        var movementTimeThreshold = PluginConfiguration.GetCustomFloatValue(Config.BLM_MovementTime);
                         double deltaTime = (DateTime.Now - previousTime).TotalSeconds;
                         previousTime = DateTime.Now;
                         if (IsMoving)
@@ -949,7 +949,7 @@ namespace XIVSlothComboPlugin.Combos
                     var canWeave = CanSpellWeave(actionID);
                     var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
                     var currentMP = LocalPlayer.CurrentMp;
-                    var astralFireRefresh = Service.Configuration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
+                    var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
                     var thunder3 = TargetHasEffect(Debuffs.Thunder3);
                     var thunder3Duration = FindTargetEffect(Debuffs.Thunder3);
 

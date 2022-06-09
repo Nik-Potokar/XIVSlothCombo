@@ -189,7 +189,7 @@ namespace XIVSlothComboPlugin.Combos
                         var canWeave = CanWeave(actionID);
                         var gauge = GetJobGauge<NINGauge>();
                         var mugCD = GetCooldown(Mug);
-                        var mugNinkiValue = Service.Configuration.GetCustomIntValue(Config.Mug_NinkiGauge);
+                        var mugNinkiValue = PluginConfiguration.GetCustomIntValue(Config.Mug_NinkiGauge);
 
                         if (!mugCD.IsCooldown && gauge.Ninki <= mugNinkiValue && canWeave && level >= TraitLevels.Shukiho)
                             return OriginalHook(Mug);
@@ -206,7 +206,7 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         var huton = GetJobGauge<NINGauge>();
-                        var armorcrushTimer = Service.Configuration.GetCustomIntValue(Config.Huton_RemainingArmorCrush);
+                        var armorcrushTimer = PluginConfiguration.GetCustomIntValue(Config.Huton_RemainingArmorCrush);
 
                         if (lastComboMove == GustSlash && level >= Levels.ArmorCrush && huton.HutonTimer < armorcrushTimer * 1000 && IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_ArmorCrush))
                         {
@@ -237,9 +237,9 @@ namespace XIVSlothComboPlugin.Combos
                     var canWeave = CanWeave(actionID);
                     var gauge = GetJobGauge<NINGauge>();
                     var bunshinCD = GetCooldown(Bunshin);
-                    var trickCDThreshold = Service.Configuration.GetCustomIntValue(Config.Trick_CooldownRemaining);
-                    var ninkiBhavaPooling = Service.Configuration.GetCustomIntValue(Config.Ninki_BhavaPooling);
-                    var ninkiBunshinPooling = Service.Configuration.GetCustomIntValue(Config.Ninki_BunshinPooling);
+                    var trickCDThreshold = PluginConfiguration.GetCustomIntValue(Config.Trick_CooldownRemaining);
+                    var ninkiBhavaPooling = PluginConfiguration.GetCustomIntValue(Config.Ninki_BhavaPooling);
+                    var ninkiBunshinPooling = PluginConfiguration.GetCustomIntValue(Config.Ninki_BunshinPooling);
 
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);

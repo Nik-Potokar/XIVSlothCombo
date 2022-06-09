@@ -65,14 +65,14 @@ namespace XIVSlothComboPlugin
                     bool grimSwatheReady = !GetCooldown(GrimSwathe).IsCooldown;
                     bool lemuresSliceReady = !GetCooldown(LemuresSlice).IsCooldown;
                     bool arcaneReady = !GetCooldown(ArcaneCrest).IsCooldown;
-                    var arcaneThreshold = Service.Configuration.GetCustomIntValue(Config.RPRPvP_ArcaneCircleThreshold);
+                    var arcaneThreshold = PluginConfiguration.GetCustomIntValue(Config.RPRPvP_ArcaneCircleThreshold);
                     bool deathWarrantReady = !GetCooldown(DeathWarrant).IsCooldown;
                     bool plentifulReady = !GetCooldown(PlentifulHarvest).IsCooldown;
                     var plentifulCD = GetCooldown(PlentifulHarvest).CooldownRemaining;
                     bool enshrouded = HasEffect(Buffs.Enshrouded);
                     var enshroudStacks = GetBuffStacks(Buffs.Enshrouded);
                     var immortalStacks = GetBuffStacks(Buffs.ImmortalSacrifice);
-                    var immortalThreshold = Service.Configuration.GetCustomIntValue(Config.RPRPvP_ImmortalStackThreshold);
+                    var immortalThreshold = PluginConfiguration.GetCustomIntValue(Config.RPRPvP_ImmortalStackThreshold);
                     bool soulsow = HasEffect(Buffs.Soulsow);
                     bool canBind = !TargetHasEffect(PVPCommon.Debuffs.Bind);
                     bool GCDStopped = !GetCooldown(OriginalHook(Slice)).IsCooldown;
