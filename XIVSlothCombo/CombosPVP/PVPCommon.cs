@@ -75,7 +75,7 @@ namespace XIVSlothComboPlugin
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)maxHPThreshold;
 
 
-
+                if (HasEffect(3180)) return false; //DRG LB buff
                 if (LocalPlayer.CurrentMp < 2500) return false;
                 if (remainingPercentage * 100 > threshold) return false;
 
@@ -116,6 +116,7 @@ namespace XIVSlothComboPlugin
                 var threshold = Service.Configuration.GetCustomIntValue(Config.EmergencyGuardThreshold);
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
+                if (HasEffect(3180)) return false; //DRG LB buff
                 if (HasEffectAny(Debuffs.Unguarded) || HasEffect(WARPVP.Buffs.InnerRelease)) return false;
                 if (GetCooldown(Guard).IsCooldown) return false;
                 if (remainingPercentage * 100 > threshold) return false;
@@ -155,6 +156,7 @@ namespace XIVSlothComboPlugin
             {
                 var selectedStatuses = Service.Configuration.GetCustomBoolArrayValue(Config.QuickPurifyStatuses);
 
+                if (HasEffect(3180)) return false; //DRG LB buff
 
                 if (selectedStatuses.Length == 0) return false;
                 if (GetCooldown(Purify).IsCooldown) return false;

@@ -130,9 +130,9 @@ namespace XIVSlothComboPlugin.Combos
                     }
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGauss))
                     {
-                        if (level >= Levels.Ricochet && ricochetCD.CooldownRemaining <= 30 && GetCooldown(CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
+                        if (level >= Levels.Ricochet && ricochetCD.RemainingCharges > 1 && GetCooldown(CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
                             return Ricochet;
-                        if (level >= Levels.GaussRound && gaussCD.CooldownRemaining <= 30 && GetCooldown(CleanShot).CooldownRemaining > 0.6)
+                        if (level >= Levels.GaussRound && gaussCD.RemainingCharges > 1 && GetCooldown(CleanShot).CooldownRemaining > 0.6)
                             return GaussRound;
 
                     }
