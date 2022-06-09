@@ -123,7 +123,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == AeolianEdge)
+                if (actionID is AeolianEdge)
                 {
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);
@@ -155,11 +155,9 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_Bunshin) && level >= Levels.Bunshin)
                     {
-                        var canWeave = CanWeave(actionID);
                         var gauge = GetJobGauge<NINGauge>();
-                        var bunshinCD = GetCooldown(Bunshin);
 
-                        if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && canWeave)
+                        if (gauge.Ninki >= 50 && IsOffCooldown(Bunshin) && CanWeave(actionID))
                             return Bunshin;
 
                         if (HasEffect(Buffs.PhantomReady) && canWeave && level >= Levels.PhantomKamaitachi)
@@ -168,34 +166,30 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_Bhavacakra) && level >= Levels.Bhavacakra)
                     {
-                        var actionIDCD = GetCooldown(actionID);
                         var gauge = GetJobGauge<NINGauge>();
 
-                        if (gauge.Ninki >= 50 && actionIDCD.IsCooldown)
+                        if (gauge.Ninki >= 50 && IsOnCooldown(actionID)) //20220606 Tsusai: Not a weave?
                             return Bhavacakra;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_AssassinateDWAD) && level >= Levels.Assassinate)
-                    {
-                        var actionIDCD = GetCooldown(actionID);
-                        var assasinateCD = GetCooldown(Assassinate);
+                    if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_AssassinateDWAD)
+                        && level >= Levels.Assassinate
+                        && IsOnCooldown(actionID) 
+                        && IsOffCooldown(Assassinate)
+                       ) return OriginalHook(Assassinate);
 
-                        if (actionIDCD.IsCooldown && !assasinateCD.IsCooldown)
-                            return OriginalHook(Assassinate);
-                    }
-
-                    if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_Mug) && level >= Levels.Mug)
+                    
+                    if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_Mug) 
+                        && level >= Levels.Mug
+                        && CanWeave(actionID)
+                        && IsOffCooldown(Mug))
                     {
-                        var canWeave = CanWeave(actionID);
                         var gauge = GetJobGauge<NINGauge>();
-                        var mugCD = GetCooldown(Mug);
-                        var mugNinkiValue = PluginConfiguration.GetCustomIntValue(Config.Mug_NinkiGauge);
+                        var mugNinkiValue = GetOptionValue(Config.Mug_NinkiGauge);
 
-                        if (!mugCD.IsCooldown && gauge.Ninki <= mugNinkiValue && canWeave && level >= TraitLevels.Shukiho)
-                            return OriginalHook(Mug);
-
-                        if (!mugCD.IsCooldown && canWeave && level < TraitLevels.Shukiho)
-                            return OriginalHook(Mug);
+                        if ((level >= TraitLevels.Shukiho && gauge.Ninki <= mugNinkiValue)
+                            || level < TraitLevels.Shukiho
+                            ) return OriginalHook(Mug);
                     }
 
                     if (comboTime > 0f)
@@ -206,12 +200,13 @@ namespace XIVSlothComboPlugin.Combos
                         }
 
                         var huton = GetJobGauge<NINGauge>();
-                        var armorcrushTimer = PluginConfiguration.GetCustomIntValue(Config.Huton_RemainingArmorCrush);
+                        var armorcrushTimer = GetOptionValue(Config.Huton_RemainingArmorCrush);
 
-                        if (lastComboMove == GustSlash && level >= Levels.ArmorCrush && huton.HutonTimer < armorcrushTimer * 1000 && IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_ArmorCrush))
-                        {
-                            return ArmorCrush;
-                        }
+                        if (IsEnabled(CustomComboPreset.NIN_AeolianEdgeCombo_ArmorCrush)
+                            && lastComboMove == GustSlash 
+                            && level >= Levels.ArmorCrush 
+                            && huton.HutonTimer < armorcrushTimer * 1000 
+                           ) return ArmorCrush;
 
                         if (lastComboMove == GustSlash && level >= Levels.AeolianEdge)
                         {
@@ -232,14 +227,12 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SpinningEdge)
+                if (actionID is SpinningEdge)
                 {
-                    var canWeave = CanWeave(actionID);
                     var gauge = GetJobGauge<NINGauge>();
-                    var bunshinCD = GetCooldown(Bunshin);
-                    var trickCDThreshold = PluginConfiguration.GetCustomIntValue(Config.Trick_CooldownRemaining);
-                    var ninkiBhavaPooling = PluginConfiguration.GetCustomIntValue(Config.Ninki_BhavaPooling);
-                    var ninkiBunshinPooling = PluginConfiguration.GetCustomIntValue(Config.Ninki_BunshinPooling);
+                    var trickCDThreshold = GetOptionValue(Config.Trick_CooldownRemaining);
+                    var ninkiBhavaPooling = GetOptionValue(Config.Ninki_BhavaPooling);
+                    var ninkiBunshinPooling = GetOptionValue(Config.Ninki_BunshinPooling);
 
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);
@@ -250,20 +243,27 @@ namespace XIVSlothComboPlugin.Combos
                     if (level >= Levels.Huraijin && gauge.HutonTimer == 0 && !HasEffect(Buffs.Mudra))
                         return Huraijin;
 
-                    if (level >= Levels.Mug && IsEnabled(CustomComboPreset.NIN_ST_Simple_Mug))
-                    {
-                        var mugCD = GetCooldown(Mug);
+                    if (IsEnabled(CustomComboPreset.NIN_ST_Simple_Mug) 
+                        && level >= Levels.Mug 
+                        && CanWeave(actionID)
+                        && IsOffCooldown(Mug) 
+                        && gauge.Ninki <= 60 
+                        && !HasEffect(Buffs.Mudra)
+                       ) return OriginalHook(Mug);
 
-                        if (canWeave && !mugCD.IsCooldown && gauge.Ninki <= 60 && !HasEffect(Buffs.Mudra))
-                            return OriginalHook(Mug);
-                    }
-
-                    if ((!GetCooldown(TrickAttack).IsCooldown || GetCooldown(TrickAttack).CooldownRemaining <= trickCDThreshold) && (!HasEffect(Buffs.Kassatsu) || (HasEffect(Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick_Kassatsu))) && level >= Levels.Doton && IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick))
+                    
+                    if (IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick)
+                        && level >= Levels.Doton
+                        && (IsOffCooldown(TrickAttack) || GetCooldownRemainingTime(TrickAttack) <= trickCDThreshold) 
+                        && (!HasEffect(Buffs.Kassatsu) || (HasEffect(Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick_Kassatsu))) )
                     {
-                        if (HasEffect(Buffs.Suiton) && !GetCooldown(TrickAttack).IsCooldown)
+                        if (HasEffect(Buffs.Suiton) && IsOffCooldown(TrickAttack))
                             return TrickAttack;
 
-                        if (!HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Suiton) && (GetCooldown(Chi).RemainingCharges > 0 || (HasEffect(Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick_Kassatsu))))
+                        if (!HasEffect(Buffs.Mudra) 
+                            && !HasEffect(Buffs.Suiton) 
+                            && HasCharges(Chi)
+                            || (HasEffect(Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick_Kassatsu)))
                             return OriginalHook(Chi);
 
                         if (!HasEffect(Buffs.Suiton) && OriginalHook(Ninjutsu) == FumaShuriken)
@@ -276,8 +276,11 @@ namespace XIVSlothComboPlugin.Combos
                             return OriginalHook(Ninjutsu);
                     }
 
-                    if (!GetCooldown(Kassatsu).IsCooldown && CanWeave(actionID) && !HasEffect(Buffs.Mudra) && level >= Levels.Kassatsu)
-                        return Kassatsu;
+                    if (level >= Levels.Kassatsu 
+                        && IsOffCooldown(Kassatsu) 
+                        && CanWeave(actionID) 
+                        && !HasEffect(Buffs.Mudra)
+                       ) return Kassatsu;
 
                     if (level >= Levels.EnhancedKassatsu)
                     {
@@ -292,7 +295,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (HasEffect(Buffs.Kassatsu))
                                 return JinCombo;
 
-                            if (GetCooldown(Jin).RemainingCharges > 0)
+                            if (HasCharges(Jin))
                                 return Jin;
                         }
                         else
@@ -323,54 +326,43 @@ namespace XIVSlothComboPlugin.Combos
                             if (HasEffect(Buffs.Kassatsu))
                                 return JinCombo;
 
-                            if (GetCooldown(Jin).RemainingCharges > 0)
+                            if (HasCharges(Jin))
                                 return Jin;
                         }
                     }
 
-                    if (!IsEnabled(CustomComboPreset.NIN_NinkiPooling_Bunshin))
-                    {
-                        if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && canWeave && level >= Levels.Bunshin)
-                            return Bunshin;
-                    }
-                    else
-                    {
-                        if (gauge.Ninki >= ninkiBunshinPooling && !bunshinCD.IsCooldown && canWeave && level >= Levels.Bunshin)
-                            return Bunshin;
-                    }
+                    //20220606 Tsusai: Pooling option appears to be a slider from 50 to 100. Is it needed as a option if the minimum is indeed 50?
+                    if (level >= Levels.Bunshin
+                        && IsOffCooldown(Bunshin)
+                        && CanWeave(actionID)
+                        && ( (!IsEnabled(CustomComboPreset.NIN_NinkiPooling_Bunshin) && gauge.Ninki >= 50) || (gauge.Ninki >= ninkiBunshinPooling) )
+                       ) return Bunshin;
 
                     if (HasEffect(Buffs.PhantomReady) && level >= Levels.PhantomKamaitachi)
                         return PhantomKamaitachi;
 
-                    if (!IsEnabled(CustomComboPreset.NIN_NinkiPooling_Bhavacakra))
-                    {
-                        if (gauge.Ninki >= 50 && canWeave && level >= Levels.Bhavacakra)
-                            return Bhavacakra;
-                    }
-                    else
-                    {
-                        if (gauge.Ninki >= ninkiBhavaPooling && canWeave && level >= Levels.Bhavacakra)
-                            return Bhavacakra;
-                    }
+                    //Question as the above
+                    if (level >= Levels.Bhavacakra
+                        && IsOffCooldown(Bhavacakra)
+                        && CanWeave(actionID)
+                        && ( (!IsEnabled(CustomComboPreset.NIN_NinkiPooling_Bhavacakra) && gauge.Ninki >= 50) || (gauge.Ninki >= ninkiBhavaPooling) )
+                       ) return Bhavacakra;
 
-                    if (level >= Levels.Assassinate)
-                    {
-                        var assasinateCD = GetCooldown(OriginalHook(Assassinate));
-
-                        if (canWeave && !assasinateCD.IsCooldown)
-                            return OriginalHook(Assassinate);
-                    }
+                    if (level >= Levels.Assassinate
+                        && IsOffCooldown(Assassinate)
+                        && CanWeave(actionID)
+                       ) return OriginalHook(Assassinate);
 
                     if (comboTime > 0f)
                     {
                         if (lastComboMove == SpinningEdge && level >= Levels.GustSlash)
                             return GustSlash;
 
-                        if (lastComboMove == GustSlash && gauge.HutonTimer < 15000 && level >= Levels.ArmorCrush)
-                            return ArmorCrush;
-
                         if (lastComboMove == GustSlash && level >= Levels.AeolianEdge)
-                            return AeolianEdge;
+                        {
+                            if (level >= Levels.ArmorCrush && gauge.HutonTimer < 15000) return ArmorCrush;
+                            else return AeolianEdge;
+                        }
                     }
                     return SpinningEdge;
                 }
@@ -386,16 +378,13 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == DeathBlossom)
+                if (actionID is DeathBlossom)
                 {
-                    var dotonBuff = FindEffect(Buffs.Doton);
-                    var jutsuCooldown = GetCooldown(Ten);
-                    var jutsuCharges = jutsuCooldown.RemainingCharges;
                     var gauge = GetJobGauge<NINGauge>();
 
                     lastUsedJutsu = OriginalHook(Ninjutsu) != Ninjutsu ? OriginalHook(Ninjutsu) : lastUsedJutsu;
 
-                    if (gauge.HutonTimer == 0 && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu) && level >= Levels.Huraijin)
+                    if (level >= Levels.Huraijin && gauge.HutonTimer == 0 && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu))
                         return Huraijin;
 
                     //Doton is really annoying. It takes a hot moment for the buff to apply. This is just logic to try and deal with it so it doesn't clip with the rest of the feature.
@@ -404,21 +393,20 @@ namespace XIVSlothComboPlugin.Combos
                         return OriginalHook(Ninjutsu);
                     }
 
-                    if ((!HasEffect(Buffs.Doton) || dotonBuff is { RemainingTime: <= 5 }) && (jutsuCharges > 0 || HasEffect(Buffs.Mudra)) && level >= Levels.Doton && lastUsedJutsu != Doton && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras))
+                    if (IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras)
+                        && level >= Levels.Doton
+                        && (!HasEffect(Buffs.Doton) || GetBuffRemainingTime(Buffs.Doton) <= 5 ) 
+                        && (HasCharges(Ten) || HasEffect(Buffs.Mudra)) 
+                        && lastUsedJutsu != Doton)
                     {
-                        if (OriginalHook(Ninjutsu) == Doton)
+                        switch (OriginalHook(Ninjutsu))
                         {
-                            return Doton;
-                        }
-
-                        if (OriginalHook(Ninjutsu) is Katon or GokaMekkyaku)
-                        {
-                            return ChiCombo;
-                        }
-
-                        if (OriginalHook(Ninjutsu) == FumaShuriken)
-                        {
-                            return TenCombo;
+                            case Doton:
+                                return Doton;
+                            case Katon or GokaMekkyaku:
+                                return ChiCombo;
+                            case FumaShuriken:
+                                return TenCombo;
                         }
 
                         if (HasEffect(Buffs.Kassatsu))
@@ -428,38 +416,45 @@ namespace XIVSlothComboPlugin.Combos
                             return Jin;
                     }
 
-                    if ((jutsuCharges > 0 || HasEffect(Buffs.Mudra) || HasEffect(Buffs.Kassatsu) || (!GetCooldown(Kassatsu).IsCooldown) && level >= Levels.Kassatsu) && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras))
+                    //20220606 Tsusai: Not sure what's with this below, could this not be simplified / merged with the above? Need a flow chart on this
+                    if (IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras) 
+                        && (HasCharges(Ten) || HasEffect(Buffs.Mudra) || HasEffect(Buffs.Kassatsu) || (IsOffCooldown(Kassatsu)) && level >= Levels.Kassatsu))
                     {
-                        if (!GetCooldown(Kassatsu).IsCooldown && !HasEffect(Buffs.Mudra) && level >= Levels.Kassatsu)
+                        if (level >= Levels.Kassatsu && IsOffCooldown(Kassatsu) && !HasEffect(Buffs.Mudra))
                         {
                             return Kassatsu;
                         }
 
-                        if (OriginalHook(Ninjutsu) is Katon or GokaMekkyaku)
-                            return OriginalHook(Ninjutsu);
-
-                        if (OriginalHook(Ninjutsu) == FumaShuriken)
-                            return TenCombo;
-
-
-                        return OriginalHook(Jin);
+                        switch (OriginalHook(Ninjutsu))
+                        {
+                            case Katon or GokaMekkyaku:
+                                return OriginalHook(Ninjutsu);
+                            case FumaShuriken:
+                                return TenCombo;
+                            default:
+                                return OriginalHook(Jin);
+                        }
                     }
 
                     if (!HasEffect(Buffs.Mudra))
                     {
-                        var actionIDCD = GetCooldown(actionID);
-                        var bunshinCD = GetCooldown(Bunshin);
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_Simple_Bunshin)
+                            && level >= Levels.Bunshin)
+                        {
+                            if (gauge.Ninki >= 50
+                                && IsOffCooldown(Bunshin)
+                                && IsOnCooldown(actionID) //20220606 Tsusai: Is this a CanWeave situation?
+                               ) return Bunshin;
 
-                        if (gauge.Ninki >= 50 && !bunshinCD.IsCooldown && actionIDCD.IsCooldown && level >= Levels.Bunshin && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Bunshin))
-                            return Bunshin;
+                            if (level >= Levels.PhantomKamaitachi && HasEffect(Buffs.PhantomReady)) return PhantomKamaitachi;
+                        }
 
-                        if (HasEffect(Buffs.PhantomReady) && level >= Levels.PhantomKamaitachi && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Bunshin))
-                            return PhantomKamaitachi;
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_Simple_Hellfrog) 
+                            && gauge.Ninki >= 50 
+                            && IsOnCooldown(actionID)
+                           ) return Hellfrog;
 
-                        if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Hellfrog))
-                            return Hellfrog;
-
-                        if (comboTime > 0f && lastComboMove == DeathBlossom && level >= 52)
+                        if (comboTime > 0f && lastComboMove == DeathBlossom && level >= Levels.HakkeMujinsatsu)
                         {
                             return HakkeMujinsatsu;
                         }
@@ -477,7 +472,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == ArmorCrush)
+                if (actionID is ArmorCrush)
                 {
                     if (IsEnabled(CustomComboPreset.NIN_GCDsNinjutsu) && OriginalHook(Jin) == OriginalHook(JinCombo))
                     {
@@ -486,12 +481,12 @@ namespace XIVSlothComboPlugin.Combos
 
                     if (comboTime > 0f)
                     {
-                        if (lastComboMove == SpinningEdge && level >= 4)
+                        if (lastComboMove == SpinningEdge && level >= Levels.GustSlash)
                         {
                             return GustSlash;
                         }
 
-                        if (lastComboMove == GustSlash && level >= 54)
+                        if (lastComboMove == GustSlash && level >= Levels.ArmorCrush)
                         {
                             return ArmorCrush;
                         }
@@ -508,11 +503,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Huraijin)
-                {
-                    if (lastComboMove == GustSlash)
-                        return ArmorCrush;
-                }
+                if (actionID is Huraijin && lastComboMove is GustSlash) return ArmorCrush;
                 return actionID;
             }
         }
@@ -523,18 +514,14 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Hide)
+                if (actionID is Hide)
                 {
-                    if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
-                    {
-                        return Mug;
-                    }
-
-                    if (HasEffect(Buffs.Hidden))
+                    if (HasEffect(Buffs.Suiton) || HasEffect(Buffs.Hidden))
                     {
                         return TrickAttack;
                     }
 
+                    if (InCombat()) return Mug;
                 }
 
                 return actionID;
@@ -547,7 +534,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Chi && level >= 76 && HasEffect(Buffs.Kassatsu))
+                if (actionID is Chi && level >= Levels.EnhancedKassatsu && HasEffect(Buffs.Kassatsu))
                 {
                     return Jin;
                 }
@@ -561,7 +548,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Kassatsu)
+                if (actionID is Kassatsu)
                 {
                     if (HasEffect(Buffs.Suiton) || HasEffect(Buffs.Hidden))
                     {
@@ -579,7 +566,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == TenChiJin)
+                if (actionID is TenChiJin)
                 {
 
                     if (HasEffect(Buffs.Suiton))
@@ -609,7 +596,7 @@ namespace XIVSlothComboPlugin.Combos
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Huraijin)
+                if (actionID is Huraijin)
                 {
                     if (IsEnabled(CustomComboPreset.NIN_HuraijinRaiju_Fleeting) && level >= Levels.ForkedRaiju && HasEffect(Buffs.RaijuReady))
                         return FleetingRaiju;
