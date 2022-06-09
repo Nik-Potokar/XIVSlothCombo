@@ -107,28 +107,6 @@ namespace XIVSlothComboPlugin
         /// <summary> Hide MotD. </summary>
         public bool HideMessageOfTheDay { get; set; } = false;
 
-        #region Image Caching
-        [JsonProperty]
-        public Dictionary<string, byte[]> ImageCache { get; set; } = new();
-
-        /// <summary> Gets an image in the cache. </summary>
-        public byte[]? GetImageInCache(string url)
-        {
-            byte[]? output;
-
-            if (!ImageCache.TryGetValue(url, out output)) return null;
-
-            return output;
-        }
-
-        /// <summary> Sets an image in the cache. </summary>
-        public void SetImageInCache(string url, byte[] image)
-        {
-            ImageCache[url] = image;
-
-        }
-        #endregion
-
         #region Custom Float Values
         [JsonProperty]
         private static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
