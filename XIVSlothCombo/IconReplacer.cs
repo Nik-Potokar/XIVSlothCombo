@@ -5,14 +5,10 @@ using System.Reflection;
 using Dalamud.Hooking;
 using Dalamud.Logging;
 using XIVSlothComboPlugin.Combos;
-using GameObject = FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject;
-using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace XIVSlothComboPlugin
 {
-    /// <summary>
-    /// This class facilitates the icon replacing.
-    /// </summary>
+    /// <summary> This class facilitates icon replacement. </summary>
     internal sealed partial class IconReplacer : IDisposable
     {
         private readonly List<CustomCombo> customCombos;
@@ -22,9 +18,7 @@ namespace XIVSlothComboPlugin
         private IntPtr actionManager = IntPtr.Zero;
         private readonly IntPtr module = IntPtr.Zero;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IconReplacer"/> class.
-        /// </summary>
+        /// <summary> Initializes a new instance of the <see cref="IconReplacer"/> class. </summary>
         public IconReplacer()
         {
             this.customCombos = Assembly.GetAssembly(typeof(CustomCombo))!.GetTypes()
@@ -52,11 +46,9 @@ namespace XIVSlothComboPlugin
             this.isIconReplaceableHook?.Dispose();
         }
 
-        /// <summary>
-        /// Calls the original hook.
-        /// </summary>
-        /// <param name="actionID">Action ID.</param>
-        /// <returns>The result from the hook.</returns>
+        /// <summary> Calls the original hook. </summary>
+        /// <param name="actionID"> Action ID. </param>
+        /// <returns> The result from the hook. </returns>
         internal uint OriginalHook(uint actionID)
             => this.getIconHook.Original(this.actionManager, actionID);
 
@@ -92,7 +84,8 @@ namespace XIVSlothComboPlugin
             }
         }
 
-        private bool ClassLocked()
+        // Class locking
+        private static bool ClassLocked()
         {
             if (Service.ClientState.LocalPlayer.Level <= 35) Service.ClassLocked = false;
 
