@@ -1314,15 +1314,9 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Always Gauss Round/Ricochet on AoE Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, 0, "", "")]
         MCH_AoE_Gauss = 8012,
 
-        [ConflictingCombos(MCH_ST_MainCombo_RicochetGauss)]
         [ParentCombo(MCH_ST_MainCombo)]
-        [CustomComboInfo("Ricochet & Gauss Round Feature", "Adds Ricochet and Gauss Round to main combo. Will use all charges.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Ricochet & Gauss Round Feature", "Adds Ricochet and Gauss Round to main combo.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo_RicochetGaussCharges = 8017,
-
-        [ConflictingCombos(MCH_ST_MainCombo_RicochetGaussCharges)]
-        [ParentCombo(MCH_ST_MainCombo)]
-        [CustomComboInfo("Ricochet & Gauss Round overcap protection option", "Adds Ricochet and Gauss Round to main combo. Will leave 1 charge of each.", MCH.JobID, 0, "", "")]
-        MCH_ST_MainCombo_RicochetGauss = 8013,
 
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Barrel Stabilizer drift protection feature", "Adds Barrel Stabilizer onto the main combo if heat is between 5-20.", MCH.JobID, 0, "", "")]

@@ -892,6 +892,9 @@ namespace XIVSlothComboPlugin
             // ====================================================================================
             #region MACHINIST
 
+            if (preset is CustomComboPreset.MCH_ST_MainCombo_RicochetGaussCharges)
+                ConfigWindowFunctions.DrawSliderInt(0, 1, MCH.Config.MCH_ST_MainCombo_RicochetGaussCharges_ChargesToKeep, "Amount of Charges of Ricochet and Gauss to Save");
+
             #endregion
             // ====================================================================================
             #region MONK
