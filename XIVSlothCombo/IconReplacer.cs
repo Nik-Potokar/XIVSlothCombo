@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
 using Dalamud.Hooking;
 using Dalamud.Logging;
 using XIVSlothComboPlugin.Combos;
@@ -88,7 +87,7 @@ namespace XIVSlothComboPlugin
             }
             catch (Exception ex)
             {
-                PluginLog.Error(ex, "Don't crash the game");
+                PluginLog.Error(ex, "Preset error");
                 return this.OriginalHook(actionID);
             }
         }
