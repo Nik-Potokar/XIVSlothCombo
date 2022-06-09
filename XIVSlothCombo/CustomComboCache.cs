@@ -8,9 +8,7 @@ using Dalamud.Game.ClientState.Statuses;
 
 namespace XIVSlothComboPlugin
 {
-    /// <summary>
-    /// Cached conditional combo logic.
-    /// </summary>
+    /// <summary> Cached conditional combo logic. </summary>
     internal partial class CustomComboCache : IDisposable
     {
         private const uint InvalidObjectID = 0xE000_0000;
@@ -24,9 +22,7 @@ namespace XIVSlothComboPlugin
         private readonly Dictionary<Type, JobGaugeBase> jobGaugeCache = new();
         private readonly Dictionary<(uint ActionID, uint ClassJobID, byte Level), (ushort CurrentMax, ushort Max)> chargesCache = new();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomComboCache"/> class.
-        /// </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomComboCache"/> class. </summary>
         public CustomComboCache()
         {
             Service.Framework.Update += this.Framework_Update;
@@ -40,11 +36,9 @@ namespace XIVSlothComboPlugin
             Service.Framework.Update -= this.Framework_Update;
         }
 
-        /// <summary>
-        /// Get a job gauge.
-        /// </summary>
-        /// <typeparam name="T">Type of job gauge.</typeparam>
-        /// <returns>The job gauge.</returns>
+        /// <summary> Gets a job gauge. </summary>
+        /// <typeparam name="T"> Type of job gauge. </typeparam>
+        /// <returns> The job gauge. </returns>
         internal T GetJobGauge<T>() where T : JobGaugeBase
         {
             if (!this.jobGaugeCache.TryGetValue(typeof(T), out var gauge))
@@ -53,13 +47,11 @@ namespace XIVSlothComboPlugin
             return (T)gauge;
         }
 
-        /// <summary>
-        /// Finds a status on the given object.
-        /// </summary>
-        /// <param name="statusID">Status effect ID.</param>
-        /// <param name="obj">Object to look for effects on.</param>
-        /// <param name="sourceID">Source object ID.</param>
-        /// <returns>Status object or null.</returns>
+        /// <summary> Finds a status on the given object. </summary>
+        /// <param name="statusID"> Status effect ID. </param>
+        /// <param name="obj"> Object to look for effects on. </param>
+        /// <param name="sourceID"> Source object ID. </param>
+        /// <returns> Status object or null. </returns>
         internal Status? GetStatus(uint statusID, GameObject? obj, uint? sourceID)
         {
             var key = (statusID, obj?.ObjectId, sourceID);
@@ -81,11 +73,9 @@ namespace XIVSlothComboPlugin
             return this.statusCache[key] = null;
         }
 
-        /// <summary>
-        /// Gets the cooldown data for an action.
-        /// </summary>
-        /// <param name="actionID">Action ID to check.</param>
-        /// <returns>Cooldown data.</returns>
+        /// <summary> Gets the cooldown data for an action. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
+        /// <returns> Cooldown data. </returns>
         internal unsafe CooldownData GetCooldown(uint actionID)
         {
             if (this.cooldownCache.TryGetValue(actionID, out var found))
@@ -103,11 +93,9 @@ namespace XIVSlothComboPlugin
             return this.cooldownCache[actionID] = *(CooldownData*)cooldownPtr;
         }
 
-        /// <summary>
-        /// Get the maximum number of charges for an action.
-        /// </summary>
-        /// <param name="actionID">Action ID to check.</param>
-        /// <returns>Max number of charges at current and max level.</returns>
+        /// <summary> Get the maximum number of charges for an action. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
+        /// <returns> Max number of charges at current and max level. </returns>
         internal unsafe (ushort Current, ushort Max) GetMaxCharges(uint actionID)
         {
             var player = Service.ClientState.LocalPlayer;
@@ -128,6 +116,9 @@ namespace XIVSlothComboPlugin
             return this.chargesCache[key] = (cur, max);
         }
 
+        /// <summary> Get the resource cost of an action. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
+        /// <returns> Returns the resource cost of an action. </returns>
         internal unsafe int GetResourceCost(uint actionID)
         {
             var actionManager = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.Instance();
@@ -140,7 +131,8 @@ namespace XIVSlothComboPlugin
 
         }
 
-
+        /// <summary> Get the cooldown group of an action. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
         private byte GetCooldownGroup(uint actionID)
         {
             if (this.cooldownGroupCache.TryGetValue(actionID, out var cooldownGroup))
@@ -152,6 +144,7 @@ namespace XIVSlothComboPlugin
             return this.cooldownGroupCache[actionID] = row!.CooldownGroup;
         }
 
+        /// <summary> Triggers when the game framework updates. Clears cooldown and status caches. </summary>
         private unsafe void Framework_Update(Framework framework)
         {
             this.statusCache.Clear();
