@@ -1386,7 +1386,7 @@ namespace XIVSlothComboPlugin
 
         [ParentCombo(MCH_ST_Simple_Assembling)]
         [CustomComboInfo("Chain Saw", "Use Reassemble with Chain Saw when available.", MCH.JobID, 0, "", "")]
-        MCH_Simple_Assembling_ChainSaw = 8031,
+        MCH_ST_Simple_Assembling_ChainSaw = 8031,
 
         [ParentCombo(MCH_ST_Simple_Assembling_Drill)]
         [CustomComboInfo("Only use Drill...", "...when you have max charges of reassemble.", MCH.JobID, 0, "", "")]
@@ -1396,9 +1396,13 @@ namespace XIVSlothComboPlugin
         [CustomComboInfo("Only use Air Anchor...", "...when you have max charges of reassemble.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_AirAnchor_MaxCharges = 8033,
 
-        [ParentCombo(MCH_Simple_Assembling_ChainSaw)]
+        [ParentCombo(MCH_ST_Simple_Assembling_ChainSaw)]
         [CustomComboInfo("Only use Chain Saw...", "...when you have max charges of reassemble.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8034,
+
+        [ParentCombo(MCH_ST_Simple_Stabilizer)]
+        [CustomComboInfo("Wildfire Only", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
 
         #endregion
         // ====================================================================================
