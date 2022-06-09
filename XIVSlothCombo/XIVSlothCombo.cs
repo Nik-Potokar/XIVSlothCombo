@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace XIVSlothComboPlugin
@@ -16,7 +15,7 @@ namespace XIVSlothComboPlugin
     /// <summary>
     /// Main plugin implementation.
     /// </summary>
-    public sealed partial class XIVComboExpandedPlugin : IDalamudPlugin
+    public sealed partial class XIVSlothCombo : IDalamudPlugin
     {
         private const string Command = "/scombo";
 
@@ -26,10 +25,10 @@ namespace XIVSlothComboPlugin
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XIVComboExpandedPlugin"/> class.
+        /// Initializes a new instance of the <see cref="XIVSlothCombo"/> class.
         /// </summary>
         /// <param name="pluginInterface">Dalamud plugin interface.</param>
-        public XIVComboExpandedPlugin(DalamudPluginInterface pluginInterface)
+        public XIVSlothCombo(DalamudPluginInterface pluginInterface)
         {
             FFXIVClientStructs.Resolver.Initialize();
 
@@ -93,7 +92,7 @@ namespace XIVSlothComboPlugin
             }
             catch (Exception ex)
             {
-                Dalamud.Logging.PluginLog.Error(ex, "Unable to retrieve MOTD");
+                Dalamud.Logging.PluginLog.Error(ex, "Unable to retrieve MotD");
             }
         }
 
@@ -124,7 +123,7 @@ namespace XIVSlothComboPlugin
 
             switch (argumentsParts[0].ToLower())
             {
-                case "unsetall":
+                case "unsetall": // unset all features
                     {
                         foreach (var preset in Enum.GetValues<CustomComboPreset>())
                         {
@@ -136,7 +135,7 @@ namespace XIVSlothComboPlugin
                         break;
                     }
 
-                case "set":
+                case "set": // set a feature
                     {
                         if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
@@ -159,7 +158,7 @@ namespace XIVSlothComboPlugin
                         break;
                     }
 
-                case "toggle":
+                case "toggle": // toggle a feature
                     {
                         if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
@@ -192,7 +191,7 @@ namespace XIVSlothComboPlugin
                         break;
                     }
 
-                case "unset":
+                case "unset": // unset a feature
                     {
                         if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
@@ -215,13 +214,13 @@ namespace XIVSlothComboPlugin
                         break;
                     }
 
-                case "list":
+                case "list": // list features
                     {
                         var filter = argumentsParts.Length > 1
                             ? argumentsParts[1].ToLowerInvariant()
                             : "all";
 
-                        if (filter == "set")
+                        if (filter == "set") // list set features
                         {
                             foreach (var preset in Enum.GetValues<CustomComboPreset>()
                                 .Select(preset => Service.Configuration.IsEnabled(preset)))
@@ -229,7 +228,7 @@ namespace XIVSlothComboPlugin
                                 Service.ChatGui.Print(preset.ToString());
                             }
                         }
-                        else if (filter == "unset")
+                        else if (filter == "unset") // list unset features
                         {
                             foreach (var preset in Enum.GetValues<CustomComboPreset>()
                                 .Select(preset => !Service.Configuration.IsEnabled(preset)))
@@ -237,7 +236,7 @@ namespace XIVSlothComboPlugin
                                 Service.ChatGui.Print(preset.ToString());
                             }
                         }
-                        else if (filter == "all")
+                        else if (filter == "all") // list all features
                         {
                             foreach (var preset in Enum.GetValues<CustomComboPreset>())
                             {
@@ -251,7 +250,7 @@ namespace XIVSlothComboPlugin
 
                         break;
                     }
-                case "enabled":
+                case "enabled": // list all currently enabled features
                     {
                         foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
                         {
@@ -260,7 +259,7 @@ namespace XIVSlothComboPlugin
                         }
                         break;
                     }
-                case "debug":
+                case "debug": // debug logging
                     {
                         try
                         {
@@ -268,13 +267,13 @@ namespace XIVSlothComboPlugin
 
                             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-                            using StreamWriter file = new($"{desktopPath}/SlothDebug.txt", append: false);
+                            using StreamWriter file = new($"{desktopPath}/SlothDebug.txt", append: false); // output path
 
                             file.WriteLine("START DEBUG LOG");
-                            file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}");
-                            file.WriteLine($"Current Job: {Service.ClientState.LocalPlayer.ClassJob.GameData.Name}");
-                            file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}");
-                            file.WriteLine($"Current Party Size: {Service.PartyList.Length}");
+                            file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}"); // Plugin version
+                            file.WriteLine($"Current Job: {Service.ClientState.LocalPlayer.ClassJob.GameData.Name}"); // Currently equipped job
+                            file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}"); // Current zone location
+                            file.WriteLine($"Current Party Size: {Service.PartyList.Length}"); // Current party size
                             file.WriteLine($"START ENABLED FEATURES");
 
                             int i = 0;
@@ -291,9 +290,9 @@ namespace XIVSlothComboPlugin
                                 foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
                                 {
                                     if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
-                                    if (preset.ToString().Substring(0, 3).ToLower() == specificJob ||
-                                        preset.ToString().Substring(0, 3).ToLower() == "all" ||
-                                        preset.ToString().Substring(0, 3).ToLower() == "pvp")
+                                    if (preset.ToString().Substring(0, 3).ToLower() == specificJob || // Job identifier
+                                        preset.ToString().Substring(0, 3).ToLower() == "all" || // adds in Globals
+                                        preset.ToString().Substring(0, 3).ToLower() == "pvp") // adds in PvP Globals
                                     file.WriteLine($"{(int)preset} - {preset}");
                                 }
                             }
