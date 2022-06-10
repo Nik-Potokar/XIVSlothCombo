@@ -2,9 +2,7 @@
 
 namespace XIVSlothComboPlugin
 {
-    /// <summary>
-    /// Internal cooldown data.
-    /// </summary>
+    /// <summary> Internal cooldown data. </summary>
     [StructLayout(LayoutKind.Explicit)]
     internal struct CooldownData
     {
@@ -20,114 +18,95 @@ namespace XIVSlothComboPlugin
         [FieldOffset(0xC)]
         private readonly float cooldownTotal;
 
-        /// <summary>
-        /// Gets a value indicating whether the action is on cooldown.
-        /// </summary>
+        /// <summary> Gets a value indicating whether the action is on cooldown. </summary>
         public bool IsCooldown
         {
             get
             {
-                var (cur, max) = Service.ComboCache.GetMaxCharges(this.ActionID);
+                var (cur, max) = Service.ComboCache.GetMaxCharges(ActionID);
                 if (cur == max)
-                    return this.isCooldown;
+                    return isCooldown;
 
-                return this.cooldownElapsed < this.CooldownTotal;
+                return cooldownElapsed < CooldownTotal;
             }
         }
 
-        /// <summary>
-        /// Gets the action ID on cooldown.
-        /// </summary>
-        public uint ActionID => this.actionID;
+        /// <summary> Gets the action ID on cooldown. </summary>
+        public uint ActionID => actionID;
 
-        /// <summary>
-        /// Gets the elapsed cooldown time.
-        /// </summary>
+        /// <summary> Gets the elapsed cooldown time. </summary>
         public float CooldownElapsed
         {
             get
             {
-                if (this.cooldownElapsed == 0)
+                if (cooldownElapsed == 0)
                     return 0;
 
-                if (this.cooldownElapsed > this.CooldownTotal)
+                if (cooldownElapsed > CooldownTotal)
                     return 0;
 
-                return this.cooldownElapsed;
+                return cooldownElapsed;
             }
         }
 
-        /// <summary>
-        /// Gets the total cooldown time.
-        /// </summary>
+        /// <summary> Gets the total cooldown time. </summary>
         public float CooldownTotal
         {
             get
             {
-                if (this.cooldownTotal == 0)
+                if (cooldownTotal == 0)
                     return 0;
 
-                var (cur, max) = Service.ComboCache.GetMaxCharges(this.ActionID);
+                var (cur, max) = Service.ComboCache.GetMaxCharges(ActionID);
+
                 if (cur == max)
-                    return this.cooldownTotal;
+                    return cooldownTotal;
 
                 // Rebase to the current charge count
-                var total = this.cooldownTotal / max * cur;
+                var total = cooldownTotal / max * cur;
 
-                if (this.cooldownElapsed > total)
+                if (cooldownElapsed > total)
                     return 0;
 
                 return total;
             }
         }
 
-        /// <summary>
-        /// Gets the cooldown time remaining.
-        /// </summary>
-        /// 
-        public float CooldownRemaining => this.IsCooldown ? this.CooldownTotal - this.CooldownElapsed : 0;
+        /// <summary> Gets the cooldown time remaining. </summary>
+        public float CooldownRemaining => IsCooldown ? CooldownTotal - CooldownElapsed : 0;
 
+        /// <summary> Gets the maximum number of charges for an action at the current level. </summary>
+        /// <returns> Number of charges. </returns>
+        public ushort MaxCharges => Service.ComboCache.GetMaxCharges(ActionID).Current;
 
-        /// <summary>
-        /// Gets the maximum number of charges for an action at the current level.
-        /// </summary>
-        /// <returns>Number of charges.</returns>
-        public ushort MaxCharges => Service.ComboCache.GetMaxCharges(this.ActionID).Current;
+        /// <summary> Gets a value indicating whether the action has charges, not charges available. </summary>
+        public bool HasCharges => MaxCharges > 1;
 
-        /// <summary>
-        /// Gets a value indicating whether the action has charges, not charges available.
-        /// </summary>
-        public bool HasCharges => this.MaxCharges > 1;
-
-        /// <summary>
-        /// Gets the remaining number of charges for an action.
-        /// </summary>
+        /// <summary> Gets the remaining number of charges for an action. </summary>
         public ushort RemainingCharges
         {
             get
             {
-                var (cur, _) = Service.ComboCache.GetMaxCharges(this.ActionID);
+                var (cur, _) = Service.ComboCache.GetMaxCharges(ActionID);
 
-                if (!this.IsCooldown)
+                if (!IsCooldown)
                     return cur;
 
-                return (ushort)(this.CooldownElapsed / (this.CooldownTotal / this.MaxCharges));
+                return (ushort)(CooldownElapsed / (CooldownTotal / MaxCharges));
             }
         }
 
-        /// <summary>
-        /// Gets the cooldown time remaining until the next charge.
-        /// </summary>
+        /// <summary> Gets the cooldown time remaining until the next charge. </summary>
         public float ChargeCooldownRemaining
         {
             get
             {
-                if (!this.IsCooldown)
+                if (!IsCooldown)
                     return 0;
 
-                var (cur, _) = Service.ComboCache.GetMaxCharges(this.ActionID);
+                var (cur, _) = Service.ComboCache.GetMaxCharges(ActionID);
 
-                return this.CooldownRemaining % (this.CooldownTotal / cur);
+                return CooldownRemaining % (CooldownTotal / cur);
             }
         }
     }

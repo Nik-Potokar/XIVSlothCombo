@@ -21,18 +21,18 @@ namespace XIVSlothComboPlugin
         /// <summary> Initializes a new instance of the <see cref="IconReplacer"/> class. </summary>
         public IconReplacer()
         {
-            this.customCombos = Assembly.GetAssembly(typeof(CustomCombo))!.GetTypes()
+            customCombos = Assembly.GetAssembly(typeof(CustomCombo))!.GetTypes()
                 .Where(t => !t.IsAbstract && t.BaseType == typeof(CustomCombo))
                 .Select(t => Activator.CreateInstance(t))
                 .Cast<CustomCombo>()
                 .OrderByDescending(x => x.Preset)
                 .ToList();
 
-            this.getIconHook = new Hook<GetIconDelegate>(Service.Address.GetAdjustedActionId, this.GetIconDetour);
-            this.isIconReplaceableHook = new Hook<IsIconReplaceableDelegate>(Service.Address.IsActionIdReplaceable, this.IsIconReplaceableDetour);
+            getIconHook = new Hook<GetIconDelegate>(Service.Address.GetAdjustedActionId, GetIconDetour);
+            isIconReplaceableHook = new Hook<IsIconReplaceableDelegate>(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
 
-            this.getIconHook.Enable();
-            this.isIconReplaceableHook.Enable();
+            getIconHook.Enable();
+            isIconReplaceableHook.Enable();
         }
 
         private delegate ulong IsIconReplaceableDelegate(uint actionID);
@@ -42,15 +42,14 @@ namespace XIVSlothComboPlugin
         /// <inheritdoc/>
         public void Dispose()
         {
-            this.getIconHook?.Dispose();
-            this.isIconReplaceableHook?.Dispose();
+            getIconHook?.Dispose();
+            isIconReplaceableHook?.Dispose();
         }
 
         /// <summary> Calls the original hook. </summary>
         /// <param name="actionID"> Action ID. </param>
         /// <returns> The result from the hook. </returns>
-        internal uint OriginalHook(uint actionID)
-            => this.getIconHook.Original(this.actionManager, actionID);
+        internal uint OriginalHook(uint actionID) => getIconHook.Original(actionManager, actionID);
 
         private unsafe uint GetIconDetour(IntPtr actionManager, uint actionID)
         {
@@ -59,9 +58,9 @@ namespace XIVSlothComboPlugin
             try
             {
                 if (Service.ClientState.LocalPlayer == null)
-                    return this.OriginalHook(actionID);
+                    return OriginalHook(actionID);
 
-                if (ClassLocked()) return this.OriginalHook(actionID);
+                if (ClassLocked()) return OriginalHook(actionID);
 
                 var lastComboMove = *(uint*)Service.Address.LastComboMove;
                 var comboTime = *(float*)Service.Address.ComboTimer;
@@ -69,18 +68,19 @@ namespace XIVSlothComboPlugin
 
                 BlueMageService.PopulateBLUSpells();
 
-                foreach (var combo in this.customCombos)
+                foreach (var combo in customCombos)
                 {
                     if (combo.TryInvoke(actionID, level, lastComboMove, comboTime, out var newActionID))
                         return newActionID;
                 }
 
-                return this.OriginalHook(actionID);
+                return OriginalHook(actionID);
             }
+
             catch (Exception ex)
             {
                 PluginLog.Error(ex, "Preset error");
-                return this.OriginalHook(actionID);
+                return OriginalHook(actionID);
             }
         }
 

@@ -33,7 +33,7 @@ namespace XIVSlothComboPlugin
                 .GetValues<CustomComboPreset>()
                 .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
                 .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-                .Where(tpl => tpl.Info != null && Service.Configuration.GetParent(tpl.Preset) == null)
+                .Where(tpl => tpl.Info != null && PluginConfiguration.GetParent(tpl.Preset) == null)
                 .OrderBy(tpl => tpl.Info.MemeJobName)
                 .ThenBy(tpl => tpl.Info.Order)
                 .GroupBy(tpl => tpl.Info.MemeJobName)
@@ -48,7 +48,7 @@ namespace XIVSlothComboPlugin
                 .GetValues<CustomComboPreset>()
                 .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
                 .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-                .Where(tpl => tpl.Info != null && Service.Configuration.GetParent(tpl.Preset) == null)
+                .Where(tpl => tpl.Info != null && PluginConfiguration.GetParent(tpl.Preset) == null)
                 .OrderBy(tpl => tpl.Info.JobName)
                 .ThenBy(tpl => tpl.Info.Order)
                 .GroupBy(tpl => tpl.Info.JobName)
@@ -196,11 +196,11 @@ namespace XIVSlothComboPlugin
 
             foreach (var jobName in groupedPresets.Keys)
             {
-                if (!groupedPresets[jobName].Any(x => Service.Configuration.IsSecret(x.Preset))) continue;
+                if (!groupedPresets[jobName].Any(x => PluginConfiguration.IsSecret(x.Preset))) continue;
 
                 if (ImGui.CollapsingHeader(jobName))
                 {
-                    foreach (var (preset, info) in groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    foreach (var (preset, info) in groupedPresets[jobName].Where(x => PluginConfiguration.IsSecret(x.Preset)))
                     {
                         InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { DrawPreset(preset, info, ref i); } };
 
@@ -241,8 +241,8 @@ namespace XIVSlothComboPlugin
 
                 else
                 {
-                    i += groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)).Count();
-                    foreach (var preset in groupedPresets[jobName].Where(x => Service.Configuration.IsSecret(x.Preset)))
+                    i += groupedPresets[jobName].Where(x => PluginConfiguration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in groupedPresets[jobName].Where(x => PluginConfiguration.IsSecret(x.Preset)))
                     {
                         i += AllChildren(presetChildren[preset.Preset]);
                     }
@@ -430,7 +430,7 @@ namespace XIVSlothComboPlugin
                 {
                     if (!PrintBLUMessage(jobName)) continue;
 
-                    foreach (var (preset, info) in groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
+                    foreach (var (preset, info) in groupedPresets[jobName].Where(x => !PluginConfiguration.IsSecret(x.Preset)))
                     {
                         InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { DrawPreset(preset, info, ref i); } };
                         if (Service.Configuration.HideConflictedCombos)
@@ -469,8 +469,8 @@ namespace XIVSlothComboPlugin
 
                 else
                 {
-                    i += groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)).Count();
-                    foreach (var preset in groupedPresets[jobName].Where(x => !Service.Configuration.IsSecret(x.Preset)))
+                    i += groupedPresets[jobName].Where(x => !PluginConfiguration.IsSecret(x.Preset)).Count();
+                    foreach (var preset in groupedPresets[jobName].Where(x => !PluginConfiguration.IsSecret(x.Preset)))
                     {
                         i += AllChildren(presetChildren[preset.Preset]);
                     }
@@ -503,9 +503,9 @@ namespace XIVSlothComboPlugin
         private void DrawPreset(CustomComboPreset preset, CustomComboInfoAttribute info, ref int i)
         {
             var enabled = Service.Configuration.IsEnabled(preset);
-            var secret = Service.Configuration.IsSecret(preset);
+            var secret = PluginConfiguration.IsSecret(preset);
             var conflicts = Service.Configuration.GetConflicts(preset);
-            var parent = Service.Configuration.GetParent(preset);
+            var parent = PluginConfiguration.GetParent(preset);
             var irlsloth = Service.Configuration.SpecialEvent;
             var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
@@ -710,7 +710,7 @@ namespace XIVSlothComboPlugin
         /// <param name="preset">Combo preset to enabled.</param>
         private static void EnableParentPresets(CustomComboPreset preset)
         {
-            var parentMaybe = Service.Configuration.GetParent(preset);
+            var parentMaybe = PluginConfiguration.GetParent(preset);
 
             while (parentMaybe != null)
             {
@@ -725,7 +725,7 @@ namespace XIVSlothComboPlugin
                     }
                 }
 
-                parentMaybe = Service.Configuration.GetParent(parent);
+                parentMaybe = PluginConfiguration.GetParent(parent);
             }
         }
 
