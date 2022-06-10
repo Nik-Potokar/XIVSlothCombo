@@ -1,11 +1,8 @@
-﻿using Dalamud.Game.Gui;
-using FFXIVClientStructs.FFXIV.Client.System.Framework;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using static FFXIVClientStructs.FFXIV.Client.UI.AddonAOZNotebook;
 
 namespace XIVSlothComboPlugin
 {
@@ -52,8 +49,6 @@ namespace XIVSlothComboPlugin
 
             if (Service.Configuration.ActiveBLUSpells.Except(prevList).Any())
             Service.Configuration.Save();
-
         }
-
     }
 }

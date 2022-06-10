@@ -35,20 +35,20 @@ namespace XIVSlothComboPlugin
             Service.Address.Setup();
 
             if (Service.Configuration.Version == 4)
-                this.UpgradeConfig4();
+                UpgradeConfig4();
 
             Service.ComboCache = new CustomComboCache();
             Service.IconReplacer = new IconReplacer();
             ActionWatching.Enable();
 
-            this.configWindow = new();
-            this.windowSystem = new("XIVSlothCombo");
-            this.windowSystem.AddWindow(this.configWindow);
+            configWindow = new();
+            windowSystem = new("XIVSlothCombo");
+            windowSystem.AddWindow(configWindow);
 
-            Service.Interface.UiBuilder.OpenConfigUi += this.OnOpenConfigUi;
-            Service.Interface.UiBuilder.Draw += this.windowSystem.Draw;
+            Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
+            Service.Interface.UiBuilder.Draw += windowSystem.Draw;
 
-            Service.CommandManager.AddHandler(Command, new CommandInfo(this.OnCommand)
+            Service.CommandManager.AddHandler(Command, new CommandInfo(OnCommand)
             {
                 HelpMessage = "Open a window to edit custom combo settings.",
                 ShowInHelp = true,
@@ -100,8 +100,8 @@ namespace XIVSlothComboPlugin
         {
             Service.CommandManager.RemoveHandler(Command);
 
-            Service.Interface.UiBuilder.OpenConfigUi -= this.OnOpenConfigUi;
-            Service.Interface.UiBuilder.Draw -= this.windowSystem.Draw;
+            Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
+            Service.Interface.UiBuilder.Draw -= windowSystem.Draw;
 
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
@@ -111,7 +111,7 @@ namespace XIVSlothComboPlugin
         }
 
         private void OnOpenConfigUi()
-            => this.configWindow.IsOpen = true;
+            => configWindow.IsOpen = true;
 
         private void OnCommand(string command, string arguments)
         {
@@ -329,7 +329,7 @@ namespace XIVSlothComboPlugin
                     }
 
                 default:
-                    this.configWindow.Toggle();
+                    configWindow.Toggle();
                     break;
             }
 

@@ -25,7 +25,7 @@ namespace XIVSlothComboPlugin
         /// <summary> Initializes a new instance of the <see cref="CustomComboCache"/> class. </summary>
         public CustomComboCache()
         {
-            Service.Framework.Update += this.Framework_Update;
+            Service.Framework.Update += Framework_Update;
         }
 
         private delegate IntPtr GetActionCooldownSlotDelegate(IntPtr actionManager, int cooldownGroup);
@@ -33,7 +33,7 @@ namespace XIVSlothComboPlugin
         /// <inheritdoc/>
         public void Dispose()
         {
-            Service.Framework.Update -= this.Framework_Update;
+            Service.Framework.Update -= Framework_Update;
         }
 
         /// <summary> Gets a job gauge. </summary>
@@ -41,8 +41,8 @@ namespace XIVSlothComboPlugin
         /// <returns> The job gauge. </returns>
         internal T GetJobGauge<T>() where T : JobGaugeBase
         {
-            if (!this.jobGaugeCache.TryGetValue(typeof(T), out var gauge))
-                gauge = this.jobGaugeCache[typeof(T)] = Service.JobGauges.Get<T>();
+            if (!jobGaugeCache.TryGetValue(typeof(T), out var gauge))
+                gauge = jobGaugeCache[typeof(T)] = Service.JobGauges.Get<T>();
 
             return (T)gauge;
         }
@@ -55,22 +55,22 @@ namespace XIVSlothComboPlugin
         internal Status? GetStatus(uint statusID, GameObject? obj, uint? sourceID)
         {
             var key = (statusID, obj?.ObjectId, sourceID);
-            if (this.statusCache.TryGetValue(key, out var found))
+            if (statusCache.TryGetValue(key, out var found))
                 return found;
 
             if (obj is null)
-                return this.statusCache[key] = null;
+                return statusCache[key] = null;
 
             if (obj is not BattleChara chara)
-                return this.statusCache[key] = null;
+                return statusCache[key] = null;
 
             foreach (var status in chara.StatusList)
             {
                 if (status.StatusId == statusID && (!sourceID.HasValue || status.SourceID == 0 || status.SourceID == InvalidObjectID || status.SourceID == sourceID))
-                    return this.statusCache[key] = status;
+                    return statusCache[key] = status;
             }
 
-            return this.statusCache[key] = null;
+            return statusCache[key] = null;
         }
 
         /// <summary> Gets the cooldown data for an action. </summary>
@@ -78,19 +78,19 @@ namespace XIVSlothComboPlugin
         /// <returns> Cooldown data. </returns>
         internal unsafe CooldownData GetCooldown(uint actionID)
         {
-            if (this.cooldownCache.TryGetValue(actionID, out var found))
+            if (cooldownCache.TryGetValue(actionID, out var found))
                 return found;
 
             var actionManager = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.Instance();
             if (actionManager == null)
-                return this.cooldownCache[actionID] = default;
+                return cooldownCache[actionID] = default;
 
-            var cooldownGroup = this.GetCooldownGroup(actionID);
+            var cooldownGroup = GetCooldownGroup(actionID);
 
             var cooldownPtr = actionManager->GetRecastGroupDetail(cooldownGroup - 1);
             cooldownPtr->ActionID = actionID;
 
-            return this.cooldownCache[actionID] = *(CooldownData*)cooldownPtr;
+            return cooldownCache[actionID] = *(CooldownData*)cooldownPtr;
         }
 
         /// <summary> Get the maximum number of charges for an action. </summary>
@@ -108,12 +108,12 @@ namespace XIVSlothComboPlugin
                 return (0, 0);
 
             var key = (actionID, job, level);
-            if (this.chargesCache.TryGetValue(key, out var found))
+            if (chargesCache.TryGetValue(key, out var found))
                 return found;
 
             var cur = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.GetMaxCharges(actionID, 0);
             var max = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.GetMaxCharges(actionID, 90);
-            return this.chargesCache[key] = (cur, max);
+            return chargesCache[key] = (cur, max);
         }
 
         /// <summary> Get the resource cost of an action. </summary>
@@ -135,20 +135,20 @@ namespace XIVSlothComboPlugin
         /// <param name="actionID"> Action ID to check. </param>
         private byte GetCooldownGroup(uint actionID)
         {
-            if (this.cooldownGroupCache.TryGetValue(actionID, out var cooldownGroup))
+            if (cooldownGroupCache.TryGetValue(actionID, out var cooldownGroup))
                 return cooldownGroup;
 
             var sheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!;
             var row = sheet.GetRow(actionID);
 
-            return this.cooldownGroupCache[actionID] = row!.CooldownGroup;
+            return cooldownGroupCache[actionID] = row!.CooldownGroup;
         }
 
         /// <summary> Triggers when the game framework updates. Clears cooldown and status caches. </summary>
         private unsafe void Framework_Update(Framework framework)
         {
-            this.statusCache.Clear();
-            this.cooldownCache.Clear();
+            statusCache.Clear();
+            cooldownCache.Clear();
         }
     }
 }

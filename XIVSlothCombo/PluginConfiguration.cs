@@ -38,11 +38,14 @@ namespace XIVSlothComboPlugin
         }
 
         #region Version
+
         /// <summary> Gets or sets the configuration version. </summary>
         public int Version { get; set; } = 5;
+
         #endregion
 
         #region EnabledActions
+
         /// <summary> Gets or sets the collection of enabled combos. </summary>
         [JsonProperty("EnabledActionsV5")]
         public HashSet<CustomComboPreset> EnabledActions { get; set; } = new();
@@ -50,9 +53,11 @@ namespace XIVSlothComboPlugin
         /// <summary> Gets or sets the collection of enabled combos. </summary>
         [JsonProperty("EnabledActionsV4")]
         public HashSet<CustomComboPreset> EnabledActions4 { get; set; } = new();
+
         #endregion
 
         #region Settings Options
+
         /// <summary> Gets or sets a value indicating whether to output combat log to the chatbox. </summary>
         public bool EnabledOutputLog { get; set; } = false;
 
@@ -64,52 +69,51 @@ namespace XIVSlothComboPlugin
 
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
+
         #endregion
 
         #region Combo Preset Checks
+
         /// <summary> Gets a value indicating whether a preset is enabled. </summary>
         /// <param name="preset"> Preset to check. </param>
         /// <returns> The boolean representation. </returns>
-        public bool IsEnabled(CustomComboPreset preset)
-            => this.EnabledActions.Contains(preset);
+        public bool IsEnabled(CustomComboPreset preset) => EnabledActions.Contains(preset);
 
         /// <summary> Gets a value indicating whether a preset is secret. </summary>
         /// <param name="preset"> Preset to check. </param>
         /// <returns> The boolean representation. </returns>
-        public bool IsSecret(CustomComboPreset preset)
-            => SecretCombos.Contains(preset);
+        public static bool IsSecret(CustomComboPreset preset) => SecretCombos.Contains(preset);
 
         /// <summary> Gets the parent combo preset if it exists, or null. </summary>
         /// <param name="preset"> Preset to check. </param>
         /// <returns> The parent preset. </returns>
-        public CustomComboPreset? GetParent(CustomComboPreset preset)
-            => ParentCombos[preset];
+        public static CustomComboPreset? GetParent(CustomComboPreset preset) => ParentCombos[preset];
+
         #endregion
 
         #region Conflicting Combos
+
         /// <summary> Gets an array of conflicting combo presets. </summary>
         /// <param name="preset"> Preset to check. </param>
         /// <returns> The conflicting presets. </returns>
-        public CustomComboPreset[] GetConflicts(CustomComboPreset preset)
-            => ConflictingCombos[preset];
+        public CustomComboPreset[] GetConflicts(CustomComboPreset preset) => ConflictingCombos[preset];
 
         /// <summary> Gets the full list of conflicted combos. </summary>
-        public List<CustomComboPreset> GetAllConflicts()
-            => ConflictingCombos.Keys.ToList();
+        public List<CustomComboPreset> GetAllConflicts() => ConflictingCombos.Keys.ToList();
 
         /// <summary> Get all the info from conflicted combos. </summary>
-        public List<CustomComboPreset[]> GetAllConflictOriginals()
-            => ConflictingCombos.Values.ToList();
+        public List<CustomComboPreset[]> GetAllConflictOriginals() => ConflictingCombos.Values.ToList();
+
         #endregion
 
         #region Custom Float Values
+
         [JsonProperty]
         private static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
 
         /// <summary> Gets a custom float value. </summary>
         public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
         {
-
             if (!CustomFloatValues.TryGetValue(config, out float configValue)) { SetCustomFloatValue(config, defaultMinValue); return defaultMinValue; }
 
             return configValue;
@@ -120,9 +124,11 @@ namespace XIVSlothComboPlugin
         {
             CustomFloatValues[config] = value;
         }
+
         #endregion
 
         #region Custom Int Values
+
         [JsonProperty]
         private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
 
@@ -139,9 +145,11 @@ namespace XIVSlothComboPlugin
         {
             CustomIntValues[config] = value;
         }
+
         #endregion
 
         #region Custom Bool Values
+
         [JsonProperty]
         private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
@@ -158,9 +166,11 @@ namespace XIVSlothComboPlugin
         {
             CustomBoolValues[config] = value;
         }
+
         #endregion
 
         #region Custom Bool Array Values
+
         [JsonProperty]
         private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
 
@@ -177,9 +187,11 @@ namespace XIVSlothComboPlugin
         {
             CustomBoolArrayValues[config] = value;
         }
+
         #endregion
 
         #region Job-specific
+
         /// <summary> Gets active Blue Mage (BLU) spells. </summary>
         public List<uint> ActiveBLUSpells { get; set; } = new List<uint>();
 
@@ -192,11 +204,13 @@ namespace XIVSlothComboPlugin
             DNC.FanDance2,
         };
 
-        /// <summary> Handles Mudra path selection for NIN_Simple_Mudras. </summary>
+        /// <summary> Handles Mudra path selection for <see cref="CustomComboPreset.NIN_Simple_Mudras"/>. </summary>
         public int MudraPathSelection { get; set; } = 0;
+
         #endregion
 
         #region Other (SpecialEvent, MotD, Save)
+
         /// <summary> Handles 'special event' feature naming. </summary>
         public bool SpecialEvent { get; set; } = false;
 
@@ -204,8 +218,8 @@ namespace XIVSlothComboPlugin
         public bool HideMessageOfTheDay { get; set; } = false;
 
         /// <summary> Save the configuration to disk. </summary>
-        public void Save()
-            => Service.Interface.SavePluginConfig(this);
+        public void Save() => Service.Interface.SavePluginConfig(this);
+
         #endregion
     }
 }

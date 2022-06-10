@@ -80,7 +80,6 @@ namespace XIVSlothComboPlugin
         public static void OutputLog()
         {
             Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
-
         }
         public static void Dispose()
         {
@@ -106,35 +105,11 @@ namespace XIVSlothComboPlugin
             SendActionHook?.Disable();
         }
 
-        public static int GetLevel(uint id)
-        {
-            if (ActionSheet.TryGetValue(id, out var action))
-            {
-                return action.ClassJobLevel;
-            }
+        public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.ClassJobLevel : 0;
 
-            return 0;
-        }
+        public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
 
-        public static string GetActionName(uint id)
-        {
-            if (ActionSheet.TryGetValue(id, out var action))
-            {
-                return action.Name;
-            }
-
-            return "UNKNOWN ABILITY";
-        }
-
-        public static string GetStatusName(uint id)
-        {
-            if (StatusSheet.TryGetValue(id, out var status))
-            {
-                return status.Name;
-            }
-
-            return "Unknown Status";
-        }
+        public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 
         public static List<uint> GetStatusesByName(string status)
         {
@@ -158,7 +133,6 @@ namespace XIVSlothComboPlugin
                 "Ability" => ActionAttackType.Ability,
                 _ => ActionAttackType.Unknown
             };
-
         }
 
         public enum ActionAttackType
@@ -168,9 +142,7 @@ namespace XIVSlothComboPlugin
             Weaponskill,
             Unknown
         }
-
     }
-
 
     internal unsafe static class ActionManagerHelper
     {
@@ -178,6 +150,7 @@ namespace XIVSlothComboPlugin
 
         internal static IntPtr FpUseAction =>
             (IntPtr)ActionManager.fpUseAction;
+
         internal static IntPtr FpUseActionLocation =>
             (IntPtr)ActionManager.fpUseActionLocation;
 
@@ -186,20 +159,20 @@ namespace XIVSlothComboPlugin
 
         public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero
             ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;
+
         public static ushort LastRecievedSeq => actionMgrPtr != IntPtr.Zero
             ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x112) : (ushort)0;
 
         public static bool IsCasting => actionMgrPtr != IntPtr.Zero
             && Marshal.ReadByte(actionMgrPtr + 0x28) != 0;
+
         public static uint CastingActionId => actionMgrPtr != IntPtr.Zero
             ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x24) : 0u;
+
         public static uint CastTargetObjectId => actionMgrPtr != IntPtr.Zero
             ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x38) : 0u;
 
-        static ActionManagerHelper()
-        {
-            actionMgrPtr = (IntPtr)ActionManager.Instance();
-        }
+        static ActionManagerHelper() => actionMgrPtr = (IntPtr)ActionManager.Instance();
     }
 
     [StructLayout(LayoutKind.Explicit)]

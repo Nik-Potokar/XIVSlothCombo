@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XIVSlothComboPlugin;
 
 namespace XIVSlothComboPlugin
 {
-    /// <summary>
-    /// Attribute documenting which skill the feature uses the user does not have active currently.
-    /// </summary>
+    /// <summary> Attribute documenting which skill the feature uses the user does not have active currently. </summary>
     [AttributeUsage(AttributeTargets.Field)]
     public class BlueInactiveAttribute : Attribute
     {
-        /// <summary>
-        /// List of each action the feature uses the user does not have active. Initializes a new instance of the <see cref="BlueInactiveAttribute"/> class.
-        /// </summary>
+        /// <summary> List of each action the feature uses the user does not have active. Initializes a new instance of the <see cref="BlueInactiveAttribute"/> class. </summary>
         /// <param name="actionIDs">List of actions the preset replaces</param>
         internal BlueInactiveAttribute(params uint[] actionIDs)
         {
@@ -27,10 +19,8 @@ namespace XIVSlothComboPlugin
 
                 Actions.Add(id);
             }
-
         }
 
         internal List<uint> Actions { get; set; } = new();
-
     }
 }

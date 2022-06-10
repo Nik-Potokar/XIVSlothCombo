@@ -25,9 +25,9 @@ namespace XIVSlothComboPlugin.Combos
         /// </summary>
         protected CustomCombo()
         {
-            var presetInfo = this.Preset.GetAttribute<CustomComboInfoAttribute>();
-            this.JobID = presetInfo.JobID;
-            this.ClassID = this.JobID switch
+            var presetInfo = Preset.GetAttribute<CustomComboInfoAttribute>();
+            JobID = presetInfo.JobID;
+            ClassID = JobID switch
             {
                 ADV.JobID => ADV.ClassID,
                 BLM.JobID => BLM.ClassID,
@@ -121,21 +121,21 @@ namespace XIVSlothComboPlugin.Combos
         {
             newActionID = 0;
             // Movement
-            if (this.MovingCounter == 0)
+            if (MovingCounter == 0)
             {
                 Vector2 newPosition = LocalPlayer is null ? Vector2.Zero : new Vector2(LocalPlayer.Position.X, LocalPlayer.Position.Z);
-                this.PlayerSpeed = Vector2.Distance(newPosition, this.Position);
-                this.IsMoving = this.PlayerSpeed > 0;
-                this.Position = LocalPlayer is null ? Vector2.Zero : newPosition;
+                PlayerSpeed = Vector2.Distance(newPosition, Position);
+                IsMoving = PlayerSpeed > 0;
+                Position = LocalPlayer is null ? Vector2.Zero : newPosition;
                 // refreshes every 50 dalamud ticks for a more accurate representation of speed, otherwise it'll report 0.
-                this.MovingCounter = 50;
+                MovingCounter = 50;
             }
 
-            if (this.MovingCounter > 0)
-                this.MovingCounter--;
+            if (MovingCounter > 0)
+                MovingCounter--;
 
 
-            if (!IsEnabled(this.Preset))
+            if (!IsEnabled(Preset))
                 return false;
 
             var classJobID = LocalPlayer!.ClassJob.Id;
@@ -146,11 +146,11 @@ namespace XIVSlothComboPlugin.Combos
             if (classJobID >= 16 && classJobID <= 18)
                 classJobID = DoL.JobID;
 
-            if (this.JobID != ADV.JobID && this.ClassID != ADV.ClassID &&
-                this.JobID != classJobID && this.ClassID != classJobID)
+            if (JobID != ADV.JobID && ClassID != ADV.ClassID &&
+                JobID != classJobID && ClassID != classJobID)
                 return false;
 
-            var resultingActionID = this.Invoke(actionID, lastComboMove, comboTime, level);
+            var resultingActionID = Invoke(actionID, lastComboMove, comboTime, level);
             //Dalamud.Logging.PluginLog.Debug(resultingActionID.ToString());
 
             if (resultingActionID == 0 || actionID == resultingActionID)
