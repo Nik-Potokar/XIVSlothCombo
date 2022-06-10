@@ -63,7 +63,7 @@
                         return OriginalHook(Fire);
 
                     if (FindTargetEffect(Debuffs.AstralWarmth).StackCount < 3 &&
-                        GetRemainingCharges(Paradox) > 0)
+                        IsOffCooldown(Paradox))
                         return Paradox;
 
                     if (IsEnabled(CustomComboPreset.BLMPvP_BurstMode_NightWing) &&
@@ -97,7 +97,7 @@
                         return OriginalHook(Blizzard);
 
                     if (FindTargetEffect(Debuffs.UmbralFreeze).StackCount < 3 &&
-                        GetRemainingCharges(Paradox) > 0)
+                        IsOffCooldown(Paradox))
                         return Paradox;
 
                     if (IsEnabled(CustomComboPreset.BLMPvP_BurstMode_NightWing) &&
