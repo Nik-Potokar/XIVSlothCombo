@@ -3,12 +3,11 @@ using XIVSlothComboPlugin.Combos;
 
 namespace XIVSlothComboPlugin
 {
-    /// <summary>
-    /// Combo presets.
-    /// </summary>
+    /// <summary> Combo presets. </summary>
     public enum CustomComboPreset
     {
-        // ====================================================================================
+        #region PvE Combos
+
         #region Misc
 
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", ADV.JobID)]
@@ -81,7 +80,7 @@ namespace XIVSlothComboPlugin
         Disabled = 99999,
 
         #endregion
-        // ====================================================================================
+
         #region GLOBAL FEATURES
 
         #region Global Tank Features
@@ -146,7 +145,9 @@ namespace XIVSlothComboPlugin
         //AllOutputCombatLog = 100094,
 
         #endregion
-        // ====================================================================================
+
+        // Jobs
+
         #region ASTROLOGIAN
 
         #region DPS
@@ -289,7 +290,7 @@ namespace XIVSlothComboPlugin
         //Last number used is 34
 
         #endregion
-        // ====================================================================================
+
         #region BLACK MAGE
 
         [ReplaceSkill(BLM.Scathe)]
@@ -414,7 +415,7 @@ namespace XIVSlothComboPlugin
         BLM_Simple_CastMovement_Scathe = 2028,
 
         #endregion
-        // ====================================================================================
+
         #region BLUE MAGE
 
         [BlueInactive(BLU.SongOfTorment, BLU.Bristle)]
@@ -478,7 +479,7 @@ namespace XIVSlothComboPlugin
         BLU_HydroPull = 70012,
 
         #endregion
-        // ====================================================================================
+
         #region BARD
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
@@ -598,7 +599,7 @@ namespace XIVSlothComboPlugin
         BRD_AoE_Simple_SongsExcludeWM = 3027,
 
         #endregion
-        // ====================================================================================
+
         #region DANCER
 
         #region Single Target Multibutton
@@ -820,7 +821,7 @@ namespace XIVSlothComboPlugin
             #endregion
 
         #endregion
-        // ====================================================================================
+
         #region DARK KNIGHT
 
         [ParentCombo(DRK_SouleaterCombo)]
@@ -945,7 +946,7 @@ namespace XIVSlothComboPlugin
         
 
         #endregion
-        // ====================================================================================
+
         #region DRAGOON
 
         [ReplaceSkill(DRG.CoerthanTorment)]
@@ -1136,7 +1137,7 @@ namespace XIVSlothComboPlugin
         DRG_FangAndClaw = 6701,
 
         #endregion
-        // ====================================================================================
+
         #region GUNBREAKER
 
         [ReplaceSkill(GNB.SolidBarrel)]
@@ -1255,7 +1256,7 @@ namespace XIVSlothComboPlugin
         GNB_AuroraProtection = 7028,
 
         #endregion
-        // ====================================================================================
+
         #region MACHINIST
 
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
@@ -1405,7 +1406,7 @@ namespace XIVSlothComboPlugin
         MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
 
         #endregion
-        // ====================================================================================
+
         #region MONK
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
@@ -1515,7 +1516,7 @@ namespace XIVSlothComboPlugin
         MNK_ST_Simple_Thunderclap = 9025,
 
         #endregion
-        // ====================================================================================
+
         #region NINJA
 
         [ReplaceSkill(NIN.ArmorCrush)]
@@ -1657,7 +1658,7 @@ namespace XIVSlothComboPlugin
         NIN_NinkiPooling_Bhavacakra = 10034,
 
         #endregion
-        // ====================================================================================
+
         #region PALADIN
 
         [ReplaceSkill(PLD.GoringBlade)]
@@ -1769,7 +1770,7 @@ namespace XIVSlothComboPlugin
         PLD_ST_RoyalAuth_FoFOpener_Intervene = 11029,
 
         #endregion
-        // ====================================================================================
+
         #region REAPER
 
         [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID, 0, "", "")]
@@ -1948,7 +1949,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #endregion
-        // ====================================================================================
+
         #region RED MAGE
 
         /* RDM Feature Numbering
@@ -2095,7 +2096,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #endregion
-        // ====================================================================================
+
         #region SAGE
 
         /* SGE Feature Numbering
@@ -2260,7 +2261,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #endregion
-        // ====================================================================================
+
         #region SAMURAI
 
         #region Overcap Features
@@ -2458,7 +2459,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #endregion
-        // ====================================================================================
+
         #region SCHOLAR
 
         /* SCH Feature Numbering
@@ -2531,7 +2532,7 @@ namespace XIVSlothComboPlugin
         #endregion
 
         #endregion
-        // ====================================================================================
+
         #region SUMMONER
 
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2)]
@@ -2677,7 +2678,7 @@ namespace XIVSlothComboPlugin
         SMN_ESPainflare_Ruin4 = 17039,
 
         #endregion
-        // ====================================================================================
+
         #region WARRIOR
 
         [ReplaceSkill(WAR.StormsEye)]
@@ -2761,7 +2762,7 @@ namespace XIVSlothComboPlugin
         WAR_ST_StormsPath_Onslaught_MeleeSpender = 18024,
         
         #endregion
-        // ====================================================================================
+
         #region WHITE MAGE
 
         [ReplaceSkill(WHM.Stone1, WHM.Stone2, WHM.Stone3, WHM.Stone4, WHM.Glare1, WHM.Glare3)]
@@ -2883,14 +2884,16 @@ namespace XIVSlothComboPlugin
         WHM_AoE_DPS_Misery = 19194,
 
         #endregion
-        // ====================================================================================
+
+        // Non-combat
+
         #region DOH
 
         // [CustomComboInfo("Placeholder", "Placeholder.", DOH.JobID)]
         // DohPlaceholder = 50001,
 
         #endregion
-        // ====================================================================================
+
         #region DOL
 
         [CustomComboInfo("Eureka Feature", "Replace Ageless Words and Solid Reason with Wise to the World when available.", DoL.JobID)]
@@ -2915,10 +2918,18 @@ namespace XIVSlothComboPlugin
         FSH_CastLight_ElectricCurrent = 51007,
 
         #endregion
-        // ====================================================================================
+
+        #endregion
+
         #region PvP Combos
 
-        #region MCH
+        // full re-order pending - K
+
+        #region ASTROLOGIAN
+
+        #endregion
+
+        #region MACHINIST
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
         MCHPvP_BurstMode = 80010,
@@ -2934,19 +2945,19 @@ namespace XIVSlothComboPlugin
             MCHPvP_BurstMode_AltAnalysis = 80012,
         #endregion
 
-        #region BRD
+        #region BARD
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
         BRDPvP_BurstMode = 80020,
         #endregion
 
-        #region RDM
+        #region RED MAGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
         RDMPvP_BurstMode = 80030,
         #endregion
 
-        #region WAR
+        #region WARRIOR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
         WARPvP_BurstMode = 80040,
@@ -2962,7 +2973,7 @@ namespace XIVSlothComboPlugin
             WARPvP_BurstMode_Blota = 80042,
         #endregion
 
-        #region NIN
+        #region NINJA
         [ConflictingCombos(NINPvP_AoE_BurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
@@ -2974,13 +2985,13 @@ namespace XIVSlothComboPlugin
         NINPvP_AoE_BurstMode = 80051,
         #endregion
 
-        #region SGE
+        #region SAGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
         SGEPvP_BurstMode = 80060,
         #endregion
 
-        #region DNC
+        #region DANCER
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Fountain Combo into an all-in-one damage button.", DNC.JobID)]
         DNCPvP_BurstMode = 80070,
@@ -2996,7 +3007,7 @@ namespace XIVSlothComboPlugin
             DNCPvP_BurstMode_CuringWaltz = 80072,
         #endregion
 
-        #region SAM
+        #region SAMURAI
 
         #region Burst Mode
         [SecretCustomCombo]
@@ -3037,7 +3048,7 @@ namespace XIVSlothComboPlugin
 
         #endregion
 
-        #region BLM
+        #region BLACK MAGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Fire and Blizzard into all-in-one damage buttons.", BLM.JobID)]
         BLMPvP_BurstMode = 80090,
@@ -3053,7 +3064,7 @@ namespace XIVSlothComboPlugin
             BLMPvP_BurstMode_AetherialManip = 80092,
         #endregion
 
-        #region RPR
+        #region REAPER
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.\nAdds Soul Slice to the main combo.", RPR.JobID)]
         RPRPvP_Burst = 80190,
@@ -3106,7 +3117,7 @@ namespace XIVSlothComboPlugin
             RPRPvP_Burst_ArcaneCircle = 80199,
             #endregion
 
-        #region MNK
+        #region MONK
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Phantom Rush Combo into all-in-one damage button.", MNK.JobID)]
         MNKPvP_Burst = 80100,
@@ -3120,11 +3131,44 @@ namespace XIVSlothComboPlugin
             [SecretCustomCombo]
             [CustomComboInfo("Add Riddle of Earth", "Adds Riddle of Earth and Earth's Reply to the Burst Mode when in combat.", MNK.JobID)]
             MNKPvP_Burst_RiddleOfEarth = 80102,
-            #endregion
+        #endregion
+
+        #region DARK KNIGHT
 
         #endregion
-        // ====================================================================================
-        #region PvPGlobals
+
+        #region DRAGOON
+
+        #endregion
+
+        #region GUNBREAKER
+
+        #endregion
+
+        #region PALADIN
+
+        #endregion
+
+        #region SCHOLAR
+
+        #endregion
+
+        #region SUMMONER
+
+        #endregion
+
+        #region WARRIOR
+
+        #endregion
+
+        #region WHITE MAGE
+
+        #endregion
+
+        #endregion
+
+        #region PvPGlobals // Pending insertion into above region
+
         [SecretCustomCombo]
         [CustomComboInfo("Emergency Heals", "Uses Recuperate when your HP is under a certain threshold and you have the MP.", ADV.JobID, 1)]
         PvP_EmergencyHeals = 90000,
