@@ -87,6 +87,7 @@ namespace XIVSlothComboPlugin.Combos
                 Chi = 35,
                 Jin = 45,
                 Doton = 45,
+                Suiton = 45,
                 Assassinate = 40,
                 Kassatsu = 50,
                 HakkeMujinsatsu = 52,
@@ -253,7 +254,7 @@ namespace XIVSlothComboPlugin.Combos
 
                     
                     if (IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick)
-                        && level >= Levels.Doton
+                        && level >= Levels.Suiton
                         && (IsOffCooldown(TrickAttack) || GetCooldownRemainingTime(TrickAttack) <= trickCDThreshold) 
                         && (!HasEffect(Buffs.Kassatsu) || (HasEffect(Buffs.Kassatsu) && IsEnabled(CustomComboPreset.NIN_ST_Simple_Trick_Kassatsu))) )
                     {
