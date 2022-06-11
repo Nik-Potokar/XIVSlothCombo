@@ -10,7 +10,7 @@ namespace XIVSlothCombo.Window.Tabs
 {
     internal class PvPFeatures : ConfigWindow
     {
-        internal static void Draw()
+        internal static new void Draw()
         {
             ImGui.Text("This tab allows you to select which PvP combos and features you wish to enable.");
 

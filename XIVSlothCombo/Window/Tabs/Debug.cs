@@ -21,7 +21,7 @@ namespace XIVSlothCombo.Window.Tabs
             }
         }
 
-        internal static void Draw()
+        internal static new void Draw()
         {
             var LocalPlayer = Service.ClientState.LocalPlayer;
             var comboClass = new DebugCombo();

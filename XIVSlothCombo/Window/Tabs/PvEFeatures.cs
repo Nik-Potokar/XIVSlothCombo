@@ -11,7 +11,7 @@ namespace XIVSlothCombo.Window.Tabs
 {
     internal class PvEFeatures : ConfigWindow
     {
-        internal static void Draw()
+        internal static new void Draw()
         {
             if (Service.ClassLocked)
             {

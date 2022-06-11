@@ -35,10 +35,7 @@ namespace XIVSlothCombo.CustomComboNS
                 _ => 0xFF,
             };
 
-            combatTimer = new Timer(1000); // in miliseconds
-            combatTimer.Elapsed += UpdateCombatTimer;
-            combatTimer.Start();
-
+            StartTimer();
         }
 
         /// <summary>

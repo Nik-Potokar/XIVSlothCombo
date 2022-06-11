@@ -7,7 +7,7 @@ namespace XIVSlothCombo.Window.Tabs
 {
     internal class Settings : ConfigWindow
     {
-        internal static void Draw()
+        internal static new void Draw()
         {
             ImGui.BeginChild("main", new Vector2(0, 0), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");

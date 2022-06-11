@@ -44,5 +44,12 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             return combatDuration;
         }
+
+        protected void StartTimer()
+        {
+            combatTimer = new Timer(1000); // in miliseconds
+            combatTimer.Elapsed += UpdateCombatTimer;
+            combatTimer.Start();
+        }
     }
 }

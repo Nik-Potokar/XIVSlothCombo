@@ -7,7 +7,7 @@ namespace XIVSlothCombo.Window.Tabs
 {
     internal class AboutUs : ConfigWindow
     {
-        internal static void Draw()
+        internal static new void Draw()
         {
             ImGui.BeginChild("About", new Vector2(0, 0), true);
 
