@@ -185,17 +185,24 @@ namespace XIVSlothComboPlugin.Combos
             {
                 if (actionID == HeatBlast)
                 {
-                    var wildfireCD = GetCooldown(Wildfire);
                     var heatBlastCD = GetCooldown(HeatBlast);
                     var gaussCD = GetCooldown(GaussRound);
                     var ricochetCD = GetCooldown(Ricochet);
 
                     var gauge = GetJobGauge<MCHGauge>();
                     var heat = GetJobGauge<MCHGauge>().Heat;
-                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel) && heat < 50 && IsOffCooldown(BarrelStabilizer) && level >= 66)
+                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel) 
+                        && level >= Levels.BarrelStabilizer 
+                        && heat < 50 
+                        && IsOffCooldown(BarrelStabilizer) 
+                        && !gauge.IsOverheated)
                         return BarrelStabilizer;
 
-                    if (!wildfireCD.IsCooldown && level >= Levels.Wildfire && heat >= 50 && IsEnabled(CustomComboPreset.MCH_ST_Wildfire))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire)
+                        && IsOffCooldown(Hypercharge)
+                        && IsOffCooldown(Wildfire) 
+                        && level >= Levels.Wildfire 
+                        && heat >= 50)
                         return Wildfire;
 
                     if (!gauge.IsOverheated && level >= Levels.Hypercharge)
@@ -204,7 +211,7 @@ namespace XIVSlothComboPlugin.Combos
                     if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.HeatBlast) // Prioritize Heat Blast
                         return HeatBlast;
 
-                    if (level <= 49)
+                    if (level <= Levels.Ricochet)
                         return GaussRound;
 
                     if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
@@ -350,13 +357,18 @@ namespace XIVSlothComboPlugin.Combos
                     var heat = GetJobGauge<MCHGauge>().Heat;
 
                     var gauge = GetJobGauge<MCHGauge>();
-                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel) && heat < 50 && IsOffCooldown(BarrelStabilizer) && level >= 66)
-                        return BarrelStabilizer;
+                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel)
+                        && level >= Levels.BarrelStabilizer
+                        && heat < 50
+                        && IsOffCooldown(BarrelStabilizer)
+                        && !gauge.IsOverheated
+                       ) return BarrelStabilizer;
+
                     if (!gauge.IsOverheated && level >= Levels.Hypercharge)
                         return Hypercharge;
                     if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.AutoCrossbow) // prioritize autocrossbow
                         return AutoCrossbow;
-                    if (level <= 49)
+                    if (level <= Levels.Ricochet)
                         return GaussRound;
                     if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
                         return GaussRound;
