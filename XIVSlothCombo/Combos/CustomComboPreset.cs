@@ -1,7 +1,8 @@
-﻿using XIVSlothComboPlugin.Attributes;
-using XIVSlothComboPlugin.Combos;
+﻿using XIVSlothCombo.Attributes;
+using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Combos.PvP;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Combos
 {
     /// <summary> Combo presets. </summary>
     public enum CustomComboPreset

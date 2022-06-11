@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Data
 {
     /// <summary> Internal cooldown data. </summary>
     [StructLayout(LayoutKind.Explicit)]

@@ -3,9 +3,10 @@ using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Numerics;
+using XIVSlothCombo.Core;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin.ConfigFunctions
-
+namespace XIVSlothCombo.Window
 {
     public static class ConfigWindowFunctions
     {

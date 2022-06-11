@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using XIVSlothComboPlugin;
+using XIVSlothCombo.Combos;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothCombo.CustomCombo
+namespace XIVSlothCombo.CustomComboNS
 {
     internal abstract partial class CustomCombo
     {

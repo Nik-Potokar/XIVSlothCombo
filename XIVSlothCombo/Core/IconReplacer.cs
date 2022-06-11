@@ -4,9 +4,10 @@ using System.Linq;
 using System.Reflection;
 using Dalamud.Hooking;
 using Dalamud.Logging;
-using XIVSlothCombo.CustomCombo;
+using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Core
 {
     /// <summary> This class facilitates icon replacement. </summary>
     internal sealed partial class IconReplacer : IDisposable

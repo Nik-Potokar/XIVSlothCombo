@@ -3,9 +3,10 @@ using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
-using XIVSlothCombo.CustomCombo;
+using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin.Combos
+namespace XIVSlothCombo.Combos.PvE
 {
     internal static class AST
     {

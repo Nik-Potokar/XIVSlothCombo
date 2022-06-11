@@ -1,7 +1,8 @@
-using XIVSlothCombo.CustomCombo;
-using XIVSlothComboPlugin.Combos;
+using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Core;
+using XIVSlothCombo.CustomComboNS;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Combos.PvP
 {
     internal static class RPRPVP
     {

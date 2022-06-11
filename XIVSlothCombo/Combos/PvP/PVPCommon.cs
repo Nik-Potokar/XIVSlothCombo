@@ -1,6 +1,7 @@
-﻿using XIVSlothCombo.CustomCombo;
+﻿using XIVSlothCombo.Core;
+using XIVSlothCombo.CustomComboNS;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Combos.PvP
 {
     internal static class PvPCommon
     {

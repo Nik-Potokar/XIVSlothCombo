@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using XIVSlothComboPlugin.Combos;
+using XIVSlothCombo.Combos.PvE;
 
-namespace XIVSlothComboPlugin.Attributes
+namespace XIVSlothCombo.Attributes
 {
     /// <summary> Attribute documenting additional information for each combo. </summary>
     [AttributeUsage(AttributeTargets.Field)]

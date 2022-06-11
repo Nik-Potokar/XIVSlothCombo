@@ -3,7 +3,7 @@ using ImGuiNET;
 using System;
 using System.Numerics;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Window
 {
 
     internal class InfoBox

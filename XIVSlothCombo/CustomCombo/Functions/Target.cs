@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 using System.Numerics;
-using XIVSlothComboPlugin;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothCombo.CustomCombo
+namespace XIVSlothCombo.CustomComboNS
 {
     internal abstract partial class CustomCombo
     {

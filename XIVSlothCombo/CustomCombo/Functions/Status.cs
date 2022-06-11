@@ -1,8 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
-using XIVSlothComboPlugin;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothCombo.CustomCombo
+namespace XIVSlothCombo.CustomComboNS
 {
     internal abstract partial class CustomCombo
     {

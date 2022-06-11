@@ -1,4 +1,4 @@
-﻿namespace XIVSlothComboPlugin.Combos
+﻿namespace XIVSlothCombo.Combos.PvE
 {
     internal static class ADV
     {

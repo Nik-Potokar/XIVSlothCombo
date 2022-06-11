@@ -13,8 +13,10 @@ using Dalamud.Plugin;
 using System;
 using System.IO;
 using System.Reflection;
+using XIVSlothCombo.Core;
+using XIVSlothCombo.Data;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Services
 {
     /// <summary> Dalamud and plugin services. </summary>
     internal class Service

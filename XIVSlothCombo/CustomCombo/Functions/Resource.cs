@@ -1,7 +1,7 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
-using XIVSlothComboPlugin;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothCombo.CustomCombo
+namespace XIVSlothCombo.CustomComboNS
 {
     internal abstract partial class CustomCombo
     {

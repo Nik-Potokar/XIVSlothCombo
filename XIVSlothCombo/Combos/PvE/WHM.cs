@@ -1,7 +1,8 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using XIVSlothCombo.CustomCombo;
+using XIVSlothCombo.Core;
+using XIVSlothCombo.CustomComboNS;
 
-namespace XIVSlothComboPlugin.Combos
+namespace XIVSlothCombo.Combos.PvE
 {
     internal static class WHM
     {

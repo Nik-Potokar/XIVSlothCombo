@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XIVSlothComboPlugin.Attributes
+namespace XIVSlothCombo.Attributes
 {
     /// <summary> Attribute designating secret combos. </summary>
     [AttributeUsage(AttributeTargets.Field)]

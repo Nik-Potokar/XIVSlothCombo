@@ -2,7 +2,7 @@ using System;
 using Dalamud.Game;
 using Dalamud.Logging;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Core
 {
     /// <summary> Plugin address resolver. </summary>
     internal class PluginAddressResolver : BaseAddressResolver

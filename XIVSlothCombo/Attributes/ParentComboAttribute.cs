@@ -1,6 +1,7 @@
 using System;
+using XIVSlothCombo.Combos;
 
-namespace XIVSlothComboPlugin.Attributes
+namespace XIVSlothCombo.Attributes
 {
     /// <summary> Attribute documenting required combo relationships. </summary>
     [AttributeUsage(AttributeTargets.Field)]

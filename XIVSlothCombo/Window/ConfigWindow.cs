@@ -1,22 +1,25 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
-using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using XIVSlothCombo.CustomCombo;
-using XIVSlothComboPlugin.Attributes;
-using XIVSlothComboPlugin.Combos;
-using XIVSlothComboPlugin.ConfigFunctions;
+using XIVSlothCombo.Attributes;
+using XIVSlothCombo.Combos;
+using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Combos.PvP;
+using XIVSlothCombo.Core;
+using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Services; 
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Window
 {
     /// <summary> Plugin configuration window. </summary>
-    internal class ConfigWindow : Window
+    internal class ConfigWindow : Dalamud.Interface.Windowing.Window
     {
         private readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets;
         private readonly Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> presetChildren;

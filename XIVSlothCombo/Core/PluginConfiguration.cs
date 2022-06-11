@@ -4,10 +4,12 @@ using System.Linq;
 using Dalamud.Configuration;
 using Dalamud.Utility;
 using Newtonsoft.Json;
-using XIVSlothComboPlugin.Attributes;
-using XIVSlothComboPlugin.Combos;
+using XIVSlothCombo.Attributes;
+using XIVSlothCombo.Combos;
+using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Core
 {
     /// <summary> Plugin configuration. </summary>
     [Serializable]

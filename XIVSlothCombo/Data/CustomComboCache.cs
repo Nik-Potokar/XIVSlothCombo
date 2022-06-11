@@ -5,8 +5,9 @@ using Dalamud.Game;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Data
 {
     /// <summary> Cached conditional combo logic. </summary>
     internal partial class CustomComboCache : IDisposable

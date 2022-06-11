@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin
-{
+namespace XIVSlothCombo.Data
+{ 
     public static class ActionWatching
     {
         public static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?

@@ -1,10 +1,10 @@
 ﻿using Dalamud.Utility;
 using System.Timers;
-using XIVSlothComboPlugin;
-using XIVSlothComboPlugin.Attributes;
-using XIVSlothComboPlugin.Combos;
+using XIVSlothCombo.Attributes;
+using XIVSlothCombo.Combos;
+using XIVSlothCombo.Combos.PvE;
 
-namespace XIVSlothCombo.CustomCombo
+namespace XIVSlothCombo.CustomComboNS
 {
     /// <summary>
     /// Base class for each combo.

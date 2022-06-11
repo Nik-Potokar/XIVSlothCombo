@@ -1,7 +1,7 @@
 ﻿using System;
-using XIVSlothComboPlugin;
+using XIVSlothCombo.Core;
 
-namespace XIVSlothCombo.CustomCombo
+namespace XIVSlothCombo.CustomComboNS
 {
     internal abstract partial class CustomCombo
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Attributes
 {
     /// <summary> Attribute documenting which skill each preset replace. </summary>
     [AttributeUsage(AttributeTargets.Field)]

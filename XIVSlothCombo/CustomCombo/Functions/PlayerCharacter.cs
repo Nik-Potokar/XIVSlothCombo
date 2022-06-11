@@ -1,9 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.SubKinds;
-using XIVSlothComboPlugin;
+using XIVSlothCombo.Services;
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
-namespace XIVSlothCombo.CustomCombo
+namespace XIVSlothCombo.CustomComboNS
 {
     internal abstract partial class CustomCombo
     {

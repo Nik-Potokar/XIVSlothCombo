@@ -2,7 +2,7 @@
 using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using GameObject = FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Services
 {
     public static unsafe class PartyTargetingService
     {

@@ -9,8 +9,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using XIVSlothCombo.Combos;
+using XIVSlothCombo.Core;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Services;
+using XIVSlothCombo.Window;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo
 {
     /// <summary> Main plugin implementation. </summary>
     public sealed partial class XIVSlothCombo : IDalamudPlugin

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XIVSlothComboPlugin.Attributes
+namespace XIVSlothCombo.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class HoverInfoAttribute : Attribute

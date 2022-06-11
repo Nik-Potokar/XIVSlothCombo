@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using XIVSlothCombo.Services;
 
-namespace XIVSlothComboPlugin
+namespace XIVSlothCombo.Attributes
 {
     /// <summary> Attribute documenting which skill the feature uses the user does not have active currently. </summary>
     [AttributeUsage(AttributeTargets.Field)]
