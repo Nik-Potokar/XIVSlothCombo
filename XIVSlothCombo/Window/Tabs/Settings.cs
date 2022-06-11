@@ -133,6 +133,5 @@ namespace XIVSlothCombo.Window.Tabs
 
             ImGui.EndChild();
         }
-
     }
 }

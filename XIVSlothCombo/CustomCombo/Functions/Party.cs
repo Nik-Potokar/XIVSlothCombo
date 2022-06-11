@@ -7,10 +7,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 {
     internal abstract partial class CustomComboFunctions
     {
-        /// <summary>
-        /// Gets the party list
-        /// </summary>
-        /// <returns>Current party list.</returns>
+        /// <summary> Gets the party list </summary>
+        /// <returns> Current party list. </returns>
         public PartyList GetPartyMembers() => Service.PartyList;
 
         protected unsafe static GameObject? GetPartySlot(int slot)
@@ -35,11 +33,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
                 return null;
             }
+
             catch
             {
                 return null;
             }
-
         }
     }
 }

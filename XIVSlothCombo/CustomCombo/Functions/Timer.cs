@@ -11,10 +11,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         internal DateTime combatEnd;
         internal Timer? combatTimer;
 
-        /// <summary>
-        /// Function that keeps getting called by the timer set up in the constructor,
-        /// to keep track of combat duration.
-        /// </summary>
+        /// <summary> Called by the timer in the constructor to keep track of combat duration. </summary>
         internal void UpdateCombatTimer(object sender, EventArgs e)
         {
             if (InCombat())
@@ -36,10 +33,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             combatDuration = combatEnd - combatStart;
         }
 
-        /// <summary>
-        /// Tells the elapsed time since the combat started.
-        /// </summary>
-        /// <returns>Combat time in seconds.</returns>
+        /// <summary> Tells the elapsed time since the combat started. </summary>
+        /// <returns> Combat time in seconds. </returns>
         protected TimeSpan CombatEngageDuration()
         {
             return combatDuration;
@@ -47,7 +42,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         protected void StartTimer()
         {
-            combatTimer = new Timer(1000); // in miliseconds
+            combatTimer = new Timer(1000); // in milliseconds
             combatTimer.Elapsed += UpdateCombatTimer;
             combatTimer.Start();
         }

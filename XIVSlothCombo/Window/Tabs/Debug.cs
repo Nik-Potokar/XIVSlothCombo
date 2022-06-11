@@ -44,12 +44,12 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"TARGET OBJECT KIND: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
                 ImGui.TextUnformatted($"TARGET IS BATTLE CHARA: {Service.ClientState.LocalPlayer.TargetObject is BattleChara}");
                 ImGui.TextUnformatted($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
-                ImGui.TextUnformatted($"IN COMBAT: {comboClass.InCombat()}");
+                ImGui.TextUnformatted($"IN COMBAT: {CustomComboNS.Functions.CustomComboFunctions.InCombat()}");
                 ImGui.TextUnformatted($"IN MELEE RANGE: {comboClass.InMeleeRange()}");
                 ImGui.TextUnformatted($"DISTANCE FROM TARGET: {comboClass.GetTargetDistance()}");
-                ImGui.TextUnformatted($"TARGET HP VALUE: {comboClass.EnemyHealthCurrentHp()}");
+                ImGui.TextUnformatted($"TARGET HP VALUE: {CustomComboNS.Functions.CustomComboFunctions.EnemyHealthCurrentHp()}");
                 ImGui.TextUnformatted($"LAST ACTION: {ActionWatching.GetActionName(ActionWatching.LastAction)}");
-                ImGui.TextUnformatted($"LAST ACTION COST: {comboClass.GetResourceCost(ActionWatching.LastAction)}");
+                ImGui.TextUnformatted($"LAST ACTION COST: {CustomComboNS.Functions.CustomComboFunctions.GetResourceCost(ActionWatching.LastAction)}");
                 ImGui.TextUnformatted($"LAST ACTION TYPE: {ActionWatching.GetAttackType(ActionWatching.LastAction)}");
                 ImGui.TextUnformatted($"LAST WEAPONSKILL: {ActionWatching.GetActionName(ActionWatching.LastWeaponskill)}");
                 ImGui.TextUnformatted($"LAST SPELL: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
@@ -65,6 +65,5 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted("Plese log in to use this tab.");
             }
         }
-
     }
 }

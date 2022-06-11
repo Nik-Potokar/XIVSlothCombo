@@ -5,7 +5,6 @@ using System.Numerics;
 
 namespace XIVSlothCombo.Window
 {
-
     internal class InfoBox
     {
         public Vector4 Color { get; set; } = Colors.White;
@@ -17,7 +16,7 @@ namespace XIVSlothCombo.Window
         public Vector2 Offset { get; set; } = Vector2.Zero;
         public string Label { get; set; } = "";
         public bool AutoResize { get; set; } = true;
-        private ImDrawListPtr DrawList => ImGui.GetWindowDrawList();
+        private static ImDrawListPtr DrawList => ImGui.GetWindowDrawList();
         private uint ColorU32 => ImGui.GetColorU32(Color);
         private Vector2 StartPosition { get; set; }
         public bool Debug { get; set; } = false;
@@ -123,6 +122,7 @@ namespace XIVSlothCombo.Window
                 textEndPadding = 7.0f * ImGuiHelpers.GlobalScale;
                 textVerticalOffset = textSize.Y / 2.0f;
             }
+
             else
             {
                 textStartPadding = 0;
@@ -134,23 +134,23 @@ namespace XIVSlothCombo.Window
             DrawList.AddLine(new Vector2(StartPosition.X + CurveRadius + textStartPadding + textSize.X + textEndPadding, StartPosition.Y - 0.5f), new Vector2(StartPosition.X + Size.X - CurveRadius + 0.5f, StartPosition.Y - 0.5f), color, BorderThickness);
         }
 
-        private float DegreesToRadians(float degrees) => MathF.PI / 180 * degrees;
+        private static float DegreesToRadians(float degrees) => MathF.PI / 180 * degrees;
     }
 
     internal static class Colors
     {
-        public static Vector4 Purple = new Vector4(176 / 255.0f, 38 / 255.0f, 236 / 255.0f, 1.0f);
-        public static Vector4 Blue = new Vector4(37 / 255.0f, 168 / 255.0f, 1.0f, 1.0f);
-        public static Vector4 ForestGreen = new Vector4(0.133f, 0.545f, 0.1333f, 1.0f);
-        public static Vector4 White = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-        public static Vector4 Red = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-        public static Vector4 Green = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
-        public static Vector4 Black = new Vector4(0.0f, 0.0f, 0.0f, 1.0f);
-        public static Vector4 HealerGreen = new Vector4(33 / 255f, 193 / 255f, 0, 1.0f);
-        public static Vector4 DPSRed = new Vector4(210 / 255f, 42 / 255f, 43 / 255f, 1.0f);
-        public static Vector4 SoftRed = new Vector4(0.8f, 0.2f, 0.2f, 1.0f);
-        public static Vector4 Grey = new Vector4(0.4f, 0.4f, 0.4f, 1.0f);
-        public static Vector4 Orange = new Vector4(1.0f, 165.0f / 255.0f, 0.0f, 1.0f);
-        public static Vector4 SoftGreen = new Vector4(0.2f, 0.8f, 0.2f, 1.0f);
+        public static Vector4 Purple = new(176 / 255.0f, 38 / 255.0f, 236 / 255.0f, 1.0f);
+        public static Vector4 Blue = new(37 / 255.0f, 168 / 255.0f, 1.0f, 1.0f);
+        public static Vector4 ForestGreen = new(0.133f, 0.545f, 0.1333f, 1.0f);
+        public static Vector4 White = new(1.0f, 1.0f, 1.0f, 1.0f);
+        public static Vector4 Red = new(1.0f, 0.0f, 0.0f, 1.0f);
+        public static Vector4 Green = new(0.0f, 1.0f, 0.0f, 1.0f);
+        public static Vector4 Black = new(0.0f, 0.0f, 0.0f, 1.0f);
+        public static Vector4 HealerGreen = new(33 / 255f, 193 / 255f, 0, 1.0f);
+        public static Vector4 DPSRed = new(210 / 255f, 42 / 255f, 43 / 255f, 1.0f);
+        public static Vector4 SoftRed = new(0.8f, 0.2f, 0.2f, 1.0f);
+        public static Vector4 Grey = new(0.4f, 0.4f, 0.4f, 1.0f);
+        public static Vector4 Orange = new(1.0f, 165.0f / 255.0f, 0.0f, 1.0f);
+        public static Vector4 SoftGreen = new(0.2f, 0.8f, 0.2f, 1.0f);
     }
 }

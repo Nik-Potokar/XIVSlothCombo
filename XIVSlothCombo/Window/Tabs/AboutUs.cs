@@ -24,7 +24,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             if (ImGui.Button("Click here to join our Discord Server!"))
             {
-                Util.OpenLink("https://discord.gg/xT7zyjzjtY");
+                Util.OpenLink("https://discord.gg/xivslothcombo");
             }
 
             ImGui.PopStyleColor();
@@ -37,6 +37,5 @@ namespace XIVSlothCombo.Window.Tabs
 
             ImGui.EndChild();
         }
-
     }
 }

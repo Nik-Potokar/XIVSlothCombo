@@ -5,28 +5,19 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 {
     internal abstract partial class CustomComboFunctions
     {
-        /// <summary>
-        /// Gets the Resource Cost of the action.
-        /// </summary>
-        /// <param name="actionID">Action ID to check.</param>
+        /// <summary> Gets the Resource Cost of the action. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
         /// <returns></returns>
-        public int GetResourceCost(uint actionID)
-            => Service.ComboCache.GetResourceCost(actionID);
+        public static int GetResourceCost(uint actionID) => Data.CustomComboCache.GetResourceCost(actionID);
 
-        /// <summary>
-        /// Gets the Resource Type of the action.
-        /// </summary>
-        /// <param name="actionID">Action ID to check.</param>
+        /// <summary> Gets the Resource Type of the action. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
         /// <returns></returns>
-        public bool IsResourceTypeNormal(uint actionID)
-            => Service.ComboCache.GetResourceCost(actionID) >= 100 || Service.ComboCache.GetResourceCost(actionID) == 0;
+        public static bool IsResourceTypeNormal(uint actionID) => Data.CustomComboCache.GetResourceCost(actionID) >= 100 || Data.CustomComboCache.GetResourceCost(actionID) == 0;
 
-        /// <summary>
-        /// Get a job gauge.
-        /// </summary>
-        /// <typeparam name="T">Type of job gauge.</typeparam>
-        /// <returns>The job gauge.</returns>
-        public T GetJobGauge<T>() where T : JobGaugeBase
-            => Service.ComboCache.GetJobGauge<T>();
+        /// <summary> Get a job gauge. </summary>
+        /// <typeparam name="T"> Type of job gauge.</typeparam>
+        /// <returns> The job gauge. </returns>
+        public static T GetJobGauge<T>() where T : JobGaugeBase => Service.ComboCache.GetJobGauge<T>();
     }
 }

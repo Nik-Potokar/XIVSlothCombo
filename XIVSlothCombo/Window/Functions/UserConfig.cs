@@ -15,12 +15,12 @@ namespace XIVSlothCombo.Window.Functions
     public static class UserConfig
     {
         /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
-        /// <param name="minValue">The absolute minimum value you'll let the user pick.</param>
-        /// <param name="maxValue">The absolute maximum value you'll let the user pick.</param>
-        /// <param name="config">The config ID.</param>
-        /// <param name="sliderDescription">Description of the slider. Appends to the right of the slider.</param>
-        /// <param name="itemWidth">How long the slider should be.</param>
-        /// <param name="sliderIncrement">How much you want the user to increment the slider by. Uses SliderIncrements as a preset.</param>
+        /// <param name="minValue"> The absolute minimum value you'll let the user pick. </param>
+        /// <param name="maxValue"> The absolute maximum value you'll let the user pick. </param>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
+        /// <param name="itemWidth"> How long the slider should be. </param>
+        /// <param name="sliderIncrement"> How much you want the user to increment the slider by. Uses SliderIncrements as a preset. </param>
         public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150, uint sliderIncrement = SliderIncrements.Ones)
         {
             var output = PluginConfiguration.GetCustomIntValue(config, minValue);
@@ -45,11 +45,11 @@ namespace XIVSlothCombo.Window.Functions
         }
 
         /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
-        /// <param name="minValue">The absolute minimum value you'll let the user pick.</param>
-        /// <param name="maxValue">The absolute maximum value you'll let the user pick.</param>
-        /// <param name="config">The config ID.</param>
-        /// <param name="sliderDescription">Description of the slider. Appends to the right of the slider.</param>
-        /// <param name="itemWidth">How long the slider should be.</param>
+        /// <param name="minValue"> The absolute minimum value you'll let the user pick. </param>
+        /// <param name="maxValue"> The absolute maximum value you'll let the user pick. </param>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
+        /// <param name="itemWidth"> How long the slider should be. </param>
         public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
@@ -67,11 +67,11 @@ namespace XIVSlothCombo.Window.Functions
         }
 
         /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
-        /// <param name="minValue">The absolute minimum value you'll let the user pick.</param>
-        /// <param name="maxValue">The absolute maximum value you'll let the user pick.</param>
-        /// <param name="config">The config ID.</param>
-        /// <param name="sliderDescription">Description of the slider. Appends to the right of the slider.</param>
-        /// <param name="itemWidth">How long the slider should be.</param>
+        /// <param name="minValue"> The absolute minimum value you'll let the user pick. </param>
+        /// <param name="maxValue"> The absolute maximum value you'll let the user pick. </param>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
+        /// <param name="itemWidth"> How long the slider should be. </param>
         public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
         {
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
@@ -89,10 +89,10 @@ namespace XIVSlothCombo.Window.Functions
         }
 
         /// <summary> Draws a checkbox intended to be linked to other checkboxes sharing the same config value. </summary>
-        /// <param name="config">The config ID.</param>
-        /// <param name="checkBoxName">The name of the feature.</param>
-        /// <param name="checkboxDescription">The description of the feature.</param>
-        /// <param name="outputValue">If the user ticks this box, this is the value the config will be set to.</param>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="checkBoxName"> The name of the feature. </param>
+        /// <param name="checkboxDescription"> The description of the feature. </param>
+        /// <param name="outputValue"> If the user ticks this box, this is the value the config will be set to. </param>
         /// <param name="itemWidth"></param>
         /// <param name="descriptionColor"></param>
         public static void DrawRadioButton(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
@@ -120,10 +120,10 @@ namespace XIVSlothCombo.Window.Functions
         }
 
         /// <summary> Draws a checkbox in a horizontal configuration intended to be linked to other checkboxes sharing the same config value. </summary>
-        /// <param name="config">The config ID.</param>
-        /// <param name="checkBoxName">The name of the feature.</param>
-        /// <param name="checkboxDescription">The description of the feature.</param>
-        /// <param name="outputValue">If the user ticks this box, this is the value the config will be set to.</param>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="checkBoxName"> The name of the feature. </param>
+        /// <param name="checkboxDescription"> The description of the feature. </param>
+        /// <param name="outputValue"> If the user ticks this box, this is the value the config will be set to. </param>
         /// <param name="itemWidth"></param>
         /// <param name="descriptionColor"></param>
         public static void DrawHorizontalRadioButton(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
@@ -521,7 +521,6 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.NextColumn();
             ImGui.Columns(1);
             ImGui.Spacing();
-
         }
 
         public static void DrawJobGridSingleChoice(string config)
@@ -724,8 +723,8 @@ namespace XIVSlothCombo.Window.Functions
     public static class UserConfigItems
     {
         /// <summary> Draws the User Configurable settings. </summary>
-        /// <param name="preset"> The preset it's attached to </param>
-        /// <param name="enabled"> If it's enabled or not </param>
+        /// <param name="preset"> The preset it's attached to. </param>
+        /// <param name="enabled"> If it's enabled or not. </param>
         internal static void Draw(CustomComboPreset preset, bool enabled)
         {
             if (!enabled) return;
