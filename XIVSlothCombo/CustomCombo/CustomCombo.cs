@@ -3,13 +3,14 @@ using System.Timers;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.CustomComboNS
 {
     /// <summary>
     /// Base class for each combo.
     /// </summary>
-    internal abstract partial class CustomCombo
+    internal abstract partial class CustomCombo : CustomComboFunctions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomCombo"/> class.

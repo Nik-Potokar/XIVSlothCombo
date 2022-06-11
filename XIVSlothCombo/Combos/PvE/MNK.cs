@@ -105,7 +105,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var solarNadi = gauge.Nadi == Nadi.SOLAR;
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
 
                     if (!inCombat)
@@ -273,7 +272,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Bootshine)
                 {
-                    var gauge = GetJobGauge<MNKGauge>();
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
                     {
                         if (!HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes)

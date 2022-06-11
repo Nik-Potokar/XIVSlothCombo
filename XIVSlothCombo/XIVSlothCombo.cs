@@ -293,9 +293,9 @@ namespace XIVSlothCombo
                                 foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
                                 {
                                     if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
-                                    if (preset.ToString().Substring(0, 3).ToLower() == specificJob || // Job identifier
-                                        preset.ToString().Substring(0, 3).ToLower() == "all" || // adds in Globals
-                                        preset.ToString().Substring(0, 3).ToLower() == "pvp") // adds in PvP Globals
+                                    if (preset.ToString()[..3].ToLower() == specificJob || // Job identifier
+                                        preset.ToString()[..3].ToLower() == "all" || // adds in Globals
+                                        preset.ToString()[..3].ToLower() == "pvp") // adds in PvP Globals
                                     file.WriteLine($"{(int)preset} - {preset}");
                                 }
                             }
@@ -311,7 +311,7 @@ namespace XIVSlothCombo
                                 file.WriteLine($"END REDUNDANT IDs");
                             }
                             file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
-                            if (Service.ClientState.LocalPlayer.StatusList.Count() > 0)
+                            if (Service.ClientState.LocalPlayer.StatusList.Length > 0)
                             {
                                 file.WriteLine($"START STATUS EFFECTS");
                                 foreach (var status in Service.ClientState.LocalPlayer.StatusList)

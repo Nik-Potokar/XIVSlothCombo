@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
 
-namespace XIVSlothCombo.CustomComboNS
+namespace XIVSlothCombo.CustomComboNS.Functions
 {
-    internal abstract partial class CustomCombo
+    internal abstract partial class CustomComboFunctions
     {
         protected Vector2 Position { get; set; }
         protected float PlayerSpeed { get; set; }

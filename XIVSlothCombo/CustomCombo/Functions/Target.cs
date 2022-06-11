@@ -4,9 +4,9 @@ using System.Linq;
 using System.Numerics;
 using XIVSlothCombo.Services;
 
-namespace XIVSlothCombo.CustomComboNS
+namespace XIVSlothCombo.CustomComboNS.Functions
 {
-    internal abstract partial class CustomCombo
+    internal abstract partial class CustomComboFunctions
     {
         /// <summary>
         /// Gets the current target or null.

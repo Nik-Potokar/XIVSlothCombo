@@ -194,7 +194,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID == Scathe)
                 {
                     var gauge = GetJobGauge<BLMGauge>();
-                    var GCD = GetCooldown(actionID);
                     var thundercloudduration = FindEffectAny(Buffs.Thundercloud);
                     var thunderdebuffontarget = FindTargetEffect(Debuffs.Thunder3);
                     var thunderOneDebuff = FindTargetEffect(Debuffs.Thunder);
@@ -1294,7 +1293,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<BLMGauge>();
                     var canWeave = CanSpellWeave(actionID);
-                    var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
                     var currentMP = LocalPlayer.CurrentMp;
                     var thunder3 = TargetHasEffect(Debuffs.Thunder3);
                     var thunder3Duration = FindTargetEffect(Debuffs.Thunder3);

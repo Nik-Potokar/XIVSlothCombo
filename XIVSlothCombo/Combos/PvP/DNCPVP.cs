@@ -52,8 +52,6 @@ namespace XIVSlothCombo.Combos.PvP
                 {
                     bool starfallDanceReady = !GetCooldown(StarfallDance).IsCooldown;
                     bool starfallDance = HasEffect(Buffs.StarfallDance);
-                    bool enAvant = HasEffect(Buffs.EnAvant);
-                    var enAvantCharges = GetCooldown(EnAvant).RemainingCharges;
                     bool curingWaltzReady = !GetCooldown(CuringWaltz).IsCooldown;
                     bool honingDanceReady = !GetCooldown(HoningDance).IsCooldown;
                     var acclaimStacks = GetBuffStacks(Buffs.Acclaim);

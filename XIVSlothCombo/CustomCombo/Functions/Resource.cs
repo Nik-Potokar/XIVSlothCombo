@@ -1,9 +1,9 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Services;
 
-namespace XIVSlothCombo.CustomComboNS
+namespace XIVSlothCombo.CustomComboNS.Functions
 {
-    internal abstract partial class CustomCombo
+    internal abstract partial class CustomComboFunctions
     {
         /// <summary>
         /// Gets the Resource Cost of the action.

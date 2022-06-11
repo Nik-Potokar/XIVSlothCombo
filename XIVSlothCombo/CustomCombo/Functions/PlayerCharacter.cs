@@ -3,9 +3,9 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using XIVSlothCombo.Services;
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
-namespace XIVSlothCombo.CustomComboNS
+namespace XIVSlothCombo.CustomComboNS.Functions
 {
-    internal abstract partial class CustomCombo
+    internal abstract partial class CustomComboFunctions
     {
         /// <summary>
         /// Gets the player or null.

@@ -4,9 +4,9 @@ using XIVSlothCombo.Combos;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 
-namespace XIVSlothCombo.CustomComboNS
+namespace XIVSlothCombo.CustomComboNS.Functions
 {
-    internal abstract partial class CustomCombo
+    internal abstract partial class CustomComboFunctions
     {
         /// <summary>
         /// Determine if the given preset is enabled.

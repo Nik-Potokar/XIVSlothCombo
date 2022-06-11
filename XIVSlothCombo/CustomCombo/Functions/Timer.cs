@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Timers;
 
-namespace XIVSlothCombo.CustomComboNS
+namespace XIVSlothCombo.CustomComboNS.Functions
 {
-    internal abstract partial class CustomCombo
+    internal abstract partial class CustomComboFunctions
     {
-        private bool restartCombatTimer = true;
-        private TimeSpan combatDuration = new();
-        private DateTime combatStart;
-        private DateTime combatEnd;
-        private readonly Timer combatTimer;
+        internal bool restartCombatTimer = true;
+        internal TimeSpan combatDuration = new();
+        internal DateTime combatStart;
+        internal DateTime combatEnd;
+        internal Timer? combatTimer;
 
         /// <summary>
         /// Function that keeps getting called by the timer set up in the constructor,
         /// to keep track of combat duration.
         /// </summary>
-        private void UpdateCombatTimer(object sender, EventArgs e)
+        internal void UpdateCombatTimer(object sender, EventArgs e)
         {
             if (InCombat())
             {

@@ -229,8 +229,6 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         var venomous = TargetHasEffect(Debuffs.VenomousBite);
                         var windbite = TargetHasEffect(Debuffs.Windbite);
-                        var venomousDuration = FindTargetEffect(Debuffs.VenomousBite);
-                        var windbiteDuration = FindTargetEffect(Debuffs.Windbite);
 
                         if (level >= Levels.IronJaws && venomous && windbite)
                         {
@@ -250,8 +248,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     var caustic = TargetHasEffect(Debuffs.CausticBite);
                     var stormbite = TargetHasEffect(Debuffs.Stormbite);
-                    var causticDuration = FindTargetEffect(Debuffs.CausticBite);
-                    var stormbiteDuration = FindTargetEffect(Debuffs.Stormbite);
 
                     if (level >= Levels.IronJaws && caustic && stormbite)
                     {
