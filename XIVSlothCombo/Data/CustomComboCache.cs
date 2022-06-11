@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Dalamud.Game;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -120,7 +119,7 @@ namespace XIVSlothCombo.Data
         /// <summary> Get the resource cost of an action. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> Returns the resource cost of an action. </returns>
-        internal unsafe int GetResourceCost(uint actionID)
+        internal static unsafe int GetResourceCost(uint actionID)
         {
             var actionManager = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.Instance();
             if (actionManager == null)
@@ -129,7 +128,6 @@ namespace XIVSlothCombo.Data
             var cost = FFXIVClientStructs.FFXIV.Client.Game.ActionManager.GetActionCost(FFXIVClientStructs.FFXIV.Client.Game.ActionType.Spell, actionID, 0, 0, 0, 0);
 
             return cost;
-
         }
 
         /// <summary> Get the cooldown group of an action. </summary>

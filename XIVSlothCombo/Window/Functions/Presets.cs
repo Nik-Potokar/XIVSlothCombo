@@ -166,8 +166,8 @@ namespace XIVSlothCombo.Window.Functions
                     {
                         if (Service.Configuration.HideConflictedCombos)
                         {
-                            var conflictOriginals = Service.Configuration.GetConflicts(childPreset); // Presets that are contained within a ConflictedAttribute
-                            var conflictsSource = Service.Configuration.GetAllConflicts(); // Presets with the ConflictedAttribute
+                            var conflictOriginals = Service.Configuration.GetConflicts(childPreset);    // Presets that are contained within a ConflictedAttribute
+                            var conflictsSource = Service.Configuration.GetAllConflicts();              // Presets with the ConflictedAttribute
 
                             if (!conflictsSource.Where(x => x == childPreset || x == preset).Any() || conflictOriginals.Length == 0)
                             {
@@ -219,7 +219,7 @@ namespace XIVSlothCombo.Window.Functions
         }
 
         /// <summary> Iterates up a preset's parent tree, enabling each of them. </summary>
-        /// <param name="preset">Combo preset to enabled.</param>
+        /// <param name="preset"> Combo preset to enabled. </param>
         private static void EnableParentPresets(CustomComboPreset preset)
         {
             var parentMaybe = PluginConfiguration.GetParent(preset);

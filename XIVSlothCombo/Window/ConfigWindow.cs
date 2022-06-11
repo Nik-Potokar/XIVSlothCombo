@@ -7,7 +7,6 @@ using System.Numerics;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
-using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Tabs;
 
 namespace XIVSlothCombo.Window
@@ -97,11 +96,8 @@ namespace XIVSlothCombo.Window
                     ImGui.EndTabItem();
                 }
 #endif
-
                 ImGui.EndTabBar();
             }
-
         }
-
     }
 }

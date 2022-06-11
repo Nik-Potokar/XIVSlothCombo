@@ -8,23 +8,15 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 {
     internal abstract partial class CustomComboFunctions
     {
-        /// <summary>
-        /// Gets the current target or null.
-        /// </summary>
-        public GameObject? CurrentTarget
-            => Service.TargetManager.Target;
+        /// <summary> Gets the current target or null. </summary>
+        public static GameObject? CurrentTarget => Service.TargetManager.Target;
 
-        /// <summary>
-        /// Find if the player has a target.
-        /// </summary>
-        /// <returns>A value indicating whether the player has a target.</returns>
-        public bool HasTarget()
-            => CurrentTarget is not null;
+        /// <summary> Find if the player has a target. </summary>
+        /// <returns> A value indicating whether the player has a target. </returns>
+        public static bool HasTarget() => CurrentTarget is not null;
 
-        /// <summary>
-        /// Gets the distance from the target.
-        /// </summary>
-        /// <returns>Double representing the distance from the target.</returns>
+        /// <summary> Gets the distance from the target. </summary>
+        /// <returns> Double representing the distance from the target. </returns>
         public double GetTargetDistance()
         {
             if (CurrentTarget is null || LocalPlayer is null)
@@ -42,10 +34,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return Math.Max(0, (Vector2.Distance(position, selfPosition) - chara.HitboxRadius) - LocalPlayer.HitboxRadius);
         }
 
-        /// <summary>
-        /// Gets a value indicating whether you are in melee range from the current target.
-        /// </summary>
-        /// <returns>Bool indicating whether you are in melee range.</returns>
+        /// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>
+        /// <returns> Bool indicating whether you are in melee range. </returns>
         public bool InMeleeRange()
         {
             if (LocalPlayer.TargetObject == null) return false;
@@ -61,11 +51,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return true;
         }
 
-        /// <summary>
-        /// Gets a value indicating target's HP Percent. CurrentTarget is default unless specified
-        /// </summary>
-        /// <returns>Double indicating percentage.</returns>
-        public double GetTargetHPPercent(GameObject? OurTarget = null)
+        /// <summary> Gets a value indicating target's HP Percent. CurrentTarget is default unless specified </summary>
+        /// <returns> Double indicating percentage. </returns>
+        public static double GetTargetHPPercent(GameObject? OurTarget = null)
         {
             if (OurTarget is null)
             {
@@ -81,7 +69,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return health / maxHealth * 100;
         }
-        public double EnemyHealthMaxHp()
+
+        public static double EnemyHealthMaxHp()
         {
             if (CurrentTarget is null)
                 return 0;
@@ -92,7 +81,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return maxHealth;
         }
-        public double EnemyHealthCurrentHp()
+
+        public static double EnemyHealthCurrentHp()
         {
             if (CurrentTarget is null)
                 return 0;
@@ -103,6 +93,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return currentHp;
         }
+
         public double PlayerHealthPercentageHp()
         {
             double maxHealth = LocalPlayer.MaxHp;
@@ -110,7 +101,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return currentHealth / maxHealth * 100;
         }
-        public bool HasBattleTarget()
+
+        public static bool HasBattleTarget()
         {
             if (CurrentTarget is null)
                 return false;
@@ -119,11 +111,10 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return true;
         }
-        /// <summary>
-        /// Determines if the enemy can be interrupted if they are currently casting.
-        /// </summary>
-        /// <returns>Bool indicating whether they can be interrupted or not.</returns>
-        public bool CanInterruptEnemy()
+
+        /// <summary> Determines if the enemy can be interrupted if they are currently casting. </summary>
+        /// <returns> Bool indicating whether they can be interrupted or not. </returns>
+        public static bool CanInterruptEnemy()
         {
             if (CurrentTarget is null)
                 return false;
@@ -134,18 +125,14 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return false;
         }
 
-        /// <summary>
-        /// Sets the player's target. 
-        /// </summary>
-        /// <param name="target">Target must be a game object that the player can normally click and target.</param>
-        public void SetTarget(GameObject? target) =>
+        /// <summary> Sets the player's target. </summary>
+        /// <param name="target"> Target must be a game object that the player can normally click and target. </param>
+        public static void SetTarget(GameObject? target) =>
             Service.TargetManager.Target = target;
 
-        /// <summary>
-        /// Checks if target is in appropriate range for targeting
-        /// </summary>
-        /// <param name="target">The target object to check</param>
-        public bool IsInRange(GameObject? target)
+        /// <summary> Checks if target is in appropriate range for targeting </summary>
+        /// <param name="target"> The target object to check </param>
+        public static bool IsInRange(GameObject? target)
         {
             if (target == null) return false;
             if (target.YalmDistanceX >= 30) return false;
@@ -153,9 +140,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return true;
         }
 
-        /// <summary>
-        /// Attempts to target the given party member
-        /// </summary>
+        /// <summary> Attempts to target the given party member </summary>
         /// <param name="target"></param>
         protected unsafe void TargetObject(TargetType target)
         {
@@ -167,7 +152,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (IsInRange(p)) SetTarget(p);
         }
 
-        public void TargetObject(GameObject? target)
+        public static void TargetObject(GameObject? target)
         {
             if (IsInRange(target)) SetTarget(target);
         }

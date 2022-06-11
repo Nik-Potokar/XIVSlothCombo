@@ -6,28 +6,20 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 {
     internal abstract partial class CustomComboFunctions
     {
-        /// <summary>
-        /// Calls the original hook.
-        /// </summary>
-        /// <param name="actionID">Action ID.</param>
-        /// <returns>The result from the hook.</returns>
-        public uint OriginalHook(uint actionID)
-            => Service.IconReplacer.OriginalHook(actionID);
+        /// <summary> Calls the original hook. </summary>
+        /// <param name="actionID"> Action ID. </param>
+        /// <returns> The result from the hook. </returns>
+        public static uint OriginalHook(uint actionID) => Service.IconReplacer.OriginalHook(actionID);
 
-        /// <summary>
-        /// Compare the original hook to the given action ID.
-        /// </summary>
-        /// <param name="actionID">Action ID.</param>
-        /// <returns>A value indicating whether the action would be modified.</returns>
-        public bool IsOriginal(uint actionID)
-            => Service.IconReplacer.OriginalHook(actionID) == actionID;
+        /// <summary> Compare the original hook to the given action ID. </summary>
+        /// <param name="actionID"> Action ID. </param>
+        /// <returns> A value indicating whether the action would be modified. </returns>
+        public static bool IsOriginal(uint actionID) => Service.IconReplacer.OriginalHook(actionID) == actionID;
 
-        /// <summary>
-        /// Checks if the player is high enough level to use the passed ID.
-        /// </summary>
-        /// <param name="id">ID of the action.</param>
+        /// <summary> Checks if the player is high enough level to use the passed ID. </summary>
+        /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public bool LevelChecked(uint id)
+        public static bool LevelChecked(uint id)
         {
             if (LocalPlayer.Level < GetLevel(id))
                 return false;
@@ -35,77 +27,50 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return true;
         }
 
-        /// <summary>
-        /// Returns the name of an action from its ID.
-        /// </summary>
-        /// <param name="id">ID of the action.</param>
+        /// <summary> Returns the name of an action from its ID. </summary>
+        /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public string GetActionName(uint id)
-            => ActionWatching.GetActionName(id);
+        public static string GetActionName(uint id) => ActionWatching.GetActionName(id);
 
-        /// <summary>
-        /// Returns the level required for an action from its ID.
-        /// </summary>
-        /// <param name="id">ID of the action.</param>
+        /// <summary> Returns the level required for an action from its ID. </summary>
+        /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public int GetLevel(uint id)
-            => ActionWatching.GetLevel(id);
+        public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
 
-        /// <summary>
-        /// Checks if the last action performed was the passed ID.
-        /// </summary>
-        /// <param name="id">ID of the action.</param>
+        /// <summary> Checks if the last action performed was the passed ID. </summary>
+        /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public bool WasLastAction(uint id)
-            => ActionWatching.LastAction == id;
+        public static bool WasLastAction(uint id) => ActionWatching.LastAction == id;
 
-        /// <summary>
-        /// Returns how many times in a row the last action was used.
-        /// </summary>
+        /// <summary> Returns how many times in a row the last action was used. </summary>
         /// <returns></returns>
-        public int LastActionCounter()
-            => ActionWatching.LastActionUseCount;
+        public static int LastActionCounter() => ActionWatching.LastActionUseCount;
 
-        /// <summary>
-        /// Checks if the last weaponskill used was the passed ID. Does not have to be the last action performed, just the last weaponskill used.
-        /// </summary>
-        /// <param name="id">ID of the action.</param>
+        /// <summary> Checks if the last weaponskill used was the passed ID. Does not have to be the last action performed, just the last weaponskill used. </summary>
+        /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public bool WasLastWeaponskill(uint id)
-            => ActionWatching.LastWeaponskill == id;
+        public static bool WasLastWeaponskill(uint id) => ActionWatching.LastWeaponskill == id;
 
-        /// <summary>
-        /// Checks if the last spell used was the passed ID. Does not have to be the last action performed, just the last spell used.
-        /// </summary>
-        /// <param name="id">ID of the action.</param>
+        /// <summary> Checks if the last spell used was the passed ID. Does not have to be the last action performed, just the last spell used. </summary>
+        /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public bool WasLastSpell(uint id)
-            => ActionWatching.LastSpell == id;
+        public static bool WasLastSpell(uint id) => ActionWatching.LastSpell == id;
 
-        /// <summary>
-        /// Checks if the last ability used was the passed ID. Does not have to be the last action performed, just the last ability used.
-        /// </summary>
-        /// <param name="id">ID of the action.</param>
+        /// <summary> Checks if the last ability used was the passed ID. Does not have to be the last action performed, just the last ability used. </summary>
+        /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public bool WasLastAbility(uint id)
-            => ActionWatching.LastAbility == id;
+        public static bool WasLastAbility(uint id) => ActionWatching.LastAbility == id;
 
-        /// <summary>
-        /// Returns if the player has set the spell as active in the Blue Mage Spellbook
-        /// </summary>
-        /// <param name="id">ID of the BLU spell.</param>
+        /// <summary> Returns if the player has set the spell as active in the Blue Mage Spellbook </summary>
+        /// <param name="id"> ID of the BLU spell. </param>
         /// <returns></returns>
-        public bool IsSpellActive(uint id)
-            => Service.Configuration.ActiveBLUSpells.Contains(id);
+        public static bool IsSpellActive(uint id) => Service.Configuration.ActiveBLUSpells.Contains(id);
 
-        /// <summary>
-        /// Calculate the best action to use, based on cooldown remaining.
-        /// If there is a tie, the original is used.
-        /// </summary>
-        /// <param name="original">The original action.</param>
-        /// <param name="actions">Action data.</param>
-        /// <returns>The appropriate action to use.</returns>
-        public uint CalcBestAction(uint original, params uint[] actions)
+        /// <summary> Calculate the best action to use, based on cooldown remaining. If there is a tie, the original is used. </summary>
+        /// <param name="original"> The original action. </param>
+        /// <param name="actions"> Action data. </param>
+        /// <returns> The appropriate action to use. </returns>
+        public static uint CalcBestAction(uint original, params uint[] actions)
         {
             static (uint ActionID, CooldownData Data) Compare(
                 uint original,
@@ -130,6 +95,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                         return a1.Data.RemainingCharges > a2.Data.RemainingCharges
                             ? a1 : a2;
                     }
+
                     else if (a1.Data.HasCharges)
                     {
                         if (a1.Data.RemainingCharges > 0)
@@ -138,6 +104,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                         return a1.Data.ChargeCooldownRemaining < a2.Data.CooldownRemaining
                             ? a1 : a2;
                     }
+
                     else if (a2.Data.HasCharges)
                     {
                         if (a2.Data.RemainingCharges > 0)
@@ -146,6 +113,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                         return a2.Data.ChargeCooldownRemaining < a1.Data.CooldownRemaining
                             ? a2 : a1;
                     }
+
                     else
                     {
                         return a1.Data.CooldownRemaining < a2.Data.CooldownRemaining
@@ -157,8 +125,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 return a1.Data.IsCooldown ? a2 : a1;
             }
 
-            (uint ActionID, CooldownData Data) Selector(uint actionID)
-                => (actionID, GetCooldown(actionID));
+            static (uint ActionID, CooldownData Data) Selector(uint actionID) => (actionID, GetCooldown(actionID));
 
             return actions
                 .Select(Selector)
@@ -166,43 +133,32 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 .ActionID;
         }
 
-        /// <summary>
-        /// Checks if the provided action ID has cooldown remaining enough to weave against it
-        /// without causing clipping
-        /// </summary>
-        /// <param name="actionID">Action ID to check.</param>
-        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
-        /// <returns>True or false.</returns>
-        public bool CanWeave(uint actionID, double weaveTime = 0.7)
-           => (GetCooldown(actionID).CooldownRemaining > weaveTime) || (HasPacification() && HasSilence());
+        /// <summary> Checks if the provided actionID has enough cooldown remaining to weave against it without causing clipping.</summary>
+        /// <param name="actionID"> Action ID to check. </param>
+        /// <param name="weaveTime"> Time when weaving window is over. Defaults to 0.7. </param>
+        /// <returns> True or false. </returns>
+        public bool CanWeave(uint actionID, double weaveTime = 0.7) => (GetCooldown(actionID).CooldownRemaining > weaveTime) || (HasPacification() && HasSilence());
 
-        /// <summary>
-        /// Checks if the provided action ID has cooldown remaining enough to weave against it
-        /// without causing clipping and checks if you're casting a spell to make it mage friendly
-        /// </summary>
-        /// <param name="actionID">Action ID to check.</param>
-        /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.6.</param>
-        /// <returns>True or false.</returns>
-        public bool CanSpellWeave(uint actionID, double weaveTime = 0.6)
+        /// <summary> Checks if the provided actionID has enough cooldown remaining to weave against it without causing clipping and checks if you're casting a spell. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
+        /// <param name="weaveTime"> Time when weaving window is over. Defaults to 0.6. </param>
+        /// <returns> True or false. </returns>
+        public static bool CanSpellWeave(uint actionID, double weaveTime = 0.6)
         {
             var castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
 
-            if (GetCooldown(actionID).CooldownRemaining > weaveTime && // Prevent GCD delay
-                (castTimeRemaining <= 0.5 && // Show in last 0.5sec of cast so game can queue ability
-                GetCooldown(actionID).CooldownRemaining - castTimeRemaining - weaveTime >= 0)) // Don't show if spell is still casting in weave window
+            if (GetCooldown(actionID).CooldownRemaining > weaveTime &&                          // Prevent GCD delay
+                (castTimeRemaining <= 0.5 &&                                                    // Show in last 0.5sec of cast so game can queue ability
+                GetCooldown(actionID).CooldownRemaining - castTimeRemaining - weaveTime >= 0))  // Don't show if spell is still casting in weave window
                 return true;
             return false;
         }
 
-        /// <summary>
-        /// Checks if the provided action ID has cooldown remaining enough to weave against it
-        /// at the later half of the gcd without causing clipping (aka Delayed Weaving)
-        /// </summary>
-        /// <param name="actionID">Action ID to check.</param>
-        /// <param name="start">Time (in seconds) to start to check for the weave window.</param>
-        /// <param name="end">Time (in seconds) to end the check for the weave window.</param>
-        /// <returns>True or false.</returns>
-        public bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6)
-           => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
+        /// <summary> Checks if the provided actionID has enough cooldown remaining to weave against it in the later portion of the GCD without causing clipping. </summary>
+        /// <param name="actionID"> Action ID to check. </param>
+        /// <param name="start"> Time (in seconds) to start to check for the weave window. </param>
+        /// <param name="end"> Time (in seconds) to end the check for the weave window. </param>
+        /// <returns> True or false. </returns>
+        public static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6) => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
     }
 }

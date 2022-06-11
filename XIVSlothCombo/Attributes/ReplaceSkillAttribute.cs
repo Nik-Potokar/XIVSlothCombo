@@ -9,12 +9,12 @@ namespace XIVSlothCombo.Attributes
     [AttributeUsage(AttributeTargets.Field)]
     public class ReplaceSkillAttribute : Attribute
     {
-        private static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
+        private static readonly Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
                     .Where(i => i.ClassJobCategory.Row > 0 && i.ActionCategory.Row <= 4 && i.RowId is not 7)
                     .ToDictionary(i => i.RowId, i => i);
 
         /// <summary> List of each action the feature replaces. Initializes a new instance of the <see cref="ReplaceSkillAttribute"/> class. </summary>
-        /// <param name="actionIDs">List of actions the preset replaces</param>
+        /// <param name="actionIDs"> List of actions the preset replaces. </param>
         internal ReplaceSkillAttribute(params uint[] actionIDs)
         {
             foreach(uint id in actionIDs)

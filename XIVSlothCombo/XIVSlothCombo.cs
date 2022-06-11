@@ -28,7 +28,7 @@ namespace XIVSlothCombo
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
 
         /// <summary> Initializes a new instance of the <see cref="XIVSlothCombo"/> class. </summary>
-        /// <param name="pluginInterface">Dalamud plugin interface.</param>
+        /// <param name="pluginInterface"> Dalamud plugin interface. </param>
         public XIVSlothCombo(DalamudPluginInterface pluginInterface)
         {
             FFXIVClientStructs.Resolver.Initialize();
@@ -60,14 +60,12 @@ namespace XIVSlothCombo
             });
 
             Service.ClientState.Login += PrintLoginMessage;
-
         }
 
         private void PrintLoginMessage(object? sender, EventArgs e)
         {
             if (!Service.Configuration.HideMessageOfTheDay)
                 Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(task => PrintMotD());
-
         }
 
         private void PrintMotD()
@@ -91,6 +89,7 @@ namespace XIVSlothCombo
                     Type = XivChatType.Echo
                 });
             }
+
             catch (Exception ex)
             {
                 Dalamud.Logging.PluginLog.Error(ex, "Unable to retrieve MotD");
@@ -115,8 +114,7 @@ namespace XIVSlothCombo
             Service.ClientState.Login -= PrintLoginMessage;
         }
 
-        private void OnOpenConfigUi()
-            => configWindow.IsOpen = true;
+        private void OnOpenConfigUi() => configWindow.IsOpen = true;
 
         private void OnCommand(string command, string arguments)
         {
@@ -152,6 +150,7 @@ namespace XIVSlothCombo
 
                             Service.Configuration.Save();
                         }
+
                         else
                         {
                             Service.ChatGui.PrintError("Features cannot be set in combat.");
@@ -176,6 +175,7 @@ namespace XIVSlothCombo
                                     Service.Configuration.EnabledActions.Remove(preset);
                                     Service.ChatGui.Print($"{preset} UNSET");
                                 }
+
                                 else
                                 {
                                     Service.Configuration.EnabledActions.Add(preset);
@@ -185,6 +185,7 @@ namespace XIVSlothCombo
 
                             Service.Configuration.Save();
                         }
+
                         else
                         {
                             Service.ChatGui.PrintError("Features cannot be toggled in combat.");
@@ -208,10 +209,12 @@ namespace XIVSlothCombo
 
                             Service.Configuration.Save();
                         }
+
                         else
                         {
                             Service.ChatGui.PrintError("Features cannot be unset in combat.");
                         }
+
                         break;
                     }
 
@@ -229,6 +232,7 @@ namespace XIVSlothCombo
                                 Service.ChatGui.Print(preset.ToString());
                             }
                         }
+
                         else if (filter == "unset") // list unset features
                         {
                             foreach (var preset in Enum.GetValues<CustomComboPreset>()
@@ -237,6 +241,7 @@ namespace XIVSlothCombo
                                 Service.ChatGui.Print(preset.ToString());
                             }
                         }
+
                         else if (filter == "all") // list all features
                         {
                             foreach (var preset in Enum.GetValues<CustomComboPreset>())
@@ -244,6 +249,7 @@ namespace XIVSlothCombo
                                 Service.ChatGui.Print(preset.ToString());
                             }
                         }
+
                         else
                         {
                             Service.ChatGui.PrintError("Available list filters: set, unset, all");
@@ -288,6 +294,7 @@ namespace XIVSlothCombo
                                     file.WriteLine($"{(int)preset} - {preset}");
                                 }
                             }
+
                             else
                             {
                                 foreach (var preset in Service.Configuration.EnabledActions.OrderBy(x => x))
@@ -299,8 +306,10 @@ namespace XIVSlothCombo
                                     file.WriteLine($"{(int)preset} - {preset}");
                                 }
                             }
+
                             file.WriteLine($"END ENABLED FEATURES");
                             file.WriteLine($"Redundant IDs found: {i}");
+
                             if (i > 0)
                             {
                                 file.WriteLine($"START REDUNDANT IDs");
@@ -310,7 +319,9 @@ namespace XIVSlothCombo
                                 }
                                 file.WriteLine($"END REDUNDANT IDs");
                             }
+
                             file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
+
                             if (Service.ClientState.LocalPlayer.StatusList.Length > 0)
                             {
                                 file.WriteLine($"START STATUS EFFECTS");
@@ -319,12 +330,14 @@ namespace XIVSlothCombo
                                     file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceID}");
                                 }
                                 file.WriteLine($"END STATUS EFFECTS");
-
                             }
+
                             file.WriteLine("END DEBUG LOG");
                             Service.ChatGui.Print("Please check your desktop for SlothDebug.txt and upload this file where requested.");
+
                             break;
                         }
+
                         catch (Exception ex)
                         {
                             Dalamud.Logging.PluginLog.Error(ex, "Debug Log");

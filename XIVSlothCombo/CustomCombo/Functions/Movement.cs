@@ -9,9 +9,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         protected uint MovingCounter { get; set; }
         protected bool IsMoving { get; set; }
 
-        /// <summary>
-        /// Checks player movement
-        /// </summary>
+        /// <summary> Checks player movement </summary>
         public void CheckMovement()
         {
             if (MovingCounter == 0)
@@ -20,8 +18,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 PlayerSpeed = Vector2.Distance(newPosition, Position);
                 IsMoving = PlayerSpeed > 0;
                 Position = LocalPlayer is null ? Vector2.Zero : newPosition;
-                // refreshes every 50 dalamud ticks for a more accurate representation of speed, otherwise it'll report 0.
-                MovingCounter = 50;
+                MovingCounter = 50; // refreshes every 50 dalamud ticks for a more accurate representation of speed, otherwise it'll report 0.
             }
 
             if (MovingCounter > 0)
