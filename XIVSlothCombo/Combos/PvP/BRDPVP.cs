@@ -1,3 +1,5 @@
+using XIVSlothCombo.CustomCombo;
+
 namespace XIVSlothComboPlugin.Combos
 {
     internal static class BRDPvP

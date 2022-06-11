@@ -1,4 +1,4 @@
-﻿using XIVSlothComboPlugin.Combos;
+﻿using XIVSlothCombo.CustomCombo;
 
 namespace XIVSlothComboPlugin
 {

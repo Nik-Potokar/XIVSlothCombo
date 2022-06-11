@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.CustomCombo;
 
 namespace XIVSlothComboPlugin.Combos
 {

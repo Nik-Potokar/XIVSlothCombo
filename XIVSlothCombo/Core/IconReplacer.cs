@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Dalamud.Hooking;
 using Dalamud.Logging;
-using XIVSlothComboPlugin.Combos;
+using XIVSlothCombo.CustomCombo;
 
 namespace XIVSlothComboPlugin
 {

@@ -1,7 +1,4 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
-using System;
-
-namespace XIVSlothComboPlugin.Combos
+﻿namespace XIVSlothComboPlugin.Combos
 {
     internal static class ADV
     {

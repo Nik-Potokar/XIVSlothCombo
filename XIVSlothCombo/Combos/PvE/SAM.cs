@@ -1,6 +1,6 @@
-using System.Runtime.InteropServices.ComTypes;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.CustomCombo;
 
 namespace XIVSlothComboPlugin.Combos
 {

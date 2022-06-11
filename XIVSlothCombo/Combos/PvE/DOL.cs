@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
+using XIVSlothCombo.CustomCombo;
 
 namespace XIVSlothComboPlugin.Combos
 {

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.CustomCombo;
 
 namespace XIVSlothComboPlugin.Combos
 {
