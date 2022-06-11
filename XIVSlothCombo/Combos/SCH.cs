@@ -272,7 +272,7 @@ namespace XIVSlothComboPlugin.Combos
                             //Bio 1 checked at the start, fine for default
                             _ => FindTargetEffect(Debuffs.Bio1),
                         };
-                        if ((BioDebuffID is null) || (BioDebuffID?.RemainingTime <= 3) &&
+                        if ((BioDebuffID is null || BioDebuffID?.RemainingTime <= 3) &&
                             (GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_BioOption))
                            ) return OriginalHook(Bio1);
 
