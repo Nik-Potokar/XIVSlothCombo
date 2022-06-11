@@ -62,6 +62,7 @@ namespace XIVSlothComboPlugin.Combos
                 Decimate = 60,
                 Onslaught = 62,
                 Upheaval = 64,
+                InnerRelease = 70,
                 ChaoticCyclone = 72,
                 MythrilTempestTrait = 74,
                 NascentFlash = 76,
@@ -115,7 +116,7 @@ namespace XIVSlothComboPlugin.Combos
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught) && level >= Levels.Onslaught && GetRemainingCharges(Onslaught) > onslaughtChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught_MeleeSpender) ||
-                                    (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught_MeleeSpender) && GetTargetDistance() <= 1 && GetCooldownRemainingTime(InnerRelease) > 40))
+                                    (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught_MeleeSpender) && GetTargetDistance() <= 1 && (GetCooldownRemainingTime(InnerRelease) > 40 || level < Levels.InnerRelease)))
                                     return Onslaught;
                             }
                         }
