@@ -391,7 +391,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Combust 1 level checked at the start, fine for default
                             _ => FindTargetEffect(Debuffs.Combust1),
                         };
-                        if ((CombustDebuffID is null) || (CombustDebuffID?.RemainingTime <= 3) &&
+                        if ((CombustDebuffID is null || CombustDebuffID?.RemainingTime <= 3) &&
                             (GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption))
                            ) return OriginalHook(Combust1);
 
