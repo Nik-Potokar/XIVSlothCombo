@@ -523,8 +523,8 @@ namespace XIVSlothComboPlugin.Combos
         /// <param name="actionID">Action ID to check.</param>
         /// <param name="weaveTime">Time when weaving window is over. Defaults to 0.7.</param>
         /// <returns>True or false.</returns>
-        public bool CanWeave(uint actionID, double weaveTime = 0.7)         // Reverted for 3.0.15.4 hotfix. -k
-           => GetCooldown(actionID).CooldownRemaining > weaveTime;          // (GetCooldown(actionID).CooldownRemaining > weaveTime) || (HasPacification() && HasSilence());
+        public bool CanWeave(uint actionID, double weaveTime = 0.7)
+           => (GetCooldown(actionID).CooldownRemaining > weaveTime) || (HasPacification() && HasSilence());
 
         /// <summary>
         /// Checks if the provided action ID has cooldown remaining enough to weave against it
@@ -981,7 +981,6 @@ namespace XIVSlothComboPlugin.Combos
             };
         }
 
-        /*  Commented these out for 3.0.15.4 hotfix. -k
         /// <summary>
         /// Checks if the character has the Silence status.
         /// </summary>
@@ -1023,7 +1022,6 @@ namespace XIVSlothComboPlugin.Combos
 
             return false;
         }
-        */
 
         /// <summary>
         /// Checks if the action can be used. Checks many conditions to ensure accuracy.
@@ -1041,10 +1039,9 @@ namespace XIVSlothComboPlugin.Combos
             if ((!GetCooldown(id).HasCharges && !IsOffCooldown(id) && GetCooldown(id).CooldownTotal > 3) || (GetCooldown(id).HasCharges && GetRemainingCharges(id) == 0)) return false;
             if (GetTargetDistance() > actionFromSheet.Range && actionFromSheet.Range > 0) return false;
 
-            /* Commented these out for 3.0.15.4 hotfix. -k
             if (ActionWatching.GetAttackType(id) == ActionWatching.ActionAttackType.Ability && HasAmnesia()) return false;
             if (ActionWatching.GetAttackType(id) == ActionWatching.ActionAttackType.Spell && HasSilence()) return false;
-            if (ActionWatching.GetAttackType(id) == ActionWatching.ActionAttackType.Weaponskill && HasPacification()) return false; */
+            if (ActionWatching.GetAttackType(id) == ActionWatching.ActionAttackType.Weaponskill && HasPacification()) return false;
 
 
             //Deal with job stuff first, such as free casts and non-MP costs
