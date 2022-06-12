@@ -433,7 +433,11 @@ namespace XIVSlothComboPlugin.Combos
                         else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 55 || CombatEngageDuration().Seconds <= 05 || CombatEngageDuration().Minutes == 0))
                         {
                             return OriginalHook(RookAutoturret);
-                        } 
+                        }
+                        else if (gauge.Battery >= 80 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 50 || CombatEngageDuration().Seconds <= 05))
+                        {
+                            return OriginalHook(RookAutoturret);
+                        }
 
                     }
 
@@ -473,14 +477,14 @@ namespace XIVSlothComboPlugin.Combos
                             //Protection & ensures Hyper charged is double weaved with WF during reopener
                             if (HasEffect(Buffs.Wildfire) || level < Levels.Wildfire) return Hypercharge;
 
-                            if (level >= Levels.Drill && GetCooldownRemainingTime(Drill) > 8 && wildfireCDTime > 8)
+                            if (level >= Levels.Drill && GetCooldownRemainingTime(Drill) >= 8)
                             {
-                                if (level >= Levels.AirAnchor && GetCooldownRemainingTime(AirAnchor) > 8 && wildfireCDTime > 8)
+                                if (level >= Levels.AirAnchor && GetCooldownRemainingTime(AirAnchor) >= 8)
                                 {
-                                    if (level >= Levels.ChainSaw && GetCooldownRemainingTime(ChainSaw) > 8 && wildfireCDTime > 8)
+                                    if (level >= Levels.ChainSaw && GetCooldownRemainingTime(ChainSaw) >= 8)
                                     {
                                         // i really do not remember why i put > 70 here for heat, and im afraid if i remove it itll break it lol
-                                        if (CombatEngageDuration().Minutes == 0 && gauge.Heat > 70 && !WasLastWeaponskill(OriginalHook(CleanShot)) ) 
+                                        if (CombatEngageDuration().Minutes == 0 && gauge.Heat > 70 && !WasLastWeaponskill(OriginalHook(CleanShot))) 
                                         {
                                             return Hypercharge;
                                         } 
@@ -500,17 +504,17 @@ namespace XIVSlothComboPlugin.Combos
                                     }
                                     else if (level < Levels.ChainSaw)
                                     {
-                                        if (wildfireCDTime > 9) return Hypercharge;
+                                        if (wildfireCDTime >= 8) return Hypercharge;
                                     }
                                 }
                                 else if (level < Levels.AirAnchor)
                                 {
-                                    if (wildfireCDTime > 9) return Hypercharge;
+                                    if (wildfireCDTime >= 8) return Hypercharge;
                                 }
                             }
                             else if (level < Levels.Drill)
                             {
-                                if (wildfireCDTime > 9 || level < Levels.Wildfire) return Hypercharge;
+                                if (wildfireCDTime >= 8 || level < Levels.Wildfire) return Hypercharge;
                             }
                         }
                     }
