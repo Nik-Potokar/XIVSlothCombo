@@ -1,20 +1,20 @@
 using System;
 using System.Runtime.CompilerServices;
-using XIVSlothComboPlugin.Combos;
+using XIVSlothCombo.Combos.PvE;
 
-namespace XIVSlothComboPlugin.Attributes
+namespace XIVSlothCombo.Attributes
 {
     /// <summary> Attribute documenting additional information for each combo. </summary>
     [AttributeUsage(AttributeTargets.Field)]
     internal class CustomComboInfoAttribute : Attribute
     {
         /// <summary> Initializes a new instance of the <see cref="CustomComboInfoAttribute"/> class. </summary>
-        /// <param name="fancyName">Display name.</param>
-        /// <param name="description">Combo description.</param>
-        /// <param name="jobID">Associated job ID.</param>
-        /// <param name="order">Display order.</param>
-        /// <param name="memeName">Display meme name</param>
-        /// <param name="memeDescription">Meme description.</param>
+        /// <param name="fancyName"> Display name. </param>
+        /// <param name="description"> Combo description. </param>
+        /// <param name="jobID"> Associated job ID. </param>
+        /// <param name="order"> Display order. </param>
+        /// <param name="memeName"> Display meme name </param>
+        /// <param name="memeDescription"> Meme description. </param>
         internal CustomComboInfoAttribute(string fancyName, string description, byte jobID, [CallerLineNumber] int order = 0, string memeName = "", string memeDescription = "")
         {
             FancyName = fancyName;
