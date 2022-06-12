@@ -18,91 +18,57 @@ namespace XIVSlothCombo.Window.Functions
             var secret = PluginConfiguration.IsSecret(preset);
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = PluginConfiguration.GetParent(preset);
-            var irlsloth = Service.Configuration.SpecialEvent;
             var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
             ImGui.PushItemWidth(200);
 
-            if (irlsloth && !string.IsNullOrEmpty(info.MemeName))
+            if (ImGui.Checkbox($"{info.FancyName}###{i}", ref enabled))
             {
-                if (ImGui.Checkbox(info.MemeName, ref enabled))
+                if (enabled)
                 {
-                    if (enabled)
+                    EnableParentPresets(preset);
+                    Service.Configuration.EnabledActions.Add(preset);
+                    foreach (var conflict in conflicts)
                     {
-                        EnableParentPresets(preset);
-                        Service.Configuration.EnabledActions.Add(preset);
-                        foreach (var conflict in conflicts)
-                        {
-                            Service.Configuration.EnabledActions.Remove(conflict);
-                        }
+                        Service.Configuration.EnabledActions.Remove(conflict);
                     }
-
-                    else
-                    {
-                        Service.Configuration.EnabledActions.Remove(preset);
-                    }
-
-                    Service.Configuration.Save();
                 }
-            }
 
-            else
-            {
-                if (ImGui.Checkbox($"{info.FancyName}###{i}", ref enabled))
+                else
                 {
-                    if (enabled)
-                    {
-                        EnableParentPresets(preset);
-                        Service.Configuration.EnabledActions.Add(preset);
-                        foreach (var conflict in conflicts)
-                        {
-                            Service.Configuration.EnabledActions.Remove(conflict);
-                        }
-                    }
-
-                    else
-                    {
-                        Service.Configuration.EnabledActions.Remove(preset);
-                    }
-
-                    Service.Configuration.Save();
+                    Service.Configuration.EnabledActions.Remove(preset);
                 }
+
+                Service.Configuration.Save();
             }
 
             ImGui.PopItemWidth();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
 
-            if (irlsloth && !string.IsNullOrEmpty(info.MemeDescription))
+            if (preset.GetAttribute<ReplaceSkillAttribute>() != null)
             {
-                ImGui.TextWrapped($"#{i}: {info.MemeDescription}");
-            }
+                string skills = string.Join(", ", preset.GetAttribute<ReplaceSkillAttribute>().ActionNames);
 
-            else
-            {
-                if (preset.GetAttribute<ReplaceSkillAttribute>() != null)
+                if (ImGui.IsItemHovered())
                 {
-                    string skills = string.Join(", ", preset.GetAttribute<ReplaceSkillAttribute>().ActionNames);
-
-                    if (ImGui.IsItemHovered())
-                    {
-                        ImGui.BeginTooltip();
-                        ImGui.TextUnformatted($"Replaces: {skills}");
-                        ImGui.EndTooltip();
-                    }
-                }
-
-                ImGui.TextWrapped($"#{i}: {info.Description}");
-
-                if (preset.GetAttribute<HoverInfoAttribute>() != null)
-                {
-                    if (ImGui.IsItemHovered())
-                    {
-                        ImGui.BeginTooltip();
-                        ImGui.TextUnformatted(preset.GetAttribute<HoverInfoAttribute>().HoverText);
-                        ImGui.EndTooltip();
-                    }
+                    ImGui.BeginTooltip();
+                    ImGui.TextUnformatted($"Replaces: {skills}");
+                    ImGui.EndTooltip();
                 }
             }
+
+            ImGui.TextWrapped($"#{i}: {info.Description}");
+
+            if (preset.GetAttribute<HoverInfoAttribute>() != null)
+            {
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.BeginTooltip();
+                    ImGui.TextUnformatted(preset.GetAttribute<HoverInfoAttribute>().HoverText);
+                    ImGui.EndTooltip();
+                }
+            }
+
 
             ImGui.PopStyleColor();
             ImGui.Spacing();
@@ -115,15 +81,8 @@ namespace XIVSlothCombo.Window.Functions
                 {
                     var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
 
-                    if (irlsloth)
-                    {
-                        return $"\n - {conflictInfo.MemeName}";
-                    }
+                    return $"\n - {conflictInfo.FancyName}";
 
-                    else
-                    {
-                        return $"\n - {conflictInfo.FancyName}";
-                    }
 
                 }).Aggregate((t1, t2) => $"{t1}{t2}");
 
@@ -195,8 +154,7 @@ namespace XIVSlothCombo.Window.Functions
                     }
 
                     ImGui.Unindent();
-                }
-
+                }   
                 else
                 {
                     i += AllChildren(presetChildren[preset]);

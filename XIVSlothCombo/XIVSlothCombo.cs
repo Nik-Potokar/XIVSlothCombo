@@ -22,7 +22,6 @@ namespace XIVSlothCombo
     {
         private const string Command = "/scombo";
 
-        private readonly WindowSystem windowSystem;
         private readonly ConfigWindow configWindow;
 
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
@@ -47,11 +46,9 @@ namespace XIVSlothCombo
             ActionWatching.Enable();
 
             configWindow = new();
-            windowSystem = new("XIVSlothCombo");
-            windowSystem.AddWindow(configWindow);
 
+            Service.Interface.UiBuilder.Draw += DrawUI;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
-            Service.Interface.UiBuilder.Draw += windowSystem.Draw;
 
             Service.CommandManager.AddHandler(Command, new CommandInfo(OnCommand)
             {
@@ -60,6 +57,11 @@ namespace XIVSlothCombo
             });
 
             Service.ClientState.Login += PrintLoginMessage;
+        }
+
+        private void DrawUI()
+        {
+            configWindow.Draw();
         }
 
         private void PrintLoginMessage(object? sender, EventArgs e)
@@ -102,19 +104,21 @@ namespace XIVSlothCombo
         /// <inheritdoc/>
         public void Dispose()
         {
+            configWindow?.Dispose();
+
             Service.CommandManager.RemoveHandler(Command);
 
             Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
-            Service.Interface.UiBuilder.Draw -= windowSystem.Draw;
+            Service.Interface.UiBuilder.Draw -= DrawUI;
 
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
             ActionWatching.Dispose();
-
+            
             Service.ClientState.Login -= PrintLoginMessage;
         }
 
-        private void OnOpenConfigUi() => configWindow.IsOpen = true;
+        private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 
         private void OnCommand(string command, string arguments)
         {
@@ -347,14 +351,14 @@ namespace XIVSlothCombo
                     }
 
                 default:
-                    configWindow.Toggle();
+                    configWindow.Visible = !configWindow.Visible;
                     break;
             }
 
             Service.Configuration.Save();
         }
 
-        private void UpgradeConfig4()
+        private static void UpgradeConfig4()
         {
             Service.Configuration.Version = 5;
             Service.Configuration.EnabledActions = Service.Configuration.EnabledActions4

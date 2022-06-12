@@ -10,12 +10,14 @@ namespace XIVSlothCombo.Data
 { 
     public static class ActionWatching
     {
-        public static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action>? ActionSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()?
+        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action> ActionSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!
             .Where(i => i.RowId is not 7)
             .ToDictionary(i => i.RowId, i => i);
 
-        public static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status>? StatusSheet = Service.DataManager?.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()?
+        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
             .ToDictionary(i => i.RowId, i => i);
+
+        private static readonly Dictionary<string, List<uint>> statusCache = new();
 
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
@@ -112,15 +114,15 @@ namespace XIVSlothCombo.Data
 
         public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 
-        public static List<uint> GetStatusesByName(string status)
+        public static List<uint>? GetStatusesByName(string status)
         {
-            List<uint> output = new List<uint>();
-            foreach (var item in StatusSheet?.Where(x => x.Value.Name.ToString().Equals(status, StringComparison.CurrentCultureIgnoreCase)))
-            {
-                output.Add(item.Key);
-            }
+            if (statusCache.TryGetValue(status, out var list))            
+                return list;
 
-            return output;
+            return statusCache.TryAdd(status, StatusSheet.Where(x => x.Value.Name.ToString().Equals(status, StringComparison.CurrentCultureIgnoreCase)).Select(x => x.Key).ToList())
+                ? statusCache[status]
+                : null;
+
         }
 
         public static ActionAttackType GetAttackType(uint id)

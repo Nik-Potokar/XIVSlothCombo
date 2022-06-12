@@ -13,11 +13,13 @@ namespace XIVSlothCombo.Window.Tabs
     {
         internal static new void Draw()
         {
+#if !DEBUG
             if (Service.ClassLocked)
             {
                 ImGui.Text("Equip your job stone to re-unlock features.");
                 return;
             }
+#endif
 
             ImGui.Text("This tab allows you to select which PvE combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(0, 0), true);
@@ -35,6 +37,7 @@ namespace XIVSlothCombo.Window.Tabs
                     foreach (var (preset, info) in groupedPresets[jobName].Where(x => !PluginConfiguration.IsSecret(x.Preset)))
                     {
                         InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
+
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             var conflictOriginals = Service.Configuration.GetConflicts(preset); // Presets that are contained within a ConflictedAttribute

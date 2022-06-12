@@ -7,10 +7,13 @@ using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 
+#if DEBUG
 namespace XIVSlothCombo.Window.Tabs
 {
+
     internal class Debug : ConfigWindow
     {
+
         internal class DebugCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; }
@@ -66,4 +69,6 @@ namespace XIVSlothCombo.Window.Tabs
             }
         }
     }
+
 }
+#endif

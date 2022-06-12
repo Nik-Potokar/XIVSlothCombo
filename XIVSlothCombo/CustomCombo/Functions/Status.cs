@@ -10,15 +10,15 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Find if an effect on the player exists. The effect may be owned by the player or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> A value indicating if the effect exists. </returns>
-        public bool HasEffect(ushort effectID) => FindEffect(effectID) is not null;
+        public static bool HasEffect(ushort effectID) => FindEffect(effectID) is not null;
 
-        public float GetBuffStacks(ushort effectId)
+        public static float GetBuffStacks(ushort effectId)
         {
             Status? eff = FindEffect(effectId);
             return eff?.StackCount ?? 0;
         }
 
-        public float GetBuffRemainingTime(ushort effectId)
+        public static float GetBuffRemainingTime(ushort effectId)
         {
             Status? eff = FindEffect(effectId);
             return eff?.RemainingTime ?? 0;
@@ -27,19 +27,20 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Finds an effect on the player. The effect must be owned by the player or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> Status object or null. </returns>
-        public Status? FindEffect(ushort effectID) => FindEffect(effectID, LocalPlayer, LocalPlayer?.ObjectId);
+        public static Status? FindEffect(ushort effectID) => FindEffect(effectID, LocalPlayer, LocalPlayer?.ObjectId);
 
         /// <summary> Find if an effect on the target exists. The effect must be owned by the player or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> A value indicating if the effect exists. </returns>
-        public bool TargetHasEffect(ushort effectID) => FindTargetEffect(effectID) is not null;
+        public static bool TargetHasEffect(ushort effectID) => FindTargetEffect(effectID) is not null;
 
         /// <summary> Finds an effect on the current target. The effect must be owned by the player or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> Status object or null. </returns>
-        public Status? FindTargetEffect(ushort effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.ObjectId);
+        public static Status? FindTargetEffect(ushort effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.ObjectId);
 
-        public float GetDebuffRemainingTime(ushort effectId)
+        /// <summary></summary>
+        public static float GetDebuffRemainingTime(ushort effectId)
         {
             Status? eff = FindTargetEffect(effectId);
             return eff?.RemainingTime ?? 0;
@@ -48,22 +49,22 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Find if an effect on the player exists. The effect may be owned by anyone or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> A value indicating if the effect exists. </returns>
-        public bool HasEffectAny(ushort effectID) => FindEffectAny(effectID) is not null;
+        public static bool HasEffectAny(ushort effectID) => FindEffectAny(effectID) is not null;
 
         /// <summary> Finds an effect on the player. The effect may be owned by anyone or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> Status object or null. </returns>
-        public Status? FindEffectAny(ushort effectID) => FindEffect(effectID, LocalPlayer, null);
+        public static Status? FindEffectAny(ushort effectID) => FindEffect(effectID, LocalPlayer, null);
 
         /// <summary> Find if an effect on the target exists. The effect may be owned by anyone or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> A value indicating if the effect exists. </returns>
-        public bool TargetHasEffectAny(ushort effectID) => FindTargetEffectAny(effectID) is not null;
+        public static bool TargetHasEffectAny(ushort effectID) => FindTargetEffectAny(effectID) is not null;
 
         /// <summary> Finds an effect on the current target. The effect may be owned by anyone or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> Status object or null. </returns>
-        public Status? FindTargetEffectAny(ushort effectID) => FindEffect(effectID, CurrentTarget, null);
+        public static Status? FindTargetEffectAny(ushort effectID) => FindEffect(effectID, CurrentTarget, null);
 
         /// <summary> Finds an effect on the given object. </summary>
         /// <param name="effectID"> Status effect ID. </param>
@@ -85,7 +86,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Checks if the character has the Silence status. </summary>
         /// <returns></returns>
-        public bool HasSilence()
+        public static bool HasSilence()
         {
             foreach (var status in ActionWatching.GetStatusesByName("Silence"))
             {
@@ -97,7 +98,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Checks if the character has the Pacification status. </summary>
         /// <returns></returns>
-        public bool HasPacification()
+        public static bool HasPacification()
         {
             foreach (var status in ActionWatching.GetStatusesByName("Pacification"))
             {
@@ -109,7 +110,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Checks if the character has the Amnesia status. </summary>
         /// <returns></returns>
-        public bool HasAmnesia()
+        public static bool HasAmnesia()
         {
             foreach (var status in ActionWatching.GetStatusesByName("Amnesia"))
             {

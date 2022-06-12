@@ -12,7 +12,7 @@ using XIVSlothCombo.Window.Tabs;
 namespace XIVSlothCombo.Window
 {
     /// <summary> Plugin configuration window. </summary>
-    internal class ConfigWindow : Dalamud.Interface.Windowing.Window
+    internal class ConfigWindow : Dalamud.Interface.Windowing.Window, IDisposable
     {
         internal static readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets = GetGroupedPresets();
         internal static readonly Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> presetChildren = GetPresetChildren();
@@ -52,8 +52,15 @@ namespace XIVSlothCombo.Window
                     .OrderBy(tpl => tpl.Info.Order).ToArray());
         }
 
+        private bool visible = false;
+        public bool Visible
+        {
+            get { return this.visible; }
+            set { this.visible = value; }
+        }
+
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
-        public ConfigWindow() : base("Sloth Combo Setup")
+        public ConfigWindow() : base("Sloth Combo Setup", ImGuiWindowFlags.AlwaysAutoResize)
         {
             RespectCloseHotkey = true;
 
@@ -63,41 +70,59 @@ namespace XIVSlothCombo.Window
 
         public override void Draw()
         {
-            if (ImGui.BeginTabBar("SlothBar"))
+            DrawConfig();
+        }
+
+        public void DrawConfig()
+        {
+            if (!Visible)
             {
-                if (ImGui.BeginTabItem("PvE Features"))
-                {
-                    PvEFeatures.Draw();
-                    ImGui.EndTabItem();
-                }
+                return;
+            }
 
-                if (ImGui.BeginTabItem("PvP Features"))
+            if (ImGui.Begin("Sloth Combo Setup", ref visible))
+            {
+                if (ImGui.BeginTabBar("SlothBar"))
                 {
-                    PvPFeatures.Draw();
-                    ImGui.EndTabItem();
-                }
+                    if (ImGui.BeginTabItem("PvE Features"))
+                    {
+                        PvEFeatures.Draw();
+                        ImGui.EndTabItem();
+                    }
 
-                if (ImGui.BeginTabItem("Settings"))
-                {
-                    Settings.Draw();
-                    ImGui.EndTabItem();
-                }
+                    if (ImGui.BeginTabItem("PvP Features"))
+                    {
+                        PvPFeatures.Draw();
+                        ImGui.EndTabItem();
+                    }
 
-                if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
-                {
-                    AboutUs.Draw();
-                    ImGui.EndTabItem();
-                }
+                    if (ImGui.BeginTabItem("Settings"))
+                    {
+                        Settings.Draw();
+                        ImGui.EndTabItem();
+                    }
+
+                    if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
+                    {
+                        AboutUs.Draw();
+                        ImGui.EndTabItem();
+                    }
 
 #if DEBUG
-                if (ImGui.BeginTabItem("Debug Mode"))
-                {
-                    Debug.Draw();
-                    ImGui.EndTabItem();
-                }
+                    if (ImGui.BeginTabItem("Debug Mode"))
+                    {
+                        Debug.Draw();
+                        ImGui.EndTabItem();
+                    }
 #endif
-                ImGui.EndTabBar();
+                    ImGui.EndTabBar();
+                }
             }
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -407,7 +408,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(Ninjutsu);
                     }
 
-                    if ((!HasEffect(Buffs.Doton) || dotonBuff is { RemainingTime: <= 5 }) && (jutsuCharges > 0 || HasEffect(Buffs.Mudra)) && level >= Levels.Doton && lastUsedJutsu != Doton && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras))
+                    if ((!HasEffect(Buffs.Doton) || dotonBuff is { RemainingTime: <= 5 }) && 
+                        (jutsuCharges > 0 || HasEffect(Buffs.Mudra)) &&
+                        level >= Levels.Doton && 
+                        lastUsedJutsu != Doton && 
+                        IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras))
                     {
                         if (OriginalHook(Ninjutsu) == Doton)
                         {
@@ -431,21 +436,35 @@ namespace XIVSlothCombo.Combos.PvE
                             return Jin;
                     }
 
-                    if ((jutsuCharges > 0 || HasEffect(Buffs.Mudra) || HasEffect(Buffs.Kassatsu) || (!GetCooldown(Kassatsu).IsCooldown) && level >= Levels.Kassatsu) && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras))
+                    if ((jutsuCharges > 0 || HasEffect(Buffs.Mudra) || HasEffect(Buffs.Kassatsu) || (!GetCooldown(Kassatsu).IsCooldown && Kassatsu.LevelChecked())) && level >= Levels.Chi && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Mudras))
                     {
-                        if (!GetCooldown(Kassatsu).IsCooldown && !HasEffect(Buffs.Mudra) && level >= Levels.Kassatsu)
+                        if (!Jin.LevelChecked())
                         {
-                            return Kassatsu;
+                            if (OriginalHook(Ninjutsu) is Katon or GokaMekkyaku)
+                                return OriginalHook(Ninjutsu);
+
+                            if (OriginalHook(Ninjutsu) == FumaShuriken)
+                                return TenCombo;
+
+
+                            return OriginalHook(Chi);
                         }
+                        else
+                        {
+                            if (!GetCooldown(Kassatsu).IsCooldown && !HasEffect(Buffs.Mudra) && level >= Levels.Kassatsu)
+                            {
+                                return Kassatsu;
+                            }
 
-                        if (OriginalHook(Ninjutsu) is Katon or GokaMekkyaku)
-                            return OriginalHook(Ninjutsu);
+                            if (OriginalHook(Ninjutsu) is Katon or GokaMekkyaku)
+                                return OriginalHook(Ninjutsu);
 
-                        if (OriginalHook(Ninjutsu) == FumaShuriken)
-                            return TenCombo;
+                            if (OriginalHook(Ninjutsu) == FumaShuriken)
+                                return TenCombo;
 
 
-                        return OriginalHook(Jin);
+                            return OriginalHook(Jin);
+                        }
                     }
 
                     if (!HasEffect(Buffs.Mudra))

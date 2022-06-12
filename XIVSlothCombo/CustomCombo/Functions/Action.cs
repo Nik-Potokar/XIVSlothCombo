@@ -137,7 +137,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="actionID"> Action ID to check. </param>
         /// <param name="weaveTime"> Time when weaving window is over. Defaults to 0.7. </param>
         /// <returns> True or false. </returns>
-        public bool CanWeave(uint actionID, double weaveTime = 0.7) => (GetCooldown(actionID).CooldownRemaining > weaveTime) || (HasPacification() && HasSilence());
+        public static bool CanWeave(uint actionID, double weaveTime = 0.7) => (GetCooldown(actionID).CooldownRemaining > weaveTime) || (HasSilence() && HasPacification());
 
         /// <summary> Checks if the provided actionID has enough cooldown remaining to weave against it without causing clipping and checks if you're casting a spell. </summary>
         /// <param name="actionID"> Action ID to check. </param>
