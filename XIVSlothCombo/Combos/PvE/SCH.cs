@@ -167,8 +167,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     if (!HasAetherFlows)
                     {
-                        bool AetherflowEDOnly = GetOptionBool(Config.SCH_Aetherflow_Display);
-                        if ((actionID is EnergyDrain && AetherflowEDOnly) || !AetherflowEDOnly)
+                        bool ShowAetherflowOnAll = GetOptionBool(Config.SCH_Aetherflow_Display);
+                        if ((actionID is EnergyDrain && !ShowAetherflowOnAll) || ShowAetherflowOnAll)
                         {
                             if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation) &&
                                 level >= Levels.Dissipation &&
