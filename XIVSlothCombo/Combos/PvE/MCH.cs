@@ -105,7 +105,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.HeatBlast) // prioritize heatblast
                             return HeatBlast;
-                        if (level <= 49)
+                        if (level <= Levels.Ricochet)
                             return GaussRound;
                         if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
                             return GaussRound;
@@ -118,7 +118,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return AirAnchor;
                         if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= Levels.Drill)
                             return Drill;
-                        if (HasEffect(Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= 90)
+                        if (HasEffect(Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= Levels.ChainSaw)
                             return ChainSaw;
                     }
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGaussCharges))
@@ -139,18 +139,18 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainComboAlternate))
                     {
-                        if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= 76)
+                        if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
                             return AirAnchor;
-                        if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= 58)
+                        if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= Levels.Drill)
                             return Drill;
-                        if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= 75)
+                        if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= Levels.AirAnchor)
                             return HotShot;
                         else
                         if (level >= 84)
                         {
                             if (HasEffect(Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 55 && !airAnchorCD.IsCooldown)
                                 return AirAnchor;
-                            if (reassembleCD.CooldownRemaining >= 55 && !chainsawCD.IsCooldown && level >= 90)
+                            if (reassembleCD.CooldownRemaining >= 55 && !chainsawCD.IsCooldown && level >= Levels.ChainSaw)
                                 return ChainSaw;
                             if (HasEffect(Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 110 && !drillCD.IsCooldown)
                                 return Drill;
@@ -236,7 +236,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var ricochetCd = GetCooldown(Ricochet);
 
                     // Prioritize the original if both are off cooldown
-                    if (level <= 49)
+                    if (level <= Levels.Ricochet)
                         return GaussRound;
 
                     if (!gaussCd.IsCooldown && !ricochetCd.IsCooldown)

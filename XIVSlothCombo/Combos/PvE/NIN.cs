@@ -481,7 +481,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.Ninki >= 50 && actionIDCD.IsCooldown && IsEnabled(CustomComboPreset.NIN_AoE_Simple_Hellfrog))
                             return Hellfrog;
 
-                        if (comboTime > 0f && lastComboMove == DeathBlossom && level >= 52)
+                        if (comboTime > 0f && lastComboMove == DeathBlossom && level >= Levels.HakkeMujinsatsu)
                         {
                             return HakkeMujinsatsu;
                         }
@@ -508,12 +508,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0f)
                     {
-                        if (lastComboMove == SpinningEdge && level >= 4)
+                        if (lastComboMove == SpinningEdge && level >= Levels.GustSlash)
                         {
                             return GustSlash;
                         }
 
-                        if (lastComboMove == GustSlash && level >= 54)
+                        if (lastComboMove == GustSlash && level >= Levels.ArmorCrush)
                         {
                             return ArmorCrush;
                         }
@@ -547,7 +547,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Hide)
                 {
-                    if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
+                    if (InCombat())
                     {
                         return Mug;
                     }
@@ -569,7 +569,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Chi && level >= 76 && HasEffect(Buffs.Kassatsu))
+                if (actionID == Chi && level >= Levels.Kassatsu && HasEffect(Buffs.Kassatsu))
                 {
                     return Jin;
                 }

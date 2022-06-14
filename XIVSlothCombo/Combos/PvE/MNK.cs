@@ -303,7 +303,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == PerfectBalance)
                 {
-                    if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= 60)
+                    if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= Levels.MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
                 }
 
@@ -621,21 +621,12 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var RoFCD = GetCooldown(RiddleOfFire);
-                var BrotherhoodCD = GetCooldown(Brotherhood);
-
-                if (actionID == RiddleOfFire)
-                {
-                    if (level is >= 68 and < 70)
-                        return RiddleOfFire;
-                    if (RoFCD.IsCooldown && BrotherhoodCD.IsCooldown && level >= 70)
-                        return RiddleOfFire;
-                    if (RoFCD.IsCooldown && !BrotherhoodCD.IsCooldown && level >= 70)
-                        return Brotherhood;
-
-                    return RiddleOfFire;
-                }
-                return actionID;
+                if (actionID is RiddleOfFire
+                    && level >= Levels.Brotherhood
+                    && IsOnCooldown(RiddleOfFire)
+                    && IsOffCooldown(Brotherhood)
+                   ) return Brotherhood;
+                else return actionID;
             }
         }
 

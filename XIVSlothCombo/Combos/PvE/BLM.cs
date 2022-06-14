@@ -255,7 +255,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.IsEnochianActive)
                         {
-                            if (gauge.ElementTimeRemaining < 6000 && !HasEffect(Buffs.Firestarter) && IsEnabled(CustomComboPreset.BLM_Fire_1to3) && level == 90 && gauge.IsParadoxActive)
+                            if (gauge.ElementTimeRemaining < 6000 && !HasEffect(Buffs.Firestarter) && IsEnabled(CustomComboPreset.BLM_Fire_1to3) && level == Levels.Paradox && gauge.IsParadoxActive)
                                 return Paradox;
                             if (gauge.ElementTimeRemaining < 6000 && !HasEffect(Buffs.Firestarter) && IsEnabled(CustomComboPreset.BLM_Fire_1to3) && !gauge.IsParadoxActive)
                                 return Fire;
@@ -302,7 +302,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (gauge.InAstralFire)
                     {
-                        if (HasEffect(Buffs.Firestarter) && level == 90)
+                        if (HasEffect(Buffs.Firestarter) && level == Levels.Paradox)
                             return Paradox;
                         if (HasEffect(Buffs.Firestarter))
                             return Fire3;
