@@ -130,6 +130,11 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(ALL_Melee_Menu)]
             [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
             ALL_Melee_Feint = 100030,
+
+            [ParentCombo(ALL_Melee_Menu)]
+            [CustomComboInfo("Melee DPS: True North Protection", "Prevents the use of True North when its buff is already active by replacing it with Fire.", ADV.JobID)]
+            ALL_Melee_TrueNorth = 100031,
+        
             #endregion
 
         #region Global Ranged Physical Features
