@@ -552,10 +552,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID))
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);
+                        var gaussMaxCharges = GetMaxCharges(GaussRound);
+
                         var ricochetCharges = GetRemainingCharges(Ricochet);
 
-                        if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) && gaussCharges > 0 &&
-                        level >= Levels.GaussRound)
+                        if (gaussCharges > ricochetCharges || gaussCharges == gaussMaxCharges || level < Levels.Ricochet)
                             return GaussRound;
                         else if (ricochetCharges > 0 && level >= Levels.Ricochet)
                             return Ricochet;
