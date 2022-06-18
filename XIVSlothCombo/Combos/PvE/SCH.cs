@@ -256,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
                         level >= Levels.Ruin2 &&
                         HasBattleTarget() &&
-                        this.IsMoving
+                        IsMoving
                        ) return OriginalHook(Ruin2); //Who knows in the future
 
                     //Bio/Biolysis

@@ -7,7 +7,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         protected Vector2 Position { get; set; }
         protected float PlayerSpeed { get; set; }
         protected uint MovingCounter { get; set; }
-        protected bool IsMoving { get; set; }
+        public static bool IsMoving { get; set; }
 
         /// <summary> Checks player movement </summary>
         public void CheckMovement()

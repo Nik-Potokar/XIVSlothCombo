@@ -69,13 +69,13 @@ namespace XIVSlothCombo.Combos.PvP
                         if (GetCooldownRemainingTime(Soten) < 1 && CanWeave(Yukikaze))
                             return OriginalHook(Soten);
 
-                        if (OriginalHook(MeikyoShisui) == Midare && !this.IsMoving)
+                        if (OriginalHook(MeikyoShisui) == Midare && !IsMoving)
                             return OriginalHook(MeikyoShisui);
 
                         if (IsEnabled(CustomComboPreset.SAMPvP_BurstMode_Stun) && IsOffCooldown(Mineuchi))
                             return OriginalHook(Mineuchi);
 
-                        if (IsOffCooldown(OgiNamikiri) && !this.IsMoving)
+                        if (IsOffCooldown(OgiNamikiri) && !IsMoving)
                             return OriginalHook(OgiNamikiri);
 
                         if (GetRemainingCharges(Soten) > sotenCharges && CanWeave(Yukikaze))

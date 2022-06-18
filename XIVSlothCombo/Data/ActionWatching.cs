@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
@@ -90,7 +91,7 @@ namespace XIVSlothCombo.Data
 
         public static void OutputLog()
         {
-            Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
+            Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} ({LastAction}) x{LastActionUseCount}");
         }
         public static void Dispose()
         {
