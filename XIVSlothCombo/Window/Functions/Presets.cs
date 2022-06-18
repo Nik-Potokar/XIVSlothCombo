@@ -6,6 +6,7 @@ using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Functions
@@ -45,9 +46,9 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.PopItemWidth();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
 
-            if (preset.GetAttribute<ReplaceSkillAttribute>() != null)
+            if (preset.GetReplaceAttribute() != null)
             {
-                string skills = string.Join(", ", preset.GetAttribute<ReplaceSkillAttribute>().ActionNames);
+                string skills = string.Join(", ", preset.GetReplaceAttribute().ActionNames);
 
                 if (ImGui.IsItemHovered())
                 {
@@ -59,12 +60,12 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.TextWrapped($"#{i}: {info.Description}");
 
-            if (preset.GetAttribute<HoverInfoAttribute>() != null)
+            if (preset.GetHoverAttribute() != null)
             {
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.BeginTooltip();
-                    ImGui.TextUnformatted(preset.GetAttribute<HoverInfoAttribute>().HoverText);
+                    ImGui.TextUnformatted(preset.GetHoverAttribute().HoverText);
                     ImGui.EndTooltip();
                 }
             }
@@ -79,7 +80,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 var conflictText = conflicts.Select(conflict =>
                 {
-                    var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
+                    var conflictInfo = conflict.GetComboAttribute();
 
                     return $"\n - {conflictInfo.FancyName}";
 

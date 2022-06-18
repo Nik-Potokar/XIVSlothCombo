@@ -64,8 +64,16 @@ namespace XIVSlothCombo.Data
         private static readonly Hook<SendActionDelegate>? SendActionHook;
         private static void SendActionDetour(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
         {
-            SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
-            ActionType = actionType;
+            try
+            {
+                SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
+                ActionType = actionType;
+            }
+            catch (Exception ex)
+            {
+                Dalamud.Logging.PluginLog.Error(ex, "SendActionDetour");
+                SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
+            }
         }
 
         public static uint LastAction { get; set; } = 0;
