@@ -143,7 +143,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return AirAnchor;
                         if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= Levels.Drill)
                             return Drill;
-                        if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level <= Levels.AirAnchor)
+                        if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level < Levels.AirAnchor)
                             return HotShot;
                         else
                         if (level >= 84)
