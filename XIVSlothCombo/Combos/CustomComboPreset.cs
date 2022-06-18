@@ -1343,7 +1343,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!\nMade to work optimally with a 2.5 GCD.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
         MCH_ST_SimpleMode = 8020,
 
         [ParentCombo(MCH_ST_SimpleMode)]
@@ -1405,6 +1405,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_ST_Simple_Stabilizer)]
         [CustomComboInfo("Wildfire Only", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("High Ping Mode", "A high ping friendly mode.\nIt limits the uses of Gauss/Ricochet inside Hypercharge windows.\nThere will be a little dps loss.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_High_Latency_Mode = 8036,
 
         #endregion
 
