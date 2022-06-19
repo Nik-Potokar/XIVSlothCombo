@@ -252,10 +252,20 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsNotEnabled(CustomComboPreset.PLD_AtonementDrop))
                             return Atonement;
 
-                        if ((IsEnabled(CustomComboPreset.PLD_AtonementDrop) &&
-                             GetCooldownRemainingTime(FightOrFlight) <= 15 && GetBuffStacks(Buffs.SwordOath) > 1) ||
-                            (HasEffect(Buffs.Requiescat) && GetCooldownRemainingTime(FightOrFlight) <= 49))
-                            return Atonement;
+                        if (IsEnabled(CustomComboPreset.PLD_AtonementDrop))
+                        {
+                            if (HasEffect(Buffs.FightOrFlight))
+                            {
+                                if (lastComboMove == Atonement || lastComboMove == RoyalAuthority)
+                                {
+                                    return Atonement;
+                                }
+                            }
+                            else if (GetBuffStacks(Buffs.SwordOath) > 1)
+                            {
+                                return Atonement;
+                            }
+                        }
                     }
 
                     // 1-2-3 Combo
