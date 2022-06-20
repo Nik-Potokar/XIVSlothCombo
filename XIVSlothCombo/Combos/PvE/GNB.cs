@@ -1,4 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -101,7 +103,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var roughDivideChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
                     var quarterWeave = GetCooldown(actionID).CooldownRemaining < 1 && GetCooldown(actionID).CooldownRemaining > 0.2;
 
-                    if (IsEnabled(CustomComboPreset.GNB_RangedUptime) && !InMeleeRange() && level > Levels.LightningShot && HasBattleTarget())
+                    if (IsEnabled(CustomComboPreset.GNB_RangedUptime) && !InMeleeRange() && level > Levels.LightningShot && (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy)
                         return LightningShot;
 
                     if (comboTime > 0)

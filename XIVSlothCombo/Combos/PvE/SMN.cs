@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using System.Threading.Tasks;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -610,20 +611,19 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SMN_CarbuncleReminder : CustomCombo
         {
             protected internal override CustomComboPreset Preset => CustomComboPreset.SMN_CarbuncleReminder;
-            internal static bool carbyPresent = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
                 if (actionID is Ruin or Ruin2 or Ruin3 or DreadwyrmTrance or AstralFlow or EnkindleBahamut or SearingLight or RadiantAegis or Outburst or Tridisaster or PreciousBrilliance or Gemshine)
                 {
-                    if (HasPetPresent() ||
-                        (!HasPetPresent() && lastComboMove is AstralImpulse or FountainOfFire))
-                        carbyPresent = true;
+                    var gauge = GetJobGauge<SMNGauge>();
+
                     if (!HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && GetCooldownRemainingTime(Ruin) == 0)
-                        carbyPresent = false;
-                    if (carbyPresent == false)
+                    {
+                        Task.Delay(600); //Deals with half second refresh
                         return SummonCarbuncle;
+                    }
+
                 }
 
                 return actionID;
