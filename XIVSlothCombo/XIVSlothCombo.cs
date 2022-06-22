@@ -30,8 +30,6 @@ namespace XIVSlothCombo
         /// <param name="pluginInterface"> Dalamud plugin interface. </param>
         public XIVSlothCombo(DalamudPluginInterface pluginInterface)
         {
-            FFXIVClientStructs.Resolver.Initialize();
-
             pluginInterface.Create<Service>();
 
             Service.Configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();

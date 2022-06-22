@@ -199,6 +199,22 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        internal class ALL_Melee_TrueNorth : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Melee_TrueNorth;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is TrueNorth)
+                {
+                    if (HasEffect(Buffs.TrueNorth))
+                        return BLM.Fire;
+                }
+
+                return actionID;
+            }
+        }
+
         //Ranged Physical Features
         internal class ALL_Ranged_Mitigation : CustomCombo
         {

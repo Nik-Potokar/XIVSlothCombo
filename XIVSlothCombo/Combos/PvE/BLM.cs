@@ -185,146 +185,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class BLM_Enochian : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Enochian;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == Scathe)
-                {
-                    var gauge = GetJobGauge<BLMGauge>();
-                    var thundercloudduration = FindEffectAny(Buffs.Thundercloud);
-                    var thunderdebuffontarget = FindTargetEffect(Debuffs.Thunder3);
-                    var thunderOneDebuff = FindTargetEffect(Debuffs.Thunder);
-                    var thunder3DebuffOnTarget = TargetHasEffect(Debuffs.Thunder3);
-
-                    if (gauge.InUmbralIce && level >= Levels.Blizzard4)
-                    {
-                        if (gauge.ElementTimeRemaining >= 0 && IsEnabled(CustomComboPreset.BLM_Thunder))
-                        {
-                            if (HasEffect(Buffs.Thundercloud))
-                            {
-                                if ((TargetHasEffect(Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35))
-                                    return Thunder3;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && !thunder3DebuffOnTarget && lastComboMove != Thunder3 && LocalPlayer.CurrentMp >= 400)
-                                return Thunder3;
-
-                            if (gauge.IsParadoxActive && level >= Levels.Paradox)
-                                return Paradox;
-
-                            if (IsEnabled(CustomComboPreset.BLM_AspectSwap) && gauge.UmbralHearts == 3 && LocalPlayer.CurrentMp >= 10000)
-                                return Fire3;
-
-                        }
-
-                        return Blizzard4;
-                    }
-
-                    if (level >= Levels.Fire4)
-                    {
-                        if (gauge.ElementTimeRemaining >= 6000 && IsEnabled(CustomComboPreset.BLM_Thunder))
-                        {
-                            if (HasEffect(Buffs.Thundercloud))
-                            {
-                                if ((TargetHasEffect(Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4) || (!thunder3DebuffOnTarget && HasEffect(Buffs.Thundercloud) && thundercloudduration.RemainingTime > 0 && thundercloudduration.RemainingTime < 35))
-                                    return Thunder3;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && !thunder3DebuffOnTarget && lastComboMove != Thunder3 && LocalPlayer.CurrentMp >= 400)
-                                return Thunder3;
-                        }
-
-                        if (gauge.ElementTimeRemaining < 3000 && HasEffect(Buffs.Firestarter) && IsEnabled(CustomComboPreset.BLM_Fire_1to3))
-                        {
-                            return Fire3;
-                        }
-
-                        if (IsEnabled(CustomComboPreset.BLM_AspectSwap) && level >= Levels.Blizzard3)
-                        {
-                            if ((LocalPlayer.CurrentMp < 800) || (LocalPlayer.CurrentMp < 1600 && level < Levels.Despair))
-                                return Blizzard3;
-                        }
-
-                        if (gauge.ElementTimeRemaining > 0 && LocalPlayer.CurrentMp < 2400 && level >= Levels.Despair && IsEnabled(CustomComboPreset.BLM_Despair))
-                        {
-                            return Despair;
-                        }
-
-                        if (gauge.IsEnochianActive)
-                        {
-                            if (gauge.ElementTimeRemaining < 6000 && !HasEffect(Buffs.Firestarter) && IsEnabled(CustomComboPreset.BLM_Fire_1to3) && level == Levels.Paradox && gauge.IsParadoxActive)
-                                return Paradox;
-                            if (gauge.ElementTimeRemaining < 6000 && !HasEffect(Buffs.Firestarter) && IsEnabled(CustomComboPreset.BLM_Fire_1to3) && !gauge.IsParadoxActive)
-                                return Fire;
-                        }
-
-                        return Fire4;
-                    }
-
-                    if (gauge.ElementTimeRemaining >= 5000 && IsEnabled(CustomComboPreset.BLM_Thunder))
-                    {
-                        if (level < Levels.Thunder3)
-                        {
-                            if (HasEffect(Buffs.Thundercloud))
-                            {
-                                if (TargetHasEffect(Debuffs.Thunder) && thunderOneDebuff.RemainingTime < 4)
-                                    return Thunder;
-                            }
-                        }
-                        else
-                        {
-                            if (HasEffect(Buffs.Thundercloud))
-                            {
-                                if (TargetHasEffect(Debuffs.Thunder3) && thunderdebuffontarget.RemainingTime < 4)
-                                    return Thunder3;
-                            }
-                        }
-
-                        if (level < Levels.Thunder3)
-                        {
-                            if (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && !TargetHasEffect(Debuffs.Thunder) && lastComboMove != Thunder && LocalPlayer.CurrentMp >= 200)
-                                return Thunder;
-                        }
-                        else
-                        {
-                            if (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && !TargetHasEffect(Debuffs.Thunder3) && lastComboMove != Thunder3 && LocalPlayer.CurrentMp >= 400)
-                                return Thunder3;
-                        }
-                    }
-
-                    if (level < Levels.Fire3)
-                    {
-                        return Fire;
-                    }
-
-                    if (gauge.InAstralFire)
-                    {
-                        if (HasEffect(Buffs.Firestarter) && level == Levels.Paradox)
-                            return Paradox;
-                        if (HasEffect(Buffs.Firestarter))
-                            return Fire3;
-                        if (IsEnabled(CustomComboPreset.BLM_AspectSwap) && LocalPlayer.CurrentMp < 1600 && level >= Levels.Blizzard3)
-                            return Blizzard3;
-
-                        return Fire;
-                    }
-
-                    if (gauge.InUmbralIce)
-                    {
-                        if (IsEnabled(CustomComboPreset.BLM_AspectSwap) && LocalPlayer.CurrentMp >= 10000 && level >= Levels.Fire3)
-                            return Fire3;
-
-                        return Blizzard;
-                    }
-                }
-
-                return actionID;
-            }
-        }
-
         internal class BLM_AoE_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AoE_SimpleMode;
@@ -360,7 +220,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (level >= Levels.Thunder4)
                         {
-                            if (lastComboMove != Thunder4 && (!thunder4Debuff || thunder4Timer.RemainingTime <= 4) &&
+                            if (lastComboMove != Thunder3 && lastComboMove != Thunder4 && (!thunder4Debuff || thunder4Timer.RemainingTime <= 4) &&
                                ((gauge.InUmbralIce && gauge.UmbralHearts == 3) ||
                                 (gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))))
                             {
@@ -369,7 +229,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         else if (level >= Levels.Thunder2)
                         {
-                            if (lastComboMove != Thunder2 && (!thunder2Debuff || thunder2Timer.RemainingTime <= 4) &&
+                            if (lastComboMove != Thunder && lastComboMove != Thunder3 && lastComboMove != Thunder2 && (!thunder2Debuff || thunder2Timer.RemainingTime <= 4) &&
                                ((gauge.InUmbralIce && (gauge.UmbralHearts == 3 || level < Levels.Blizzard4)) ||
                                 (gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))))
                             {
@@ -649,16 +509,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                                 if (HasEffect(Buffs.Thundercloud))
                                 {
-                                    if (level < Levels.Thunder3)
+                                    if (lastComboMove != Thunder && lastComboMove != Thunder3 && lastComboMove != Thunder2 && lastComboMove != Thunder4 &&
+                                        !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
                                     {
-                                        if (lastComboMove != Thunder && thunderRecast(4) && !TargetHasEffect(Debuffs.Thunder2))
+                                        if (level >= Levels.Thunder3 && thunder3Recast(4))
+                                        {
+                                            return Thunder3;
+                                        }
+                                        else if (level < Levels.Thunder3 && thunderRecast(4))
                                         {
                                             return Thunder;
                                         }
-                                    }
-                                    else if (lastComboMove != Thunder3 && thunder3Recast(4) && !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
-                                    {
-                                        return Thunder3;
                                     }
                                 }
                                 if (IsOffCooldown(All.Swiftcast))
@@ -685,18 +546,22 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.ElementTimeRemaining > 0)
                     {
                         // Thunder uptime
-                        if (gauge.ElementTimeRemaining >= astralFireRefresh && (HasEffect(Buffs.Thundercloud) || currentMP >= MP.AspectThunder))
+                        if (IsEnabled(CustomComboPreset.BLM_Thunder) && gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
-                            if (level < Levels.Thunder3)
+                            if (lastComboMove != Thunder && lastComboMove != Thunder3 && lastComboMove != Thunder2 && lastComboMove != Thunder4 && 
+                                !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
                             {
-                                if (lastComboMove != Thunder && thunderRecast(4) && !TargetHasEffect(Debuffs.Thunder2))
+                                if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && currentMP >= MP.AspectThunder))
                                 {
-                                    return Thunder;
+                                    if (level >= Levels.Thunder3 && thunder3Recast(4))
+                                    {
+                                        return Thunder3;
+                                    }
+                                    else if (level < Levels.Thunder3 && thunderRecast(4))
+                                    {
+                                        return Thunder;
+                                    }
                                 }
-                            }
-                            else if (lastComboMove != Thunder3 && thunder3Recast(4) && !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
-                            {
-                                return Thunder3;
                             }
                         }
 
@@ -1095,10 +960,16 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.ElementTimeRemaining > 0)
                     {
                         // Thunder
-                        if (lastComboMove != Thunder3 && currentMP >= MP.AspectThunder &&
-                            thunder3Recast(4) && !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
+                        if (IsEnabled(CustomComboPreset.BLM_Thunder) && gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
-                            return Thunder3;
+                            if (lastComboMove != Thunder && lastComboMove != Thunder3 && lastComboMove != Thunder2 && lastComboMove != Thunder4 &&
+                                !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4) && thunder3Recast(4))
+                            {
+                                if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && currentMP >= MP.AspectThunder))
+                                {
+                                    return Thunder3;
+                                }
+                            }
                         }
 
                         // Buffs
