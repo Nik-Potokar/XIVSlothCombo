@@ -138,13 +138,18 @@ namespace XIVSlothCombo.Combos.PvE
                         inOpener = true;
                     }
 
-                    // Uptime Features
-                    if (!InMeleeRange() && !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth))
+                    // Uptime Feature
+                    if (!InMeleeRange() && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) &&
+                        !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth) && HasTarget())
                     {
-                        if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) && level >= Levels.ShieldLob && !HasEffect(Buffs.Requiescat))
-                            return ShieldLob;
-                        if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime_2) && level >= Levels.HolySpirit)
+                        if (level >= Levels.HolySpirit && LocalPlayer.CurrentMp >= 1000 && (!this.IsMoving || HasEffect(Buffs.Requiescat)))
+                        {
                             return HolySpirit;
+                        }
+                        else if (level >= Levels.ShieldLob && !HasEffect(Buffs.Requiescat))
+                        {
+                            return ShieldLob;
+                        }
                     }
 
                     // Buffs

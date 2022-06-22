@@ -1706,8 +1706,7 @@ namespace XIVSlothCombo.Combos
         PLD_ST_RoyalAuth_Intervene = 11010,
 
         [ParentCombo(PLD_ST_RoyalAuth)]
-        [ConflictingCombos(PLD_ST_RoyalAuth_RangedUptime_2)]
-        [CustomComboInfo("Shield Lob Uptime Feature", "Replace Main Combo with Shield Lob when out of range.", PLD.JobID, 4, "", "")]
+        [CustomComboInfo("Uptime Feature", "Replace Main Combo with Shield Lob/Holy Spirit when out of range.\nWill use Holy Spirit if you're not moving or have the Requiescat buff\nOtherwise will use Shield lob when moving and if you don't have the Requiescat buff.", PLD.JobID, 4, "", "")]
         PLD_ST_RoyalAuth_RangedUptime = 11012,
 
         // This is a parent of itself? Bruh moment. I don't 'do' PLD, so I'm just leaving this note here. - K
@@ -1719,11 +1718,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(PLD_ST_RoyalAuth)]
         [CustomComboInfo("Requiescat Feature", "Requiescat gets added onto the main combo when the Fight or Flight buff has 17 seconds remaining or less.", PLD.JobID, 2, "", "")]
         PLD_ST_RoyalAuth_Requiescat = 11014,
-
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [ConflictingCombos(PLD_ST_RoyalAuth_RangedUptime)]
-        [CustomComboInfo("Holy Spirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Holy Spirit when out of range.", PLD.JobID, 5, "", "")]
-        PLD_ST_RoyalAuth_RangedUptime_2 = 11016,
 
         [ParentCombo(PLD_ST_RoyalAuth)]
         [CustomComboInfo("Fight or Flight Feature", "Adds Fight or Flight onto the main combo with a delayed weave.", PLD.JobID, 2, "", "")]
