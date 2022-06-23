@@ -89,7 +89,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Oblation)
+                if (actionID == Souleater)
                 {
                     var gauge = GetJobGauge<DRKGauge>();
                     var plungeChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_KeepPlungeCharges);
@@ -275,29 +275,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return SaltAndDarkness;
                     if (IsEnabled(CustomComboPreset.DRK_Shadowbringer_oGCD) && GetCooldownRemainingTime(Shadowbringer) < 60 && level >= Levels.Shadowbringer && gauge.DarksideTimeRemaining > 0)
                         return Shadowbringer;
-                }
-                return actionID;
-            }
-        }
-
-        internal class DRK_Hold : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_Hold;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                var gauge = GetJobGauge<DRKGauge>();
-
-                if (actionID == HardSlash)
-                {
-                    // 1-2-3 combo
-                    if (comboTime > 0)
-                    {
-                        if (lastComboMove == HardSlash && level >= Levels.SyphonStrike)
-                            return SyphonStrike;
-                        if (lastComboMove == SyphonStrike && level >= Levels.Souleater)
-                            return Souleater;
-                    }
                 }
                 return actionID;
             }
