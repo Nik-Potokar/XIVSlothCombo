@@ -2670,6 +2670,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_ESPainflare)]
         [CustomComboInfo("Ruin 4 Painflare Option", "Changes Painflare to Ruin 4 when out of Aetherflow stacks, Energy Siphon is on cooldown, and Ruin 4 is up.", SMN.JobID, 0, "Festering Painflare", "Just take some Advil for that, or see the doc?")]
         SMN_ESPainflare_Ruin4 = 17039,
+        
+        [ParentCombo(SMN_Ifrit_Cyclone)]
+        [CustomComboInfo("Crimson Cyclone Option", "Changes Crimson Cyclone to only be used after all Ifrit Attunement charges have been used, or if moving.", SMN.JobID, 0, "", "")]
+        SMN_Ifrit_Cyclone_Option = 17040,
 
         #endregion
 
