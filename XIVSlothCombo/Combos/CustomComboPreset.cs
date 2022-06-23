@@ -950,10 +950,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AOE on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_LivingShadow = 5030,
 
-        [CustomComboInfo("Test", "Adds Living Shadow to AOE on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
-        DRK_Hold = 5031,
-
-
         #endregion
 
         #region DRAGOON
