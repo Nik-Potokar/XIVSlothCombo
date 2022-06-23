@@ -379,13 +379,12 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) //Ifrit
                         return OriginalHook(AstralFlow);
 
+                    if (IsEnabled(CustomComboPreset.SMN_ST_MainCombo_Ruin4) && gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
+                        return Ruin4;
+                    
                     // Gemshine
                     if (IsEnabled(CustomComboPreset.SMN_ST_MainCombo_EgiSummons_Attacks) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                    {
-                        if (gauge.IsIfritAttuned && IsMoving && HasEffect(SMN.Buffs.FurtherRuin))
-                            return Ruin4;
                         return OriginalHook(Gemshine);
-                    }
 
                     if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_EgiOrder) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
                     {
@@ -575,13 +574,12 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) //Ifrit
                         return OriginalHook(AstralFlow);
 
+                    if (IsEnabled(CustomComboPreset.SMN_AoE_MainCombo_Ruin4) && gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
+                        return Ruin4;
+                    
                     //Precious Brilliance
                     if (IsEnabled(CustomComboPreset.SMN_AoE_MainCombo_EgiAttacks) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
-                    {
-                        if (gauge.IsIfritAttuned && IsMoving && HasEffect(SMN.Buffs.FurtherRuin))
-                            return Ruin4;
                         return OriginalHook(PreciousBrilliance);
-                    }
 
                     if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_EgiOrder) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
                     {
