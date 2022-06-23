@@ -164,104 +164,105 @@ namespace XIVSlothCombo.Combos.PvE
 
                 return actionID;
             }
+        }
 
-            internal class War_ST_StormsEye : CustomCombo
+        internal class War_ST_StormsEye : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.War_ST_StormsEye;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.War_ST_StormsEye;
-
-                protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                if (actionID == StormsEye)
                 {
-                    if (actionID == StormsEye)
+                    if (comboTime > 0)
                     {
-                        if (comboTime > 0)
-                        {
-                            if (lastComboMove == HeavySwing && level >= Levels.Maim)
-                                return Maim;
+                        if (lastComboMove == HeavySwing && level >= Levels.Maim)
+                            return Maim;
 
-                            if (lastComboMove == Maim && level >= Levels.StormsEye)
-                                return StormsEye;
-                        }
-
-                        return HeavySwing;
+                        if (lastComboMove == Maim && level >= Levels.StormsEye)
+                            return StormsEye;
                     }
 
-                    return actionID;
+                    return HeavySwing;
                 }
-            }
 
-            internal class WAR_AoE_Overpower : CustomCombo
-            {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_AoE_Overpower;
-
-                protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                {
-                    if (actionID == Overpower)
-                    {
-                        var gauge = GetJobGauge<WARGauge>().BeastGauge;
-
-                        if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
-                            return Infuriate;
-
-                        //Sub Mythril Tempest level check
-                        if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level is >= Levels.Berserk and < Levels.MythrilTempest && InCombat())
-                            return OriginalHook(Berserk);
-
-                        if (HasEffect(Buffs.SurgingTempest) && InCombat())
-                        {
-                            if (CanWeave(actionID))
-                            {
-                                if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level >= Levels.Berserk)
-                                    return OriginalHook(Berserk);
-                                if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Orogeny) && IsOffCooldown(Orogeny) && level >= Levels.Orogeny && HasEffect(Buffs.SurgingTempest))
-                                    return Orogeny;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && level >= Levels.PrimalRend)
-                            {
-                                if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && (GetTargetDistance() <= 3 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
-                                    return PrimalRend;
-                                if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
-                                    return PrimalRend;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Spender) && level >= Levels.SteelCyclone && (gauge >= 50 || HasEffect(Buffs.InnerRelease)))
-                                return OriginalHook(SteelCyclone);
-                        }
-
-                        if (comboTime > 0)
-                        {
-                            if (lastComboMove == Overpower && level >= Levels.MythrilTempest)
-                            {
-                                if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_OvercapProtection) && gauge >= 90 && level >= Levels.SteelCyclone)
-                                    return OriginalHook(SteelCyclone);
-                                return MythrilTempest;
-                            }
-                        }
-
-                        return Overpower;
-                    }
-
-                    return actionID;
-                }
-            }
-
-            internal class WAR_NascentFlash : CustomCombo
-            {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_NascentFlash;
-
-                protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                {
-                    if (actionID == NascentFlash)
-                    {
-                        if (level >= Levels.NascentFlash)
-                            return NascentFlash;
-                        return RawIntuition;
-                    }
-
-                    return actionID;
-                }
+                return actionID;
             }
         }
+
+        internal class WAR_AoE_Overpower : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_AoE_Overpower;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == Overpower)
+                {
+                    var gauge = GetJobGauge<WARGauge>().BeastGauge;
+
+                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
+                        return Infuriate;
+
+                    //Sub Mythril Tempest level check
+                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level is >= Levels.Berserk and < Levels.MythrilTempest && InCombat())
+                        return OriginalHook(Berserk);
+
+                    if (HasEffect(Buffs.SurgingTempest) && InCombat())
+                    {
+                        if (CanWeave(actionID))
+                        {
+                            if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level >= Levels.Berserk)
+                                return OriginalHook(Berserk);
+                            if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Orogeny) && IsOffCooldown(Orogeny) && level >= Levels.Orogeny && HasEffect(Buffs.SurgingTempest))
+                                return Orogeny;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && level >= Levels.PrimalRend)
+                        {
+                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && (GetTargetDistance() <= 3 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
+                                return PrimalRend;
+                            if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
+                                return PrimalRend;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Spender) && level >= Levels.SteelCyclone && (gauge >= 50 || HasEffect(Buffs.InnerRelease)))
+                            return OriginalHook(SteelCyclone);
+                    }
+
+                    if (comboTime > 0)
+                    {
+                        if (lastComboMove == Overpower && level >= Levels.MythrilTempest)
+                        {
+                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_OvercapProtection) && gauge >= 90 && level >= Levels.SteelCyclone)
+                                return OriginalHook(SteelCyclone);
+                            return MythrilTempest;
+                        }
+                    }
+
+                    return Overpower;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class WAR_NascentFlash : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_NascentFlash;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == NascentFlash)
+                {
+                    if (level >= Levels.NascentFlash)
+                        return NascentFlash;
+                    return RawIntuition;
+                }
+
+                return actionID;
+            }
+        }
+
 
         internal class WAR_ST_StormsPath_PrimalRend : CustomCombo
         {
