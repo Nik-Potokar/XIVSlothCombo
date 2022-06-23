@@ -1,8 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
-using System.Timers;
-using System.Diagnostics;
 using System;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -623,6 +621,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     presentTime = DateTime.Now;
                     int deltaTime = (presentTime - noPetTime).Milliseconds;
+                    var gauge = GetJobGauge<SMNGauge>();
 
                     if (HasPetPresent())
                     {
@@ -631,7 +630,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                  
                     //Deals with the game's half second pet refresh
-                    if (deltaTime > 500)
+                    if (deltaTime > 500 && !HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && GetCooldownRemainingTime(Ruin) == 0)
                         carbyPresent = false;
                     if (carbyPresent == false)
                         return SummonCarbuncle;
