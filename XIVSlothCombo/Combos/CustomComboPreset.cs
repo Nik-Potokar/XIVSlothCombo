@@ -2534,7 +2534,7 @@ namespace XIVSlothCombo.Combos
         SMN_ST_MainCombo = 17000,
 
         [ParentCombo(SMN_ST_MainCombo)]
-        [CustomComboInfo("Demi Attacks on Main/AOE Combo", "Adds Deathflare/Ahk Morn/Revelation to the Main/AoE Combos.", SMN.JobID, 17, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
+        [CustomComboInfo("Demi Attacks on Main/AOE Combo", "Adds Deathflare/Ahk Morn/Revelation to the Main/AoE Combos.", SMN.JobID, 7, "Demi Dingus Feature", "Can't tell the difference between a Bahamut and a Phoenix?\nWe know.")]
         SMN_ST_MainCombo_DemiSummons_Attacks = 17002,
 
         [ParentCombo(SMN_ST_MainCombo)]
@@ -2579,7 +2579,7 @@ namespace XIVSlothCombo.Combos
         SMN_DemiEgiMenu_EgiOrder = 17016,
 
         [ParentCombo(SMN_ST_MainCombo)]
-        [CustomComboInfo("Searing Light on Single Target/AoE combo", "Adds Searing Light to the Single target, and AoE combos. Will be used on cooldown.", SMN.JobID, 16, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light on Single Target/AoE combo", "Adds Searing Light to the Single target, and AoE combos. Will be used on cooldown.", SMN.JobID, 6, "My eyes!", "I can't see!")]
         SMN_SearingLight = 17018,
 
         [ParentCombo(SMN_SearingLight)]
@@ -2587,7 +2587,7 @@ namespace XIVSlothCombo.Combos
         SMN_SearingLight_Burst = 170181,
 
         [ParentCombo(SMN_ST_MainCombo)]
-        [CustomComboInfo("Demi Summons on Main/AoE Combo", "Adds Demi Summons to the Main/AoE Combos.", SMN.JobID, 15, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
+        [CustomComboInfo("Demi Summons on Main/AoE Combo", "Adds Demi Summons to the Main/AoE Combos.", SMN.JobID, 5, "Chad Kroeger Demi Feature", "This is how, you remind me, of what I really am")]
         SMN_ST_MainCombo_DemiSummons = 17020,
 
         [ParentCombo(SMN_ST_MainCombo)]
@@ -2606,7 +2606,7 @@ namespace XIVSlothCombo.Combos
         SMN_Raise = 17027,
 
         [ParentCombo(SMN_ST_MainCombo)]
-        [CustomComboInfo("Rekindle on Main/AoE Combo option", "Adds Rekindle to the Main/Aoe Combos.", SMN.JobID, 19, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
+        [CustomComboInfo("Rekindle on Main/AoE Combo option", "Adds Rekindle to the Main/Aoe Combos.", SMN.JobID, 9, "Phoenix Dingus Feature", "You only need to worry about healing yourself.\nIts okay.")]
         SMN_ST_MainCombo_DemiSummons_Rekindle = 17028,
 
         [ReplaceSkill(SMN.Ruin4)]
@@ -2618,7 +2618,7 @@ namespace XIVSlothCombo.Combos
         SMN_Lucid = 17031,
         
         [ParentCombo(SMN_ST_MainCombo)]
-        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Fester and Searing Light will only be used during Bahamut/Phoenix windows.", SMN.JobID, 18, "", "")]
+        [CustomComboInfo("Burst Phase Choice", "Chooses which phase to burst in for all relevant burst features. Fester and Searing Light will only be used during Bahamut/Phoenix windows.", SMN.JobID, 8, "", "")]
         SMN_DemiEgiMenu_BurstChoice = 17032,
 
         [CustomComboInfo("Egi Abilities on Egi Summons", "Adds Egi Abilities (Astral Flow) to Egi Summons when ready.\nEgi Abilities will appear on their respective Egi Summon Ability, as well as, Titan.", SMN.JobID, 12, "", "")]
