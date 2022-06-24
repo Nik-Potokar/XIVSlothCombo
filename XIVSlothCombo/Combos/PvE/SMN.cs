@@ -262,7 +262,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
                     
-                    if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
+                    if (gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
                         (Aethercharge.LevelChecked() && !SummonBahamut.LevelChecked() ||
                          gauge.IsBahamutReady && SummonBahamut.LevelChecked() ||
                          gauge.IsPhoenixReady && SummonPhoenix.LevelChecked()))
@@ -272,10 +272,10 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (Slipstream.LevelChecked() && HasEffect(Buffs.GarudasFavor))
                         {
-                            if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
+                            if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast) && IsNotEnabled(CustomComboPreset.SMN_Simple_Swiftcast_Option))
                                 return All.Swiftcast;
 
-                            if ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) || gauge.Attunement == 0)
+                            if ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)))
                                 return OriginalHook(AstralFlow);
                         }
                         
@@ -283,7 +283,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.Swiftcast;
                     }
 
-                    if (gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) ||
+                    if (HasEffect(Buffs.GarudasFavor) && gauge.Attunement is 0 ||
                         HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) ||
                         HasEffect(Buffs.IfritsFavor) && (IsMoving || gauge.Attunement is 0) || lastComboMove == CrimsonCyclone)
                         return OriginalHook(AstralFlow);
@@ -424,7 +424,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Demi
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons))
                     {
-                        if (gauge.AttunmentTimerRemaining == 0 && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
+                        if (gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
                             (Aethercharge.LevelChecked() && !SummonBahamut.LevelChecked() || //Pre Bahamut Phase
                              gauge.IsBahamutReady && SummonBahamut.LevelChecked() || //Bahamut Phase
                              gauge.IsPhoenixReady && SummonPhoenix.LevelChecked())) //Phoenix Phase
@@ -474,7 +474,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         return All.Swiftcast;
                                 }
                                 if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) &&
-                                    ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) ||
+                                    ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) ||
                                      (gauge.Attunement == 0))) //Astral Flow if Swiftcast is not ready throughout Garuda
                                     return OriginalHook(AstralFlow);
                             }
@@ -492,7 +492,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2) && gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) || //Garuda
+                    if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2) && HasEffect(Buffs.GarudasFavor) || //Garuda
                         IsEnabled(CustomComboPreset.SMN_Titan_MountainBuster) && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) || //Titan
                         IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) //Ifrit
                         return OriginalHook(AstralFlow);

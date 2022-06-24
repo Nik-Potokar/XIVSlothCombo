@@ -2653,6 +2653,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Summoner Simple Combo", "Summoner simple one button combo.", SMN.JobID, -1, "", "")]
         SMN_Simple_Combo = 17041,
         
+        [ParentCombo(SMN_Simple_Combo)]
+        [CustomComboInfo("Ifrit Swiftcast Option", "Use Swiftcast only for Ruby Rite/Catastrophe.", SMN.JobID, 0, "", "")]
+        SMN_Simple_Swiftcast_Option = 17042,
+        
         #endregion
 
         #region WARRIOR
