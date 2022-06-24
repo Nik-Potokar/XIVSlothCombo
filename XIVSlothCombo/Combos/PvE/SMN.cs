@@ -497,11 +497,12 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) //Ifrit
                         return OriginalHook(AstralFlow);
 
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
+                        return Ruin4;
+                    
                     // Gemshine
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                     {
-                        if (gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
-                            return Ruin4;
                         if (STCombo)
                             return OriginalHook(Gemshine);
                         if (AoECombo && PreciousBrilliance.LevelChecked())
