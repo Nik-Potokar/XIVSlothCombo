@@ -326,7 +326,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Bootshine || (actionID == Demolish && IsEnabled(CustomComboPreset.MNK_ST_Simple_Demolish)))
+                if (actionID == Bootshine)
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MNKGauge>();
@@ -339,7 +339,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
 
                     // Opener for MNK
-                    if (actionID != Demolish && IsEnabled(CustomComboPreset.MNK_ST_Simple_LunarSolarOpener))
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_LunarSolarOpener))
                     {
                         // Re-enter opener when Brotherhood is used
                         if (lastComboMove == Brotherhood)
@@ -445,7 +445,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (inCombat && !inOpener)
                     {
-                        if (actionID != Demolish && IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs))
+                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs))
                         {
                             if (canWeave)
                             {
