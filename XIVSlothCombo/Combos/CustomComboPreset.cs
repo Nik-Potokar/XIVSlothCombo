@@ -2146,7 +2146,7 @@ namespace XIVSlothCombo.Combos
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Diagnosis Simple Single Target Heal Feature", "Supports soft-targeting.", SGE.JobID, 300, "", "")]
+        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2193,7 +2193,7 @@ namespace XIVSlothCombo.Combos
         #region Sage Simple AoE Heal
         [ReplaceSkill(SGE.Prognosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Sage Simple AoE Heal Feature", "Customize your AoE healing to your liking", SGE.JobID, 500, "", "")]
+        [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking", SGE.JobID, 500, "", "")]
         SGE_AoE_Heal = 14500,
             
             [ParentCombo(SGE_AoE_Heal)]
@@ -2239,7 +2239,7 @@ namespace XIVSlothCombo.Combos
         SGE_DruoTauro = 14700,
 
         [ReplaceSkill(SGE.Pneuma)]
-        [CustomComboInfo("Zoe Buff for Pneuma Feature", "Places Zoe ontop of Pneuma when both actions are on cooldown", SGE.JobID, 701, "", "")] //Temporary to keep the order
+        [CustomComboInfo("Zoe Pneuma Feature", "Places Zoe on top of Pneuma when both actions are on cooldown", SGE.JobID, 701, "", "")] //Temporary to keep the order
         SGE_ZoePneuma = 141000,
         #endregion
 
