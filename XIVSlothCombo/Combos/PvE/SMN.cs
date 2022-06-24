@@ -272,7 +272,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (Slipstream.LevelChecked() && HasEffect(Buffs.GarudasFavor))
                         {
-                            if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast) && IsNotEnabled(CustomComboPreset.SMN_Simple_Swiftcast_Option))
+                            if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
                                 return All.Swiftcast;
 
                             if ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)))
