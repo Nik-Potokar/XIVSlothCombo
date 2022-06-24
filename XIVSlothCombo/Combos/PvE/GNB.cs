@@ -103,7 +103,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var roughDivideChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
                     var quarterWeave = GetCooldown(actionID).CooldownRemaining < 1 && GetCooldown(actionID).CooldownRemaining > 0.2;
 
-                    if (IsEnabled(CustomComboPreset.GNB_RangedUptime) && !InMeleeRange() && level > Levels.LightningShot && (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy)
+                    if (IsEnabled(CustomComboPreset.GNB_RangedUptime) && !InMeleeRange() && level > Levels.LightningShot && HasBattleTarget())
                         return LightningShot;
 
                     if (comboTime > 0)

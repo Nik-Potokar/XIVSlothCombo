@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
@@ -102,15 +103,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return currentHealth / maxHealth * 100;
         }
 
-        public static bool HasBattleTarget()
-        {
-            if (CurrentTarget is null)
-                return false;
-            if (CurrentTarget is not BattleChara)
-                return false;
-
-            return true;
-        }
+        public static bool HasBattleTarget() 
+            => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
 
         /// <summary> Determines if the enemy can be interrupted if they are currently casting. </summary>
         /// <returns> Bool indicating whether they can be interrupted or not. </returns>

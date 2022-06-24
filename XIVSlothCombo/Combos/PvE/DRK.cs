@@ -95,7 +95,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var plungeChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_KeepPlungeCharges);
                     var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_MPManagement);
 
-                    if (IsEnabled(CustomComboPreset.DRK_RangedUptime) && level >= Levels.Unmend && !InMeleeRange() && (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy)
+                    if (IsEnabled(CustomComboPreset.DRK_RangedUptime) && level >= Levels.Unmend && !InMeleeRange() && HasBattleTarget())
                         return Unmend;
 
                     if (InCombat())
