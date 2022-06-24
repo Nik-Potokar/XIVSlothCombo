@@ -279,9 +279,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(AstralFlow);
                         }
                         
-                        if (gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
-                            if (gauge.Attunement >= 1)
-                                return All.Swiftcast;
+                        if (gauge.IsIfritAttuned && gauge.Attunement >= 1 && IsOffCooldown(All.Swiftcast))
+                            return All.Swiftcast;
                     }
 
                     if (gauge.IsGarudaAttuned && HasEffect(Buffs.GarudasFavor) ||

@@ -2531,7 +2531,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2, SMN.Outburst, SMN.Tridisaster)]
         [ConflictingCombos(SMN_Simple_Combo)]
-        [CustomComboInfo("Summoner Advanced Combo", "Advanced Combo features tied to Ruin, Ruin II, Outburst, or Tri-Disaster.\nIf all sub options are toggled will turn into a full one button rotation (Simple Summoner)\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
+        [CustomComboInfo("Summoner Advanced Combo", "Advanced Combo features tied to Ruin, Ruin II, Outburst, and Tri-Disaster.\nRuin III is kept untouched for mobility.", SMN.JobID, 0, "Ruin 7 Feature", "Ruination is come... again?")]
         SMN_Advanced_Combo = 17000,
         
         [ParentCombo(SMN_Advanced_Combo)]
