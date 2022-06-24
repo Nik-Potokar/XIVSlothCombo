@@ -50,7 +50,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"IN COMBAT: {CustomComboNS.Functions.CustomComboFunctions.InCombat()}");
                 ImGui.TextUnformatted($"IN MELEE RANGE: {comboClass.InMeleeRange()}");
                 ImGui.TextUnformatted($"DISTANCE FROM TARGET: {comboClass.GetTargetDistance()}");
-                ImGui.TextUnformatted($"TARGET HP VALUE: {CustomComboNS.Functions.CustomComboFunctions.EnemyHealthCurrentHp()}");
+                ImGui.TextUnformatted($"TARGET HP VALUE: {CustomComboNS.Functions.CustomComboFunctions.GetTargetCurrentHP()}");
                 ImGui.TextUnformatted($"LAST ACTION: {ActionWatching.GetActionName(ActionWatching.LastAction)}");
                 ImGui.TextUnformatted($"LAST ACTION COST: {CustomComboNS.Functions.CustomComboFunctions.GetResourceCost(ActionWatching.LastAction)}");
                 ImGui.TextUnformatted($"LAST ACTION TYPE: {ActionWatching.GetAttackType(ActionWatching.LastAction)}");
