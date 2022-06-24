@@ -2146,7 +2146,7 @@ namespace XIVSlothCombo.Combos
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Diagnosis Simple Single Target Heal Feature", "Supports soft-targetting.", SGE.JobID, 300, "", "")]
+        [CustomComboInfo("Diagnosis Simple Single Target Heal Feature", "Supports soft-targeting.", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
