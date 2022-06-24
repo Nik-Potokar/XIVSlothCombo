@@ -245,6 +245,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return EnergySiphon;
                         }
                         
+                        if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 4000 && level >= All.Levels.LucidDreaming)
+                            return All.LucidDreaming;
+                        
                         if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
                         {
                             if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && (!SummonBahamut.LevelChecked() || lastComboMove is AstralImpulse or AstralFlare))
