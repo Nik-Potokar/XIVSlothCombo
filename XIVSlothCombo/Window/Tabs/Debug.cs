@@ -65,7 +65,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             else
             {
-                ImGui.TextUnformatted("Plese log in to use this tab.");
+                ImGui.TextUnformatted("Please log in to use this tab.");
             }
         }
     }
