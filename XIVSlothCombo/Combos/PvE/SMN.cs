@@ -282,6 +282,13 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.IsIfritAttuned && gauge.Attunement >= 1 && IsOffCooldown(All.Swiftcast))
                             return All.Swiftcast;
                     }
+                    if (gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone)
+                    {
+                        if (STCombo)
+                            return OriginalHook(Gemshine);
+                        if (AoECombo && PreciousBrilliance.LevelChecked())
+                            return OriginalHook(PreciousBrilliance);
+                    }
 
                     if (HasEffect(Buffs.GarudasFavor) && gauge.Attunement is 0 ||
                         HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) ||
@@ -459,7 +466,6 @@ namespace XIVSlothCombo.Combos.PvE
                                         return All.Swiftcast;
                                 }
                             }
-
                         }
 
                         //SpS Swiftcast
@@ -482,8 +488,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
                             if (gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
                             {
-                                if (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) ||
-                                    (IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && gauge.Attunement >= 1))
+                                if (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) || (IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && gauge.Attunement >= 1))
                                 {
                                     if (STCombo || (AoECombo && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi_Only)))
                                         return All.Swiftcast;
@@ -492,6 +497,14 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone)
+                    {
+                        if (STCombo)
+                            return OriginalHook(Gemshine);
+                        if (AoECombo && PreciousBrilliance.LevelChecked())
+                            return OriginalHook(PreciousBrilliance);
+                    }
+                    
                     if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2) || //Garuda
                         IsEnabled(CustomComboPreset.SMN_Titan_MountainBuster) && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) || //Titan
                         IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) //Ifrit
