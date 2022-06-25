@@ -2105,15 +2105,15 @@ namespace XIVSlothCombo.Combos
         SGE_ST_Dosis = 14100,
                 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 110, "", "")]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value.", SGE.JobID, 110, "", "")]
             SGE_ST_Dosis_Lucid = 14110,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime", SGE.JobID, 120, "", "")]
+            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 120, "", "")]
             SGE_ST_Dosis_EDosis = 14120,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving", SGE.JobID, 130, "", "")]
+            [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving.", SGE.JobID, 130, "", "")]
             SGE_ST_Dosis_Toxikon = 14130,
             #endregion
 
@@ -2123,23 +2123,23 @@ namespace XIVSlothCombo.Combos
         SGE_AoE_Phlegma = 14200,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("No Phlegma to Toxikon Option", "Use Toxikon when out of Phlegma charges\nTakes priority over Dyskrasia", SGE.JobID, 210, "", "")]
+            [CustomComboInfo("No Phlegma to Toxikon Option", "Use Toxikon when out of Phlegma charges\nTakes priority over Dyskrasia.", SGE.JobID, 210, "", "")]
             SGE_AoE_Phlegma_NoPhlegmaToxikon = 14210,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Toxikon Distance Option", "Use Toxikon when out of Phlemga's Range\nTakes priority over Dyskrasia", SGE.JobID, 220, "", "")]
+            [CustomComboInfo("Toxikon Distance Option", "Use Toxikon when out of Phlemga's Range\nTakes priority over Dyskrasia.", SGE.JobID, 220, "", "")]
             SGE_AoE_Phlegma_OutOfRangeToxikon = 14220,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("No Phlegma to Dyskrasia Option", "Use Dyskrasia when out of Phlegma charges", SGE.JobID, 230, "", "")]
+            [CustomComboInfo("No Phlegma to Dyskrasia Option", "Use Dyskrasia when out of Phlegma charges.", SGE.JobID, 230, "", "")]
             SGE_AoE_Phlegma_NoPhlegmaDyskrasia = 14230,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Dyskrasia No-Target Option", "Use Dyskrasia when no target is selected", SGE.JobID, 240, "", "")]
+            [CustomComboInfo("Dyskrasia No-Target Option", "Use Dyskrasia when no target is selected.", SGE.JobID, 240, "", "")]
             SGE_AoE_Phlegma_NoTargetDyskrasia = 14240,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Phlegma when MP drops below slider value", SGE.JobID, 250, "", "")]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Phlegma when MP drops below slider value.", SGE.JobID, 250, "", "")]
             SGE_AoE_Phlegma_Lucid = 14250,
             #endregion
 
@@ -2178,7 +2178,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Haima = 14370,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 380, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 380, "", "")]
             SGE_ST_Heal_Rhizomata = 14380,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2193,7 +2193,7 @@ namespace XIVSlothCombo.Combos
         #region Sage Simple AoE Heal
         [ReplaceSkill(SGE.Prognosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking", SGE.JobID, 500, "", "")]
+        [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking.", SGE.JobID, 500, "", "")]
         SGE_AoE_Heal = 14500,
             
             [ParentCombo(SGE_AoE_Heal)]
@@ -2217,15 +2217,15 @@ namespace XIVSlothCombo.Combos
             SGE_AoE_Heal_Pepsis = 14550,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Ixochole Option", "Adds Ixochole", SGE.JobID, 560, "", "")]
+            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 560, "", "")]
             SGE_AoE_Heal_Ixochole = 14560,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Kerachole Option", "Adds Kerachole", SGE.JobID, 570, "", "")]
+            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 570, "", "")]
             SGE_AoE_Heal_Kerachole = 14570,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 580, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 580, "", "")]
             SGE_AoE_Heal_Rhizomata = 14580,
             #endregion
 
@@ -2235,11 +2235,11 @@ namespace XIVSlothCombo.Combos
         SGE_Rhizo = 14600,
 
         [ReplaceSkill(SGE.Druochole)]
-        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 700, "", "")]
+        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
         SGE_DruoTauro = 14700,
 
         [ReplaceSkill(SGE.Pneuma)]
-        [CustomComboInfo("Zoe Pneuma Feature", "Places Zoe on top of Pneuma when both actions are on cooldown", SGE.JobID, 701, "", "")] //Temporary to keep the order
+        [CustomComboInfo("Zoe Pneuma Feature", "Places Zoe on top of Pneuma when both actions are on cooldown.", SGE.JobID, 701, "", "")] //Temporary to keep the order
         SGE_ZoePneuma = 141000,
         #endregion
 
