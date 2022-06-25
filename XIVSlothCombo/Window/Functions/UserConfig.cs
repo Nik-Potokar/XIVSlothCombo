@@ -1163,7 +1163,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
 
-            if (preset == CustomComboPreset.SMN_DemiEgiMenu_BurstChoice)
+            if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
             {
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
