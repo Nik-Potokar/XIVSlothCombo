@@ -2543,7 +2543,7 @@ namespace XIVSlothCombo.Combos
         SMN_Advanced_Combo_EgiSummons_Attacks = 17004,
         
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Garuda Slipstream Option, "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 6, "Slipstream", "2 Fast 2 Furious")]
+        [CustomComboInfo("Garuda Slipstream Option", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 6, "Slipstream", "2 Fast 2 Furious")]
         SMN_Garuda_Slipstream = 17005,
         
         [ParentCombo(SMN_Advanced_Combo)]
