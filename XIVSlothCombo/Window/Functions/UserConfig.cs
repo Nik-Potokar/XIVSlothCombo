@@ -133,7 +133,7 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomIntValue(config);
             ImGui.PushItemWidth(itemWidth);
             ImGui.SameLine();
-            ImGui.Dummy(new Vector2(15, 0));
+            ImGui.Dummy(new Vector2(21, 0));
             ImGui.SameLine();
             var enabled = output == outputValue;
 
