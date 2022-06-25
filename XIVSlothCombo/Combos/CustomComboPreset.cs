@@ -1483,10 +1483,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_LunarSolarOpener = 9018,
 
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Main Combo on Demolish Option", "Replaces Demolish with the Main Combo, except without any oCDs added. Useful for saving burst.", MNK.JobID, -1, "", "")]
-        MNK_ST_Simple_Demolish = 9026,
-
         [ParentCombo(MNK_AoE_SimpleMode)]
         [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_CDs = 9019,
