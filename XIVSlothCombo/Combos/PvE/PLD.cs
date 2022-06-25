@@ -140,7 +140,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Uptime Feature
                     if (!InMeleeRange() && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) &&
-                        !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth) && HasTarget())
+                        !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth) && HasBattleTarget())
                     {
                         if (level >= Levels.HolySpirit && LocalPlayer.CurrentMp >= 1000 && (!this.IsMoving || HasEffect(Buffs.Requiescat)))
                         {
