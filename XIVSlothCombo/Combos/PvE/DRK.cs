@@ -69,6 +69,7 @@ namespace XIVSlothCombo.Combos.PvE
                 StalwartSoul = 40,
                 Shadow = 74,
                 EdgeOfShadow = 74,
+                EnhancedPlunge = 78,
                 LivingShadow = 80,
                 SaltAndDarkness = 86,
                 Shadowbringer = 90,
@@ -151,7 +152,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (level >= Levels.Plunge && IsEnabled(CustomComboPreset.DRK_Plunge) && GetRemainingCharges(Plunge) > plungeChargesRemaining)
                                     {
                                         if (IsNotEnabled(CustomComboPreset.DRK_MeleePlunge) ||
-                                            (IsEnabled(CustomComboPreset.DRK_MeleePlunge) && GetCooldownRemainingTime(Delirium) >= 45 && GetTargetDistance() <= 1))
+                                            (IsEnabled(CustomComboPreset.DRK_MeleePlunge) && GetTargetDistance() <= 1 &&
+                                            ((level >= Levels.EnhancedPlunge && GetCooldownRemainingTime(Delirium) >= 45) ||
+                                            level < Levels.EnhancedPlunge)))
                                             return Plunge;
                                     }
                                 }
