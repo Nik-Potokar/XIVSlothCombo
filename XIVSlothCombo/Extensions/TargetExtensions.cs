@@ -17,10 +17,10 @@ namespace XIVSlothCombo.Extensions
          * CurrentTarget.IsEnemy
          * etc
         */
-        
+
         /// <summary> Gets a value indicating a specified target's HP Percent</summary>
-        /// <returns> Double representing percentage. </returns>
-        internal static double GetHPPercent(this GameObject? target) => target is not BattleChara chara ? 0 : chara.CurrentHp / chara.MaxHp * 100;
+        /// <returns> float representing percentage. </returns>
+        internal static float GetHPPercent(this GameObject? target) => target is not BattleChara chara ? 0 : (float)chara.CurrentHp / chara.MaxHp * 100;
         
         /// <summary> Gets a specified target's Maximum HP</summary>
         /// <returns> uint representing Max HP value </returns>
@@ -42,7 +42,7 @@ namespace XIVSlothCombo.Extensions
 
         /// <summary> Gets distance from player to target </summary>
         /// <returns> Double representing distance</returns>
-        internal static double GetDistance(this GameObject? target)
+        internal static float GetDistance(this GameObject? target)
         {
             if (target is null || CustomComboFunctions.LocalPlayer is null)
                 return 0;
