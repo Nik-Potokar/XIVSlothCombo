@@ -2598,7 +2598,7 @@ namespace XIVSlothCombo.Combos
         SMN_DemiAbilities = 17024,
 
         [ParentCombo(SMN_Advanced_Combo_EDFester)]
-        [CustomComboInfo("Pooled oGCDs Option", "Pools damage OGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in below.", SMN.JobID, 1)]
+        [CustomComboInfo("Pooled oGCDs Option", "Pools damage oGCDs to use under Searing Light and in Bahamut/Phoenix Phase.\nChoose which phase to burst in below.", SMN.JobID, 1)]
         SMN_DemiEgiMenu_oGCDPooling = 17025,
 
         [ConflictingCombos(ALL_Caster_Raise)]
