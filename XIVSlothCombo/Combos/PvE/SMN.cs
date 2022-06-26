@@ -349,7 +349,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (UsedDemiAttack == false && lastComboMove is AstralImpulse or FountainOfFire or AstralFlare or BrandOfPurgatory && GetCooldownRemainingTime(AstralImpulse) > 1)
                     {
                         UsedDemiAttack = true; // Registers that a Demi Attack was used and blocks further incrementation of DemiAttackCount3Count
-                        DemiAttackCount++; // Increments Glare3 counter
+                        DemiAttackCount++; // Increments DemiAttack counter
                     }
                     //CHECK_DEMIATTACK_USE_RESET
                     if (UsedDemiAttack && GetCooldownRemainingTime(AstralImpulse) < 1) UsedDemiAttack = false; // Resets block to allow CHECK_DEMIATTACK_USE
