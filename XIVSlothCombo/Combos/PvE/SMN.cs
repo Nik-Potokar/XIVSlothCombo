@@ -282,6 +282,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.IsIfritAttuned && gauge.Attunement >= 1 && IsOffCooldown(All.Swiftcast))
                             return All.Swiftcast;
                     }
+                    
                     if (gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone)
                     {
                         if (STCombo)
