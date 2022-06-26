@@ -128,7 +128,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SMN_Lucid = "SMN_Lucid",
                 SMN_BurstPhase = "SMN_BurstPhase",
                 SMN_PrimalChoice = "SMN_PrimalChoice",
-                SMN_SwiftcastPhase = "SMN_SwiftcastPhase";
+                SMN_SwiftcastPhase = "SMN_SwiftcastPhase",
+                SMN_Burst_Delay = "SMN_Burst_Delay";
         }
 
         internal class SMN_Raise : CustomCombo
@@ -326,6 +327,8 @@ namespace XIVSlothCombo.Combos.PvE
         }
         internal class SMN_Advanced_Combo : CustomCombo
         {
+            internal static uint DemiAttackCount = 0;
+            internal static bool UsedDemiAttack = false;
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMN_Advanced_Combo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -335,11 +338,22 @@ namespace XIVSlothCombo.Combos.PvE
                 var SummonerBurstPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_BurstPhase);
                 var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.SMN_Lucid);
                 var swiftcastPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
+                var burstDelay = PluginConfiguration.GetCustomIntValue(Config.SMN_Burst_Delay);
                 var STCombo = actionID is Ruin or Ruin2;
                 var AoECombo = actionID is Outburst or Tridisaster;
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster && InCombat())
                 {
+                    if (OriginalHook(Ruin) is not (AstralImpulse or FountainOfFire) || gauge.SummonTimerRemaining == 0) DemiAttackCount = 0; // Resets counter
+                    //CHECK_DEMIATTACK_USE
+                    if (UsedDemiAttack == false && lastComboMove is AstralImpulse or FountainOfFire or AstralFlare or BrandOfPurgatory && GetCooldownRemainingTime(AstralImpulse) > 1)
+                    {
+                        UsedDemiAttack = true; // Registers that a Demi Attack was used and blocks further incrementation of DemiAttackCount3Count
+                        DemiAttackCount++; // Increments Glare3 counter
+                    }
+                    //CHECK_DEMIATTACK_USE_RESET
+                    if (UsedDemiAttack && GetCooldownRemainingTime(AstralImpulse) < 1) UsedDemiAttack = false; // Resets block to allow CHECK_DEMIATTACK_USE
+                    
                     if (CanSpellWeave(actionID))
                     {
                         // Searing Light
@@ -382,9 +396,9 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (AoECombo && Painflare.LevelChecked() && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling_Only))
                                             return Painflare;
                                     }
-                                    if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Ruin) == AstralImpulse) ||
-                                        (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire) ||
-                                        (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
+                                    if ((SummonerBurstPhase is 0 or 1 && DemiAttackCount >= burstDelay && OriginalHook(Ruin) == AstralImpulse) ||
+                                        (SummonerBurstPhase == 2 && DemiAttackCount >= burstDelay && OriginalHook(Ruin) == FountainOfFire) ||
+                                        (SummonerBurstPhase == 3 && DemiAttackCount >= burstDelay && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
                                         (SummonerBurstPhase == 4 && HasEffectAny(Buffs.SearingLight) && !HasEffect(Buffs.TitansFavor)))
                                     {
                                         if (STCombo)
@@ -411,7 +425,7 @@ namespace XIVSlothCombo.Combos.PvE
                         //Demi Nuke
                         if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
                         {
-                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks))
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && DemiAttackCount >= burstDelay)
                             {
                                 if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && (!SummonBahamut.LevelChecked() || lastComboMove is AstralImpulse or AstralFlare))
                                     return OriginalHook(AstralFlow);
