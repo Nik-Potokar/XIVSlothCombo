@@ -229,7 +229,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Painflare;
                             }
 
-                            if (OriginalHook(Ruin) == AstralImpulse)
+                            if (OriginalHook(Ruin) == AstralImpulse && HasEffect(Buffs.SearingLight))
                             {
                                 if (STCombo)
                                     return Fester;
@@ -396,15 +396,16 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (AoECombo && Painflare.LevelChecked() && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling_Only))
                                             return Painflare;
                                     }
-                                    if ((SummonerBurstPhase is 0 or 1 && DemiAttackCount >= burstDelay && OriginalHook(Ruin) == AstralImpulse) ||
+                                    if (HasEffect(Buffs.SearingLight) && 
+                                        (SummonerBurstPhase is 0 or 1 && DemiAttackCount >= burstDelay && OriginalHook(Ruin) == AstralImpulse) ||
                                         (SummonerBurstPhase == 2 && DemiAttackCount >= burstDelay && OriginalHook(Ruin) == FountainOfFire) ||
                                         (SummonerBurstPhase == 3 && DemiAttackCount >= burstDelay && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
-                                        (SummonerBurstPhase == 4 && HasEffectAny(Buffs.SearingLight) && !HasEffect(Buffs.TitansFavor)))
+                                        (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                     {
-                                        if (STCombo)
-                                            return Fester;
-                                        if (AoECombo && Painflare.LevelChecked() && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling_Only))
-                                            return Painflare;
+                                            if (STCombo)
+                                                return Fester;
+                                            if (AoECombo && Painflare.LevelChecked() && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling_Only))
+                                                return Painflare;
                                     }
                                 }
                             }
