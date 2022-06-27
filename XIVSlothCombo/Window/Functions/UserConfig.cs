@@ -110,6 +110,9 @@ namespace XIVSlothCombo.Window.Functions
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
             var output = PluginConfiguration.GetCustomIntValue(config, outputValue);
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             var enabled = output == outputValue;
 
             if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
