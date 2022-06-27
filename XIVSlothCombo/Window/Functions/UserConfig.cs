@@ -26,6 +26,9 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomIntValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             inputChanged |= ImGui.SliderInt($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
             if (inputChanged)
@@ -55,6 +58,9 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
             if (inputChanged)
@@ -77,6 +83,9 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue, "%.1f");
 
             if (inputChanged)
