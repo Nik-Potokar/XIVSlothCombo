@@ -402,10 +402,10 @@ namespace XIVSlothCombo.Combos.PvE
                                         (SummonerBurstPhase == 3 && DemiAttackCount >= burstDelay && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
                                         (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                     {
-                                            if (STCombo)
-                                                return Fester;
-                                            if (AoECombo && Painflare.LevelChecked() && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling_Only))
-                                                return Painflare;
+                                        if (STCombo)
+                                            return Fester;
+                                        if (AoECombo && Painflare.LevelChecked() && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling_Only))
+                                            return Painflare;
                                     }
                                 }
                             }
