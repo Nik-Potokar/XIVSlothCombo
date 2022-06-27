@@ -839,8 +839,8 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DRK.Souleater)]
         [ParentCombo(DRK_MainComboBuffs_Group)]
-        [CustomComboInfo("Delirium Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "")]
-        DRK_Delirium = 5002,
+        [CustomComboInfo("Bloodspiller Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "")]
+        DRK_Bloodspiller = 5002,
 
         [ReplaceSkill(DRK.StalwartSoul)]
         [ParentCombo(DRK_StalwartSoulCombo)]
@@ -852,7 +852,7 @@ namespace XIVSlothCombo.Combos
         DRK_LivingShadow = 5004,
 
         [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("EoS Overcap Feature", "Uses EoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "", "")]
         DRK_ManaOvercap = 5005,
 
         [ReplaceSkill(DRK.CarveAndSpit, DRK.AbyssalDrain)]
@@ -868,9 +868,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available and Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_Plunge = 5008,
 
-        [ParentCombo(DRK_Delirium)]
-        [CustomComboInfo("Delayed Delirium Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0, "", "")]
-        DRK_DelayedDelirium = 5010,
+        [ParentCombo(DRK_Bloodspiller)]
+        [CustomComboInfo("Delayed Bloodspiller Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID, 0, "", "")]
+        DRK_DelayedBloodspiller = 5010,
 
         [ParentCombo(DRK_SouleaterCombo)]
         [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID, 0, "", "")]
@@ -885,7 +885,7 @@ namespace XIVSlothCombo.Combos
         DRK_AoE_Shadowbringer = 5014,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("FoS Overcap Feature", "Uses FoS if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID, 0, "", "")]
         DRK_AoE_ManaOvercap = 5015,
 
         [ParentCombo(DRK_SouleaterCombo)]
@@ -897,7 +897,7 @@ namespace XIVSlothCombo.Combos
         DRK_Shadowbringer = 5019,
 
         [ParentCombo(DRK_ManaOvercap)]
-        [CustomComboInfo("EoS Burst Option", "Uses EoS until chosen MP limit is reached during even minute window bursts.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Edge of Shadow Burst Option", "Uses Edge of Shadow until chosen MP limit is reached during minute window bursts.", DRK.JobID, 0, "", "")]
         DRK_EoSPooling = 5020,
 
         [ParentCombo(DRK_Shadowbringer)]
@@ -916,9 +916,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0, "", "")]
         DRK_SaltedEarth = 5024,
 
-        [ParentCombo(DRK_Delirium)]
+        [ParentCombo(DRK_MainComboBuffs_Group)]
         [CustomComboInfo("Delirium on CD", "Adds Delirium to Main Combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0, "", "")]
-        DRK_DeliriumOnCD = 5025,
+        DRK_Delirium = 5025,
 
         [ParentCombo(DRK_MainComboBuffs_Group)]
         [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
@@ -939,7 +939,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DRK_StalwartSoulCombo)]
         [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AoE on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_LivingShadow = 5030,
-        
 
         #endregion
 
@@ -2101,15 +2100,15 @@ namespace XIVSlothCombo.Combos
         SGE_ST_Dosis = 14100,
                 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value", SGE.JobID, 110, "", "")]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value.", SGE.JobID, 110, "", "")]
             SGE_ST_Dosis_Lucid = 14110,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime", SGE.JobID, 120, "", "")]
+            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 120, "", "")]
             SGE_ST_Dosis_EDosis = 14120,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving", SGE.JobID, 130, "", "")]
+            [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving.", SGE.JobID, 130, "", "")]
             SGE_ST_Dosis_Toxikon = 14130,
             #endregion
 
@@ -2119,30 +2118,30 @@ namespace XIVSlothCombo.Combos
         SGE_AoE_Phlegma = 14200,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("No Phlegma to Toxikon Option", "Use Toxikon when out of Phlegma charges\nTakes priority over Dyskrasia", SGE.JobID, 210, "", "")]
+            [CustomComboInfo("No Phlegma to Toxikon Option", "Use Toxikon when out of Phlegma charges\nTakes priority over Dyskrasia.", SGE.JobID, 210, "", "")]
             SGE_AoE_Phlegma_NoPhlegmaToxikon = 14210,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Toxikon Distance Option", "Use Toxikon when out of Phlemga's Range\nTakes priority over Dyskrasia", SGE.JobID, 220, "", "")]
+            [CustomComboInfo("Toxikon Distance Option", "Use Toxikon when out of Phlemga's Range\nTakes priority over Dyskrasia.", SGE.JobID, 220, "", "")]
             SGE_AoE_Phlegma_OutOfRangeToxikon = 14220,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("No Phlegma to Dyskrasia Option", "Use Dyskrasia when out of Phlegma charges", SGE.JobID, 230, "", "")]
+            [CustomComboInfo("No Phlegma to Dyskrasia Option", "Use Dyskrasia when out of Phlegma charges.", SGE.JobID, 230, "", "")]
             SGE_AoE_Phlegma_NoPhlegmaDyskrasia = 14230,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Dyskrasia No-Target Option", "Use Dyskrasia when no target is selected", SGE.JobID, 240, "", "")]
+            [CustomComboInfo("Dyskrasia No-Target Option", "Use Dyskrasia when no target is selected.", SGE.JobID, 240, "", "")]
             SGE_AoE_Phlegma_NoTargetDyskrasia = 14240,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Phlegma when MP drops below slider value", SGE.JobID, 250, "", "")]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Phlegma when MP drops below slider value.", SGE.JobID, 250, "", "")]
             SGE_AoE_Phlegma_Lucid = 14250,
             #endregion
 
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Diagnosis Simple Single Target Heal Feature", "You must target a party member (including yourself) for some features to work.", SGE.JobID, 300, "", "")]
+        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2174,7 +2173,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Haima = 14370,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 380, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 380, "", "")]
             SGE_ST_Heal_Rhizomata = 14380,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2189,7 +2188,7 @@ namespace XIVSlothCombo.Combos
         #region Sage Simple AoE Heal
         [ReplaceSkill(SGE.Prognosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Sage Simple AoE Heal Feature", "Customize your AoE healing to your liking", SGE.JobID, 500, "", "")]
+        [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking.", SGE.JobID, 500, "", "")]
         SGE_AoE_Heal = 14500,
             
             [ParentCombo(SGE_AoE_Heal)]
@@ -2213,15 +2212,15 @@ namespace XIVSlothCombo.Combos
             SGE_AoE_Heal_Pepsis = 14550,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Ixochole Option", "Adds Ixochole", SGE.JobID, 560, "", "")]
+            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 560, "", "")]
             SGE_AoE_Heal_Ixochole = 14560,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Kerachole Option", "Adds Kerachole", SGE.JobID, 570, "", "")]
+            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 570, "", "")]
             SGE_AoE_Heal_Kerachole = 14570,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0", SGE.JobID, 580, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 580, "", "")]
             SGE_AoE_Heal_Rhizomata = 14580,
             #endregion
 
@@ -2231,11 +2230,11 @@ namespace XIVSlothCombo.Combos
         SGE_Rhizo = 14600,
 
         [ReplaceSkill(SGE.Druochole)]
-        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available", SGE.JobID, 700, "", "")]
+        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
         SGE_DruoTauro = 14700,
 
         [ReplaceSkill(SGE.Pneuma)]
-        [CustomComboInfo("Zoe Buff for Pneuma Feature", "Places Zoe ontop of Pneuma when both actions are on cooldown", SGE.JobID, 701, "", "")] //Temporary to keep the order
+        [CustomComboInfo("Zoe Pneuma Feature", "Places Zoe on top of Pneuma when both actions are on cooldown.", SGE.JobID, 701, "", "")] //Temporary to keep the order
         SGE_ZoePneuma = 141000,
         #endregion
 

@@ -1,4 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -26,6 +28,7 @@ namespace XIVSlothCombo.Combos.PvE
             EdgeOfShadow = 16470,
             LivingShadow = 16472,
             SaltAndDarkness = 25755,
+            Oblation = 25754,
             Shadowbringer = 25757,
             Plunge = 3640,
             BloodWeapon = 3625,
@@ -66,6 +69,7 @@ namespace XIVSlothCombo.Combos.PvE
                 StalwartSoul = 40,
                 Shadow = 74,
                 EdgeOfShadow = 74,
+                EnhancedPlunge = 78,
                 LivingShadow = 80,
                 SaltAndDarkness = 86,
                 Shadowbringer = 90,
@@ -103,9 +107,9 @@ namespace XIVSlothCombo.Combos.PvE
                             //Mana Features
                             if (IsEnabled(CustomComboPreset.DRK_ManaOvercap))
                             {
-                                if (IsEnabled(CustomComboPreset.DRK_EoSPooling) && gauge.ShadowTimeRemaining >= 1 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && level >= Levels.EdgeOfDarkness && CanDelayedWeave(actionID))
+                                if (IsEnabled(CustomComboPreset.DRK_EoSPooling) && GetCooldownRemainingTime(Delirium) >= 50 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && level >= Levels.EdgeOfDarkness && CanDelayedWeave(actionID))
                                     return OriginalHook(EdgeOfDarkness);
-                                if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10)
+                                if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000))
                                 {
                                     if (level >= Levels.EdgeOfDarkness)
                                         return OriginalHook(EdgeOfDarkness);
@@ -121,7 +125,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (IsEnabled(CustomComboPreset.DRK_BloodWeapon) && IsOffCooldown(BloodWeapon) && level >= Levels.BloodWeapon)
                                         return BloodWeapon;
-                                    if (IsEnabled(CustomComboPreset.DRK_DeliriumOnCD) && IsOffCooldown(Delirium) && level >= Levels.Delirium)
+                                    if (IsEnabled(CustomComboPreset.DRK_Delirium) && IsOffCooldown(Delirium) && level >= Levels.Delirium)
                                         return Delirium;
                                 }
 
@@ -148,7 +152,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (level >= Levels.Plunge && IsEnabled(CustomComboPreset.DRK_Plunge) && GetRemainingCharges(Plunge) > plungeChargesRemaining)
                                     {
                                         if (IsNotEnabled(CustomComboPreset.DRK_MeleePlunge) ||
-                                            (IsEnabled(CustomComboPreset.DRK_MeleePlunge) && GetCooldownRemainingTime(Delirium) >= 45 && GetTargetDistance() <= 1))
+                                            (IsEnabled(CustomComboPreset.DRK_MeleePlunge) && GetTargetDistance() <= 1 &&
+                                            ((level >= Levels.EnhancedPlunge && GetCooldownRemainingTime(Delirium) >= 45) ||
+                                            level < Levels.EnhancedPlunge)))
                                             return Plunge;
                                     }
                                 }
@@ -156,19 +162,19 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Delirium Features
-                        if (level >= Levels.Delirium && IsEnabled(CustomComboPreset.DRK_Delirium) && IsEnabled(CustomComboPreset.DRK_MainComboCDs_Group))
+                        if (level >= Levels.Delirium && IsEnabled(CustomComboPreset.DRK_Bloodspiller) && IsEnabled(CustomComboPreset.DRK_MainComboCDs_Group))
                         {
                             //Regular Delirium
-                            if (GetBuffStacks(Buffs.Delirium) > 0 && (level < Levels.LivingShadow || IsNotEnabled(CustomComboPreset.DRK_DelayedDelirium)))
+                            if (GetBuffStacks(Buffs.Delirium) > 0 && (level < Levels.LivingShadow || IsNotEnabled(CustomComboPreset.DRK_DelayedBloodspiller)))
                                 return Bloodspiller;
 
                             //Delayed Delirium
-                            if (IsEnabled(CustomComboPreset.DRK_DelayedDelirium) && GetBuffStacks(Buffs.Delirium) > 0 &&
+                            if (IsEnabled(CustomComboPreset.DRK_DelayedBloodspiller) && GetBuffStacks(Buffs.Delirium) > 0 &&
                                 (GetBuffStacks(Buffs.BloodWeapon) is 0 or 1 or 2))
                                 return Bloodspiller;
 
                             //Blood management before Delirium
-                            if (IsEnabled(CustomComboPreset.DRK_DeliriumOnCD) && ((gauge.Blood >= 50 && GetCooldownRemainingTime(BloodWeapon) < 6 && GetCooldownRemainingTime(Delirium) > 0) || (IsOffCooldown(Delirium) && gauge.Blood >= 50)))
+                            if (IsEnabled(CustomComboPreset.DRK_Delirium) && ((gauge.Blood >= 50 && GetCooldownRemainingTime(BloodWeapon) < 6 && GetCooldownRemainingTime(Delirium) > 0) || (IsOffCooldown(Delirium) && gauge.Blood >= 50)))
                                 return Bloodspiller;
                         }
 
@@ -206,7 +212,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap) && level >= Levels.FloodOfDarkness && (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || gauge.DarksideTimeRemaining < 10))
+                        if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap) && level >= Levels.FloodOfDarkness && (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000)))
                             return OriginalHook(FloodOfDarkness);
                         if (gauge.DarksideTimeRemaining > 1)
                         {

@@ -1,4 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -137,22 +139,26 @@ namespace XIVSlothCombo.Combos.PvE
                                         return OriginalHook(DangerZone);
                                 }
 
-                                //60 second weaves
-                                if (IsOnCooldown(DoubleDown))
+                                //60s weaves
+                                if (HasEffect(Buffs.NoMercy))
                                 {
-                                    if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && IsOffCooldown(DangerZone))
-                                        return OriginalHook(DangerZone);
-                                    if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && IsOffCooldown(BowShock))
-                                        return BowShock;
-                                }
+                                    //Post DD
+                                    if (IsOnCooldown(DoubleDown))
+                                    {
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && IsOffCooldown(DangerZone))
+                                            return OriginalHook(DangerZone);
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && IsOffCooldown(BowShock))
+                                            return BowShock;
+                                    }
 
-                                //30 second weaves
-                                if (IsOnCooldown(SonicBreak))
-                                {
-                                    if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && level >= Levels.BowShock && IsOffCooldown(BowShock))
-                                        return BowShock;
-                                    if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
-                                        return OriginalHook(DangerZone);
+                                    //Pre DD
+                                    if (IsOnCooldown(SonicBreak) && level < Levels.DoubleDown)
+                                    {
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && level >= Levels.BowShock && IsOffCooldown(BowShock))
+                                            return BowShock;
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
+                                            return OriginalHook(DangerZone);
+                                    }
                                 }
                             }
 
@@ -230,7 +236,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                                     return Hypervelocity;
                                 if (level >= Levels.BurstStrike && (gauge.Ammo == MaxCartridges(level) ||
-                                    (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && GetCooldownRemainingTime(Bloodfest) < 6 && gauge.Ammo != 0 && IsOnCooldown(NoMercy) && level >= Levels.Bloodfest))) //Burns Ammo for Bloodfest
+                                    (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && GetCooldownRemainingTime(Bloodfest) < 6 && gauge.Ammo is not 0 and <= 2 && GetCooldownRemainingTime(NoMercy) > 10 && level >= Levels.Bloodfest))) //Burns Ammo for Bloodfest
                                     return BurstStrike;
                             }
 
