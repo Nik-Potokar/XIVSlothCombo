@@ -2582,15 +2582,15 @@ namespace XIVSlothCombo.Combos
         SMN_SearingLight = 17018,
 
         [ParentCombo(SMN_SearingLight)]
-        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nNot recommended for SpS Builds.", SMN.JobID, 0, "")]
+        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Demi phases.\nReflects Demi choice selected under 'Pooled oGCDs Option'.\nNot recommended for SpS Builds.", SMN.JobID, 0, "")]
         SMN_SearingLight_Burst = 170181,
 
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Demi Summons Combo Option", "Adds Demi Summons to the single target and AoE combos.", SMN.JobID, 10, "", "")]
+        [CustomComboInfo("Demi Summons Combo Option", "Adds Demi summons to the single target and AoE combos.", SMN.JobID, 10, "", "")]
         SMN_Advanced_Combo_DemiSummons = 17020,
 
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Swiftcast Egi Ability Option", "Swiftcasts during the selected Primal summon.", SMN.JobID, 8, "", "")]
+        [CustomComboInfo("Swiftcast Egi Ability Option", "Uses Swiftcast during the selected Egi summon.", SMN.JobID, 8, "", "")]
         SMN_DemiEgiMenu_SwiftcastEgi = 17023,
 
         [CustomComboInfo("Astral Flow/Enkindle on Demi Summons Feature", "Adds Enkindle Bahamut, Enkindle Phoenix and Astral Flow to their relevant summons.", SMN.JobID, 11, "", "")]
@@ -2620,15 +2620,15 @@ namespace XIVSlothCombo.Combos
         SMN_Egi_AstralFlow = 17034,
 
         [ParentCombo(SMN_SearingLight)]
-        [CustomComboInfo("Single Target Only Searing Light Option", "Only use Searing Light on the single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Use only on Single Target combo", "Prevent this feature from applying to the AoE combo.", SMN.JobID, 2, "", "")]
         SMN_SearingLight_STOnly = 17036,
         
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
-        [CustomComboInfo("Single Target Only Pooled oGCD Option", "Only use damage oGCDs on the single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Use only on Single Target combo", "Prevent this feature from applying to the AoE combo.", SMN.JobID, 2, "", "")]
         SMN_DemiEgiMenu_oGCDPooling_Only = 17037,
         
         [ParentCombo(SMN_DemiEgiMenu_SwiftcastEgi)]
-        [CustomComboInfo("Single Target Only Swiftcast Egis Option", "Only use Swiftcast on the single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Use only on Single Target combo", "Prevent this feature from applying to the AoE combo.", SMN.JobID, 2, "", "")]
         SMN_DemiEgiMenu_SwiftcastEgi_Only = 17038,
         
         [ParentCombo(SMN_ESPainflare)]
@@ -2636,7 +2636,7 @@ namespace XIVSlothCombo.Combos
         SMN_ESPainflare_Ruin4 = 17039,
         
         [ParentCombo(SMN_Ifrit_Cyclone)]
-        [CustomComboInfo("Crimson Cyclone Option", "Changes Crimson Cyclone to only be used after all Ifrit Attunement charges have been used, or if moving.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Crimson Cyclone Option", "Only uses Crimson Cyclone if you are not moving, or have no remaining Ifrit Attunement charges.", SMN.JobID, 0, "", "")]
         SMN_Ifrit_Cyclone_Option = 17040,
 
         [ConflictingCombos(SMN_Advanced_Combo)]
