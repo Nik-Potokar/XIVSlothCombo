@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using System;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -611,16 +612,25 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset => CustomComboPreset.SMN_CarbuncleReminder;
             internal static bool carbyPresent = false;
+            internal static DateTime noPetTime;
+            internal static DateTime presentTime;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                var gauge = GetJobGauge<SMNGauge>();
+            {                            
                 if (actionID is Ruin or Ruin2 or Ruin3 or DreadwyrmTrance or AstralFlow or EnkindleBahamut or SearingLight or RadiantAegis or Outburst or Tridisaster or PreciousBrilliance or Gemshine)
                 {
-                    if (HasPetPresent() ||
-                        (!HasPetPresent() && lastComboMove is AstralImpulse or FountainOfFire))
+                    presentTime = DateTime.Now;
+                    int deltaTime = (presentTime - noPetTime).Milliseconds;
+                    var gauge = GetJobGauge<SMNGauge>();
+
+                    if (HasPetPresent())
+                    {
                         carbyPresent = true;
-                    if (!HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && GetCooldownRemainingTime(Ruin) == 0)
+                        noPetTime = DateTime.Now;
+                    }
+                 
+                    //Deals with the game's half second pet refresh
+                    if (deltaTime > 500 && !HasPetPresent() && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0 && GetCooldownRemainingTime(Ruin) == 0)
                         carbyPresent = false;
                     if (carbyPresent == false)
                         return SummonCarbuncle;
