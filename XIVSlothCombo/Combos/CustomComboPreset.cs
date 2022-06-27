@@ -2575,7 +2575,7 @@ namespace XIVSlothCombo.Combos
         SMN_Advanced_Combo_EDFester = 17014,
 
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Egi Summons Combo Option", "Adds Egi summons to your Main/AoE combos.\nWill prioritise the Egi selected below.\nIf no option is selected, the feature will default to summoning Titan first.", SMN.JobID, 3, "", "")]
+        [CustomComboInfo("Egi Summons Combo Option", "Adds Egi summons to the single target and AoE combos.\nWill prioritise the Egi selected below.\nIf no option is selected, the feature will default to summoning Titan first.", SMN.JobID, 3, "", "")]
         SMN_DemiEgiMenu_EgiOrder = 17016,
 
         [ParentCombo(SMN_Advanced_Combo)]
@@ -2583,7 +2583,7 @@ namespace XIVSlothCombo.Combos
         SMN_SearingLight = 17018,
 
         [ParentCombo(SMN_SearingLight)]
-        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix phase.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS Builds.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Demi summon phases.\nChoose which phase to burst in under 'Burst Phase Choice' option.\nNot recommended for SpS builds.", SMN.JobID, 0, "", "")]
         SMN_SearingLight_Burst = 170181,
 
         [ParentCombo(SMN_Advanced_Combo)]
@@ -2614,22 +2614,22 @@ namespace XIVSlothCombo.Combos
         SMN_RuinMobility = 17030,
 
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the main combo when below set MP value.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the single target combo when MP falls below the set value.", SMN.JobID, 2, "", "")]
         SMN_Lucid = 17031,
 
         [CustomComboInfo("Egi Abilities on Summons Feature", "Adds Egi Abilities (Astral Flow) to Egi summons when ready.\nEgi abilities will appear on their respective Egi summon ability, as well as Titan.", SMN.JobID, 12, "", "")]
         SMN_Egi_AstralFlow = 17034,
 
         [ParentCombo(SMN_SearingLight)]
-        [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on the single target combo.", SMN.JobID, 2, "", "")]
         SMN_SearingLight_STOnly = 17036,
         
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
-        [CustomComboInfo("Single target only Pooled oGCD Option", "Only use damage oGCDs on single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Single target only Pooled oGCD Option", "Only use damage oGCDs on the single target combo.", SMN.JobID, 2, "", "")]
         SMN_DemiEgiMenu_oGCDPooling_Only = 17037,
         
         [ParentCombo(SMN_DemiEgiMenu_SwiftcastEgi)]
-        [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on the single target combo.", SMN.JobID, 2, "", "")]
         SMN_DemiEgiMenu_SwiftcastEgi_Only = 17038,
         
         [ParentCombo(SMN_ESPainflare)]
