@@ -1162,6 +1162,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
             }
+            
+            if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
+                UserConfig.DrawSliderInt(0, 2, SMN.Config.SMN_Burst_Delay, "Sets the amount of Demi GCDs to wait for bursting", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
             {
@@ -1180,9 +1183,6 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, SMN.Config.SMN_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
-            
-            if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
-                UserConfig.DrawSliderInt(0, 2, SMN.Config.SMN_Burst_Delay, "Sets the amount of Demi GCDs to wait for bursting", 150, SliderIncrements.Ones);
 
             #endregion
             // ====================================================================================
