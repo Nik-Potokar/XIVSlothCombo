@@ -130,6 +130,11 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(ALL_Melee_Menu)]
             [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
             ALL_Melee_Feint = 100030,
+
+            [ParentCombo(ALL_Melee_Menu)]
+            [CustomComboInfo("Melee DPS: True North Protection", "Prevents the use of True North when its buff is already active by replacing it with Fire.", ADV.JobID)]
+            ALL_Melee_TrueNorth = 100031,
+        
             #endregion
 
         #region Global Ranged Physical Features
@@ -293,12 +298,6 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region BLACK MAGE
-
-        [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_SimpleMode)]
-        [CustomComboInfo("Scathe Feature", "Replaces Scathe with Fire 4 or Blizzard 4 depending on Astral Fire/Umbral Ice.", BLM.JobID, 2, "", "")]
-        BLM_Enochian = 2000,
-
         [ReplaceSkill(BLM.Transpose)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "", "")]
         BLM_Mana = 2001,
@@ -312,7 +311,7 @@ namespace XIVSlothCombo.Combos
         BLM_Blizzard = 2003,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_SimpleMode)]
+        [ConflictingCombos(BLM_SimpleMode, BLM_Simple_Transpose, BLM_Paradox)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID, 0, "", "")]
         BLM_ScatheXeno = 2004,
 
@@ -320,32 +319,20 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Fire 1/3 Feature", "Replaces Fire 1 with Fire 3 outside of Astral Fire or when Firestarter proc is up.", BLM.JobID, 0, "", "")]
         BLM_Fire_1to3 = 2005,
 
-        [ReplaceSkill(BLM.Scathe)]
-        [ParentCombo(BLM_Enochian)]
-        [CustomComboInfo("Thundercloud Option", "Replaces Scathe with Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available.", BLM.JobID, 0, "", "")]
+        [ParentCombo(BLM_SimpleMode)]
+        [CustomComboInfo("Thundercloud Option", "Adds Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available to Simple BLM.", BLM.JobID, 0, "", "")]
         BLM_Thunder = 2006,
-
-        [ReplaceSkill(BLM.Fire4)]
-        [ParentCombo(BLM_Enochian)]
-        [CustomComboInfo("Despair Option", "Replaces Fire 4 with Despair when below 2400 MP.", BLM.JobID, 0, "", "")]
-        BLM_Despair = 2007,
 
         [ReplaceSkill(BLM.Flare)]
         [CustomComboInfo("Simple AoE Feature", "Replaces Flare with a full one button rotation.", BLM.JobID, -1, "", "")]
         BLM_AoE_SimpleMode = 2008,
 
-        [ReplaceSkill(BLM.Scathe)]
-        [ParentCombo(BLM_Enochian)]
-        [CustomComboInfo("Aspect Swap Option", "Replaces Scathe with Blizzard 3 when at 0 MP in Astral Fire or with Fire 3 when at 10000 MP in Umbral Ice with 3 Umbral Hearts.", BLM.JobID, 0, "", "")]
-        BLM_AspectSwap = 2010,
-
-        [ReplaceSkill(BLM.Scathe)]
         [ParentCombo(BLM_Thunder)]
-        [CustomComboInfo("Thunder 1/3 Option", "Replaces Scathe with Thunder 1/3 when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Simple BLM.", BLM.JobID, 0, "", "")]
         BLM_ThunderUptime = 2011,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_ScatheXeno, BLM_Simple_Transpose, BLM_Paradox)]
+        [ConflictingCombos(BLM_ScatheXeno, BLM_Simple_Transpose, BLM_Paradox)]
         [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -3, "", "")]
         BLM_SimpleMode = 2012,
 
@@ -382,7 +369,7 @@ namespace XIVSlothCombo.Combos
         BLM_AoE_Simple_Foul = 2020,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
+        [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
         [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -2, "", "")]
         BLM_Simple_Transpose = 2021,
 
@@ -391,7 +378,7 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_Transpose_Pooling = 2022,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_Enochian, BLM_ScatheXeno, BLM_SimpleMode, BLM_Simple_Transpose)]
+        [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Simple_Transpose)]
         [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9-13%% less damage than Simple BLM). Requires level 90.", BLM.JobID, -2, "", "")]
         BLM_Paradox = 2023,
 
@@ -414,6 +401,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLM_Simple_CastMovement)]
         [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving.", BLM.JobID, 0, "", "")]
         BLM_Simple_CastMovement_Scathe = 2028,
+
+        [ParentCombo(BLM_Simple_Transpose)]
+        [CustomComboInfo("Thundercloud Option", "Adds Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available to Advanced BLM.", BLM.JobID, 0, "", "")]
+        BLM_TransposeThunder = 2029,
+
+        [ParentCombo(BLM_TransposeThunder)]
+        [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Advanced BLM.", BLM.JobID, 0, "", "")]
+        BLM_TransposeThunderUptime = 2030,
 
         #endregion
 
@@ -1343,7 +1338,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overprotections.\nConflicts with other single target toggles!!\nMade to work optimally with a 2.5 GCD.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Machinist", "Single button single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
         MCH_ST_SimpleMode = 8020,
 
         [ParentCombo(MCH_ST_SimpleMode)]
@@ -1405,6 +1400,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_ST_Simple_Stabilizer)]
         [CustomComboInfo("Wildfire Only", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("High Ping Mode", "A high ping friendly mode.\nIt limits the uses of Gauss/Ricochet inside Hypercharge windows.\nThere will be a little dps loss.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_High_Latency_Mode = 8036,
 
         #endregion
 
@@ -1483,10 +1482,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_LunarSolarOpener = 9018,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Main Combo on Demolish Option", "Replaces Demolish with the Main Combo, except without any oCDs added. Useful for saving burst.", MNK.JobID, -1, "", "")]
-        MNK_ST_Simple_Demolish = 9026,
 
         [ParentCombo(MNK_AoE_SimpleMode)]
         [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
@@ -1707,8 +1702,7 @@ namespace XIVSlothCombo.Combos
         PLD_ST_RoyalAuth_Intervene = 11010,
 
         [ParentCombo(PLD_ST_RoyalAuth)]
-        [ConflictingCombos(PLD_ST_RoyalAuth_RangedUptime_2)]
-        [CustomComboInfo("Shield Lob Uptime Feature", "Replace Main Combo with Shield Lob when out of range.", PLD.JobID, 4, "", "")]
+        [CustomComboInfo("Uptime Feature", "Replace Main Combo with Shield Lob/Holy Spirit when out of range.\nWill use Holy Spirit if you're not moving or have the Requiescat buff\nOtherwise will use Shield lob when moving and if you don't have the Requiescat buff.", PLD.JobID, 4, "", "")]
         PLD_ST_RoyalAuth_RangedUptime = 11012,
 
         // This is a parent of itself? Bruh moment. I don't 'do' PLD, so I'm just leaving this note here. - K
@@ -1720,11 +1714,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(PLD_ST_RoyalAuth)]
         [CustomComboInfo("Requiescat Feature", "Requiescat gets added onto the main combo when the Fight or Flight buff has 17 seconds remaining or less.", PLD.JobID, 2, "", "")]
         PLD_ST_RoyalAuth_Requiescat = 11014,
-
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [ConflictingCombos(PLD_ST_RoyalAuth_RangedUptime)]
-        [CustomComboInfo("Holy Spirit Uptime Feature", "Replace Royal Authority/Rage of Halone Feature with Holy Spirit when out of range.", PLD.JobID, 5, "", "")]
-        PLD_ST_RoyalAuth_RangedUptime_2 = 11016,
 
         [ParentCombo(PLD_ST_RoyalAuth)]
         [CustomComboInfo("Fight or Flight Feature", "Adds Fight or Flight onto the main combo with a delayed weave.", PLD.JobID, 2, "", "")]

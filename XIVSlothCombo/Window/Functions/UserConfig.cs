@@ -133,7 +133,7 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomIntValue(config);
             ImGui.PushItemWidth(itemWidth);
             ImGui.SameLine();
-            ImGui.Dummy(new Vector2(15, 0));
+            ImGui.Dummy(new Vector2(21, 0));
             ImGui.SameLine();
             var enabled = output == outputValue;
 
@@ -1020,6 +1020,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte", "", 1);
                 UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
                 UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte\n-Jolt\n-Jolt II", "Select for one button rotation", 3);
+            }
+
+            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo)
+            {
+                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet", "", 1);
+                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet\n-Scatter\n-Impact", "Select for one button rotation", 2);
             }
 
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
