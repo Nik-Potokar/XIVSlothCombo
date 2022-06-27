@@ -2526,7 +2526,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2, SMN.Outburst, SMN.Tridisaster)]
         [ConflictingCombos(SMN_Simple_Combo)]
-        [CustomComboInfo("Advanced Summoner Feature", "Advanced combo features tied to Ruin, Ruin II, Outburst, and Tri-Disaster.\nRuin III is left unchanged for mobility purposes.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Summoner Feature", "Advanced combo features for a greater degree of customisation.\nAccommodates SpS builds.\nRuin III is left unchanged for mobility purposes.", SMN.JobID, 0, "", "")]
         SMN_Advanced_Combo = 17000,
         
         [ParentCombo(SMN_Advanced_Combo)]
@@ -2538,15 +2538,15 @@ namespace XIVSlothCombo.Combos
         SMN_Advanced_Combo_EgiSummons_Attacks = 17004,
         
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Garuda Slipstream Option", "Adds Slipstream on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 6, "", "")]
+        [CustomComboInfo("Garuda Slipstream Option", "Adds Slipstream to the single target and AoE combos.", SMN.JobID, 6, "", "")]
         SMN_Garuda_Slipstream = 17005,
         
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Ifrit Cyclone Option", "Adds Crimson Cyclone/Crimson Strike on RuinI/Ruin II/Tri-disaster.", SMN.JobID, 7, "", "")]
+        [CustomComboInfo("Ifrit Cyclone Option", "Adds Crimson Cyclone and Crimson Strike to the single target and AoE combos.", SMN.JobID, 7, "", "")]
         SMN_Ifrit_Cyclone = 17006,
         
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Titan Mountain Buster Option", "Adds Mountain Buster on Ruin I/Ruin II/Tri-disaster.", SMN.JobID, 5, "", "")]
+        [CustomComboInfo("Titan Mountain Buster Option", "Adds Mountain Buster to the single target and AoE combos.", SMN.JobID, 5, "", "")]
         SMN_Titan_MountainBuster = 17007,
 
         [ReplaceSkill(SMN.Fester)]
@@ -2582,7 +2582,7 @@ namespace XIVSlothCombo.Combos
         SMN_SearingLight = 17018,
 
         [ParentCombo(SMN_SearingLight)]
-        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nNot recommended for SpS Builds.", SMN.JobID, 0, "My eyes!", "I can't see!")]
+        [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Bahamut/Phoenix Phase.\nNot recommended for SpS Builds.", SMN.JobID, 0, "")]
         SMN_SearingLight_Burst = 170181,
 
         [ParentCombo(SMN_Advanced_Combo)]
@@ -2620,15 +2620,15 @@ namespace XIVSlothCombo.Combos
         SMN_Egi_AstralFlow = 17034,
 
         [ParentCombo(SMN_SearingLight)]
-        [CustomComboInfo("Single target only Searing Light Option", "Only use Searing Light on the single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Single Target Only Searing Light Option", "Only use Searing Light on the single target combo.", SMN.JobID, 2, "", "")]
         SMN_SearingLight_STOnly = 17036,
         
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
-        [CustomComboInfo("Single target only Pooled oGCD Option", "Only use damage oGCDs on the single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Single Target Only Pooled oGCD Option", "Only use damage oGCDs on the single target combo.", SMN.JobID, 2, "", "")]
         SMN_DemiEgiMenu_oGCDPooling_Only = 17037,
         
         [ParentCombo(SMN_DemiEgiMenu_SwiftcastEgi)]
-        [CustomComboInfo("Single target only Swiftcast Egis Option", "Only use Swiftcast on the single target combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Single Target Only Swiftcast Egis Option", "Only use Swiftcast on the single target combo.", SMN.JobID, 2, "", "")]
         SMN_DemiEgiMenu_SwiftcastEgi_Only = 17038,
         
         [ParentCombo(SMN_ESPainflare)]
