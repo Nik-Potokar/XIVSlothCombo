@@ -226,16 +226,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
                         {
-                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
-                                return OriginalHook(EnkindleBahamut);
-                            
                             if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && Deathflare.LevelChecked())
                                 return OriginalHook(AstralFlow);
+                            
+                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
+                                return OriginalHook(EnkindleBahamut);
 
                             if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire or BrandOfPurgatory)
                                 return OriginalHook(AstralFlow);
-
-                            return actionID;
                         }
                         
                         if (gauge.HasAetherflowStacks)
@@ -394,11 +392,11 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && DemiAttackCount >= burstDelay)
                             {
-                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
-                                    return OriginalHook(EnkindleBahamut);
-                                
                                 if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && Deathflare.LevelChecked())
                                     return OriginalHook(AstralFlow);
+                                
+                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
+                                    return OriginalHook(EnkindleBahamut);
                             }
 
                             // Demi Nuke 2: Electric Boogaloo
