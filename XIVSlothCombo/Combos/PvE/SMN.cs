@@ -241,7 +241,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
                                 return OriginalHook(EnkindleBahamut);
 
-                            if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire or BrandOfPurgatory)
+                            if (IsOffCooldown(Rekindle) && OriginalHook(Ruin) is FountainOfFire)
                                 return OriginalHook(AstralFlow);
                         }
                         
@@ -411,7 +411,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // Demi Nuke 2: Electric Boogaloo
                             if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle))
                             {
-                                if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire or BrandOfPurgatory)
+                                if (IsOffCooldown(Rekindle) && OriginalHook(Ruin) is FountainOfFire)
                                     return OriginalHook(AstralFlow);
                             }
                         }
