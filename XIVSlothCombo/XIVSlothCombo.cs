@@ -2,7 +2,6 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
-using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using System;
 using System.Collections.Generic;
@@ -55,7 +54,16 @@ namespace XIVSlothCombo
             });
 
             Service.ClientState.Login += PrintLoginMessage;
+            
+
         }
+
+        private void ResetFeatures()
+        {
+            //Enumerable.Range is a start and count, not a start and end.
+            Service.Configuration.ResetFeatures("NINRework", Enumerable.Range(10000, 100).ToArray());
+        }
+
 
         private void DrawUI()
         {
@@ -64,6 +72,8 @@ namespace XIVSlothCombo
 
         private void PrintLoginMessage(object? sender, EventArgs e)
         {
+            ResetFeatures();
+
             if (!Service.Configuration.HideMessageOfTheDay)
                 Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(task => PrintMotD());
         }
