@@ -235,7 +235,7 @@ namespace XIVSlothCombo.Combos.PvE
                         
                         if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
                         {
-                            if (IsOffCooldown(Deathflare) && Deathflare.LevelChecked())
+                            if (IsOffCooldown(Deathflare) && Deathflare.LevelChecked() && OriginalHook(Ruin) is AstralImpulse)
                                 return OriginalHook(AstralFlow);
                             
                             if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
@@ -401,7 +401,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && DemiAttackCount >= burstDelay)
                             {
-                                if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && Deathflare.LevelChecked())
+                                if (IsOffCooldown(Deathflare) && Deathflare.LevelChecked() && OriginalHook(Ruin) is AstralImpulse)
                                     return OriginalHook(AstralFlow);
                                 
                                 if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
