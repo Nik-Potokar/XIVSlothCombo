@@ -387,7 +387,8 @@ namespace XIVSlothCombo.Combos.PvE
                             else return SearingLight;
                         }
                         
-                        if (!gauge.HasAetherflowStacks)
+                        // ED/ES
+                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks)
                         {
                             if (STCombo && EnergyDrain.LevelChecked() && IsOffCooldown(EnergyDrain))
                                 return EnergyDrain;
@@ -416,7 +417,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                         
-                        // ED & Fester
+                        // Fester/Painflare
                         if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester))
                         {
                             if (gauge.HasAetherflowStacks)
