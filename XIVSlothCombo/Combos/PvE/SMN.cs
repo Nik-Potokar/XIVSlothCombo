@@ -224,6 +224,15 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsOffCooldown(SearingLight) && LevelChecked(SearingLight) && OriginalHook(Ruin) == AstralImpulse)
                             return SearingLight;
 
+                        if (!gauge.HasAetherflowStacks)
+                        {
+                            if (STCombo && EnergyDrain.LevelChecked() && IsOffCooldown(EnergyDrain))
+                                return EnergyDrain;
+
+                            if (AoECombo && EnergySiphon.LevelChecked() && IsOffCooldown(EnergySiphon))
+                                return EnergySiphon;
+                        }
+                        
                         if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
                         {
                             if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && Deathflare.LevelChecked())
@@ -257,15 +266,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (!gauge.HasAetherflowStacks)
-                        {
-                            if (STCombo && EnergyDrain.LevelChecked() && IsOffCooldown(EnergyDrain))
-                                return EnergyDrain;
-
-                            if (AoECombo && EnergySiphon.LevelChecked() && IsOffCooldown(EnergySiphon))
-                                return EnergySiphon;
-                        }
-                        
                         if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 4000 && level >= All.Levels.LucidDreaming)
                             return All.LucidDreaming;
                     }
@@ -386,6 +386,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                             else return SearingLight;
                         }
+                        
+                        if (!gauge.HasAetherflowStacks)
+                        {
+                            if (STCombo && EnergyDrain.LevelChecked() && IsOffCooldown(EnergyDrain))
+                                return EnergyDrain;
+
+                            if (AoECombo && EnergySiphon.LevelChecked() && IsOffCooldown(EnergySiphon))
+                                return EnergySiphon;
+                        }
 
                         // Demi Nuke
                         if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
@@ -444,15 +453,6 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Painflare;
                                     }
                                 }
-                            }
-
-                            if (!gauge.HasAetherflowStacks)
-                            {
-                                if (STCombo && EnergyDrain.LevelChecked() && IsOffCooldown(EnergyDrain))
-                                    return EnergyDrain;
-
-                                if (AoECombo && EnergySiphon.LevelChecked() && IsOffCooldown(EnergySiphon))
-                                    return EnergySiphon;
                             }
                         }
 
