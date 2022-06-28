@@ -223,6 +223,20 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsOffCooldown(SearingLight) && LevelChecked(SearingLight) && OriginalHook(Ruin) == AstralImpulse)
                             return SearingLight;
+
+                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
+                        {
+                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
+                                return OriginalHook(EnkindleBahamut);
+                            
+                            if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && Deathflare.LevelChecked())
+                                return OriginalHook(AstralFlow);
+
+                            if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire or BrandOfPurgatory)
+                                return OriginalHook(AstralFlow);
+
+                            return actionID;
+                        }
                         
                         if (gauge.HasAetherflowStacks)
                         {
@@ -235,7 +249,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Painflare;
                             }
 
-                            if (OriginalHook(Ruin) == AstralImpulse && HasEffect(Buffs.SearingLight))
+                            if (HasEffect(Buffs.SearingLight))
                             {
                                 if (STCombo)
                                     return Fester;
@@ -256,20 +270,6 @@ namespace XIVSlothCombo.Combos.PvE
                         
                         if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 4000 && level >= All.Levels.LucidDreaming)
                             return All.LucidDreaming;
-                        
-                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
-                        {
-                            if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && (!SummonBahamut.LevelChecked() || lastComboMove is AstralImpulse or AstralFlare))
-                                return OriginalHook(AstralFlow);
-
-                            if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked() && lastComboMove is AstralImpulse or AstralFlare or FountainOfFire or BrandOfPurgatory)
-                                return OriginalHook(EnkindleBahamut);
-                            
-                            if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire or BrandOfPurgatory)
-                                return OriginalHook(AstralFlow);
-
-                            return actionID;
-                        }
                     }
                     
                     if (gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
@@ -357,10 +357,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster && InCombat())
                 {
-                    if (OriginalHook(Ruin) is not (AstralImpulse or FountainOfFire) || gauge.SummonTimerRemaining == 0) DemiAttackCount = 0;    // Resets counter
+                    if (WasLastAction(OriginalHook(Aethercharge))) DemiAttackCount = 0;    // Resets counter
 
                     //CHECK_DEMIATTACK_USE
-                    if (UsedDemiAttack == false && lastComboMove is AstralImpulse or FountainOfFire or AstralFlare or BrandOfPurgatory && GetCooldownRemainingTime(AstralImpulse) > 1)
+                    if (UsedDemiAttack == false && lastComboMove is AstralImpulse or FountainOfFire or AstralFlare or BrandOfPurgatory && DemiAttackCount is not 6 && GetCooldownRemainingTime(AstralImpulse) > 1)
                     {
                         UsedDemiAttack = true;      // Registers that a Demi Attack was used and blocks further incrementation of DemiAttackCountCount
                         DemiAttackCount++;          // Increments DemiAttack counter
@@ -389,6 +389,26 @@ namespace XIVSlothCombo.Combos.PvE
                             else return SearingLight;
                         }
 
+                        // Demi Nuke
+                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
+                        {
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && DemiAttackCount >= burstDelay)
+                            {
+                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
+                                    return OriginalHook(EnkindleBahamut);
+                                
+                                if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && Deathflare.LevelChecked())
+                                    return OriginalHook(AstralFlow);
+                            }
+
+                            // Demi Nuke 2: Electric Boogaloo
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle))
+                            {
+                                if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire or BrandOfPurgatory)
+                                    return OriginalHook(AstralFlow);
+                            }
+                        }
+                        
                         // ED & Fester
                         if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester))
                         {
@@ -415,10 +435,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     if (HasEffect(Buffs.SearingLight) && 
-                                        SummonerBurstPhase is 0 or 1 && DemiAttackCount >= burstDelay && OriginalHook(Ruin) == AstralImpulse ||
-                                        (SummonerBurstPhase == 2 && DemiAttackCount >= burstDelay && OriginalHook(Ruin) == FountainOfFire) ||
-                                        (SummonerBurstPhase == 3 && DemiAttackCount >= burstDelay && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100) && OriginalHook(Ruin) is AstralImpulse or FountainOfFire) ||
-                                        (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
+                                        (SummonerBurstPhase is 0 or 1 or 2 && DemiAttackCount >= burstDelay ||
+                                        (SummonerBurstPhase == 3 && DemiAttackCount >= burstDelay && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100)) ||
+                                        (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor))))
                                     {
                                         if (STCombo)
                                             return Fester;
@@ -442,28 +461,6 @@ namespace XIVSlothCombo.Combos.PvE
                         // Lucid Dreaming
                         if (IsEnabled(CustomComboPreset.SMN_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
                             return All.LucidDreaming;
-
-                        // Demi Nuke
-                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
-                        {
-                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && DemiAttackCount >= burstDelay)
-                            {
-                                if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && (!SummonBahamut.LevelChecked() ||
-                                    lastComboMove is AstralImpulse or AstralFlare))
-                                    return OriginalHook(AstralFlow);
-
-                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked() &&
-                                    lastComboMove is AstralImpulse or AstralFlare or FountainOfFire or BrandOfPurgatory)
-                                    return OriginalHook(EnkindleBahamut);
-                            }
-
-                            // Demi Nuke 2: Electric Boogaloo
-                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle))
-                            {
-                                if (IsOffCooldown(Rekindle) && lastComboMove is FountainOfFire or BrandOfPurgatory)
-                                    return OriginalHook(AstralFlow);
-                            }
-                        }
                     }
 
                     // Demi
