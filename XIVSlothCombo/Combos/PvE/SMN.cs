@@ -235,7 +235,7 @@ namespace XIVSlothCombo.Combos.PvE
                         
                         if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
                         {
-                            if (IsOffCooldown(Deathflare) && AstralFlow.LevelChecked() && Deathflare.LevelChecked())
+                            if (IsOffCooldown(Deathflare) && Deathflare.LevelChecked())
                                 return OriginalHook(AstralFlow);
                             
                             if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && SummonBahamut.LevelChecked())
