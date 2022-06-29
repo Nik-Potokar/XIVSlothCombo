@@ -388,7 +388,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         
                         // ED/ES
-                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks)
+                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && DemiAttackCount >= burstDelay)
                         {
                             if (STCombo && EnergyDrain.LevelChecked() && IsOffCooldown(EnergyDrain))
                                 return EnergyDrain;
