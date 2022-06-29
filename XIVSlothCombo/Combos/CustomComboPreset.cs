@@ -2624,7 +2624,7 @@ namespace XIVSlothCombo.Combos
         SMN_SearingLight_STOnly = 17036,
         
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
-        [CustomComboInfo("Use only on Single Target combo", "Prevent this feature from applying to the AoE combo.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Use only on Single Target combo", "Prevent this feature from applying to the AoE combo.", SMN.JobID, 3, "", "")]
         SMN_DemiEgiMenu_oGCDPooling_Only = 17037,
         
         [ParentCombo(SMN_DemiEgiMenu_SwiftcastEgi)]
@@ -2647,6 +2647,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
         [CustomComboInfo("Energy Drain/Siphon Delay Option", "Makes Energy Drain/Siphon follow the same oGCD delay as Fester/Painflare.", SMN.JobID, 1, "", "")]
         SMN_Advanced_ED_ES_Option = 17042,
+        
+        [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
+        [CustomComboInfo("Burst Delay Only During Opener", "Only follows Burst Delay settings for initial burst phase.", SMN.JobID, 2, "", "")]
+        SMN_Advanced_Burst_Delay_Option = 17043,
         #endregion
 
         #region WARRIOR

@@ -350,23 +350,28 @@ namespace XIVSlothCombo.Combos.PvE
                 var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.SMN_Lucid);
                 var swiftcastPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
                 var burstDelay = PluginConfiguration.GetCustomIntValue(Config.SMN_Burst_Delay);
+                var inOpener = CombatEngageDuration().TotalSeconds < 30;
                 var STCombo = actionID is Ruin or Ruin2;
                 var AoECombo = actionID is Outburst or Tridisaster;
 
+                if (WasLastAction(OriginalHook(Aethercharge))) DemiAttackCount = 0;    // Resets counter
+
+                if (IsEnabled(CustomComboPreset.SMN_Advanced_Burst_Delay_Option) && !inOpener) DemiAttackCount = 6; // If SMN_Advanced_Burst_Delay_Option is active and outside opener window, set DemiAttackCount to 6 to ignore delayed oGCDs 
+
+                if (gauge.SummonTimerRemaining == 0 && !InCombat()) DemiAttackCount = 0;
+                
+                //CHECK_DEMIATTACK_USE
+                if (UsedDemiAttack == false && lastComboMove is AstralImpulse or FountainOfFire or AstralFlare or BrandOfPurgatory && DemiAttackCount is not 6 && GetCooldownRemainingTime(AstralImpulse) > 1)
+                {
+                    UsedDemiAttack = true;      // Registers that a Demi Attack was used and blocks further incrementation of DemiAttackCountCount
+                    DemiAttackCount++;          // Increments DemiAttack counter
+                }
+
+                //CHECK_DEMIATTACK_USE_RESET
+                if (UsedDemiAttack && GetCooldownRemainingTime(AstralImpulse) < 1) UsedDemiAttack = false;  // Resets block to allow CHECK_DEMIATTACK_USE
+
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster && InCombat())
                 {
-                    if (WasLastAction(OriginalHook(Aethercharge))) DemiAttackCount = 0;    // Resets counter
-
-                    //CHECK_DEMIATTACK_USE
-                    if (UsedDemiAttack == false && lastComboMove is AstralImpulse or FountainOfFire or AstralFlare or BrandOfPurgatory && DemiAttackCount is not 6 && GetCooldownRemainingTime(AstralImpulse) > 1)
-                    {
-                        UsedDemiAttack = true;      // Registers that a Demi Attack was used and blocks further incrementation of DemiAttackCountCount
-                        DemiAttackCount++;          // Increments DemiAttack counter
-                    }
-
-                    //CHECK_DEMIATTACK_USE_RESET
-                    if (UsedDemiAttack && GetCooldownRemainingTime(AstralImpulse) < 1) UsedDemiAttack = false;  // Resets block to allow CHECK_DEMIATTACK_USE
-                    
                     if (CanSpellWeave(actionID))
                     {
                         // Searing Light
