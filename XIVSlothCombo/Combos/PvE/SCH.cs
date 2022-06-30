@@ -1,7 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
+using System.Linq;
 using XIVSlothCombo.CustomComboNS;
+
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -49,6 +51,7 @@ namespace XIVSlothCombo.Combos.PvE
             Aetherflow = 166,
             Recitation = 16542,
             ChainStratagem = 7436,
+            DeploymentTactics = 3585,
 
             // Role
             Resurrection = 173;
@@ -56,6 +59,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Buffs
         {
             public const ushort
+            Galvanize = 297, //or 1331
             Recitation = 1896;
         }
 
@@ -208,6 +212,50 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (GetOptionBool(Config.SCH_FairyFeature)) return SummonSelene; else return SummonEos;
                 }
+                return actionID;
+            }
+        }
+
+        internal class SCH_DeploymentTactics : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DeploymentTactics;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is DeploymentTactics)
+                {
+                    if (IsOffCooldown(DeploymentTactics))
+                    {
+                        bool found = false;
+                        GameObject? target;
+                        //Check current target if they're a player and in the party
+                        if (CurrentTarget?.ObjectKind is ObjectKind.Player)
+                        {
+                            target = CurrentTarget;
+                            int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
+                            if (GetPartyMembers().Length > 0) maxPartySize = GetPartyMembers().Length;
+                            if (GetPartyMembers().Length == 0 && Services.Service.BuddyList.Length == 0) maxPartySize = 0;
+
+                            //Check if our target is in the party
+                            for (int i = 1; i <= maxPartySize; i++)
+                            {
+                                found = GetPartySlot(i) == target;
+                                if (found) break;
+                            }
+
+                        } 
+                        //Fall back to self, we can't use Deployment tactics on no target or non-party members
+                        else target = LocalPlayer;
+
+                        if (found) //we have a party member or we're working off ourselves. Recitation is down here as not to waste it on bad targets.
+                        {
+                            if (FindEffect(Buffs.Galvanize, target, LocalPlayer?.ObjectId) is not null) return DeploymentTactics;
+                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && (IsOffCooldown(Recitation))) return Recitation;
+                        }
+                    }
+
+                    return Adloquium;
+                }
+
                 return actionID;
             }
         }
