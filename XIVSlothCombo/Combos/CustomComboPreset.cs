@@ -2643,13 +2643,9 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2, SMN.Outburst, SMN.Tridisaster)]
         [CustomComboInfo("Simple Summoner Feature", "General purpose one-button combo.\nBursts on Bahamut phase.\nSummons Titan, Garuda, then Ifrit.\nSwiftcasts on Slipstream unless drifted.", SMN.JobID, -1, "", "")]
         SMN_Simple_Combo = 17041,
-        
+
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
-        [CustomComboInfo("Energy oGCDs Delay Option", "Makes Energy Drain/Siphon follow the same oGCD delay as Fester/Painflare.\nOnly applies to opener burst.", SMN.JobID, 1, "", "")]
-        SMN_Advanced_ED_ES_Option = 17042,
-        
-        [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
-        [CustomComboInfo("Burst Delay Option", "Only follows Burst Delay settings for the opener burst.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Burst Delay Option", "Only follows Burst Delay settings for the opener burst.\nThis Option is for high SPS builds.", SMN.JobID, 2, "", "")]
         SMN_Advanced_Burst_Delay_Option = 17043,
         #endregion
 
