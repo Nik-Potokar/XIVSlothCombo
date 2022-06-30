@@ -393,7 +393,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         
                         // ED/ES
-                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && (IsNotEnabled(CustomComboPreset.SMN_Advanced_ED_ES_Option) || DemiAttackCount >= burstDelay))
+                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && (IsNotEnabled(CustomComboPreset.SMN_Advanced_ED_ES_Option) || (!inOpener || DemiAttackCount >= burstDelay)))
                         {
                             if (STCombo && EnergyDrain.LevelChecked() && IsOffCooldown(EnergyDrain))
                                 return EnergyDrain;
