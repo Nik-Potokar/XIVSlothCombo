@@ -405,7 +405,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Non-Opener first set Fester/Painfalre
                         if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling) && gauge.HasAetherflowStacks && !inOpener)
                         {
-                            if (GetCooldown(EnergyDrain).CooldownRemaining <= 2.85)
+                            if (GetCooldown(EnergyDrain).CooldownRemaining <= 3.2)
                             {
                                 if (HasEffect(Buffs.SearingLight) &&
                                     (SummonerBurstPhase is 0 or 1 or 2 ||
