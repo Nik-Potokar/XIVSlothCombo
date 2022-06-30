@@ -132,27 +132,29 @@ namespace XIVSlothCombo.Combos.PvE
             #endregion
         }
 
-        internal class DNC_DanceComboReplacer : CustomCombo
+    internal class DNC_DanceComboReplacer : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_DanceComboReplacer;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var gauge = GetJobGauge<DNCGauge>();
-
-            if (gauge.IsDancing)
+            if (GetJobGauge<DNCGauge>().IsDancing)
             {
                 var actionIDs = Service.Configuration.DancerDanceCompatActionIDs;
 
+                // Cascade replacement
                 if (actionID == actionIDs[0] || (actionIDs[0] == 0 && actionID == Cascade))
                     return OriginalHook(Cascade);
 
+                // Fountain replacement
                 if (actionID == actionIDs[1] || (actionIDs[1] == 0 && actionID == Flourish))
                     return OriginalHook(Fountain);
 
+                // Reverse Cascade replacement
                 if (actionID == actionIDs[2] || (actionIDs[2] == 0 && actionID == FanDance1))
                     return OriginalHook(ReverseCascade);
 
+                // Fountainfall replacement
                 if (actionID == actionIDs[3] || (actionIDs[3] == 0 && actionID == FanDance2))
                     return OriginalHook(Fountainfall);
             }
@@ -239,14 +241,14 @@ namespace XIVSlothCombo.Combos.PvE
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            var canWeave = CanWeave(actionID);
-
             // Fan Dance 3 & 4 on Flourish when relevant
-            if (actionID is Flourish && canWeave)
+            if (actionID is Flourish && CanWeave(actionID))
             {
+                // FD3
                 if (HasEffect(Buffs.ThreeFoldFanDance))
                     return FanDance3;
 
+                // FD4
                 if (HasEffect(Buffs.FourFoldFanDance))
                     return FanDance4;
             }
@@ -263,11 +265,13 @@ namespace XIVSlothCombo.Combos.PvE
         {
             if (actionID is Cascade)
             {
+                #region Types
                 var gauge = GetJobGauge<DNCGauge>();
                 var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
                 var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
                 var canWeave = CanWeave(actionID);
                 var espritThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST);
+                #endregion
 
                 // ST Esprit overcap options
                 if (level >= Levels.SaberDance && gauge.Esprit >= espritThreshold && IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap))
@@ -282,9 +286,11 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Fan Dance 3/4 on combo
                     if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
                     {
+                        // FD3
                         if (HasEffect(Buffs.ThreeFoldFanDance) && level >= Levels.FanDance3)
                             return FanDance3;
 
+                        // FD4
                         if (HasEffect(Buffs.FourFoldFanDance) && level >= Levels.FanDance4)
                             return FanDance4;
                     }
@@ -317,11 +323,13 @@ namespace XIVSlothCombo.Combos.PvE
         {
             if (actionID is Windmill)
             {
+                #region Types
                 var gauge = GetJobGauge<DNCGauge>();
                 var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
                 var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
                 var canWeave = CanWeave(actionID);
                 var espritThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE);
+                #endregion
 
                 // AoE Esprit overcap options
                 if (level >= Levels.SaberDance && gauge.Esprit >= espritThreshold && IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap))
@@ -336,9 +344,11 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Fan Dance 3/4 on combo
                     if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
                     {
+                        // FD3
                         if (HasEffect(Buffs.ThreeFoldFanDance))
                             return FanDance3;
 
+                        // FD4
                         if (HasEffect(Buffs.FourFoldFanDance))
                             return FanDance4;
                     }
@@ -385,35 +395,44 @@ namespace XIVSlothCombo.Combos.PvE
             // One-button mode for both dances (SS/TS). SS takes priority.
             if (actionID is StandardStep)
             {
+                #region Types
                 var gauge = GetJobGauge<DNCGauge>();
                 var standardCD = GetCooldown(StandardStep);
                 var techstepCD = GetCooldown(TechnicalStep);
                 var devilmentCD = GetCooldown(Devilment);
                 var flourishCD = GetCooldown(Flourish);
                 var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                #endregion
 
+                // Devilment
                 if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                 {
-                    if (level is >= Levels.Devilment and < Levels.TechnicalStep ||
-                        (level >= Levels.TechnicalStep && techstepCD.IsCooldown))
+                    if (level is >= Levels.Devilment and < Levels.TechnicalStep ||  // Lv.62 - 69
+                        (level >= Levels.TechnicalStep && techstepCD.IsCooldown))   // Lv. 70+ during Tech
                         return Devilment;
                 }
 
+                // Flourish
                 if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) && !gauge.IsDancing && !flourishCD.IsCooldown &&
                     incombat && level >= Levels.Flourish && standardCD.IsCooldown)
                     return Flourish;
 
+                // Starfall Dance
                 if (HasEffect(Buffs.FlourishingStarfall))
                     return StarfallDance;
 
+                // Tillana
                 if (HasEffect(Buffs.FlourishingFinish))
                     return Tillana;
 
+                // Tech Step
                 if (standardCD.IsCooldown && !techstepCD.IsCooldown && !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
                     return TechnicalStep;
 
+                // Dance steps
                 if (gauge.IsDancing)
                 {
+                    // SS Steps
                     if (HasEffect(Buffs.StandardStep))
                     {
                         if (gauge.CompletedSteps < 2)
@@ -422,6 +441,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return StandardFinish2;
                     }
 
+                    // TS Steps
                     if (HasEffect(Buffs.TechnicalStep))
                     {
                         if (gauge.CompletedSteps < 4)
@@ -430,7 +450,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalFinish4;
                     }
                 }
-
             }
                 return actionID;
         }
@@ -444,6 +463,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             if (actionID is Cascade)
             {
+                #region Types
                 var gauge = GetJobGauge<DNCGauge>();
                 var canWeave = CanWeave(actionID);
                 var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
@@ -461,6 +481,7 @@ namespace XIVSlothCombo.Combos.PvE
                 var featherBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent);
                 var waltzThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent);
                 var secondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent);
+                #endregion
 
                 // Simple ST Standard Steps
                 if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DNC_ST_Simple_SS))
@@ -548,8 +569,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (level >= Levels.SaberDance && (gauge.Esprit >= 85 || (techBurst && gauge.Esprit > 50)))
                     return SaberDance;
 
-
-
                 // Simple ST Combos and burst attacks
                 if (level >= Levels.Fountain && lastComboMove is Cascade && comboTime is < 2 and > 0)
                     return Fountain;
@@ -562,12 +581,15 @@ namespace XIVSlothCombo.Combos.PvE
                 if (HasEffect(Buffs.FlourishingStarfall))
                     return StarfallDance;
 
+                // Fountainfall
                 if (level >= Levels.Fountainfall && flow)
                     return Fountainfall;
 
+                // Reverse Cascade
                 if (level >= Levels.ReverseCascade && symmetry)
                     return ReverseCascade;
                 
+                // Fountain
                 if (level >= Levels.Fountain && lastComboMove is Cascade && comboTime > 0)
                     return Fountain;
 
@@ -586,6 +608,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Windmill)
                 {
+                    #region Types
                     var gauge = GetJobGauge<DNCGauge>();
                     var canWeave = CanWeave(actionID);
                     var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
@@ -602,6 +625,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var technicalStepBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
                     var waltzThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWaltzPercent);
                     var secondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent);
+                    #endregion
 
                     // Simple AoE Standard Step (step function)
                     if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS))
@@ -681,9 +705,11 @@ namespace XIVSlothCombo.Combos.PvE
                         // Simple AoE Panic Heals
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_PanicHeals))
                         {
+                            // Curing Waltz
                             if (PlayerHealthPercentageHp() < waltzThreshold && curingWaltzReady)
                                 return CuringWaltz;
 
+                            // Second Wind
                             if (PlayerHealthPercentageHp() < secondWindThreshold && secondWindReady)
                                 return All.SecondWind;
                         }
@@ -693,7 +719,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Improvisation;
                     }
 
-                    // Simple AoE Combos and burst attacks
+                    // Simple AoE combos and burst attacks
                     if (level >= Levels.Bladeshower && lastComboMove is Windmill && comboTime is < 2 and > 0)
                         return Bladeshower;
 
@@ -705,12 +731,15 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
 
+                    // Bloodshower
                     if (level >= Levels.Bloodshower && flow)
                         return Bloodshower;
 
+                    // Rising Windmill
                     if (level >= Levels.RisingWindmill && symmetry)
                         return RisingWindmill;
 
+                    // Bladeshower
                     if (level >= Levels.Bladeshower && lastComboMove is Windmill && comboTime > 0)
                         return Bladeshower;
                 }
