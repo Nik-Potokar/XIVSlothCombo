@@ -39,6 +39,7 @@ namespace XIVSlothCombo.Combos.PvE
             FanDance3 = 16009,
             FanDance4 = 25791,
             // Other
+            Peloton = 7557,
             SaberDance = 16005,
             EnAvant = 16010,
             Devilment = 16011,
@@ -70,6 +71,7 @@ namespace XIVSlothCombo.Combos.PvE
                 ThreeFoldFanDance = 1820,
                 FourFoldFanDance = 2699,
                 // Other
+                Peloton = 1199,
                 ShieldSamba = 1826;
         }
 
@@ -431,8 +433,8 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Types
                     var gauge = GetJobGauge<DNCGauge>();
                     var canWeave = CanWeave(actionID);
-                    var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
-                    var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
+                    var flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
+                    var symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     var techBurstTimer = GetBuffRemainingTime(Buffs.TechnicalFinish);
                     var techBurst = HasEffect(Buffs.TechnicalFinish);
                     var flourishReady = LevelChecked(Flourish) && IsOffCooldown(Flourish) && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) && !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow);
@@ -447,6 +449,10 @@ namespace XIVSlothCombo.Combos.PvE
                     var waltzThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent);
                     var secondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent);
                     #endregion
+
+                    // Simple Pre-pull Peloton
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Peloton) && !InCombat() && !HasEffectAny(Buffs.Peloton) && GetBuffRemainingTime(Buffs.StandardStep) > 5)
+                        return Peloton;
 
                     // Simple ST Standard Steps
                     if (HasEffect(Buffs.StandardStep) && (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)))
@@ -574,8 +580,8 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Types
                     var gauge = GetJobGauge<DNCGauge>();
                     var canWeave = CanWeave(actionID);
-                    var flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
-                    var symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
+                    var flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
+                    var symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     var techBurstTimer = GetBuffRemainingTime(Buffs.TechnicalFinish);
                     var techBurst = HasEffect(Buffs.TechnicalFinish);
                     var flourishReady = LevelChecked(Flourish) && IsOffCooldown(Flourish);
