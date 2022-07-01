@@ -59,7 +59,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Buffs
         {
             public const ushort
-            Galvanize = 297, //or 1331
+            Galvanize = 297,
             Recitation = 1896;
         }
 
