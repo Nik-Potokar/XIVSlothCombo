@@ -555,6 +555,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    // Gemshine/Precious Brilliance if has Swiftcast
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone)
                     {
                         if (STCombo)
@@ -569,6 +570,7 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) // Ifrit
                         return OriginalHook(AstralFlow);
 
+                    // Movement Ruin4 in Ifrit Phase
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
                         return Ruin4;
                     
@@ -582,6 +584,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(PreciousBrilliance);
                     }
 
+                    // Egi Order
                     if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_EgiOrder) && gauge.SummonTimerRemaining == 0 && IsOnCooldown(SummonPhoenix) && IsOnCooldown(SummonBahamut))
                     {
                         if (gauge.IsIfritReady && !gauge.IsTitanReady && !gauge.IsGarudaReady && LevelChecked(SummonRuby))
@@ -606,6 +609,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    // Ruin 4
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && LevelChecked(Ruin4) && gauge.SummonTimerRemaining == 0 && gauge.AttunmentTimerRemaining == 0 && HasEffect(Buffs.FurtherRuin))
                         return Ruin4;
                 }
