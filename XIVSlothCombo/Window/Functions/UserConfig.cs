@@ -26,6 +26,9 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomIntValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             inputChanged |= ImGui.SliderInt($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
             if (inputChanged)
@@ -55,6 +58,9 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue);
 
             if (inputChanged)
@@ -77,6 +83,9 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
             var inputChanged = false;
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue, "%.1f");
 
             if (inputChanged)
@@ -101,6 +110,9 @@ namespace XIVSlothCombo.Window.Functions
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
             var output = PluginConfiguration.GetCustomIntValue(config, outputValue);
             ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
             var enabled = output == outputValue;
 
             if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
@@ -133,7 +145,7 @@ namespace XIVSlothCombo.Window.Functions
             var output = PluginConfiguration.GetCustomIntValue(config);
             ImGui.PushItemWidth(itemWidth);
             ImGui.SameLine();
-            ImGui.Dummy(new Vector2(15, 0));
+            ImGui.Dummy(new Vector2(21, 0));
             ImGui.SameLine();
             var enabled = output == outputValue;
 
@@ -1022,6 +1034,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte\n-Jolt\n-Jolt II", "Select for one button rotation", 3);
             }
 
+            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo)
+            {
+                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet", "", 1);
+                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet\n-Scatter\n-Impact", "Select for one button rotation", 2);
+            }
+
             if (preset == CustomComboPreset.RDM_MeleeFinisher)
             {
                 UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet", "", 1);
@@ -1153,27 +1171,30 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_DemiEgiMenu_EgiOrder)
             {
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Titan first", "Summons Titan first, Garuda second, Ifrit third", 1);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Garuda first", "Summons Garuda first, Titan second, Ifrit third", 2);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Titan first", "Summons Titan, Garuda then Ifrit.", 1);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Garuda first", "Summons Garuda, Titan then Ifrit.", 2);
             }
+            
+            if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
+                UserConfig.DrawSliderInt(0, 2, SMN.Config.SMN_Burst_Delay, "Sets the amount of GCDs under Demi summon to wait for oGCD use.", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.SMN_DemiEgiMenu_BurstChoice)
+            if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
             {
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut", "Burst during Bahamut Phase", 1);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Phoenix", "Burst during Phoenix Phase", 2);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut or Phoenix", "Burst during Bahamut or Phoenix Phase (whichever happens first)", 3);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "SpS Friendly Option", "Bursts when Searing Light is ready regardless of Phase", 4);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut", "Bursts during Bahamut phase.", 1);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Phoenix", "Bursts during Phoenix phase.", 2);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut or Phoenix", "Bursts during Bahamut or Phoenix phase (whichever comes first).", 3);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Flexible (SpS) Option", "Bursts when Searing Light is ready, regardless of phase.", 4);
             }
 
             if (preset == CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi)
             {
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "Garuda", "Swiftcast Slipstream", 1);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "Ifrit", "Swiftcast Ruby Ruin/Rite", 2);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "SpS Friendly Option", "Swiftcasts whichever Primal is available when Swiftcast is ready", 3);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "Garuda", "Swiftcasts Slipstream", 1);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "Ifrit", "Swiftcasts Ruby Ruin/Ruby Rite", 2);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_SwiftcastPhase, "Flexible (SpS) Option", "Swiftcasts the first available Egi when Swiftcast is ready.", 3);
             }
 
             if (preset == CustomComboPreset.SMN_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, SMN.Config.SMN_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, SMN.Config.SMN_Lucid, "Set value for your MP to be at or under for this feature to take effect.", 150, SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================

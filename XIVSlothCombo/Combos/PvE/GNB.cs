@@ -1,4 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -64,6 +66,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const byte
                 NoMercy = 2,
                 BrutalShell = 4,
+                LightningShot = 15,
                 DangerZone = 18,
                 SolidBarrel = 26,
                 BurstStrike = 30,
@@ -100,11 +103,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var roughDivideChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
                     var quarterWeave = GetCooldown(actionID).CooldownRemaining < 1 && GetCooldown(actionID).CooldownRemaining > 0.2;
 
-                    if (IsEnabled(CustomComboPreset.GNB_RangedUptime))
-                    {
-                        if (!InMeleeRange())
-                            return LightningShot;
-                    }
+                    if (IsEnabled(CustomComboPreset.GNB_RangedUptime) && !InMeleeRange() && level > Levels.LightningShot && HasBattleTarget())
+                        return LightningShot;
 
                     if (comboTime > 0)
                     {
@@ -125,37 +125,41 @@ namespace XIVSlothCombo.Combos.PvE
                         //oGCDs
                         if (CanWeave(actionID))
                         {
-                            if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup) && IsEnabled(CustomComboPreset.GNB_ST_Bloodfest))
+                            if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup))
                             {
-                                if (gauge.Ammo == 0 && IsOffCooldown(Bloodfest) && level >= Levels.Bloodfest && IsOnCooldown(GnashingFang))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && gauge.Ammo == 0 && IsOffCooldown(Bloodfest) && level >= Levels.Bloodfest && IsOnCooldown(GnashingFang))
                                     return Bloodfest;
-                            }
 
-                            //Blasting Zone outside of NM
-                            if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
-                            {
-                                if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && !HasEffect(Buffs.NoMercy) &&
-                                    ((IsOnCooldown(GnashingFang) && gauge.AmmoComboStep != 1 && GetCooldown(GnashingFang).CooldownRemaining > 20) || //Post Gnashing Fang
-                                    (level < Levels.GnashingFang) && IsOnCooldown(NoMercy))) //Pre Gnashing Fang
-                                    return OriginalHook(DangerZone);
-                            }
+                                //Blasting Zone outside of NM
+                                if (level >= Levels.DangerZone && IsOffCooldown(DangerZone))
+                                {
+                                    if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && !HasEffect(Buffs.NoMercy) &&
+                                        ((IsOnCooldown(GnashingFang) && gauge.AmmoComboStep != 1 && GetCooldown(GnashingFang).CooldownRemaining > 20) || //Post Gnashing Fang
+                                        (level < Levels.GnashingFang) && IsOnCooldown(NoMercy))) //Pre Gnashing Fang
+                                        return OriginalHook(DangerZone);
+                                }
 
-                            //60 second weaves
-                            if (IsOnCooldown(DoubleDown))
-                            {
-                                if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && IsOffCooldown(DangerZone))
-                                    return OriginalHook(DangerZone);
-                                if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && IsOffCooldown(BowShock))
-                                    return BowShock;
-                            }
+                                //60s weaves
+                                if (HasEffect(Buffs.NoMercy))
+                                {
+                                    //Post DD
+                                    if (IsOnCooldown(DoubleDown))
+                                    {
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && IsOffCooldown(DangerZone))
+                                            return OriginalHook(DangerZone);
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && IsOffCooldown(BowShock))
+                                            return BowShock;
+                                    }
 
-                            //30 second weaves
-                            if (IsOnCooldown(SonicBreak))
-                            {
-                                if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && level >= Levels.BowShock && IsOffCooldown(BowShock))
-                                    return BowShock;
-                                if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
-                                    return OriginalHook(DangerZone);
+                                    //Pre DD
+                                    if (IsOnCooldown(SonicBreak) && level < Levels.DoubleDown)
+                                    {
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && level >= Levels.BowShock && IsOffCooldown(BowShock))
+                                            return BowShock;
+                                        if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && level >= Levels.DangerZone && IsOffCooldown(DangerZone))
+                                            return OriginalHook(DangerZone);
+                                    }
+                                }
                             }
 
                             //Continuation
@@ -232,7 +236,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (level >= Levels.EnhancedContinuation && HasEffect(Buffs.ReadyToBlast))
                                     return Hypervelocity;
                                 if (level >= Levels.BurstStrike && (gauge.Ammo == MaxCartridges(level) ||
-                                    (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && GetCooldownRemainingTime(Bloodfest) < 6 && gauge.Ammo != 0 && IsOnCooldown(NoMercy) && level >= Levels.Bloodfest))) //Burns Ammo for Bloodfest
+                                    (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && GetCooldownRemainingTime(Bloodfest) < 6 && gauge.Ammo is not 0 and <= 2 && GetCooldownRemainingTime(NoMercy) > 10 && level >= Levels.Bloodfest))) //Burns Ammo for Bloodfest
                                     return BurstStrike;
                             }
 

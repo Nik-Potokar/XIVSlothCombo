@@ -102,6 +102,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string RDM_OGCD_OnAction = "RDM_OGCD_OnAction";
             public const string RDM_ST_MeleeCombo_OnAction = "RDM_ST_MeleeCombo_OnAction";
+            public const string RDM_AoE_MeleeCombo_OnAction = "RDM_AoE_MeleeCombo_OnAction";
             public const string RDM_MeleeFinisher_OnAction = "RDM_MeleeFinisher_OnAction";
             public const string RDM_Lucid_Threshold = "RDM_LucidDreaming_Threshold";
             public const string RDM_MoulinetRange = "RDM_MoulinetRange";
@@ -125,6 +126,11 @@ namespace XIVSlothCombo.Combos.PvE
                 var moulinetRange = PluginConfiguration.GetCustomIntValue(Config.RDM_MoulinetRange);
                 int black = gauge.BlackMana;
                 int white = gauge.WhiteMana;
+                var radioButtonST = PluginConfiguration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
+                var radioButtonAoE = PluginConfiguration.GetCustomIntValue(Config.RDM_AoE_MeleeCombo_OnAction);
+                var radioButtonMF = PluginConfiguration.GetCustomIntValue(Config.RDM_MeleeFinisher_OnAction);
+                var radioButtonOGCD = PluginConfiguration.GetCustomIntValue(Config.RDM_OGCD_OnAction);
+                var distance = GetTargetDistance();
                 //END_MAIN_COMBO_VARIABLES
 
                 //RDM_BALANCE_OPENER
@@ -308,11 +314,9 @@ namespace XIVSlothCombo.Combos.PvE
                     && (GetTargetDistance() <= 3 || (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_CorpsGapCloser)
                     && GetCooldown(Corpsacorps).RemainingCharges >= 1)))
                 {
-                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
-
-                    if ((radioButton == 1 && actionID is Riposte or EnchantedRiposte)
-                        || (radioButton == 2 && actionID is Jolt or Jolt2)
-                        || (radioButton == 3 && actionID is Riposte or EnchantedRiposte or Jolt or Jolt2))
+                    if ((radioButtonST == 1 && actionID is Riposte or EnchantedRiposte)
+                        || (radioButtonST == 2 && actionID is Jolt or Jolt2)
+                        || (radioButtonST == 3 && actionID is Riposte or EnchantedRiposte or Jolt or Jolt2))
                     {
                         //Situation 1: Manafication first
                         if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
@@ -414,7 +418,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 //RDM_AOE_MANAFICATIONEMBOLDEN
                 if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_ManaEmbolden)
-                    && actionID is Scatter or Impact 
+                    && ((radioButtonAoE == 1 && actionID is Moulinet or EnchantedMoulinet) || (radioButtonAoE == 2 && actionID is Moulinet or EnchantedMoulinet or Scatter or Impact))
                     && level >= Levels.Embolden 
                     && HasCondition(ConditionFlag.InCombat)
                     && !HasEffect(Buffs.Dualcast) 
@@ -483,7 +487,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.RDM_oGCD) 
                     && level >= Levels.Corpsacorps)
                 {
-                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_OGCD_OnAction);
                     //Radio Button Settings:
                     //1: Fleche
                     //2: Jolt
@@ -492,7 +495,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     uint placeOGCD = 0;
 
-                    var distance = GetTargetDistance();
                     var corpacorpsRange = 25;
                     var corpsacorpsPool = 0;
                     var engagementPool = 0;
@@ -520,14 +522,14 @@ namespace XIVSlothCombo.Combos.PvE
                             && IsOffCooldown(ContreSixte) 
                             && level >= Levels.ContreSixte) 
                             placeOGCD = ContreSixte;
-                        if ((radioButton == 1 || IsEnabled(CustomComboPreset.RDM_oGCD_Fleche)) 
+                        if ((radioButtonOGCD == 1 || IsEnabled(CustomComboPreset.RDM_oGCD_Fleche)) 
                             && IsOffCooldown(Fleche) && level >= Levels.Fleche) 
                             placeOGCD = Fleche;
 
-                        if ((actionID is Jolt or Jolt2) && (radioButton is 2 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
-                        if ((actionID is Scatter or Impact) && (radioButton is 3 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
-                        if ((actionID is Riposte or Moulinet) && (radioButton is 5 or 6) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
-                        if (actionID is Fleche && radioButton is 1 or 6 && placeOGCD == 0) // All actions are on cooldown, determine the lowest CD to display on Fleche.
+                        if ((actionID is Jolt or Jolt2) && (radioButtonOGCD is 2 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
+                        if ((actionID is Scatter or Impact) && (radioButtonOGCD is 3 or 4) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
+                        if ((actionID is Riposte or Moulinet) && (radioButtonOGCD is 5 or 6) && CanSpellWeave(actionID) && placeOGCD != 0) return placeOGCD;
+                        if (actionID is Fleche && radioButtonOGCD is 1 or 6 && placeOGCD == 0) // All actions are on cooldown, determine the lowest CD to display on Fleche.
                         {
                             placeOGCD = Fleche;
                             if (IsEnabled(CustomComboPreset.RDM_oGCD_ContraSixte) 
@@ -545,7 +547,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 && GetCooldown(placeOGCD).CooldownRemaining > GetCooldown(Engagement).CooldownRemaining) 
                                 placeOGCD = Engagement;
                         }
-                        if (actionID is Fleche && radioButton == 1) return placeOGCD;
+                        if (actionID is Fleche && radioButtonOGCD == 1) return placeOGCD;
                     }
                 }
                 //END_RDM_OGCD
@@ -600,12 +602,10 @@ namespace XIVSlothCombo.Combos.PvE
                 //RDM_MELEEFINISHER
                 if (IsEnabled(CustomComboPreset.RDM_MeleeFinisher))
                 {
-                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_MeleeFinisher_OnAction);
-
-                    if ((radioButton == 1 && actionID is Riposte or EnchantedRiposte or Moulinet or EnchantedMoulinet)
-                        || (radioButton == 2 && actionID is Jolt or Jolt2 or Scatter or Impact)
-                        || (radioButton == 3 && actionID is Riposte or EnchantedRiposte or Moulinet or EnchantedMoulinet or Jolt or Jolt2 or Scatter or Impact)
-                        || (radioButton == 4 && actionID is Veraero or Veraero2 or Veraero3 or Verthunder or Verthunder2 or Verthunder3))
+                    if ((radioButtonMF == 1 && actionID is Riposte or EnchantedRiposte or Moulinet or EnchantedMoulinet)
+                        || (radioButtonMF == 2 && actionID is Jolt or Jolt2 or Scatter or Impact)
+                        || (radioButtonMF == 3 && actionID is Riposte or EnchantedRiposte or Moulinet or EnchantedMoulinet or Jolt or Jolt2 or Scatter or Impact)
+                        || (radioButtonMF == 4 && actionID is Veraero or Veraero2 or Veraero3 or Verthunder or Verthunder2 or Verthunder3))
                     {
                         if (gauge.ManaStacks >= 3)
                         {
@@ -646,12 +646,9 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo) 
                     && LocalPlayer.IsCasting == false)
                 {
-                    var radioButton = PluginConfiguration.GetCustomIntValue(Config.RDM_ST_MeleeCombo_OnAction);
-                    var distance = GetTargetDistance();
-
-                    if ((radioButton == 1 && actionID is Riposte or EnchantedRiposte)
-                        || (radioButton == 2 && actionID is Jolt or Jolt2)
-                        || (radioButton == 3 && actionID is Riposte or EnchantedRiposte or Jolt or Jolt2))
+                    if ((radioButtonST == 1 && actionID is Riposte or EnchantedRiposte)
+                        || (radioButtonST == 2 && actionID is Jolt or Jolt2)
+                        || (radioButtonST == 3 && actionID is Riposte or EnchantedRiposte or Jolt or Jolt2))
                     {
                         if ((lastComboMove is Riposte or EnchantedRiposte) 
                             && level >= Levels.Zwerchhau)
@@ -697,9 +694,9 @@ namespace XIVSlothCombo.Combos.PvE
                 //END_RDM_ST_MELEECOMBO
 
                 //RDM_AOE_MELEECOMBO
-                if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo) 
+                if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo)
                     && level >= Levels.Moulinet 
-                    && actionID is Scatter or Impact 
+                    && ((radioButtonAoE == 1 && actionID is Moulinet or EnchantedMoulinet) || (radioButtonAoE == 2 && actionID is Moulinet or EnchantedMoulinet or Scatter or Impact))
                     && LocalPlayer.IsCasting == false
                     && !HasEffect(Buffs.Dualcast) 
                     && !HasEffect(All.Buffs.Swiftcast) 

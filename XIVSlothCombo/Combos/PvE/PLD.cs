@@ -138,13 +138,18 @@ namespace XIVSlothCombo.Combos.PvE
                         inOpener = true;
                     }
 
-                    // Uptime Features
-                    if (!InMeleeRange() && !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth))
+                    // Uptime Feature
+                    if (!InMeleeRange() && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) &&
+                        !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth) && HasBattleTarget())
                     {
-                        if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) && level >= Levels.ShieldLob && !HasEffect(Buffs.Requiescat))
-                            return ShieldLob;
-                        if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime_2) && level >= Levels.HolySpirit)
+                        if (level >= Levels.HolySpirit && LocalPlayer.CurrentMp >= 1000 && (!this.IsMoving || HasEffect(Buffs.Requiescat)))
+                        {
                             return HolySpirit;
+                        }
+                        else if (level >= Levels.ShieldLob && !HasEffect(Buffs.Requiescat))
+                        {
+                            return ShieldLob;
+                        }
                     }
 
                     // Buffs
@@ -252,10 +257,20 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsNotEnabled(CustomComboPreset.PLD_AtonementDrop))
                             return Atonement;
 
-                        if ((IsEnabled(CustomComboPreset.PLD_AtonementDrop) &&
-                             GetCooldownRemainingTime(FightOrFlight) <= 15 && GetBuffStacks(Buffs.SwordOath) > 1) ||
-                            (HasEffect(Buffs.Requiescat) && GetCooldownRemainingTime(FightOrFlight) <= 49))
-                            return Atonement;
+                        if (IsEnabled(CustomComboPreset.PLD_AtonementDrop))
+                        {
+                            if (HasEffect(Buffs.FightOrFlight))
+                            {
+                                if (lastComboMove == Atonement || lastComboMove == RoyalAuthority)
+                                {
+                                    return Atonement;
+                                }
+                            }
+                            else if (GetBuffStacks(Buffs.SwordOath) > 1)
+                            {
+                                return Atonement;
+                            }
+                        }
                     }
 
                     // 1-2-3 Combo

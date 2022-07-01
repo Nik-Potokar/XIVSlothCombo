@@ -1,5 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -164,12 +166,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
                     var SamFillerCombo = PluginConfiguration.GetCustomIntValue(Config.SAM_FillerCombo);
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
-
-                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_RangedUptime) && level >= Levels.Enpi && !inEvenFiller && !inOddFiller)
-                    {
-                        if (!InMeleeRange())
-                            return Enpi;
-                    }
+                    
+                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_RangedUptime) && level >= Levels.Enpi && !inEvenFiller && !inOddFiller && !InMeleeRange() && HasBattleTarget())
+                        return Enpi;
 
                     if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SAM_TrueNorth) && GetBuffStacks(Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0)
                         return All.TrueNorth;

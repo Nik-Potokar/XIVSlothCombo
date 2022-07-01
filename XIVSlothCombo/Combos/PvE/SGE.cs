@@ -312,18 +312,24 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Diagnosis)
                 {
+                    //Set Target. Soft->Hard->Self priority, matching normal ingame behavior
+                    GameObject? HealTarget;
+                    if (Services.Service.TargetManager.SoftTarget?.ObjectKind is ObjectKind.Player) HealTarget = Services.Service.TargetManager.SoftTarget;
+                    else if (CurrentTarget?.ObjectKind is ObjectKind.Player) HealTarget = CurrentTarget;
+                    else HealTarget = LocalPlayer;
+
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) &&
                         level >= Levels.Druochole &&
                         IsOffCooldown(Druochole) &&
                         GetJobGauge<SGEGauge>().Addersgall >= 1 &&
-                        GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Druochole)
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Druochole)
                        ) return Druochole;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) &&
                         level >= Levels.Taurochole &&
                         IsOffCooldown(Taurochole) &&
                         GetJobGauge<SGEGauge>().Addersgall >= 1 &&
-                        GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Taurochole)
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Taurochole)
                        ) return Taurochole;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) &&
@@ -335,44 +341,43 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Kardia) &&
                         level >= Levels.Kardia &&
                         FindEffect(Buffs.Kardia) is null &&
-                        FindTargetEffect(Buffs.Kardion) is null
+                        FindEffect(Buffs.Kardion, HealTarget, LocalPlayer?.ObjectId) is null
                        ) return Kardia;
 
-                    if (CurrentTarget?.ObjectKind is ObjectKind.Player)
-                    {
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) &&
-                            level >= Levels.Soteria &&
-                            IsOffCooldown(Soteria) &&
-                            GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Soteria)
-                           ) return Soteria;
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) &&
+                        level >= Levels.Soteria &&
+                        IsOffCooldown(Soteria) &&
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Soteria)
+                        ) return Soteria;
 
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) &&
-                            level >= Levels.Zoe &&
-                            IsOffCooldown(Zoe) &&
-                            GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Zoe)
-                           ) return Zoe;
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) &&
+                        level >= Levels.Zoe &&
+                        IsOffCooldown(Zoe) &&
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Zoe)
+                        ) return Zoe;
 
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) &&
-                            level >= Levels.Krasis &&
-                            IsOffCooldown(Krasis) && GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Krasis)
-                           ) return Krasis;
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) &&
+                        level >= Levels.Krasis &&
+                        IsOffCooldown(Krasis) && 
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Krasis)
+                        ) return Krasis;
 
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) &&
-                            level >= Levels.Pepsis &&
-                            IsOffCooldown(Pepsis) && GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
-                            FindTargetEffect(Buffs.EukrasianDiagnosis) is not null
-                           ) return Pepsis;
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) &&
+                        level >= Levels.Pepsis &&
+                        IsOffCooldown(Pepsis) && 
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
+                        FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is not null //update for HealTarget
+                        ) return Pepsis;
 
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) &&
-                            level >= Levels.Haima &&
-                            IsOffCooldown(Haima) && GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Haima)
-                           ) return Haima;
-                    }
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) &&
+                        level >= Levels.Haima &&
+                        IsOffCooldown(Haima) && GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Haima)
+                        ) return Haima;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) &&
                         level >= Levels.Eukrasia &&
-                        FindTargetEffect(Buffs.EukrasianDiagnosis) is null &&
-                        GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
+                        FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is null && //update
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
                     {
                         if (!HasEffect(Buffs.Eukrasia))
                             return Eukrasia;
