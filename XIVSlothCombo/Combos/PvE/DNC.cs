@@ -50,23 +50,27 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Buffs
         {
             public const ushort
+                // Flourishing & Silken (Procs)
                 FlourishingCascade = 1814,
                 FlourishingFountain = 1815,
                 FlourishingWindmill = 1816,
                 FlourishingShower = 1817,
-                StandardStep = 1818,
-                TechnicalStep = 1819,
-                ShieldSamba = 1826,
+                FlourishingFanDance = 2021,
                 SilkenSymmetry = 2693,
                 SilkenFlow = 2694,
+                FlourishingFinish = 2698,
+                FlourishingStarfall = 2700,
                 FlourishingSymmetry = 3017,
                 FlourishingFlow = 3018,
-                FlourishingFanDance = 1820,
-                FlourishingStarfall = 2700,
-                FlourishingFinish = 2698,
+                // Dances
+                StandardStep = 1818,
+                TechnicalStep = 1819,
+                TechnicalFinish = 1822,
+                // Fan Dances
                 ThreeFoldFanDance = 1820,
                 FourFoldFanDance = 2699,
-                TechnicalFinish = 1822;
+                // Other
+                ShieldSamba = 1826;
         }
 
         public static class Debuffs
@@ -74,62 +78,35 @@ namespace XIVSlothCombo.Combos.PvE
             // public const short placeholder = 0;
         }
 
-        public static class Levels
-        {
-            public const byte
-                Fountain = 2,
-                StandardStep = 15,
-                ReverseCascade = 20,
-                Bladeshower = 25,
-                FanDance1 = 30,
-                RisingWindmill = 35,
-                Fountainfall = 40,
-                Bloodshower = 45,
-                FanDance2 = 50,
-                EnAvant = 50,
-                CuringWaltz = 52,
-                ShieldSamba = 56,
-                ClosedPosition = 60,
-                Devilment = 62,
-                FanDance3 = 66,
-                TechnicalStep = 70,
-                Flourish = 72,
-                SaberDance = 76,
-                Improvisation = 80,
-                Tillana = 82,
-                FanDance4 = 86,
-                StarfallDance = 90;
-        }
-
         public static class Config
         {
             public const string
-                DNCEspritThreshold_ST = "DNCEspritThreshold_ST";
+                DNCEspritThreshold_ST = "DNCEspritThreshold_ST";                            // Single target Esprit threshold
             public const string
-                DNCEspritThreshold_AoE = "DNCEspritThreshold_AoE";
+                DNCEspritThreshold_AoE = "DNCEspritThreshold_AoE";                          // AoE Esprit threshold
 
             #region Simple ST Sliders
             public const string
-                DNCSimpleSSBurstPercent = "DNCSimpleSSBurstPercent";
+                DNCSimpleSSBurstPercent = "DNCSimpleSSBurstPercent";                        // Standard Step    target HP% threshold
             public const string
-                DNCSimpleTSBurstPercent = "DNCSimpleTSBurstPercent";
+                DNCSimpleTSBurstPercent = "DNCSimpleTSBurstPercent";                        // Technical Step   target HP% threshold
             public const string
-                DNCSimpleFeatherBurstPercent = "DNCSimpleFeatherBurstPercent";
+                DNCSimpleFeatherBurstPercent = "DNCSimpleFeatherBurstPercent";              // Feather burst    target HP% threshold
             public const string
-                DNCSimplePanicHealWaltzPercent = "DNCSimplePanicHealWaltzPercent";
+                DNCSimplePanicHealWaltzPercent = "DNCSimplePanicHealWaltzPercent";          // Curing Waltz     player HP% threshold
             public const string
-                DNCSimplePanicHealWindPercent = "DNCSimplePanicHealWindPercent";
+                DNCSimplePanicHealWindPercent = "DNCSimplePanicHealWindPercent";            // Second Wind      player HP% threshold
             #endregion
 
             #region Simple AoE Sliders
             public const string
-                DNCSimpleSSAoEBurstPercent = "DNCSimpleSSAoEBurstPercent";
+                DNCSimpleSSAoEBurstPercent = "DNCSimpleSSAoEBurstPercent";                  // Standard Step    target HP% threshold
             public const string
-                DNCSimpleTSAoEBurstPercent = "DNCSimpleTSAoEBurstPercent";
+                DNCSimpleTSAoEBurstPercent = "DNCSimpleTSAoEBurstPercent";                  // Technical Step   target HP% threshold
             public const string
-                DNCSimpleAoEPanicHealWaltzPercent = "DNCSimpleAoEPanicHealWaltzPercent";
+                DNCSimpleAoEPanicHealWaltzPercent = "DNCSimpleAoEPanicHealWaltzPercent";    // Curing Waltz     player HP% threshold 
             public const string
-                DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";
+                DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";      // Second Wind      player HP% threshold
             #endregion
         }
 
@@ -194,7 +171,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
                         return FanDance4;
                 }
-
                 return actionID;
             }
         }
@@ -214,7 +190,6 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.CompletedSteps < 2)
                             return gauge.NextStep;
-
                         return StandardFinish2;
                     }
                 }
@@ -226,11 +201,9 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.CompletedSteps < 4)
                             return gauge.NextStep;
-
                         return TechnicalFinish4;
                     }
                 }
-
                 return actionID;
             }
         }
@@ -252,7 +225,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.FourFoldFanDance))
                         return FanDance4;
                 }
-
                 return actionID;
             }
         }
@@ -275,7 +247,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Esprit overcap options
                     if (LevelChecked(SaberDance) && gauge.Esprit >= espritThreshold && IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap))
-                            return SaberDance;
+                        return SaberDance;
 
                     if (canWeave)
                     {
@@ -307,10 +279,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Cascade Combo
                     if (lastComboMove is Cascade && LevelChecked(Fountain))
                         return Fountain;
-
                     return Cascade;
                 }
-
                 return actionID;
             }
         }
@@ -365,10 +335,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Windmill Combo
                     if (lastComboMove is Windmill && LevelChecked(Bladeshower))
                         return Bladeshower;
-
                     return Windmill;
                 }
-
                 return actionID;
             }
         }
@@ -380,8 +348,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is Devilment && HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
-
+                    return StarfallDance;
                 return actionID;
             }
         }
@@ -408,7 +375,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
                     {
                         if (LevelChecked(Devilment) && !LevelChecked(TechnicalStep) ||  // Lv.62 - 69
-                            (LevelChecked(TechnicalStep) && techstepCD.IsCooldown))   // Lv. 70+ during Tech
+                            (LevelChecked(TechnicalStep) && techstepCD.IsCooldown))     // Lv. 70+ during Tech
                             return Devilment;
                     }
 
@@ -437,7 +404,6 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (gauge.CompletedSteps < 2)
                                 return gauge.NextStep;
-
                             return StandardFinish2;
                         }
 
@@ -446,12 +412,10 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (gauge.CompletedSteps < 4)
                                 return gauge.NextStep;
-
                             return TechnicalFinish4;
                         }
                     }
                 }
-
                 return actionID;
             }
         }
@@ -593,10 +557,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Fountain
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime > 0)
                         return Fountain;
-
                     return Cascade;
                 }
-
                 return actionID;
             }
         }
@@ -683,7 +645,6 @@ namespace XIVSlothCombo.Combos.PvE
                         // Simple AoE Feathers
                         if (LevelChecked(FanDance1) && IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers))
                         {
-
                             // Simple AoE Feather Pooling
                             var minFeathers = IsEnabled(CustomComboPreset.DNC_AoE_Simple_FeatherPooling) && LevelChecked(TechnicalStep) ? 3 : 0;
 
@@ -744,7 +705,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime > 0)
                         return Bladeshower;
                 }
-
                 return actionID;
             }
         }
