@@ -1,8 +1,8 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
-using System.Linq;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 
 
 namespace XIVSlothCombo.Combos.PvE
@@ -223,39 +223,46 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is DeploymentTactics)
                 {
-                    if (IsOffCooldown(DeploymentTactics))
+                    if (IsOffCooldown(DeploymentTactics) && DeploymentTactics.LevelChecked()) //Allows Adlo to work at sync
                     {
                         bool found = false;
-                        GameObject? target;
-                        //Check current target if they're a player and in the party
-                        if (CurrentTarget?.ObjectKind is ObjectKind.Player)
+                        GameObject? target = CurrentTarget;
+                        if (target is not null)
                         {
-                            target = CurrentTarget;
-                            int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
-                            if (GetPartyMembers().Length > 0) maxPartySize = GetPartyMembers().Length;
-                            if (GetPartyMembers().Length == 0 && Services.Service.BuddyList.Length == 0) maxPartySize = 0;
 
-                            //Check if our target is in the party
-                            for (int i = 1; i <= maxPartySize; i++)
+                            //What's our party size? Check if trust, and add 1 (trust does not include player), else get Party Count
+                            //It's okay if both Buddy/Party are Zero. For loop will skip
+                            int PartySize = Services.Service.BuddyList.Length > 0 ? Services.Service.BuddyList.Length + 1 : GetPartyMembers().Length;
+
+                            //Check if our target is in the party. Will skip if partysize is zero
+                            for (int i = 1; i <= PartySize; i++)
                             {
-                                found = GetPartySlot(i) == target;
+                                found = (GetPartySlot(i) == target);
                                 if (found) break;
                             }
+                            //Check if it's our chocobo?
+                            if (found is false) found = (HasCompanionPresent() && CurrentTarget == Services.Service.BuddyList.CompanionBuddy.GameObject);
+                        }
 
-                        } 
-                        //Fall back to self, we can't use Deployment tactics on no target or non-party members
-                        else target = LocalPlayer;
-
-                        if (found) //we have a party member or we're working off ourselves. Recitation is down here as not to waste it on bad targets.
+                        //Fall back to self, skills won't work with anyone else.
+                        if (target is null || found is false)
                         {
-                            if (FindEffect(Buffs.Galvanize, target, LocalPlayer?.ObjectId) is not null) return DeploymentTactics;
-                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && (IsOffCooldown(Recitation))) return Recitation;
+                            target = LocalPlayer;
+                            found = true;
+                        }
+
+                        if (found)
+                        {
+                            if (FindEffect(Buffs.Galvanize, target, LocalPlayer.ObjectId) is not null) return DeploymentTactics;
+                            //Recitation is down here as not to waste it on bad targets.
+                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) 
+                                && Recitation.LevelChecked() 
+                                && IsOffCooldown(Recitation)
+                               ) return Recitation;
                         }
                     }
-
                     return Adloquium;
                 }
-
                 return actionID;
             }
         }
