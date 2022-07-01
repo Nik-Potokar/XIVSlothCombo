@@ -226,7 +226,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsOffCooldown(DeploymentTactics) && DeploymentTactics.LevelChecked()) //Allows Adlo to work at sync
                     {
                         bool found = false;
-                        GameObject? target = CurrentTarget;
+                        //If we have a soft target, use that, else CurrentTarget.
+                        GameObject? target = Services.Service.TargetManager.SoftTarget is not null ? Services.Service.TargetManager.SoftTarget : CurrentTarget;
+
                         if (target is not null)
                         {
 
@@ -241,7 +243,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (found) break;
                             }
                             //Check if it's our chocobo?
-                            if (found is false) found = (HasCompanionPresent() && CurrentTarget == Services.Service.BuddyList.CompanionBuddy.GameObject);
+                            if (found is false) found = (HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject);
                         }
 
                         //Fall back to self, skills won't work with anyone else.
