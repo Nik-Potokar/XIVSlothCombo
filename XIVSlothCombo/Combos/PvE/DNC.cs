@@ -449,7 +449,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // Simple ST Standard Steps
-                    if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DNC_ST_Simple_SS))
+                    if (HasEffect(Buffs.StandardStep) && (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
                             : StandardFinish2;
@@ -591,7 +591,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // Simple AoE Standard Step (step function)
-                    if (HasEffect(Buffs.StandardStep) && IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS))
+                    if (HasEffect(Buffs.StandardStep) && (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
                             : StandardFinish2;
