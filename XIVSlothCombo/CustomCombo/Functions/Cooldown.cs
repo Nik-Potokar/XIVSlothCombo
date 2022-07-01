@@ -20,6 +20,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> Remaining time for the next charge of the cooldown. </returns>
         public static float GetCooldownChargeRemainingTime(uint actionID) => Service.ComboCache.GetCooldown(actionID).ChargeCooldownRemaining;
 
+        /// <summary> Gets the elapsed cooldown time.</summary>
+        /// <param name="actionID">Action ID to check</param>
+        /// <returns> Time passed since action went on cooldown.</returns>
+        public static float GetCooldownElapsed(uint actionID) => Service.ComboCache.GetCooldown(actionID).CooldownElapsed;
+
         /// <summary> Gets a value indicating whether an action is on cooldown. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> True or false. </returns>
@@ -28,17 +33,17 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Gets a value indicating whether an action is off cooldown. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> True or false. </returns>
-        public bool IsOffCooldown(uint actionID) => !GetCooldown(actionID).IsCooldown;
+        public static bool IsOffCooldown(uint actionID) => !GetCooldown(actionID).IsCooldown;
 
         /// <summary> Check if the Cooldown was just used. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> True or false. </returns>
-        public bool JustUsed(uint actionID) => IsOnCooldown(actionID) && GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
+        public static bool JustUsed(uint actionID) => IsOnCooldown(actionID) && GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
 
         /// <summary> Gets a value indicating whether an action has any available charges. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> True or false. </returns>
-        public bool HasCharges(uint actionID) => GetCooldown(actionID).RemainingCharges > 0;
+        public static bool HasCharges(uint actionID) => GetCooldown(actionID).RemainingCharges > 0;
 
         /// <summary> Get the current number of charges remaining for an action. </summary>
         /// <param name="actionID"> Action ID to check. </param>

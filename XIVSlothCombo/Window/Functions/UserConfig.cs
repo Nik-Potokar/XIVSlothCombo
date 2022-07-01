@@ -900,54 +900,27 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.NIN_Simple_Mudras)
             {
-                var mudrapath = Service.Configuration.MudraPathSelection;
-                bool path1 = mudrapath == 1;
-                bool path2 = mudrapath == 2;
-
-                ImGui.Indent();
-                ImGui.PushItemWidth(75);
-
-                if (ImGui.Checkbox("Mudra Path Set 1", ref path1))
-                {
-                    Service.Configuration.MudraPathSelection = 1;
-                    Service.Configuration.Save();
-                }
-
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
-                ImGui.TextWrapped($"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton");
-                ImGui.PopStyleColor();
-
-                if (ImGui.Checkbox("Mudra Path Set 2", ref path2))
-                {
-                    Service.Configuration.MudraPathSelection = 2;
-                    Service.Configuration.Save();
-                }
-
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
-                ImGui.TextWrapped($"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).");
-                ImGui.PopStyleColor();
-
-                ImGui.Unindent();
-                ImGui.Spacing();
+                UserConfig.DrawRadioButton(NIN.Config.NIN_SimpleMudra_Choice, "Mudra Path Set 1", $"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton", 1);
+                UserConfig.DrawRadioButton(NIN.Config.NIN_SimpleMudra_Choice, "Mudra Path Set 2", $"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).", 2);
             }
 
-            if (preset == CustomComboPreset.NIN_ST_Simple_Trick)
-                UserConfig.DrawSliderInt(0, 15, NIN.Config.Trick_CooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Huraijin)
+                UserConfig.DrawSliderInt(0, 60, NIN.Config.Huton_RemainingHuraijin, "Set the amount of time remaining on Huton the feature should wait before using Huraijin");
 
-            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_Huraijin)
-                UserConfig.DrawSliderInt(0, 60, NIN.Config.Huton_RemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush)
+                UserConfig.DrawSliderInt(0, 30, NIN.Config.Huton_RemainingArmorCrush, "Set the amount of time remaining on Huton the feature should wait before using Armor Crush");
 
-            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_Mug)
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.Mug_NinkiGauge, $"Set the amount of Ninki to be at or under for this feature (level {NIN.TraitLevels.Shukiho} onwards)");
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra)
+                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BhavaPooling, "Set the minimal amount of Ninki required to have before spending on Bhavacakra.");
 
-            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_ArmorCrush)
-                UserConfig.DrawSliderInt(0, 30, NIN.Config.Huton_RemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)
+                UserConfig.DrawSliderInt(0, 15, NIN.Config.Trick_CooldownRemaining, "Set the amount of time remaining on Trick Attack cooldown before trying to set up with Suiton.");
 
-            if (preset == CustomComboPreset.NIN_NinkiPooling_Bhavacakra)
-                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BhavaPooling, "The minimum value of Ninki to have before spending.");
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bunshin)
+                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BunshinPooling, "Set the amount of Ninki required to have before spending on Bunshin.");
 
-            if (preset == CustomComboPreset.NIN_NinkiPooling_Bunshin)
-                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BunshinPooling, "The minimum value of Ninki to have before spending.");
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Cooldowns)
+                UserConfig.DrawSliderInt(0, 15, NIN.Config.Advanced_Trick_Cooldown, "Set the amount of time remaining on Trick Attack cooldown to start saving cooldowns.");
 
             #endregion
             // ====================================================================================

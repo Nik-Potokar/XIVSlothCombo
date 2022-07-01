@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
-using System;
+using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
@@ -11,23 +12,55 @@ namespace XIVSlothCombo.Combos.JobHelpers
         internal class MudraCasting : PvE.NIN
         {
             ///<summary> Checks if the player is in a state to be able to cast a ninjitsu.</summary>
-            private static bool CanCast()
+            private bool CanCast()
             {
+                var gcd = CustomComboFunctions.GetCooldown(GustSlash).CooldownTotal;
+
+                if (gcd == 0.5) return true;
+
                 if (CustomComboFunctions.GetRemainingCharges(Ten) == 0 &&
                     !CustomComboFunctions.HasEffect(Buffs.Mudra) &&
-                    !CustomComboFunctions.HasEffect(Buffs.Kassatsu)) return false;
+                    !CustomComboFunctions.HasEffect(Buffs.Kassatsu))
+                    return false;
 
                 return true;
+            }
+
+
+            private MudraState currentMudra = MudraState.None;
+            public MudraState CurrentMudra
+            {
+                get
+                {
+                    return currentMudra;
+                }
+                set
+                {
+                    if (value == MudraState.None)
+                    {
+                        justResetMudra = true;
+                    }
+                    else
+                    {
+                        justResetMudra = false;
+                    }
+
+                    currentMudra = value;
+                }
             }
 
             ///<summary> Simple method of casting Fuma Shuriken.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastFumaShuriken(ref uint actionID)
+            public bool CastFumaShuriken(ref uint actionID)
             {
-                if (FumaShuriken.LevelChecked())
+                if (FumaShuriken.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingFumaShuriken)
                 {
-                    if (!CanCast()) return false;
+                    if (!CanCast())
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -36,9 +69,11 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Ten);
+                    CurrentMudra = MudraState.CastingFumaShuriken;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
@@ -46,11 +81,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
             ///<summary> Simple method of casting Raiton.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastRaiton(ref uint actionID)
+            public bool CastRaiton(ref uint actionID)
             {
-                if (Raiton.LevelChecked())
+                if (Raiton.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingRaiton)
                 {
-                    if (!CanCast()) return false;
+                    if (!CanCast())
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -65,20 +104,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Ten);
+                    CurrentMudra = MudraState.CastingRaiton;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
             ///<summary> Simple method of casting Katon.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastKaton(ref uint actionID)
+            public bool CastKaton(ref uint actionID)
             {
-                if (Katon.LevelChecked())
+                if (Katon.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingKaton)
                 {
-                    if (!CanCast()) return false;
+                    if (!CanCast())
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -93,20 +138,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Chi);
+                    CurrentMudra = MudraState.CastingKaton;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
             ///<summary> Simple method of casting Hyoton.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastHyoton(ref uint actionID)
+            public bool CastHyoton(ref uint actionID)
             {
-                if (Hyoton.LevelChecked())
+                if (Hyoton.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingHyoton)
                 {
-                    if (!CanCast() || CustomComboFunctions.HasEffect(Buffs.Kassatsu)) return false;
+                    if (!CanCast() || CustomComboFunctions.HasEffect(Buffs.Kassatsu))
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -121,20 +172,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Ten);
+                    CurrentMudra = MudraState.CastingHyoton;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
             ///<summary> Simple method of casting Huton.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastHuton(ref uint actionID)
+            public bool CastHuton(ref uint actionID)
             {
-                if (Huton.LevelChecked())
+                if (Huton.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingHuton)
                 {
-                    if (!CanCast()) return false;
+                    if (!CanCast())
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -155,20 +212,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Chi);
+                    CurrentMudra = MudraState.CastingHuton;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
             ///<summary> Simple method of casting Doton.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastDoton(ref uint actionID)
+            public bool CastDoton(ref uint actionID)
             {
-                if (Doton.LevelChecked())
+                if (Doton.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingDoton)
                 {
-                    if (!CanCast()) return false;
+                    if (!CanCast())
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -189,20 +252,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Ten);
+                    CurrentMudra = MudraState.CastingDoton;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
             ///<summary> Simple method of casting Suiton.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastSuiton(ref uint actionID)
+            public bool CastSuiton(ref uint actionID)
             {
-                if (Suiton.LevelChecked())
+                if (Suiton.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingSuiton)
                 {
-                    if (!CanCast()) return false;
+                    if (!CanCast())
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -223,20 +292,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Ten);
+                    CurrentMudra = MudraState.CastingSuiton;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
             ///<summary> Simple method of casting Goka Mekkyaku.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastGokaMekkyaku(ref uint actionID)
+            public bool CastGokaMekkyaku(ref uint actionID)
             {
-                if (GokaMekkyaku.LevelChecked())
+                if (GokaMekkyaku.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingGokaMekkyaku)
                 {
-                    if (!CanCast() || !CustomComboFunctions.HasEffect(Buffs.Kassatsu)) return false;
+                    if (!CanCast() || !CustomComboFunctions.HasEffect(Buffs.Kassatsu))
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -251,20 +326,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Chi);
+                    CurrentMudra = MudraState.CastingGokaMekkyaku;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
             }
 
             ///<summary> Simple method of casting Hyosho Ranryu.</summary>
             /// <param name="actionID">The actionID from the combo.</param>
             /// <returns>True if in a state to cast or continue the ninjitsu, modifies actionID to the step of the ninjitsu.</returns>
-            public static bool CastHyoshoRanryu(ref uint actionID)
+            public bool CastHyoshoRanryu(ref uint actionID)
             {
-                if (HyoshoRanryu.LevelChecked())
+                if (HyoshoRanryu.LevelChecked() && CurrentMudra is MudraState.None or MudraState.CastingHyoshoRanryu)
                 {
-                    if (!CanCast() || !CustomComboFunctions.HasEffect(Buffs.Kassatsu)) return false;
+                    if (!CanCast() || !CustomComboFunctions.HasEffect(Buffs.Kassatsu))
+                    {
+                        CurrentMudra = MudraState.None;
+                        return false;
+                    }
 
                     if (CustomComboFunctions.OriginalHook(Ninjutsu) is FumaShuriken)
                     {
@@ -279,10 +360,59 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
 
                     actionID = CustomComboFunctions.OriginalHook(Chi);
+                    CurrentMudra = MudraState.CastingHyoshoRanryu;
                     return true;
                 }
 
+                CurrentMudra = MudraState.None;
                 return false;
+            }
+
+            private bool justResetMudra = false;
+            public bool ContinueCurrentMudra(ref uint actionID)
+            {
+                if ((CustomComboFunctions.WasLastAction(FumaShuriken) ||
+                    CustomComboFunctions.WasLastAction(Katon) ||
+                    CustomComboFunctions.WasLastAction(Raiton) ||
+                    CustomComboFunctions.WasLastAction(Hyoton) ||
+                    CustomComboFunctions.WasLastAction(Huton) ||
+                    CustomComboFunctions.WasLastAction(Doton) ||
+                    CustomComboFunctions.WasLastAction(Suiton) ||
+                    CustomComboFunctions.WasLastAction(GokaMekkyaku) ||
+                    CustomComboFunctions.WasLastAction(HyoshoRanryu)) &&
+                    !justResetMudra)
+                    CurrentMudra = MudraState.None;
+
+
+                return CurrentMudra switch
+                {
+                    MudraState.None => false,
+                    MudraState.CastingFumaShuriken => CastFumaShuriken(ref actionID),
+                    MudraState.CastingKaton => CastKaton(ref actionID),
+                    MudraState.CastingRaiton => CastRaiton(ref actionID),
+                    MudraState.CastingHyoton => CastHyoton(ref actionID),
+                    MudraState.CastingHuton => CastHuton(ref actionID),
+                    MudraState.CastingDoton => CastDoton(ref actionID),
+                    MudraState.CastingSuiton => CastSuiton(ref actionID),
+                    MudraState.CastingGokaMekkyaku => CastGokaMekkyaku(ref actionID),
+                    MudraState.CastingHyoshoRanryu => CastHyoshoRanryu(ref actionID),
+                    _ => false,
+                };
+            }
+
+            public enum MudraState
+            {
+                None,
+                CastingFumaShuriken,
+                CastingKaton,
+                CastingRaiton,
+                CastingHyoton,
+                CastingHuton,
+                CastingDoton,
+                CastingSuiton,
+                CastingGokaMekkyaku,
+                CastingHyoshoRanryu
+
             }
         }
 
@@ -290,7 +420,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             private static bool HasCooldowns()
             {
-                if (CustomComboFunctions.GetRemainingCharges(Ten) < 2) return false;
+                if (CustomComboFunctions.GetRemainingCharges(Ten) < 1) return false;
                 if (CustomComboFunctions.IsOnCooldown(Mug)) return false;
                 if (CustomComboFunctions.IsOnCooldown(TenChiJin)) return false;
                 if (CustomComboFunctions.IsOnCooldown(PhantomKamaitachi)) return false;
@@ -303,17 +433,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             private static uint OpenerLevel => 90;
 
-            private static uint PrePullStep = 0;
+            public uint PrePullStep = 1;
 
-            private static uint OpenerStep = 0;
+            public uint OpenerStep = 1;
 
-            private static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
+            public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
-            private static bool CanOpener => HasCooldowns() && LevelChecked;
+            private bool CanOpener => HasCooldowns() && LevelChecked;
 
-            private static OpenerState currentState = OpenerState.NoState;
+            private OpenerState currentState = OpenerState.OpenerFinished;
 
-            private static OpenerState CurrentState
+            public OpenerState CurrentState
             {
                 get
                 {
@@ -325,29 +455,39 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     {
                         if (value == OpenerState.PrePull) PrePullStep = 1;
                         if (value == OpenerState.InOpener) OpenerStep = 1;
-                        if (value == OpenerState.OpenerFinished || value == OpenerState.NoState) { PrePullStep = 0; OpenerStep = 0; }
+                        if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener) { PrePullStep = 0; OpenerStep = 0; }
 
                         currentState = value;
                     }
                 }
             }
 
-            private static bool DoPrePullSteps(ref uint actionID)
+            private bool DoPrePullSteps(ref uint actionID, MudraCasting mudraState)
             {
+                if (!LevelChecked) return false;
+
                 if (CanOpener && PrePullStep == 0 && !CustomComboFunctions.InCombat()) { CurrentState = OpenerState.PrePull; }
 
                 if (CurrentState == OpenerState.PrePull)
                 {
-                    if (CustomComboFunctions.WasLastAction(Huton) && PrePullStep == 1) PrePullStep++;
-                    else if (PrePullStep == 1) MudraCasting.CastHuton(ref actionID);
+                    if (ActionWatching.TimeSinceLastAction.TotalSeconds > 5 && !CustomComboFunctions.InCombat())
+                    {
+                        mudraState.CastHuton(ref actionID);
+                        PrePullStep = 1;
+                        return true;
+                    }
 
-                    if (PrePullStep == 2 && CustomComboFunctions.InCombat()) ResetOpener();
+                    if (CustomComboFunctions.WasLastAction(Huton) && PrePullStep == 1) PrePullStep++;
+                    else if (PrePullStep == 1) mudraState.CastHuton(ref actionID);
 
                     if (CustomComboFunctions.WasLastAction(Hide) && PrePullStep == 2) PrePullStep++;
                     else if (PrePullStep == 2) { actionID = CustomComboFunctions.OriginalHook(Hide); }
 
                     if (CustomComboFunctions.WasLastAction(Suiton) && PrePullStep == 3) CurrentState = OpenerState.InOpener;
-                    else if (PrePullStep == 3) MudraCasting.CastSuiton(ref actionID);
+                    else if (PrePullStep == 3) mudraState.CastSuiton(ref actionID);
+
+                    //Failure states
+                    if (PrePullStep is (1 or 2) && CustomComboFunctions.InCombat()) { mudraState.CurrentMudra = MudraCasting.MudraState.None; ResetOpener(); }
 
                     return true;
 
@@ -357,15 +497,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return false;
             }
 
-            private static bool DoOpener(ref uint actionID)
+            private bool DoOpener(ref uint actionID, MudraCasting mudraState)
             {
+                if (!LevelChecked) return false;
+
                 if (CurrentState == OpenerState.InOpener)
                 {
-                    //Failure states
-                    if ((OpenerStep is 14 or 15 or 16 && CustomComboFunctions.IsMoving) ||
-                        (OpenerStep is 7 && !CustomComboFunctions.HasEffect(Buffs.Suiton)) ||
-                        (OpenerStep is 10 && !CustomComboFunctions.HasEffect(Buffs.Kassatsu))) 
-                        CurrentState = OpenerState.OpenerFinished;
+                    bool inLateWeaveWindow = CustomComboFunctions.CanDelayedWeave(GustSlash, 1, 0);
 
                     if (CustomComboFunctions.WasLastAction(Kassatsu) && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 1) actionID = CustomComboFunctions.OriginalHook(Kassatsu);
@@ -386,7 +524,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else if (OpenerStep == 6) actionID = CustomComboFunctions.OriginalHook(PhantomKamaitachi);
 
                     if (CustomComboFunctions.WasLastAction(TrickAttack) && OpenerStep == 7) OpenerStep++;
-                    else if (OpenerStep == 7) actionID = CustomComboFunctions.OriginalHook(TrickAttack);
+                    else if (OpenerStep == 7 && inLateWeaveWindow) actionID = CustomComboFunctions.OriginalHook(TrickAttack);
 
                     if (CustomComboFunctions.WasLastAction(AeolianEdge) && OpenerStep == 8) OpenerStep++;
                     else if (OpenerStep == 8) actionID = CustomComboFunctions.OriginalHook(AeolianEdge);
@@ -395,15 +533,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else if (OpenerStep == 9) actionID = CustomComboFunctions.OriginalHook(DreamWithinADream);
 
                     if (CustomComboFunctions.WasLastAction(HyoshoRanryu) && OpenerStep == 10) OpenerStep++;
-                    else if (OpenerStep == 10) MudraCasting.CastHyoshoRanryu(ref actionID);
+                    else if (OpenerStep == 10) mudraState.CastHyoshoRanryu(ref actionID);
 
                     if (CustomComboFunctions.WasLastAction(Raiton) && OpenerStep == 11) OpenerStep++;
-                    else if (OpenerStep == 11) MudraCasting.CastRaiton(ref actionID);
+                    else if (OpenerStep == 11) mudraState.CastRaiton(ref actionID);
 
                     if (CustomComboFunctions.WasLastAction(TenChiJin) && OpenerStep == 12) OpenerStep++;
                     else if (OpenerStep == 12) actionID = CustomComboFunctions.OriginalHook(TenChiJin);
 
-                    if (CustomComboFunctions.WasLastAction(TCJFumaShuriken) && OpenerStep == 13) OpenerStep++;
+                    if (CustomComboFunctions.WasLastAction(TCJFumaShurikenTen) && OpenerStep == 13) OpenerStep++;
                     else if (OpenerStep == 13) actionID = CustomComboFunctions.OriginalHook(Ten);
 
                     if (CustomComboFunctions.WasLastAction(TCJRaiton) && OpenerStep == 14) OpenerStep++;
@@ -427,28 +565,40 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Bhavacakra) && OpenerStep == 20) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 20) actionID = CustomComboFunctions.OriginalHook(Bhavacakra);
 
+
+                    //Failure states
+                    if ((OpenerStep is 13 or 14 or 15 && CustomComboFunctions.IsMoving) ||
+                        (OpenerStep is 7 && !CustomComboFunctions.HasEffect(Buffs.Suiton)) ||
+                        (OpenerStep is 18 or 20 && CustomComboFunctions.GetJobGauge<NINGauge>().Ninki < 45) ||
+                        (OpenerStep is 17 or 19 && !CustomComboFunctions.HasEffect(Buffs.RaijuReady)) ||
+                        (OpenerStep is 10 && !CustomComboFunctions.HasEffect(Buffs.Kassatsu)))
+                        ResetOpener();
+
+
                     return true;
                 }
 
                 return false;
             }
 
-            private static void ResetOpener()
+            private void ResetOpener()
             {
-                CurrentState = OpenerState.NoState;
+                CurrentState = OpenerState.FailedOpener;
             }
 
-            private static bool openerEventsSetup = false;
+            private bool openerEventsSetup = false;
 
-            public static bool DoFullOpener(ref uint actionID)
+            public bool DoFullOpener(ref uint actionID, MudraCasting mudraState)
             {
+                if (!LevelChecked) return false;
+
                 if (!openerEventsSetup) { Service.Condition.ConditionChange += CheckCombatStatus; openerEventsSetup = true; }
 
-                if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.NoState)
-                    if (DoPrePullSteps(ref actionID)) return true;
+                if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
+                    if (DoPrePullSteps(ref actionID, mudraState)) return true;
 
                 if (CurrentState == OpenerState.InOpener)
-                    if (DoOpener(ref actionID)) return true;
+                    if (DoOpener(ref actionID, mudraState)) return true;
 
                 if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
                     ResetOpener();
@@ -456,7 +606,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return false;
             }
 
-            private static void CheckCombatStatus(ConditionFlag flag, bool value)
+            private void CheckCombatStatus(ConditionFlag flag, bool value)
             {
                 if (flag == ConditionFlag.InCombat && value == false) ResetOpener();
             }
@@ -467,7 +617,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             PrePull,
             InOpener,
             OpenerFinished,
-            NoState
+            FailedOpener
         }
     }
 }

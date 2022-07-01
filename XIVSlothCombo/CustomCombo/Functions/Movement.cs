@@ -4,9 +4,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 {
     internal abstract partial class CustomComboFunctions
     {
-        protected Vector2 Position { get; set; }
-        protected float PlayerSpeed { get; set; }
-        protected uint MovingCounter { get; set; }
+        public Vector2 Position { get; set; }
+        public float PlayerSpeed { get; set; }
+        public uint MovingCounter { get; set; }
         public static bool IsMoving { get; set; }
 
         /// <summary> Checks player movement </summary>

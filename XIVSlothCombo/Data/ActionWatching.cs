@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
-{ 
+{
     public static class ActionWatching
     {
         internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action> ActionSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!
@@ -56,6 +55,8 @@ namespace XIVSlothCombo.Data
                     }
                 }
 
+                TimeLastActionUsed = DateTime.Now;
+
                 if (Service.Configuration.EnabledOutputLog)
                     OutputLog();
             }
@@ -89,9 +90,13 @@ namespace XIVSlothCombo.Data
 
         public static uint LastSpell { get; set; } = 0;
 
+        public static TimeSpan TimeSinceLastAction => DateTime.Now - TimeLastActionUsed;
+
+        private static DateTime TimeLastActionUsed { get; set; } = DateTime.Now;
+
         public static void OutputLog()
         {
-            Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} ({LastAction}) x{LastActionUseCount}");
+            Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
         }
         public static void Dispose()
         {

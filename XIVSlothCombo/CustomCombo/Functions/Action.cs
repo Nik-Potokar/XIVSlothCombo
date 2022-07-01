@@ -159,6 +159,6 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="start"> Time (in seconds) to start to check for the weave window. </param>
         /// <param name="end"> Time (in seconds) to end the check for the weave window. </param>
         /// <returns> True or false. </returns>
-        public static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6) => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
+        public static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6) => GetCooldown(actionID).CooldownRemaining <= start && GetCooldown(actionID).CooldownRemaining >= end;
     }
 }
