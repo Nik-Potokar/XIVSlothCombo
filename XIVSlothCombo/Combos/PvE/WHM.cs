@@ -61,25 +61,6 @@ namespace XIVSlothCombo.Combos.PvE
             Aero2 = 144;
         }
 
-        public static class Levels
-        {
-            public const byte
-                Aero1 = 4,
-                PresenceOfMind = 30,
-                Cure2 = 30,
-                Aero2 = 46,
-                Medica2 = 50,
-                AfflatusSolace = 52,
-                Assize = 56,
-                ThinAir = 58,
-                Tetragrammaton = 60,
-                DivineBenison = 66,
-                Dia = 72,
-                AfflatusMisery = 74,
-                AfflatusRapture = 76,
-                Glare3 = 82;
-        }
-
         public static class Config
         {
             public const string
