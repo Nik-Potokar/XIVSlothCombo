@@ -75,7 +75,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == AfflatusSolace)
+                if (actionID is AfflatusSolace)
                 {
                     var gauge = GetJobGauge<WHMGauge>();
 
@@ -93,7 +93,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == AfflatusRapture)
+                if (actionID is AfflatusRapture)
                 {
                     var gauge = GetJobGauge<WHMGauge>();
 
@@ -111,7 +111,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Cure2)
+                if (actionID is Cure2)
                 {
                     if (!LevelChecked(Cure2))
                         return Cure;
@@ -130,7 +130,7 @@ namespace XIVSlothCombo.Combos.PvE
                 var tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
 
 
-                if (actionID == Cure2)
+                if (actionID is Cure2)
                 {
                     if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison)     // Is the priority option enabled
                         && LevelChecked(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison) && HasCharges(DivineBenison)                     // Can I use Divine Benison
@@ -149,7 +149,7 @@ namespace XIVSlothCombo.Combos.PvE
                     return actionID;
                 }
 
-                if (actionID == Medica)
+                if (actionID is Medica)
                 {
                     if (LevelChecked(AfflatusRapture) && gauge.Lily > 0)
                         return AfflatusRapture;
@@ -165,7 +165,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == All.Swiftcast)
+                if (actionID is All.Swiftcast)
                 {
                     var thinairCD = GetCooldown(ThinAir);
                     var hasThinAirBuff = HasEffect(Buffs.ThinAir);
@@ -188,7 +188,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Glare3 || actionID == Glare1 || actionID == Stone1 || actionID == Stone2 || actionID == Stone3 || actionID == Stone4)
+                if (actionID is Glare3 or Glare1 or Stone1 or Stone2 or Stone3 or Stone4)
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var diaDebuff = FindTargetEffect(Debuffs.Dia);
@@ -263,7 +263,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Medica2)
+                if (actionID is Medica2)
                 {
                     var gauge = GetJobGauge<WHMGauge>();
                     var medica2Buff = GetBuffRemainingTime(Buffs.Medica2);
@@ -292,7 +292,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 var tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
 
-                if (actionID == Cure2)
+                if (actionID is Cure2)
                 {
                     if (LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison)
                         && (GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29))
