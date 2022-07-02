@@ -2153,23 +2153,23 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Diagnosis = 14320,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Soteria Option", "Applies Soteria when the selected target is at or above the set HP percentage.", SGE.JobID, 330, "", "")]
+            [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 330, "", "")]
             SGE_ST_Heal_Soteria = 14330,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Zoe Option", "Applies Zoe when the selected target is at or above the set HP percentage.", SGE.JobID, 340, "", "")]
+            [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 340, "", "")]
             SGE_ST_Heal_Zoe = 14340,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present and the selected target is at or above the set HP percentage.", SGE.JobID, 350, "", "")]
+            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 350, "", "")]
             SGE_ST_Heal_Pepsis = 14350,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Taurochole Option", "Adds Taurochole when the selected target is at or above the set HP percentage.", SGE.JobID, 360, "", "")]
+            [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 360, "", "")]
             SGE_ST_Heal_Taurochole = 14360,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Haima Option", "Adds Haima when the selected target is at or above the set HP percentage.", SGE.JobID, 370, "", "")]
+            [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 370, "", "")]
             SGE_ST_Heal_Haima = 14370,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2177,11 +2177,11 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Rhizomata = 14380,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Krasis Option", "Applies Krasis when the selected target is at or above the set HP percentage.", SGE.JobID, 390, "", "")]
+            [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 390, "", "")]
             SGE_ST_Heal_Krasis = 14390,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Druochole Option", "Adds Druochole when the selected target is at or above the set HP percentage.", SGE.JobID, 400, "", "")]
+            [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 400, "", "")]
             SGE_ST_Heal_Druochole = 14400,
             #endregion
 
