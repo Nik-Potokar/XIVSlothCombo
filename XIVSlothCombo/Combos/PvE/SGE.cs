@@ -106,8 +106,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Kardia;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Soteria 
-                    && (!HasEffect(Buffs.Kardia) || IsOnCooldown(Soteria))
+                if (actionID is Soteria && (!HasEffect(Buffs.Kardia) || IsOnCooldown(Soteria))
                    ) return Kardia;
                 else return actionID;
             }
@@ -144,10 +143,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauro;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Druochole &&
-                    LevelChecked(Taurochole) &&
-                    IsOffCooldown(Taurochole)
-                   ) return Taurochole;
+                if (actionID is Druochole && LevelChecked(Taurochole) && IsOffCooldown(Taurochole) ) return Taurochole;
                 else return actionID;
             }
         }
@@ -159,11 +155,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ZoePneuma;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Pneuma &&
-                    LevelChecked(Pneuma) &&
-                    IsOffCooldown(Pneuma) &&
-                    IsOffCooldown(Zoe)
-                   ) return Zoe;
+                if (actionID is Pneuma && LevelChecked(Pneuma) && IsOffCooldown(Pneuma) && IsOffCooldown(Zoe)) return Zoe;
                 else return actionID;
             }
         }
@@ -246,8 +238,8 @@ namespace XIVSlothCombo.Combos.PvE
                         else DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis1);
 
                         //Got our Debuff for our level, check for it and procede 
-                        if (((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3))
-                            && (GetTargetHPPercent() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer))
+                        if (((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3)) &&
+                            (GetTargetHPPercent() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer))
                            ) return Eukrasia;
                     }
 
