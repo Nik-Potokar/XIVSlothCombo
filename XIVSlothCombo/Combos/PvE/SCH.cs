@@ -2,7 +2,6 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.Extensions;
 
 
 namespace XIVSlothCombo.Combos.PvE
@@ -223,7 +222,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is DeploymentTactics)
                 {
-                    if (IsOffCooldown(DeploymentTactics) && DeploymentTactics.LevelChecked()) //Allows Adlo to work at sync
+                    if (IsOffCooldown(DeploymentTactics) && LevelChecked(DeploymentTactics)) //Allows Adlo to work at sync
                     {
                         bool found = false;
                         //If we have a soft target, use that, else CurrentTarget.
@@ -258,7 +257,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (FindEffect(Buffs.Galvanize, target, LocalPlayer.ObjectId) is not null) return DeploymentTactics;
                             //Recitation is down here as not to waste it on bad targets.
                             if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) 
-                                && Recitation.LevelChecked() 
+                                && LevelChecked(Recitation)
                                 && IsOffCooldown(Recitation)
                                ) return Recitation;
                         }
