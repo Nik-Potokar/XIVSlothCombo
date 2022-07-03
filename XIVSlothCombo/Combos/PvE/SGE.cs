@@ -184,7 +184,7 @@ namespace XIVSlothCombo.Combos.PvE
                         HasBattleTarget() &&
                         Gauge.Addersting > 0)
                     {
-                        if ((NoPhlegmaToxikon && GetRemainingCharges(OriginalHook(Phlegma)) is 0) ||
+                        if ((NoPhlegmaToxikon && !HasCharges(OriginalHook(Phlegma))) ||
                             (OutOfRangeToxikon && (GetTargetDistance() > Range.Phlegma))
                            ) return OriginalHook(Toxikon);
                     }
@@ -193,7 +193,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if ((NoPhlegmaDyskrasia || NoTargetDyskrasia) &&
                         LevelChecked(Phlegma))
                     {
-                        if ((NoPhlegmaDyskrasia && GetRemainingCharges(OriginalHook(Phlegma)) is 0) ||
+                        if ((NoPhlegmaDyskrasia && !HasCharges(OriginalHook(Phlegma))) ||
                             (NoTargetDyskrasia && CurrentTarget is null)
                            ) return OriginalHook(Dyskrasia);
                     }
