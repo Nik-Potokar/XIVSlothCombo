@@ -66,6 +66,7 @@ namespace XIVSlothCombo.Combos.PvE
                 // Dances
                 StandardStep = 1818,
                 TechnicalStep = 1819,
+                StandardFinish = 1821,
                 TechnicalFinish = 1822,
                 // Fan Dances
                 ThreeFoldFanDance = 1820,
@@ -186,26 +187,16 @@ namespace XIVSlothCombo.Combos.PvE
                 var gauge = GetJobGauge<DNCGauge>();
 
                 // Standard Step
-                if (actionID is StandardStep)
-                {
-                    if (gauge.IsDancing && HasEffect(Buffs.StandardStep))
-                    {
-                        if (gauge.CompletedSteps < 2)
-                            return gauge.NextStep;
-                        return StandardFinish2;
-                    }
-                }
+                if (actionID is StandardStep && gauge.IsDancing && HasEffect(Buffs.StandardStep))
+                    return gauge.CompletedSteps < 2
+                        ? gauge.NextStep
+                        : StandardFinish2;
 
                 // Technical Step
-                if ((actionID is TechnicalStep) && LevelChecked(TechnicalStep))
-                {
-                    if (gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
-                    {
-                        if (gauge.CompletedSteps < 4)
-                            return gauge.NextStep;
-                        return TechnicalFinish4;
-                    }
-                }
+                if ((actionID is TechnicalStep) && gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
+                    return gauge.CompletedSteps < 4
+                        ? gauge.NextStep
+                        : TechnicalFinish4;
                 return actionID;
             }
         }
@@ -442,6 +433,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var improvisationReady = LevelChecked(Improvisation) && IsOffCooldown(Improvisation);
                     var curingWaltzReady = LevelChecked(CuringWaltz) && IsOffCooldown(CuringWaltz);
                     var secondWindReady = LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind);
+                    var standardStepReady = LevelChecked(StandardStep) && IsOffCooldown(StandardStep);
+                    var technicalStepReady = LevelChecked(TechnicalStep) && IsOffCooldown(TechnicalStep);
                     var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && LevelChecked(All.HeadGraze);
                     var standardStepBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
                     var technicalStepBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent);
@@ -454,45 +447,44 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Peloton) && !InCombat() && !HasEffectAny(Buffs.Peloton) && GetBuffRemainingTime(Buffs.StandardStep) > 5)
                         return Peloton;
 
-                    // Simple ST Standard Steps
-                    if (HasEffect(Buffs.StandardStep) && (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)))
+                    // Simple ST Standard Steps & Fill Feature
+                    if (HasEffect(Buffs.StandardStep) &&
+                        (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
                             : StandardFinish2;
 
                     // Simple ST Tech Steps & Fill Feature
-                    if (HasEffect(Buffs.TechnicalStep) && (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_TechFill)))
+                    if (HasEffect(Buffs.TechnicalStep) &&
+                        (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_TechFill)))
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
                             : TechnicalFinish4;
 
                     // Simple ST Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) && interruptable)
-                            return All.HeadGraze;
+                        return All.HeadGraze;
 
                     // Simple ST Standard (activates dance with no target, or when target is over HP% threshold)
                     if (!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold)
                     {
-                        if (LevelChecked(StandardStep) && IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && IsOffCooldown(StandardStep)
-                            && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer > 5))
+                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && standardStepReady &&
+                            ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer > 5)) 
                             return StandardStep;
                     }
 
                     // Simple ST Tech (activates dance with no target, or when target is over HP% threshold)
                     if (!HasTarget() || GetTargetHPPercent() > technicalStepBurstThreshold)
                     {
-                        if (LevelChecked(TechnicalStep) && IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
+                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && technicalStepReady && !HasEffect(Buffs.StandardStep))
                             return TechnicalStep;
                     }
 
                     if (canWeave)
                     {
                         // Simple ST Devilment
-                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) && devilmentReady)
-                        {
-                            if (techBurst || !LevelChecked(TechnicalStep))
-                                return Devilment;
-                        }
+                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) && devilmentReady && (techBurst || !LevelChecked(TechnicalStep)))
+                            return Devilment;
 
                         // Simple ST Flourish
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) && flourishReady)
@@ -563,7 +555,6 @@ namespace XIVSlothCombo.Combos.PvE
                     // Fountain
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime > 0)
                         return Fountain;
-                    return Cascade;
                 }
                 return actionID;
             }
@@ -589,6 +580,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var improvisationReady = LevelChecked(Improvisation) && IsOffCooldown(Improvisation);
                     var curingWaltzReady = LevelChecked(CuringWaltz) && IsOffCooldown(CuringWaltz);
                     var secondWindReady = LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind);
+                    var standardStepReady = LevelChecked(StandardStep) && IsOffCooldown(StandardStep);
+                    var technicalStepReady = LevelChecked(TechnicalStep) && IsOffCooldown(TechnicalStep);
                     var interruptable = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze) && LevelChecked(All.HeadGraze);
                     var standardStepBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
                     var technicalStepBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent);
@@ -596,13 +589,13 @@ namespace XIVSlothCombo.Combos.PvE
                     var secondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent);
                     #endregion
 
-                    // Simple AoE Standard Step (step function)
+                    // Simple AoE Standard Steps & Fill Feature
                     if (HasEffect(Buffs.StandardStep) && (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
                             : StandardFinish2;
 
-                    // Simple AoE Tech Step (step function)
+                    // Simple AoE Tech Steps & Fill Feature
                     if (HasEffect(Buffs.TechnicalStep) && (IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_TechFill)))
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
@@ -615,26 +608,25 @@ namespace XIVSlothCombo.Combos.PvE
                     // Simple AoE Standard (activates dance with no target, or when target is over HP% threshold)
                     if (!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold)
                     {
-                        if (LevelChecked(StandardStep) && IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && IsOffCooldown(StandardStep)
-                            && ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer > 5))
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && standardStepReady &&
+                            ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer > 5))
                             return StandardStep;
                     }
 
                     // Simple AoE Tech (activates dance with no target, or when target is over HP% threshold)
                     if (!HasTarget() || GetTargetHPPercent() > technicalStepBurstThreshold)
                     {
-                        if (LevelChecked(TechnicalStep) && IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && !HasEffect(Buffs.StandardStep) && IsOffCooldown(TechnicalStep))
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && technicalStepReady &&
+                            !HasEffect(Buffs.StandardStep))
                             return TechnicalStep;
                     }
 
                     if (canWeave)
                     {
                         // Simple AoE Tech Devilment
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) && devilmentReady)
-                        {
-                            if (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep))
-                                return Devilment;
-                        }
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) && devilmentReady &&
+                            (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                            return Devilment;
 
                         // Simple AoE Flourish
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) && flourishReady)
@@ -659,11 +651,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return FanDance3;
 
                             // Simple AoE Overcap & Burst
-                            if (LevelChecked(FanDance2))
-                            {
-                                if (gauge.Feathers > minFeathers || (techBurst && gauge.Feathers > 0))
-                                    return FanDance2;
-                            }
+                            if (LevelChecked(FanDance2) && (gauge.Feathers > minFeathers || (techBurst && gauge.Feathers > 0)))
+                                return FanDance2;
                         }
 
                         // Simple AoE FD4 
