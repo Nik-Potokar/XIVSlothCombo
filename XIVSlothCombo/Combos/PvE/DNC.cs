@@ -139,7 +139,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (actionID == actionIDs[3] || (actionIDs[3] == 0 && actionID == FanDance2))
                         return OriginalHook(Fountainfall);
                 }
-
                 return actionID;
             }
         }
