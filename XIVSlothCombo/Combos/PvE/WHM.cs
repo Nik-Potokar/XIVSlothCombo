@@ -238,19 +238,18 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // DoTs
-                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) &&
-                        inCombat &&
-                        LevelChecked(Aero1))
+                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && inCombat && LevelChecked(Aero1))
                     {
+                        // Fetch appropriate debuff for player level
                         Status? DoTDebuff;
                         if (LevelChecked(Dia)) DoTDebuff = FindTargetEffect(Debuffs.Dia);
                         else if (LevelChecked(Aero2)) DoTDebuff = FindTargetEffect(Debuffs.Aero2);
                         else DoTDebuff = FindTargetEffect(Debuffs.Aero1);
 
-                        //Got our Debuff for our level, check for it and procede 
+                        // DoT Uptime & HP% threshold
                         if (((DoTDebuff is null) || (DoTDebuff.RemainingTime <= 3)) &&
-                            (GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT))
-                           ) return OriginalHook(Aero1);
+                            (GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT)))
+                            return OriginalHook(Aero1);
                     }
 
                     if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
