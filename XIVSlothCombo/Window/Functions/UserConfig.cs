@@ -1215,6 +1215,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
+                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
