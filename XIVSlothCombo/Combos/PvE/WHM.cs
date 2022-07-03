@@ -165,7 +165,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is All.Swiftcast)
                 {
-                    bool thinAirReady = !HasEffect(Buffs.ThinAir) && LevelChecked(ThinAir) && GetCooldown(ThinAir).RemainingCharges > 0;
+                    bool thinAirReady = !HasEffect(Buffs.ThinAir) && LevelChecked(ThinAir) && HasCharges(ThinAir);
 
                     if (HasEffect(All.Buffs.Swiftcast))
                     {
@@ -315,7 +315,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Cure2)
                 {
-                    if (benisonReady && (GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29))
+                    if (benisonReady && (GetRemainingCharges(DivineBenison) == 2 || GetCooldownRemainingTime(DivineBenison) <= 29))
                     {
                         if (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_BenisonWeave) && canWeave)
                             return DivineBenison;
