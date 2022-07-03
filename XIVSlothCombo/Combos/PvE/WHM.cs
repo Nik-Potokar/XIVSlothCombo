@@ -279,6 +279,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Medica2)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
+                    bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > 0;
 
                     if (!LevelChecked(Medica2))
                         return Medica1;
@@ -291,6 +292,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(Buffs.Medica2) && GetBuffRemainingTime(Buffs.Medica2) > 2)
                         return Medica1;
+
+                    if (IsEnabled(CustomComboPreset.WHM_Medica_ThinAir) && thinAirReady)
+                        return ThinAir;
                 }
                 return actionID;
             }
