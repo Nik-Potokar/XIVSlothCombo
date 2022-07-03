@@ -270,9 +270,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return ReverseCascade;
 
                     // ST Cascade Combo
-                    if (lastComboMove is Cascade && LevelChecked(Fountain))
+                    if (LevelChecked(Fountain) && lastComboMove is Cascade)
                         return Fountain;
-                    return Cascade;
                 }
                 return actionID;
             }
@@ -326,9 +325,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return RisingWindmill;
 
                     // AoE Windmill Combo
-                    if (lastComboMove is Windmill && LevelChecked(Bladeshower))
+                    if (LevelChecked(Bladeshower) && lastComboMove is Windmill)
                         return Bladeshower;
-                    return Windmill;
                 }
                 return actionID;
             }
@@ -497,12 +495,12 @@ namespace XIVSlothCombo.Combos.PvE
                         // Simple ST Feathers
                         if (LevelChecked(FanDance1) && IsEnabled(CustomComboPreset.DNC_ST_Simple_Feathers))
                         {
+                            // Simple ST Feather Pooling
+                            var minFeathers = IsEnabled(CustomComboPreset.DNC_ST_Simple_FeatherPooling) && LevelChecked(TechnicalStep) ? 3 : 0;
+
                             // Simple ST FD3
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
-
-                            // Simple ST Feather Pooling
-                            var minFeathers = IsEnabled(CustomComboPreset.DNC_ST_Simple_FeatherPooling) && LevelChecked(TechnicalStep) ? 3 : 0;
 
                             // Simple ST Feather Overcap & Burst
                             if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0)
