@@ -502,13 +502,14 @@ namespace XIVSlothCombo.Combos.PvE
                         // Swiftcast Garuda Feature
                         if (swiftcastPhase is 0 or 1 && LevelChecked(Slipstream) && HasEffect(Buffs.GarudasFavor))
                         {
-                            if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned)
+                            if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
                             {
                                 if (STCombo || (AoECombo && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi_Only)))
                                     return All.Swiftcast;
                             }
+                            
                             if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) &&
-                                ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) || (gauge.Attunement == 0)))     // Astral Flow if Swiftcast is not ready throughout Garuda
+                                ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) || (gauge.Attunement == 0)))     // Astral Flow if Swiftcast is not ready throughout Garuda
                                 return OriginalHook(AstralFlow);
                         }
 
@@ -538,8 +539,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) &&
-                                    ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) ||
-                                     (gauge.Attunement == 0)))          // Astral Flow if Swiftcast is not ready throughout Garuda
+                                    ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) || (gauge.Attunement == 0)))     // Astral Flow if Swiftcast is not ready throughout Garuda
                                     return OriginalHook(AstralFlow);
                             }
 
@@ -555,8 +555,10 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // Gemshine/Precious Brilliance if has Swiftcast
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone)
+                    // Gemshine/Precious Brilliance priority casting
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && 
+                        ((gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone) ||
+                        (HasEffect(Buffs.GarudasFavor) && gauge.Attunement >= 1 && !HasEffect(All.Buffs.Swiftcast) && IsMoving)))
                     {
                         if (STCombo)
                             return OriginalHook(Gemshine);
@@ -564,6 +566,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (AoECombo && LevelChecked(PreciousBrilliance))
                             return OriginalHook(PreciousBrilliance);
                     }
+                    
+                    // Movement Ruin4 in Garuda Phase
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.GarudasFavor) && !HasEffect(All.Buffs.Swiftcast) && !gauge.IsGarudaAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
+                        return Ruin4;
                     
                     if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2) ||                                             // Garuda
                         IsEnabled(CustomComboPreset.SMN_Titan_MountainBuster) && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) ||                                                              // Titan
