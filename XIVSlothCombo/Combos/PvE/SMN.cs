@@ -499,6 +499,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // Movement Ruin4 in Garuda Phase
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.GarudasFavor) && !HasEffect(All.Buffs.Swiftcast) && !gauge.IsGarudaAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
                         return Ruin4;
+                    //something broke when trying to merge these two into one check, I'll mess with it later.
+                    // Movement Ruin4 in Ifrit Phase
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && gauge.IsIfritAttuned && !HasEffect(All.Buffs.Swiftcast) && IsMoving && HasEffect(Buffs.FurtherRuin))
+                        return Ruin4;
                     
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) && level >= All.Levels.Swiftcast)
@@ -576,10 +580,6 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) // Ifrit
                         return OriginalHook(AstralFlow);
 
-                    // Movement Ruin4 in Ifrit Phase
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
-                        return Ruin4;
-                    
                     // Gemshine/Precious Brilliance
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                     {
