@@ -499,7 +499,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Movement Ruin4 in Egi Phases
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) &&
                         ((HasEffect(Buffs.GarudasFavor) && !HasEffect(All.Buffs.Swiftcast) && !gauge.IsGarudaAttuned && IsMoving && HasEffect(Buffs.FurtherRuin)) ||
-                         (gauge.IsIfritAttuned && !HasEffect(All.Buffs.Swiftcast) && IsMoving && HasEffect(Buffs.FurtherRuin))))
+                         (!HasEffect(All.Buffs.Swiftcast) && !HasEffect(All.Buffs.Swiftcast) && gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))))
                         return Ruin4;
                     
                     // Egi Features
