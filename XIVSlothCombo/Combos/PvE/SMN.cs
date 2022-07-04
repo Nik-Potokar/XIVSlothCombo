@@ -408,9 +408,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetCooldown(EnergyDrain).CooldownRemaining <= 3.2)
                             {
                                 if (HasEffect(Buffs.SearingLight) &&
-                                    (SummonerBurstPhase is 0 or 1 or 2 ||
-                                     (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100)) ||
-                                     (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor))))
+                                    (SummonerBurstPhase is 0 or 1 or 2 or 3) ||
+                                    (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                 {
                                     if (STCombo)
                                         return Fester;
@@ -466,10 +465,9 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Painflare;
                                     }
 
-                                    if (HasEffect(Buffs.SearingLight) && 
-                                        (SummonerBurstPhase is 0 or 1 or 2 && DemiAttackCount >= burstDelay ||
-                                        (SummonerBurstPhase == 3 && DemiAttackCount >= burstDelay && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100)) ||
-                                        (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor))))
+                                    if (HasEffect(Buffs.SearingLight) && inOpener &&
+                                        (SummonerBurstPhase is 0 or 1 or 2 or 3 && DemiAttackCount >= burstDelay) ||
+                                        (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                     {
                                         if (STCombo)
                                             return Fester;
