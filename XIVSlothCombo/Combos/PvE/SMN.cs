@@ -496,12 +496,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Aethercharge);
                     }
                     
-                    // Movement Ruin4 in Garuda Phase
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.GarudasFavor) && !HasEffect(All.Buffs.Swiftcast) && !gauge.IsGarudaAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
-                        return Ruin4;
-                    //something broke when trying to merge these two into one check, I'll mess with it later.
-                    // Movement Ruin4 in Ifrit Phase
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && gauge.IsIfritAttuned && !HasEffect(All.Buffs.Swiftcast) && IsMoving && HasEffect(Buffs.FurtherRuin))
+                    //Movement Ruin4 in Egi Phases
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) &&
+                        ((HasEffect(Buffs.GarudasFavor) && !HasEffect(All.Buffs.Swiftcast) && !gauge.IsGarudaAttuned && IsMoving && HasEffect(Buffs.FurtherRuin)) ||
+                         (gauge.IsIfritAttuned && !HasEffect(All.Buffs.Swiftcast) && IsMoving && HasEffect(Buffs.FurtherRuin))))
                         return Ruin4;
                     
                     // Egi Features
