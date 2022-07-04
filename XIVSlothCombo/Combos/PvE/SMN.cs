@@ -496,6 +496,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Aethercharge);
                     }
                     
+                    // Movement Ruin4 in Garuda Phase
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.GarudasFavor) && !HasEffect(All.Buffs.Swiftcast) && !gauge.IsGarudaAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
+                        return Ruin4;
+                    
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) && level >= All.Levels.Swiftcast)
                     {
@@ -566,10 +570,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if (AoECombo && LevelChecked(PreciousBrilliance))
                             return OriginalHook(PreciousBrilliance);
                     }
-                    
-                    // Movement Ruin4 in Garuda Phase
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.GarudasFavor) && !HasEffect(All.Buffs.Swiftcast) && !gauge.IsGarudaAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
-                        return Ruin4;
                     
                     if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2) ||                                             // Garuda
                         IsEnabled(CustomComboPreset.SMN_Titan_MountainBuster) && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) ||                                                              // Titan
