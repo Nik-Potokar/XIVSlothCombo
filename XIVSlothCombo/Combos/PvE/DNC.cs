@@ -238,8 +238,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     #region Types
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
-                    bool flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
-                    bool symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
+                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
+                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     bool canWeave = CanWeave(actionID);
                     int espritThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST);
                     #endregion
@@ -294,8 +294,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     #region Types
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
-                    bool flow = (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow));
-                    bool symmetry = (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry));
+                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
+                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     bool canWeave = CanWeave(actionID);
                     int espritThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE);
                     #endregion
@@ -362,26 +362,20 @@ namespace XIVSlothCombo.Combos.PvE
                 // One-button mode for both dances (SS/TS). SS takes priority.
                 if (actionID is StandardStep)
                 {
-                    #region Types
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
-                    CooldownData standardCD = GetCooldown(StandardStep);
-                    CooldownData techstepCD = GetCooldown(TechnicalStep);
-                    CooldownData devilmentCD = GetCooldown(Devilment);
-                    CooldownData flourishCD = GetCooldown(Flourish);
-                    bool incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    #endregion
 
                     // Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && standardCD.IsCooldown && !devilmentCD.IsCooldown && !gauge.IsDancing)
+                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !gauge.IsDancing)
                     {
-                        if (LevelChecked(Devilment) && !LevelChecked(TechnicalStep) ||  // Lv.62 - 69
-                            (LevelChecked(TechnicalStep) && techstepCD.IsCooldown))     // Lv. 70+ during Tech
+                        if (LevelChecked(Devilment) && !LevelChecked(TechnicalStep) ||      // Lv.62 - 69
+                            (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
                             return Devilment;
                     }
 
                     // Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) && !gauge.IsDancing && !flourishCD.IsCooldown &&
-                        incombat && LevelChecked(Flourish) && standardCD.IsCooldown)
+                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) && InCombat() && !gauge.IsDancing &&
+                        IsOffCooldown(Flourish) && LevelChecked(Flourish) &&
+                        IsOnCooldown(StandardStep))
                         return Flourish;
 
                     // Starfall Dance
@@ -393,7 +387,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Tillana;
 
                     // Tech Step
-                    if (standardCD.IsCooldown && !techstepCD.IsCooldown && !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
+                    if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) && !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
                     // Dance steps
@@ -402,22 +396,21 @@ namespace XIVSlothCombo.Combos.PvE
                         // SS Steps
                         if (HasEffect(Buffs.StandardStep))
                         {
-                            if (gauge.CompletedSteps < 2)
-                                return gauge.NextStep;
-
-                            return StandardFinish2;
+                            return gauge.CompletedSteps < 2
+                                ? gauge.NextStep
+                                : StandardFinish2;
                         }
 
                         // TS Steps
                         if (HasEffect(Buffs.TechnicalStep))
                         {
-                            if (gauge.CompletedSteps < 4)
-                                return gauge.NextStep;
-
-                            return TechnicalFinish4;
+                            return gauge.CompletedSteps < 4
+                                ? gauge.NextStep
+                                : TechnicalFinish4;
                         }
                     }
                 }
+
                 return actionID;
             }
         }
@@ -514,7 +507,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return FanDance3;
 
                             // Simple ST Feather Overcap & Burst
-                            if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) || GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0)
+                            if (gauge.Feathers > minFeathers ||
+                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) ||
+                                GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0)
                                 return FanDance1;
                         }
 
@@ -618,7 +613,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Simple AoE Standard (activates dance with no target, or when target is over HP% threshold)
                     if (!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold)
                     {
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && standardStepReady &&
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) &&standardStepReady &&
                             ((!HasEffect(Buffs.TechnicalStep) && !techBurst) || techBurstTimer > 5))
                             return StandardStep;
                     }
