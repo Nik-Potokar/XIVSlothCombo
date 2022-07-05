@@ -144,6 +144,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return (LevelChecked(RefulgentArrow)) ? RefulgentArrow : StraightShot;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -235,6 +236,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Stormbite;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -319,6 +321,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Stormbite;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -336,6 +339,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
                         return ApexArrow;
                 }
+
                 return actionID;
             }
         }
@@ -362,6 +366,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder))
                         return Sidewinder;
                 }
+
                 return actionID;
             }
         }
@@ -423,6 +428,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
                         return BlastArrow;
                 }
+
                 return actionID;
             }
         }
@@ -461,6 +467,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder))
                         return Sidewinder;
                 }
+
                 return actionID;
             }
         }
@@ -486,6 +493,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Shadowbite;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -812,6 +820,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return (LevelChecked(RefulgentArrow)) ? RefulgentArrow : StraightShot;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -829,6 +838,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice))
                         return BattleVoice;
                 }
+
                 return actionID;
             }
         }
@@ -862,6 +872,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return ArmysPaeon;
                     }
                 }
+
                 return actionID;
             }
         }
