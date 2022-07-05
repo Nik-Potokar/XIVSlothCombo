@@ -115,18 +115,18 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 bool hasLily = GetJobGauge<WHMGauge>().Lily > 0;
                 byte BloodLilies = GetJobGauge<WHMGauge>().BloodLily;
-                bool benisonPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison);
-                bool benisonReady = LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
-                bool benisonJustUsed = GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29;
-                bool tetraPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra);
-                bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
-                int  tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
 
                 if (actionID is Cure2)
                 {
+                    bool benisonPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison);
+                    bool benisonReady = LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
+                    bool benisonJustUsed = GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29;
+                    bool tetraPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra);
+                    bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
+                    int tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
+
                     // Are these first two statements supposed to return 'actionID'?
                     // Seems like a weird condition set to return Cure II. -k
-
                     if (benisonPrioFeatureEnabled && benisonReady && benisonJustUsed)
                         return actionID;
                     if (tetraPrioFeatureEnabled && tetraReady && GetTargetHPPercent() <= tetraHP)
@@ -179,20 +179,11 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool openerDelayComplete = glare3Count >= 3;
-                    Status? diaDebuff = FindTargetEffect(Debuffs.Dia);
-                    Status? aero1Debuff = FindTargetEffect(Debuffs.Aero);
-                    Status? aero2Debuff = FindTargetEffect(Debuffs.Aero2);
                     int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_ST_Lucid);
-                    bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold;
-                    bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
-                    bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
                     float glare3CD = GetCooldownRemainingTime(Glare3);
-                    bool pomEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind);
-                    bool assizeEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Assize);
-                    bool lucidEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid);
-
+                    
                     // No-Swift Opener
                     // Counter reset
                     if (!InCombat()) glare3Count = 0;
@@ -212,6 +203,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanSpellWeave(actionID) && openerDelayComplete)
                     {
+                        bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold;
+                        bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
+                        bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
+                        bool pomEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind);
+                        bool assizeEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Assize);
+                        bool lucidEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid);
+
                         if (pomEnabled && pomReady)
                             return PresenceOfMind;
                         if (assizeEnabled && assizeReady)
@@ -280,15 +278,13 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                #region Types
-                bool canWeave = CanSpellWeave(actionID);
-                int tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
-                bool benisonReady = LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
-                bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
-                #endregion
-
                 if (actionID is Cure2)
                 {
+                    bool canWeave = CanSpellWeave(actionID);
+                    int tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
+                    bool benisonReady = LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
+                    bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
+
                     if (benisonReady && (GetRemainingCharges(DivineBenison) == 2 || GetCooldownRemainingTime(DivineBenison) <= 29) &&
                         (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_BenisonWeave) && canWeave ||
                         IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison)))
@@ -312,16 +308,18 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Holy or Holy3)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
-                    int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid);
-                    bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold;
-                    bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
-                    bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
+                    
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
-                    bool holyLast = WasLastAction(OriginalHook(Holy));
-
+                    
                     if (CanSpellWeave(actionID))
                     {
+                        bool holyLast = WasLastAction(OriginalHook(Holy));
+                        int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid);
+                        bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold;
+                        bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
+                        bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
+
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && pomReady)
                             return PresenceOfMind;
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && holyLast && assizeReady)
