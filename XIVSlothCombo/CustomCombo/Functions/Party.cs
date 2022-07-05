@@ -9,7 +9,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
     {
         /// <summary> Gets the party list </summary>
         /// <returns> Current party list. </returns>
-        public PartyList GetPartyMembers() => Service.PartyList;
+        public static PartyList GetPartyMembers() => Service.PartyList;
 
         protected unsafe static GameObject? GetPartySlot(int slot)
         {

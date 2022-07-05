@@ -20,8 +20,12 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static bool InCombat() => Service.Condition[ConditionFlag.InCombat];
 
         /// <summary> Find if the player has a pet present. </summary>
-        /// <returns> A value indicating whether the player has a pet present. </returns>
+        /// <returns> A value indicating whether the player has a pet (fairy/carbuncle) present. </returns>
         public static bool HasPetPresent() => Service.BuddyList.PetBuddyPresent;
+
+        /// <summary> Find if the player has a companion (chocobo) present. </summary>
+        /// <returns> A value indicating whether the player has a companion (chocobo). </returns>
+        public static bool HasCompanionPresent() => Service.BuddyList.CompanionBuddyPresent;
 
         /// <summary> Checks if the player is in a PVP enabled zone. </summary>
         /// <returns></returns>

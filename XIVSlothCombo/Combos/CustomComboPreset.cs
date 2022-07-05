@@ -2518,6 +2518,15 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
         [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 500, "", "")]
         SCH_FairyReminder = 16500,
+
+        [ReplaceSkill(SCH.DeploymentTactics)]
+        [CustomComboInfo("Deployment Tactics Feature", "Deployment Tactics idles as Adloquium until the Party Member has the Galvanize Buff", SCH.JobID, 600, "", "")]
+        SCH_DeploymentTactics = 16600,
+
+            [ParentCombo(SCH_DeploymentTactics)]
+            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
+            SCH_DeploymentTactics_Recitation = 16610,
+        
         #endregion
 
         #endregion
