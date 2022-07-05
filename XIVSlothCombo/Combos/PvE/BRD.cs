@@ -102,36 +102,34 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.BRD_DoTMaintainance))
                     {
                         #region Types
-                        var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                        var venomous = TargetHasEffect(Debuffs.VenomousBite);
-                        var windbite = TargetHasEffect(Debuffs.Windbite);
-                        var caustic = TargetHasEffect(Debuffs.CausticBite);
-                        var stormbite = TargetHasEffect(Debuffs.Stormbite);
-                        var venomousDuration = FindTargetEffect(Debuffs.VenomousBite);
-                        var windbiteDuration = FindTargetEffect(Debuffs.Windbite);
-                        var causticDuration = FindTargetEffect(Debuffs.CausticBite);
-                        var stormbiteDuration = FindTargetEffect(Debuffs.Stormbite);
+                        // Venomous Bite
+                        bool venomous = TargetHasEffect(Debuffs.VenomousBite);
+                        bool windbite = TargetHasEffect(Debuffs.Windbite);
+                        bool caustic = TargetHasEffect(Debuffs.CausticBite);
+                        bool stormbite = TargetHasEffect(Debuffs.Stormbite);
+                        float venomRemaining = GetDebuffRemainingTime(Debuffs.VenomousBite);
+                        float windRemaining = GetDebuffRemainingTime(Debuffs.Windbite);
+                        float causticRemaining = GetDebuffRemainingTime(Debuffs.CausticBite);
+                        float stormRemaining = GetDebuffRemainingTime(Debuffs.Stormbite);
                         #endregion
 
-                        if (inCombat)
+                        if (InCombat())
                         {
-                            var useIronJaws = LevelChecked(IronJaws) &&
-                                ((venomous && venomousDuration.RemainingTime < 4) || (caustic && causticDuration.RemainingTime < 4)) ||
-                                (windbite && windbiteDuration.RemainingTime < 4) || (stormbite && stormbiteDuration.RemainingTime < 4);
-
-                            if (useIronJaws)
+                            if (LevelChecked(IronJaws) &&
+                                ((venomous && venomRemaining < 4) || (caustic && causticRemaining < 4)) ||
+                                (windbite && windRemaining < 4) || (stormbite && stormRemaining < 4))
                                 return IronJaws;
 
-                            if (!LevelChecked(IronJaws) && venomous && venomousDuration.RemainingTime < 4)
+                            if (!LevelChecked(IronJaws) && venomous && venomRemaining < 4)
                                 return VenomousBite;
 
-                            if (!LevelChecked(IronJaws) && windbite && windbiteDuration.RemainingTime < 4)
+                            if (!LevelChecked(IronJaws) && windbite && windRemaining < 4)
                                 return Windbite;
                         }
                     }
 
                     if (HasEffect(Buffs.StraightShotReady))
-                        return (LevelChecked(RefulgentArrow))
+                        return LevelChecked(RefulgentArrow)
                             ? RefulgentArrow
                             : StraightShot;
                 }
@@ -475,8 +473,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                         return All.HeadGraze;
 
-                    var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BRD_Simple_NoWaste) ?
-                        GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage) : true;
+                    var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BRD_Simple_NoWaste)
+                        ? GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage)
+                        : true;
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Song) && isEnemyHealthHigh)
                     {
@@ -671,7 +670,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (LevelChecked(IronJaws) && IsEnabled(CustomComboPreset.BRD_Simple_RagingJaws) &&
                             HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration < ragingJawsRenewTime &&
                             poisonRecast(40) && windRecast(40));
-                        var dotOpener = (IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener) && !openerFinished || !IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener));
+                        var dotOpener = IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener) && !openerFinished || !IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener);
 
                         if (!LevelChecked(Stormbite))
                         {
@@ -747,7 +746,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (HasEffect(Buffs.StraightShotReady))
-                        return (LevelChecked(RefulgentArrow)) ? RefulgentArrow : StraightShot;
+                        return LevelChecked(RefulgentArrow)
+                            ? RefulgentArrow
+                            : StraightShot;
                 }
 
                 return actionID;
