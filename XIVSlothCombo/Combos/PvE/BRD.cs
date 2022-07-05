@@ -44,16 +44,16 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const ushort
                 StraightShotReady = 122,
-                Troubadour = 1934,
-                BlastArrowReady = 2692,
-                ShadowbiteReady = 3002,
-                WanderersMinuet = 865,
+                RagingStrikes = 125,
+                Barrage = 128,
                 MagesBallad = 135,
                 ArmysPaeon = 137,
-                RadiantFinale = 2722,
                 BattleVoice = 141,
-                Barrage = 128,
-                RagingStrikes = 125;
+                WanderersMinuet = 865,
+                Troubadour = 1934,
+                BlastArrowReady = 2692,
+                RadiantFinale = 2722,
+                ShadowbiteReady = 3002;
         }
 
         public static class Debuffs
