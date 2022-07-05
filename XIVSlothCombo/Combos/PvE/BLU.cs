@@ -66,19 +66,13 @@ namespace XIVSlothCombo.Combos.PvE
                 Lightheaded = 2501;
         }
 
-        public static class Levels
-        {
-            public const byte
-                Placeholder = 1;
-        }
-
         internal class BLU_BuffedSoT : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_BuffedSoT;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SongOfTorment)
+                if (actionID is SongOfTorment)
                 {
                     if (!HasEffect(Buffs.Bristle) && IsSpellActive(Bristle))
                         return Bristle;
@@ -96,7 +90,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == MoonFlute || actionID == Whistle)
+                if (actionID is MoonFlute or Whistle)
                 {
                     //If Triple Trident is saved for Crit/Det builds
                     if (GetCooldownRemainingTime(TripleTrident) <= 3 && IsSpellActive(TripleTrident))
@@ -134,7 +128,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return FeatherRain;
                     if (!HasEffect(Buffs.Bristle) && IsOffCooldown(All.Swiftcast) && IsSpellActive(Bristle))
                         return Bristle;
-                    if (IsOffCooldown(All.Swiftcast) && level >= All.Levels.Swiftcast)
+                    if (IsOffCooldown(All.Swiftcast) && LevelChecked(All.Swiftcast))
                         return All.Swiftcast;
                     if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
                         return GlassDance;
@@ -158,7 +152,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == FinalSting)
+                if (actionID is FinalSting)
                 {
                     if (IsEnabled(CustomComboPreset.BLU_SoloMode) && HasCondition(ConditionFlag.BoundByDuty) && !HasEffect(Buffs.BasicInstinct) && GetPartyMembers().Length == 0 && IsSpellActive(BasicInstinct))
                         return BasicInstinct;
@@ -182,7 +176,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return ShockStrike;
                     if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle) && !WasLastAction(Whistle))
                         return Whistle;
-                    if (IsOffCooldown(All.Swiftcast) && level >= All.Levels.Swiftcast)
+                    if (IsOffCooldown(All.Swiftcast) && LevelChecked(All.Swiftcast))
                         return All.Swiftcast;
                     if (IsSpellActive(FinalSting))
                         return FinalSting;
@@ -198,7 +192,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Ultravibration)
+                if (actionID is Ultravibration)
                 {
                     if (IsEnabled(CustomComboPreset.BLU_HydroPull) && !InMeleeRange() && IsSpellActive(HydroPull))
                         return HydroPull;
@@ -224,7 +218,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Devour || actionID == Offguard || actionID == BadBreath)
+                if (actionID is Devour or Offguard or BadBreath)
                 {
                     if (!TargetHasEffectAny(Debuffs.Offguard) && IsOffCooldown(Offguard) && IsSpellActive(Offguard))
                         return Offguard;
@@ -232,7 +226,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return BadBreath;
                     if (IsOffCooldown(Devour) && HasEffect(Buffs.TankMimicry) && IsSpellActive(Devour))
                         return Devour;
-                    if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 9000 & level >= All.Levels.LucidDreaming)
+                    if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 9000 & LevelChecked(All.LucidDreaming))
                         return All.LucidDreaming;
                 }
 
@@ -246,7 +240,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == MagicHammer)
+                if (actionID is MagicHammer)
                 {
                     if (IsOnCooldown(MagicHammer) && IsOffCooldown(All.Addle) && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(Debuffs.Conked))
                         return All.Addle;
@@ -262,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == FeatherRain)
+                if (actionID is FeatherRain)
                 {
                     if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
                         return FeatherRain;
@@ -286,7 +280,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == WhiteKnightsTour || actionID == BlackKnightsTour)
+                if (actionID is WhiteKnightsTour or BlackKnightsTour)
                 {
                     if (TargetHasEffect(Debuffs.Slow) && IsSpellActive(BlackKnightsTour))
                         return BlackKnightsTour;
@@ -304,7 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == PeripheralSynthesis)
+                if (actionID is PeripheralSynthesis)
                 {
                     if (!TargetHasEffect(Debuffs.Lightheaded) && IsSpellActive(PeripheralSynthesis))
                         return PeripheralSynthesis;
