@@ -77,6 +77,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (GetJobGauge<WHMGauge>().BloodLily == 3)
                         return AfflatusMisery;
                 }
+
                 return actionID;
             }
         }
@@ -92,6 +93,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (GetJobGauge<WHMGauge>().BloodLily == 3)
                         return AfflatusMisery;
                 }
+
                 return actionID;
             }
         }
@@ -107,6 +109,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!LevelChecked(Cure2))
                         return Cure;
                 }
+
                 return actionID;
             }
         }
@@ -153,6 +156,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return AfflatusRapture;
                     return actionID;
                 }
+
                 return actionID;
             }
         }
@@ -174,6 +178,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Raise;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -266,6 +271,7 @@ namespace XIVSlothCombo.Combos.PvE
                         gauge.BloodLily >= 3 && openerDelayComplete)
                         return AfflatusMisery;
                 }
+
                 return actionID;
             }
         }
@@ -296,6 +302,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_Medica_ThinAir) && thinAirReady)
                         return ThinAir;
                 }
+
                 return actionID;
             }
         }
@@ -333,6 +340,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Tetragrammaton;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -366,17 +374,19 @@ namespace XIVSlothCombo.Combos.PvE
                         if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && assizeReady)
                             return Assize;
 
-                        if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && lucidReady)
+                        if (WasLastAction(OriginalHook(Holy)) && IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) &&lucidReady)
                             return All.LucidDreaming;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_LilyOvercap) && LevelChecked(AfflatusRapture) && (liliesFullNoBlood || liliesNearlyFull))
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_LilyOvercap) && LevelChecked(AfflatusRapture) &&
+                        (liliesFullNoBlood || liliesNearlyFull))
                         return AfflatusRapture;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && LevelChecked(AfflatusMisery) &&
                         gauge.BloodLily >= 3 && HasBattleTarget())
                         return AfflatusMisery;
                 }
+
                 return actionID;
             }
         }
