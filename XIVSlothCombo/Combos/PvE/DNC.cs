@@ -77,10 +77,12 @@ namespace XIVSlothCombo.Combos.PvE
                 ShieldSamba = 1826;
         }
 
+        /*
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const short placeholder = 0;
         }
+        */
 
         public static class Config
         {
@@ -140,6 +142,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (actionID == actionIDs[3] || (actionIDs[3] == 0 && actionID == FanDance2))
                         return OriginalHook(Fountainfall);
                 }
+
                 return actionID;
             }
         }
@@ -174,6 +177,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
                         return FanDance4;
                 }
+
                 return actionID;
             }
         }
@@ -197,6 +201,7 @@ namespace XIVSlothCombo.Combos.PvE
                     return gauge.CompletedSteps < 4
                         ? gauge.NextStep
                         : TechnicalFinish4;
+
                 return actionID;
             }
         }
@@ -218,6 +223,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.FourFoldFanDance))
                         return FanDance4;
                 }
+
                 return actionID;
             }
         }
@@ -273,6 +279,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Fountain) && lastComboMove is Cascade)
                         return Fountain;
                 }
+
                 return actionID;
             }
         }
@@ -328,6 +335,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill)
                         return Bladeshower;
                 }
+
                 return actionID;
             }
         }
@@ -340,6 +348,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Devilment && HasEffect(Buffs.FlourishingStarfall))
                     return StarfallDance;
+
                 return actionID;
             }
         }
@@ -395,6 +404,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (gauge.CompletedSteps < 2)
                                 return gauge.NextStep;
+
                             return StandardFinish2;
                         }
 
@@ -403,6 +413,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (gauge.CompletedSteps < 4)
                                 return gauge.NextStep;
+
                             return TechnicalFinish4;
                         }
                     }
@@ -554,6 +565,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime > 0)
                         return Fountain;
                 }
+
                 return actionID;
             }
         }
@@ -698,6 +710,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime > 0)
                         return Bladeshower;
                 }
+
                 return actionID;
             }
         }
