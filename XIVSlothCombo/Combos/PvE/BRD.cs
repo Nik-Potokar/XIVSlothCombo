@@ -72,20 +72,11 @@ namespace XIVSlothCombo.Combos.PvE
                 BRD_NoWasteHPPercentage = "noWasteHpPercentage";
         }
 
-        internal static bool SongIsNotNone(Song value)
-        {
-            return value != Song.NONE;
-        }
-
-        internal static bool SongIsNone(Song value)
-        {
-            return value == Song.NONE;
-        }
-
-        internal static bool SongIsWandererMinuet(Song value)
-        {
-            return value == Song.WANDERER;
-        }
+        #region Song status
+        internal static bool SongIsNotNone(Song value) => value != Song.NONE;
+        internal static bool SongIsNone(Song value) => value == Song.NONE;
+        internal static bool SongIsWandererMinuet(Song value) => value == Song.WANDERER;
+        #endregion
 
 
         // Replace HS/BS with SS/RA when procced.
