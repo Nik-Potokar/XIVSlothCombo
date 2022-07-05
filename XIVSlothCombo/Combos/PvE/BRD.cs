@@ -140,9 +140,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (HasEffect(Buffs.StraightShotReady))
-                    {
-                        return (LevelChecked(RefulgentArrow)) ? RefulgentArrow : StraightShot;
-                    }
+                        return (LevelChecked(RefulgentArrow))
+                            ? RefulgentArrow
+                            : StraightShot;
                 }
 
                 return actionID;
@@ -176,25 +176,17 @@ namespace XIVSlothCombo.Combos.PvE
                         if (venomous is not null && windbite is not null)
                         {
                             if (LevelChecked(VenomousBite) && venomous.RemainingTime < windbite.RemainingTime)
-                            {
                                 return VenomousBite;
-                            }
 
                             if (LevelChecked(Windbite))
-                            {
                                 return Windbite;
-                            }
                         }
 
                         if (LevelChecked(VenomousBite) && (!LevelChecked(Windbite) || windbite is not null))
-                        {
                             return VenomousBite;
-                        }
 
                         if (LevelChecked(Windbite))
-                        {
                             return Windbite;
-                        }
                     }
 
                     if (!LevelChecked(Stormbite))
@@ -203,38 +195,26 @@ namespace XIVSlothCombo.Combos.PvE
                         var windbite = TargetHasEffect(Debuffs.Windbite);
 
                         if (LevelChecked(IronJaws) && venomous && windbite)
-                        {
                             return IronJaws;
-                        }
 
                         if (LevelChecked(VenomousBite) && windbite)
-                        {
                             return VenomousBite;
-                        }
 
                         if (LevelChecked(Windbite))
-                        {
                             return Windbite;
-                        }
                     }
 
                     var caustic = TargetHasEffect(Debuffs.CausticBite);
                     var stormbite = TargetHasEffect(Debuffs.Stormbite);
 
                     if (LevelChecked(IronJaws) && caustic && stormbite)
-                    {
                         return IronJaws;
-                    }
 
                     if (LevelChecked(CausticBite) && stormbite)
-                    {
                         return CausticBite;
-                    }
 
                     if (LevelChecked(Stormbite))
-                    {
                         return Stormbite;
-                    }
                 }
 
                 return actionID;
@@ -257,25 +237,17 @@ namespace XIVSlothCombo.Combos.PvE
                         if (venomous is not null && windbite is not null)
                         {
                             if (LevelChecked(VenomousBite) && venomous.RemainingTime < windbite.RemainingTime)
-                            {
                                 return VenomousBite;
-                            }
 
                             if (LevelChecked(Windbite))
-                            {
                                 return Windbite;
-                            }
                         }
 
                         if (LevelChecked(VenomousBite) && (!LevelChecked(Windbite) || windbite is not null))
-                        {
                             return VenomousBite;
-                        }
 
                         if (LevelChecked(Windbite))
-                        {
                             return Windbite;
-                        }
                     }
 
                     if (!LevelChecked(Stormbite))
@@ -286,19 +258,13 @@ namespace XIVSlothCombo.Combos.PvE
                         var windbiteDuration = FindTargetEffect(Debuffs.Windbite);
 
                         if (LevelChecked(IronJaws) && venomous && windbite && (venomousDuration.RemainingTime < 4 || windbiteDuration.RemainingTime < 4))
-                        {
                             return IronJaws;
-                        }
 
                         if (LevelChecked(VenomousBite) && windbite)
-                        {
                             return VenomousBite;
-                        }
 
                         if (LevelChecked(Windbite))
-                        {
                             return Windbite;
-                        }
                     }
 
                     var caustic = TargetHasEffect(Debuffs.CausticBite);
@@ -307,19 +273,13 @@ namespace XIVSlothCombo.Combos.PvE
                     var stormbiteDuration = FindTargetEffect(Debuffs.Stormbite);
 
                     if (LevelChecked(IronJaws) && caustic && stormbite && (causticDuration.RemainingTime < 4 || stormbiteDuration.RemainingTime < 4))
-                    {
                         return IronJaws;
-                    }
 
                     if (LevelChecked(CausticBite) && stormbite)
-                    {
                         return CausticBite;
-                    }
 
                     if (LevelChecked(Stormbite))
-                    {
                         return Stormbite;
-                    }
                 }
 
                 return actionID;
@@ -489,9 +449,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.BRD_AoE_Combo) && LevelChecked(Shadowbite) && HasEffectAny(Buffs.ShadowbiteReady))
-                    {
                         return Shadowbite;
-                    }
                 }
 
                 return actionID;
@@ -524,9 +482,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
-                    {
                         return All.HeadGraze;
-                    }
 
                     var isEnemyHealthHigh = IsEnabled(CustomComboPreset.BRD_Simple_NoWaste) ?
                         GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage) : true;
@@ -560,15 +516,11 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 // Spend any repertoire before switching to next song
                                 if (songTimerInSeconds < 3 && gauge.Repertoire > 0)
-                                {
                                     return OriginalHook(WanderersMinuet);
-                                }
 
                                 // Move to Mage's Ballad if < 3 seconds left on song
                                 if (songTimerInSeconds < 3 && balladOffCooldown)
-                                {
                                     return MagesBallad;
-                                }
                             }
 
                             if (gauge.Song == Song.MAGE && canWeave)
@@ -587,9 +539,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 // Move to Wanderer's Minuet if < 3 seconds left on song or WM off CD and have 4 repertoires of AP
                                 if (songTimerInSeconds < 3 || (minuetOffCooldown && gauge.Repertoire == 4))
-                                {
                                     return WanderersMinuet;
-                                }
                             }
                         }
 
@@ -605,15 +555,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Buffs) && (gauge.Song != Song.NONE || !LevelChecked(MagesBallad)) && isEnemyHealthHigh)
                     {
-                        if (((canWeaveBuffs && CombatEngageDuration().Minutes == 0) || (canWeaveDelayed && CombatEngageDuration().Minutes > 0)) && LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes) &&
+                        if (LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes) &&
+                            ((canWeaveBuffs && CombatEngageDuration().Minutes == 0) || (canWeaveDelayed && CombatEngageDuration().Minutes > 0)) &&
                             (GetCooldown(BattleVoice).CooldownRemaining <= 5.38 || IsOffCooldown(BattleVoice) || !LevelChecked(BattleVoice)))
-                        {
                             return RagingStrikes;
-                        }
 
-                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && LevelChecked(RadiantFinale) &&
-                            IsOffCooldown(RadiantFinale) && (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet)) &&
-                            (IsOffCooldown(BattleVoice) || GetCooldownRemainingTime(BattleVoice) < 0.7) && (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished) && IsOnCooldown(RagingStrikes))
+                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && LevelChecked(RadiantFinale) && IsOffCooldown(RadiantFinale) &&
+                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet)) &&
+                            (IsOffCooldown(BattleVoice) || GetCooldownRemainingTime(BattleVoice) < 0.7) &&
+                            (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished) && IsOnCooldown(RagingStrikes))
                         {
                             if (!JustUsed(RagingStrikes))
                                 return RadiantFinale;
@@ -643,16 +593,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow) &&
                             (!openerFinished || (openerFinished && GetCooldownRemainingTime(BattleVoice) >= 3.5)))
-                        {
                             return EmpyrealArrow;
-                        }
 
                         if (LevelChecked(PitchPerfect) && gauge.Song == Song.WANDERER &&
                             (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && GetCooldown(EmpyrealArrow).CooldownRemaining < 2)) &&
                             (!openerFinished || (openerFinished && GetCooldownRemainingTime(BattleVoice) >= 3.5)))
-                        {
                             return OriginalHook(WanderersMinuet);
-                        }
 
                         if (LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder) &&
                             (!openerFinished || (openerFinished && GetCooldownRemainingTime(BattleVoice) >= 3.5)))
@@ -665,9 +611,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         (HasEffect(Buffs.BattleVoice) || GetCooldown(BattleVoice).CooldownRemaining > 10) &&
                                         (HasEffect(Buffs.RadiantFinale) || GetCooldown(RadiantFinale).CooldownRemaining > 10 ||
                                         !LevelChecked(RadiantFinale)))
-                                    {
                                         return Sidewinder;
-                                    }
                                 }
                                 else return Sidewinder;
                             }
@@ -688,9 +632,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         (HasEffect(Buffs.RadiantFinale) || GetCooldown(RadiantFinale).CooldownRemaining > 10 ||
                                         !LevelChecked(RadiantFinale)) &&
                                         bloodletterCharges > 0) || bloodletterCharges > 2)
-                                    {
                                         return Bloodletter;
-                                    }
                                 }
 
                                 if (gauge.Song == Song.ARMY && (bloodletterCharges == 3 || ((gauge.SongTimer / 1000) > 30 && bloodletterCharges > 0)))
@@ -704,9 +646,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             else if (bloodletterCharges > 0)
-                            {
                                 return Bloodletter;
-                            }
                         }
                     }
 
@@ -816,9 +756,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (HasEffect(Buffs.StraightShotReady))
-                    {
                         return (LevelChecked(RefulgentArrow)) ? RefulgentArrow : StraightShot;
-                    }
                 }
 
                 return actionID;
