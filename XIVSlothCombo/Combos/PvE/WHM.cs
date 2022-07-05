@@ -54,7 +54,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const ushort
             Dia = 1871,
-            Aero = 143,
+            Aero1 = 143,
             Aero2 = 144;
         }
 
@@ -62,6 +62,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 WHM_ST_Lucid = "WHMLucidDreamingFeature",
+                WHM_ST_MainCombo_DoT = "WHM_ST_MainCombo_DoT",
                 WHM_AoE_Lucid = "WHM_AoE_Lucid",
                 WHM_oGCDHeals = "WHMogcdHealsShieldsFeature";
         }
@@ -220,14 +221,18 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // DoTs
-                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat())
+                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat() && LevelChecked(Aero1))
                     {
-                        if (LevelChecked(Aero1) && !LevelChecked(Aero2) && ((aero1Debuff is null) || (aero1Debuff.RemainingTime <= 3)))
-                            return Aero1;
-                        if (LevelChecked(Aero2) && !LevelChecked(Dia) && ((aero2Debuff is null) || (aero2Debuff.RemainingTime <= 3)))
-                            return Aero2;
-                        if (LevelChecked(Dia) && ((diaDebuff is null) || (diaDebuff.RemainingTime <= 3)))
-                            return Dia;
+                        // Fetch appropriate debuff for player level
+                        Status? DoTDebuff;
+                        if (LevelChecked(Dia)) DoTDebuff = FindTargetEffect(Debuffs.Dia);
+                        else if (LevelChecked(Aero2)) DoTDebuff = FindTargetEffect(Debuffs.Aero2);
+                        else DoTDebuff = FindTargetEffect(Debuffs.Aero1);
+
+                        // DoT Uptime & HP% threshold
+                        if (((DoTDebuff is null) || (DoTDebuff.RemainingTime <= 3)) &&
+                            (GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT)))
+                            return OriginalHook(Aero1);
                     }
 
                     if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
