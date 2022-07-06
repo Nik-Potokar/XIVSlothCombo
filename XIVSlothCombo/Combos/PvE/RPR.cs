@@ -84,16 +84,16 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<RPRGauge>();
-                var enshrouded = HasEffect(Buffs.Enshrouded);
-                var soulReaver = HasEffect(Buffs.SoulReaver);
-                var deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
-                var playerHP = PlayerHealthPercentageHp();
-                var enemyHP = GetTargetHPPercent();
-                var positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
-                var sodThreshold = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDThreshold);
-                var sodRefreshRange = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
-                var trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                RPRGauge? gauge = GetJobGauge<RPRGauge>();
+                bool enshrouded = HasEffect(Buffs.Enshrouded);
+                bool soulReaver = HasEffect(Buffs.SoulReaver);
+                bool deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
+                double playerHP = PlayerHealthPercentageHp();
+                double enemyHP = GetTargetHPPercent();
+                int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
+                int sodThreshold = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDThreshold);
+                int sodRefreshRange = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
+                bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
                 // Gibbet and Gallows on Shadow of Death
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) && soulReaver && LevelChecked(Gibbet))
@@ -126,7 +126,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Slice)
                 {
-                    var interruptReady = LevelChecked(All.LegSweep) && CanInterruptEnemy() && IsOffCooldown(All.LegSweep);
+                    bool interruptReady = LevelChecked(All.LegSweep) && CanInterruptEnemy() && IsOffCooldown(All.LegSweep);
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
                         return All.TrueNorth;
@@ -157,7 +157,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_RangedFiller) && !InMeleeRange() && LevelChecked(Harpe) && HasBattleTarget())
                     {
-                        var harvestMoonReady = LevelChecked(HarvestMoon) && HasEffect(Buffs.Soulsow);
+                        bool harvestMoonReady = LevelChecked(HarvestMoon) && HasEffect(Buffs.Soulsow);
 
                         if (HasEffect(Buffs.Enshrouded) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
                             return Communio;
@@ -178,7 +178,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD) && LevelChecked(ShadowOfDeath) && !soulReaver && enemyHP > sodThreshold)
                     {
                         if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD_Double) && LevelChecked(PlentifulHarvest) && enshrouded && GetCooldownRemainingTime(ArcaneCircle) < 9 &&
-                            ((gauge.LemureShroud is 4 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30) || gauge.LemureShroud is 3 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 50)) ||    // Double Enshroud windows
+                            ((gauge.LemureShroud is 4 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30) || (gauge.LemureShroud is 3 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 50))) ||    // Double Enshroud windows
                             (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOffCooldown(ArcaneCircle)) ||                                                                     // Opener condition
                             (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOnCooldown(ArcaneCircle)))                                                                        // Non-2-minute windows  
                             return ShadowOfDeath;
@@ -186,8 +186,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_ComboHeals))
                     {
-                        var bloodbathReady = LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath);
-                        var secondWindReady = LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind);
+                        bool bloodbathReady = LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath);
+                        bool secondWindReady = LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind);
 
                         if (bloodbathReady && playerHP < 65)
                             return All.Bloodbath;
@@ -197,8 +197,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
-                        var arcaneReady = LevelChecked(ArcaneCircle) && IsOffCooldown(ArcaneCircle);
-                        var plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
+                        bool arcaneReady = LevelChecked(ArcaneCircle) && IsOffCooldown(ArcaneCircle);
+                        bool plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
 
                         if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_ArcaneCircle) && CanWeave(actionID) && arcaneReady)
                             return ArcaneCircle;
@@ -256,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : OriginalHook(BloodStalk);
                             }
 
-                            var soulSliceReady = LevelChecked(SoulSlice) && GetRemainingCharges(SoulSlice) > 0;
+                            bool soulSliceReady = LevelChecked(SoulSlice) && GetRemainingCharges(SoulSlice) > 0;
 
                             if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoulSlice) && !enshrouded && !soulReaver && gauge.Soul <= 50 && soulSliceReady)
                                 return SoulSlice;
@@ -284,11 +284,11 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is SpinningScythe)
                 {
-                    var gauge = GetJobGauge<RPRGauge>();
-                    var enshrouded = HasEffect(Buffs.Enshrouded);
-                    var soulReaver = HasEffect(Buffs.SoulReaver);
-                    var deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
-                    var enemyHP = GetTargetHPPercent();
+                    RPRGauge? gauge = GetJobGauge<RPRGauge>();
+                    bool enshrouded = HasEffect(Buffs.Enshrouded);
+                    bool soulReaver = HasEffect(Buffs.SoulReaver);
+                    bool deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
+                    double enemyHP = GetTargetHPPercent();
 
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Guillotine) && soulReaver && LevelChecked(Guillotine))
                         return OriginalHook(Guillotine);
@@ -297,7 +297,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_ArcaneCircle) && InCombat())
                     {
-                        var plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
+                        bool plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
 
                         if (IsOffCooldown(ArcaneCircle) && CanWeave(actionID) && LevelChecked(ArcaneCircle))
                             return ArcaneCircle;
@@ -307,8 +307,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (deathsDesign)
                     {
-                        var enshroudReady = LevelChecked(Enshroud) && IsOffCooldown(Enshroud);
-                        var soulScytheReady = LevelChecked(SoulScythe) && GetRemainingCharges(SoulScythe) > 0;
+                        bool enshroudReady = LevelChecked(Enshroud) && IsOffCooldown(Enshroud);
+                        bool soulScytheReady = LevelChecked(SoulScythe) && GetRemainingCharges(SoulScythe) > 0;
 
                         if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Enshroud) && !enshrouded && !soulReaver && enshroudReady && CanWeave(actionID) && gauge.Shroud >= 50)
                             return Enshroud;
@@ -351,9 +351,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
-                var gauge = GetJobGauge<RPRGauge>();
-                var gluttonyReady = LevelChecked(Gluttony) && IsOffCooldown(Gluttony);
+                int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
+                RPRGauge? gauge = GetJobGauge<RPRGauge>();
+                bool gluttonyReady = LevelChecked(Gluttony) && IsOffCooldown(Gluttony);
 
                 if (actionID is GrimSwathe)
                 {
@@ -375,7 +375,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is BloodStalk)
                 {
-                    var trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                    bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
                         return All.TrueNorth;
@@ -471,7 +471,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_Soulsow;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var soulsowReady = LevelChecked(Soulsow) && !HasEffect(Buffs.Soulsow);
+                bool soulsowReady = LevelChecked(Soulsow) && !HasEffect(Buffs.Soulsow);
 
                 return actionID is Harpe or Slice or SpinningScythe or ShadowOfDeath or BloodStalk &&
                     soulsowReady && !InCombat()
@@ -485,10 +485,10 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_EnshroudProtection;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
+                int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
                 if (actionID is Enshroud)
                 {
-                    var trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                    bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
                         return All.TrueNorth;
@@ -518,7 +518,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_CommunioOnGGG;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<RPRGauge>();
+                RPRGauge? gauge = GetJobGauge<RPRGauge>();
 
                 if (actionID is Gibbet or Gallows && HasEffect(Buffs.Enshrouded))
                 {
