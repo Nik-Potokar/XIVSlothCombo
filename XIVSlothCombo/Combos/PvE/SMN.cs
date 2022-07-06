@@ -465,7 +465,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Painflare;
                                     }
 
-                                    if (HasEffect(Buffs.SearingLight) && inOpener &&
+                                    if (HasEffect(Buffs.SearingLight) &&
                                         (SummonerBurstPhase is 0 or 1 or 2 or 3 && DemiAttackCount >= burstDelay) ||
                                         (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                     {
