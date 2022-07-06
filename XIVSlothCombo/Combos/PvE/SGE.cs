@@ -99,7 +99,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_AoE_Phlegma_Lucid = "SGE_AoE_Phlegma_Lucid";
         }
 
-        // SageSoteriaKardia
+        // Soteria Kardia
         // Soteria becomes Kardia when Kardia's Buff is not active or Soteria is on cooldown.
         internal class SGE_Kardia : CustomCombo
         {
@@ -113,14 +113,13 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         /*
-        SageRhizomata
+        Rhizomata
         Replaces all Addersgal using Abilities (Taurochole/Druochole/Ixochole/Kerachole) with Rhizomata if out of Addersgall stacks
         (Scholar speak: Replaces all Aetherflow abilities with Aetherflow when out)
         */
         internal class SGE_Rhizo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Rhizo;
-
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 return actionID is Taurochole or Druochole or Ixochole or Kerachole &&
@@ -132,7 +131,7 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         /*
-        SageDruoTauro
+        Druo/Tauro
         Druochole Upgrade to Taurochole (like a trait upgrade)
         Replaces Druocole with Taurochole when Taurochole is available
         (As of 6.0) Taurochole (single target massive insta heal w/ cooldown), Druochole (Single target insta heal)
@@ -142,12 +141,13 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauro;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Druochole && LevelChecked(Taurochole) && IsOffCooldown(Taurochole)) return Taurochole;
-                else return actionID;
+                return actionID is Druochole && LevelChecked(Taurochole) && IsOffCooldown(Taurochole)
+                    ? Taurochole
+                    : actionID;
             }
         }
 
-        // SageZoePneumaFeature
+        // Zoe Pneuma
         // Places Zoe on top of Pneuma when both are available.
         internal class SGE_ZoePneuma : CustomCombo
         {
@@ -182,8 +182,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.LucidDreaming;
 
                     if ((NoPhlegmaToxikon || OutOfRangeToxikon) &&
-                        LevelChecked(Toxikon) &&
-                        HasBattleTarget() &&
+                        LevelChecked(Toxikon) && HasBattleTarget() &&
                         Gauge.Addersting > 0)
                     {
                         if ((NoPhlegmaToxikon && !HasCharges(OriginalHook(Phlegma))) ||
@@ -286,8 +285,9 @@ namespace XIVSlothCombo.Combos.PvE
                     // Set Target. Soft -> Hard -> Self priority, matching normal in-game behavior
                     GameObject? HealTarget;
                     if (Services.Service.TargetManager.SoftTarget?.ObjectKind is ObjectKind.Player) HealTarget = Services.Service.TargetManager.SoftTarget;
-                    else if (CurrentTarget?.ObjectKind is ObjectKind.Player) HealTarget = CurrentTarget;
-                    else HealTarget = LocalPlayer;
+                    else HealTarget = CurrentTarget?.ObjectKind is ObjectKind.Player
+                        ? CurrentTarget
+                        : LocalPlayer;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && druocholeReady &&
                         Gauge.Addersgall >= 1 &&
@@ -357,7 +357,6 @@ namespace XIVSlothCombo.Combos.PvE
                     bool holosReady = LevelChecked(Holos) && IsOffCooldown(Holos);
                     bool panhaimaReady = LevelChecked(Panhaima) && IsOffCooldown(Panhaima);
                     bool pepsisReady = LevelChecked(Pepsis) && IsOffCooldown(Pepsis);
-                    bool haimaReady = LevelChecked(Haima) && IsOffCooldown(Haima);
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && rhizomataReady &&
                         Gauge.Addersgall is 0)
@@ -379,12 +378,14 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (!HasEffect(Buffs.Eukrasia))
                             return Eukrasia;
+
                         if (HasEffect(Buffs.Eukrasia))
                             return EukrasianPrognosis;
                     }
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) && holosReady)
                         return Holos;
+
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) && panhaimaReady)
                         return Panhaima;
 
