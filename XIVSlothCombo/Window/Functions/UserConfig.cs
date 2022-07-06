@@ -1074,28 +1074,28 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_AoE_Phlegma_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Set HP percentage value for Soteria to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Use Soteria when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Set HP percentage value for Zoe to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Use Zoe when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Set HP percentage value for Pepsis to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Use Pepsis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Set HP percentage value for Taurochole to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Use Taurochole when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Set HP percentage value for Haima to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Use Haima when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Set HP percentage value for Krasis to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Use Krasis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Set HP percentage value for Druochole to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Use Druochole when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Diagnosis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Set HP percentage value for Eukrasian Diagnosis to trigger");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Use Diagnosis when Target HP is at or below set percentage");
 
             #endregion
             // ====================================================================================
