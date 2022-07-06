@@ -1,9 +1,9 @@
 using System;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
-using Dalamud.Game.ClientState.Statuses;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -681,7 +681,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (LevelChecked(IronJaws) && IsEnabled(CustomComboPreset.BRD_Simple_RagingJaws) &&
                             HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration < ragingJawsRenewTime &&
                             poisonRecast(40) && windRecast(40));
-                        bool dotOpener = IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener) && !openerFinished || !IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener);
+                        bool dotOpener = (IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener) && !openerFinished) || !IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener);
 
                         if (!LevelChecked(Stormbite))
                         {
