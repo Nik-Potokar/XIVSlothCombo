@@ -339,7 +339,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Devilment
                     if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !gauge.IsDancing)
                     {
-                        if (LevelChecked(Devilment) && !LevelChecked(TechnicalStep) ||      // Lv.62 - 69
+                        if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
                             (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
                             return Devilment;
                     }
@@ -462,7 +462,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return FanDance3;
                             if (gauge.Feathers > minFeathers ||
                                 (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) ||
-                                GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0)
+                                (GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0))
                                 return FanDance1;
                         }
 
