@@ -317,7 +317,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Ruin 2 Movement 
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
                         level >= Levels.Ruin2 &&
-                        IsOffCooldown(Ruin2) &&
+                        IsOffCooldown(actionID) &&
                         HasBattleTarget() &&
                         this.IsMoving
                        ) return OriginalHook(Ruin2); //Who knows in the future
