@@ -408,9 +408,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetCooldown(EnergyDrain).CooldownRemaining <= 3.2)
                             {
                                 if (HasEffect(Buffs.SearingLight) &&
-                                    (SummonerBurstPhase is 0 or 1 or 2 ||
-                                     (SummonerBurstPhase == 3 && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100)) ||
-                                     (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor))))
+                                    (SummonerBurstPhase is 0 or 1 or 2 or 3) ||
+                                    (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                 {
                                     if (STCombo)
                                         return Fester;
@@ -422,9 +421,9 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Demi Nuke
-                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire)
+                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire && DemiAttackCount >= burstDelay)
                         {
-                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && DemiAttackCount >= burstDelay)
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks))
                             {
                                 if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && LevelChecked(SummonBahamut))
                                     return OriginalHook(EnkindleBahamut);
@@ -466,10 +465,9 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Painflare;
                                     }
 
-                                    if (HasEffect(Buffs.SearingLight) && 
-                                        (SummonerBurstPhase is 0 or 1 or 2 && DemiAttackCount >= burstDelay ||
-                                        (SummonerBurstPhase == 3 && DemiAttackCount >= burstDelay && (GetCooldownRemainingTime(SearingLight) < 30 || GetCooldownRemainingTime(SearingLight) > 100)) ||
-                                        (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor))))
+                                    if (HasEffect(Buffs.SearingLight) && inOpener &&
+                                        (SummonerBurstPhase is 0 or 1 or 2 or 3 && DemiAttackCount >= burstDelay) ||
+                                        (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                     {
                                         if (STCombo)
                                             return Fester;
@@ -496,26 +494,32 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Aethercharge);
                     }
                     
+                    //Movement Ruin4 in Egi Phases
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && !HasEffect(All.Buffs.Swiftcast) && IsMoving && HasEffect(Buffs.FurtherRuin) &&
+                        ((HasEffect(Buffs.GarudasFavor) && !gauge.IsGarudaAttuned) || (gauge.IsIfritAttuned && lastComboMove is not CrimsonCyclone)))
+                        return Ruin4;
+                    
                     // Egi Features
                     if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) && level >= All.Levels.Swiftcast)
                     {
                         // Swiftcast Garuda Feature
                         if (swiftcastPhase is 0 or 1 && LevelChecked(Slipstream) && HasEffect(Buffs.GarudasFavor))
                         {
-                            if (CanSpellWeave(actionID) && IsOffCooldown(All.Swiftcast) && gauge.IsGarudaAttuned)
+                            if (CanSpellWeave(actionID) && gauge.IsGarudaAttuned && IsOffCooldown(All.Swiftcast))
                             {
                                 if (STCombo || (AoECombo && IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi_Only)))
                                     return All.Swiftcast;
                             }
+                            
                             if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) &&
-                                ((gauge.IsGarudaAttuned && HasEffect(All.Buffs.Swiftcast)) || (gauge.Attunement == 0)))     // Astral Flow if Swiftcast is not ready throughout Garuda
+                                ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) || (gauge.Attunement == 0)))     // Astral Flow if Swiftcast is not ready throughout Garuda
                                 return OriginalHook(AstralFlow);
                         }
 
                         // Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
                         if (swiftcastPhase == 2)
                         {
-                            if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned)
+                            if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned && lastComboMove is not CrimsonCyclone)
                             {
                                 if (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) || (IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && gauge.Attunement >= 1))
                                 {
@@ -538,13 +542,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) &&
-                                    ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) ||
-                                     (gauge.Attunement == 0)))          // Astral Flow if Swiftcast is not ready throughout Garuda
+                                    ((HasEffect(Buffs.GarudasFavor) && HasEffect(All.Buffs.Swiftcast)) || (gauge.Attunement == 0)))     // Astral Flow if Swiftcast is not ready throughout Garuda
                                     return OriginalHook(AstralFlow);
                             }
 
                             // Swiftcast Ifrit Feature (Conditions to allow for SpS Ruins to still be under the effect of Swiftcast)
-                            if (gauge.IsIfritAttuned && IsOffCooldown(All.Swiftcast))
+                            if (IsOffCooldown(All.Swiftcast) && gauge.IsIfritAttuned && lastComboMove is not CrimsonCyclone)
                             {
                                 if (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) || (IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && gauge.Attunement >= 1))
                                 {
@@ -555,8 +558,10 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // Gemshine/Precious Brilliance if has Swiftcast
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone)
+                    // Gemshine/Precious Brilliance priority casting
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && 
+                        ((gauge.IsIfritAttuned && gauge.Attunement >= 1 && HasEffect(All.Buffs.Swiftcast) && lastComboMove is not CrimsonCyclone) ||
+                        (HasEffect(Buffs.GarudasFavor) && gauge.Attunement >= 1 && !HasEffect(All.Buffs.Swiftcast) && IsMoving)))
                     {
                         if (STCombo)
                             return OriginalHook(Gemshine);
@@ -565,16 +570,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(PreciousBrilliance);
                     }
                     
-                    if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2) ||                                             // Garuda
-                        IsEnabled(CustomComboPreset.SMN_Titan_MountainBuster) && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) ||                                                              // Titan
-                        IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) && ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || lastComboMove == CrimsonCyclone)) // Ifrit
+                    if (IsEnabled(CustomComboPreset.SMN_Garuda_Slipstream) && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2) ||                 // Garuda
+                        IsEnabled(CustomComboPreset.SMN_Titan_MountainBuster) && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID) ||                                  // Titan
+                        IsEnabled(CustomComboPreset.SMN_Ifrit_Cyclone) &&
+                        ((HasEffect(Buffs.IfritsFavor) && (IsNotEnabled(CustomComboPreset.SMN_Ifrit_Cyclone_Option) || (IsMoving || gauge.Attunement == 0))) || (lastComboMove == CrimsonCyclone && InMeleeRange())))   // Ifrit
                         return OriginalHook(AstralFlow);
 
-                    // Movement Ruin4 in Ifrit Phase
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
-                        return Ruin4;
-                    
-                    // Gemshine
+                    // Gemshine/Precious Brilliance
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                     {
                         if (STCombo)
@@ -659,7 +661,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if ((actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonEmerald or SummonGaruda or SummonGaruda2 or SummonRuby or SummonIfrit or SummonIfrit2 && HasEffect(Buffs.TitansFavor)) ||
                     (actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonEmerald or SummonGaruda or SummonGaruda2 && HasEffect(Buffs.GarudasFavor)) ||
-                    (actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonRuby or SummonIfrit or SummonIfrit2 && (HasEffect(Buffs.IfritsFavor) || lastComboMove == CrimsonCyclone)))
+                    (actionID is SummonTopaz or SummonTitan or SummonTitan2 or SummonRuby or SummonIfrit or SummonIfrit2 && (HasEffect(Buffs.IfritsFavor) || (lastComboMove == CrimsonCyclone && InMeleeRange()))))
                     return OriginalHook(AstralFlow);
 
                 return actionID;
