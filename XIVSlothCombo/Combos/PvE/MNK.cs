@@ -118,7 +118,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return FormShift;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && HasEffect(Buffs.FormlessFist))
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                         {
                             return Thunderclap;
                         }
@@ -436,7 +436,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return FormShift;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && HasEffect(Buffs.FormlessFist))
+                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                         {
                             return Thunderclap;
                         }
@@ -563,7 +563,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= PluginConfiguration.GetCustomIntValue(Config.MNK_DisciplinedFist_Apply)))
+                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply)))
                         {
                             return TwinSnakes;
                         }
@@ -572,7 +572,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomIntValue(Config.MNK_Demolish_Apply)))
+                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply)))
                         {
                             return Demolish;
                         }

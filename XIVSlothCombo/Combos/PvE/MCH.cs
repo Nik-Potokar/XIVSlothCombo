@@ -87,31 +87,38 @@ namespace XIVSlothCombo.Combos.PvE
                     var drillCD = GetCooldown(Drill);
                     var airAnchorCD = GetCooldown(AirAnchor);
                     var hotshotCD = GetCooldown(HotShot);
-                    var reassembleCD = GetCooldown(Reassemble);
-                    var heatBlastCD = GetCooldown(HeatBlast);
+                    
                     var gaussCD = GetCooldown(GaussRound);
                     var ricochetCD = GetCooldown(Ricochet);
                     var chainsawCD = GetCooldown(ChainSaw);
-                    var barrelCD = GetCooldown(BarrelStabilizer);
+                    
                     var battery = GetJobGauge<MCHGauge>().Battery;
                     var heat = GetJobGauge<MCHGauge>().Heat;
+                    var canWeave = CanWeave(actionID);
+
                     if (IsEnabled(CustomComboPreset.MCH_ST_BarrelStabilizer_DriftProtection))
                     {
-                        if (level >= Levels.BarrelStabilizer && heat < 20 && GetCooldown(actionID).CooldownRemaining > 0.7 && IsOffCooldown(BarrelStabilizer))
+                        if (level >= Levels.BarrelStabilizer && heat < 20 && canWeave && IsOffCooldown(BarrelStabilizer))
                             return BarrelStabilizer;
                     }
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_HeatBlast) && gauge.IsOverheated)
                     {
-                        if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.HeatBlast) // prioritize heatblast
+                        if (CanWeave(actionID, 0.6))
+                        {
+                            if (level <= Levels.Ricochet && HasCharges(GaussRound))
+                                return GaussRound;
+                            
+                            if (HasCharges(GaussRound) && gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                                return GaussRound;
+                            else if (level >= Levels.Ricochet && HasCharges(Ricochet))
+                                return Ricochet;
+                        }
+
+                        if (level >= Levels.HeatBlast) // prioritize heatblast
                             return HeatBlast;
-                        if (level <= Levels.Ricochet)
-                            return GaussRound;
-                        if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
-                            return GaussRound;
-                        else
-                            return Ricochet;
                     }
+
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_Cooldowns))
                     {
                         if (HasEffect(Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
@@ -121,48 +128,45 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= Levels.ChainSaw)
                             return ChainSaw;
                     }
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGaussCharges))
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGaussCharges) && CanWeave(actionID, 0.6)) //0.6 instead of 0.7 to more easily fit opener. a
                     {
-                        if (level >= Levels.Ricochet && HasCharges(Ricochet) && GetCooldown(CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
+                        if (level >= Levels.Ricochet && HasCharges(Ricochet)) 
                             return Ricochet;
-                        if (level >= Levels.GaussRound && HasCharges(GaussRound) && GetCooldown(CleanShot).CooldownRemaining > 0.6)
+                        if (level >= Levels.GaussRound && HasCharges(GaussRound))
                             return GaussRound;
 
                     }
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGauss))
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGauss) && CanWeave(actionID, 0.6)) //0.6 instead of 0.7 to more easily fit opener. a
                     {
-                        if (level >= Levels.Ricochet && ricochetCD.RemainingCharges > 1 && GetCooldown(CleanShot).CooldownRemaining > 0.6) //0.6 instead of 0.7 to more easily fit opener. a
+                        if (level >= Levels.Ricochet && GetRemainingCharges(Ricochet) > 1) 
                             return Ricochet;
-                        if (level >= Levels.GaussRound && gaussCD.RemainingCharges > 1 && GetCooldown(CleanShot).CooldownRemaining > 0.6)
+                        if (level >= Levels.GaussRound && GetRemainingCharges(GaussRound) > 1)
                             return GaussRound;
 
                     }
+
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainComboAlternate))
                     {
-                        if (reassembleCD.CooldownRemaining >= 55 && !airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
+                        if (level >= Levels.AirAnchor && !airAnchorCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
                             return AirAnchor;
-                        if (reassembleCD.CooldownRemaining >= 55 && !drillCD.IsCooldown && level >= Levels.Drill)
+                        if (level >= Levels.ChainSaw && !chainsawCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)) )
+                            return ChainSaw;
+                        if (level >= Levels.Drill && !drillCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
                             return Drill;
-                        if (reassembleCD.CooldownRemaining >= 55 && !hotshotCD.IsCooldown && level < Levels.AirAnchor)
+                        if (level < Levels.AirAnchor && !hotshotCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)) )
                             return HotShot;
-                        else
-                        if (level >= 84)
-                        {
-                            if (HasEffect(Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 55 && !airAnchorCD.IsCooldown)
-                                return AirAnchor;
-                            if (reassembleCD.CooldownRemaining >= 55 && !chainsawCD.IsCooldown && level >= Levels.ChainSaw)
-                                return ChainSaw;
-                            if (HasEffect(Buffs.Reassembled) && reassembleCD.CooldownRemaining <= 110 && !drillCD.IsCooldown)
-                                return Drill;
-                        }
                     }
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_OverCharge))
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_OverCharge) && canWeave)
                     {
-                        if (battery == 100 && level is >= 40 and <= 79 && GetCooldown(CleanShot).CooldownRemaining > 0.7)
+                        if (battery == 100 && level is >= 40 and <= 79)
                             return RookAutoturret;
-                        if (battery == 100 && level >= 80 && GetCooldown(CleanShot).CooldownRemaining > 0.7)
+                        if (battery == 100 && level >= 80)
                             return AutomatonQueen;
                     }
+
                     if (comboTime > 0)
                     {
                         if (lastComboMove == SplitShot && level >= Levels.SlugShot)
@@ -588,7 +592,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (LocalPlayer.Level < Levels.BarrelStabilizer) wfTimer = 12; // just a little space to breathe and not delay the WF too much while you don't have access to the Barrel Stabilizer
 
                 // i really do not remember why i put > 70 here for heat, and im afraid if i remove it itll break it lol
-                if (CombatEngageDuration().Minutes == 0 && gauge.Heat > 70 && !WasLastWeaponskill(OriginalHook(CleanShot)))
+                if (CombatEngageDuration().Minutes == 0 && (gauge.Heat > 70 || CombatEngageDuration().Seconds <= 30) && !WasLastWeaponskill(OriginalHook(CleanShot)))
                 {
                     return true;
                 }

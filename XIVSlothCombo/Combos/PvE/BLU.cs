@@ -44,6 +44,8 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 MoonFlute = 1718,
                 Bristle = 1716,
+                WaningNocturne = 1727,
+                PhantomFlurry = 2502,
                 Tingle = 2492,
                 Whistle = 2118,
                 TankMimicry = 2124,
@@ -64,23 +66,16 @@ namespace XIVSlothCombo.Combos.PvE
                 Lightheaded = 2501;
         }
 
-        public static class Levels
-        {
-            public const byte
-                Placeholder = 1;
-        }
-
         internal class BLU_BuffedSoT : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_BuffedSoT;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SongOfTorment)
+                if (actionID is SongOfTorment)
                 {
                     if (!HasEffect(Buffs.Bristle) && IsSpellActive(Bristle))
                         return Bristle;
-
                     if (IsSpellActive(SongOfTorment))
                         return SongOfTorment;
                 }
@@ -95,63 +90,55 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == MoonFlute || actionID == Whistle)
+                if (actionID is MoonFlute or Whistle)
                 {
-                    if (GetCooldown(TripleTrident).CooldownRemaining < 3 && IsSpellActive(TripleTrident))
+                    //If Triple Trident is saved for Crit/Det builds
+                    if (GetCooldownRemainingTime(TripleTrident) <= 3 && IsSpellActive(TripleTrident))
                     {
-                        if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle))
+                        if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle) && !WasLastSpell(Whistle) && IsOffCooldown(JKick))
                             return Whistle;
-
-                        if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle))
+                        if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle) && !WasLastSpell(Tingle) && IsOffCooldown(JKick))
                             return Tingle;
-
-                        if (!HasEffect(Buffs.MoonFlute) && IsSpellActive(MoonFlute))
+                        if (!HasEffect(Buffs.MoonFlute) && !HasEffect(Buffs.WaningNocturne) && IsSpellActive(MoonFlute) && !WasLastSpell(MoonFlute))
                             return MoonFlute;
-
-                        if (!GetCooldown(JKick).IsCooldown && IsSpellActive(JKick))
+                        if (IsOffCooldown(JKick) && IsSpellActive(JKick))
                             return JKick;
-
-                        if (!GetCooldown(TripleTrident).IsCooldown)
+                        if (IsOffCooldown(TripleTrident))
                             return TripleTrident;
                     }
 
-                    if (!HasEffect(Buffs.Whistle) && !GetCooldown(JKick).IsCooldown && IsSpellActive(Whistle))
-                        return Whistle;
+                    //If Triple Trident is used on CD for Crit/Sps builds or Triple Trident isn't active
+                    if ((GetCooldownRemainingTime(TripleTrident) > 3 && IsSpellActive(TripleTrident)) || !IsSpellActive(TripleTrident))
+                    {
+                        if (!HasEffect(Buffs.Whistle) && IsOffCooldown(JKick) && !WasLastSpell(Whistle) && IsSpellActive(Whistle) && IsOffCooldown(JKick))
+                            return Whistle;
+                        if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle) && !WasLastSpell(Tingle) && IsOffCooldown(JKick))
+                            return Tingle;
+                        if (!HasEffect(Buffs.MoonFlute) && !HasEffect(Buffs.WaningNocturne) && IsSpellActive(MoonFlute))
+                            return MoonFlute;
+                        if (IsOffCooldown(JKick) && IsSpellActive(JKick))
+                            return JKick;
+                    }
 
-                    if (!HasEffect(Buffs.MoonFlute) && IsSpellActive(MoonFlute))
-                        return MoonFlute;
-
-                    if (!GetCooldown(JKick).IsCooldown && IsSpellActive(JKick))
-                        return JKick;
-
-                    if (!GetCooldown(Nightbloom).IsCooldown && IsSpellActive(Nightbloom))
+                    if (IsOffCooldown(Nightbloom) && IsSpellActive(Nightbloom))
                         return Nightbloom;
-
-                    if (!GetCooldown(RoseOfDestruction).IsCooldown && IsSpellActive(RoseOfDestruction))
+                    if (IsOffCooldown(RoseOfDestruction) && IsSpellActive(RoseOfDestruction))
                         return RoseOfDestruction;
-
-                    if (!GetCooldown(FeatherRain).IsCooldown && IsSpellActive(FeatherRain))
+                    if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
                         return FeatherRain;
-
-                    if (!HasEffect(Buffs.Bristle) && !GetCooldown(All.Swiftcast).IsCooldown && IsSpellActive(Bristle))
+                    if (!HasEffect(Buffs.Bristle) && IsOffCooldown(All.Swiftcast) && IsSpellActive(Bristle))
                         return Bristle;
-
-                    if (!GetCooldown(All.Swiftcast).IsCooldown)
+                    if (IsOffCooldown(All.Swiftcast) && LevelChecked(All.Swiftcast))
                         return All.Swiftcast;
-
-                    if (!GetCooldown(GlassDance).IsCooldown && IsSpellActive(GlassDance))
+                    if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
                         return GlassDance;
-
-                    if (GetCooldown(Surpanakha).CooldownRemaining < 95 && IsSpellActive(Surpanakha))
+                    if (GetCooldownRemainingTime(Surpanakha) < 95 && IsSpellActive(Surpanakha))
                         return Surpanakha;
-
-                    if (!GetCooldown(MatraMagic).IsCooldown && HasEffect(Buffs.DPSMimicry) && IsSpellActive(MatraMagic))
+                    if (IsOffCooldown(MatraMagic) && HasEffect(Buffs.DPSMimicry) && IsSpellActive(MatraMagic))
                         return MatraMagic;
-
-                    if (!GetCooldown(ShockStrike).IsCooldown && IsSpellActive(ShockStrike))
+                    if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
                         return ShockStrike;
-
-                    if (IsSpellActive(PhantomFlurry))
+                    if ((IsOffCooldown(PhantomFlurry) && IsSpellActive(PhantomFlurry)) || HasEffect(Buffs.PhantomFlurry))
                         return PhantomFlurry;
                 }
 
@@ -165,42 +152,33 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == FinalSting)
+                if (actionID is FinalSting)
                 {
                     if (IsEnabled(CustomComboPreset.BLU_SoloMode) && HasCondition(ConditionFlag.BoundByDuty) && !HasEffect(Buffs.BasicInstinct) && GetPartyMembers().Length == 0 && IsSpellActive(BasicInstinct))
                         return BasicInstinct;
-
-                    if (!HasEffect(Buffs.MoonFlute) && IsSpellActive(MoonFlute))
+                    if (!HasEffect(Buffs.MoonFlute) && !WasLastSpell(MoonFlute) && IsSpellActive(MoonFlute))
                         return MoonFlute;
-
                     if (IsEnabled(CustomComboPreset.BLU_Primals))
                     {
-                        if (!GetCooldown(RoseOfDestruction).IsCooldown && IsSpellActive(RoseOfDestruction))
+                        if (IsOffCooldown(RoseOfDestruction) && IsSpellActive(RoseOfDestruction))
                             return RoseOfDestruction;
-
-                        if (!GetCooldown(FeatherRain).IsCooldown && IsSpellActive(FeatherRain))
+                        if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
                             return FeatherRain;
-
-                        if (!GetCooldown(GlassDance).IsCooldown && IsSpellActive(GlassDance))
+                        if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
                             return GlassDance;
-
-                        if (!GetCooldown(JKick).IsCooldown && IsSpellActive(JKick))
+                        if (IsOffCooldown(JKick) && IsSpellActive(JKick))
                             return JKick;
                     }
 
-                    if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle))
+                    if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle) && !WasLastSpell(Tingle))
                         return Tingle;
-
-                    if (!GetCooldown(ShockStrike).IsCooldown && IsEnabled(CustomComboPreset.BLU_Primals) && IsSpellActive(ShockStrike))
+                    if (IsOffCooldown(ShockStrike) && IsEnabled(CustomComboPreset.BLU_Primals) && IsSpellActive(ShockStrike))
                         return ShockStrike;
-
-                    if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle))
+                    if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle) && !WasLastAction(Whistle))
                         return Whistle;
-
-                    if (!GetCooldown(All.Swiftcast).IsCooldown)
+                    if (IsOffCooldown(All.Swiftcast) && LevelChecked(All.Swiftcast))
                         return All.Swiftcast;
-
-                    if(IsSpellActive(FinalSting))
+                    if (IsSpellActive(FinalSting))
                         return FinalSting;
                 }
 
@@ -214,24 +192,18 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Ultravibration)
+                if (actionID is Ultravibration)
                 {
-                    var freezeDebuff = FindTargetEffect(Debuffs.DeepFreeze);
-                    var swiftCD = GetCooldown(All.Swiftcast);
-                    var ultraCD = GetCooldown(Ultravibration);
-
                     if (IsEnabled(CustomComboPreset.BLU_HydroPull) && !InMeleeRange() && IsSpellActive(HydroPull))
                         return HydroPull;
-
-                    if (freezeDebuff is null && !ultraCD.IsCooldown && IsSpellActive(RamsVoice))
+                    if (!TargetHasEffectAny(Debuffs.DeepFreeze) && IsOffCooldown(Ultravibration) && IsSpellActive(RamsVoice))
                         return RamsVoice;
 
-                    if (freezeDebuff is not null)
+                    if (TargetHasEffectAny(Debuffs.DeepFreeze))
                     {
-                        if (!swiftCD.IsCooldown)
+                        if (IsOffCooldown(All.Swiftcast))
                             return All.Swiftcast;
-
-                        if (IsSpellActive(Ultravibration))
+                        if (IsSpellActive(Ultravibration) && IsOffCooldown(Ultravibration))
                             return Ultravibration;
                     }
                 }
@@ -246,23 +218,15 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Devour || actionID == Offguard || actionID == BadBreath)
+                if (actionID is Devour or Offguard or BadBreath)
                 {
-                    var devourCD = GetCooldown(Devour);
-                    var offguardDebuff = FindTargetEffect(Debuffs.Offguard);
-                    var offguardCD = GetCooldown(Offguard);
-                    var lucidCD = GetCooldown(All.LucidDreaming);
-
-                    if (offguardDebuff is null && !offguardCD.IsCooldown && IsSpellActive(Offguard))
+                    if (!TargetHasEffectAny(Debuffs.Offguard) && IsOffCooldown(Offguard) && IsSpellActive(Offguard))
                         return Offguard;
-
-                    if (TargetHasEffect(Debuffs.Malodorous) && HasEffect(Buffs.TankMimicry) && IsSpellActive(BadBreath))
+                    if (!TargetHasEffectAny(Debuffs.Malodorous) && HasEffect(Buffs.TankMimicry) && IsSpellActive(BadBreath))
                         return BadBreath;
-
-                    if (!devourCD.IsCooldown && HasEffect(Buffs.TankMimicry) && IsSpellActive(Devour))
+                    if (IsOffCooldown(Devour) && HasEffect(Buffs.TankMimicry) && IsSpellActive(Devour))
                         return Devour;
-
-                    if (!lucidCD.IsCooldown && LocalPlayer.CurrentMp <= 9000 & level >= All.Levels.LucidDreaming)
+                    if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 9000 & LevelChecked(All.LucidDreaming))
                         return All.LucidDreaming;
                 }
 
@@ -276,12 +240,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == MagicHammer)
+                if (actionID is MagicHammer)
                 {
-                    var addleCD = GetCooldown(All.Addle);
-                    var hammerCD = GetCooldown(MagicHammer);
-
-                    if (hammerCD.IsCooldown && !addleCD.IsCooldown && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(Debuffs.Conked))
+                    if (IsOnCooldown(MagicHammer) && IsOffCooldown(All.Addle) && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(Debuffs.Conked))
                         return All.Addle;
                 }
 
@@ -295,27 +256,17 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == FeatherRain)
+                if (actionID is FeatherRain)
                 {
-                    var rainCD = GetCooldown(FeatherRain);
-                    var shockCD = GetCooldown(ShockStrike);
-                    var glassCD = GetCooldown(GlassDance);
-                    var kickCD = GetCooldown(JKick);
-                    var roseCD = GetCooldown(RoseOfDestruction);
-
-                    if (!rainCD.IsCooldown && IsSpellActive(FeatherRain))
+                    if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
                         return FeatherRain;
-
-                    if (!shockCD.IsCooldown && IsSpellActive(ShockStrike))
+                    if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
                         return ShockStrike;
-
-                    if (!roseCD.IsCooldown && IsSpellActive(RoseOfDestruction))
+                    if (IsOffCooldown(RoseOfDestruction) && IsSpellActive(RoseOfDestruction))
                         return RoseOfDestruction;
-
-                    if (!glassCD.IsCooldown && IsSpellActive(GlassDance))
+                    if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
                         return GlassDance;
-
-                    if (!kickCD.IsCooldown && IsSpellActive(JKick))
+                    if (IsOffCooldown(JKick) && IsSpellActive(JKick))
                         return JKick;
                 }
 
@@ -329,11 +280,10 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == WhiteKnightsTour || actionID == BlackKnightsTour)
+                if (actionID is WhiteKnightsTour or BlackKnightsTour)
                 {
                     if (TargetHasEffect(Debuffs.Slow) && IsSpellActive(BlackKnightsTour))
                         return BlackKnightsTour;
-
                     if (TargetHasEffect(Debuffs.Bind) && IsSpellActive(WhiteKnightsTour))
                         return WhiteKnightsTour;
                 }
@@ -348,11 +298,10 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == PeripheralSynthesis)
+                if (actionID is PeripheralSynthesis)
                 {
                     if (!TargetHasEffect(Debuffs.Lightheaded) && IsSpellActive(PeripheralSynthesis))
                         return PeripheralSynthesis;
-
                     if (TargetHasEffect(Debuffs.Lightheaded) && IsSpellActive(MustardBomb))
                         return MustardBomb;
                 }

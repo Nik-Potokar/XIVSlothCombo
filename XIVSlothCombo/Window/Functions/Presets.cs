@@ -58,7 +58,11 @@ namespace XIVSlothCombo.Window.Functions
                 }
             }
 
-            ImGui.TextWrapped($"#{i}: {info.Description}");
+            ImGui.Text($"#{i}: ");
+            var length = ImGui.CalcTextSize($"#{i}: ");
+            ImGui.SameLine();
+            ImGui.PushItemWidth(length.Length());
+            ImGui.TextWrapped($"{info.Description}");
 
             if (preset.GetHoverAttribute() != null)
             {

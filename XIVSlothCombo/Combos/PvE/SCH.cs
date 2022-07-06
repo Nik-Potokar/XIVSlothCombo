@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.CustomComboNS;
 
+
 namespace XIVSlothCombo.Combos.PvE
 {
     internal static class SCH
@@ -49,6 +50,7 @@ namespace XIVSlothCombo.Combos.PvE
             Aetherflow = 166,
             Recitation = 16542,
             ChainStratagem = 7436,
+            DeploymentTactics = 3585,
 
             // Role
             Resurrection = 173;
@@ -56,6 +58,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Buffs
         {
             public const ushort
+            Galvanize = 297,
             Recitation = 1896;
         }
 
@@ -207,6 +210,59 @@ namespace XIVSlothCombo.Combos.PvE
                     GetJobGauge<SCHGauge>().SeraphTimer == 0)
                 {
                     if (GetOptionBool(Config.SCH_FairyFeature)) return SummonSelene; else return SummonEos;
+                }
+                return actionID;
+            }
+        }
+
+        internal class SCH_DeploymentTactics : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DeploymentTactics;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is DeploymentTactics)
+                {
+                    if (IsOffCooldown(DeploymentTactics) && LevelChecked(DeploymentTactics)) //Allows Adlo to work at sync
+                    {
+                        bool found = false;
+                        //If we have a soft target, use that, else CurrentTarget.
+                        GameObject? target = Services.Service.TargetManager.SoftTarget is not null ? Services.Service.TargetManager.SoftTarget : CurrentTarget;
+
+                        if (target is not null)
+                        {
+
+                            //What's our party size? Check if trust, and add 1 (trust does not include player), else get Party Count
+                            //It's okay if both Buddy/Party are Zero. For loop will skip
+                            int PartySize = Services.Service.BuddyList.Length > 0 ? Services.Service.BuddyList.Length + 1 : GetPartyMembers().Length;
+
+                            //Check if our target is in the party. Will skip if partysize is zero
+                            for (int i = 1; i <= PartySize; i++)
+                            {
+                                found = (GetPartySlot(i) == target);
+                                if (found) break;
+                            }
+                            //Check if it's our chocobo?
+                            if (found is false) found = (HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject);
+                        }
+
+                        //Fall back to self, skills won't work with anyone else.
+                        if (target is null || found is false)
+                        {
+                            target = LocalPlayer;
+                            found = true;
+                        }
+
+                        if (found)
+                        {
+                            if (FindEffect(Buffs.Galvanize, target, LocalPlayer.ObjectId) is not null) return DeploymentTactics;
+                            //Recitation is down here as not to waste it on bad targets.
+                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) 
+                                && LevelChecked(Recitation)
+                                && IsOffCooldown(Recitation)
+                               ) return Recitation;
+                        }
+                    }
+                    return Adloquium;
                 }
                 return actionID;
             }
