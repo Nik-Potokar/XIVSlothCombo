@@ -2,7 +2,6 @@
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;
-using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -125,7 +124,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (GetJobGauge<DNCGauge>().IsDancing)
                 {
                     uint[]? actionIDs = Service.Configuration.DancerDanceCompatActionIDs;
-                    
+
                     if (actionID == actionIDs[0] || (actionIDs[0] == 0 && actionID == Cascade))     // Cascade replacement
                         return OriginalHook(Cascade);
                     if (actionID == actionIDs[1] || (actionIDs[1] == 0 && actionID == Flourish))    // Fountain replacement
@@ -148,7 +147,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 bool FD3Ready = HasEffect(Buffs.ThreeFoldFanDance);
                 bool FD4Ready = HasEffect(Buffs.FourFoldFanDance);
-                
+
                 // FD 1 --> 3, FD 1 --> 4
                 if (actionID is FanDance1)
                 {
@@ -438,7 +437,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // Devilment & Flourish
-                    if (canWeave) 
+                    if (canWeave)
                     {
                         bool flourishReady = LevelChecked(Flourish) && IsOffCooldown(Flourish) && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) && !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow);
                         bool devilmentReady = LevelChecked(Devilment) && IsOffCooldown(Devilment);
@@ -512,7 +511,7 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         internal class DNC_AoE_SimpleMode : CustomCombo
-            {
+        {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AoE_SimpleMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
