@@ -3133,7 +3133,10 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region SUMMONER
-
+        [ConflictingCombos()]
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Ruin III into an all-in-one damage button.", SMNPvP.JobID)]
+        SMNPvP_BurstMode = 80300,
         #endregion
 
         #region WARRIOR

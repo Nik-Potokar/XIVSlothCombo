@@ -1169,6 +1169,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SUMMONER
 
+            #region PvE
             if (preset == CustomComboPreset.SMN_DemiEgiMenu_EgiOrder)
             {
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Titan first", "Summons Titan, Garuda then Ifrit.", 1);
@@ -1195,6 +1196,17 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, SMN.Config.SMN_Lucid, "Set value for your MP to be at or under for this feature to take effect.", 150, SliderIncrements.Hundreds);
+            #endregion
+
+            #region PvP
+
+            if (preset == CustomComboPreset.SMNPvP_BurstMode)
+                UserConfig.DrawSliderInt(0, 90, SMNPvP.Config.SMNPvP_RadiantAegisThreshold, "Player HP% to use Radiant Aegis under.\nSet to 0 to disable. Caps at 90 to prevent waste.###SMNPvP", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.SMNPvP_BurstMode)
+                UserConfig.DrawSliderInt(50, 100, SMNPvP.Config.SMNPvP_FesterThreshold, "Target HP% to use Fester under.\nSet to 100 use Fester as soon as available.###SMNPvP", 150, SliderIncrements.Ones);
+
+            #endregion
 
             #endregion
             // ====================================================================================
