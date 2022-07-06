@@ -215,6 +215,12 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        /*
+         * Combos Deployment Tactics with Adloquium by showing Adloquim instead,
+         * while leaving the real Adloquim alone.
+         * Will work on Party/Trust/Chocobo hard/soft targets
+         * Recitation is optional, if one wishes to Crit the shield first
+         */
         internal class SCH_DeploymentTactics : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DeploymentTactics;
@@ -311,6 +317,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Ruin 2 Movement 
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
                         level >= Levels.Ruin2 &&
+                        IsOffCooldown(Ruin2) &&
                         HasBattleTarget() &&
                         this.IsMoving
                        ) return OriginalHook(Ruin2); //Who knows in the future
