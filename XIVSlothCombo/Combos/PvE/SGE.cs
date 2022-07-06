@@ -123,7 +123,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 return actionID is Taurochole or Druochole or Ixochole or Kerachole &&
-                    CanUse(Rhizomata) &&
+                    CanUseAction(Rhizomata) &&
                     Gauge.Addersgall is 0
                     ? Rhizomata
                     : actionID;
@@ -141,7 +141,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauro;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Druochole && CanUse(Taurochole)
+                return actionID is Druochole && CanUseAction(Taurochole)
                     ? Taurochole
                     : actionID;
             }
@@ -154,7 +154,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ZoePneuma;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Pneuma && CanUse(Pneuma) && IsOffCooldown(Zoe)
+                return actionID is Pneuma && CanUseAction(Pneuma) && IsOffCooldown(Zoe)
                     ? Zoe
                     : actionID;
             }
@@ -175,7 +175,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool NoTargetDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
 
                     // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) && CanUse(All.LucidDreaming) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) && CanUseAction(All.LucidDreaming) &&
                         LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_AoE_Phlegma_Lucid) &&
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
@@ -214,7 +214,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Dosis1 or Dosis2 or Dosis3 && InCombat())
                 {
                     // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) && CanUse(All.LucidDreaming) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) && CanUseAction(All.LucidDreaming) &&
                         LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_ST_Dosis_Lucid) &&
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
@@ -242,7 +242,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Toxikon
                     if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
-                        CanUse(Toxikon) && HasBattleTarget() &&
+                        CanUseAction(Toxikon) && HasBattleTarget() &&
                         ((!GetOptionBool(Config.SGE_ST_Dosis_Toxikon) && this.IsMoving) || GetOptionBool(Config.SGE_ST_Dosis_Toxikon)) &&
                         Gauge.Addersting > 0)
                         return OriginalHook(Toxikon);
@@ -278,17 +278,17 @@ namespace XIVSlothCombo.Combos.PvE
                         ? CurrentTarget
                         : LocalPlayer;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && CanUse(Druochole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && CanUseAction(Druochole) &&
                         Gauge.Addersgall >= 1 &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Druochole))
                         return Druochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && CanUse(Taurochole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && CanUseAction(Taurochole) &&
                         Gauge.Addersgall >= 1 &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Taurochole))
                         return Taurochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && CanUse(Rhizomata)
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && CanUseAction(Rhizomata)
                         && Gauge.Addersgall is 0)
                         return Rhizomata;
 
@@ -297,24 +297,24 @@ namespace XIVSlothCombo.Combos.PvE
                         FindEffect(Buffs.Kardion, HealTarget, LocalPlayer?.ObjectId) is null)
                         return Kardia;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && CanUse(Soteria) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && CanUseAction(Soteria) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Soteria))
                         return Soteria;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && CanUse(Zoe) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && CanUseAction(Zoe) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Zoe))
                         return Zoe;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && CanUse(Krasis) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && CanUseAction(Krasis) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Krasis))
                         return Krasis;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && CanUse(Pepsis) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && CanUseAction(Pepsis) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
                         FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is not null) // Update for HealTarget
                         return Pepsis;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && CanUse(Haima) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && CanUseAction(Haima) &&
                         GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Haima))
                         return Haima;
 
@@ -339,19 +339,19 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Prognosis)
                 {
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && CanUse(Rhizomata) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && CanUseAction(Rhizomata) &&
                         Gauge.Addersgall is 0)
                         return Rhizomata;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) && CanUse(Kerachole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) && CanUseAction(Kerachole) &&
                         Gauge.Addersgall >= 1)
                         return Kerachole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) && CanUse(Ixochole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) && CanUseAction(Ixochole) &&
                         Gauge.Addersgall >= 1)
                         return Ixochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis) && CanUse(Physis))
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis) && CanUseAction(Physis))
                         return OriginalHook(Physis);
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis) && LevelChecked(Eukrasia) &&
@@ -364,13 +364,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return EukrasianPrognosis;
                     }
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) && CanUse(Holos))
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) && CanUseAction(Holos))
                         return Holos;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) && CanUse(Panhaima))
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) && CanUseAction(Panhaima))
                         return Panhaima;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && CanUse(Pepsis) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && CanUseAction(Pepsis) &&
                         FindEffect(Buffs.EukrasianPrognosis) is not null)
                         return Pepsis;
                 }

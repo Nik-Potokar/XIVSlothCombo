@@ -40,7 +40,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Checks if the player can use an action based on the level required and it's cooldown status. Also checks action charges.</summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public static bool CanUse(uint id)
+        public static bool CanUseAction(uint id)
         {
             if (LevelChecked(id))
             {
