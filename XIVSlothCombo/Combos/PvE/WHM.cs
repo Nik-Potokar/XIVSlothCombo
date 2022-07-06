@@ -183,11 +183,11 @@ namespace XIVSlothCombo.Combos.PvE
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
                     float glare3CD = GetCooldownRemainingTime(Glare3);
-                    
+
                     // No-Swift Opener
                     // Counter reset
                     if (!InCombat()) glare3Count = 0;
-                    
+
                     // Check Glare3 use
                     if (InCombat() && usedGlare3 == false && lastComboMove == Glare3 && glare3CD > 1)
                     {
@@ -286,11 +286,11 @@ namespace XIVSlothCombo.Combos.PvE
                     bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
 
                     if (benisonReady && (GetRemainingCharges(DivineBenison) == 2 || GetCooldownRemainingTime(DivineBenison) <= 29) &&
-                        (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_BenisonWeave) && canWeave ||
+                        ((IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_BenisonWeave) && canWeave) ||
                         IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison)))
                         return DivineBenison;
                     if (tetraReady && GetTargetHPPercent() <= tetraHP &&
-                        (IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_TetraWeave) && canWeave ||
+                        ((IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_TetraWeave) && canWeave) ||
                         IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra)))
                         return Tetragrammaton;
                 }
@@ -298,7 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-        
+
         internal class WHM_AoE_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_AoE_DPS;
@@ -308,10 +308,10 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Holy or Holy3)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
-                    
+
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
-                    
+
                     if (CanSpellWeave(actionID))
                     {
                         bool holyLast = WasLastAction(OriginalHook(Holy));
