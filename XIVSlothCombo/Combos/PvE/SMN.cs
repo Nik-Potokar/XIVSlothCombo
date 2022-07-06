@@ -358,6 +358,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (IsEnabled(CustomComboPreset.SMN_Advanced_Burst_Delay_Option) && !inOpener) DemiAttackCount = 6; // If SMN_Advanced_Burst_Delay_Option is active and outside opener window, set DemiAttackCount to 6 to ignore delayed oGCDs 
 
+                if (GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed >= 12.5) DemiAttackCount = 6; // Sets DemiAttackCount to 6 if for whatever reason you're in a position that you can't demi attack to prevent ogcd waste.
+                
                 if (gauge.SummonTimerRemaining == 0 && !InCombat()) DemiAttackCount = 0;
                 
                 //CHECK_DEMIATTACK_USE
@@ -390,6 +392,26 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             else return SearingLight;
+                        }
+                        
+                        // Emergency priority Demi Nuke to prevent waste if you can't get demi attacks out to satisfy the slider check.
+                        if (OriginalHook(Ruin) is AstralImpulse or FountainOfFire && GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed >= 12.5)
+                        {
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks))
+                            {
+                                if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && LevelChecked(SummonBahamut))
+                                    return OriginalHook(EnkindleBahamut);
+                                
+                                if (IsOffCooldown(Deathflare) && LevelChecked(Deathflare) && OriginalHook(Ruin) is AstralImpulse)
+                                    return OriginalHook(AstralFlow);
+                            }
+
+                            // Demi Nuke 2: Electric Boogaloo
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle))
+                            {
+                                if (IsOffCooldown(Rekindle) && OriginalHook(Ruin) is FountainOfFire)
+                                    return OriginalHook(AstralFlow);
+                            }
                         }
                         
                         // ED/ES
