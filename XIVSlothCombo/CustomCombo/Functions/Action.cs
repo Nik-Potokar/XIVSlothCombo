@@ -37,6 +37,21 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
 
+        /// <summary> Checks if the player can use an action based on the level required and it's cooldown status. Also checks action charges.</summary>
+        /// <param name="id"> ID of the action. </param>
+        /// <returns></returns>
+        public static bool CanUse(uint id)
+        {
+            if (LevelChecked(id))
+            {
+                //Asking for cooldown data one time for two checks
+                CooldownData cd = GetCooldown(id);
+                //Are we off cooldown, else do we have a charge?
+                return (!cd.IsCooldown || cd.RemainingCharges > 0);
+            }
+            return false;
+        }
+
         /// <summary> Checks if the last action performed was the passed ID. </summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
@@ -161,4 +176,6 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> True or false. </returns>
         public static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6) => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
     }
+
+
 }
