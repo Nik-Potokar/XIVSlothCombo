@@ -141,7 +141,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal MudraCasting mudraState = new MudraCasting();
 
-            protected internal OpenerLogic openerLogic = new OpenerLogic();
+            protected internal NINOpenerLogic openerLogic = new NINOpenerLogic();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -168,7 +168,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener) && OpenerLogic.LevelChecked && openerLogic.DoFullOpener(ref actionID, mudraState))
+                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener) && NINOpenerLogic.LevelChecked && openerLogic.DoFullOpener(ref actionID, mudraState))
                         return actionID;
 
                     if (HasEffect(Buffs.TenChiJin))
@@ -349,7 +349,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal MudraCasting mudraState = new MudraCasting();
 
-            protected internal OpenerLogic openerLogic = new OpenerLogic();
+            protected internal NINOpenerLogic openerLogic = new NINOpenerLogic();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -364,7 +364,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener) && OpenerLogic.LevelChecked && openerLogic.DoFullOpener(ref actionID, mudraState))
+                    if (IsEnabled(CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener) && NINOpenerLogic.LevelChecked && openerLogic.DoFullOpener(ref actionID, mudraState))
                         return actionID;
 
                     if (HasEffect(Buffs.TenChiJin))

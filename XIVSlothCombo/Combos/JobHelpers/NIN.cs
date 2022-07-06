@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
@@ -416,7 +417,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             }
         }
 
-        internal class OpenerLogic : PvE.NIN
+        internal class NINOpenerLogic : PvE.NIN
         {
             private static bool HasCooldowns()
             {
@@ -610,14 +611,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 if (flag == ConditionFlag.InCombat && value == false) ResetOpener();
             }
-        }
-
-        internal enum OpenerState
-        {
-            PrePull,
-            InOpener,
-            OpenerFinished,
-            FailedOpener
         }
     }
 }
