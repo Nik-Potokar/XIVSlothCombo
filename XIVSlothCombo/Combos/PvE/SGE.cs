@@ -219,33 +219,36 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
 
-                    // Eukrasian Dosis.
-                    // If we're too low level to use Eukrasia, we can stop here.
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia) && HasBattleTarget())
-                    {
-                        // If we're already Eukrasian'd, the whole point of this section is moot
-                        if (HasEffect(Buffs.Eukrasia))
-                            return OriginalHook(Dosis1); // OriginalHook will select the correct Dosis for us
+                    if (HasBattleTarget())
+                    { 
+                        // Eukrasian Dosis.
+                        // If we're too low level to use Eukrasia, we can stop here.
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia))
+                        {
+                            // If we're already Eukrasian'd, the whole point of this section is moot
+                            if (HasEffect(Buffs.Eukrasia))
+                                return OriginalHook(Dosis1); // OriginalHook will select the correct Dosis for us
 
-                        // Determine which Dosis debuff to check
-                        // Check level backwards from max level to find the appropriate level for debuff checking
-                        Status? DosisDebuffID;
-                        if (LevelChecked(Dosis3)) DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis3);
-                        else if (LevelChecked(Dosis2)) DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis2);
-                        else DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis1);
+                            // Determine which Dosis debuff to check
+                            // Check level backwards from max level to find the appropriate level for debuff checking
+                            Status? DosisDebuffID;
+                            if (LevelChecked(Dosis3)) DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis3);
+                            else if (LevelChecked(Dosis2)) DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis2);
+                            else DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis1);
 
-                        // Got our Debuff for our level, check for it and procede 
-                        if (((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3)) &&
-                            (GetTargetHPPercent() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)))
-                            return Eukrasia;
+                            // Got our Debuff for our level, check for it and procede 
+                            if (((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3)) &&
+                                (GetTargetHPPercent() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)))
+                                return Eukrasia;
+                        }
+
+                        // Toxikon
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
+                            LevelChecked(Toxikon) && IsOffCooldown(actionID) &&
+                            ((!GetOptionBool(Config.SGE_ST_Dosis_Toxikon) && this.IsMoving) || GetOptionBool(Config.SGE_ST_Dosis_Toxikon)) &&
+                            Gauge.Addersting > 0)
+                           return OriginalHook(Toxikon);
                     }
-
-                    // Toxikon
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
-                        LevelChecked(Toxikon) && HasBattleTarget() && IsOffCooldown(actionID) &&
-                        ((!GetOptionBool(Config.SGE_ST_Dosis_Toxikon) && this.IsMoving) || GetOptionBool(Config.SGE_ST_Dosis_Toxikon)) &&
-                        Gauge.Addersting > 0)
-                        return OriginalHook(Toxikon);
                 }
 
                 return actionID;
