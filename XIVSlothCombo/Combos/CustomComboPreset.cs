@@ -2257,10 +2257,12 @@ namespace XIVSlothCombo.Combos
             #endregion
 
         #region Misc Healing
+        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Taurochole, SGE.Druochole, SGE.Ixochole, SGE.Kerachole)]
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
         SGE_Rhizo = 14600,
 
+        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Druochole)]
         [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
         SGE_DruoTauro = 14700,
