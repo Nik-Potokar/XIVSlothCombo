@@ -1,7 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Statuses;
+using System.Collections.Generic;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -31,16 +31,16 @@ namespace XIVSlothCombo.Combos.PvE
             EukrasianPrognosis = 24292,
 
             // DPS
-            Dosis1 = 24283,
+            Dosis = 24283,
             Dosis2 = 24306,
             Dosis3 = 24312,
-            EukrasianDosis1 = 24293,
+            EukrasianDosis  = 24293,
             EukrasianDosis2 = 24308,
             EukrasianDosis3 = 24314,
-            Phlegma = 24289,
+            Phlegma  = 24289,
             Phlegma2 = 24307,
             Phlegma3 = 24313,
-            Dyskrasia = 24297,
+            Dyskrasia  = 24297,
             Dyskrasia2 = 24315,
             Toxikon = 24304,
             Pneuma = 24318,
@@ -58,23 +58,36 @@ namespace XIVSlothCombo.Combos.PvE
             // Role
             Egeiro = 24287;
 
+        //Action Groups
+        public static readonly List<uint>
+            AddersgalList = new() { Taurochole, Druochole, Ixochole, Kerachole },
+            PhlegmaList = new () { Phlegma, Phlegma2, Phlegma3 };
+
         public static class Buffs
         {
             public const ushort
                 Kardia = 2604,
                 Eukrasia = 2606,
                 EukrasianDiagnosis = 2607,
-                Kardion = 2872,
-                EukrasianPrognosis = 2609;
+                EukrasianPrognosis = 2609,
+                Kardion = 2872;
         }
 
         public static class Debuffs
         {
             public const ushort
-                EukrasianDosis1 = 2614,
+                EukrasianDosis = 2614,
                 EukrasianDosis2 = 2615,
                 EukrasianDosis3 = 2616;
         }
+
+        //Debuff Pairs of Actions and Debuff
+        public static readonly Dictionary<uint, ushort>
+            DosisList = new() {
+                { Dosis,  Debuffs.EukrasianDosis  },
+                { Dosis2, Debuffs.EukrasianDosis2 },
+                { Dosis3, Debuffs.EukrasianDosis3 }
+            };
 
         public static class Range
         {
@@ -122,8 +135,8 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Rhizo;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Taurochole or Druochole or Ixochole or Kerachole &&
-                    CanUseAction(Rhizomata) &&
+                return AddersgalList.Contains(actionID) && 
+                    LevelAndCDChecked(Rhizomata) &&
                     Gauge.Addersgall is 0
                     ? Rhizomata
                     : actionID;
@@ -141,7 +154,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauro;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Druochole && CanUseAction(Taurochole)
+                return actionID is Druochole && LevelAndCDChecked(Taurochole)
                     ? Taurochole
                     : actionID;
             }
@@ -154,7 +167,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ZoePneuma;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Pneuma && CanUseAction(Pneuma) && IsOffCooldown(Zoe)
+                return actionID is Pneuma && LevelAndCDChecked(Pneuma) && IsOffCooldown(Zoe)
                     ? Zoe
                     : actionID;
             }
@@ -167,7 +180,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_Phlegma;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Phlegma or Phlegma2 or Phlegma3)
+                if (PhlegmaList.Contains(actionID))
                 {
                     bool NoPhlegmaToxikon = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaToxikon);
                     bool OutOfRangeToxikon = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_OutOfRangeToxikon);
@@ -175,7 +188,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool NoTargetDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
 
                     // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) && CanUseAction(All.LucidDreaming) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) && LevelAndCDChecked(All.LucidDreaming) &&
                         LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_AoE_Phlegma_Lucid) &&
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
@@ -211,10 +224,10 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_Dosis;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Dosis1 or Dosis2 or Dosis3 && InCombat())
+                if (DosisList.ContainsKey(actionID) && InCombat())
                 {
                     // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) && CanUseAction(All.LucidDreaming) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) && LevelAndCDChecked(All.LucidDreaming) &&
                         LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_ST_Dosis_Lucid) &&
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
@@ -223,31 +236,21 @@ namespace XIVSlothCombo.Combos.PvE
                     { 
                         // Eukrasian Dosis.
                         // If we're too low level to use Eukrasia, we can stop here.
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia))
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia) && (!HasEffect(Buffs.Eukrasia)))
                         {
-                            // If we're already Eukrasian'd, the whole point of this section is moot
-                            if (HasEffect(Buffs.Eukrasia))
-                                return OriginalHook(Dosis1); // OriginalHook will select the correct Dosis for us
-
-                            // Determine which Dosis debuff to check
-                            // Check level backwards from max level to find the appropriate level for debuff checking
-                            Status? DosisDebuffID;
-                            if (LevelChecked(Dosis3)) DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis3);
-                            else if (LevelChecked(Dosis2)) DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis2);
-                            else DosisDebuffID = FindTargetEffect(Debuffs.EukrasianDosis1);
-
-                            // Got our Debuff for our level, check for it and procede 
-                            if (((DosisDebuffID is null) || (DosisDebuffID.RemainingTime <= 3)) &&
+                            //Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
+                            var dotDebuff = FindTargetEffect(DosisList[OriginalHook(actionID)]);
+                            if (((dotDebuff is null) || (dotDebuff.RemainingTime <= 3)) &&
                                 (GetTargetHPPercent() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)))
                                 return Eukrasia;
                         }
 
                         // Toxikon
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
-                            LevelChecked(Toxikon) && IsOffCooldown(actionID) &&
+                            LevelChecked(Toxikon) && IsOffCooldown(actionID) && //Cooldown check against original action to stop cooldown animation seizure
                             ((!GetOptionBool(Config.SGE_ST_Dosis_Toxikon) && this.IsMoving) || GetOptionBool(Config.SGE_ST_Dosis_Toxikon)) &&
                             Gauge.Addersting > 0)
-                           return OriginalHook(Toxikon);
+                            return OriginalHook(Toxikon);
                     }
                 }
 
@@ -281,18 +284,18 @@ namespace XIVSlothCombo.Combos.PvE
                         ? CurrentTarget
                         : LocalPlayer;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && CanUseAction(Druochole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && LevelAndCDChecked(Druochole) &&
                         Gauge.Addersgall >= 1 &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Druochole))
                         return Druochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && CanUseAction(Taurochole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && LevelAndCDChecked(Taurochole) &&
                         Gauge.Addersgall >= 1 &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Taurochole))
                         return Taurochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && CanUseAction(Rhizomata)
-                        && Gauge.Addersgall is 0)
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && LevelAndCDChecked(Rhizomata) &&
+                        Gauge.Addersgall is 0)
                         return Rhizomata;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Kardia) && LevelChecked(Kardia) &&
@@ -300,24 +303,24 @@ namespace XIVSlothCombo.Combos.PvE
                         FindEffect(Buffs.Kardion, HealTarget, LocalPlayer?.ObjectId) is null)
                         return Kardia;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && CanUseAction(Soteria) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && LevelAndCDChecked(Soteria) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Soteria))
                         return Soteria;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && CanUseAction(Zoe) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && LevelAndCDChecked(Zoe) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Zoe))
                         return Zoe;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && CanUseAction(Krasis) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && LevelAndCDChecked(Krasis) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Krasis))
                         return Krasis;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && CanUseAction(Pepsis) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && LevelAndCDChecked(Pepsis) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
-                        FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is not null) // Update for HealTarget
+                        FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is not null)
                         return Pepsis;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && CanUseAction(Haima) &&
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && LevelAndCDChecked(Haima) &&
                         GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Haima))
                         return Haima;
 
@@ -342,19 +345,19 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Prognosis)
                 {
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && CanUseAction(Rhizomata) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && LevelAndCDChecked(Rhizomata) &&
                         Gauge.Addersgall is 0)
                         return Rhizomata;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) && CanUseAction(Kerachole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) && LevelAndCDChecked(Kerachole) &&
                         Gauge.Addersgall >= 1)
                         return Kerachole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) && CanUseAction(Ixochole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) && LevelAndCDChecked(Ixochole) &&
                         Gauge.Addersgall >= 1)
                         return Ixochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis) && CanUseAction(Physis))
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis) && LevelAndCDChecked(Physis))
                         return OriginalHook(Physis);
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis) && LevelChecked(Eukrasia) &&
@@ -367,13 +370,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return EukrasianPrognosis;
                     }
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) && CanUseAction(Holos))
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) && LevelAndCDChecked(Holos))
                         return Holos;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) && CanUseAction(Panhaima))
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) && LevelAndCDChecked(Panhaima))
                         return Panhaima;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && CanUseAction(Pepsis) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && LevelAndCDChecked(Pepsis) &&
                         FindEffect(Buffs.EukrasianPrognosis) is not null)
                         return Pepsis;
                 }

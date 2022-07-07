@@ -37,20 +37,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
 
-        /// <summary> Checks if the player can use an action based on the level required and it's cooldown status. Also checks action charges.</summary>
+        /// <summary> Checks if the player can use an action based on the level required and it's cooldown status (includes charges).</summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public static bool CanUseAction(uint id)
-        {
-            if (LevelChecked(id))
-            {
-                //Asking for cooldown data one time for two checks
-                CooldownData cd = GetCooldown(id);
-                //Are we off cooldown, else do we have a charge?
-                return (!cd.IsCooldown || cd.RemainingCharges > 0);
-            }
-            return false;
-        }
+        //Note: Testing so far shows non charge skills have a max charge of 1, and it's zero during cooldown
+        public static bool LevelAndCDChecked(uint id) => LevelChecked(id) && HasCharges(id);
 
         /// <summary> Checks if the last action performed was the passed ID. </summary>
         /// <param name="id"> ID of the action. </param>
