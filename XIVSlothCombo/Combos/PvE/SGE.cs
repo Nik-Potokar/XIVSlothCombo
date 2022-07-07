@@ -215,7 +215,7 @@ namespace XIVSlothCombo.Combos.PvE
         /*
         Single Target Dosis Combo
         Currently Replaces Dosis with Eukrasia when the debuff on the target is < 3 seconds or not existing
-        Lucid Dreaming, Target of Target optional
+        Lucid Dreaming, Toxikon optional
         */
         internal class SGE_ST_Dosis : CustomCombo
         {
