@@ -468,7 +468,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool songMage = gauge.Song == Song.MAGE;
                     bool songArmy = gauge.Song == Song.ARMY;
                     bool canInterrupt = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze);
-                    int targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage);
+                    int  targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage);
                     bool isEnemyHealthHigh = IsEnabled(CustomComboPreset.BRD_Simple_NoWaste)
                         ? GetTargetHPPercent() > targetHPThreshold
                         : true;
@@ -554,6 +554,7 @@ namespace XIVSlothCombo.Combos.PvE
                         bool radiantReady = LevelChecked(RadiantFinale) && IsOffCooldown(RadiantFinale);
                         bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
                         bool battleVoiceReady = LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice);
+                        bool barrageReady = LevelChecked(Barrage) && IsOffCooldown(Barrage);
                         bool firstMinute = CombatEngageDuration().Minutes == 0;
                         bool restOfFight = CombatEngageDuration().Minutes > 0;
 
@@ -564,21 +565,20 @@ namespace XIVSlothCombo.Combos.PvE
                         if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
                             (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet)) &&
                             (battleVoiceReady || GetCooldownRemainingTime(BattleVoice) < 0.7) &&
-                            (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished) && ragingReady)
+                            (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished) && IsOnCooldown(RagingStrikes))
                         {
                             if (!JustUsed(RagingStrikes))
                                 return RadiantFinale;
                         }
 
                         if (canWeaveBuffs && battleVoiceReady &&
-                            (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished) && ragingReady)
+                            (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished) && IsOnCooldown(RagingStrikes))
                         {
                             if (!JustUsed(RagingStrikes))
                                 return BattleVoice;
                         }
 
-                        if (canWeaveBuffs && LevelChecked(Barrage) && IsOffCooldown(Barrage) &&
-                            !HasEffect(Buffs.StraightShotReady) && HasEffect(Buffs.RagingStrikes))
+                        if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.StraightShotReady) && HasEffect(Buffs.RagingStrikes))
                         {
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
