@@ -104,7 +104,7 @@ namespace XIVSlothCombo.Core
         public static List<CustomComboPreset> GetAllConflicts() => ConflictingCombos.Keys.ToList();
 
         /// <summary> Get all the info from conflicted combos. </summary>
-        public List<CustomComboPreset[]> GetAllConflictOriginals() => ConflictingCombos.Values.ToList();
+        public static List<CustomComboPreset[]> GetAllConflictOriginals() => ConflictingCombos.Values.ToList();
 
         #endregion
 
