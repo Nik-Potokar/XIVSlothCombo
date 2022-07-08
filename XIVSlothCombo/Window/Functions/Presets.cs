@@ -16,7 +16,7 @@ namespace XIVSlothCombo.Window.Functions
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = PluginConfiguration.IsSecret(preset);
-            var conflicts = Service.Configuration.GetConflicts(preset);
+            var conflicts = PluginConfiguration.GetConflicts(preset);
             var parent = PluginConfiguration.GetParent(preset);
             var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
@@ -129,7 +129,7 @@ namespace XIVSlothCombo.Window.Functions
                     {
                         if (Service.Configuration.HideConflictedCombos)
                         {
-                            var conflictOriginals = Service.Configuration.GetConflicts(childPreset);    // Presets that are contained within a ConflictedAttribute
+                            var conflictOriginals = PluginConfiguration.GetConflicts(childPreset);    // Presets that are contained within a ConflictedAttribute
                             var conflictsSource = Service.Configuration.GetAllConflicts();              // Presets with the ConflictedAttribute
 
                             if (!conflictsSource.Where(x => x == childPreset || x == preset).Any() || conflictOriginals.Length == 0)
@@ -193,7 +193,7 @@ namespace XIVSlothCombo.Window.Functions
                 if (!Service.Configuration.EnabledActions.Contains(parent))
                 {
                     Service.Configuration.EnabledActions.Add(parent);
-                    foreach (var conflict in Service.Configuration.GetConflicts(parent))
+                    foreach (var conflict in PluginConfiguration.GetConflicts(parent))
                     {
                         Service.Configuration.EnabledActions.Remove(conflict);
                     }

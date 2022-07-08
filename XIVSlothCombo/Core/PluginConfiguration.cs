@@ -98,7 +98,7 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets an array of conflicting combo presets. </summary>
         /// <param name="preset"> Preset to check. </param>
         /// <returns> The conflicting presets. </returns>
-        public CustomComboPreset[] GetConflicts(CustomComboPreset preset) => ConflictingCombos[preset];
+        public static CustomComboPreset[] GetConflicts(CustomComboPreset preset) => ConflictingCombos[preset];
 
         /// <summary> Gets the full list of conflicted combos. </summary>
         public List<CustomComboPreset> GetAllConflicts() => ConflictingCombos.Keys.ToList();
