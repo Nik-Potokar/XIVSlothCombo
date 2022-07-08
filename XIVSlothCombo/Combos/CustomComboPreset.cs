@@ -2127,7 +2127,7 @@ namespace XIVSlothCombo.Combos
         */
 
         #region Single Target DPS Feature
-        [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
+        [ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
         [CustomComboInfo("Single Target DPS Feature", "", SGE.JobID, 100, "", "")]
         SGE_ST_Dosis = 14100,
                 
