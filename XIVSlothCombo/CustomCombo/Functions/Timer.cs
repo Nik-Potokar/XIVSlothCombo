@@ -35,10 +35,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Tells the elapsed time since the combat started. </summary>
         /// <returns> Combat time in seconds. </returns>
-        protected TimeSpan CombatEngageDuration()
-        {
-            return combatDuration;
-        }
+        protected TimeSpan CombatEngageDuration() => combatDuration;
 
         protected void StartTimer()
         {
