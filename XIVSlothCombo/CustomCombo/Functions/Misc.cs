@@ -16,7 +16,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> A value indicating whether the preset is not enabled. </returns>
         public bool IsNotEnabled(CustomComboPreset preset) => !IsEnabled(preset);
 
-        
+
         // Job & Class Names
         public class JobIDs
         {
@@ -48,7 +48,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 Combos.PvE.DRK.JobID,
                 Combos.PvE.GNB.JobID
             };
-            
+
             public static readonly List<byte> Healer = new()
             {
                 Combos.PvE.WHM.JobID, Combos.PvE.WHM.ClassID,
