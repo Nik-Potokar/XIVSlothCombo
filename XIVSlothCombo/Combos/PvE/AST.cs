@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -119,11 +119,11 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Play)
                 {
-                    var haveCard = HasEffect(Buffs.Balance) || HasEffect(Buffs.Bole) || HasEffect(Buffs.Arrow) || HasEffect(Buffs.Spear) || HasEffect(Buffs.Ewer) || HasEffect(Buffs.Spire);
-                    var cardDrawn = Gauge.DrawnCard;
+                    bool haveCard = HasEffect(Buffs.Balance) || HasEffect(Buffs.Bole) || HasEffect(Buffs.Arrow) || HasEffect(Buffs.Spear) || HasEffect(Buffs.Ewer) || HasEffect(Buffs.Spire);
+                    CardType cardDrawn = Gauge.DrawnCard;
 
-                    if (!Gauge.ContainsSeal(SealType.NONE) && 
-                        IsEnabled(CustomComboPreset.AST_Cards_AstrodyneOnPlay) && 
+                    if (!Gauge.ContainsSeal(SealType.NONE) &&
+                        IsEnabled(CustomComboPreset.AST_Cards_AstrodyneOnPlay) &&
                         (Gauge.DrawnCard != CardType.NONE || GetCooldown(Draw).CooldownRemaining > 30)
                        ) return Astrodyne;
 
@@ -142,7 +142,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_AutoCardTarget))
                         {
-                            if (GetTarget || (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_TargetLock)))
+                            if (GetTarget || IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_TargetLock))
                                 SetTarget();
 
 
@@ -173,7 +173,7 @@ namespace XIVSlothCombo.Combos.PvE
             private bool SetTarget()
             {
                 if (Gauge.DrawnCard.Equals(CardType.NONE)) return false;
-                var cardDrawn = Gauge.DrawnCard;
+                CardType cardDrawn = Gauge.DrawnCard;
                 if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
                 //Checks for trusts then normal parties. Buddylist does not include player, so +1
                 int maxPartySize = Services.Service.BuddyList.Length > 0 ? Services.Service.BuddyList.Length + 1 : GetPartyMembers().Length;
@@ -274,9 +274,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 bool AlternateMode = System.Convert.ToBoolean(GetOptionValue(Config.AST_DPS_AltMode)); //(0 or 1 radio values)
-                if (((!AlternateMode && actionID is FallMalefic or Malefic4 or Malefic3 or Malefic2 or Malefic1) || 
-                     (AlternateMode && actionID is Combust1 or Combust2 or Combust3 ) ||
-                     (IsEnabled(CustomComboPreset.AST_AoE_DPS) && actionID is Gravity or Gravity2)) && 
+                if (((!AlternateMode && actionID is FallMalefic or Malefic4 or Malefic3 or Malefic2 or Malefic1) ||
+                     (AlternateMode && actionID is Combust1 or Combust2 or Combust3) ||
+                     (IsEnabled(CustomComboPreset.AST_AoE_DPS) && actionID is Gravity or Gravity2)) &&
                     InCombat())
                 {
                     if (IsEnabled(CustomComboPreset.AST_DPS_LightSpeed) &&
@@ -308,7 +308,7 @@ namespace XIVSlothCombo.Combos.PvE
                         !Gauge.ContainsSeal(SealType.NONE) &&
                         CanSpellWeave(actionID)
                         ) return Astrodyne;
-                    
+
                     //Card Draw
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         LevelChecked(Draw) &&
@@ -339,7 +339,7 @@ namespace XIVSlothCombo.Combos.PvE
                         HasBattleTarget())
                     {
                         //Determine which Combust debuff to check
-                        Status? CombustDebuffID; 
+                        Status? CombustDebuffID;
                         if (LevelChecked(Combust3)) CombustDebuffID = FindTargetEffect(Debuffs.Combust3);
                         else if (LevelChecked(Combust2)) CombustDebuffID = FindTargetEffect(Debuffs.Combust2);
                         else CombustDebuffID = FindTargetEffect(Debuffs.Combust1);
@@ -371,21 +371,21 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
                         LevelChecked(CrownPlay) &&
                         InCombat() &&
-                        Gauge.DrawnCrownCard == CardType.LADY 
+                        Gauge.DrawnCrownCard == CardType.LADY
                        ) return LadyOfCrown;
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_CelestialOpposition) &&
                         LevelChecked(CelestialOpposition) &&
-                        IsOffCooldown(CelestialOpposition) 
+                        IsOffCooldown(CelestialOpposition)
                        ) return CelestialOpposition;
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Horoscope))
                     {
-                        if (LevelChecked(Horoscope) && 
+                        if (LevelChecked(Horoscope) &&
                             IsOffCooldown(Horoscope)
                            ) return Horoscope;
 
-                        if ( (LevelChecked(AspectedHelios) && !HasEffect(Buffs.AspectedHelios))
+                        if ((LevelChecked(AspectedHelios) && !HasEffect(Buffs.AspectedHelios))
                              || HasEffect(Buffs.Horoscope)
                              || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
                             return AspectedHelios;
@@ -427,21 +427,21 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_AspectedBenefic) && LevelChecked(AspectedBenefic))
                     {
-                        var aspectedBeneficHoT = FindTargetEffect(Buffs.AspectedBenefic);
-                        var NeutralSectShield = FindTargetEffect(Buffs.NeutralSectShield);
-                        var NeutralSectBuff = FindTargetEffect(Buffs.NeutralSect);
-                        if (((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3))
+                        Status? aspectedBeneficHoT = FindTargetEffect(Buffs.AspectedBenefic);
+                        Status? NeutralSectShield = FindTargetEffect(Buffs.NeutralSectShield);
+                        Status? NeutralSectBuff = FindTargetEffect(Buffs.NeutralSect);
+                        if ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)
                             || ((NeutralSectShield is null) && (NeutralSectBuff is not null))
                            ) return AspectedBenefic;
                     }
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
-                        LevelChecked(EssentialDignity) && 
-                        GetCooldown(EssentialDignity).RemainingCharges > 0 && 
+                        LevelChecked(EssentialDignity) &&
+                        GetCooldown(EssentialDignity).RemainingCharges > 0 &&
                         GetTargetHPPercent() <= GetOptionValue(Config.AST_EssentialDignity)
                        ) return EssentialDignity;
 
-                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Exaltation) && 
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Exaltation) &&
                         LevelChecked(Exaltation) &&
                         IsOffCooldown(Exaltation)
                        ) return Exaltation;
