@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Dalamud.Data;
 using Dalamud.Game;
 using Dalamud.Game.ClientState;
@@ -10,9 +13,6 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.IoC;
 using Dalamud.Plugin;
-using System;
-using System.IO;
-using System.Reflection;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 
