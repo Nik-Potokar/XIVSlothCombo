@@ -17,12 +17,14 @@ namespace XIVSlothCombo.Combos.PvE
         public const uint
             Benefic = 3594,
             Draw = 3590,
-            //Balance = 4401,
-            //Bole = 4404,
-            //Arrow = 4402,
-            //Spear = 4403,
-            //Ewer = 4405,
-            //Spire = 4406,
+            /*
+            Balance = 4401,
+            Bole = 4404,
+            Arrow = 4402,
+            Spear = 4403,
+            Ewer = 4405,
+            Spire = 4406,
+            */
             MinorArcana = 7443,
             //SleeveDraw = 7448,
             Malefic4 = 16555,
@@ -40,16 +42,16 @@ namespace XIVSlothCombo.Combos.PvE
             Lightspeed = 3606,
             Redraw = 3593,
 
-            // aoes
+            // AoEs
             Gravity = 3615,
             Gravity2 = 25872,
 
-            // dots
+            // DoTs
             Combust3 = 16554,
             Combust2 = 3608,
             Combust1 = 3599,
 
-            // heals
+            // Heals
             Helios = 3600,
             AspectedHelios = 3601,
             CelestialOpposition = 16553,
