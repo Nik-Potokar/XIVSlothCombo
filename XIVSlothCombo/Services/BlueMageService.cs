@@ -1,8 +1,8 @@
-﻿using FFXIVClientStructs.FFXIV.Client.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace XIVSlothCombo.Services
 {
@@ -17,7 +17,7 @@ namespace XIVSlothCombo.Services
             List<uint> prevList = Service.Configuration.ActiveBLUSpells.ToList();
 
             Service.Configuration.ActiveBLUSpells.Clear();
-            var notebook = Marshal.PtrToStructure<AddonAOZNotebook>(notebookPtr);
+            AddonAOZNotebook notebook = Marshal.PtrToStructure<AddonAOZNotebook>(notebookPtr);
 
             if (notebook.ActiveActions01.ActionID != 0) Service.Configuration.ActiveBLUSpells.Add((uint)notebook.ActiveActions01.ActionID);
             if (notebook.ActiveActions02.ActionID != 0) Service.Configuration.ActiveBLUSpells.Add((uint)notebook.ActiveActions02.ActionID);
@@ -48,7 +48,7 @@ namespace XIVSlothCombo.Services
             if (notebook.ActiveActions24.ActionID != 0) Service.Configuration.ActiveBLUSpells.Add((uint)notebook.ActiveActions24.ActionID);
 
             if (Service.Configuration.ActiveBLUSpells.Except(prevList).Any())
-            Service.Configuration.Save();
+                Service.Configuration.Save();
         }
     }
 }
