@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
 using XIVSlothCombo.CustomComboNS;
 
@@ -13,7 +14,6 @@ namespace XIVSlothCombo.Combos.PvE
         public static SGEGauge Gauge = CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SGEGauge>();
 
         public const uint
-
             // Heals and Shields
             Diagnosis = 24284,
             Prognosis = 24286,
@@ -56,9 +56,9 @@ namespace XIVSlothCombo.Combos.PvE
             Eukrasia = 24290,
             Rhizomata = 24309;
 
-        //Action Groups
+        // Action Groups
         public static readonly List<uint>
-            AddersgalList = new() { Taurochole, Druochole, Ixochole, Kerachole },
+            AddersgallList = new() { Taurochole, Druochole, Ixochole, Kerachole },
             PhlegmaList = new () { Phlegma, Phlegma2, Phlegma3 };
 
         public static class Buffs
@@ -79,9 +79,10 @@ namespace XIVSlothCombo.Combos.PvE
                 EukrasianDosis3 = 2616;
         }
 
-        //Debuff Pairs of Actions and Debuff
+        // Debuff Pairs of Actions and Debuff
         public static readonly Dictionary<uint, ushort>
-            DosisList = new() {
+            DosisList = new()
+            {
                 { Dosis,  Debuffs.EukrasianDosis  },
                 { Dosis2, Debuffs.EukrasianDosis2 },
                 { Dosis3, Debuffs.EukrasianDosis3 }
@@ -133,7 +134,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Rhizo;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return AddersgalList.Contains(actionID) && 
+                return AddersgallList.Contains(actionID) && 
                     ActionReady(Rhizomata) &&
                     Gauge.Addersgall is 0
                     ? Rhizomata
@@ -184,11 +185,12 @@ namespace XIVSlothCombo.Combos.PvE
                     bool OutOfRangeToxikon = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_OutOfRangeToxikon);
                     bool NoPhlegmaDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoPhlegmaDyskrasia);
                     bool NoTargetDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
+                    int lucidMPThreshold = GetOptionValue(Config.SGE_AoE_Phlegma_Lucid);
 
                     // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) && ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_AoE_Phlegma_Lucid) &&
-                        CanSpellWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) &&
+                        ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) &&
+                        LocalPlayer.CurrentMp <= lucidMPThreshold)
                         return All.LucidDreaming;
 
                     if ((NoPhlegmaToxikon || OutOfRangeToxikon) &&
@@ -224,29 +226,35 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (DosisList.ContainsKey(actionID) && InCombat())
                 {
+                    int lucidMPThreshold = GetOptionValue(Config.SGE_AoE_Phlegma_Lucid);
+
                     // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) && ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_ST_Dosis_Lucid) &&
-                        CanSpellWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) &&
+                        ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) &&
+                        LocalPlayer.CurrentMp <= lucidMPThreshold)
                         return All.LucidDreaming;
 
                     if (HasBattleTarget())
-                    { 
+                    {
+                        bool toxikonMovement = GetOptionBool(Config.SGE_ST_Dosis_Toxikon);
+
                         // Eukrasian Dosis.
                         // If we're too low level to use Eukrasia, we can stop here.
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia) && (!HasEffect(Buffs.Eukrasia)))
                         {
-                            //Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
-                            var dotDebuff = FindTargetEffect(DosisList[OriginalHook(actionID)]);
+                            // Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
+                            Status? dotDebuff = FindTargetEffect(DosisList[OriginalHook(actionID)]);
+                            int eDosisHPThreshold = GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer);
+
                             if (((dotDebuff is null) || (dotDebuff.RemainingTime <= 3)) &&
-                                (GetTargetHPPercent() > GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer)))
+                                (GetTargetHPPercent() > eDosisHPThreshold))
                                 return Eukrasia;
                         }
 
                         // Toxikon
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
-                            LevelChecked(Toxikon) && IsOffCooldown(actionID) && //Cooldown check against original action to stop cooldown animation seizure
-                            ((!GetOptionBool(Config.SGE_ST_Dosis_Toxikon) && this.IsMoving) || GetOptionBool(Config.SGE_ST_Dosis_Toxikon)) &&
+                            LevelChecked(Toxikon) && IsOffCooldown(actionID) &&     // Cooldown check against original action to stop cooldown animation seizure
+                            ((!toxikonMovement && IsMoving) || toxikonMovement) &&
                             Gauge.Addersting > 0)
                             return OriginalHook(Toxikon);
                     }
@@ -277,6 +285,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     // Set Target. Soft -> Hard -> Self priority, matching normal in-game behavior
                     GameObject? HealTarget;
+
                     if (Services.Service.TargetManager.SoftTarget?.ObjectKind is ObjectKind.Player) HealTarget = Services.Service.TargetManager.SoftTarget;
                     else HealTarget = CurrentTarget?.ObjectKind is ObjectKind.Player
                         ? CurrentTarget
@@ -363,7 +372,6 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (!HasEffect(Buffs.Eukrasia))
                             return Eukrasia;
-
                         if (HasEffect(Buffs.Eukrasia))
                             return EukrasianPrognosis;
                     }
