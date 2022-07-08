@@ -9,9 +9,9 @@ namespace XIVSlothCombo.Combos.PvE
 {
     internal static class SGE
     {
-        public const byte JobID = 40;
+        internal const byte JobID = 40;
 
-        public static SGEGauge Gauge = CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SGEGauge>();
+        private static SGEGauge Gauge => CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SGEGauge>();
 
         public const uint
             // Heals and Shields
@@ -57,13 +57,13 @@ namespace XIVSlothCombo.Combos.PvE
             Rhizomata = 24309;
 
         // Action Groups
-        public static readonly List<uint>
+        internal static readonly List<uint>
             AddersgallList = new() { Taurochole, Druochole, Ixochole, Kerachole },
             PhlegmaList = new () { Phlegma, Phlegma2, Phlegma3 };
 
-        public static class Buffs
+        internal static class Buffs
         {
-            public const ushort
+            internal const ushort
                 Kardia = 2604,
                 Eukrasia = 2606,
                 EukrasianDiagnosis = 2607,
@@ -71,16 +71,16 @@ namespace XIVSlothCombo.Combos.PvE
                 Kardion = 2872;
         }
 
-        public static class Debuffs
+        internal static class Debuffs
         {
-            public const ushort
+            internal const ushort
                 EukrasianDosis = 2614,
                 EukrasianDosis2 = 2615,
                 EukrasianDosis3 = 2616;
         }
 
         // Debuff Pairs of Actions and Debuff
-        public static readonly Dictionary<uint, ushort>
+        internal static readonly Dictionary<uint, ushort>
             DosisList = new()
             {
                 { Dosis,  Debuffs.EukrasianDosis  },
@@ -88,14 +88,14 @@ namespace XIVSlothCombo.Combos.PvE
                 { Dosis3, Debuffs.EukrasianDosis3 }
             };
 
-        public static class Range
+        internal static class Range
         {
-            public const byte Phlegma = 6;
+            internal const byte Phlegma = 6;
         }
 
-        public static class Config
+        internal static class Config
         {
-            public const string
+            internal const string
                 // GUI Customization Storage Names
                 SGE_ST_Dosis_EDosisHPPer = "SGE_ST_Dosis_EDosisHPPer",
                 SGE_ST_Dosis_Lucid = "SGE_ST_Dosis_Lucid",
@@ -236,8 +236,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasBattleTarget())
                     {
-                        bool toxikonMovement = GetOptionBool(Config.SGE_ST_Dosis_Toxikon);
-
                         // Eukrasian Dosis.
                         // If we're too low level to use Eukrasia, we can stop here.
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia) && (!HasEffect(Buffs.Eukrasia)))
@@ -252,9 +250,10 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Toxikon
+                        bool alwaysShowToxikon = GetOptionBool(Config.SGE_ST_Dosis_Toxikon); //False for moving only, True for Show All Times
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
                             LevelChecked(Toxikon) && IsOffCooldown(actionID) &&     // Cooldown check against original action to stop cooldown animation seizure
-                            ((!toxikonMovement && IsMoving) || toxikonMovement) &&
+                            ((!alwaysShowToxikon && IsMoving) || alwaysShowToxikon) &&
                             Gauge.Addersting > 0)
                             return OriginalHook(Toxikon);
                     }
