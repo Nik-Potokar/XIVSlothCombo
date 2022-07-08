@@ -28,7 +28,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static bool HasCompanionPresent() => Service.BuddyList.CompanionBuddyPresent;
 
         /// <summary> Checks if the player is in a PVP enabled zone. </summary>
-        /// <returns></returns>
+        /// <returns> A value indicating whether the player is in a PVP enabled zone. </returns>
         public static bool InPvP() => GameMain.IsInPvPArea() || GameMain.IsInPvPInstance();
     }
 }
