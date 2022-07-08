@@ -349,6 +349,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Prognosis)
                 {
+                    if (HasEffect(Buffs.Eukrasia)) return EukrasianPrognosis;
+
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && ActionReady(Rhizomata) &&
                         Gauge.Addersgall is 0)
                         return Rhizomata;
@@ -369,12 +371,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis) && LevelChecked(Eukrasia) &&
                         FindEffect(Buffs.EukrasianPrognosis) is null)
-                    {
-                        if (!HasEffect(Buffs.Eukrasia))
-                            return Eukrasia;
-                        if (HasEffect(Buffs.Eukrasia))
-                            return EukrasianPrognosis;
-                    }
+                        return Eukrasia;
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) && ActionReady(Holos))
                         return Holos;
