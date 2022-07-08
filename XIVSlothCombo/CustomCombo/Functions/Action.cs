@@ -19,13 +19,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Checks if the player is high enough level to use the passed ID. </summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public static bool LevelChecked(uint id)
-        {
-            if (LocalPlayer.Level < GetLevel(id))
-                return false;
-
-            return true;
-        }
+        public static bool LevelChecked(uint id) => LocalPlayer.Level >= GetLevel(id);
 
         /// <summary> Returns the name of an action from its ID. </summary>
         /// <param name="id"> ID of the action. </param>
@@ -151,11 +145,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> True or false. </returns>
         public static bool CanSpellWeave(uint actionID, double weaveTime = 0.6)
         {
-            var castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
+            float castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
 
             if (GetCooldown(actionID).CooldownRemaining > weaveTime &&                          // Prevent GCD delay
-                (castTimeRemaining <= 0.5 &&                                                    // Show in last 0.5sec of cast so game can queue ability
-                GetCooldown(actionID).CooldownRemaining - castTimeRemaining - weaveTime >= 0))  // Don't show if spell is still casting in weave window
+                castTimeRemaining <= 0.5 &&                                                     // Show in last 0.5sec of cast so game can queue ability
+                GetCooldown(actionID).CooldownRemaining - castTimeRemaining - weaveTime >= 0)   // Don't show if spell is still casting in weave window
                 return true;
             return false;
         }
@@ -167,6 +161,4 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> True or false. </returns>
         public static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6) => GetCooldown(actionID).CooldownRemaining < start && GetCooldown(actionID).CooldownRemaining > end;
     }
-
-
 }
