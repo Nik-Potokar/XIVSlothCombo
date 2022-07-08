@@ -2173,11 +2173,11 @@ namespace XIVSlothCombo.Combos
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.", SGE.JobID, 300, "", "")]
+        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.\nOptions below are in priority order", SGE.JobID, 304, "", "")]
+            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 304, "", "")]
             SGE_ST_Heal_Kardia = 14310,
 
             [ParentCombo(SGE_ST_Heal)]
