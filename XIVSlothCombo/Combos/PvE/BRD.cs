@@ -535,9 +535,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (songTimerInSeconds < 3 || (minuetReady && gauge.Repertoire == 4))
                                     return WanderersMinuet;
                             }
-                        }
-
-                        else if (songTimerInSeconds < 3)
+                        } else if (songTimerInSeconds < 3 && canWeave)
                         {
                             bool balladReady = LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad);
                             bool paeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);
