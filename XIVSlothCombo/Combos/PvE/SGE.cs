@@ -10,7 +10,7 @@ namespace XIVSlothCombo.Combos.PvE
     {
         internal const byte JobID = 40;
 
-        private static SGEGauge Gauge => CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SGEGauge>();
+        private static SGEGauge Gauge = CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SGEGauge>();
 
         public const uint
             // Heals and Shields
@@ -326,7 +326,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Pepsis;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && ActionReady(Haima) &&
-                        GetTargetHPPercent() <= GetOptionValue(Config.SGE_ST_Heal_Haima))
+                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Haima))
                         return Haima;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) && LevelChecked(Eukrasia) &&
