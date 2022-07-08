@@ -240,7 +240,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolySpirit;
                         }
 
-                        if (HasEffect(Buffs.Requiescat) && LevelChecked(HolySpirit) && !HasEffect(Buffs.FightOrFlight) && LocalPlayer.CurrentMp >= 1000)
+                        if (HasEffect(Buffs.Requiescat) && LevelChecked(HolySpirit) && (!HasEffect(Buffs.FightOrFlight) || !InMeleeRange()) && LocalPlayer.CurrentMp >= 1000)
                         {
                             if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && LevelChecked(Confiteor) &&
                                 ((GetBuffRemainingTime(Buffs.Requiescat) <= 3 && GetBuffRemainingTime(Buffs.Requiescat) >= 0) || GetBuffStacks(Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
