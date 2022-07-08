@@ -533,13 +533,17 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (lastComboMove == Hakaze && level >= Levels.Jinpu)
                                 {
-                                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Yukikaze) && gauge.Sen.HasFlag(Sen.SETSU) == false && level >= Levels.Yukikaze && HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Yukikaze) && 
+                                        gauge.Sen.HasFlag(Sen.SETSU) == false && 
+                                        level >= Levels.Yukikaze && 
+                                        HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
                                         return Yukikaze;
 
-                                    if ((level < Levels.Kasha && ((GetBuffRemainingTime(Buffs.Fugetsu) < GetBuffRemainingTime(Buffs.Fuka)) || !HasEffect(Buffs.Fugetsu))) || (level >= Levels.Kasha && gauge.Sen.HasFlag(Sen.GETSU) == false))
+                                    if ((level < Levels.Kasha && ((GetBuffRemainingTime(Buffs.Fugetsu) < GetBuffRemainingTime(Buffs.Fuka)) || !HasEffect(Buffs.Fugetsu))) || 
+                                        (level >= Levels.Kasha && gauge.Sen.HasFlag(Sen.GETSU) == false))
                                         return Jinpu;
 
-                                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) &&
+                                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && LevelChecked(Shifu) &&
                                         ((level < Levels.Kasha && ((GetBuffRemainingTime(Buffs.Fuka) < GetBuffRemainingTime(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka))) || (level >= Levels.Kasha && gauge.Sen.HasFlag(Sen.KA) == false)))
                                         return Shifu;
 
