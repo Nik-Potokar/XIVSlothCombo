@@ -12,7 +12,7 @@ namespace XIVSlothCombo.Combos.PvE
     internal static class AST
     {
         public const byte JobID = 33;
-        internal static ASTGauge Gauge => CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<ASTGauge>();
+        private static ASTGauge Gauge => CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<ASTGauge>();
 
         public const uint
             Benefic = 3594,
