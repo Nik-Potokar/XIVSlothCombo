@@ -130,7 +130,7 @@ namespace XIVSlothCombo.Window.Functions
                         if (Service.Configuration.HideConflictedCombos)
                         {
                             var conflictOriginals = PluginConfiguration.GetConflicts(childPreset);    // Presets that are contained within a ConflictedAttribute
-                            var conflictsSource = Service.Configuration.GetAllConflicts();              // Presets with the ConflictedAttribute
+                            var conflictsSource = PluginConfiguration.GetAllConflicts();              // Presets with the ConflictedAttribute
 
                             if (!conflictsSource.Where(x => x == childPreset || x == preset).Any() || conflictOriginals.Length == 0)
                             {
