@@ -2127,7 +2127,7 @@ namespace XIVSlothCombo.Combos
         */
 
         #region Single Target DPS Feature
-        [ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
+        [ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
         [CustomComboInfo("Single Target DPS Feature", "", SGE.JobID, 100, "", "")]
         SGE_ST_Dosis = 14100,
                 
@@ -2257,10 +2257,12 @@ namespace XIVSlothCombo.Combos
             #endregion
 
         #region Misc Healing
+        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Taurochole, SGE.Druochole, SGE.Ixochole, SGE.Kerachole)]
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
         SGE_Rhizo = 14600,
 
+        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Druochole)]
         [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
         SGE_DruoTauro = 14700,
@@ -3045,7 +3047,7 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(DNCPvP_BurstMode)]
-            [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the main combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
+            [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
             DNCPvP_BurstMode_CuringWaltz = 80072,
         #endregion
 
@@ -3196,6 +3198,14 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region SUMMONER
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Ruin III into an all-in-one damage button.\nOnly uses Crimson Cyclone when in melee range.", SMNPvP.JobID)]
+        SMNPvP_BurstMode = 80300,
+
+        [SecretCustomCombo]
+        [ParentCombo(SMNPvP_BurstMode)]
+        [CustomComboInfo("Radiant Aegis Option", "Adds Radiant Aegis to the combo when available, and your HP is at or below the set percentage.", SMNPvP.JobID)]
+        SMNPvP_BurstMode_RadiantAegis = 80301,
 
         #endregion
 

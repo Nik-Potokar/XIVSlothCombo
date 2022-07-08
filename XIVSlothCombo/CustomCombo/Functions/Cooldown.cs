@@ -38,7 +38,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Gets a value indicating whether an action has any available charges. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> True or false. </returns>
-        public bool HasCharges(uint actionID) => GetCooldown(actionID).RemainingCharges > 0;
+        public static bool HasCharges(uint actionID) => GetCooldown(actionID).RemainingCharges > 0;
 
         /// <summary> Get the current number of charges remaining for an action. </summary>
         /// <param name="actionID"> Action ID to check. </param>

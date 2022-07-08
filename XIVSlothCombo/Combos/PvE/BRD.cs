@@ -549,7 +549,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.BRD_Simple_Buffs) && (songNone || !LevelChecked(MagesBallad)) && isEnemyHealthHigh)
+                    if (IsEnabled(CustomComboPreset.BRD_Simple_Buffs) && (!songNone || !LevelChecked(MagesBallad)) && isEnemyHealthHigh)
                     {
                         bool radiantReady = LevelChecked(RadiantFinale) && IsOffCooldown(RadiantFinale);
                         bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
