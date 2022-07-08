@@ -752,9 +752,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (HasEffect(Buffs.StraightShotReady))
-                        return LevelChecked(RefulgentArrow)
-                            ? RefulgentArrow
-                            : StraightShot;
+                        return OriginalHook(StraightShot);
                 }
 
                 return actionID;
