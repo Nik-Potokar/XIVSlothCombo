@@ -1,9 +1,10 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
-using System;
+﻿using System;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Game.ClientState.Objects.Enums;
+using Dalamud.Game.ClientState.Objects.Types;
 using XIVSlothCombo.Services;
+using StructsObject = FFXIVClientStructs.FFXIV.Client.Game.Object;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
 {
@@ -29,19 +30,20 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (CurrentTarget.ObjectId == LocalPlayer.ObjectId)
                 return 0;
 
-            var position = new Vector2(chara.Position.X, chara.Position.Z);
-            var selfPosition = new Vector2(LocalPlayer.Position.X, LocalPlayer.Position.Z);
+            Vector2 position = new(chara.Position.X, chara.Position.Z);
+            Vector2 selfPosition = new(LocalPlayer.Position.X, LocalPlayer.Position.Z);
 
-            return Math.Max(0, (Vector2.Distance(position, selfPosition) - chara.HitboxRadius) - LocalPlayer.HitboxRadius);
+            return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - LocalPlayer.HitboxRadius);
         }
 
         /// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>
         /// <returns> Bool indicating whether you are in melee range. </returns>
         public bool InMeleeRange()
         {
-            if (LocalPlayer.TargetObject == null) return false;
+            if (LocalPlayer.TargetObject == null)
+                return false;
 
-            var distance = GetTargetDistance();
+            double distance = GetTargetDistance();
 
             if (distance == 0)
                 return true;
@@ -60,15 +62,14 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             {
                 //Fallback to CurrentTarget
                 OurTarget = CurrentTarget;
-                if (OurTarget is null) return 0;
+                if (OurTarget is null)
+                    return 0;
             }
+
             if (OurTarget is not BattleChara chara)
                 return 0;
 
-            double health = chara.CurrentHp;
-            double maxHealth = chara.MaxHp;
-
-            return health / maxHealth * 100;
+            return chara.CurrentHp / chara.MaxHp * 100;
         }
 
         public static double EnemyHealthMaxHp()
@@ -78,9 +79,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (CurrentTarget is not BattleChara chara)
                 return 0;
 
-            double maxHealth = chara.MaxHp;
-
-            return maxHealth;
+            return chara.MaxHp;
         }
 
         public static double EnemyHealthCurrentHp()
@@ -90,9 +89,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (CurrentTarget is not BattleChara chara)
                 return 0;
 
-            double currentHp = chara.CurrentHp;
-
-            return currentHp;
+            return chara.CurrentHp;
         }
 
         public double PlayerHealthPercentageHp()
@@ -103,8 +100,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return currentHealth / maxHealth * 100;
         }
 
-        public static bool HasBattleTarget() 
-            => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
+        public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
 
         /// <summary> Determines if the enemy can be interrupted if they are currently casting. </summary>
         /// <returns> Bool indicating whether they can be interrupted or not. </returns>
@@ -121,16 +117,14 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Sets the player's target. </summary>
         /// <param name="target"> Target must be a game object that the player can normally click and target. </param>
-        public static void SetTarget(GameObject? target) =>
-            Service.TargetManager.Target = target;
+        public static void SetTarget(GameObject? target) => Service.TargetManager.Target = target;
 
         /// <summary> Checks if target is in appropriate range for targeting </summary>
         /// <param name="target"> The target object to check </param>
         public static bool IsInRange(GameObject? target)
         {
-            if (target == null) return false;
-            if (target.YalmDistanceX >= 30) return false;
-
+            if (target == null || target.YalmDistanceX >= 30)
+                return false;
             return true;
         }
 
@@ -138,10 +132,10 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="target"></param>
         protected unsafe void TargetObject(TargetType target)
         {
-            var t = GetTarget(target);
+            StructsObject.GameObject* t = GetTarget(target);
             if (t == null) return;
-            var o = PartyTargetingService.GetObjectID(t);
-            var p = Service.ObjectTable.Where(x => x.ObjectId == o).First();
+            long o = PartyTargetingService.GetObjectID(t);
+            GameObject? p = Service.ObjectTable.Where(x => x.ObjectId == o).First();
 
             if (IsInRange(p)) SetTarget(p);
         }
@@ -151,7 +145,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (IsInRange(target)) SetTarget(target);
         }
 
-        protected unsafe static FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* GetTarget(TargetType target)
+        protected unsafe static StructsObject.GameObject* GetTarget(TargetType target)
         {
             GameObject? o = null;
 
@@ -199,7 +193,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                     return PartyTargetingService.GetGameObjectFromPronounID(50);
             }
 
-            return o != null ? (FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject*)o.Address : null;
+            return o != null ? (StructsObject.GameObject*)o.Address : null;
         }
 
         public enum TargetType
