@@ -1,9 +1,9 @@
-using Dalamud.Utility;
-using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Utility;
+using ImGuiNET;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
@@ -38,9 +38,9 @@ namespace XIVSlothCombo.Window
                 tpl => tpl,
                 tpl => new List<CustomComboPreset>());
 
-            foreach (var preset in Enum.GetValues<CustomComboPreset>())
+            foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
             {
-                var parent = preset.GetAttribute<ParentComboAttribute>()?.ParentPreset;
+                CustomComboPreset? parent = preset.GetAttribute<ParentComboAttribute>()?.ParentPreset;
                 if (parent != null)
                     childCombos[parent.Value].Add(preset);
             }
@@ -55,8 +55,8 @@ namespace XIVSlothCombo.Window
         private bool visible = false;
         public bool Visible
         {
-            get { return this.visible; }
-            set { this.visible = value; }
+            get => visible;
+            set => visible = value;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
