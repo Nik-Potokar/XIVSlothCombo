@@ -1,7 +1,9 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
-using ImGuiNET;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Statuses;
+using ImGuiNET;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
@@ -26,20 +28,20 @@ namespace XIVSlothCombo.Window.Tabs
 
         internal static new void Draw()
         {
-            var LocalPlayer = Service.ClientState.LocalPlayer;
-            var comboClass = new DebugCombo();
+            PlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
+            DebugCombo? comboClass = new DebugCombo();
 
             if (LocalPlayer != null)
             {
                 if (Service.ClientState.LocalPlayer.TargetObject is BattleChara chara)
                 {
-                    foreach (var status in chara.StatusList)
+                    foreach (Status? status in chara.StatusList)
                     {
                         ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
                     }
                 }
 
-                foreach (var status in (Service.ClientState.LocalPlayer as BattleChara).StatusList)
+                foreach (Status? status in (Service.ClientState.LocalPlayer as BattleChara).StatusList)
                 {
                     ImGui.TextUnformatted($"SELF STATUS CHECK: {Service.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
                 }
