@@ -233,11 +233,12 @@ namespace XIVSlothCombo.Combos.PvE
                         LocalPlayer.CurrentMp <= lucidMPThreshold)
                         return All.LucidDreaming;
 
-                    if (HasBattleTarget())
+                    if (HasBattleTarget() && (!HasEffect(Buffs.Eukrasia))) 
+                        //Buff check Above. Without it, Toxikon and any future option will interfere in the Eukrasia->Eukrasia Dosis combo
                     {
                         // Eukrasian Dosis.
                         // If we're too low level to use Eukrasia, we can stop here.
-                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia) && (!HasEffect(Buffs.Eukrasia)))
+                        if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia))
                         {
                             // Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
                             var dotDebuff = FindTargetEffect(DosisList[OriginalHook(actionID)]);
@@ -281,6 +282,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Diagnosis)
                 {
+                    if (HasEffect(Buffs.Eukrasia)) return EukrasianDiagnosis;
+
                     // Set Target. Soft -> Hard -> Self priority, matching normal in-game behavior
                     GameObject? HealTarget;
 
@@ -328,15 +331,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && ActionReady(Haima) &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Haima))
                         return Haima;
-
+                    
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) && LevelChecked(Eukrasia) &&
                         FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is null &&
                         GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
-                    {
-                        return !HasEffect(Buffs.Eukrasia)
-                            ? Eukrasia
-                            : EukrasianDiagnosis;
-                    }
+                        return Eukrasia;
                 }
 
                 return actionID;
