@@ -1,7 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
 using XIVSlothCombo.CustomComboNS;
 
@@ -241,7 +240,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia) && (!HasEffect(Buffs.Eukrasia)))
                         {
                             // Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
-                            Status? dotDebuff = FindTargetEffect(DosisList[OriginalHook(actionID)]);
+                            var dotDebuff = FindTargetEffect(DosisList[OriginalHook(actionID)]);
                             int eDosisHPThreshold = GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer);
 
                             if (((dotDebuff is null) || (dotDebuff.RemainingTime <= 3)) &&
@@ -363,8 +362,11 @@ namespace XIVSlothCombo.Combos.PvE
                         Gauge.Addersgall >= 1)
                         return Ixochole;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis) && ActionReady(Physis))
-                        return OriginalHook(Physis);
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis))
+                    {
+                        uint physis = OriginalHook(Physis);
+                        if (ActionReady(physis)) return physis;
+                    }
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis) && LevelChecked(Eukrasia) &&
                         FindEffect(Buffs.EukrasianPrognosis) is null)
