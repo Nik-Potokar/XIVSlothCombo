@@ -57,11 +57,13 @@ namespace XIVSlothCombo.Combos.PvP
                     if (canWeave)
                     {
                         // Radiant Aegis
-                        if (IsOffCooldown(RadiantAegis) && playerHP <= radiantThreshold)
+                        if (IsEnabled(CustomComboPreset.SMNPvP_BurstMode_RadiantAegis) &&
+                            IsOffCooldown(RadiantAegis) && playerHP <= radiantThreshold)
                             return RadiantAegis;
 
                         // Fester
-                        if (HasCharges(Fester) && targetHP <= festerThreshold && !enemyGuarded)
+                        if (HasCharges(Fester) && targetHP <= festerThreshold && !enemyGuarded &&
+                            !(phoenixBurst || bahamutBurst)) // Lazy method for correct (?) priority
                             return Fester;
                     }
 

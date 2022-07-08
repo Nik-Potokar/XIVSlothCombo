@@ -1201,10 +1201,10 @@ namespace XIVSlothCombo.Window.Functions
             #region PvP
 
             if (preset == CustomComboPreset.SMNPvP_BurstMode)
-                UserConfig.DrawSliderInt(0, 90, SMNPvP.Config.SMNPvP_RadiantAegisThreshold, "Player HP% to use Radiant Aegis under.\nSet to 0 to disable. Caps at 90 to prevent waste.###SMNPvP", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(50, 100, SMNPvP.Config.SMNPvP_FesterThreshold, "Target HP% to cast Fester below.\nSet to 100 use Fester as soon as it's available.###SMNPvP", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.SMNPvP_BurstMode)
-                UserConfig.DrawSliderInt(50, 100, SMNPvP.Config.SMNPvP_FesterThreshold, "Target HP% to use Fester under.\nSet to 100 use Fester as soon as available.###SMNPvP", 150, SliderIncrements.Ones);
+            if (preset == CustomComboPreset.SMNPvP_BurstMode_RadiantAegis)
+                UserConfig.DrawSliderInt(0, 90, SMNPvP.Config.SMNPvP_RadiantAegisThreshold, "Caps at 90 to prevent waste.###SMNPvP", 150, SliderIncrements.Ones);
 
             #endregion
 
