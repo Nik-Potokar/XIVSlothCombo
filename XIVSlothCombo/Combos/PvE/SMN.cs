@@ -696,7 +696,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Aethercharge or SummonBahamut or SummonPhoenix)
+                if (actionID is Aethercharge or DreadwyrmTrance or SummonBahamut or SummonPhoenix)
                 {
                     if (IsOffCooldown(EnkindleBahamut) && OriginalHook(Ruin) is AstralImpulse)
                         return OriginalHook(EnkindleBahamut);
