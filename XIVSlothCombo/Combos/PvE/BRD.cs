@@ -468,7 +468,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool songMage = gauge.Song == Song.MAGE;
                     bool songArmy = gauge.Song == Song.ARMY;
                     bool canInterrupt = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze);
-                    int  targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage);
+                    int targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage);
                     bool isEnemyHealthHigh = IsEnabled(CustomComboPreset.BRD_Simple_NoWaste)
                         ? GetTargetHPPercent() > targetHPThreshold
                         : true;
@@ -535,7 +535,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (songTimerInSeconds < 3 || (minuetReady && gauge.Repertoire == 4))
                                     return WanderersMinuet;
                             }
-                        } else if (songTimerInSeconds < 3 && canWeave)
+                        }
+                        else if (songTimerInSeconds < 3 && canWeave)
                         {
                             bool balladReady = LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad);
                             bool paeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);
