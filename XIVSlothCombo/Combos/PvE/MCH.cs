@@ -457,8 +457,6 @@ namespace XIVSlothCombo.Combos.PvE
                             var gaussCharges = GetRemainingCharges(GaussRound);
                             var gaussMaxCharges = GetMaxCharges(GaussRound);
 
-                            var ricochetCharges = GetRemainingCharges(Ricochet);
-
                             var overheatTime = gauge.OverheatTimeRemaining;
                             var reasmCharges = GetRemainingCharges(Reassemble);
 
@@ -472,17 +470,16 @@ namespace XIVSlothCombo.Combos.PvE
                                     (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && reasmCharges >= 1 && GetCooldownRemainingTime(Drill) <= 2)
                                 ))
                                 return Reassemble;
-                            else if ( ((gaussCharges > ricochetCharges || gaussCharges == gaussMaxCharges || level < Levels.Ricochet) && !IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode)) ||
-                                       (gaussCharges >= gaussMaxCharges - 1 && IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode)) )
+                            else if ( (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)) ) ||
+                                       (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && gaussCharges >= gaussMaxCharges - 1 ) )
                             {
                                 return GaussRound;
                             }
-                            else if (level >= Levels.Ricochet && ricochetCharges > 0 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode))
+                            else if (level >= Levels.Ricochet && HasCharges(Ricochet) && !IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode))
                             {
                                return Ricochet;
                             }
-                                
-                            
+
                         }
 
                         return HeatBlast;
@@ -555,14 +552,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID))
                     {
-                        var gaussCharges = GetRemainingCharges(GaussRound);
-                        var gaussMaxCharges = GetMaxCharges(GaussRound);
-
-                        var ricochetCharges = GetRemainingCharges(Ricochet);
-
-                        if (gaussCharges > ricochetCharges || gaussCharges == gaussMaxCharges || level < Levels.Ricochet)
+                        if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
                             return GaussRound;
-                        else if (ricochetCharges > 0 && level >= Levels.Ricochet)
+                        else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
                             return Ricochet;
                     }
                     
