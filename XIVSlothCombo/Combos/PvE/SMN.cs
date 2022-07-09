@@ -424,7 +424,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return EnergySiphon;
                         }
                         
-                        // Non-Opener first set Fester/Painflare
+                        // First set Fester/Painflare if ED is close to being off CD, or off CD while you have aetherflow stacks.
                         if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling) && gauge.HasAetherflowStacks)
                         {
                             if (GetCooldown(EnergyDrain).CooldownRemaining <= 3.2)
