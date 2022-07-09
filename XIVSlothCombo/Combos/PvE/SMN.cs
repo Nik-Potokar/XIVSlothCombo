@@ -424,8 +424,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return EnergySiphon;
                         }
                         
-                        // Non-Opener first set Fester/Painfalre
-                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling) && gauge.HasAetherflowStacks && !inOpener)
+                        // Non-Opener first set Fester/Painflare
+                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling) && gauge.HasAetherflowStacks)
                         {
                             if (GetCooldown(EnergyDrain).CooldownRemaining <= 3.2)
                             {
@@ -696,7 +696,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is SummonBahamut or SummonPhoenix)
+                if (actionID is Aethercharge or SummonBahamut or SummonPhoenix)
                 {
                     if (IsOffCooldown(EnkindleBahamut) && OriginalHook(Ruin) is AstralImpulse)
                         return OriginalHook(EnkindleBahamut);
@@ -704,7 +704,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsOffCooldown(EnkindlePhoenix) && OriginalHook(Ruin) is FountainOfFire)
                         return OriginalHook(EnkindlePhoenix);
 
-                    if (OriginalHook(AstralFlow) is Deathflare or Rekindle)
+                    if ((OriginalHook(AstralFlow) is Deathflare && IsOffCooldown(Deathflare)) || (OriginalHook(AstralFlow) is Rekindle && IsOffCooldown(Rekindle)))
                         return OriginalHook(AstralFlow);
                 }
 
