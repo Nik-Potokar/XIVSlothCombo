@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
-using System.Collections.Generic;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.CustomComboNS;
-
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -103,7 +103,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SCH_Consolation : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Consolation;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 => actionID is FeyBlessing && LevelChecked(SummonSeraph) && Gauge.SeraphTimer > 0 ? Consolation : actionID;
         }
 
@@ -116,7 +116,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (AetherflowList.Contains(actionID) && LevelChecked(Aetherflow))
                 {
-                    var HasAetherFlows = System.Convert.ToBoolean(Gauge.Aetherflow); //False if Zero stacks
+                    bool HasAetherFlows = System.Convert.ToBoolean(Gauge.Aetherflow); //False if Zero stacks
                     if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite) &&
                         LevelChecked(Recitation) &&
                         (IsOffCooldown(Recitation) || HasEffect(Buffs.Recitation)))
@@ -161,7 +161,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SCH_Raise : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Raise;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 => actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast) ? Resurrection : actionID;
         }
 
@@ -169,7 +169,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SCH_FairyReminder : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_FairyReminder;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 => FairyList.Contains(actionID) && !HasPetPresent() && Gauge.SeraphTimer == 0
                     ? GetOptionBool(Config.SCH_FairyFeature) ? SummonSelene : SummonEos
                     : actionID;
@@ -204,11 +204,11 @@ namespace XIVSlothCombo.Combos.PvE
                             //Check if our target is in the party. Will skip if partysize is zero
                             for (int i = 1; i <= PartySize; i++)
                             {
-                                found = (GetPartySlot(i) == target);
+                                found = GetPartySlot(i) == target;
                                 if (found) break;
                             }
                             //Check if it's our chocobo?
-                            if (found is false) found = (HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject);
+                            if (found is false) found = HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject;
                         }
 
                         //Fall back to self, skills won't work with anyone else.
@@ -223,7 +223,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (FindEffect(Buffs.Galvanize, target, LocalPlayer.ObjectId) is not null) return DeploymentTactics;
                             //Recitation is down here as not to waste it on bad targets.
                             if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
-                               return Recitation;
+                                return Recitation;
                         }
                     }
                     return Adloquium;
@@ -254,7 +254,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID)) return All.LucidDreaming;
 
                     //Aetherflow
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) && 
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
                         ActionReady(Aetherflow) &&
                         Gauge.Aetherflow is 0 &&
                         CanSpellWeave(actionID)) return Aetherflow;
@@ -273,17 +273,17 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
                             LevelChecked(Ruin2) &&
                             IsOffCooldown(actionID) && //Check against actionID to stop seizure during cooldown 
-                            this.IsMoving) return OriginalHook(Ruin2); //Who knows in the future
+                            IsMoving) return OriginalHook(Ruin2); //Who knows in the future
 
                         //Bio/Biolysis
                         if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio))
                         {
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
-                            var dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                            Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
                             if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
                                 (GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_BioOption)))
-                               return dot; //Use appropriate DoT Action
+                                return dot; //Use appropriate DoT Action
 
                             //AlterateMode idles as Ruin/Broil
                             if (AlternateMode) return OriginalHook(Ruin);
