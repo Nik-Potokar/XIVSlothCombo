@@ -2173,47 +2173,47 @@ namespace XIVSlothCombo.Combos
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
         [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
-        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.", SGE.JobID, 300, "", "")]
+        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 310, "", "")]
+            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 304, "", "")]
             SGE_ST_Heal_Kardia = 14310,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 320, "", "")]
+            [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
             SGE_ST_Heal_Diagnosis = 14320,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 330, "", "")]
+            [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
             SGE_ST_Heal_Soteria = 14330,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 340, "", "")]
+            [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 307, "", "")]
             SGE_ST_Heal_Zoe = 14340,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 350, "", "")]
+            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 309, "", "")]
             SGE_ST_Heal_Pepsis = 14350,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 360, "", "")]
+            [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 302, "", "")]
             SGE_ST_Heal_Taurochole = 14360,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 370, "", "")]
+            [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 310, "", "")]
             SGE_ST_Heal_Haima = 14370,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 380, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 303, "", "")]
             SGE_ST_Heal_Rhizomata = 14380,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 390, "", "")]
+            [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 308, "", "")]
             SGE_ST_Heal_Krasis = 14390,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 400, "", "")]
+            [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 301, "", "")]
             SGE_ST_Heal_Druochole = 14400,
             #endregion
 
@@ -2492,7 +2492,7 @@ namespace XIVSlothCombo.Combos
         */
 
         #region DPS
-        [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio1, SCH.Bio2, SCH.Biolysis)]
+        [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
         [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
         SCH_DPS = 16100,
 
@@ -2558,7 +2558,7 @@ namespace XIVSlothCombo.Combos
         SCH_DeploymentTactics = 16600,
 
             [ParentCombo(SCH_DeploymentTactics)]
-            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
+            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
             SCH_DeploymentTactics_Recitation = 16610,
         
         #endregion
@@ -2636,7 +2636,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Swiftcast Egi Ability Option", "Uses Swiftcast during the selected Egi summon.", SMN.JobID, 8, "", "")]
         SMN_DemiEgiMenu_SwiftcastEgi = 17023,
 
-        [CustomComboInfo("Astral Flow/Enkindle on Demi Summons Feature", "Adds Enkindle Bahamut, Enkindle Phoenix and Astral Flow to their relevant summons.", SMN.JobID, 11, "", "")]
+        [CustomComboInfo("Astral Flow/Enkindle on Demis Feature", "Adds Enkindle Bahamut, Enkindle Phoenix and Astral Flow to their relevant summons.", SMN.JobID, 11, "", "")]
         SMN_DemiAbilities = 17024,
 
         [ParentCombo(SMN_Advanced_Combo_EDFester)]
@@ -3115,11 +3115,6 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Grim Swathe Option", "Weaves Grim Swathe onto the main combo when available.", RPR.JobID)]
-            RPRPvP_Burst_GrimSwathe = 80191,
-
-            [SecretCustomCombo]
-            [ParentCombo(RPRPvP_Burst)]
             [CustomComboInfo("Death Warrant Option", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
             RPRPvP_Burst_DeathWarrant = 80192,
 
@@ -3130,7 +3125,7 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option - BETA", "Pools stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful as soon as it's suitable.", RPR.JobID)]
+            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option - BETA", "Pools stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful as soon as it's available.", RPR.JobID)]
             RPRPvP_Burst_ImmortalPooling = 80194,
 
             [SecretCustomCombo]
