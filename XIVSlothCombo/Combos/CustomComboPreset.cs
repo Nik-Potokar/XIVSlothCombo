@@ -1682,7 +1682,7 @@ namespace XIVSlothCombo.Combos
         NIN_ST_AdvancedMode_TrueNorth_ArmorCrush = NIN_ST_AdvancedMode_TrueNorth + 1,
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Use Second Wind, Bloodbath and Shadeshift in you combo", "Uses Second Wind, Bloodbath and Shadeshift in you combo under certain thresholds.", NIN.JobID)]
+        [CustomComboInfo("Use Second Wind, Bloodbath and Shadeshift in your combo", "Weaves Second Wind, Bloodbath and Shadeshift between GCDs in your combo under the following HP %% thresholds.", NIN.JobID)]
         NIN_ST_AdvancedMode_ComboHeals = NIN_ST_AdvancedMode_TrueNorth_ArmorCrush + 1,
 
         [ReplaceSkill(NIN.DeathBlossom)]
@@ -1748,7 +1748,7 @@ namespace XIVSlothCombo.Combos
         NIN_AoE_AdvancedMode_Bunshin_Phantom = NIN_AoE_AdvancedMode_Bunshin + 1,
 
         [ParentCombo(CustomComboPreset.NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Second Wind, Bloodbath and Shadeshift in you combo", "Uses Second Wind, Bloodbath and Shadeshift in you combo under certain thresholds.", NIN.JobID)]
+        [CustomComboInfo("Use Second Wind, Bloodbath and Shadeshift in your combo", "Weaves Second Wind, Bloodbath and Shadeshift between GCDs in your combo under the following HP %% thresholds.", NIN.JobID)]
         NIN_AoE_AdvancedMode_ComboHeals = NIN_AoE_AdvancedMode_Bunshin_Phantom + 1,
 
         [ReplaceSkill(NIN.ArmorCrush)]

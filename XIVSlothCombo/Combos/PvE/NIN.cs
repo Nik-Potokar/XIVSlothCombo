@@ -145,9 +145,12 @@ namespace XIVSlothCombo.Combos.PvE
                 Advanced_DotonTimer = "Advanced_DotonTimer",
                 Advanced_DotonHP = "Advanced_DotonHP",
                 Advanced_TCJEnderAoE = "Advanced_TCJEnderAoe",
-                SecondWindThreshold = "SecondWindThreshold",
-                ShadeShiftThreshold = "ShadeShiftThreshold",
-                BloodbathThreshold = "BloodbathThreshold";
+                SecondWindThresholdST = "SecondWindThresholdST",
+                ShadeShiftThresholdST = "ShadeShiftThresholdST",
+                BloodbathThresholdST = "BloodbathThresholdST",
+                SecondWindThresholdAoE = "SecondWindThresholdST",
+                ShadeShiftThresholdAoE = "ShadeShiftThresholdST",
+                BloodbathThresholdAoE = "BloodbathThresholdST";
         }
 
         internal class NIN_ST_AdvancedMode : CustomCombo
@@ -177,9 +180,9 @@ namespace XIVSlothCombo.Combos.PvE
                     int bhavaPool = GetOptionValue(Config.Ninki_BhavaPooling);
                     int hutonArmorCrushTimer = GetOptionValue(Config.Huton_RemainingArmorCrush) * 1000;
                     int bunshinPool = GetOptionValue(Config.Ninki_BunshinPoolingST);
-                    int SecondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.SecondWindThreshold);
-                    int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThreshold);
-                    int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThreshold);
+                    int SecondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.SecondWindThresholdST);
+                    int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThresholdST);
+                    int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThresholdST);
                     double playerHP = PlayerHealthPercentageHp();
 
 
@@ -408,9 +411,9 @@ namespace XIVSlothCombo.Combos.PvE
                     int dotonThreshold = GetOptionValue(Config.Advanced_DotonHP);
                     int tcjPath = GetOptionValue(Config.Advanced_TCJEnderAoE);
                     int bunshingPool = GetOptionValue(Config.Ninki_BunshinPoolingAoE);
-                    int SecondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.SecondWindThreshold);
-                    int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThreshold);
-                    int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThreshold);
+                    int SecondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.SecondWindThresholdAoE);
+                    int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThresholdAoE);
+                    int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThresholdAoE);
                     double playerHP = PlayerHealthPercentageHp();
 
                     if (IsNotEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
