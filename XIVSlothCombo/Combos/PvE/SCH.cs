@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Objects.Enums;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.CustomComboNS;
-
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -11,7 +11,9 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte ClassID = 26;
         public const byte JobID = 28;
 
-        public const uint
+        private static SCHGauge Gauge => CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SCHGauge>();
+
+        internal const uint
 
             // Heals
             Physick = 190,
@@ -22,14 +24,15 @@ namespace XIVSlothCombo.Combos.PvE
             Indomitability = 3583,
             Excogitation = 7434,
             Consolation = 16546,
+            Resurrection = 173,
 
             // Offense
-            Bio1 = 17864,
+            Bio = 17864,
             Bio2 = 17865,
             Biolysis = 16540,
-            Ruin1 = 17869,
+            Ruin = 17869,
             Ruin2 = 17870,
-            Broil1 = 3584,
+            Broil = 3584,
             Broil2 = 7435,
             Broil3 = 16541,
             Broil4 = 25865,
@@ -50,67 +53,41 @@ namespace XIVSlothCombo.Combos.PvE
             Aetherflow = 166,
             Recitation = 16542,
             ChainStratagem = 7436,
-            DeploymentTactics = 3585,
+            DeploymentTactics = 3585;
 
-            // Role
-            Resurrection = 173;
+        //Action Groups
+        internal static readonly List<uint>
+            BroilList = new() { Ruin, Broil, Broil2, Broil3, Broil4 },
+            AetherflowList = new() { EnergyDrain, Lustrate, SacredSoil, Indomitability, Excogitation },
+            FairyList = new() { WhisperingDawn, FeyBlessing, FeyIllumination, Dissipation, Aetherpact };
 
-        public static class Buffs
+        internal static class Buffs
         {
-            public const ushort
-            Galvanize = 297,
-            Recitation = 1896;
+            internal const ushort
+                Galvanize = 297,
+                Recitation = 1896;
         }
 
-        public static class Debuffs
+        internal static class Debuffs
         {
-            public const ushort
-            Bio1 = 179,
-            Bio2 = 189,
-            Biolysis = 1895,
-            ChainStratagem = 1221;
+            internal const ushort
+                Bio1 = 179,
+                Bio2 = 189,
+                Biolysis = 1895,
+                ChainStratagem = 1221;
         }
 
-        public static class Levels
-        {
-            public const byte
+        //Debuff Pairs of Actions and Debuff
+        internal static readonly Dictionary<uint, ushort>
+            BioList = new() {
+                { Bio, Debuffs.Bio1 },
+                { Bio2, Debuffs.Bio2 },
+                { Biolysis, Debuffs.Biolysis }
+            };
 
-                Bio1 = 2,
-                Physick = 4,
-                WhisperingDawn = 20,
-                Bio2 = 26,
-                Adloquium = 30,
-                Succor = 35,
-                Ruin2 = 38,
-                FeyIllumination = 40,
-                Aetherflow = 45,
-                EnergyDrain = 45,
-                Lustrate = 45,
-                Scourge = 46,
-                SacredSoil = 50,
-                Indomitability = 52,
-                Broil = 54,
-                DeploymentTactics = 56,
-                EmergencyTactics = 58,
-                Dissipation = 60,
-                Excogitation = 62,
-                Broil2 = 64,
-                ChainStratagem = 66,
-                Aetherpact = 70,
-                Biolysis = 72,
-                Broil3 = 72,
-                Recitation = 74,
-                FeyBlessing = 76,
-                SummonSeraph = 80,
-                Broil4 = 82,
-                Scoura = 82,
-                Protraction = 86,
-                Expedient = 90;
-        }
-
-        public static class Config
+        internal static class Config
         {
-            public const string
+            internal const string
                 SCH_ST_DPS_AltMode = "SCH_ST_DPS_AltMode",
                 SCH_ST_DPS_LucidOption = "SCH_ST_DPS_LucidOption",
                 SCH_ST_DPS_BioOption = "SCH_ST_DPS_BioOption",
@@ -127,13 +104,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Consolation;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is FeyBlessing &&
-                    level >= Levels.SummonSeraph &&
-                    GetJobGauge<SCHGauge>().SeraphTimer > 0
-                   ) return Consolation;
-                else return actionID;
-            }
+                => actionID is FeyBlessing && LevelChecked(SummonSeraph) && Gauge.SeraphTimer > 0 ? Consolation : actionID;
         }
 
         // Replaces all Energy Drain actions with Aetherflow when depleted
@@ -143,12 +114,11 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Aetherflow;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is EnergyDrain or Lustrate or SacredSoil or Indomitability or Excogitation &&
-                    level >= Levels.Aetherflow)
+                if (AetherflowList.Contains(actionID) && LevelChecked(Aetherflow))
                 {
-                    var HasAetherFlows = System.Convert.ToBoolean(GetJobGauge<SCHGauge>().Aetherflow); //False if Zero stacks
+                    bool HasAetherFlows = System.Convert.ToBoolean(Gauge.Aetherflow); //False if Zero stacks
                     if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite) &&
-                        level >= Levels.Recitation &&
+                        LevelChecked(Recitation) &&
                         (IsOffCooldown(Recitation) || HasEffect(Buffs.Recitation)))
                     {
                         //Recitation Indominability and Excogitation, with optional check against AF zero stack count
@@ -157,15 +127,15 @@ namespace XIVSlothCombo.Combos.PvE
                             (AlwaysShowReciteExcog || (!AlwaysShowReciteExcog && !HasAetherFlows)) &&
                             actionID is Excogitation)
                         {   //Do not merge this nested if with above. Won't procede with next set
-                            if (HasEffect(Buffs.Recitation) && IsOffCooldown(Excogitation)) return Excogitation; else return Recitation;
+                            return HasEffect(Buffs.Recitation) && IsOffCooldown(Excogitation) ? Excogitation : Recitation;
                         }
 
                         bool AlwaysShowReciteIndom = GetIntOptionAsBool(Config.SCH_Aetherflow_Recite_Indom);
                         if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite_Indom) &&
                             (AlwaysShowReciteIndom || (!AlwaysShowReciteIndom && !HasAetherFlows)) &&
                             actionID is Indomitability)
-                        {
-                            if (HasEffect(Buffs.Recitation) && IsOffCooldown(Excogitation)) return Indomitability; else return Recitation;
+                        {   //Same as above, do not nest with above. It won't procede with the next set
+                            return HasEffect(Buffs.Recitation) && IsOffCooldown(Excogitation) ? Indomitability : Recitation;
                         }
                     }
                     if (!HasAetherFlows)
@@ -174,8 +144,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if ((actionID is EnergyDrain && !ShowAetherflowOnAll) || ShowAetherflowOnAll)
                         {
                             if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation) &&
-                                level >= Levels.Dissipation &&
-                                IsOffCooldown(Dissipation) &&
+                                ActionReady(Dissipation) &&
                                 IsOnCooldown(Aetherflow) &&
                                 //Dissipation requires fairy, can't seem to make it replace dissipation with fairy summon feature *shrug*
                                 HasPetPresent()) return Dissipation;
@@ -193,10 +162,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Raise;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast)) return Resurrection;
-                else return actionID;
-            }
+                => actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast) ? Resurrection : actionID;
         }
 
         // Replaces Fairy abilities with Fairy summoning with Eos (default) or Selene
@@ -204,17 +170,17 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_FairyReminder;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is WhisperingDawn or FeyBlessing or FeyIllumination or Dissipation or Aetherpact &&
-                    !HasPetPresent() && 
-                    GetJobGauge<SCHGauge>().SeraphTimer == 0)
-                {
-                    if (GetIntOptionAsBool(Config.SCH_FairyFeature)) return SummonSelene; else return SummonEos;
-                }
-                return actionID;
-            }
+                => FairyList.Contains(actionID) && !HasPetPresent() && Gauge.SeraphTimer == 0
+                    ? GetIntOptionBool(Config.SCH_FairyFeature) ? SummonSelene : SummonEos
+                    : actionID;
         }
 
+        /*
+         * Combos Deployment Tactics with Adloquium by showing Adloquim instead,
+         * while leaving the real Adloquim alone.
+         * Will work on Party/Trust/Chocobo hard/soft targets
+         * Recitation is optional, if one wishes to Crit the shield first
+         */
         internal class SCH_DeploymentTactics : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DeploymentTactics;
@@ -222,7 +188,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is DeploymentTactics)
                 {
-                    if (IsOffCooldown(DeploymentTactics) && LevelChecked(DeploymentTactics)) //Allows Adlo to work at sync
+                    if (ActionReady(DeploymentTactics)) //Allows Adlo to work at sync, do not nest with above
                     {
                         bool found = false;
                         //If we have a soft target, use that, else CurrentTarget.
@@ -238,11 +204,11 @@ namespace XIVSlothCombo.Combos.PvE
                             //Check if our target is in the party. Will skip if partysize is zero
                             for (int i = 1; i <= PartySize; i++)
                             {
-                                found = (GetPartySlot(i) == target);
+                                found = GetPartySlot(i) == target;
                                 if (found) break;
                             }
                             //Check if it's our chocobo?
-                            if (found is false) found = (HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject);
+                            if (found is false) found = HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject;
                         }
 
                         //Fall back to self, skills won't work with anyone else.
@@ -256,10 +222,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (FindEffect(Buffs.Galvanize, target, LocalPlayer.ObjectId) is not null) return DeploymentTactics;
                             //Recitation is down here as not to waste it on bad targets.
-                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) 
-                                && LevelChecked(Recitation)
-                                && IsOffCooldown(Recitation)
-                               ) return Recitation;
+                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
+                                return Recitation;
                         }
                     }
                     return Adloquium;
@@ -278,63 +242,52 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DPS;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                bool AlternateMode = GetIntOptionAsBool(Config.SCH_ST_DPS_AltMode); //(0 or 1 radio values)
-                if ((!AlternateMode &&  actionID is Ruin1 or Broil1 or Broil2 or Broil3 or Broil4
-                     || (AlternateMode && actionID is Bio1 or Bio2 or Biolysis)) 
-                    && InCombat())
+                bool AlternateMode = GetIntOptionBool(Config.SCH_ST_DPS_AltMode); //(0 or 1 radio values)
+                if (((!AlternateMode && BroilList.Contains(actionID)) ||
+                     (AlternateMode && BioList.ContainsKey(actionID))) &&
+                    InCombat())
                 {
                     //Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
-                        level >= All.Levels.LucidDreaming &&
-                        IsOffCooldown(All.LucidDreaming) &&
+                        ActionReady(All.LucidDreaming) &&
                         LocalPlayer.CurrentMp <= GetOptionValue(Config.SCH_ST_DPS_LucidOption) &&
-                        CanSpellWeave(actionID)
-                       ) return All.LucidDreaming;
+                        CanSpellWeave(actionID)) return All.LucidDreaming;
 
                     //Aetherflow
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
-                        level >= Levels.Aetherflow &&
-                        GetJobGauge<SCHGauge>().Aetherflow == 0 &&
-                        IsOffCooldown(Aetherflow) &&
-                        CanSpellWeave(actionID)
-                       ) return Aetherflow;
+                        ActionReady(Aetherflow) &&
+                        Gauge.Aetherflow is 0 &&
+                        CanSpellWeave(actionID)) return Aetherflow;
 
-                    //Chain Stratagem
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
-                        level >= Levels.ChainStratagem &&
-                        IsOffCooldown(ChainStratagem) &&
-                        !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
-                        GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_ChainStratagemOption) &&
-                        CanSpellWeave(actionID)
-                       ) return ChainStratagem;
-
-                    //Ruin 2 Movement 
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
-                        level >= Levels.Ruin2 &&
-                        HasBattleTarget() &&
-                        IsMoving
-                       ) return OriginalHook(Ruin2); //Who knows in the future
-
-                    //Bio/Biolysis
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && 
-                        level >= Levels.Bio1 && 
-                        (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy)
+                    //Target based options
+                    if (HasBattleTarget())
                     {
-                        //Determine which Bio debuff to check
-                        var BioDebuffID = level switch
-                        {
-                            //Using FindEffect b/c we have a custom Target variable
-                            >= Levels.Biolysis => FindTargetEffect(Debuffs.Biolysis),
-                            >= Levels.Bio2 => FindTargetEffect(Debuffs.Bio2),
-                            //Bio 1 checked at the start, fine for default
-                            _ => FindTargetEffect(Debuffs.Bio1),
-                        };
-                        if ((BioDebuffID is null || BioDebuffID?.RemainingTime <= 3) &&
-                            (GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_BioOption))
-                           ) return OriginalHook(Bio1);
+                        //Chain Stratagem
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
+                            ActionReady(ChainStratagem) &&
+                            !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
+                            GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_ChainStratagemOption) &&
+                            CanSpellWeave(actionID)) return ChainStratagem;
 
-                        //AlterateMode idles as Ruin/Broil
-                        if (AlternateMode) return OriginalHook(Ruin1);
+                        //Ruin 2 Movement 
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
+                            LevelChecked(Ruin2) &&
+                            IsOffCooldown(actionID) && //Check against actionID to stop seizure during cooldown 
+                            IsMoving) return OriginalHook(Ruin2); //Who knows in the future
+
+                        //Bio/Biolysis
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio))
+                        {
+                            uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
+                            Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+
+                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
+                                (GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_BioOption)))
+                                return dot; //Use appropriate DoT Action
+
+                            //AlterateMode idles as Ruin/Broil
+                            if (AlternateMode) return OriginalHook(Ruin);
+                        }
                     }
                 }
                 return actionID;
