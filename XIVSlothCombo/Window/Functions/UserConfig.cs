@@ -34,6 +34,7 @@ namespace XIVSlothCombo.Window.Functions
                 Service.Configuration.Save();
             }
 
+            sliderDescription = sliderDescription.Replace("%", "%%");
             var contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
             var wrapPos = ImGui.GetContentRegionMax().X - 35f;
 
