@@ -1047,6 +1047,13 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Cooldowns)
                 UserConfig.DrawSliderInt(0, 15, NIN.Config.Advanced_Trick_Cooldown, "Set the amount of time remaining on Trick Attack cooldown to start saving cooldowns.");
 
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThreshold, "Set a HP percentage Threshold for when Second Wind will be used.");
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThreshold, "Set a HP percentage Threshold for when Shade Shift will be used.");
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThreshold, "Set a HP percentage Threshold for when Bloodbath will be used.");
+            }
+
             if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_HellfrogMedium)
                 UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_HellfrogPooling, "Set the amount of Ninki required to have before spending on Hellfrog Medium.");
 

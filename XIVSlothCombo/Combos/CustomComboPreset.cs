@@ -1677,14 +1677,18 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("True North Feature", "Adds True North to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrueNorth = NIN_ST_AdvancedMode_BalanceOpener + 1,
 
-        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth)]
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode)]
         [CustomComboInfo("Use Before Armor Crush Only", "Only triggers the use of True North before Armor Crush.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrueNorth_ArmorCrush = NIN_ST_AdvancedMode_TrueNorth + 1,
+
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode)]
+        [CustomComboInfo("Use Second Wind, Bloodbath and Shadeshift in you combo", "Uses Second Wind, Bloodbath and Shadeshift in you combo under certain thresholds.", NIN.JobID)]
+        NIN_ST_AdvancedMode_ComboHeals = NIN_ST_AdvancedMode_TrueNorth_ArmorCrush + 1,
 
         [ReplaceSkill(NIN.DeathBlossom)]
         [ConflictingCombos(NIN_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replace Death Blossom with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", NIN.JobID)]
-        NIN_AoE_AdvancedMode = NIN_ST_AdvancedMode_TrueNorth_ArmorCrush +1,
+        NIN_AoE_AdvancedMode = NIN_ST_AdvancedMode_ComboHeals + 1,
 
         [ParentCombo(CustomComboPreset.NIN_AoE_AdvancedMode)]
         [CustomComboInfo("Assassinate/Dream Within a Dream Feature", "Adds Assassinate/Dream Within a Dream to Advanced Mode", NIN.JobID)]
@@ -1743,10 +1747,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Phantom Kamaitachi Feature", "Adds Phantom Kamaitachi to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Bunshin_Phantom = NIN_AoE_AdvancedMode_Bunshin + 1,
 
+        [ParentCombo(CustomComboPreset.NIN_AoE_AdvancedMode)]
+        [CustomComboInfo("Use Second Wind, Bloodbath and Shadeshift in you combo", "Uses Second Wind, Bloodbath and Shadeshift in you combo under certain thresholds.", NIN.JobID)]
+        NIN_AoE_AdvancedMode_ComboHeals = NIN_AoE_AdvancedMode_Bunshin_Phantom + 1,
+
         [ReplaceSkill(NIN.ArmorCrush)]
         [ConflictingCombos(NIN_ST_SimpleMode)]
         [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID)]
-        NIN_ArmorCrushCombo = NIN_AoE_AdvancedMode_Bunshin_Phantom + 1,
+        NIN_ArmorCrushCombo = NIN_AoE_AdvancedMode_ComboHeals + 1,
 
         [ConflictingCombos(NIN_ST_AdvancedMode_BalanceOpener, NIN_ST_AdvancedMode_BalanceOpener, NIN_ST_AdvancedMode_Kassatsu, NIN_AoE_AdvancedMode_Kassatsu, NIN_KassatsuChiJin)]
         [ReplaceSkill(NIN.Kassatsu)]
