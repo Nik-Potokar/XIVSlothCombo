@@ -222,7 +222,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (DosisList.ContainsKey(actionID) && InCombat())
                 {
-                    int lucidMPThreshold = GetOptionValue(Config.SGE_AoE_Phlegma_Lucid);
+                    int lucidMPThreshold = GetOptionValue(Config.SGE_ST_Dosis_Lucid);
 
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Lucid) &&
