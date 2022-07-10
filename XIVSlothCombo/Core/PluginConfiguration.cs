@@ -228,6 +228,7 @@ namespace XIVSlothCombo.Core
 
         public void ResetFeatures(string config, int[] values)
         {
+            Dalamud.Logging.PluginLog.Debug($"{config} {GetResetValues(config)}");
             if (!GetResetValues(config))
             {
                 bool needToResetMessagePrinted = false;

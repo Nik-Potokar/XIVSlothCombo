@@ -19,11 +19,15 @@ namespace XIVSlothCombo.Data
 
         private static readonly Dictionary<string, List<uint>> statusCache = new();
 
+        public static List<uint> CombatActions = new List<uint>();
+
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
         private static void ReceiveActionEffectDetour(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
         {
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
+            TimeLastActionUsed = DateTime.Now;
+            if (!CustomComboNS.Functions.CustomComboFunctions.InCombat()) CombatActions.Clear();
             var header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is (13 or 2)) return;
@@ -55,7 +59,7 @@ namespace XIVSlothCombo.Data
                     }
                 }
 
-                TimeLastActionUsed = DateTime.Now;
+                CombatActions.Add(header.ActionId);
 
                 if (Service.Configuration.EnabledOutputLog)
                     OutputLog();
@@ -69,13 +73,51 @@ namespace XIVSlothCombo.Data
             try
             {
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
+                TimeLastActionUsed = DateTime.Now;
                 ActionType = actionType;
+
+                Dalamud.Logging.PluginLog.Debug($"{actionId} {sequence} {a5} {a6} {a7} {a8} {a9}");
             }
             catch (Exception ex)
             {
                 Dalamud.Logging.PluginLog.Error(ex, "SendActionDetour");
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
             }
+        }
+
+        public static uint WhichOfTheseActionsWasLast(params uint[] actions)
+        {
+            if (CombatActions.Count == 0) return 0;
+
+            int currentLastIndex = 0;
+            foreach (var action in actions)
+            {
+                if (CombatActions.Any(x => x == action))
+                {
+                    int index = CombatActions.LastIndexOf(action);
+
+                    if (index > currentLastIndex) currentLastIndex = index;
+                }
+            }
+
+            return CombatActions[currentLastIndex];
+        }
+
+        public static int HowManyTimesUsedAfterAnotherAction(uint lastUsedIDToCheck, uint idToCheckAgainst)
+        {
+            if (CombatActions.Count < 2) return 0;
+            if (WhichOfTheseActionsWasLast(lastUsedIDToCheck, idToCheckAgainst) != lastUsedIDToCheck) return 0;
+
+            int startingIndex = CombatActions.LastIndexOf(idToCheckAgainst);
+            if (startingIndex == -1) return 0;
+
+            int count = 0;
+            for (int i = startingIndex + 1; i < CombatActions.Count; i++)
+            {
+                if (CombatActions[i] == lastUsedIDToCheck) count++;
+            }
+
+            return count;
         }
 
         public static uint LastAction { get; set; } = 0;

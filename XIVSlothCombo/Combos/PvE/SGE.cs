@@ -245,7 +245,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Toxikon
                     if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) &&
                         LevelChecked(Toxikon) && HasBattleTarget() &&
-                        ((!GetOptionBool(Config.SGE_ST_Dosis_Toxikon) && IsMoving) || GetOptionBool(Config.SGE_ST_Dosis_Toxikon)) &&
+                        ((!GetIntOptionAsBool(Config.SGE_ST_Dosis_Toxikon) && IsMoving) || GetIntOptionAsBool(Config.SGE_ST_Dosis_Toxikon)) &&
                         Gauge.Addersting > 0)
                         return OriginalHook(Toxikon);
                 }

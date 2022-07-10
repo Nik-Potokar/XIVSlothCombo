@@ -152,7 +152,7 @@ namespace XIVSlothCombo.Combos.PvE
                         (IsOffCooldown(Recitation) || HasEffect(Buffs.Recitation)))
                     {
                         //Recitation Indominability and Excogitation, with optional check against AF zero stack count
-                        bool AlwaysShowReciteExcog = GetOptionBool(Config.SCH_Aetherflow_Recite_Excog);
+                        bool AlwaysShowReciteExcog = GetIntOptionAsBool(Config.SCH_Aetherflow_Recite_Excog);
                         if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite_Excog) &&
                             (AlwaysShowReciteExcog || (!AlwaysShowReciteExcog && !HasAetherFlows)) &&
                             actionID is Excogitation)
@@ -160,7 +160,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.Recitation) && IsOffCooldown(Excogitation)) return Excogitation; else return Recitation;
                         }
 
-                        bool AlwaysShowReciteIndom = GetOptionBool(Config.SCH_Aetherflow_Recite_Indom);
+                        bool AlwaysShowReciteIndom = GetIntOptionAsBool(Config.SCH_Aetherflow_Recite_Indom);
                         if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite_Indom) &&
                             (AlwaysShowReciteIndom || (!AlwaysShowReciteIndom && !HasAetherFlows)) &&
                             actionID is Indomitability)
@@ -170,7 +170,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     if (!HasAetherFlows)
                     {
-                        bool ShowAetherflowOnAll = GetOptionBool(Config.SCH_Aetherflow_Display);
+                        bool ShowAetherflowOnAll = GetIntOptionAsBool(Config.SCH_Aetherflow_Display);
                         if ((actionID is EnergyDrain && !ShowAetherflowOnAll) || ShowAetherflowOnAll)
                         {
                             if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation) &&
@@ -209,7 +209,7 @@ namespace XIVSlothCombo.Combos.PvE
                     !HasPetPresent() && 
                     GetJobGauge<SCHGauge>().SeraphTimer == 0)
                 {
-                    if (GetOptionBool(Config.SCH_FairyFeature)) return SummonSelene; else return SummonEos;
+                    if (GetIntOptionAsBool(Config.SCH_FairyFeature)) return SummonSelene; else return SummonEos;
                 }
                 return actionID;
             }
@@ -278,7 +278,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DPS;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                bool AlternateMode = GetOptionBool(Config.SCH_ST_DPS_AltMode); //(0 or 1 radio values)
+                bool AlternateMode = GetIntOptionAsBool(Config.SCH_ST_DPS_AltMode); //(0 or 1 radio values)
                 if ((!AlternateMode &&  actionID is Ruin1 or Broil1 or Broil2 or Broil3 or Broil4
                      || (AlternateMode && actionID is Bio1 or Bio2 or Biolysis)) 
                     && InCombat())

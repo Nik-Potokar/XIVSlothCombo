@@ -22,6 +22,7 @@ namespace XIVSlothCombo
         private const string Command = "/scombo";
 
         private readonly ConfigWindow configWindow;
+        private readonly StatsWindow statsWindow;
 
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
 
@@ -43,6 +44,7 @@ namespace XIVSlothCombo
             ActionWatching.Enable();
 
             configWindow = new();
+            statsWindow = new();
 
             Service.Interface.UiBuilder.Draw += DrawUI;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
@@ -54,6 +56,7 @@ namespace XIVSlothCombo
             });
 
             Service.ClientState.Login += PrintLoginMessage;
+            if (Service.ClientState.IsLoggedIn) ResetFeatures();
 
             KillRedundantIDs();
         }
@@ -80,11 +83,12 @@ namespace XIVSlothCombo
         private void DrawUI()
         {
             configWindow.Draw();
+            statsWindow.Draw();
         }
 
         private void PrintLoginMessage(object? sender, EventArgs e)
         {
-            ResetFeatures();
+            Task.Delay(TimeSpan.FromSeconds(5)).ContinueWith(task => ResetFeatures());
 
             if (!Service.Configuration.HideMessageOfTheDay)
                 Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(task => PrintMotD());
@@ -369,7 +373,9 @@ namespace XIVSlothCombo
                             break;
                         }
                     }
-
+                case "stats":
+                    statsWindow.Visible = !statsWindow.Visible;
+                    break;
                 default:
                     configWindow.Visible = !configWindow.Visible;
                     break;
