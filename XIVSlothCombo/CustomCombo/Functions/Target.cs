@@ -19,7 +19,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Gets the distance from the target. </summary>
         /// <returns> Double representing the distance from the target. </returns>
-        public double GetTargetDistance()
+        public static float GetTargetDistance()
         {
             if (CurrentTarget is null || LocalPlayer is null)
                 return 0;
@@ -38,12 +38,12 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>
         /// <returns> Bool indicating whether you are in melee range. </returns>
-        public bool InMeleeRange()
+        public static bool InMeleeRange()
         {
             if (LocalPlayer.TargetObject == null)
                 return false;
 
-            double distance = GetTargetDistance();
+            float distance = GetTargetDistance();
 
             if (distance == 0)
                 return true;
@@ -56,23 +56,21 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Gets a value indicating target's HP Percent. CurrentTarget is default unless specified </summary>
         /// <returns> Double indicating percentage. </returns>
-        public static double GetTargetHPPercent(GameObject? OurTarget = null)
+        public static float GetTargetHPPercent(GameObject? OurTarget = null)
         {
             if (OurTarget is null)
             {
-                //Fallback to CurrentTarget
-                OurTarget = CurrentTarget;
+                OurTarget = CurrentTarget; // Fallback to CurrentTarget
                 if (OurTarget is null)
                     return 0;
             }
 
-            if (OurTarget is not BattleChara chara)
-                return 0;
-
-            return chara.CurrentHp / chara.MaxHp * 100;
+            return OurTarget is not BattleChara chara
+                ? 0
+                : chara.CurrentHp / chara.MaxHp * 100;
         }
 
-        public static double EnemyHealthMaxHp()
+        public static float EnemyHealthMaxHp()
         {
             if (CurrentTarget is null)
                 return 0;
@@ -82,7 +80,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return chara.MaxHp;
         }
 
-        public static double EnemyHealthCurrentHp()
+        public static float EnemyHealthCurrentHp()
         {
             if (CurrentTarget is null)
                 return 0;
@@ -92,13 +90,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return chara.CurrentHp;
         }
 
-        public double PlayerHealthPercentageHp()
-        {
-            double maxHealth = LocalPlayer.MaxHp;
-            double currentHealth = LocalPlayer.CurrentHp;
-
-            return currentHealth / maxHealth * 100;
-        }
+        public static float PlayerHealthPercentageHp() => LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
 
         public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
 
@@ -112,6 +104,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 return false;
             if (chara.IsCasting)
                 return chara.IsCastInterruptible;
+
             return false;
         }
 
@@ -125,12 +118,13 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             if (target == null || target.YalmDistanceX >= 30)
                 return false;
+
             return true;
         }
 
         /// <summary> Attempts to target the given party member </summary>
         /// <param name="target"></param>
-        protected unsafe void TargetObject(TargetType target)
+        protected static unsafe void TargetObject(TargetType target)
         {
             StructsObject.GameObject* t = GetTarget(target);
             if (t == null) return;
