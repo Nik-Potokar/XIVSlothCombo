@@ -67,7 +67,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return OurTarget is not BattleChara chara
                 ? 0
-                : chara.CurrentHp / chara.MaxHp * 100;
+                : (float)chara.CurrentHp / chara.MaxHp * 100;
         }
 
         public static float EnemyHealthMaxHp()
@@ -90,7 +90,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return chara.CurrentHp;
         }
 
-        public static float PlayerHealthPercentageHp() => LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
+        public static float PlayerHealthPercentageHp() => (float)LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
 
         public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
 
