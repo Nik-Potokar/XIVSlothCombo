@@ -240,6 +240,7 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="checkBoxName">The name of the feature.</param>
         /// <param name="checkboxDescription">The description of the feature</param>
         /// <param name="itemWidth"></param>
+        /// <param name="isConditionalChoice"></param>
         public static void DrawAdditionalBoolChoice(string config, string checkBoxName, string checkboxDescription, float itemWidth = 150, bool isConditionalChoice = false)
         {
             var output = PluginConfiguration.GetCustomBoolValue(config);
@@ -1268,6 +1269,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SUMMONER
 
+            #region PvE
             if (preset == CustomComboPreset.SMN_DemiEgiMenu_EgiOrder)
             {
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_PrimalChoice, "Titan first", "Summons Titan, Garuda then Ifrit.", 1);
@@ -1294,6 +1296,17 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, SMN.Config.SMN_Lucid, "Set value for your MP to be at or under for this feature to take effect.", 150, SliderIncrements.Hundreds);
+            #endregion
+
+            #region PvP
+
+            if (preset == CustomComboPreset.SMNPvP_BurstMode)
+                UserConfig.DrawSliderInt(50, 100, SMNPvP.Config.SMNPvP_FesterThreshold, "Target HP% to cast Fester below.\nSet to 100 use Fester as soon as it's available.###SMNPvP", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.SMNPvP_BurstMode_RadiantAegis)
+                UserConfig.DrawSliderInt(0, 90, SMNPvP.Config.SMNPvP_RadiantAegisThreshold, "Caps at 90 to prevent waste.###SMNPvP", 150, SliderIncrements.Ones);
+
+            #endregion
 
             #endregion
             // ====================================================================================
@@ -1314,6 +1327,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
+                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
