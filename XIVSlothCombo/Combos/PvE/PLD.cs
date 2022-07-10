@@ -102,10 +102,10 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is FastBlade && level >= Levels.RiotBlade)
+                        if (lastComboMove is FastBlade && LevelChecked(RiotBlade))
                             return RiotBlade;
 
-                        if (lastComboMove is RiotBlade && level >= Levels.GoringBlade)
+                        if (lastComboMove is RiotBlade && LevelChecked(GoringBlade))
                             return GoringBlade;
                     }
 
@@ -133,7 +133,7 @@ namespace XIVSlothCombo.Combos.PvE
                         inOpener = false;
                         openerFinished = false;
                     }
-                    else if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener) && level >= Levels.Requiescat && !openerFinished && !inOpener)
+                    else if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener) && LevelChecked(Requiescat) && !openerFinished && !inOpener)
                     {
                         inOpener = true;
                     }
@@ -142,11 +142,12 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InMeleeRange() && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) &&
                         !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth) && HasBattleTarget())
                     {
-                        if (level >= Levels.HolySpirit && LocalPlayer.CurrentMp >= 1000 && (!this.IsMoving || HasEffect(Buffs.Requiescat)))
+                        if (LevelChecked(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !this.IsMoving && !HasEffect(Buffs.Requiescat) ||
+                            LevelChecked(Confiteor) && HasEffect(Buffs.Requiescat) && GetBuffStacks(Buffs.Requiescat) is not 1 && (GetBuffRemainingTime(Buffs.Requiescat) >= 3) && LocalPlayer.CurrentMp >= 2000)
                         {
                             return HolySpirit;
                         }
-                        else if (level >= Levels.ShieldLob && !HasEffect(Buffs.Requiescat))
+                        else if (LevelChecked(ShieldLob) && (!HasEffect(Buffs.Requiescat) || LocalPlayer.CurrentMp < 1000))
                         {
                             return ShieldLob;
                         }
@@ -155,9 +156,9 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.2)
                     {
-                        if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoF) && level >= Levels.FightOrFlight && lastComboMove is FastBlade && IsOffCooldown(FightOrFlight))
+                        if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoF) && LevelChecked(FightOrFlight) && lastComboMove is FastBlade && IsOffCooldown(FightOrFlight))
                             return FightOrFlight;
-                        if (!inOpener && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Requiescat) && level >= Levels.Requiescat && HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) < 17 && IsOffCooldown(Requiescat))
+                        if (!inOpener && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Requiescat) && LevelChecked(Requiescat) && HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) < 17 && IsOffCooldown(Requiescat))
                             return Requiescat;
                     }
 
@@ -178,13 +179,13 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (IsOffCooldown(CircleOfScorn))
                                         return CircleOfScorn;
-                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && level >= Levels.Intervene && GetRemainingCharges(Intervene) == 2)
+                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) == 2)
                                         return Intervene;
                                     if (IsOffCooldown(OriginalHook(SpiritsWithin)))
                                         return OriginalHook(SpiritsWithin);
                                     if (IsOffCooldown(Requiescat))
                                         return Requiescat;
-                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && level >= Levels.Intervene && GetRemainingCharges(Intervene) > 0)
+                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) > 0)
                                         return Intervene;
                                 }
 
@@ -196,21 +197,21 @@ namespace XIVSlothCombo.Combos.PvE
                                         return CircleOfScorn;
                                     if (IsOffCooldown(OriginalHook(SpiritsWithin)))
                                         return OriginalHook(SpiritsWithin);
-                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && level >= Levels.Intervene && GetRemainingCharges(Intervene) > 0)
+                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) > 0)
                                         return Intervene;
                                 }
                             }
                         }
                         else
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && level >= Levels.SpiritsWithin && InCombat() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && LevelChecked(SpiritsWithin) && InCombat() && IsOffCooldown(OriginalHook(SpiritsWithin)))
                             {
                                 if (IsNotEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) ||
                                     (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
                                     return OriginalHook(SpiritsWithin);
                             }
 
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && level >= Levels.CircleOfScorn && InCombat() && IsOffCooldown(CircleOfScorn))
+                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && LevelChecked(CircleOfScorn) && InCombat() && IsOffCooldown(CircleOfScorn))
                             {
                                 if (IsNotEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) ||
                                     (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
@@ -218,7 +219,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             var interveneChargesRemaining = GetOptionValue(Config.PLD_Intervene_HoldCharges);
-                            if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene) && level >= Levels.Intervene && GetRemainingCharges(Intervene) > interveneChargesRemaining)
+                            if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) > interveneChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene_Melee) ||
                                     (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene_Melee) && HasEffect(Buffs.FightOrFlight) && GetTargetDistance() <= 1))
@@ -239,9 +240,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolySpirit;
                         }
 
-                        if (HasEffect(Buffs.Requiescat) && level >= Levels.HolySpirit && !HasEffect(Buffs.FightOrFlight) && LocalPlayer.CurrentMp >= 1000)
+                        if (HasEffect(Buffs.Requiescat) && LevelChecked(HolySpirit) && (!HasEffect(Buffs.FightOrFlight) || !InMeleeRange()) && LocalPlayer.CurrentMp >= 1000)
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && level >= Levels.Confiteor &&
+                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && LevelChecked(Confiteor) &&
                                 ((GetBuffRemainingTime(Buffs.Requiescat) <= 3 && GetBuffRemainingTime(Buffs.Requiescat) >= 0) || GetBuffStacks(Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
                                 return Confiteor;
 
@@ -252,7 +253,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Confiteor);
                     }
 
-                    if (level >= Levels.Atonement && HasEffect(Buffs.SwordOath) && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Atonement))
+                    if (LevelChecked(Atonement) && HasEffect(Buffs.SwordOath) && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Atonement))
                     {
                         if (IsNotEnabled(CustomComboPreset.PLD_AtonementDrop))
                             return Atonement;
@@ -276,12 +277,12 @@ namespace XIVSlothCombo.Combos.PvE
                     // 1-2-3 Combo
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is FastBlade && level >= Levels.RiotBlade)
+                        if (lastComboMove is FastBlade && LevelChecked(RiotBlade))
                             return RiotBlade;
 
-                        if (lastComboMove is RiotBlade && level >= Levels.RageOfHalone)
+                        if (lastComboMove is RiotBlade && LevelChecked(RageOfHalone))
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Goring) && level >= Levels.GoringBlade &&
+                            if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Goring) && LevelChecked(GoringBlade) &&
                                 ((GetDebuffRemainingTime(Debuffs.BladeOfValor) > 0 && GetDebuffRemainingTime(Debuffs.BladeOfValor) < 5) ||
                                 (FindTargetEffect(Debuffs.BladeOfValor) is null && GetDebuffRemainingTime(Debuffs.GoringBlade) < 5)))
                                 return GoringBlade;
@@ -308,22 +309,22 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Requiescat) && level >= Levels.Requiescat && IsOffCooldown(Requiescat))
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Requiescat) && LevelChecked(Requiescat) && IsOffCooldown(Requiescat))
                             return Requiescat;
 
                         if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_ExpiacionScorn) && InCombat())
                         {
-                            if (level >= Levels.SpiritsWithin && IsOffCooldown(SpiritsWithin))
+                            if (LevelChecked(SpiritsWithin) && IsOffCooldown(SpiritsWithin))
                                 return OriginalHook(SpiritsWithin);
 
-                            if (level >= Levels.CircleOfScorn && IsOffCooldown(CircleOfScorn))
+                            if (LevelChecked(CircleOfScorn) && IsOffCooldown(CircleOfScorn))
                                 return CircleOfScorn;
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle) && HasEffect(Buffs.Requiescat) && level >= Levels.HolyCircle && LocalPlayer.CurrentMp >= 1000)
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle) && HasEffect(Buffs.Requiescat) && LevelChecked(HolyCircle) && LocalPlayer.CurrentMp >= 1000)
                     {
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Confiteor) && level >= Levels.Confiteor &&
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Confiteor) && LevelChecked(Confiteor) &&
                             ((GetBuffRemainingTime(Buffs.Requiescat) <= 3 && GetBuffRemainingTime(Buffs.Requiescat) >= 0) || GetBuffStacks(Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
                             return Confiteor;
 
@@ -337,7 +338,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is TotalEclipse && level >= Levels.Prominence)
+                        if (lastComboMove is TotalEclipse && LevelChecked(Prominence))
                             return Prominence;
                     }
 
@@ -380,12 +381,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HolySpirit)
                 {
-                    if (HasEffect(Buffs.Requiescat) && level >= Levels.HolySpirit)
+                    if (HasEffect(Buffs.Requiescat) && LevelChecked(HolySpirit))
                     {
                         var requiescatTime = GetBuffRemainingTime(Buffs.Requiescat);
                         var requiescatStacks = GetBuffStacks(Buffs.Requiescat);
 
-                        if (level >= Levels.Confiteor &&
+                        if (LevelChecked(Confiteor) &&
                                 ((IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && requiescatTime is <= 3 and > 0) ||
                                 requiescatStacks is 1 || LocalPlayer.CurrentMp <= 2000))
                             return Confiteor;
@@ -409,12 +410,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HolyCircle)
                 {
-                    if (HasEffect(Buffs.Requiescat) && level >= Levels.HolyCircle)
+                    if (HasEffect(Buffs.Requiescat) && LevelChecked(HolyCircle))
                     {
                         var requiescatTime = GetBuffRemainingTime(Buffs.Requiescat);
                         var requiescatStacks = GetBuffStacks(Buffs.Requiescat);
 
-                        if (level >= Levels.Confiteor && ((IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && requiescatTime is <= 3 and > 0) ||
+                        if (LevelChecked(Confiteor) && ((IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && requiescatTime is <= 3 and > 0) ||
                                 requiescatStacks is 1 || LocalPlayer.CurrentMp <= 2000))
                             return Confiteor;
 
