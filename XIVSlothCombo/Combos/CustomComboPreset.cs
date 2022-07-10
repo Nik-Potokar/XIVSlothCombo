@@ -2492,7 +2492,7 @@ namespace XIVSlothCombo.Combos
         */
 
         #region DPS
-        [ReplaceSkill(SCH.Ruin1, SCH.Broil1, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio1, SCH.Bio2, SCH.Biolysis)]
+        [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
         [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
         SCH_DPS = 16100,
 
@@ -2558,7 +2558,7 @@ namespace XIVSlothCombo.Combos
         SCH_DeploymentTactics = 16600,
 
             [ParentCombo(SCH_DeploymentTactics)]
-            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
+            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
             SCH_DeploymentTactics_Recitation = 16610,
         
         #endregion
