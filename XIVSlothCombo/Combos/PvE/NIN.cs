@@ -534,6 +534,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Bunshin_Phantom) && HasEffect(Buffs.PhantomReady) && PhantomKamaitachi.LevelChecked())
+                        return OriginalHook(PhantomKamaitachi);
+
                     if (comboTime > 1f)
                     {
                         if (lastComboMove is DeathBlossom && HakkeMujinsatsu.LevelChecked())

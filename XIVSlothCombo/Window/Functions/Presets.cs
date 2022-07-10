@@ -1,6 +1,7 @@
 ﻿using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ImGuiNET;
+using System;
 using System.Linq;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
@@ -46,17 +47,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.PopItemWidth();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
 
-            if (preset.GetReplaceAttribute() != null)
-            {
-                string skills = string.Join(", ", preset.GetReplaceAttribute().ActionNames);
-
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.BeginTooltip();
-                    ImGui.TextUnformatted($"Replaces: {skills}");
-                    ImGui.EndTooltip();
-                }
-            }
+            DrawOpenerButtons(preset);
 
             ImGui.Text($"#{i}: ");
             var length = ImGui.CalcTextSize($"#{i}: ");
@@ -79,6 +70,15 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Spacing();
 
             UserConfigItems.Draw(preset, enabled);
+
+            if (preset == CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener || preset == CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener)
+            {
+                ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+                if (ImGui.Button("Image of rotation"))
+                {
+                    Util.OpenLink("https://i.imgur.com/q3lXeSZ.png");
+                }
+            }
 
             if (conflicts.Length > 0)
             {
@@ -164,6 +164,21 @@ namespace XIVSlothCombo.Window.Functions
                 {
                     i += AllChildren(presetChildren[preset]);
 
+                }
+            }
+        }
+
+        private static void DrawOpenerButtons(CustomComboPreset preset)
+        {
+            if (preset.GetReplaceAttribute() != null)
+            {
+                string skills = string.Join(", ", preset.GetReplaceAttribute().ActionNames);
+
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.BeginTooltip();
+                    ImGui.TextUnformatted($"Replaces: {skills}");
+                    ImGui.EndTooltip();
                 }
             }
         }
