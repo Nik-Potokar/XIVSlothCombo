@@ -1677,7 +1677,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("True North Feature", "Adds True North to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrueNorth = NIN_ST_AdvancedMode_BalanceOpener + 1,
 
-        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode)]
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth)]
         [CustomComboInfo("Use Before Armor Crush Only", "Only triggers the use of True North before Armor Crush.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrueNorth_ArmorCrush = NIN_ST_AdvancedMode_TrueNorth + 1,
 
