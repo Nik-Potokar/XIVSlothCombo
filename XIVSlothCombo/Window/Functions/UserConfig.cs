@@ -1050,9 +1050,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals)
             {
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThreshold, "Set a HP percentage Threshold for when Second Wind will be used.");
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThreshold, "Set a HP percentage Threshold for when Shade Shift will be used.");
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThreshold, "Set a HP percentage Threshold for when Bloodbath will be used.");
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThreshold, "Set a HP % threshold for when Second Wind will be used.");
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThreshold, "Set a HP % threshold for when Shade Shift will be used.");
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThreshold, "Set a HP % threshold for when Bloodbath will be used.");
             }
 
             if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_HellfrogMedium)
