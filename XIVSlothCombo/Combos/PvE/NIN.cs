@@ -148,9 +148,9 @@ namespace XIVSlothCombo.Combos.PvE
                 SecondWindThresholdST = "SecondWindThresholdST",
                 ShadeShiftThresholdST = "ShadeShiftThresholdST",
                 BloodbathThresholdST = "BloodbathThresholdST",
-                SecondWindThresholdAoE = "SecondWindThresholdST",
-                ShadeShiftThresholdAoE = "ShadeShiftThresholdST",
-                BloodbathThresholdAoE = "BloodbathThresholdST";
+                SecondWindThresholdAoE = "SecondWindThresholdAoE",
+                ShadeShiftThresholdAoE = "ShadeShiftThresholdAoE",
+                BloodbathThresholdAoE = "BloodbathThresholdAoE";
         }
 
         internal class NIN_ST_AdvancedMode : CustomCombo
@@ -241,13 +241,13 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals))
                         {
-                            if (level >= All.Levels.SecondWind && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
+                            if (All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
                                 return All.SecondWind;
 
-                            if (level >= NIN.Levels.ShadeShift && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
+                            if (ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
                                 return NIN.ShadeShift;
 
-                            if (level >= All.Levels.Bloodbath && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
+                            if (All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
                                 return All.Bloodbath;
                         }
 
@@ -452,13 +452,13 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals))
                         {
-                            if (level >= All.Levels.SecondWind && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
+                            if (All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
                                 return All.SecondWind;
 
-                            if (level >= NIN.Levels.ShadeShift && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
+                            if (ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
                                 return NIN.ShadeShift;
 
-                            if (level >= All.Levels.Bloodbath && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
+                            if (All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
                                 return All.Bloodbath;
                         }
 
