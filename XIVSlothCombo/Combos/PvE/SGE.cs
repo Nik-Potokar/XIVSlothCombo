@@ -11,7 +11,7 @@ namespace XIVSlothCombo.Combos.PvE
     {
         internal const byte JobID = 40;
 
-        private static readonly SGEGauge Gauge = CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SGEGauge>();
+        private static SGEGauge Gauge => CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SGEGauge>();
 
         public const uint
             // Heals and Shields
@@ -85,7 +85,13 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 { Dosis,  Debuffs.EukrasianDosis  },
                 { Dosis2, Debuffs.EukrasianDosis2 },
-                { Dosis3, Debuffs.EukrasianDosis3 }
+                { Dosis3, Debuffs.EukrasianDosis3 },
+                //Edge case where EDosis is still visible but Eukrasia buff has been used by healing or canceled
+                //(half of second window but DPS debuff code would throw 3-5 errors)
+                //Solved by added EukrasianDosis pairs
+                { EukrasianDosis,  Debuffs.EukrasianDosis  },
+                { EukrasianDosis2, Debuffs.EukrasianDosis2 },
+                { EukrasianDosis3, Debuffs.EukrasianDosis3 }
             };
 
         internal static class Range
