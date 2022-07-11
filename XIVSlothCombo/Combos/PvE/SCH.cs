@@ -202,7 +202,10 @@ namespace XIVSlothCombo.Combos.PvE
                             //Check if our target is in the party. Will skip if partysize is zero
                             for (int i = 1; i <= maxPartySize; i++)
                             {
-                                found = GetPartySlot(i) == target;
+                                GameObject? member = GetPartySlot(i);
+                                if (member == null) continue; //Skip nulls/disconnected people
+
+                                found = (member == target);
                                 if (found) break;
                             }
                             //Check if it's our chocobo?
