@@ -197,12 +197,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (target is not null)
                         {
 
-                            //What's our party size? Check if trust, and add 1 (trust does not include player), else get Party Count
-                            //It's okay if both Buddy/Party are Zero. For loop will skip
-                            int PartySize = Services.Service.BuddyList.Length > 0 ? Services.Service.BuddyList.Length + 1 : GetPartyMembers().Length;
+                            int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
 
                             //Check if our target is in the party. Will skip if partysize is zero
-                            for (int i = 1; i <= PartySize; i++)
+                            for (int i = 1; i <= maxPartySize; i++)
                             {
                                 found = GetPartySlot(i) == target;
                                 if (found) break;
