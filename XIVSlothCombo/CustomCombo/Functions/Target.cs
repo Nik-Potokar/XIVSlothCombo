@@ -112,14 +112,15 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             {
                 //Fallback to CurrentTarget
                 OurTarget = CurrentTarget;
-                if (OurTarget is null) return false;
-
-                //Humans
-                if (OurTarget.ObjectKind is ObjectKind.Player) return true;
-                //Trust & Chocobo
-                return (OurTarget as BattleNpc)?.BattleNpcKind is not BattleNpcSubKind.Enemy;
-                //if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy;
+                if (OurTarget is null) 
+                    return false;
             }
+
+            //Humans
+            if (OurTarget.ObjectKind is ObjectKind.Player) 
+                return true;
+            //AI
+            if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy;
             return false;
         }
 

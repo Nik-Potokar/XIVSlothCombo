@@ -294,9 +294,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
                     if (healTarget is null) healTarget = LocalPlayer;
 
-                    //Dalamud.Logging.PluginLog.LogDebug((healTarget as BattleChara).Name.ToString());
-                    //Dalamud.Logging.PluginLog.LogDebug(GetTargetHPPercent(healTarget).ToString());
-
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && ActionReady(Druochole) &&
                         Gauge.Addersgall >= 1 &&
                         GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Druochole))
