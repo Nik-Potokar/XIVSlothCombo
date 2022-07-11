@@ -196,16 +196,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (target is not null)
                         {
-                            int maxPartySize = GetPartySize();
-
-                            //Check if our target is in the party. Will skip if partysize is zero
-                            for (int i = 1; i <= maxPartySize; i++)
+                            if (IsInParty())
                             {
-                                GameObject? member = GetPartySlot(i);
-                                if (member == null) continue; //Skip nulls/disconnected people
+                                //Search the party
+                                for (int i = 1; i <= 8; i++)
+                                {
+                                    GameObject? member = GetPartySlot(i);
+                                    if (member == null) continue; //Skip nulls/disconnected people
 
-                                found = (member == target);
-                                if (found) break;
+                                    found = (member == target);
+                                    if (found) break;
+                                }
                             }
                             //Check if it's our chocobo?
                             if (found is false) found = HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject;

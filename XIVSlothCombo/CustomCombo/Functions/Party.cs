@@ -7,20 +7,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 {
     internal abstract partial class CustomComboFunctions
     {
-        /// <summary> Gets the party / trust size </summary>
-        /// <returns> Current party size</returns>
-        public static int GetPartySize()
-        {
-            int partySize = Service.PartyList.Length;
-            int buddySize = Service.BuddyList.Length;
-            //Check Party
-            if (partySize > 0) return partySize;
-            //Else check buddylist (Trust/Squad)
-            //20220711: Dalamud API currently returns a max of 3 for BuddyList.Length
-            //So checking Party Slot 5 is needed for 8 man trust trial
-            if (buddySize > 0) return GetPartySlot(5) == null ? 4 : 8;
-            return 0;
-        }
+        /// <summary> Checks if player is in a party </summary>
+        public static bool IsInParty() => (Service.PartyList.PartyId > 0);
+
         /// <summary> Gets the party list </summary>
         /// <returns> Current party list. </returns>
         public static PartyList GetPartyMembers() => Service.PartyList;
