@@ -288,22 +288,23 @@ namespace XIVSlothCombo.Combos.PvE
                         return EukrasianDiagnosis;
 
                     // Set Target. Soft -> Hard -> Self priority, matching normal in-game behavior
-                    GameObject? HealTarget;
+                    GameObject? healTarget = null;
+                    GameObject? softTarget = Services.Service.TargetManager.SoftTarget;
+                    if (HasFriendlyTarget(softTarget)) healTarget = softTarget;
+                    if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
+                    if (healTarget is null) healTarget = LocalPlayer;
 
-                    if (Services.Service.TargetManager.SoftTarget?.ObjectKind is ObjectKind.Player)
-                         HealTarget = Services.Service.TargetManager.SoftTarget;
-                    else HealTarget = CurrentTarget?.ObjectKind is ObjectKind.Player
-                        ? CurrentTarget
-                        : LocalPlayer;
+                    //Dalamud.Logging.PluginLog.LogDebug((healTarget as BattleChara).Name.ToString());
+                    //Dalamud.Logging.PluginLog.LogDebug(GetTargetHPPercent(healTarget).ToString());
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && ActionReady(Druochole) &&
                         Gauge.Addersgall >= 1 &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Druochole))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Druochole))
                         return Druochole;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && ActionReady(Taurochole) &&
                         Gauge.Addersgall >= 1 &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Taurochole))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Taurochole))
                         return Taurochole;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && ActionReady(Rhizomata) &&
@@ -312,33 +313,33 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Kardia) && LevelChecked(Kardia) &&
                         FindEffect(Buffs.Kardia) is null &&
-                        FindEffect(Buffs.Kardion, HealTarget, LocalPlayer?.ObjectId) is null)
+                        FindEffect(Buffs.Kardion, healTarget, LocalPlayer?.ObjectId) is null)
                         return Kardia;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && ActionReady(Soteria) &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Soteria))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Soteria))
                         return Soteria;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && ActionReady(Zoe) &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Zoe))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Zoe))
                         return Zoe;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && ActionReady(Krasis) &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Krasis))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Krasis))
                         return Krasis;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && ActionReady(Pepsis) &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
-                        FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is not null)
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Pepsis) &&
+                        FindEffect(Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.ObjectId) is not null)
                         return Pepsis;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && ActionReady(Haima) &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Haima))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Haima))
                         return Haima;
                     
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) && LevelChecked(Eukrasia) &&
-                        FindEffect(Buffs.EukrasianDiagnosis, HealTarget, LocalPlayer?.ObjectId) is null &&
-                        GetTargetHPPercent(HealTarget) <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
+                        FindEffect(Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.ObjectId) is null &&
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.SGE_ST_Heal_Diagnosis))
                         return Eukrasia;
                 }
 
