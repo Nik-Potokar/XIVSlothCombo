@@ -1,6 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Core;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
@@ -15,6 +15,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         public const uint
             SpinningEdge = 2240,
+            ShadeShift = 2241,
             GustSlash = 2242,
             Hide = 2245,
             Assassinate = 2246,
@@ -99,6 +100,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const byte
                 SpinningEdge = 1,
+                ShadeShift = 2,
                 GustSlash = 4,
                 Mug = 15,
                 AeolianEdge = 26,
@@ -142,7 +144,13 @@ namespace XIVSlothCombo.Combos.PvE
                 Advanced_DoubleArmorCrush = "Advanced_DoubleArmorCrush",
                 Advanced_DotonTimer = "Advanced_DotonTimer",
                 Advanced_DotonHP = "Advanced_DotonHP",
-                Advanced_TCJEnderAoE = "Advanced_TCJEnderAoe";
+                Advanced_TCJEnderAoE = "Advanced_TCJEnderAoe",
+                SecondWindThresholdST = "SecondWindThresholdST",
+                ShadeShiftThresholdST = "ShadeShiftThresholdST",
+                BloodbathThresholdST = "BloodbathThresholdST",
+                SecondWindThresholdAoE = "SecondWindThresholdAoE",
+                ShadeShiftThresholdAoE = "ShadeShiftThresholdAoE",
+                BloodbathThresholdAoE = "BloodbathThresholdAoE";
         }
 
         internal class NIN_ST_AdvancedMode : CustomCombo
@@ -172,6 +180,10 @@ namespace XIVSlothCombo.Combos.PvE
                     int bhavaPool = GetOptionValue(Config.Ninki_BhavaPooling);
                     int hutonArmorCrushTimer = GetOptionValue(Config.Huton_RemainingArmorCrush) * 1000;
                     int bunshinPool = GetOptionValue(Config.Ninki_BunshinPoolingST);
+                    int SecondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.SecondWindThresholdST);
+                    int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThresholdST);
+                    int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThresholdST);
+                    double playerHP = PlayerHealthPercentageHp();
 
 
                     if (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
@@ -227,6 +239,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave && !inMudraState)
                     {
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals))
+                        {
+                            if (All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+
+                            if (ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
+                                return NIN.ShadeShift;
+
+                            if (All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
+                                return All.Bloodbath;
+                        }
+
+
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug_AlignBefore) &&
                             HasEffect(Buffs.Suiton) &&
                             GetCooldownRemainingTime(TrickAttack) <= 3 &&
@@ -386,6 +411,10 @@ namespace XIVSlothCombo.Combos.PvE
                     int dotonThreshold = GetOptionValue(Config.Advanced_DotonHP);
                     int tcjPath = GetOptionValue(Config.Advanced_TCJEnderAoE);
                     int bunshingPool = GetOptionValue(Config.Ninki_BunshinPoolingAoE);
+                    int SecondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.SecondWindThresholdAoE);
+                    int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThresholdAoE);
+                    int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThresholdAoE);
+                    double playerHP = PlayerHealthPercentageHp();
 
                     if (IsNotEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
                         mudraState.CurrentMudra = MudraCasting.MudraState.None;
@@ -421,6 +450,18 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave && !inMudraState)
                     {
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals))
+                        {
+                            if (All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+
+                            if (ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
+                                return NIN.ShadeShift;
+
+                            if (All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
+                                return All.Bloodbath;
+                        }
+
                         if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Bunshin) && Bunshin.LevelChecked() && IsOffCooldown(Bunshin) && gauge.Ninki >= bunshingPool)
                             return OriginalHook(Bunshin);
 
