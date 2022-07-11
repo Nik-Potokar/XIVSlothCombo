@@ -196,8 +196,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (target is not null)
                         {
-
-                            int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
+                            int maxPartySize = GetPartySize();
 
                             //Check if our target is in the party. Will skip if partysize is zero
                             for (int i = 1; i <= maxPartySize; i++)
