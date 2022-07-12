@@ -12,7 +12,7 @@ namespace XIVSlothCombo.CustomComboNS
         /// <summary> Initializes a new instance of the <see cref="CustomCombo"/> class. </summary>
         protected CustomCombo()
         {
-            var presetInfo = Preset.GetAttribute<CustomComboInfoAttribute>();
+            CustomComboInfoAttribute? presetInfo = Preset.GetAttribute<CustomComboInfoAttribute>();
             JobID = presetInfo.JobID;
             ClassID = JobID switch
             {
@@ -60,19 +60,19 @@ namespace XIVSlothCombo.CustomComboNS
             if (!IsEnabled(Preset))
                 return false;
 
-            var classJobID = LocalPlayer!.ClassJob.Id;
+            uint classJobID = LocalPlayer!.ClassJob.Id;
 
-            if (classJobID >= 8 && classJobID <= 15)
+            if (classJobID is >= 8 and <= 15)
                 classJobID = DOH.JobID;
 
-            if (classJobID >= 16 && classJobID <= 18)
+            if (classJobID is >= 16 and <= 18)
                 classJobID = DoL.JobID;
 
             if (JobID != ADV.JobID && ClassID != ADV.ClassID &&
                 JobID != classJobID && ClassID != classJobID)
                 return false;
 
-            var resultingActionID = Invoke(actionID, lastComboMove, comboTime, level);
+            uint resultingActionID = Invoke(actionID, lastComboMove, comboTime, level);
             //Dalamud.Logging.PluginLog.Debug(resultingActionID.ToString());
 
             if (resultingActionID == 0 || actionID == resultingActionID)

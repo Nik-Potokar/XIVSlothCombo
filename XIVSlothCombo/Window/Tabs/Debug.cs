@@ -1,9 +1,12 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
-using ImGuiNET;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Statuses;
+using ImGuiNET;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 
@@ -18,28 +21,25 @@ namespace XIVSlothCombo.Window.Tabs
         {
             protected internal override CustomComboPreset Preset { get; }
 
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {
-                return actionID;
-            }
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level) => actionID;
         }
 
         internal static new void Draw()
         {
-            var LocalPlayer = Service.ClientState.LocalPlayer;
-            var comboClass = new DebugCombo();
+            PlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
+            DebugCombo? comboClass = new();
 
             if (LocalPlayer != null)
             {
                 if (Service.ClientState.LocalPlayer.TargetObject is BattleChara chara)
                 {
-                    foreach (var status in chara.StatusList)
+                    foreach (Status? status in chara.StatusList)
                     {
                         ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
                     }
                 }
 
-                foreach (var status in (Service.ClientState.LocalPlayer as BattleChara).StatusList)
+                foreach (Status? status in (Service.ClientState.LocalPlayer as BattleChara).StatusList)
                 {
                     ImGui.TextUnformatted($"SELF STATUS CHECK: {Service.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
                 }
@@ -47,12 +47,12 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"TARGET OBJECT KIND: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
                 ImGui.TextUnformatted($"TARGET IS BATTLE CHARA: {Service.ClientState.LocalPlayer.TargetObject is BattleChara}");
                 ImGui.TextUnformatted($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
-                ImGui.TextUnformatted($"IN COMBAT: {CustomComboNS.Functions.CustomComboFunctions.InCombat()}");
-                ImGui.TextUnformatted($"IN MELEE RANGE: {comboClass.InMeleeRange()}");
-                ImGui.TextUnformatted($"DISTANCE FROM TARGET: {comboClass.GetTargetDistance()}");
-                ImGui.TextUnformatted($"TARGET HP VALUE: {CustomComboNS.Functions.CustomComboFunctions.EnemyHealthCurrentHp()}");
+                ImGui.TextUnformatted($"IN COMBAT: {CustomComboFunctions.InCombat()}");
+                ImGui.TextUnformatted($"IN MELEE RANGE: {CustomComboFunctions.InMeleeRange()}");
+                ImGui.TextUnformatted($"DISTANCE FROM TARGET: {CustomComboFunctions.GetTargetDistance()}");
+                ImGui.TextUnformatted($"TARGET HP VALUE: {CustomComboFunctions.EnemyHealthCurrentHp()}");
                 ImGui.TextUnformatted($"LAST ACTION: {ActionWatching.GetActionName(ActionWatching.LastAction)}");
-                ImGui.TextUnformatted($"LAST ACTION COST: {CustomComboNS.Functions.CustomComboFunctions.GetResourceCost(ActionWatching.LastAction)}");
+                ImGui.TextUnformatted($"LAST ACTION COST: {CustomComboFunctions.GetResourceCost(ActionWatching.LastAction)}");
                 ImGui.TextUnformatted($"LAST ACTION TYPE: {ActionWatching.GetAttackType(ActionWatching.LastAction)}");
                 ImGui.TextUnformatted($"LAST WEAPONSKILL: {ActionWatching.GetActionName(ActionWatching.LastWeaponskill)}");
                 ImGui.TextUnformatted($"LAST SPELL: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
@@ -69,6 +69,5 @@ namespace XIVSlothCombo.Window.Tabs
             }
         }
     }
-
 }
 #endif

@@ -1,14 +1,14 @@
-﻿using Dalamud.Interface;
-using ImGuiNET;
-using System;
+﻿using System;
 using System.Numerics;
+using Dalamud.Interface;
+using ImGuiNET;
 
 namespace XIVSlothCombo.Window
 {
     internal class InfoBox
     {
         public Vector4 Color { get; set; } = Colors.White;
-        public Action ContentsAction { get; set; } = () => { ImGui.Text("Action Not Set"); };
+        public Action ContentsAction { get; set; } = () => ImGui.Text("Action Not Set");
         public float CurveRadius { get; set; } = 15.0f;
         public Vector2 Size { get; set; } = Vector2.Zero;
         public float BorderThickness { get; set; } = 2.0f;
@@ -35,12 +35,12 @@ namespace XIVSlothCombo.Window
 
             if (Size == Vector2.Zero)
             {
-                Size = ImGui.GetContentRegionAvail() with { Y = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y + CurveRadius * 2.0f };
+                Size = ImGui.GetContentRegionAvail() with { Y = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y + (CurveRadius * 2.0f) };
             }
 
             if (AutoResize)
             {
-                Size = Size with { Y = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y + CurveRadius * 2.0f };
+                Size = Size with { Y = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y + (CurveRadius * 2.0f) };
             }
 
             DrawCorners();
@@ -50,10 +50,10 @@ namespace XIVSlothCombo.Window
 
         public void DrawCentered(float percentSize = 0.80f)
         {
-            var region = ImGui.GetContentRegionAvail();
-            var currentPosition = ImGui.GetCursorPos();
-            var width = new Vector2(region.X * percentSize);
-            ImGui.SetCursorPos(currentPosition with { X = region.X / 2.0f - width.X / 2.0f });
+            Vector2 region = ImGui.GetContentRegionAvail();
+            Vector2 currentPosition = ImGui.GetCursorPos();
+            Vector2 width = new Vector2(region.X * percentSize);
+            ImGui.SetCursorPos(currentPosition with { X = (region.X / 2.0f) - (width.X / 2.0f) });
 
             Size = width;
             Draw();
@@ -61,7 +61,7 @@ namespace XIVSlothCombo.Window
 
         private void DrawContents()
         {
-            var topLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
+            Vector2 topLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
 
             ImGui.SetCursorScreenPos(topLeftCurveCenter);
             ImGui.PushTextWrapPos(Size.X);
@@ -77,10 +77,10 @@ namespace XIVSlothCombo.Window
 
         private void DrawCorners()
         {
-            var topLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
-            var topRightCurveCenter = new Vector2(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + CurveRadius);
-            var bottomLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
-            var bottomRightCurveCenter = new Vector2(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
+            Vector2 topLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
+            Vector2 topRightCurveCenter = new Vector2(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + CurveRadius);
+            Vector2 bottomLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
+            Vector2 bottomRightCurveCenter = new Vector2(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
 
             DrawList.PathArcTo(topLeftCurveCenter, CurveRadius, DegreesToRadians(180), DegreesToRadians(270), SegmentResolution);
             DrawList.PathStroke(ColorU32, ImDrawFlags.None, BorderThickness);
@@ -105,13 +105,13 @@ namespace XIVSlothCombo.Window
 
         private void DrawBorders()
         {
-            var color = Debug ? ImGui.GetColorU32(Colors.Red) : ColorU32;
+            uint color = Debug ? ImGui.GetColorU32(Colors.Red) : ColorU32;
 
             DrawList.AddLine(new Vector2(StartPosition.X - 0.5f, StartPosition.Y + CurveRadius - 0.5f), new Vector2(StartPosition.X - 0.5f, StartPosition.Y + Size.Y - CurveRadius + 0.5f), color, BorderThickness);
             DrawList.AddLine(new Vector2(StartPosition.X + Size.X - 0.5f, StartPosition.Y + CurveRadius - 0.5f), new Vector2(StartPosition.X + Size.X - 0.5f, StartPosition.Y + Size.Y - CurveRadius + 0.5f), color, BorderThickness);
             DrawList.AddLine(new Vector2(StartPosition.X + CurveRadius - 0.5f, StartPosition.Y + Size.Y - 0.5f), new Vector2(StartPosition.X + Size.X - CurveRadius + 0.5f, StartPosition.Y + Size.Y - 0.5f), color, BorderThickness);
 
-            var textSize = ImGui.CalcTextSize(Label);
+            Vector2 textSize = ImGui.CalcTextSize(Label);
             float textStartPadding;
             float textEndPadding;
             float textVerticalOffset;
