@@ -2281,6 +2281,10 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SGE.Soteria)]
         [CustomComboInfo("Soteria to Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 900, "", "")]
         SGE_Kardia = 14900,
+
+        [ReplaceSkill(SGE.Eukrasia)]
+        [CustomComboInfo("Eukrasia Feature", "Eukrasia turns into the selected Eukrasian-type action when active.", SGE.JobID, 1000, "", "")]
+        SGE_Eukrasia = 14910,
         #endregion
 
         #endregion
