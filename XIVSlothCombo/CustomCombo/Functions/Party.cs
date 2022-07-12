@@ -7,6 +7,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 {
     internal abstract partial class CustomComboFunctions
     {
+        /// <summary> Checks if player is in a party </summary>
+        public static bool IsInParty() => (Service.PartyList.PartyId > 0);
+
         /// <summary> Gets the party list </summary>
         /// <returns> Current party list. </returns>
         public static PartyList GetPartyMembers() => Service.PartyList;
