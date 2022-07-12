@@ -1771,7 +1771,7 @@ namespace XIVSlothCombo.Combos
         NIN_KassatsuChiJin = NIN_TCJMeisui + 1,
 
         [ReplaceSkill(NIN.Hide)]
-        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat.", NIN.JobID)]
+        [CustomComboInfo("Hide to Mug", "Replaces Hide with Mug while in combat and Trick Attack whilst Hidden.", NIN.JobID)]
         NIN_HideMug = NIN_KassatsuChiJin + 1,
 
         [ReplaceSkill(NIN.AeolianEdge)]
