@@ -277,7 +277,6 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Eukrasia;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Diagnosis) return Diagnosis;
                 if (actionID is Eukrasia && HasEffect(Buffs.Eukrasia))
                 {
                     int mode = GetOptionValue(Config.SGE_Eukrasia_Mode);
