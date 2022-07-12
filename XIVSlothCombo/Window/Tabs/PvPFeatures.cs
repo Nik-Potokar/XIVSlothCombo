@@ -40,6 +40,7 @@ namespace XIVSlothCombo.Window.Tabs
                     {
                         ImGui.GetStateStorage().SetInt(ImGui.GetID(otherJob), 0);
                     }
+
                     DrawHeadingContents(jobName, i);
                 }
 
