@@ -85,13 +85,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 { Dosis,  Debuffs.EukrasianDosis  },
                 { Dosis2, Debuffs.EukrasianDosis2 },
-                { Dosis3, Debuffs.EukrasianDosis3 },
-                //Edge case where EDosis is still visible but Eukrasia buff has been used by healing or canceled
-                //(half of second window but DPS debuff code would throw 3-5 errors)
-                //Solved by added EukrasianDosis pairs
-                { EukrasianDosis,  Debuffs.EukrasianDosis  },
-                { EukrasianDosis2, Debuffs.EukrasianDosis2 },
-                { EukrasianDosis3, Debuffs.EukrasianDosis3 }
+                { Dosis3, Debuffs.EukrasianDosis3 }
             };
 
         internal static class Range
@@ -244,12 +238,18 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis) && LevelChecked(Eukrasia))
                         {
                             // Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
-                            Status? dotDebuff = FindTargetEffect(DosisList[OriginalHook(actionID)]);
-                            int eDosisHPThreshold = GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer);
+                            // Using TryGetValue due to edge case where actionID would return as Eukrasian Dosis instead of Dosis
+                            // EDosis will show for half a second if the buff is removed manually or some other act of God
+                            if (DosisList.TryGetValue(OriginalHook(actionID), out ushort dotDebuffID))
+                            {
+                                Status? dotDebuff = FindTargetEffect(dotDebuffID);
 
-                            if (((dotDebuff is null) || (dotDebuff.RemainingTime <= 3)) &&
-                                (GetTargetHPPercent() > eDosisHPThreshold))
-                                return Eukrasia;
+                                int eDosisHPThreshold = GetOptionValue(Config.SGE_ST_Dosis_EDosisHPPer);
+
+                                if (((dotDebuff is null) || (dotDebuff.RemainingTime <= 3)) &&
+                                    (GetTargetHPPercent() > eDosisHPThreshold))
+                                    return Eukrasia;
+                            }
                         }
 
                         // Toxikon
