@@ -1,6 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using XIVSlothCombo.Core;
 using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
@@ -239,17 +239,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave && !inMudraState)
                     {
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals))
-                        {
-                            if (All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
-                                return All.SecondWind;
 
-                            if (ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
-                                return NIN.ShadeShift;
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_SecondWind) && All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
 
-                            if (All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
-                                return All.Bloodbath;
-                        }
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ShadeShift) && ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
+                            return NIN.ShadeShift;
+
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bloodbath) && All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
+
 
 
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug_AlignBefore) &&
@@ -361,7 +360,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_FumaShuriken) &&
                                 !Raiton.LevelChecked() &&
-                                chargeCheck  &&
+                                chargeCheck &&
                                 mudraState.CastFumaShuriken(ref actionID))
                                 return actionID;
 
@@ -450,17 +449,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave && !inMudraState)
                     {
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals))
-                        {
-                            if (All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
-                                return All.SecondWind;
 
-                            if (ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
-                                return NIN.ShadeShift;
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_SecondWind) && All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
 
-                            if (All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
-                                return All.Bloodbath;
-                        }
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_ShadeShift) && ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(NIN.ShadeShift))
+                            return NIN.ShadeShift;
+
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Bloodbath) && All.Bloodbath.LevelChecked() && playerHP <= BloodbathThreshold && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
+
 
                         if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Bunshin) && Bunshin.LevelChecked() && IsOffCooldown(Bunshin) && gauge.Ninki >= bunshingPool)
                             return OriginalHook(Bunshin);
@@ -473,8 +471,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Hellfrog);
                         }
 
-                        if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Kassatsu) && 
-                            IsOffCooldown(Kassatsu) && 
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Kassatsu) &&
+                            IsOffCooldown(Kassatsu) &&
                             Kassatsu.LevelChecked() &&
                             ((IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_Doton) && (dotonBuff != null || GetTargetHPPercent() < dotonThreshold)) ||
                             IsNotEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_Doton)))
@@ -494,7 +492,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if ((IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_Doton) && tcjPath == 1 &&
                                (dotonBuff?.RemainingTime <= dotonTimer || dotonBuff is null) &&
                                GetTargetHPPercent() >= dotonThreshold &&
-                               !WasLastAction(Doton)) || 
+                               !WasLastAction(Doton)) ||
                                tcjPath == 0)
                                 return OriginalHook(TenChiJin);
                         }

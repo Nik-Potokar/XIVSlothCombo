@@ -55,7 +55,7 @@ namespace XIVSlothCombo.Window.Functions
                         ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
                         ImGui.Text($"{sliderDescription}");
                         var height = ImGui.GetItemRectSize();
-                        var lines = height.Y / 16;
+                        var lines = (height.Y / ImGui.GetFontSize());
                         var textLength = ImGui.CalcTextSize(sliderDescription);
                         string newLines = "";
                         for (int i = 1; i < lines; i++)
@@ -68,7 +68,7 @@ namespace XIVSlothCombo.Window.Functions
                             {
                                 newLines += "\n\n";
                             }
-
+                           
                         }
 
                         if (hasAdditionalChoice)
@@ -1048,13 +1048,24 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Cooldowns)
                 UserConfig.DrawSliderInt(0, 15, NIN.Config.Advanced_Trick_Cooldown, "Set the amount of time remaining on Trick Attack cooldown to start saving cooldowns.");
 
-            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ComboHeals)
-            {
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdST, "Set a HP % threshold for when Second Wind will be used.");
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdST, "Set a HP % threshold for when Shade Shift will be used.");
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdST, "Set a HP % threshold for when Bloodbath will be used.");
-            }
-
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdST, "Set a HP% threshold for when Second Wind will be used.");
+            
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ShadeShift)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdST, "Set a HP% threshold for when Shade Shift will be used.");
+            
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bloodbath)            
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdST, "Set a HP% threshold for when Bloodbath will be used.");
+            
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdAoE, "Set a HP% threshold for when Second Wind will be used.");
+            
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_ShadeShift)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdAoE, "Set a HP% threshold for when Shade Shift will be used.");
+            
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_Bloodbath)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdAoE, "Set a HP% threshold for when Bloodbath will be used.");
+            
             if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_HellfrogMedium)
                 UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_HellfrogPooling, "Set the amount of Ninki required to have before spending on Hellfrog Medium.");
 
@@ -1070,12 +1081,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(NIN.Config.Advanced_TCJEnderAoE, $"Ten Chi Jin Ender 2", "Ends Ten Chi Jin with Doton.\nIf you have Doton enabled, Ten Chi Jin will be delayed according to the settings in that feature.", 1);
             }
 
-            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_ComboHeals)
-            {
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdAoE, "Set a HP % threshold for when Second Wind will be used.");
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdAoE, "Set a HP % threshold for when Shade Shift will be used.");
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdAoE, "Set a HP % threshold for when Bloodbath will be used.");
-            }
             #endregion
             // ====================================================================================
             #region PALADIN
