@@ -108,7 +108,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_ST_Heal_Diagnosis = "SGE_ST_Heal_Diagnosis",
                 SGE_ST_Heal_Druochole = "SGE_ST_Heal_Druochole",
                 SGE_ST_Heal_Taurochole = "SGE_ST_Heal_Taurochole",
-                SGE_AoE_Phlegma_Lucid = "SGE_AoE_Phlegma_Lucid";
+                SGE_AoE_Phlegma_Lucid = "SGE_AoE_Phlegma_Lucid",
+                SGE_Eukrasia_Mode = "SGE_ST_Eukrasia_Mode";
         }
 
         // Soteria Kardia
@@ -269,6 +270,28 @@ namespace XIVSlothCombo.Combos.PvE
                     IsOnCooldown(All.Swiftcast)
                     ? Egeiro
                     : actionID;
+        }
+
+        internal class SGE_Eukrasia : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Eukrasia;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Diagnosis) return Diagnosis;
+                if (actionID is Eukrasia && HasEffect(Buffs.Eukrasia))
+                {
+                    int mode = GetOptionValue(Config.SGE_Eukrasia_Mode);
+                    switch (mode)
+                    {
+                        case 0: return OriginalHook(Dosis);
+                        case 1: return OriginalHook(Diagnosis);
+                        case 2: return OriginalHook(Prognosis);
+                        default: break;
+                    }
+                }
+
+                return actionID;
+            }
         }
 
         internal class SGE_ST_Heal : CustomCombo
