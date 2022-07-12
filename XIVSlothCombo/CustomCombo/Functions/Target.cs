@@ -94,6 +94,24 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
 
+        public static bool HasFriendlyTarget(GameObject? OurTarget = null)
+        {
+            if (OurTarget is null)
+            {
+                //Fallback to CurrentTarget
+                OurTarget = CurrentTarget;
+                if (OurTarget is null) 
+                    return false;
+            }
+
+            //Humans
+            if (OurTarget.ObjectKind is ObjectKind.Player) 
+                return true;
+            //AI
+            if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy;
+            return false;
+        }
+
         /// <summary> Determines if the enemy can be interrupted if they are currently casting. </summary>
         /// <returns> Bool indicating whether they can be interrupted or not. </returns>
         public static bool CanInterruptEnemy()

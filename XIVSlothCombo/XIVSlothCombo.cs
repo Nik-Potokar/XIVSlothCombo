@@ -290,13 +290,21 @@ namespace XIVSlothCombo
 
                             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-                            using StreamWriter file = new($"{desktopPath}/SlothDebug.txt", append: false); // output path
+                            using StreamWriter file = new($"{desktopPath}/SlothDebug.txt", append: false);  // Output path
 
                             file.WriteLine("START DEBUG LOG");
-                            file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}"); // Plugin version
-                            file.WriteLine($"Current Job: {Service.ClientState.LocalPlayer.ClassJob.GameData.Name}"); // Currently equipped job
-                            file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}"); // Current zone location
-                            file.WriteLine($"Current Party Size: {Service.PartyList.Length}"); // Current party size
+                            file.WriteLine("");
+                            file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}");                          // Plugin version
+                            file.WriteLine("");
+                            file.WriteLine($"Current Job: " +                                                                   // Current Job
+                                $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +                                // - Client Name
+                                $"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
+                                $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");                           // - Abbreviation
+                            file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.GameData.JobIndex}"); // Job Index
+                            file.WriteLine("");
+                            file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}");                               // Current zone location
+                            file.WriteLine($"Current Party Size: {Service.PartyList.Length}");                                  // Current party size
+                            file.WriteLine("");
                             file.WriteLine($"START ENABLED FEATURES");
 
                             int i = 0;
@@ -316,14 +324,15 @@ namespace XIVSlothCombo
                                 {
                                     if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
 
-                                    if (preset.ToString()[..3].ToLower() == specificJob || // Job identifier
-                                        preset.ToString()[..3].ToLower() == "all" || // adds in Globals
-                                        preset.ToString()[..3].ToLower() == "pvp") // adds in PvP Globals
+                                    if (preset.ToString()[..3].ToLower() == specificJob ||  // Job identifier
+                                        preset.ToString()[..3].ToLower() == "all" ||        // Adds in Globals
+                                        preset.ToString()[..3].ToLower() == "pvp")          // Adds in PvP Globals
                                         file.WriteLine($"{(int)preset} - {preset}");
                                 }
                             }
 
                             file.WriteLine($"END ENABLED FEATURES");
+                            file.WriteLine("");
                             file.WriteLine($"Redundant IDs found: {i}");
 
                             if (i > 0)
@@ -335,6 +344,7 @@ namespace XIVSlothCombo
                                 }
 
                                 file.WriteLine($"END REDUNDANT IDs");
+                                file.WriteLine("");
                             }
 
                             file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
