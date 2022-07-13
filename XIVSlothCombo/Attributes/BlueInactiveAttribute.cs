@@ -12,12 +12,13 @@ namespace XIVSlothCombo.Attributes
         /// <param name="actionIDs"> List of actions the preset replaces. </param>
         internal BlueInactiveAttribute(params uint[] actionIDs)
         {
-            if (Service.Configuration is null) return;
+            if (Service.Configuration is null)
+                return;
 
-            foreach(uint id in actionIDs)
+            foreach (uint id in actionIDs)
             {
-                if (Service.Configuration.ActiveBLUSpells.Contains(id)) continue;
-
+                if (Service.Configuration.ActiveBLUSpells.Contains(id))
+                    continue;
                 Actions.Add(id);
             }
         }

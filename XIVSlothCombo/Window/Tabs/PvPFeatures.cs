@@ -1,7 +1,7 @@
-﻿using Dalamud.Interface;
-using ImGuiNET;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
+using Dalamud.Interface;
+using ImGuiNET;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
@@ -28,9 +28,9 @@ namespace XIVSlothCombo.Window.Tabs
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
-            var i = 1;
+            int i = 1;
 
-            foreach (var jobName in groupedPresets.Keys)
+            foreach (string? jobName in groupedPresets.Keys)
             {
                 if (!groupedPresets[jobName].Any(x => PluginConfiguration.IsSecret(x.Preset))) continue;
 
@@ -40,6 +40,7 @@ namespace XIVSlothCombo.Window.Tabs
                     {
                         ImGui.GetStateStorage().SetInt(ImGui.GetID(otherJob), 0);
                     }
+
                     DrawHeadingContents(jobName, i);
                 }
 

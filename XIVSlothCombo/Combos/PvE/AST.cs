@@ -113,6 +113,10 @@ namespace XIVSlothCombo.Combos.PvE
             private new bool GetTarget = true;
 
             private new GameObject? CurrentTarget;
+
+            private List<GameObject> PartyTargets = new();
+
+            private GameObject? SelectedRandomMember;
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_DrawOnPlay;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -164,6 +168,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     GetTarget = true;
+                    SelectedRandomMember = null;
                     return OriginalHook(Draw);
                 }
 
@@ -176,9 +181,8 @@ namespace XIVSlothCombo.Combos.PvE
                 CardType cardDrawn = Gauge.DrawnCard;
                 if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
                 //Checks for trusts then normal parties. Buddylist does not include player, so +1
-                int maxPartySize = Services.Service.BuddyList.Length > 0 ? Services.Service.BuddyList.Length + 1 : GetPartyMembers().Length;
+                int maxPartySize = GetPartySlot(5) == null ? 4 : 8;
 
-                List<GameObject> PartyTargets = new();
                 for (int i = 1; i <= maxPartySize; i++)
                 {
                     GameObject? member = GetPartySlot(i);
@@ -191,7 +195,18 @@ namespace XIVSlothCombo.Combos.PvE
                     if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
                     if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
 
+                   
                     PartyTargets.Add(member);
+                }
+
+                if (SelectedRandomMember is not null)
+                {
+                    if (PartyTargets.Any(x => x.ObjectId == SelectedRandomMember.ObjectId))
+                    {
+                        TargetObject(SelectedRandomMember);
+                        GetTarget = false;
+                        return true;
+                    }
                 }
 
                 if (PartyTargets.Count > 0)
@@ -201,10 +216,11 @@ namespace XIVSlothCombo.Combos.PvE
                     for (int i = 0; i <= PartyTargets.Count - 1; i++)
                     {
                         byte job = PartyTargets[i] is BattleChara ? (byte)(PartyTargets[i] as BattleChara).ClassJob.Id : (byte)0;
-                        if ((cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR && JobIDs.Melee.Contains(job)) ||
-                            (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE && JobIDs.Ranged.Contains(job)))
+                        if (((cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR) && JobIDs.Melee.Contains(job)) ||
+                            ((cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE) && JobIDs.Ranged.Contains(job)))
                         {
                             TargetObject(PartyTargets[i]);
+                            SelectedRandomMember = PartyTargets[i];
                             GetTarget = false;
                             return true;
                         }
@@ -219,6 +235,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE && JobIDs.Healer.Contains(job)))
                             {
                                 TargetObject(PartyTargets[i]);
+                                SelectedRandomMember = PartyTargets[i];
                                 GetTarget = false;
                                 return true;
                             }

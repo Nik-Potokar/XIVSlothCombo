@@ -25,10 +25,9 @@ namespace XIVSlothCombo.Data
             get
             {
                 var (cur, max) = Service.ComboCache.GetMaxCharges(ActionID);
-                if (cur == max)
-                    return isCooldown;
-
-                return cooldownElapsed < CooldownTotal;
+                return cur == max
+                    ? isCooldown
+                    : cooldownElapsed < CooldownTotal;
             }
         }
 
@@ -64,12 +63,11 @@ namespace XIVSlothCombo.Data
                     return cooldownTotal;
 
                 // Rebase to the current charge count
-                var total = cooldownTotal / max * cur;
+                float total = cooldownTotal / max * cur;
 
-                if (cooldownElapsed > total)
-                    return 0;
-
-                return total;
+                return cooldownElapsed > total
+                    ? 0
+                    : total;
             }
         }
 
@@ -90,10 +88,9 @@ namespace XIVSlothCombo.Data
             {
                 var (cur, _) = Service.ComboCache.GetMaxCharges(ActionID);
 
-                if (!IsCooldown)
-                    return cur;
-
-                return (ushort)(CooldownElapsed / (CooldownTotal / MaxCharges));
+                return !IsCooldown
+                    ? cur
+                    : (ushort)(CooldownElapsed / (CooldownTotal / MaxCharges));
             }
         }
 
