@@ -40,7 +40,7 @@ namespace XIVSlothCombo.Window.Functions
 
             InfoBox box = new()
             {
-                Color = Colors.Blue,
+                Color = Colors.White,
                 BorderThickness = 1f,
                 CurveRadius = 3f,
                 AutoResize = true,
@@ -52,7 +52,7 @@ namespace XIVSlothCombo.Window.Functions
                         var currentPos = ImGui.GetCursorPos();
                         ImGui.SetCursorPosX(currentPos.X + itemWidth);
                         ImGui.PushTextWrapPos(wrapPos);
-                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                         ImGui.Text($"{sliderDescription}");
                         var height = ImGui.GetItemRectSize();
                         var lines = (height.Y / ImGui.GetFontSize());
@@ -122,22 +122,89 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="config"> The config ID. </param>
         /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
         /// <param name="itemWidth"> How long the slider should be. </param>
-        public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
+        public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
-            var inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
-            inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue);
-
-            if (inputChanged)
+            if (output < minValue)
             {
+                output = minValue;
                 PluginConfiguration.SetCustomFloatValue(config, output);
                 Service.Configuration.Save();
             }
 
+            sliderDescription = sliderDescription.Replace("%", "%%");
+            var contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            var wrapPos = ImGui.GetContentRegionMax().X - 35f;
+
+
+            InfoBox box = new()
+            {
+                Color = Colors.White,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                {
+                    var inputChanged = false;
+                    var currentPos = ImGui.GetCursorPos();
+                    ImGui.SetCursorPosX(currentPos.X + itemWidth);
+                    ImGui.PushTextWrapPos(wrapPos);
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
+                    ImGui.Text($"{sliderDescription}");
+                    var height = ImGui.GetItemRectSize();
+                    var lines = (height.Y / ImGui.GetFontSize());
+                    var textLength = ImGui.CalcTextSize(sliderDescription);
+                    string newLines = "";
+                    for (int i = 1; i < lines; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            newLines += "\n";
+                        }
+                        else
+                        {
+                            newLines += "\n\n";
+                        }
+
+                    }
+
+                    if (hasAdditionalChoice)
+                    {
+                        ImGui.SameLine();
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                        ImGui.PushFont(UiBuilder.IconFont);
+                        ImGui.Dummy(new Vector2(5, 0));
+                        ImGui.SameLine();
+                        ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
+                        ImGui.PopFont();
+                        ImGui.PopStyleColor();
+
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.BeginTooltip();
+                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            ImGui.EndTooltip();
+                        }
+                    }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopTextWrapPos();
+                    ImGui.SameLine();
+                    ImGui.SetCursorPosX(currentPos.X);
+                    ImGui.PushItemWidth(itemWidth);
+                    inputChanged |= ImGui.SliderFloat($"{newLines}###{config}", ref output, minValue, maxValue);
+
+                    if (inputChanged)
+                    {
+                        PluginConfiguration.SetCustomFloatValue(config, output);
+                        Service.Configuration.Save();
+                    }
+                }
+            };
+
+            box.Draw();
             ImGui.Spacing();
         }
 
@@ -147,22 +214,89 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="config"> The config ID. </param>
         /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
         /// <param name="itemWidth"> How long the slider should be. </param>
-        public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
+        public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
             var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
-            var inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
-            inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue, "%.1f");
-
-            if (inputChanged)
+            if (output < minValue)
             {
+                output = minValue;
                 PluginConfiguration.SetCustomFloatValue(config, output);
                 Service.Configuration.Save();
             }
 
+            sliderDescription = sliderDescription.Replace("%", "%%");
+            var contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            var wrapPos = ImGui.GetContentRegionMax().X - 35f;
+
+
+            InfoBox box = new()
+            {
+                Color = Colors.White,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                {
+                    var inputChanged = false;
+                    var currentPos = ImGui.GetCursorPos();
+                    ImGui.SetCursorPosX(currentPos.X + itemWidth);
+                    ImGui.PushTextWrapPos(wrapPos);
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
+                    ImGui.Text($"{sliderDescription}");
+                    var height = ImGui.GetItemRectSize();
+                    var lines = (height.Y / ImGui.GetFontSize());
+                    var textLength = ImGui.CalcTextSize(sliderDescription);
+                    string newLines = "";
+                    for (int i = 1; i < lines; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            newLines += "\n";
+                        }
+                        else
+                        {
+                            newLines += "\n\n";
+                        }
+
+                    }
+
+                    if (hasAdditionalChoice)
+                    {
+                        ImGui.SameLine();
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                        ImGui.PushFont(UiBuilder.IconFont);
+                        ImGui.Dummy(new Vector2(5, 0));
+                        ImGui.SameLine();
+                        ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
+                        ImGui.PopFont();
+                        ImGui.PopStyleColor();
+
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.BeginTooltip();
+                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            ImGui.EndTooltip();
+                        }
+                    }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopTextWrapPos();
+                    ImGui.SameLine();
+                    ImGui.SetCursorPosX(currentPos.X);
+                    ImGui.PushItemWidth(itemWidth);
+                    inputChanged |= ImGui.SliderFloat($"{newLines}###{config}", ref output, minValue, maxValue, "%.1f");
+
+                    if (inputChanged)
+                    {
+                        PluginConfiguration.SetCustomFloatValue(config, output);
+                        Service.Configuration.Save();
+                    }
+                }
+            };
+
+            box.Draw();
             ImGui.Spacing();
         }
 
