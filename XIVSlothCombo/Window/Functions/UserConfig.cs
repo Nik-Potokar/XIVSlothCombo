@@ -5,14 +5,12 @@ using System;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Interface.Colors;
-using Dalamud.Utility;
-using ImGuiNET;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
+using Dalamud.Interface;
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -29,7 +27,7 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="additonalChoiceCondition">What the condition is to convey to the user what triggers it.</param>
         public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150, uint sliderIncrement = SliderIncrements.Ones, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
-            var output = PluginConfiguration.GetCustomIntValue(config, minValue);
+            int output = PluginConfiguration.GetCustomIntValue(config, minValue);
             if (output < minValue)
             {
                 output = minValue;
@@ -38,8 +36,8 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             sliderDescription = sliderDescription.Replace("%", "%%");
-            var contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
-            var wrapPos = ImGui.GetContentRegionMax().X - 35f;
+            float contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            float wrapPos = ImGui.GetContentRegionMax().X - 35f;
 
             InfoBox box = new()
             {
@@ -51,15 +49,15 @@ namespace XIVSlothCombo.Window.Functions
                 IsSubBox = true,
                 ContentsAction = () =>
                     {
-                        var inputChanged = false;
-                        var currentPos = ImGui.GetCursorPos();
+                        bool inputChanged = false;
+                        Vector2 currentPos = ImGui.GetCursorPos();
                         ImGui.SetCursorPosX(currentPos.X + itemWidth);
                         ImGui.PushTextWrapPos(wrapPos);
                         ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                         ImGui.Text($"{sliderDescription}");
-                        var height = ImGui.GetItemRectSize();
-                        var lines = (height.Y / ImGui.GetFontSize());
-                        var textLength = ImGui.CalcTextSize(sliderDescription);
+                        Vector2 height = ImGui.GetItemRectSize();
+                        float lines = (height.Y / ImGui.GetFontSize());
+                        Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                         string newLines = "";
                         for (int i = 1; i < lines; i++)
                         {
@@ -125,9 +123,11 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="config"> The config ID. </param>
         /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
         /// <param name="itemWidth"> How long the slider should be. </param>
+        /// <param name="hasAdditionalChoice"></param>
+        /// <param name="additonalChoiceCondition"></param>
         public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
-            var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
+            float output = PluginConfiguration.GetCustomFloatValue(config, minValue);
             if (output < minValue)
             {
                 output = minValue;
@@ -136,8 +136,8 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             sliderDescription = sliderDescription.Replace("%", "%%");
-            var contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
-            var wrapPos = ImGui.GetContentRegionMax().X - 35f;
+            float contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            float wrapPos = ImGui.GetContentRegionMax().X - 35f;
 
 
             InfoBox box = new()
@@ -150,15 +150,15 @@ namespace XIVSlothCombo.Window.Functions
                 IsSubBox = true,
                 ContentsAction = () =>
                 {
-                    var inputChanged = false;
-                    var currentPos = ImGui.GetCursorPos();
+                    bool inputChanged = false;
+                    Vector2 currentPos = ImGui.GetCursorPos();
                     ImGui.SetCursorPosX(currentPos.X + itemWidth);
                     ImGui.PushTextWrapPos(wrapPos);
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
-                    var height = ImGui.GetItemRectSize();
-                    var lines = (height.Y / ImGui.GetFontSize());
-                    var textLength = ImGui.CalcTextSize(sliderDescription);
+                    Vector2 height = ImGui.GetItemRectSize();
+                    float lines = (height.Y / ImGui.GetFontSize());
+                    Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
                     {
@@ -217,9 +217,11 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="config"> The config ID. </param>
         /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
         /// <param name="itemWidth"> How long the slider should be. </param>
+        /// <param name="hasAdditionalChoice"></param>
+        /// <param name="additonalChoiceCondition"></param>
         public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
-            var output = PluginConfiguration.GetCustomFloatValue(config, minValue);
+            float output = PluginConfiguration.GetCustomFloatValue(config, minValue);
             if (output < minValue)
             {
                 output = minValue;
@@ -228,8 +230,8 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             sliderDescription = sliderDescription.Replace("%", "%%");
-            var contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
-            var wrapPos = ImGui.GetContentRegionMax().X - 35f;
+            float contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            float wrapPos = ImGui.GetContentRegionMax().X - 35f;
 
 
             InfoBox box = new()
@@ -242,15 +244,15 @@ namespace XIVSlothCombo.Window.Functions
                 IsSubBox = true,
                 ContentsAction = () =>
                 {
-                    var inputChanged = false;
-                    var currentPos = ImGui.GetCursorPos();
+                    bool inputChanged = false;
+                    Vector2 currentPos = ImGui.GetCursorPos();
                     ImGui.SetCursorPosX(currentPos.X + itemWidth);
                     ImGui.PushTextWrapPos(wrapPos);
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
-                    var height = ImGui.GetItemRectSize();
-                    var lines = (height.Y / ImGui.GetFontSize());
-                    var textLength = ImGui.CalcTextSize(sliderDescription);
+                    Vector2 height = ImGui.GetItemRectSize();
+                    float lines = (height.Y / ImGui.GetFontSize());
+                    Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
                     {
@@ -383,7 +385,7 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="isConditionalChoice"></param>
         public static void DrawAdditionalBoolChoice(string config, string checkBoxName, string checkboxDescription, float itemWidth = 150, bool isConditionalChoice = false)
         {
-            var output = PluginConfiguration.GetCustomBoolValue(config);
+            bool output = PluginConfiguration.GetCustomBoolValue(config);
             ImGui.PushItemWidth(itemWidth);
             if (!isConditionalChoice)
                 ImGui.Indent();
