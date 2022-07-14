@@ -75,7 +75,8 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 RPR_PositionalChoice = "RPRPositionChoice",
                 RPR_SoDThreshold = "RPRSoDThreshold",
-                RPR_SoDRefreshRange = "RPRSoDRefreshRange";
+                RPR_SoDRefreshRange = "RPRSoDRefreshRange",
+                RPR_SoulsowOptions = "RPRSoulsowOptions";
         }
 
         internal class RPR_ST_SliceCombo : CustomCombo
@@ -229,7 +230,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows))
                             {
                                 if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
-                                    return Communio;
+                                    return !IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio_Movement) ? Communio : IsMoving ? ShadowOfDeath : Communio;
+                                
                                 if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Lemure) && gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice))
                                     return OriginalHook(BloodStalk);
                                 if (HasEffect(Buffs.EnhancedVoidReaping))
@@ -471,12 +473,16 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_Soulsow;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                var soulSowOptions = PluginConfiguration.GetCustomBoolArrayValue(Config.RPR_SoulsowOptions);
                 bool soulsowReady = LevelChecked(Soulsow) && !HasEffect(Buffs.Soulsow);
 
-                return actionID is Harpe or Slice or SpinningScythe or ShadowOfDeath or BloodStalk &&
-                    soulsowReady && !InCombat()
-                    ? Soulsow
-                    : actionID;
+                return (((actionID is Harpe && soulSowOptions[0] || 
+                    (actionID is  Slice && soulSowOptions[1]) || 
+                    (actionID is SpinningScythe && soulSowOptions[2]) ||
+                    (actionID is ShadowOfDeath && soulSowOptions[3]) ||
+                    (actionID is BloodStalk && soulSowOptions[4])) && soulsowReady && !InCombat()) ||
+                    (IsEnabled(CustomComboPreset.RPR_Soulsow_Combat) && actionID is Harpe && !HasBattleTarget())) ?
+                    Soulsow: actionID;
             }
         }
 

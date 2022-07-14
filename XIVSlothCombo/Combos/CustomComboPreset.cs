@@ -143,7 +143,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(ALL_Ranged_Menu)]
             [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
-            ALL_Ranged_Mitigation = 100040,
+            ALL_Ranged_Mitigation = 100040, 
             #endregion
 
         //Non-gameplay Features
@@ -449,7 +449,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Addle/Magic Hammer Debuff Feature", "Turns Magic Hammer into Addle when off CD.", BLU.JobID)]
         BLU_Addle = 70007,
 
-        [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance, BLU.JKick)]
+        [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
         [ReplaceSkill(BLU.FeatherRain)]
         [CustomComboInfo("Primal Feature", "Turns Feather Rain into any Primals that are off CD. \nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID)]
         BLU_PrimalCombo = 70008,
@@ -473,6 +473,25 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLU_Ultravibrate)]
         [CustomComboInfo("Hydro Pull Setup", "Uses Hydro Pull before using Ram's Voice.", BLU.JobID)]
         BLU_HydroPull = 70012,
+
+        [BlueInactive(BLU.JKick)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("J Kick Option", "Adds J Kick to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_JKick = 70013,
+
+        [BlueInactive(BLU.PerpetualRay, BLU.SharpenedKnife)]
+        [CustomComboInfo("Perpetual Ray into Sharpened Knife", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID)]
+        BLU_PerpetualRayStunCombo = 70014,
+
+        [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Burst Pooling Option", "Holds spells if Moon Flute bursts is about to come and spells are off cooldown.", BLU.JobID)]
+        BLU_PrimalCombo_Pool = 70015,
+
+        [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
+        [CustomComboInfo("Melee Feature", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID)]
+        BLU_MeleeCombo = 70016,
+
 
         #endregion
 
@@ -1180,11 +1199,11 @@ namespace XIVSlothCombo.Combos
         GNB_ST_MainCombo_CooldownsGroup = 7002,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Double Down on Main Combo", "Adds Double Down on main combo when under No Mercy buff", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Double Down on Main Combo", "Adds Double Down to the Main Combo when under No Mercy buff", GNB.JobID, 0, "", "")]
         GNB_ST_DoubleDown = 7003,
 
         [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide onto main combo whenever it's available.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide to the Main Combo whenever it's available.", GNB.JobID, 0, "", "")]
         GNB_ST_RoughDivide = 7004,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
@@ -1224,11 +1243,11 @@ namespace XIVSlothCombo.Combos
         GNB_ST_Bloodfest_Overcap = 7013,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to main combo when ammo is 0.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to the Main Combo when ammo is 0.", GNB.JobID, 0, "", "")]
         GNB_ST_Bloodfest = 7014,
 
         [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Lightning Shot Uptime", "Replace Solid Barrel Combo Feature with Lightning Shot when you are out of range.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Lightning Shot Uptime", "Adds Lightning Shot to the Main Combo when you are out of range.", GNB.JobID, 0, "", "")]
         GNB_RangedUptime = 7015,
 
         [ParentCombo(GNB_AoE_MainCombo)]
@@ -1236,15 +1255,15 @@ namespace XIVSlothCombo.Combos
         GNB_AoE_NoMercy = 7016,
 
         [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the aoe combo when it's off cooldown. Recommended to use with Gnashing Fang features.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the AOE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
         GNB_AoE_BowShock = 7017,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to main combo when at full ammo.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to the Main Combo when at full ammo.", GNB.JobID, 0, "", "")]
         GNB_ST_NoMercy = 7018,
 
         [ParentCombo(GNB_ST_Gnashing)]
-        [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang on main combo.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang to the Main Combo.", GNB.JobID, 0, "", "")]
         GNB_ST_GnashingFang_Starter = 7019,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
@@ -1256,11 +1275,11 @@ namespace XIVSlothCombo.Combos
         GNB_ST_SonicBreak = 7021,
 
         [ReplaceSkill(GNB.NoMercy)]
-        [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on CD", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Sonic Break/Bow Shock on NM", "Adds Sonic Break and Bow Shock to No Mercy when NM is on cooldown", GNB.JobID, 0, "", "")]
         GNB_NoMercy_Cooldowns = 7022,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
-        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to the Main Combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0, "", "")]
         GNB_NoMercy_BurstStrike = 7023,
 
         [ParentCombo(GNB_AoE_MainCombo)]
@@ -1281,6 +1300,15 @@ namespace XIVSlothCombo.Combos
 
         [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
         GNB_AuroraProtection = 7028,
+
+        [ParentCombo(GNB_AoE_MainCombo)]
+        [CustomComboInfo("Danger Zone on AoE Feature", "Adds Danger Zone onto the AOE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
+        GNB_AOE_DangerZone = 7029,
+
+        [ParentCombo(GNB_AoE_MainCombo)]
+        [CustomComboInfo("Sonic Break on AoE Feature", "Adds Sonic Break onto the AOE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
+        GNB_AOE_SonicBreak = 7030,
+
 
         #endregion
 
@@ -1862,6 +1890,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_ST_SliceCombo)]
         [CustomComboInfo("Gluttony and Blood Stalk Option", "Adds Gluttony and Blood Stalk to the combo when target is afflicted with Death's Design, and the skills are off cooldown and < 50 soul.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_GluttonyBloodStalk = 12016,
+
+        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows_Communio)]
+        [CustomComboInfo("Communio Movement Option", "Uses Shadow of Death instead of Communio when moving.", RPR.JobID, 0, "", "")]
+        RPR_ST_SliceCombo_GibbetGallows_Communio_Movement = 12017,
         #endregion
 
         #region AoE (Scythe) Combo Section
@@ -1930,7 +1962,7 @@ namespace XIVSlothCombo.Combos
         RPR_Regress = 12052,
 
         [ReplaceSkill(RPR.Slice, RPR.SpinningScythe, RPR.ShadowOfDeath, RPR.Harpe, RPR.BloodStalk)]
-        [CustomComboInfo("Soulsow Reminder Feature", "Adds Soulsow to Slice, Spinning Scythe, Shadow of Death, Harpe, and Blood Stalk when out of combat.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Soulsow Reminder Feature", "Adds Soulsow to the skills selected below when out of combat. \nWill also add Soulsow to Harpe when in combat and no target is selected.", RPR.JobID, 0, "", "")]
         RPR_Soulsow = 12053,
 
         [ReplaceSkill(RPR.Harpe)]
@@ -1967,6 +1999,12 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(RPR.Slice,RPR.ShadowOfDeath,RPR.Enshroud)]
         [CustomComboInfo("True North Feature", "Adds True North to Slice, Shadow of Death, Enshroud, and Blood Stalk when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
         RPR_TrueNorth = 12061,
+
+        [ReplaceSkill(RPR.Harpe)]
+        [ParentCombo(RPR_Soulsow)]
+        [CustomComboInfo("Soulsow Reminder during Combat", "Adds Soulsow to Harpe during combat when no target is selected.", RPR.JobID, 0, "", "")]
+        RPR_Soulsow_Combat = 12062,
+        
         #endregion
 
         #endregion
@@ -2413,6 +2451,11 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SAM_AoE_MangetsuCombo)]
             [CustomComboInfo("Guren on Mangetsu Combo", "Adds Guren when it's off cooldown and you have 25 Kenki to Mangetsu combo.", SAM.JobID, 0, "", "")]
             SAM_AoE_MangetsuCombo_Guren = 15025,
+
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Meikyo Shisui on Mangetsu Combo", "Adds Meikyo Shisui to Mangetsu combo.", SAM.JobID, 0, "", "")]
+            SAM_AoE_MangetsuCombo_MeikyoShisui = 15039,
+            
 
         [ReplaceSkill(SAM.Oka)]
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "", "")]
