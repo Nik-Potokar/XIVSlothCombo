@@ -1794,11 +1794,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID)]
         NIN_AeolianNinjutsu = 10058,
 
+        [ConflictingCombos(NIN_HuraijinArmorCrush)]
         [ReplaceSkill(NIN.Huraijin)]
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID)]
         NIN_HuraijinRaiju = 10059,
 
-        [ConflictingCombos(NIN_HuraijinArmorCrush)]
         [ParentCombo(NIN_HuraijinRaiju)]
         [CustomComboInfo("Huraijin / Raiju Feature Option 1", "Replaces Huraijin with Fleeting Raiju when available.", NIN.JobID)]
         NIN_HuraijinRaiju_Fleeting = 10060,
