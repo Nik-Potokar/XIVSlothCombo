@@ -93,6 +93,7 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Tank: Interrupt Feature", "Replaces Low Blow (Stun) with Interject (Interrupt) when the target can be interrupted.\nPLDs can slot Shield Bash to have the feature to work with Shield Bash.", ADV.JobID)]
             ALL_Tank_Interrupt = 100000,
 
+            [ReplaceSkill(All.Reprisal)]
             [ParentCombo(ALL_Tank_Menu)]
             [CustomComboInfo("Tank: Double Reprisal Protection", "Prevents the use of Reprisal when target already has the effect by replacing it with Stone.", ADV.JobID)]
             ALL_Tank_Reprisal = 100001,
@@ -113,10 +114,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         ALL_Caster_Menu = 100097,
 
+            [ReplaceSkill(All.Addle)]
             [ParentCombo(ALL_Caster_Menu)]
             [CustomComboInfo("Magical Ranged DPS: Double Addle Protection", "Prevents the use of Addle when target already has the effect by replacing it with Fell Cleave.", ADV.JobID)]
             ALL_Caster_Addle = 100020,
 
+            [ReplaceSkill(RDM.Verraise, SMN.Resurrection, BLU.AngelWhisper)]
             [ConflictingCombos(SMN_Raise, RDM_Raise)]
             [ParentCombo(ALL_Caster_Menu)]
             [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
@@ -127,10 +130,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         ALL_Melee_Menu = 100096,
 
+            [ReplaceSkill(All.Feint)]
             [ParentCombo(ALL_Melee_Menu)]
             [CustomComboInfo("Melee DPS: Double Feint Protection", "Prevents the use of Feint when target already has the effect by replacing it with Fire.", ADV.JobID)]
             ALL_Melee_Feint = 100030,
 
+            [ReplaceSkill(All.TrueNorth)]
             [ParentCombo(ALL_Melee_Menu)]
             [CustomComboInfo("Melee DPS: True North Protection", "Prevents the use of True North when its buff is already active by replacing it with Fire.", ADV.JobID)]
             ALL_Melee_TrueNorth = 100031,
@@ -141,9 +146,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Global Physical Ranged Features", "Features and options involving shared role actions for Physical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         ALL_Ranged_Menu = 100095,
 
+            [ReplaceSkill(MCH.Tactician,BRD.Troubadour,DNC.ShieldSamba)]
             [ParentCombo(ALL_Ranged_Menu)]
             [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
-            ALL_Ranged_Mitigation = 100040, 
+            ALL_Ranged_Mitigation = 100040,
+
+            [ReplaceSkill(All.FootGraze)]
+            [ParentCombo(ALL_Ranged_Menu)]
+            [CustomComboInfo("Physical Ranged DPS: Ranged Interrupt Feature", "Replaces Foot Graze with Head Graze when target can be interrupted.", ADV.JobID)]
+            ALL_Ranged_Interrupt = 100041,
+
+        
             #endregion
 
         //Non-gameplay Features

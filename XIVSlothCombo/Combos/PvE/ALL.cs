@@ -233,6 +233,16 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
+        internal class ALL_Ranged_Interrupt : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Ranged_Interrupt;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                return (actionID is FootGraze && CanInterruptEnemy() && IsOffCooldown(HeadGraze) && level >= Levels.HeadGraze) ? HeadGraze : actionID;
+            }
+        }
     }
 }
 
