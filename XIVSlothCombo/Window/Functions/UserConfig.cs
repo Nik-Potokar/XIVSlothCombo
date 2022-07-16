@@ -867,11 +867,11 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DNC_ST_Simple_FeatherPooling)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNCSimpleFeatherBurstPercent, "Target HP percentage to dump all pooled feathers below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            if (preset == CustomComboPreset.DNC_ST_Simple_Heals)
+            {
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleHealWaltzThreshold, "HP percent threshold to use Curing Waltz below (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleHealWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
 
             #endregion
 
@@ -883,11 +883,11 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DNC_AoE_Simple_TS)
                 UserConfig.DrawSliderInt(0, 10, DNC.Config.DNCSimpleTSAoEBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWindPercent, "Second Wind HP percent", 200, SliderIncrements.Ones);
+            if (preset == CustomComboPreset.DNC_AoE_Simple_Heals)
+            {
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEHealWaltzThreshold, "HP percent threshold to use Curing Waltz below (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEHealWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
 
             #endregion
 
@@ -1038,6 +1038,20 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawSliderInt(0, 6, RPR.Config.RPR_SoDRefreshRange, "Seconds remaining before refreshing Death's Design.", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_SoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.RPR_ST_SliceCombo_ComboHeals)
+            { 
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_ST_AdvancedMode_SecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_ST_AdvancedMode_ArcaneCrestThreshold, "Arcane Crest HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_ST_AdvancedMode_BloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+                if (preset == CustomComboPreset.RPR_AoE_ScytheCombo_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_AoE_AdvancedMode_SecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_AoE_AdvancedMode_ArcaneCrestThreshold, "Arcane Crest HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_AoE_AdvancedMode_BloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
             #endregion

@@ -776,8 +776,8 @@ namespace XIVSlothCombo.Combos
             DNC_ST_Simple_FeatherPooling = 4058,
 
             [ParentCombo(DNC_ST_SimpleMode)]
-            [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
-            DNC_ST_Simple_PanicHeals = 4059,
+            [CustomComboInfo("Simple Healing Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
+            DNC_ST_Simple_Heals = 4059,
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Improvisation Option", "Includes Improvisation in the rotation when available.", DNC.JobID, 5, "", "")]
@@ -840,8 +840,8 @@ namespace XIVSlothCombo.Combos
             DNC_AoE_Simple_FeatherPooling = 4078,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
-            [CustomComboInfo("Simple AoE Panic Heals Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 9, "", "")]
-            DNC_AoE_Simple_PanicHeals = 4079,
+            [CustomComboInfo("Simple AoE Healing Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 9, "", "")]
+            DNC_AoE_Simple_Heals = 4079,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Improvisation Option", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 10, "", "")]
@@ -1819,7 +1819,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_Stun = 12005,
 
         [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo at 65%% and 40%% HP, respectively.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath, Arcane Crest, and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_ComboHeals = 12006,
 
         [ParentCombo(RPR_ST_SliceCombo)]
@@ -1904,6 +1904,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_AoE_ScytheCombo)]
         [CustomComboInfo("Gluttony and Grim Swathe Option", "Adds Gluttony and Grim Swathe to the AoE combo when current target is afflicted with Death's Design and Soul Gauge < 50.", RPR.JobID, 0, "", "")]
         RPR_AoE_ScytheCombo_GluttonyGrimSwathe = 12029,
+
+        [ParentCombo(RPR_AoE_ScytheCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath, Arcane Crest, and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID, 0, "", "")]
+        RPR_AoE_ScytheCombo_ComboHeals = 12030,
         #endregion
 
         #region Blood Stalk/Grim Swathe Combo Section
