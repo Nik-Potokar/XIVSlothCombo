@@ -807,7 +807,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Huraijin)
                 {
-                    if (lastComboMove == GustSlash)
+                    if (lastComboMove == GustSlash && !HasEffect(Buffs.RaijuReady))
                         return ArmorCrush;
                 }
                 return actionID;

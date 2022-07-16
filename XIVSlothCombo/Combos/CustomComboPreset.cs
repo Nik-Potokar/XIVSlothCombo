@@ -1794,7 +1794,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID)]
         NIN_AeolianNinjutsu = 10058,
 
-        [ConflictingCombos(NIN_HuraijinArmorCrush)]
         [ReplaceSkill(NIN.Huraijin)]
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID)]
         NIN_HuraijinRaiju = 10059,
@@ -1816,7 +1815,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID)]
         NIN_TCJ = 10063,
 
-        [ConflictingCombos(NIN_HuraijinRaiju)]
         [ReplaceSkill(NIN.Huraijin)]
         [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash.", NIN.JobID)]
         NIN_HuraijinArmorCrush = 10064,
