@@ -923,11 +923,20 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            #endregion
-            // ====================================================================================
-            #region MONK
+            if (preset == CustomComboPreset.MCH_ST_SecondWind)
+            {
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+            }
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+            if (preset == CustomComboPreset.MCH_AoE_SecondWind)
+            {
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+            }
+                    #endregion
+                    // ====================================================================================
+                    #region MONK
+
+                    if (preset == CustomComboPreset.MNK_ST_SimpleMode)
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
 
             if (preset == CustomComboPreset.MNK_ST_SimpleMode)

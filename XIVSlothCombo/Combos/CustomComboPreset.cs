@@ -1436,6 +1436,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("High Ping Mode", "A high ping friendly mode.\nIt limits the uses of Gauss/Ricochet inside Hypercharge windows.\nThere will be a little dps loss.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_High_Latency_Mode = 8036,
 
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_ST_SecondWind = 8037,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_AoE_SecondWind = 8038,
+
         #endregion
 
         #region MONK
