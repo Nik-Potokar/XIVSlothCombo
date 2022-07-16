@@ -105,6 +105,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsOnCooldown(BattleLitany) && !HasEffect(Buffs.LanceCharge))
                                 inOpener = false;
+
                             //oGCDs
                             if (CanWeave(actionID))
                             {
@@ -128,7 +129,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (WasLastWeaponskill(FangAndClaw))
                                 {
-                                    if (IsOffCooldown(OriginalHook(Jump)))
+                                    if (IsOffCooldown(OriginalHook(Jump)) && !HasEffect(Buffs.DiveReady))
                                         return OriginalHook(Jump);
                                     if (GetRemainingCharges(SpineshatterDive) > 0 && !HasEffect(Buffs.DiveReady))
                                         return SpineshatterDive;
@@ -147,26 +148,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (WasLastWeaponskill(HeavensThrust) && GetRemainingCharges(SpineshatterDive) > 0 && !WasLastAction(SpineshatterDive))
                                     return SpineshatterDive;
                             }
-
-                            //GCDs
-                            if (HasEffect(Buffs.SharperFangAndClaw))
-                                return FangAndClaw;
-                            if (HasEffect(Buffs.EnhancedWheelingThrust))
-                                return WheelingThrust;
-
-                            if (comboTime > 0)
-                            {
-                                if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel) && GetBuffRemainingTime(Buffs.PowerSurge) < 10)
-                                    return Disembowel;
-                                if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
-                                    return OriginalHook(ChaosThrust);
-                                if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
-                                    return VorpalThrust;
-                                if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
-                                    return OriginalHook(FullThrust);
-                            }
-
-                            return OriginalHook(TrueThrust);
                         }
 
                         if (!inOpener)
@@ -225,24 +206,25 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
                             }
-
-                            //1-2-3 Combo
-                            if (HasEffect(Buffs.SharperFangAndClaw))
-                                return FangAndClaw;
-                            if (HasEffect(Buffs.EnhancedWheelingThrust))
-                                return WheelingThrust;
-                            if (comboTime > 0)
-                            {
-                                if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel) && GetBuffRemainingTime(Buffs.PowerSurge) < 10)
-                                    return Disembowel;
-                                if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
-                                    return OriginalHook(ChaosThrust);
-                                if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
-                                    return VorpalThrust;
-                                if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
-                                    return OriginalHook(FullThrust);
-                            }
                         }
+
+                        //1-2-3 Combo
+                        if (HasEffect(Buffs.SharperFangAndClaw))
+                            return FangAndClaw;
+                        if (HasEffect(Buffs.EnhancedWheelingThrust))
+                            return WheelingThrust;
+                        if (comboTime > 0)
+                        {
+                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel) && GetBuffRemainingTime(Buffs.PowerSurge) < 10)
+                                return Disembowel;
+                            if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
+                                return OriginalHook(ChaosThrust);
+                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
+                                return VorpalThrust;
+                            if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
+                                return OriginalHook(FullThrust);
+                        }
+
                     }
 
                     return OriginalHook(TrueThrust);
@@ -335,6 +317,47 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     return OriginalHook(DoomSpike);
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class DRG_StardiverFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_StardiverFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Stardiver)
+                {
+                    var gauge = GetJobGauge<DRGGauge>();
+
+                    if (gauge.IsLOTDActive && IsOffCooldown(Stardiver) && LevelChecked(Stardiver))
+                        return Stardiver;
+                    if ((LevelChecked(Geirskogul) && !gauge.IsLOTDActive) || gauge.IsLOTDActive)
+                        return OriginalHook(Geirskogul);
+
+                }
+                return actionID;
+            }
+        }
+
+        internal class DRG_BurstCDFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_BurstCDFeature;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is LanceCharge)
+                {
+                    if (IsOnCooldown(LanceCharge))
+                    {
+                        if (IsEnabled(CustomComboPreset.DRG_BurstCDFeature_DragonSight) && IsOffCooldown(DragonSight) && LevelChecked(DragonSight))
+                            return DragonSight;
+                        if (LevelChecked(BattleLitany) && IsOffCooldown(BattleLitany))
+                            return BattleLitany;
+                    }
                 }
 
                 return actionID;
