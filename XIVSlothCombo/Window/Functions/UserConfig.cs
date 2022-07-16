@@ -965,6 +965,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Battle Litany", "Requires Double Weaving. Uses Spineshatter Dive and Dragonfire Dive under Battle Litany, and Stardiver under Life of the Dragon.", 3);
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Lance Charge", "Single Weave friendly. Uses Spineshatter Dive and Dragonfire Dive under Lance Charge, and Stardiver under Life of the Dragon.", 4);
             }
+
+            if (preset == CustomComboPreset.DRG_ST_Opener && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Standard Opener", "Uses the Standard Tincture Opener.", 1);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Low Ping Opener", "Uses the Low Ping Opener. Use Lance Charge after True Thrust for the No Tincture opener.", 2);                
+            }
             #endregion
             // ====================================================================================
             #region GUNBREAKER
