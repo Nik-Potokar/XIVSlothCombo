@@ -3022,15 +3022,23 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region NINJA
-        [ConflictingCombos(NINPvP_AoE_BurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
         NINPvP_ST_BurstMode = 80050,
 
-        [ConflictingCombos(NINPvP_ST_BurstMode)]
         [SecretCustomCombo]
         [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
         NINPvP_AoE_BurstMode = 80051,
+
+        [ParentCombo(NINPvP_ST_BurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Meisui Feature", "Uses Three Mudra on Meisui when HP under a certain threshold.", NINPVP.JobID)]
+        NINPvP_ST_Meisui = 80052,
+
+        [ParentCombo(NINPvP_AoE_BurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Meisui Feature", "Uses Three Mudra on Meisui when HP under a certain threshold.", NINPVP.JobID)]
+        NINPvP_AoE_Meisui = 80053,
         #endregion
 
         #region SAGE
