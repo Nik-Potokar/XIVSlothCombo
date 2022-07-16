@@ -902,7 +902,7 @@ namespace XIVSlothCombo.Combos
         DRK_StalwartSoulCombo = 5001,
 
         [ReplaceSkill(DRK.Souleater)]
-        [ParentCombo(DRK_MainComboBuffs_Group)]
+        [ParentCombo(DRK_MainComboCDs_Group)]
         [CustomComboInfo("Bloodspiller Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "")]
         DRK_Bloodspiller = 5002,
 
