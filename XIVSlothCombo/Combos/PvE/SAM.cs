@@ -100,11 +100,13 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public const string
-                SAM_ST_KenkiOvercapAmount = "SamKenkiOvercapAmount";
-            public const string
-                SAM_AoE_KenkiOvercapAmount = "SamAOEKenkiOvercapAmount";
-            public const string
-                SAM_FillerCombo = "SamFillerCombo";
+                SAM_ST_KenkiOvercapAmount = "SamKenkiOvercapAmount",
+                SAM_AoE_KenkiOvercapAmount = "SamAOEKenkiOvercapAmount",
+                SAM_FillerCombo = "SamFillerCombo",
+                SAM_STSecondWindThreshold = "SAM_STSecondWindThreshold",
+                SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoESecondWindThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold";
         }
 
 
@@ -438,6 +440,15 @@ namespace XIVSlothCombo.Combos.PvE
                                 //oGCDs
                                 if (CanSpellWeave(actionID))
                                 {
+                                    // healing - please move if not appropriate this high priority
+                                    if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
+                                    {
+                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                            return All.SecondWind;
+                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                            return All.Bloodbath;
+                                    }
+
                                     //Senei Features
                                     if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_Senei) && gauge.Kenki >= 25 && IsOffCooldown(Senei) && level >= Levels.Senei)
                                     {
@@ -622,6 +633,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_Ikishoten) && gauge.Kenki <= 50 && IsOffCooldown(Ikishoten) && level >= Levels.Ikishoten)
                             return Ikishoten;
+
+                        // healing - please move if not appropriate this high priority
+                        if (IsEnabled(CustomComboPreset.SAM_AoE_ComboHeals))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                return All.Bloodbath;
+                        }
 
                         if (IsEnabled(CustomComboPreset.SAM_AoE_Overcap) && gauge.Kenki >= SamAOEKenkiOvercapAmount && level >= Levels.Kyuten)
                             return Kyuten;

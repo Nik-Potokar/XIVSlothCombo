@@ -351,13 +351,12 @@ namespace XIVSlothCombo.Combos.PvE
                         bool rainOfDeathReady = LevelChecked(RainOfDeath) && GetRemainingCharges(RainOfDeath) > 0;
                         bool sidewinderReady = LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder);
 
-                        // healing - pelase move if not appropriate this high priority
+                        // healing - please move if not appropriate this high priority
                         if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
                         {
                             if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                                 return All.SecondWind;
                         }
-
 
                         if (LevelChecked(PitchPerfect) && songWanderer && gauge.Repertoire == 3)
                             return OriginalHook(WanderersMinuet);
@@ -538,7 +537,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
 
-                                // healing - pelase move if not appropriate this high priority
+                                // healing - please move if not appropriate this high priority
                                 if (IsEnabled(CustomComboPreset.BRD_ST_SecondWind))
                                 {
                                     if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
