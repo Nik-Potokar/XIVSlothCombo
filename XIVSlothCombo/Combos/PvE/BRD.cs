@@ -70,7 +70,9 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 BRD_RagingJawsRenewTime = "ragingJawsRenewTime",
-                BRD_NoWasteHPPercentage = "noWasteHpPercentage";
+                BRD_NoWasteHPPercentage = "noWasteHpPercentage",
+                BRD_STSecondWindThreshold = "BRD_STSecondWindThreshold",
+                BRD_AoESecondWindThreshold = "BRD_STSecondWindThreshold";
         }
 
         #region Song status
@@ -349,6 +351,14 @@ namespace XIVSlothCombo.Combos.PvE
                         bool rainOfDeathReady = LevelChecked(RainOfDeath) && GetRemainingCharges(RainOfDeath) > 0;
                         bool sidewinderReady = LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder);
 
+                        // healing - pelase move if not appropriate this high priority
+                        if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+                        }
+
+
                         if (LevelChecked(PitchPerfect) && songWanderer && gauge.Repertoire == 3)
                             return OriginalHook(WanderersMinuet);
                         if (empyrealReady)
@@ -526,6 +536,13 @@ namespace XIVSlothCombo.Combos.PvE
                                             return EmpyrealArrow;
                                         return ArmysPaeon;
                                     }
+                                }
+
+                                // healing - pelase move if not appropriate this high priority
+                                if (IsEnabled(CustomComboPreset.BRD_ST_SecondWind))
+                                {
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                        return All.SecondWind;
                                 }
                             }
 

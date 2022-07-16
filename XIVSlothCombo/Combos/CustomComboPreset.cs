@@ -515,7 +515,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
         [ConflictingCombos(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready.", BRD.JobID, 0, "", "")]
         BRD_AoE_Combo = 3008,
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
@@ -538,15 +538,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID, 0, "", "")]
         BRD_Buffs = 3013,
 
-        [CustomComboInfo("One Button Songs", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("One Button Songs", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns.", BRD.JobID, 0, "", "")]
         BRD_OneButtonSongs = 3014,
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID, 0, "", "")]
         BRD_AoE_SimpleMode = 3015,
 
         [ParentCombo(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE.", BRD.JobID, 0, "", "")]
         BRD_AoE_Simple_Songs = 3016,
 
         [ParentCombo(BRD_ST_SimpleMode)]
@@ -562,7 +562,7 @@ namespace XIVSlothCombo.Combos
         BRD_Simple_NoWaste = 3019,
 
         [ParentCombo(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable.", BRD.JobID, 0, "", "")]
         BRD_Simple_Interrupt = 3020,
 
         [CustomComboInfo("Disable Apex Arrow", "Removes Apex Arrow from Simple Bard and AoE Feature.", BRD.JobID, 0, "", "")]
@@ -579,7 +579,7 @@ namespace XIVSlothCombo.Combos
 
         [ConflictingCombos(BRD_ST_SimpleMode)]
         [ParentCombo(BRD_IronJaws)]
-        [CustomComboInfo("Iron Jaws Apex", "Adds Apex and Blast Arrow to Iron Jaws when available", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Iron Jaws Apex", "Adds Apex and Blast Arrow to Iron Jaws when available.", BRD.JobID, 0, "", "")]
         BRD_IronJawsApex = 3024,
 
         [ParentCombo(BRD_ST_SimpleMode)]
@@ -593,6 +593,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BRD_AoE_Simple_Songs)]
         [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
         BRD_AoE_Simple_SongsExcludeWM = 3027,
+
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_ST_SecondWind = 3028,
+
+        [ParentCombo(BRD_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_AoE_SecondWind = 3029,
 
         #endregion
 
