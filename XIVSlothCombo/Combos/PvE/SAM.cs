@@ -499,33 +499,34 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Yukikaze) && gauge.Sen.HasFlag(Sen.SETSU) == false)
                                     return Yukikaze;
                             }
-
-                            if (comboTime > 0)
-                            {
-                                if (lastComboMove == Hakaze && LevelChecked(Jinpu))
-                                {
-                                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Yukikaze) && gauge.Sen.HasFlag(Sen.SETSU) == false && LevelChecked(Yukikaze) && HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
-                                        return Yukikaze;
-
-                                    if ((!LevelChecked(Kasha) && ((GetBuffRemainingTime(Buffs.Fugetsu) < GetBuffRemainingTime(Buffs.Fuka)) || !HasEffect(Buffs.Fugetsu))) || 
-                                        (LevelChecked(Kasha) && gauge.Sen.HasFlag(Sen.GETSU) == false))
-                                        return Jinpu;
-
-                                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && LevelChecked(Shifu) &&
-                                        ((!LevelChecked(Kasha) && ((GetBuffRemainingTime(Buffs.Fuka) < GetBuffRemainingTime(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka))) || (LevelChecked(Kasha) && gauge.Sen.HasFlag(Sen.KA) == false)))
-                                        return Shifu;
-
-                                    return Jinpu;
-                                }
-
-                                if (lastComboMove == Jinpu && LevelChecked(Gekko))
-                                    return Gekko;
-
-                                if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && lastComboMove == Shifu && LevelChecked(Kasha))
-                                    return Kasha;
-                            }
                         }
                     }
+
+                    if (comboTime > 0 && !inOpener)
+                    {
+                        if (lastComboMove == Hakaze && LevelChecked(Jinpu))
+                        {
+                            if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Yukikaze) && gauge.Sen.HasFlag(Sen.SETSU) == false && LevelChecked(Yukikaze) && HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                                return Yukikaze;
+
+                            if ((!LevelChecked(Kasha) && ((GetBuffRemainingTime(Buffs.Fugetsu) < GetBuffRemainingTime(Buffs.Fuka)) || !HasEffect(Buffs.Fugetsu))) ||
+                                (LevelChecked(Kasha) && gauge.Sen.HasFlag(Sen.GETSU) == false))
+                                return Jinpu;
+
+                            if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && LevelChecked(Shifu) &&
+                                ((!LevelChecked(Kasha) && ((GetBuffRemainingTime(Buffs.Fuka) < GetBuffRemainingTime(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka))) || (LevelChecked(Kasha) && gauge.Sen.HasFlag(Sen.KA) == false)))
+                                return Shifu;
+
+                            return Jinpu;
+                        }
+
+                        if (lastComboMove == Jinpu && LevelChecked(Gekko))
+                            return Gekko;
+
+                        if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && lastComboMove == Shifu && LevelChecked(Kasha))
+                            return Kasha;
+                    }
+
                     return Hakaze;
                 }
 
