@@ -1288,7 +1288,7 @@ namespace XIVSlothCombo.Combos
         GNB_ST_SonicBreak = 7021,
 
         [ReplaceSkill(GNB.NoMercy)]
-        [CustomComboInfo("Cooldowns on NM", "Adds Cooldowns to No Mercy when NM is on cooldown.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Cooldowns on No Mercy", "Adds Cooldowns to No Mercy when No Mercy is on cooldown.", GNB.JobID, 0, "", "")]
         GNB_NoMercy_Cooldowns = 7022,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
@@ -1323,11 +1323,11 @@ namespace XIVSlothCombo.Combos
         GNB_AOE_SonicBreak = 7030,
 
         [ParentCombo(GNB_NoMercy_Cooldowns)]
-        [CustomComboInfo("Double Down Option", "Adds Double Down to No Mercy when NM is on cooldown", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
         GNB_NoMercy_Cooldowns_DD = 7031,
 
         [ParentCombo(GNB_NoMercy_Cooldowns)]
-        [CustomComboInfo("Sonic Break/Bow Shock Option", "Adds Sonic Break and Bow Shock to No Mercy when NM is on cooldown", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Sonic Break/Bow Shock Option", "Adds Sonic Break and Bow Shock to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
         GNB_NoMercy_Cooldowns_SonicBreakBowShock = 7032,
         
         #endregion
