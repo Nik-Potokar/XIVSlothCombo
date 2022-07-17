@@ -391,7 +391,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class NIN_AoE_AdvancedMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; }
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_AoE_AdvancedMode;
 
             protected internal MudraCasting mudraState = new MudraCasting();
 
