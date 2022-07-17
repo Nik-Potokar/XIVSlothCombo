@@ -85,9 +85,12 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public const string
-                MNK_Demolish_Apply = "MnkDemolishApply";
-            public const string
-                MNK_DisciplinedFist_Apply = "MnkDisciplinedFistApply";
+                MNK_Demolish_Apply = "MnkDemolishApply",
+                MNK_DisciplinedFist_Apply = "MnkDisciplinedFistApply",
+                MNK_STSecondWindThreshold = "MNK_STSecondWindThreshold",
+                MNK_STBloodbathThreshold = "MNK_STBloodbathThreshold",
+                MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
+                MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold";
         }
 
         internal class MNK_AoE_SimpleMode : CustomCombo
@@ -132,6 +135,15 @@ namespace XIVSlothCombo.Combos.PvE
                             if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
                             {
                                 return RiddleOfFire;
+                            }
+
+                            // healing - please move if not appropriate this high priority
+                            if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
+                            {
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                    return All.SecondWind;
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                    return All.Bloodbath;
                             }
 
                             if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_PerfectBalance) && level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
@@ -492,6 +504,15 @@ namespace XIVSlothCombo.Combos.PvE
                                    !IsOnCooldown(RiddleOfWind) && IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
                                 {
                                     return RiddleOfWind;
+                                }
+
+                                // healing - please move if not appropriate this high priority
+                                if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
+                                {
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                        return All.SecondWind;
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                        return All.Bloodbath;
                                 }
                             }
                         }

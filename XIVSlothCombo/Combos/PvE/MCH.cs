@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -46,6 +47,13 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Debuffs
         {
             // public const short placeholder = 0;
+        }
+
+        public static class Config
+        {
+            public const string
+                MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
+                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold";
         }
 
         public static class Levels
@@ -286,7 +294,12 @@ namespace XIVSlothCombo.Combos.PvE
                             return GaussRound;
                         else if (ricochetCharges > 0 && level >= Levels.Ricochet)
                             return Ricochet;
+                    }
 
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_SecondWind) && CanWeave(actionID, 0.6))
+                    {
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_SecondWindThreshold) && (LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind)))
+                            return All.SecondWind;
                     }
 
                     if (IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
@@ -421,10 +434,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CanDelayedWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
                         {
                             return Wildfire;
-                        } else if (CanDelayedWeave(actionID,1.1) && !gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
+                        }
+                        else if (CanDelayedWeave(actionID,1.1) && !gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
                         {
                             return Wildfire;
-                        } else if (CanWeave(actionID, 0.6) && gauge.IsOverheated )
+                        }
+                        else if (CanWeave(actionID, 0.6) && gauge.IsOverheated )
                         {
                             return Wildfire;
                         }
@@ -446,7 +461,6 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return OriginalHook(RookAutoturret);
                         }
-
                     }
 
                     
@@ -483,6 +497,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         return HeatBlast;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && CanWeave(actionID, 0.6))
+                    {
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_ST_SecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
                     }
 
                     if (CanWeave(actionID) && gauge.Heat >= 50 && openerFinished && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) && level >= Levels.Hypercharge && !gauge.IsOverheated)

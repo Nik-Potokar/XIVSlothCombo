@@ -515,7 +515,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
         [ConflictingCombos(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready.", BRD.JobID, 0, "", "")]
         BRD_AoE_Combo = 3008,
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
@@ -538,15 +538,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID, 0, "", "")]
         BRD_Buffs = 3013,
 
-        [CustomComboInfo("One Button Songs", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("One Button Songs", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns.", BRD.JobID, 0, "", "")]
         BRD_OneButtonSongs = 3014,
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Simple AoE Bard", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID, 0, "", "")]
         BRD_AoE_SimpleMode = 3015,
 
         [ParentCombo(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Simple AoE Bard Song", "Weave songs on the Simple AoE.", BRD.JobID, 0, "", "")]
         BRD_AoE_Simple_Songs = 3016,
 
         [ParentCombo(BRD_ST_SimpleMode)]
@@ -562,7 +562,7 @@ namespace XIVSlothCombo.Combos
         BRD_Simple_NoWaste = 3019,
 
         [ParentCombo(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Interrupt", "Uses interrupt during simple bard rotation if applicable.", BRD.JobID, 0, "", "")]
         BRD_Simple_Interrupt = 3020,
 
         [CustomComboInfo("Disable Apex Arrow", "Removes Apex Arrow from Simple Bard and AoE Feature.", BRD.JobID, 0, "", "")]
@@ -579,7 +579,7 @@ namespace XIVSlothCombo.Combos
 
         [ConflictingCombos(BRD_ST_SimpleMode)]
         [ParentCombo(BRD_IronJaws)]
-        [CustomComboInfo("Iron Jaws Apex", "Adds Apex and Blast Arrow to Iron Jaws when available", BRD.JobID, 0, "", "")]
+        [CustomComboInfo("Iron Jaws Apex", "Adds Apex and Blast Arrow to Iron Jaws when available.", BRD.JobID, 0, "", "")]
         BRD_IronJawsApex = 3024,
 
         [ParentCombo(BRD_ST_SimpleMode)]
@@ -593,6 +593,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BRD_AoE_Simple_Songs)]
         [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
         BRD_AoE_Simple_SongsExcludeWM = 3027,
+
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_ST_SecondWind = 3028,
+
+        [ParentCombo(BRD_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_AoE_SecondWind = 3029,
 
         #endregion
 
@@ -776,8 +784,8 @@ namespace XIVSlothCombo.Combos
             DNC_ST_Simple_FeatherPooling = 4058,
 
             [ParentCombo(DNC_ST_SimpleMode)]
-            [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
-            DNC_ST_Simple_PanicHeals = 4059,
+            [CustomComboInfo("Simple Healing Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
+            DNC_ST_Simple_Heals = 4059,
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Improvisation Option", "Includes Improvisation in the rotation when available.", DNC.JobID, 5, "", "")]
@@ -840,8 +848,8 @@ namespace XIVSlothCombo.Combos
             DNC_AoE_Simple_FeatherPooling = 4078,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
-            [CustomComboInfo("Simple AoE Panic Heals Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 9, "", "")]
-            DNC_AoE_Simple_PanicHeals = 4079,
+            [CustomComboInfo("Simple AoE Healing Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 9, "", "")]
+            DNC_AoE_Simple_Heals = 4079,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Improvisation Option", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 10, "", "")]
@@ -1163,6 +1171,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Wheeling Thrust/Fang and Claw Feature", "Fang And Claw Becomes Wheeling Thrust when under Enhanced Wheeling Thrust Buff.", DRG.JobID, 39, "", "")]
         DRG_FangAndClaw = 6701,
 
+        [ParentCombo(DRG_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+        DRG_ST_ComboHeals = 6702,
+
+        [ParentCombo(DRG_AoE_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+        DRG_AoE_ComboHeals = 6703,
+
         #endregion
 
         #region GUNBREAKER
@@ -1436,6 +1452,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("High Ping Mode", "A high ping friendly mode.\nIt limits the uses of Gauss/Ricochet inside Hypercharge windows.\nThere will be a little dps loss.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_High_Latency_Mode = 8036,
 
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_ST_SecondWind = 8037,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_AoE_SecondWind = 8038,
+
         #endregion
 
         #region MONK
@@ -1541,6 +1565,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the Main Combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Thunderclap = 9025,
+
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+        MNK_ST_ComboHeals = 9026,
+
+        [ParentCombo(MNK_AoE_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+        MNK_AoE_ComboHeals = 9027,
 
         #endregion
 
@@ -1819,7 +1851,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_Stun = 12005,
 
         [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo at 65%% and 40%% HP, respectively.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath, Arcane Crest, and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_ComboHeals = 12006,
 
         [ParentCombo(RPR_ST_SliceCombo)]
@@ -1904,6 +1936,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_AoE_ScytheCombo)]
         [CustomComboInfo("Gluttony and Grim Swathe Option", "Adds Gluttony and Grim Swathe to the AoE combo when current target is afflicted with Death's Design and Soul Gauge < 50.", RPR.JobID, 0, "", "")]
         RPR_AoE_ScytheCombo_GluttonyGrimSwathe = 12029,
+
+        [ParentCombo(RPR_AoE_ScytheCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath, Arcane Crest, and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID, 0, "", "")]
+        RPR_AoE_ScytheCombo_ComboHeals = 12030,
         #endregion
 
         #region Blood Stalk/Grim Swathe Combo Section
@@ -2483,6 +2519,14 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SAM.Gekko, SAM.Yukikaze, SAM.Kasha)]
         [CustomComboInfo("True North Feature", "Adds True North on all ST Combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0, "", "")]
         SAM_TrueNorth = 15038,
+
+        [ParentCombo(SAM_ST_GekkoCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath, Arcane Crest, and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
+        SAM_ST_ComboHeals = 15039,
+
+        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath, Arcane Crest, and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
+        SAM_AoE_ComboHeals = 15040,
         #endregion
 
         #endregion

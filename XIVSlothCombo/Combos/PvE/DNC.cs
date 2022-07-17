@@ -98,9 +98,9 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 DNCSimpleFeatherBurstPercent = "DNCSimpleFeatherBurstPercent";              // Feather burst    target HP% threshold
             public const string
-                DNCSimplePanicHealWaltzPercent = "DNCSimplePanicHealWaltzPercent";          // Curing Waltz     player HP% threshold
+                DNCSimpleHealWaltzThreshold = "DNCSimpleHealWaltzThreshold";          // Curing Waltz     player HP% threshold
             public const string
-                DNCSimplePanicHealWindPercent = "DNCSimplePanicHealWindPercent";            // Second Wind      player HP% threshold
+                DNCSimpleHealWindThreshold = "DNCSimpleHealWindThreshold";            // Second Wind      player HP% threshold
             #endregion
 
             #region Simple AoE Sliders
@@ -109,9 +109,9 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 DNCSimpleTSAoEBurstPercent = "DNCSimpleTSAoEBurstPercent";                  // Technical Step   target HP% threshold
             public const string
-                DNCSimpleAoEPanicHealWaltzPercent = "DNCSimpleAoEPanicHealWaltzPercent";    // Curing Waltz     player HP% threshold 
+                DNCSimpleAoEHealWaltzThreshold = "DNCSimpleAoEHealWaltzThreshold";    // Curing Waltz     player HP% threshold 
             public const string
-                DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";      // Second Wind      player HP% threshold
+                DNCSimpleAoEHealWindThreshold = "DNCSimpleAoEHealWindThreshold";      // Second Wind      player HP% threshold
             #endregion
         }
 
@@ -469,23 +469,18 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.FourFoldFanDance))
                             return FanDance4;
 
-                        // Panic Heals
-                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_PanicHeals))
+                        // Heals
+                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Heals))
                         {
-                            bool curingWaltzReady = LevelChecked(CuringWaltz) && IsOffCooldown(CuringWaltz);
-                            bool secondWindReady = LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind);
-                            int waltzThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent);
-                            int secondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent);
-
-                            if (PlayerHealthPercentageHp() < waltzThreshold && curingWaltzReady)
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleHealWaltzThreshold) && LevelChecked(CuringWaltz) && IsOffCooldown(CuringWaltz))
                                 return CuringWaltz;
-                            if (PlayerHealthPercentageHp() < secondWindThreshold && secondWindReady)
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleHealWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                                 return All.SecondWind;
                         }
 
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Improvisation) && improvisationReady)
                             return Improvisation;
-                    }
+                        }
 
                     if (LevelChecked(SaberDance) && (gauge.Esprit >= 85 || (techBurst && gauge.Esprit > 50)))
                         return SaberDance;
@@ -594,17 +589,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.FourFoldFanDance))
                             return FanDance4;
 
-                        // Panic Heals
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_PanicHeals))
+                        //  Heals
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Heals) && canWeave)
                         {
-                            bool curingWaltzReady = LevelChecked(CuringWaltz) && IsOffCooldown(CuringWaltz);
-                            bool secondWindReady = LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind);
-                            int waltzThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWaltzPercent);
-                            int secondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent);
-
-                            if (PlayerHealthPercentageHp() < waltzThreshold && curingWaltzReady)
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEHealWaltzThreshold) && LevelChecked(CuringWaltz) && IsOffCooldown(CuringWaltz))
                                 return CuringWaltz;
-                            if (PlayerHealthPercentageHp() < secondWindThreshold && secondWindReady)
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEHealWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                                 return All.SecondWind;
                         }
 
