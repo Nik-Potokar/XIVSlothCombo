@@ -46,7 +46,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Rampart = 1191,
                 Peloton = 1199,
                 LucidDreaming = 1204,
-                TrueNorth = 1250;
+                TrueNorth = 1250,
+                Raise = 148;
         }
 
         public static class Debuffs
@@ -138,6 +139,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsOffCooldown(Swiftcast))
                         return Swiftcast;
 
+                    if (IsEnabled(CustomComboPreset.ALL_Healer_Raise_Protection) && TargetHasEffectAny(Buffs.Raise)) return Addle;
+
                     if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && LevelChecked(WHM.ThinAir))
                         return WHM.ThinAir;
 
@@ -176,6 +179,9 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (HasEffect(Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
                         return actionID;
+                    
+                    if (IsEnabled(CustomComboPreset.ALL_Caster_Raise_Protection) && TargetHasEffectAny(Buffs.Raise)) return Esuna;
+
                     if (IsOffCooldown(Swiftcast))
                         return Swiftcast;
                 }

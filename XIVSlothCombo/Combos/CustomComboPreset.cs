@@ -107,7 +107,11 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(ALL_Healer_Menu)]
             [CustomComboInfo("Healer: Raise Feature", "Changes the class' Raise Ability into Swiftcast.", ADV.JobID)]
             ALL_Healer_Raise = 100010,
-            #endregion
+
+                [ParentCombo(ALL_Healer_Raise)]
+                [CustomComboInfo("Healer: Double Raise Protection", "Attempts to prevent the use of Raise if the target is has been given a Raise.", ADV.JobID)]
+                ALL_Healer_Raise_Protection = 100011,
+        #endregion
 
         #region Global Magical Ranged Features
         [CustomComboInfo("Global Magical Ranged Features", "Features and options involving shared role actions for Magical Ranged DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
@@ -121,7 +125,11 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(ALL_Caster_Menu)]
             [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
             ALL_Caster_Raise = 100021,
-            #endregion
+
+                [ParentCombo(ALL_Caster_Raise)]
+                [CustomComboInfo("Magical Ranged DPS: Double Raise Protection", "Attempts to prevent the use of Raise if the target is has been given a Raise.", ADV.JobID)]
+                ALL_Caster_Raise_Protection = 100022,
+        #endregion
 
         #region Global Melee Features
         [CustomComboInfo("Global Melee DPS Features", "Features and options involving shared role actions for Melee DPS.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
