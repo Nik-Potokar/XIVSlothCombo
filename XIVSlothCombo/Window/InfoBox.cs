@@ -20,6 +20,8 @@ namespace XIVSlothCombo.Window
         private uint ColorU32 => ImGui.GetColorU32(Color);
         private Vector2 StartPosition { get; set; }
         public bool Debug { get; set; } = false;
+        public bool HasMaxWidth { get; set; } = false;
+        public bool IsSubBox { get; set; } = false;
 
         public void Draw()
         {
@@ -41,6 +43,12 @@ namespace XIVSlothCombo.Window
             if (AutoResize)
             {
                 Size = Size with { Y = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y + (CurveRadius * 2.0f) };
+            }
+
+            if (HasMaxWidth)
+            {
+                if ((ImGui.GetItemRectMax().X - ImGui.GetItemRectMin().X + 15f) < ImGui.GetWindowSize().X - 60f)
+                Size = Size with { X = ImGui.GetItemRectMax().X - ImGui.GetItemRectMin().X + 15f };
             }
 
             DrawCorners();

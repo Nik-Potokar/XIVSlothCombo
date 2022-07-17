@@ -56,6 +56,7 @@ namespace XIVSlothCombo
             });
 
             Service.ClientState.Login += PrintLoginMessage;
+            if (Service.ClientState.IsLoggedIn) ResetFeatures();
 
             KillRedundantIDs();
         }
@@ -69,12 +70,22 @@ namespace XIVSlothCombo
             }
 
             Service.Configuration.Save();
+            
+
+        }
+
+        private void ResetFeatures()
+        {
+            //Enumerable.Range is a start and count, not a start and end.
+            Service.Configuration.ResetFeatures("NINRework", Enumerable.Range(10000, 100).ToArray());
         }
 
         private void DrawUI() => configWindow.Draw();
 
         private void PrintLoginMessage(object? sender, EventArgs e)
         {
+            Task.Delay(TimeSpan.FromSeconds(5)).ContinueWith(task => ResetFeatures());
+
             if (!Service.Configuration.HideMessageOfTheDay)
                 Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(task => PrintMotD());
         }
@@ -373,7 +384,6 @@ namespace XIVSlothCombo
                             break;
                         }
                     }
-
                 default:
                     configWindow.Visible = !configWindow.Visible;
                     break;
