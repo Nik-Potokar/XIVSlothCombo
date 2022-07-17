@@ -213,9 +213,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Dives))
                                     {
                                         if (diveOptions is 0 or 1 || //Dives on cooldown
-                                           (diveOptions is 2 && gauge.IsLOTDActive && HasEffect(Buffs.BattleLitany)) || //Dives under Litany and Life of the Dragon
-                                           (diveOptions is 3 && HasEffect(Buffs.BattleLitany)) || //Dives under Litany
-                                           (diveOptions is 4 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
+                                           (diveOptions is 2 && ((gauge.IsLOTDActive && LevelChecked(Nastrond)) || !LevelChecked(Nastrond)) && HasEffectAny(Buffs.BattleLitany)) || //Dives under Litany and Life of the Dragon
+                                           (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
                                         {
                                             if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive))
                                                 return DragonfireDive;
@@ -223,7 +222,7 @@ namespace XIVSlothCombo.Combos.PvE
                                                 return SpineshatterDive;
                                         }
  
-                                        if (diveOptions is 0 or 1 or 2 or 3 or 4 && gauge.IsLOTDActive && LevelChecked(Stardiver) && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.3))
+                                        if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && LevelChecked(Stardiver) && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.3))
                                             return Stardiver;
                                     }
                                 }
@@ -314,9 +313,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Dives))
                             {
                                 if (DiveOptions is 0 or 1 || //Dives on cooldown
-                                   (DiveOptions is 2 && gauge.IsLOTDActive && HasEffect(Buffs.BattleLitany)) || //Dives under Litany and Life of the Dragon
-                                   (DiveOptions is 3 && HasEffect(Buffs.BattleLitany)) || //Dives under Litany
-                                   (DiveOptions is 4 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
+                                   (DiveOptions is 2 && ((LevelChecked(Nastrond) && gauge.IsLOTDActive) || !LevelChecked(Nastrond)) && HasEffectAny(Buffs.BattleLitany)) || //Dives under Litany and Life of the Dragon
+                                   (DiveOptions is 3 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
                                 {
                                     if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive))
                                         return DragonfireDive;
@@ -324,7 +322,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         return SpineshatterDive;
                                 }
 
-                                if (DiveOptions is 0 or 1 or 2 or 3 or 4 && gauge.IsLOTDActive && LevelChecked(Stardiver) && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.3))
+                                if (DiveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && LevelChecked(Stardiver) && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.3))
                                     return Stardiver;
                             }
                         }
