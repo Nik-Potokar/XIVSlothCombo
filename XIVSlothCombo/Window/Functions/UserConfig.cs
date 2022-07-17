@@ -133,6 +133,161 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Spacing();
         }
 
+        /// <summary> 
+        /// Draws two radio buttons for a on/off situation. <br/>
+        /// First radio button is "false/off", Second radio button is "true/on"
+        /// </summary>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="falseName"> Display name of the false/off result of the feature. </param>
+        /// <param name="falseDescription"> The description for the false/off result. </param>
+        /// <param name="trueName"> Display name of the true/on result of the feature. </param>
+        /// <param name="trueDescription"> The description for the true/on result. </param>
+        /// <param name="itemWidth"></param>
+        /// <param name="nameColor"></param>
+        /// <param name="descriptionColor">Default Color is DalamudYellow</param>
+        public static void DrawBoolRadioButtons(
+            string config, 
+            string falseName, string falseDescription, 
+            string trueName,string trueDescription,
+            float itemWidth = 150,
+            Vector4 nameColor = new Vector4(),
+            Vector4 descriptionColor = new Vector4())
+        {
+            ImGui.Indent();
+            bool nameColorChanged = !(nameColor == new Vector4());
+            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
+
+            int currentSetting = Convert.ToByte(PluginConfiguration.GetCustomBoolValue(config));
+            ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
+            
+            //Radiobutton insulation.
+            ImGui.BeginTable(config, 1); 
+            ImGui.TableNextColumn();
+
+            int radioSetting = currentSetting; //backup the current config value
+            // Radio does NOT like the name###config solution. Started working when it was removed
+
+            void DrawTheButtons(string name, string desc, byte idx)
+            {
+                if (nameColorChanged) ImGui.PushStyleColor(ImGuiCol.Text, nameColor);
+                ImGui.RadioButton(name, ref radioSetting, idx);
+                if (nameColorChanged) ImGui.PopStyleColor();
+                // Append Description
+                if (!desc.IsNullOrEmpty())
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+                    ImGui.TextWrapped(desc);
+                    ImGui.PopStyleColor();
+                }
+            }
+
+            DrawTheButtons(falseName, falseDescription,0); //Draw first radio
+            DrawTheButtons(trueName, trueDescription,1);   //Draw second radio
+
+            ImGui.EndTable(); //Exit the table
+
+            if (currentSetting != radioSetting) //compare if radio buttons changed
+            {
+                Dalamud.Logging.PluginLog.LogDebug($"UserConfig Item {config} updated. Previously {currentSetting}, now {radioSetting}");
+                PluginConfiguration.SetCustomBoolValue(config, Convert.ToBoolean(radioSetting));
+            }           
+
+            ImGui.Unindent();
+            ImGui.Spacing();
+        }
+
+        /// <summary> 
+        /// Draws a linked radio group for a config value.<br/>
+        /// First option is default. Indexing starts at 0 <br/>
+        /// </summary>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="nameAndDesc"> String=String dictionary of display names and description of each radio button. </param>
+        /// <param name="horizontalList"> Set to render as a Horizontal layout. </param>
+        /// <param name="hoverdescription"> Description will show as a hovered item instead of below the radio button. <br/>
+        ///                                 This is enforced regardless when using a horizontal list</param>
+        /// <param name="indexAtOne">Start indexing at 1 instead of 0</param>
+        /// <param name="itemWidth"></param>
+        /// <param name="nameColor"></param>
+        /// <param name="descriptionColor">Default Color is ImGUIColors.DalamudYellow</param>
+        public static void DrawRadioButtonGroup(
+            string config,
+            string[,] nameAndDesc,
+            bool horizontalList = false,
+            bool hoverdescription = false,
+            bool indexAtOne = false,
+            float itemWidth = 150,
+            Vector4 nameColor = new Vector4(),
+            Vector4 descriptionColor = new Vector4())
+        {
+            ImGui.Indent();
+            bool nameColorChanged = !(nameColor == new Vector4());
+            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
+
+            byte indexdiff = Convert.ToByte(indexAtOne);
+            int currentSetting = PluginConfiguration.GetCustomIntValue(config);
+            
+            //If the option has never been set (not even in the saved data), it's default is zero.
+            //So if we're indexing at 1, we need to adjust the "default" from 0 to 1
+            if (currentSetting is 0 && indexAtOne) currentSetting++;
+
+            //Create a fake table to insulate radio buttons
+            //Without it, sometimes the last option becomes unclickable when
+            //no value exists and json file hasn't saved.
+            ImGui.BeginTable(config, 1); 
+            ImGui.TableNextColumn();
+
+            ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine();
+
+            int radioSetting = currentSetting; //backup the current config value
+            
+            //Convert the 2D array of names and descriptions into radio buttons
+            for (int idx = 0; idx < nameAndDesc.GetLength(0); idx++)
+            {
+                if (nameColorChanged) ImGui.PushStyleColor(ImGuiCol.Text, nameColor);
+                ImGui.RadioButton(nameAndDesc[idx,0], ref radioSetting, idx+indexdiff);//Name, "result", index
+                if (nameColorChanged) ImGui.PopStyleColor();
+
+                if (!nameAndDesc[idx,1].IsNullOrEmpty())
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+                    if (!hoverdescription && !horizontalList) 
+                        ImGui.TextWrapped(nameAndDesc[idx, 1]);
+                    if ((hoverdescription || horizontalList) && ImGui.IsItemHovered())
+                    {
+                        ImGui.BeginTooltip();
+                        ImGui.TextUnformatted(nameAndDesc[idx, 1]);
+                        ImGui.EndTooltip();
+                    }
+
+                    ImGui.PopStyleColor();
+                }
+
+                if (horizontalList)
+                {
+                    ImGui.SameLine();
+                    ImGui.Dummy(new Vector2(21, 0)); //Spacer
+                    ImGui.SameLine();
+                }
+            }
+
+            ImGui.EndTable(); //End radiobutton insulation
+
+            if (currentSetting != radioSetting) //compare if radio buttons changed, and update
+            {
+                Dalamud.Logging.PluginLog.LogDebug($"UserConfig Item {config} updated. Previously {currentSetting}, now {radioSetting}");
+                PluginConfiguration.SetCustomIntValue(config, radioSetting);
+            }
+
+            ImGui.Unindent();
+            ImGui.Spacing();
+        }
+
         /// <summary> Draws a checkbox in a horizontal configuration intended to be linked to other checkboxes sharing the same config value. </summary>
         /// <param name="config"> The config ID. </param>
         /// <param name="checkBoxName"> The name of the feature. </param>
