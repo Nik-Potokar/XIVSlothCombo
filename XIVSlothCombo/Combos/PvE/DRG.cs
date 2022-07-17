@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -61,6 +62,14 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 ChaosThrust = 118,
                 ChaoticSpring = 2719;
+        }
+        public static class Config
+        {
+            public const string
+                DRG_STSecondWindThreshold = "DRG_STSecondWindThreshold",
+                DRG_STBloodbathThreshold = "DRG_STBloodbathThreshold",
+                DRG_AoESecondWindThreshold = "DRG_AoESecondWindThreshold",
+                DRG_AoEBloodbathThreshold = "DRG_AoEBloodbathThreshold";
         }
 
         public static class Levels
@@ -556,6 +565,15 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    // healing - please move if not appropriate this high priority
+                    if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals) && canWeave)
+                    {
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
+                    }
+
                     //Wyrmwind Thrust Feature
                     if (canWeave)
                     {
@@ -722,6 +740,15 @@ namespace XIVSlothCombo.Combos.PvE
                                     IsOffCooldown(DragonSight))
                                     return DragonSight;
                             }
+                        }
+
+                        // healing - please move if not appropriate this high priority
+                        if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                return All.Bloodbath;
                         }
 
                         //Geirskogul and Nastrond AoE Feature Part 1
