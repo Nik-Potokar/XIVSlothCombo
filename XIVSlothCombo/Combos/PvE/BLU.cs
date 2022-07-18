@@ -13,7 +13,9 @@ namespace XIVSlothCombo.Combos.PvE
             FeatherRain = 11426,
             JKick = 18325,
             Eruption = 11427,
+            SharpenedKnife = 11400,
             GlassDance = 11430,
+            SonicBoom = 18308,
             Surpanakha = 18323,
             Nightbloom = 23290,
             MoonFlute = 11415,
@@ -24,6 +26,7 @@ namespace XIVSlothCombo.Combos.PvE
             FinalSting = 11407,
             Bristle = 11393,
             PhantomFlurry = 23288,
+            PerpetualRay = 18314,
             AngelWhisper = 18317,
             SongOfTorment = 11386,
             RamsVoice = 11419,
@@ -58,6 +61,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 Slow = 9,
                 Bind = 13,
+                Stun = 142,
                 SongOfTorment = 273,
                 DeepFreeze = 1731,
                 Offguard = 1717,
@@ -258,15 +262,20 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is FeatherRain)
                 {
-                    if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
+                    if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain) &&
+                        (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 30 || IsOffCooldown(Nightbloom)))))
                         return FeatherRain;
-                    if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
+                    if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike) &&
+                        (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 60 || IsOffCooldown(Nightbloom)))))
                         return ShockStrike;
-                    if (IsOffCooldown(RoseOfDestruction) && IsSpellActive(RoseOfDestruction))
+                    if (IsOffCooldown(RoseOfDestruction) && IsSpellActive(RoseOfDestruction) &&
+                        (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 30 || IsOffCooldown(Nightbloom)))))
                         return RoseOfDestruction;
-                    if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
+                    if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance) &&
+                        (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 90 || IsOffCooldown(Nightbloom)))))
                         return GlassDance;
-                    if (IsOffCooldown(JKick) && IsSpellActive(JKick))
+                    if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_JKick) && IsOffCooldown(JKick) && IsSpellActive(JKick) &&
+                        (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 60 || IsOffCooldown(Nightbloom)))))
                         return JKick;
                 }
 
@@ -307,6 +316,26 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 return actionID;
+            }
+        }
+
+        internal class BLU_PerpetualRayStunCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_PerpetualRayStunCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                return (actionID is PerpetualRay && (TargetHasEffectAny(Debuffs.Stun) || WasLastAction(PerpetualRay)) && IsSpellActive(SharpenedKnife) && InMeleeRange()) ? SharpenedKnife : actionID;
+            }
+        }
+
+        internal class BLU_MeleeCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_MeleeCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                return (actionID is SonicBoom && GetTargetDistance() <= 3 && IsSpellActive(SharpenedKnife)) ? SharpenedKnife : actionID;
             }
         }
     }

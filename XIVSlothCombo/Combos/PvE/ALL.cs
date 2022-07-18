@@ -234,31 +234,15 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-
-        /*
-        internal class DoMSwiftcastFeature : CustomCombo
+        internal class ALL_Ranged_Interrupt : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DoMSwiftcastFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Ranged_Interrupt;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
-                {
-                    if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SGE.Egeiro || actionID == AST.Ascend || actionID == RDM.Verraise)
-                    {
-                        var swiftCD = GetCooldown(All.Swiftcast);
-                        if ((swiftCD.CooldownRemaining == 0 && !HasEffect(RDM.Buffs.Dualcast))
-                            || level <= All.Levels.Raise
-                            || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
-                            return All.Swiftcast;
-                    }
-                }
-
-                return actionID;
+                return (actionID is FootGraze && CanInterruptEnemy() && IsOffCooldown(HeadGraze) && level >= Levels.HeadGraze) ? HeadGraze : actionID;
             }
         }
-
-        */
     }
 }
 
