@@ -203,6 +203,12 @@ namespace XIVSlothCombo.Combos.PvE
                                         (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && LevelChecked(MirageDive) && HasEffect(Buffs.DiveReady)))
                                         return OriginalHook(Jump);
 
+                                    //Life Surge Feature
+                                    if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
+                                        (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is VorpalThrust) ||
+                                        (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))
+                                        return LifeSurge;
+
                                     //Dives Feature
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                     {
@@ -219,12 +225,6 @@ namespace XIVSlothCombo.Combos.PvE
                                                 return SpineshatterDive;
                                         }
                                     }
-
-                                    //Life Surge Feature
-                                    if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
-                                        (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is VorpalThrust) ||
-                                        (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))
-                                        return LifeSurge;
                                 }
                             }
                         }
