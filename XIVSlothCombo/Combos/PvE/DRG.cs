@@ -270,7 +270,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DRG_AoE_RangedUptime) && LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
                         return PiercingTalon;
 
-                    if (CanWeave(actionID, 0.5))
+                    if (CanWeave(actionID))
                     {
                         if (HasEffect(Buffs.PowerSurge))
                         {
