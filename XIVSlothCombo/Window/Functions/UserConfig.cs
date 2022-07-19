@@ -170,6 +170,45 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Unindent();
         }
 
+        /// <summary> Draws multi choice checkboxes in a horizontal configuration. </summary>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="checkBoxName"> The name of the feature. </param>
+        /// <param name="checkboxDescription"> The description of the feature. </param>
+        /// <param name="totalChoices"> The total number of options for the feature </param>
+        /// /// <param name="choice"> If the user ticks this box, this is the value the config will be set to. </param>
+        /// <param name="itemWidth"></param>
+        /// <param name="descriptionColor"></param>
+        public static void DrawHorizontalMultiChoice(string config, string checkBoxName, string checkboxDescription, int totalChoices, int choice, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        {
+            ImGui.Indent();
+            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
+            ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            ImGui.SameLine(); 
+            bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
+
+            if (values.Length == 0) Array.Resize(ref values, totalChoices);
+
+            ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+            if (ImGui.Checkbox($"{checkBoxName}###{config}{choice}", ref values[choice]))
+            {
+                PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+            
+            if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted(checkboxDescription);
+                ImGui.EndTooltip();
+            }
+            
+            ImGui.PopStyleColor();
+
+            ImGui.Unindent();
+        }
+
         public static void DrawPvPStatusMultiChoice(string config)
         {
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
@@ -911,7 +950,25 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region DRAGOON
+            if (preset == CustomComboPreset.DRG_ST_Dives && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "On Cooldown", "Single Weave friendly. Uses skills on cooldown.", 1);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Battle Litany and Life of the Dragon", "Requires Double Weaving. Uses Spineshatter Dive and Dragonfire Dive under Battle Litany and Life of the Dragon, and Stardiver under Life of the Dragon.", 2);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Lance Charge", "Single Weave friendly. Uses Spineshatter Dive and Dragonfire Dive under Lance Charge, and Stardiver under Life of the Dragon.", 3);
+            }
 
+            if (preset == CustomComboPreset.DRG_AoE_Dives && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "On Cooldown", "Single Weave friendly. Uses skills on cooldown.", 1);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Battle Litany and Life of the Dragon", "Requires Double Weaving. Uses Spineshatter Dive and Dragonfire Dive under Battle Litany and Life of the Dragon, and Stardiver under Life of the Dragon.", 2);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Lance Charge", "Single Weave friendly. Uses Spineshatter Dive and Dragonfire Dive under Lance Charge, and Stardiver under Life of the Dragon.", 3);
+            }
+
+            if (preset == CustomComboPreset.DRG_ST_Opener && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Standard Opener", "Uses the Standard Tincture Opener.", 1);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Low Ping Opener", "Uses the Low Ping Opener. Use Lance Charge after True Thrust for the No Tincture opener.", 2);                
+            }
             #endregion
             // ====================================================================================
             #region GUNBREAKER
@@ -1040,6 +1097,15 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_SoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
             }
 
+            if (preset == CustomComboPreset.RPR_Soulsow && enabled)
+            {
+                UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Harpe", "Adds Soulsow to Harpe.", 5, 0);
+                UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Slice", "Adds Soulsow to Slice.", 5, 1);
+                UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Spinning Scythe", "Adds Soulsow to Spinning Scythe", 5, 2);
+                UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Shadow of Death", "Adds Soulsow to Shadow of Death.", 5, 3);
+                UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Blood Stalk", "Adds Soulsow to Blood Stalk.", 5, 4);  
+            }
+            
             #endregion
             // ====================================================================================
             #region RED MAGE
