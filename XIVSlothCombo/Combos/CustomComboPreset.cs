@@ -1107,7 +1107,7 @@ namespace XIVSlothCombo.Combos
             DRG_AoE_RangedUptime = 6209,
 
             [ParentCombo(DRG_AoE_Dives)]
-            [CustomComboInfo("Dives AoE Feature", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 29, "", "")]
+            [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 29, "", "")]
             DRG_AoE_Dives_Melee= 6210,
 
 
