@@ -1014,42 +1014,50 @@ namespace XIVSlothCombo.Combos
         DRG_STCombo = 6100,
 
             [ParentCombo(DRG_STCombo)]
-            [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany and Lance Charge are off cooldown and when True North is used outside of combat. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 12, "", "")]
+            [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany and Lance Charge are off cooldown and when True North is used outside of combat. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
             DRG_ST_Opener = 6101,
 
             [ParentCombo(DRG_STCombo)]
+            [CustomComboInfo("CDs on Main Combo", "Collection of CD features on Main Combo.", DRG.JobID, 0, "", "")]
+            DRG_ST_CDs = 6199,
+
+            [ParentCombo(DRG_STCombo)]
+            [CustomComboInfo("Buffs on Main Combo", "Collection of Buff features on Main Combo.", DRG.JobID, 0, "", "")]
+            DRG_ST_Buffs = 6198,
+
+            [ParentCombo(DRG_ST_CDs)]
             [CustomComboInfo("Wyrmwind Thrust Option", "Includes Wyrmwind Thrust to the rotation.", DRG.JobID, 13, "", "")]
             DRG_ST_Wyrmwind = 6102,
 
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_CDs)]
             [CustomComboInfo("Geirskogul and Nastrond Option", "Includes Geirskogul and Nastrond to the rotation.", DRG.JobID, 18, "", "")]
             DRG_ST_GeirskogulNastrond = 6103,
 
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_CDs)]
             [CustomComboInfo("Dives Option", "Adds Spineshatter Dive, Dragonfire Dive, and Stardiver to the rotation.\n Select options below for when to use dives.", DRG.JobID, 14, "", "")]
             DRG_ST_Dives = 6104,
       
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_CDs)]
             [CustomComboInfo("High Jump Option", "Includes High Jump/Jump to the rotation.", DRG.JobID, 19, "", "")]
             DRG_ST_HighJump = 6105,
 
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_CDs)]
             [CustomComboInfo("Mirage Option", "Includes Mirage Dive to the rotation.", DRG.JobID, 20, "", "")]
             DRG_ST_Mirage = 6106,
 
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_Buffs)]
             [CustomComboInfo("Lance Charge Option", "Includes Lance Charge to the rotation.", DRG.JobID, 21, "", "")]
             DRG_ST_Lance = 6107,
 
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_Buffs)]
             [CustomComboInfo("Dragon Sight Option", "Includes Dragon Sight to the rotation. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 22, "", "")]
             DRG_ST_DragonSight = 6108,
 
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_Buffs)]
             [CustomComboInfo("Battle Litany Option", "Includes Battle Litany to the rotation.", DRG.JobID, 23, "", "")]
             DRG_ST_Litany = 6109,
 
-            [ParentCombo(DRG_STCombo)]
+            [ParentCombo(DRG_ST_CDs)]
             [CustomComboInfo("Life Surge Option", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, 24, "", "")]
             DRG_ST_LifeSurge = 6110,
 
