@@ -1056,7 +1056,12 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(DRG_STCombo)]
             [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 25, "", "")]
             DRG_ST_RangedUptime = 6111,
-            #endregion
+
+            [ParentCombo(DRG_ST_Dives)]
+            [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 14, "", "")]
+            DRG_ST_Dives_Melee = 6112,
+
+        #endregion
 
         #region Advanced Dragoon AoE
         [ReplaceSkill(DRG.CoerthanTorment)]
@@ -1100,6 +1105,12 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(DRG_AoECombo)]
             [CustomComboInfo("Ranged Uptime Option", "Replaces Main AoE Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 40, "", "")]
             DRG_AoE_RangedUptime = 6209,
+
+            [ParentCombo(DRG_AoE_Dives)]
+            [CustomComboInfo("Dives AoE Feature", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 29, "", "")]
+            DRG_AoE_Dives_Melee= 6210,
+
+
         #endregion
         [ReplaceSkill(DRG.Stardiver)]
         [CustomComboInfo("Stardiver Feature", "Turns Stardiver into Nastrond during Life of the Dragon, and Geirskogul outside of Life of the Dragon.", DRG.JobID, 26, "", "")]
