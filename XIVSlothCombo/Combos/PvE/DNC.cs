@@ -455,7 +455,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             int featherBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent);
                             int minFeathers = IsEnabled(CustomComboPreset.DNC_ST_Simple_FeatherPooling) && LevelChecked(TechnicalStep)
-                                ? 3
+                                ? (GetCooldownRemainingTime(TechnicalStep) < 5f?4:3)
                                 : 0;
 
                             if (HasEffect(Buffs.ThreeFoldFanDance))
