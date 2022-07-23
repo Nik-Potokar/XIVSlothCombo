@@ -97,7 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SolidBarrel)
+                if (actionID == KeenEdge)
                 {
                     var gauge = GetJobGauge<GNBGauge>();
                     var roughDivideChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
@@ -347,7 +347,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<GNBGauge>();
-                if (actionID == DemonSlaughter)
+                if (actionID == DemonSlice)
                 {
                     if (CanWeave(actionID))
                     {
