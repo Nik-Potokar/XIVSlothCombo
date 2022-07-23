@@ -1167,8 +1167,8 @@ namespace XIVSlothCombo.Combos
 
         #region GUNBREAKER
 
-        [ReplaceSkill(GNB.SolidBarrel)]
-        [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Gunbreaker)", GNB.JobID, 0, "", "")]
+        [ReplaceSkill(GNB.KeenEdge)]
+        [CustomComboInfo("Keen Edge Combo", "Replace Keen Edge with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Gunbreaker)", GNB.JobID, 0, "", "")]
         GNB_ST_MainCombo = 7000,
 
         [ParentCombo(GNB_ST_MainCombo)]
@@ -1191,11 +1191,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the Main Combo", GNB.JobID, 0, "", "")]
         GNB_ST_BlastingZone = 7005,
 
-        [ReplaceSkill(GNB.DemonSlaughter)]
-        [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "", "")]
+        [ReplaceSkill(GNB.DemonSlice)]
+        [CustomComboInfo("Demon Slice Combo", "Replace Demon Slice with its combo chain.", GNB.JobID, 0, "", "")]
         GNB_AoE_MainCombo = 7006,
 
-        [ReplaceSkill(GNB.SolidBarrel, GNB.DemonSlaughter)]
+        [ReplaceSkill(GNB.KeenEdge, GNB.DemonSlice)]
         [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, 0, "", "")]
         GNB_AmmoOvercap = 7007,
 
