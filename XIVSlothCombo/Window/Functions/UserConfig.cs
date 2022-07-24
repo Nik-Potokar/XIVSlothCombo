@@ -1152,6 +1152,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DRK_Plunge && enabled)
                 UserConfig.DrawSliderInt(0, 1, DRK.Config.DRK_KeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
 
+            if (preset == CustomComboPreset.DRKPvP_Burst)
+                UserConfig.DrawSliderInt(1, 100, DRKPVP.Config.ShadowbringerThreshold, "HP% to be at or above to use Shadowbringer");
+
             #endregion
             // ====================================================================================
             #region DRAGOON

@@ -3313,6 +3313,14 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region DARK KNIGHT
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Souleater Combo into an all-in-one damage button.", DRK.JobID)]
+        DRKPvP_Burst = 80110,
+
+        [SecretCustomCombo]
+        [ParentCombo(CustomComboPreset.DRKPvP_Burst)]
+        [CustomComboInfo("Plunge Feature", "Adds Plunge to Burst Mode", DRK.JobID)]
+        DRKPvP_Plunge = 80111,
 
         #endregion
 
