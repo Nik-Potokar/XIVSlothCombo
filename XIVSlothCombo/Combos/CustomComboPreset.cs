@@ -3322,6 +3322,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Plunge Feature", "Adds Plunge to Burst Mode", DRK.JobID)]
         DRKPvP_Plunge = 80111,
 
+        [SecretCustomCombo]
+        [ParentCombo(CustomComboPreset.DRKPvP_Plunge)]
+        [CustomComboInfo("Use in Melee", "Uses Plunge whilst in melee aswell as to gap close.", DRK.JobID)]
+        DRKPvP_PlungeMelee = 80112,
+
         #endregion
 
         #region DRAGOON

@@ -52,7 +52,7 @@ namespace XIVSlothCombo.Combos.PvP
                     int shadowBringerThreshold = GetOptionValue(Config.ShadowbringerThreshold);
 
 
-                    if (IsEnabled(CustomComboPreset.DRKPvP_Plunge) && HasTarget() && !InMeleeRange() && ActionReady(Plunge))
+                    if (IsEnabled(CustomComboPreset.DRKPvP_Plunge) && HasTarget() && ((!InMeleeRange()) || (InMeleeRange() && IsEnabled(CustomComboPreset.DRKPvP_PlungeMelee))) && ActionReady(Plunge))
                         return OriginalHook(Plunge);
 
                     if (canWeave)
