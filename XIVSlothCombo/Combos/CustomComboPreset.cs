@@ -2456,7 +2456,7 @@ namespace XIVSlothCombo.Combos
             SAM_AoE_MangetsuCombo_Oka = 15021,
 
             [ParentCombo(SAM_AoE_MangetsuCombo)]
-            [CustomComboInfo("Iaijutsu on Mangetsu Combo", "Adds Tenka Goken and Midare: Setsugekka and their relevant Kaeshi when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0, "", "")]
+            [CustomComboInfo("Iaijutsu on Mangetsu Combo", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0, "", "")]
             SAM_AoE_MangetsuCombo_TenkaGoken = 15022,
 
             [ParentCombo(SAM_AoE_MangetsuCombo)]
@@ -2479,9 +2479,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SAM_AoE_MangetsuCombo)]
             [CustomComboInfo("Ikishoten on Mangetsu Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "", "")]
             SAM_AOE_GekkoCombo_CDs_Ikishoten = 15040,
-            
 
-
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Hagakure on Mangetsu Combo", "Adds Hagakure to Mangetsu combo when there are three Sen.", SAM.JobID, 0, "", "")]
+            SAM_AoE_MangetsuCombo_Hagakure = 15041,
 
         [ReplaceSkill(SAM.Oka)]
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "", "")]

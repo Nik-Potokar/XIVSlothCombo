@@ -585,6 +585,8 @@ namespace XIVSlothCombo.Combos.PvE
                     //oGCD Features
                     if (CanSpellWeave(actionID))
                     {
+                        if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Hagakure) && OriginalHook(Iaijutsu) == Setsugekka)
+                            return Hagakure;
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Guren) && IsOffCooldown(Guren) && LevelChecked(Guren) && gauge.Kenki >= 25)
                             return Guren;
 
@@ -619,7 +621,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!IsMoving && (OriginalHook(Iaijutsu) == TenkaGoken || (OriginalHook(Iaijutsu) == Setsugekka && LevelChecked(Setsugekka))))
                             return OriginalHook(Iaijutsu);
 
-                        if ((gauge.Kaeshi == Kaeshi.GOKEN || gauge.Kaeshi == Kaeshi.SETSUGEKKA) && LevelChecked(TsubameGaeshi) && GetRemainingCharges(TsubameGaeshi) > 0)
+                        if (gauge.Kaeshi == Kaeshi.GOKEN && LevelChecked(TsubameGaeshi) && GetRemainingCharges(TsubameGaeshi) > 0)
                             return OriginalHook(TsubameGaeshi);
                     }
 
