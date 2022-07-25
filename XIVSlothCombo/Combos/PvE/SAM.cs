@@ -152,7 +152,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (level == 90 && IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener))
                         {
-                            if (meikyoBuff && openerReady)
+                            if (meikyoBuff && openerReady && !WasLastWeaponskill(Enpi))
                             {
                                 if (!inOpener)
                                     inOpener = true;
@@ -256,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetRemainingCharges(TsubameGaeshi) == 0)
                                 inOpener = false;
 
-                            if (lastComboMove == Yukikaze && oneSeal)
+                            if (lastComboMove == Yukikaze && oneSeal || (lastComboMove is Hakaze && OriginalHook(Iaijutsu) is Setsugekka))
                             {
                                 inOpener = false;
                                 nonOpener = true;
@@ -270,7 +270,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 hasDied = true;
 
                             //Filler Features
-                            if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_FillerCombos) && !hasDied && !nonOpener && level == 90)
+                            if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_FillerCombos) && !hasDied && !nonOpener && level == 90 && combatDuration.Seconds > 50)
                             {
                                 bool oddMinute = GetCooldownRemainingTime(Ikishoten) < 60 && gauge.Sen == Sen.NONE && !meikyoBuff && GetDebuffRemainingTime(Debuffs.Higanbana) > 45;
                                 bool evenMinute = !meikyoBuff && GetCooldownRemainingTime(Ikishoten) > 60 && gauge.Sen == Sen.NONE && GetRemainingCharges(TsubameGaeshi) == 0 && GetDebuffRemainingTime(Debuffs.Higanbana) > 42 && gauge.Kenki > 15;
