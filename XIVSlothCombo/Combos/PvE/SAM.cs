@@ -256,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetRemainingCharges(TsubameGaeshi) == 0)
                                 inOpener = false;
 
-                            if (lastComboMove == Yukikaze && oneSeal || (lastComboMove is Hakaze && OriginalHook(Iaijutsu) is Setsugekka))
+                            if ((lastComboMove == Yukikaze && oneSeal) || (lastComboMove is Hakaze && (threeSeal || gauge.Sen is Sen.SETSU)))
                             {
                                 inOpener = false;
                                 nonOpener = true;
