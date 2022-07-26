@@ -2649,11 +2649,15 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflows stacks when Aetherflow's cooldown has been set below", SCH.JobID, 131, "", "")]
+            SCH_DPS_EnergyDrain = 16160,
+
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move", SCH.JobID, 150, "", "")]
             SCH_DPS_Ruin2Movement = 16140,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150, "", "")]
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
             SCH_DPS_Bio = 16150,        
             #endregion
 
