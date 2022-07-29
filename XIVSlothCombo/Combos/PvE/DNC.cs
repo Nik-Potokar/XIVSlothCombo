@@ -168,6 +168,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            var gauge = GetJobGauge<DNCGauge>();
             var FD3Ready = HasEffect(Buffs.ThreeFoldFanDance);
             var FD4Ready = HasEffect(Buffs.FourFoldFanDance);
             var flourishReady = level >= Levels.Flourish && IsOffCooldown(Flourish);
@@ -177,10 +178,14 @@ namespace XIVSlothCombo.Combos.PvE
                 // FD 1 -> 3
                 if (FD3Ready && IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo))
                     return FanDance3;
-                
+
                 // FD 1 -> Flourish
                 if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_1toFlourish_Combo))
                     return Flourish;
+
+                // FD 1 full
+                if (gauge.Feathers is 4 && level >= Levels.FanDance1)
+                    return FanDance1;
 
                 // FD 1 -> 4
                 if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo))
@@ -193,14 +198,17 @@ namespace XIVSlothCombo.Combos.PvE
                 if (FD3Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo))
                     return FanDance3;
 
-                // FD 2 -> 4
-                if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
-                    return FanDance4;
-
                 // FD 2 -> Flourish
                 if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_2toFlourish_Combo))
                     return Flourish;
 
+                // FD 2 full
+                if (gauge.Feathers is 4 && level >= Levels.FanDance2)
+                    return FanDance2;
+
+                // FD 2 -> 4
+                if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
+                    return FanDance4;
             }
 
             return actionID;
