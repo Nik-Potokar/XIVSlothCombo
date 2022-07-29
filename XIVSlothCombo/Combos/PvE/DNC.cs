@@ -150,39 +150,35 @@ namespace XIVSlothCombo.Combos.PvE
                 var FD4Ready = HasEffect(Buffs.FourFoldFanDance);
                 var flourishReady = level >= Levels.Flourish && IsOffCooldown(Flourish);
 
-                // FD 1 -> Flourish
-                if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_1toFlourish_Combo))
-                    return Flourish;
-
-                // FD 1 full
-                if (gauge.Feathers is 4 && level >= Levels.FanDance1)
-                    return FanDance1;
-
-                // FD 1 -> 4
-                if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo))
-                    return FanDance4;
-            }
-
-                // FD 2 --> 3, FD 2 --> 4
-                if (actionID is FanDance2)
+                if (actionID is FanDance1)
                 {
-                    if (FD3Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo))
-                        return FanDance3;
-                    if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
+                    // FD 1 -> Flourish
+                    if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_1toFlourish_Combo))
+                        return Flourish;
+
+                    // FD 1 full
+                    if (gauge.Feathers is 4 && level >= Levels.FanDance1)
+                        return FanDance1;
+
+                    // FD 1 -> 4
+                    if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo))
                         return FanDance4;
                 }
 
-                // FD 2 -> Flourish
-                if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_2toFlourish_Combo))
-                    return Flourish;
+                if (actionID is FanDance2)
+                {
+                    // FD 2 -> Flourish
+                    if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_2toFlourish_Combo))
+                        return Flourish;
 
-                // FD 2 full
-                if (gauge.Feathers is 4 && level >= Levels.FanDance2)
-                    return FanDance2;
+                    // FD 2 full
+                    if (gauge.Feathers is 4 && level >= Levels.FanDance2)
+                        return FanDance2;
 
-                // FD 2 -> 4
-                if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
-                    return FanDance4;
+                    // FD 2 -> 4
+                    if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
+                        return FanDance4;
+                }
             }
         }
 
