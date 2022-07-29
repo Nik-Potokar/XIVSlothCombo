@@ -701,27 +701,37 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Fan Dance 1 -> 4 Option", "Changes Fan Dance 1 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
             DNC_FanDance_1to4_Combo = 4035,
 
+            [ReplaceSkill(DNC.FanDance1)]
+            [ParentCombo(DNC_FanDanceCombos)]
+            [CustomComboInfo("Fan Dance 1 -> Flourish Option", "Changes Fan Dance 1 to Flourish when available.", DNC.JobID, 0, "", "")]
+            DNC_FanDance_1toFlourish_Combo = 4036,
+
             [ReplaceSkill(DNC.FanDance2)]
             [ParentCombo(DNC_FanDanceCombos)]
             [CustomComboInfo("Fan Dance 2 -> 3 Option", "Changes Fan Dance 2 to Fan Dance 3 when available.", DNC.JobID, 0, "", "")]
-            DNC_FanDance_2to3_Combo = 4036,
+            DNC_FanDance_2to3_Combo = 4037,
 
             [ReplaceSkill(DNC.FanDance2)]
             [ParentCombo(DNC_FanDanceCombos)]
             [CustomComboInfo("Fan Dance 2 -> 4 Option", "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0, "", "")]
-            DNC_FanDance_2to4_Combo = 4037,
+            DNC_FanDance_2to4_Combo = 4038,
+
+            [ReplaceSkill(DNC.FanDance2)]
+            [ParentCombo(DNC_FanDanceCombos)]
+            [CustomComboInfo("Fan Dance 2 -> Flourish Option", "Changes Fan Dance 2 to Flourish when available.", DNC.JobID, 0, "", "")]
+            DNC_FanDance_2toFlourish_Combo = 4039,
             #endregion
 
         // Devilment --> Starfall
         [ReplaceSkill(DNC.Devilment)]
         [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
         [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID, 0, "", "")]
-        DNC_Starfall_Devilment = 4038,
+        DNC_Starfall_Devilment = 4040,
 
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
         [ConflictingCombos(DNC_CombinedDances, DNC_DanceComboReplacer)]
         [CustomComboInfo("Dance Step Combo Feature", "Change Standard Step and Technical Step into each dance step while dancing.\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
-        DNC_DanceStepCombo = 4039,
+        DNC_DanceStepCombo = 4041,
 
         #region Simple Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
