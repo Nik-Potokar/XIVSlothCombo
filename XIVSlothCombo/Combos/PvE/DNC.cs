@@ -152,6 +152,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is FanDance1)
                 {
+                    // FD 1 -> 3
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo) && FD3Ready)
+                        return FanDance3;
+
                     // FD 1 -> Flourish
                     if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_1toFlourish_Combo))
                         return Flourish;
@@ -167,6 +171,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is FanDance2)
                 {
+                    // FD 1 -> 3
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo) && FD3Ready)
+                        return FanDance3;
+
                     // FD 2 -> Flourish
                     if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_2toFlourish_Combo))
                         return Flourish;
