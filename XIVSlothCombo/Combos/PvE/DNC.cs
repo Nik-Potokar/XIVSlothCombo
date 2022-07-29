@@ -146,9 +146,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<DNCGauge>();
-                var FD3Ready = HasEffect(Buffs.ThreeFoldFanDance);
-                var FD4Ready = HasEffect(Buffs.FourFoldFanDance);
-                var flourishReady = level >= Levels.Flourish && IsOffCooldown(Flourish);
+                var FD3Ready = LevelChecked(FanDance3) && HasEffect(Buffs.ThreeFoldFanDance);
+                var FD4Ready = LevelChecked(FanDance4) && HasEffect(Buffs.FourFoldFanDance);
+                var flourishReady = LevelChecked(Flourish) && IsOffCooldown(Flourish);
 
                 if (actionID is FanDance1)
                 {
@@ -157,36 +157,38 @@ namespace XIVSlothCombo.Combos.PvE
                         return FanDance3;
 
                     // FD 1 -> Flourish
-                    if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_1toFlourish_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1toFlourish_Combo) && flourishReady)
                         return Flourish;
 
                     // FD 1 full
-                    if (gauge.Feathers is 4 && level >= Levels.FanDance1)
+                    if (LevelChecked(FanDance1) && gauge.Feathers is 4)
                         return FanDance1;
 
                     // FD 1 -> 4
-                    if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo) && FD4Ready)
                         return FanDance4;
                 }
 
                 if (actionID is FanDance2)
                 {
-                    // FD 1 -> 3
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo) && FD3Ready)
+                    // FD 2 -> 3
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo) && FD3Ready)
                         return FanDance3;
 
                     // FD 2 -> Flourish
-                    if (flourishReady && IsEnabled(CustomComboPreset.DNC_FanDance_2toFlourish_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_2toFlourish_Combo) && flourishReady)
                         return Flourish;
 
                     // FD 2 full
-                    if (gauge.Feathers is 4 && level >= Levels.FanDance2)
+                    if (LevelChecked(FanDance2) && gauge.Feathers is 4)
                         return FanDance2;
 
                     // FD 2 -> 4
-                    if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo) && FD4Ready)
                         return FanDance4;
                 }
+
+                return actionID;
             }
         }
 
@@ -294,6 +296,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     #region Types
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
+                    bool fd3 = HasEffect(Buffs.ThreeFoldFanDance);
+                    bool fd4 = HasEffect(Buffs.FourFoldFanDance);
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     bool canWeave = CanWeave(actionID);
