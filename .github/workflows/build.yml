@@ -6,15 +6,15 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - master
+    - main
 
 env:
   PUBLIC_NAME: XIVSlothCombo
   SOLUTION_NAME: XIVSlothCombo
   INTERNAL_NAME: XIVSlothCombo
   RELEASE_DIR: XIVSlothCombo\bin\Release\XIVSlothCombo
-  PERSONAL_PLUGIN_REPO: jundong321/MyDalamudPlugins
-  PR_PLUGIN_REPO: jundong321/MyDalamudPlugins
+  PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
+  PR_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
 
 jobs:
   build:
