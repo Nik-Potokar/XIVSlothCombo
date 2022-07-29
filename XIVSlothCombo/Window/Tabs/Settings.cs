@@ -1,6 +1,6 @@
-﻿using ImGuiNET;
-using System;
+﻿using System;
 using System.Numerics;
+using ImGuiNET;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Tabs
@@ -14,7 +14,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             #region SubCombos
 
-            var hideChildren = Service.Configuration.HideChildren;
+            bool hideChildren = Service.Configuration.HideChildren;
 
             if (ImGui.Checkbox("Hide SubCombo Options", ref hideChildren))
             {
@@ -34,7 +34,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             #region Conflicting
 
-            var hideConflicting = Service.Configuration.HideConflictedCombos;
+            bool hideConflicting = Service.Configuration.HideConflictedCombos;
             if (ImGui.Checkbox("Hide Conflicted Combos", ref hideConflicting))
             {
                 Service.Configuration.HideConflictedCombos = hideConflicting;
@@ -52,7 +52,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             #region Combat Log
 
-            var showCombatLog = Service.Configuration.EnabledOutputLog;
+            bool showCombatLog = Service.Configuration.EnabledOutputLog;
 
             if (ImGui.Checkbox("Output Log to Chat", ref showCombatLog))
             {
@@ -70,8 +70,8 @@ namespace XIVSlothCombo.Window.Tabs
 
             #region SpecialEvent
 
-            var isSpecialEvent = DateTime.Now.Day == 1 && DateTime.Now.Month == 4;
-            var slothIrl = isSpecialEvent && Service.Configuration.SpecialEvent;
+            bool isSpecialEvent = DateTime.Now.Day == 1 && DateTime.Now.Month == 4;
+            bool slothIrl = isSpecialEvent && Service.Configuration.SpecialEvent;
 
             if (isSpecialEvent)
 
@@ -93,7 +93,7 @@ namespace XIVSlothCombo.Window.Tabs
             float offset = (float)Service.Configuration.MeleeOffset;
             ImGui.PushItemWidth(75);
 
-            var inputChangedeth = false;
+            bool inputChangedeth = false;
             inputChangedeth |= ImGui.InputFloat("Melee Distance Offset", ref offset);
 
             if (inputChangedeth)
@@ -113,7 +113,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             #region Message of the Day
 
-            var motd = Service.Configuration.HideMessageOfTheDay;
+            bool motd = Service.Configuration.HideMessageOfTheDay;
 
             if (ImGui.Checkbox("Hide Message of the Day", ref motd))
             {

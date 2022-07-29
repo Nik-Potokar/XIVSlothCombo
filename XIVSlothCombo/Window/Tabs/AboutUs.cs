@@ -11,7 +11,7 @@ namespace XIVSlothCombo.Window.Tabs
         {
             ImGui.BeginChild("About", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.16.0\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.16.5\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
@@ -24,7 +24,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             if (ImGui.Button("Click here to join our Discord Server!"))
             {
-                Util.OpenLink("https://discord.gg/xivslothcombo");
+                Util.OpenLink("https://discord.gg/xT7zyjzjtY");
             }
 
             ImGui.PopStyleColor();

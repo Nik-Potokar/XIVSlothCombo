@@ -116,16 +116,17 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets a custom float value. </summary>
         public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
         {
-            if (!CustomFloatValues.TryGetValue(config, out float configValue)) { SetCustomFloatValue(config, defaultMinValue); return defaultMinValue; }
+            if (!CustomFloatValues.TryGetValue(config, out float configValue))
+            {
+                SetCustomFloatValue(config, defaultMinValue);
+                return defaultMinValue;
+            }
 
             return configValue;
         }
 
         /// <summary> Sets a custom float value. </summary>
-        public static void SetCustomFloatValue(string config, float value)
-        {
-            CustomFloatValues[config] = value;
-        }
+        public static void SetCustomFloatValue(string config, float value) => CustomFloatValues[config] = value;
 
         #endregion
 
@@ -137,16 +138,17 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets a custom integer value. </summary>
         public static int GetCustomIntValue(string config, int defaultMinVal = 0)
         {
-            if (!CustomIntValues.TryGetValue(config, out int configValue)) { SetCustomIntValue(config, defaultMinVal); return defaultMinVal; }
+            if (!CustomIntValues.TryGetValue(config, out int configValue))
+            {
+                SetCustomIntValue(config, defaultMinVal);
+                return defaultMinVal;
+            }
 
             return configValue;
         }
 
         /// <summary> Sets a custom integer value. </summary>
-        public static void SetCustomIntValue(string config, int value)
-        {
-            CustomIntValues[config] = value;
-        }
+        public static void SetCustomIntValue(string config, int value) => CustomIntValues[config] = value;
 
         #endregion
 
@@ -158,16 +160,17 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets a custom boolean value. </summary>
         public static bool GetCustomBoolValue(string config)
         {
-            if (!CustomBoolValues.TryGetValue(config, out bool configValue)) { SetCustomBoolValue(config, false); return false; }
+            if (!CustomBoolValues.TryGetValue(config, out bool configValue))
+            {
+                SetCustomBoolValue(config, false);
+                return false;
+            }
 
             return configValue;
         }
 
         /// <summary> Sets a custom boolean value. </summary>
-        public static void SetCustomBoolValue(string config, bool value)
-        {
-            CustomBoolValues[config] = value;
-        }
+        public static void SetCustomBoolValue(string config, bool value) => CustomBoolValues[config] = value;
 
         #endregion
 
@@ -179,16 +182,17 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets a custom boolean array value. </summary>
         public static bool[] GetCustomBoolArrayValue(string config)
         {
-            if (!CustomBoolArrayValues.TryGetValue(config, out bool[]? configValue)) { SetCustomBoolArrayValue(config, Array.Empty<bool>()); return Array.Empty<bool>(); }
+            if (!CustomBoolArrayValues.TryGetValue(config, out bool[]? configValue))
+            {
+                SetCustomBoolArrayValue(config, Array.Empty<bool>());
+                return Array.Empty<bool>();
+            }
 
             return configValue;
         }
 
         /// <summary> Sets a custom boolean array value. </summary>
-        public static void SetCustomBoolArrayValue(string config, bool[] value)
-        {
-            CustomBoolArrayValues[config] = value;
-        }
+        public static void SetCustomBoolArrayValue(string config, bool[] value) => CustomBoolArrayValues[config] = value;
 
         #endregion
 
@@ -216,7 +220,7 @@ namespace XIVSlothCombo.Core
         /// <summary> Handles 'special event' feature naming. </summary>
         public bool SpecialEvent { get; set; } = false;
 
-        /// <summary> Hide MotD. </summary>
+        /// <summary> Hides the message of the day. </summary>
         public bool HideMessageOfTheDay { get; set; } = false;
 
         /// <summary> Save the configuration to disk. </summary>

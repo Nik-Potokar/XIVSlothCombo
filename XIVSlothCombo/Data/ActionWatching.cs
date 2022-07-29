@@ -1,13 +1,13 @@
-﻿using Dalamud.Hooking;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Dalamud.Hooking;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
-{ 
+{
     public static class ActionWatching
     {
         internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action> ActionSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!
@@ -24,9 +24,9 @@ namespace XIVSlothCombo.Data
         private static void ReceiveActionEffectDetour(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
         {
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
-            var header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
+            ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
-            if (ActionType is (13 or 2)) return;
+            if (ActionType is 13 or 2) return;
             if (header.ActionId != 7 &&
                 header.ActionId != 8 &&
                 sourceObjectId == Service.ClientState.LocalPlayer.ObjectId)
@@ -36,6 +36,7 @@ namespace XIVSlothCombo.Data
                 {
                     LastActionUseCount = 1;
                 }
+
                 LastAction = header.ActionId;
 
                 ActionSheet.TryGetValue(header.ActionId, out var sheet);
@@ -69,21 +70,17 @@ namespace XIVSlothCombo.Data
         }
 
         public static uint LastAction { get; set; } = 0;
-
         public static int LastActionUseCount { get; set; } = 0;
-
         public static uint ActionType { get; set; } = 0;
-
         public static uint LastWeaponskill { get; set; } = 0;
-
         public static uint LastAbility { get; set; } = 0;
-
         public static uint LastSpell { get; set; } = 0;
 
         public static void OutputLog()
         {
             Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
         }
+
         public static void Dispose()
         {
             ReceiveActionEffectHook?.Dispose();
@@ -92,8 +89,8 @@ namespace XIVSlothCombo.Data
 
         static ActionWatching()
         {
-            ReceiveActionEffectHook ??= new Hook<ReceiveActionEffectDelegate>(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00"), ReceiveActionEffectDetour);
-            SendActionHook ??= new Hook<SendActionDelegate>(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
+            ReceiveActionEffectHook ??= Hook<ReceiveActionEffectDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00"), ReceiveActionEffectDetour);
+            SendActionHook ??= Hook<SendActionDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
         }
 
         public static void Enable()
@@ -109,14 +106,12 @@ namespace XIVSlothCombo.Data
         }
 
         public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.ClassJobLevel : 0;
-
         public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
-
         public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 
         public static List<uint>? GetStatusesByName(string status)
         {
-            if (statusCache.TryGetValue(status, out var list))            
+            if (statusCache.TryGetValue(status, out List<uint>? list))
                 return list;
 
             return statusCache.TryAdd(status, StatusSheet.Where(x => x.Value.Name.ToString().Equals(status, StringComparison.CurrentCultureIgnoreCase)).Select(x => x.Key).ToList())
@@ -150,31 +145,14 @@ namespace XIVSlothCombo.Data
     internal unsafe static class ActionManagerHelper
     {
         private static readonly IntPtr actionMgrPtr;
-
-        internal static IntPtr FpUseAction =>
-            (IntPtr)ActionManager.fpUseAction;
-
-        internal static IntPtr FpUseActionLocation =>
-            (IntPtr)ActionManager.fpUseActionLocation;
-
-        internal static IntPtr CheckActionResources =>
-            (IntPtr)ActionManager.fpCheckActionResources;
-
-        public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero
-            ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;
-
-        public static ushort LastRecievedSeq => actionMgrPtr != IntPtr.Zero
-            ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x112) : (ushort)0;
-
-        public static bool IsCasting => actionMgrPtr != IntPtr.Zero
-            && Marshal.ReadByte(actionMgrPtr + 0x28) != 0;
-
-        public static uint CastingActionId => actionMgrPtr != IntPtr.Zero
-            ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x24) : 0u;
-
-        public static uint CastTargetObjectId => actionMgrPtr != IntPtr.Zero
-            ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x38) : 0u;
-
+        internal static IntPtr FpUseAction => (IntPtr)ActionManager.fpUseAction;
+        internal static IntPtr FpUseActionLocation => (IntPtr)ActionManager.fpUseActionLocation;
+        internal static IntPtr CheckActionResources => (IntPtr)ActionManager.fpCheckActionResources;
+        public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;
+        public static ushort LastRecievedSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x112) : (ushort)0;
+        public static bool IsCasting => actionMgrPtr != IntPtr.Zero && Marshal.ReadByte(actionMgrPtr + 0x28) != 0;
+        public static uint CastingActionId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x24) : 0u;
+        public static uint CastTargetObjectId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x38) : 0u;
         static ActionManagerHelper() => actionMgrPtr = (IntPtr)ActionManager.Instance();
     }
 

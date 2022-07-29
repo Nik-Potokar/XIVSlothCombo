@@ -19,13 +19,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Checks if the player is high enough level to use the passed ID. </summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public static bool LevelChecked(uint id)
-        {
-            if (LocalPlayer.Level < GetLevel(id))
-                return false;
-
-            return true;
-        }
+        public static bool LevelChecked(uint id) => LocalPlayer.Level >= GetLevel(id);
 
         /// <summary> Returns the name of an action from its ID. </summary>
         /// <param name="id"> ID of the action. </param>
@@ -36,6 +30,12 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
         public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
+
+        /// <summary> Checks if the player can use an action based on the level required and off cooldown / has charges.</summary>
+        /// <param name="id"> ID of the action. </param>
+        /// <returns></returns>
+        //Note: Testing so far shows non charge skills have a max charge of 1, and it's zero during cooldown
+        public static bool ActionReady(uint id) => LevelChecked(id) && HasCharges(id);
 
         /// <summary> Checks if the last action performed was the passed ID. </summary>
         /// <param name="id"> ID of the action. </param>
@@ -145,11 +145,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> True or false. </returns>
         public static bool CanSpellWeave(uint actionID, double weaveTime = 0.6)
         {
-            var castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
+            float castTimeRemaining = LocalPlayer.TotalCastTime - LocalPlayer.CurrentCastTime;
 
             if (GetCooldown(actionID).CooldownRemaining > weaveTime &&                          // Prevent GCD delay
-                (castTimeRemaining <= 0.5 &&                                                    // Show in last 0.5sec of cast so game can queue ability
-                GetCooldown(actionID).CooldownRemaining - castTimeRemaining - weaveTime >= 0))  // Don't show if spell is still casting in weave window
+                castTimeRemaining <= 0.5 &&                                                     // Show in last 0.5sec of cast so game can queue ability
+                GetCooldown(actionID).CooldownRemaining - castTimeRemaining - weaveTime >= 0)   // Don't show if spell is still casting in weave window
                 return true;
             return false;
         }

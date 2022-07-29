@@ -17,7 +17,7 @@ namespace XIVSlothCombo.Attributes
         /// <param name="actionIDs"> List of actions the preset replaces. </param>
         internal ReplaceSkillAttribute(params uint[] actionIDs)
         {
-            foreach(uint id in actionIDs)
+            foreach (uint id in actionIDs)
             {
                 if (ActionSheet.TryGetValue(id, out var action) && action != null)
                 {

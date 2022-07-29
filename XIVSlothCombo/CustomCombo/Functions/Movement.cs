@@ -18,7 +18,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 PlayerSpeed = Vector2.Distance(newPosition, Position);
                 IsMoving = PlayerSpeed > 0;
                 Position = LocalPlayer is null ? Vector2.Zero : newPosition;
-                MovingCounter = 50; // refreshes every 50 dalamud ticks for a more accurate representation of speed, otherwise it'll report 0.
+                MovingCounter = 50; // Refreshes every 50 Dalamud ticks for a more accurate representation of speed, otherwise it'll report 0.
             }
 
             if (MovingCounter > 0)

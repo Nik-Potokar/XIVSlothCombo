@@ -132,12 +132,13 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro)
+                if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro) 
+                    || (actionID is SCH.Resurrection && LocalPlayer.ClassJob.Id is SCH.JobID))
                 {
                     if (IsOffCooldown(Swiftcast))
                         return Swiftcast;
 
-                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && level >= WHM.Levels.ThinAir)
+                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && LevelChecked(WHM.ThinAir))
                         return WHM.ThinAir;
 
                     return actionID;
@@ -170,7 +171,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is BLU.AngelWhisper or RDM.Verraise or SMN.Resurrection)
+                if ((actionID is BLU.AngelWhisper or RDM.Verraise) 
+                    || (actionID is SMN.Resurrection && LocalPlayer.ClassJob.Id is SMN.JobID))
                 {
                     if (HasEffect(Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
                         return actionID;
@@ -192,6 +194,22 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Feint)
                 {
                     if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
+                        return BLM.Fire;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class ALL_Melee_TrueNorth : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Melee_TrueNorth;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is TrueNorth)
+                {
+                    if (HasEffect(Buffs.TrueNorth))
                         return BLM.Fire;
                 }
 

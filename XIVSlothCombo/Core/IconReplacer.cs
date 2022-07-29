@@ -29,8 +29,8 @@ namespace XIVSlothCombo.Core
                 .OrderByDescending(x => x.Preset)
                 .ToList();
 
-            getIconHook = new Hook<GetIconDelegate>(Service.Address.GetAdjustedActionId, GetIconDetour);
-            isIconReplaceableHook = new Hook<IsIconReplaceableDelegate>(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
+            getIconHook = Hook<GetIconDelegate>.FromAddress(Service.Address.GetAdjustedActionId, GetIconDetour);
+            isIconReplaceableHook = Hook<IsIconReplaceableDelegate>.FromAddress(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
 
             getIconHook.Enable();
             isIconReplaceableHook.Enable();
@@ -63,15 +63,15 @@ namespace XIVSlothCombo.Core
 
                 if (ClassLocked()) return OriginalHook(actionID);
 
-                var lastComboMove = *(uint*)Service.Address.LastComboMove;
-                var comboTime = *(float*)Service.Address.ComboTimer;
-                var level = Service.ClientState.LocalPlayer?.Level ?? 0;
+                uint lastComboMove = *(uint*)Service.Address.LastComboMove;
+                float comboTime = *(float*)Service.Address.ComboTimer;
+                byte level = Service.ClientState.LocalPlayer?.Level ?? 0;
 
                 BlueMageService.PopulateBLUSpells();
 
-                foreach (var combo in customCombos)
+                foreach (CustomCombo? combo in customCombos)
                 {
-                    if (combo.TryInvoke(actionID, level, lastComboMove, comboTime, out var newActionID))
+                    if (combo.TryInvoke(actionID, level, lastComboMove, comboTime, out uint newActionID))
                         return newActionID;
                 }
 
@@ -90,10 +90,9 @@ namespace XIVSlothCombo.Core
         {
             if (Service.ClientState.LocalPlayer.Level <= 35) Service.ClassLocked = false;
 
-            if ((Service.ClientState.LocalPlayer.ClassJob.Id >= 8 &&
-                Service.ClientState.LocalPlayer.ClassJob.Id <= 25) ||
-                Service.ClientState.LocalPlayer.ClassJob.Id is 27 or 28 ||
-                Service.ClientState.LocalPlayer.ClassJob.Id >= 30) Service.ClassLocked = false;
+            if (Service.ClientState.LocalPlayer.ClassJob.Id is
+                (>= 8 and <= 25) or 27 or 28 or >= 30)
+                Service.ClassLocked = false;
 
             if ((Service.ClientState.LocalPlayer.ClassJob.Id is 1 or 2 or 3 or 4 or 5 or 6 or 7 or 26 or 29) &&
                 !Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BoundByDuty] &&
