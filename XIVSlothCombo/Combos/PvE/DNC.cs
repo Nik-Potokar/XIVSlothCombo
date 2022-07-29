@@ -252,19 +252,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave)
                     {
-                        // ST Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
-                            gauge.Feathers is 4 && LevelChecked(FanDance1))
-                            return FanDance1;
+                        // ST Fan Dance 3 on combo
+                        if (HasEffect(Buffs.ThreeFoldFanDance) && LevelChecked(FanDance3) && IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
+                            return FanDance3;
 
-                        // ST Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
-                        {
-                            if (HasEffect(Buffs.ThreeFoldFanDance) && LevelChecked(FanDance3))
-                                return FanDance3;
-                            if (HasEffect(Buffs.FourFoldFanDance) && LevelChecked(FanDance4))
-                                return FanDance4;
-                        }
+                        // ST Fan Dance overcap protection
+                        if (gauge.Feathers is 4 && LevelChecked(FanDance1) && IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap))
+                            return FanDance1;
+                        
+                        // ST Fan Dance 4 on combo
+                        if (HasEffect(Buffs.FourFoldFanDance) && LevelChecked(FanDance4) && IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
+                            return FanDance4;
                     }
 
                     if (LevelChecked(Fountainfall) && flow)
@@ -295,6 +293,9 @@ namespace XIVSlothCombo.Combos.PvE
                     int espritThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE);
                     #endregion
 
+                    // ST Fan Dance 4 on combo
+                    if (HasEffect(Buffs.FourFoldFanDance) && level >= Levels.FanDance4 && IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
+                        return FanDance4;
                     // AoE Esprit overcap
                     if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) &&
                         LevelChecked(SaberDance) && gauge.Esprit >= espritThreshold)
@@ -302,19 +303,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave)
                     {
-                        // AoE Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
-                            gauge.Feathers is 4 && LevelChecked(FanDance2))
-                            return FanDance2;
+                        // AoE Fan Dance 3 on combo
+                        if (HasEffect(Buffs.ThreeFoldFanDance) && LevelChecked(FanDance3) && IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
+                            return FanDance3;
 
-                        // AoE Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
-                        {
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
-                                return FanDance3;
-                            if (HasEffect(Buffs.FourFoldFanDance))
-                                return FanDance4;
-                        }
+                        // AoE Fan Dance overcap protection
+                        if (gauge.Feathers is 4 && LevelChecked(FanDance2) && IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap))
+                            return FanDance2;
+                        
+                        // AoE Fan Dance 4 on combo
+                        if (HasEffect(Buffs.FourFoldFanDance) && LevelChecked(FanDance4) && IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
+                            return FanDance4;
                     }
 
                     if (LevelChecked(Bloodshower) && flow)
