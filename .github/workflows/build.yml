@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - main
+    - jundong321
 
 env:
   PUBLIC_NAME: XIVSlothCombo
