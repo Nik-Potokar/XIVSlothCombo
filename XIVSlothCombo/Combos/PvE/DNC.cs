@@ -303,16 +303,16 @@ namespace XIVSlothCombo.Combos.PvE
                     if (canWeave)
                     {
                         // AoE Fan Dance 3 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34) && LevelChecked(FanDance3) && fd3)
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34) && LevelChecked(FanDance3) && fd3)
                             return FanDance3;
 
                         // AoE Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
                             LevelChecked(FanDance2) && gauge.Feathers is 4)
                             return FanDance2;
                         
                         // AoE Fan Dance 4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34) && LevelChecked(FanDance4) && fd4)
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34) && LevelChecked(FanDance4) && fd4)
                             return FanDance4;
                     }
 
