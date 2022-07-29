@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - jundong321
+    - master
 
 env:
   PUBLIC_NAME: XIVSlothCombo
@@ -14,7 +14,6 @@ env:
   INTERNAL_NAME: XIVSlothCombo
   RELEASE_DIR: XIVSlothCombo\bin\Release\XIVSlothCombo
   PERSONAL_PLUGIN_REPO: jundong321/MyDalamudPlugins
-  PERSONAL_PLUGIN_REPO_BRANCH: master
   PR_PLUGIN_REPO: jundong321/MyDalamudPlugins
 
 jobs:
@@ -51,7 +50,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         repository: ${{ env.PERSONAL_PLUGIN_REPO }}
-        branch: ${{ env.PERSONAL_PLUGIN_REPO_BRANCH }}
         token: ${{ secrets.XIVCOMBO_TOKEN }}
     - uses: actions/download-artifact@v2
       with:
