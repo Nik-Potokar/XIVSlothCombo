@@ -245,8 +245,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     #region Types
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
-                    bool fd3 = HasEffect(Buffs.ThreeFoldFanDance);
-                    bool fd4 = HasEffect(Buffs.FourFoldFanDance);
+                    bool fd3 = LevelChecked(FanDance3) && HasEffect(Buffs.ThreeFoldFanDance);
+                    bool fd4 = LevelChecked(FanDance4) && HasEffect(Buffs.FourFoldFanDance);
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     bool canWeave = CanWeave(actionID);
@@ -256,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (canWeave)
                     {
                         // ST Fan Dance 3 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34) && LevelChecked(FanDance3) && fd3)
+                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34) && fd3)
                             return FanDance3;
 
                         // ST Fan Dance overcap protection
@@ -265,7 +265,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return FanDance1;
                         
                         // ST Fan Dance 4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34) && LevelChecked(FanDance4) && fd4)
+                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34) && fd4)
                             return FanDance4;
                     }
 
@@ -296,8 +296,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     #region Types
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
-                    bool fd3 = HasEffect(Buffs.ThreeFoldFanDance);
-                    bool fd4 = HasEffect(Buffs.FourFoldFanDance);
+                    bool fd3 = LevelChecked(FanDance3) && HasEffect(Buffs.ThreeFoldFanDance);
+                    bool fd4 = LevelChecked(FanDance4) && HasEffect(Buffs.FourFoldFanDance);
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     bool canWeave = CanWeave(actionID);
@@ -307,7 +307,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (canWeave)
                     {
                         // AoE Fan Dance 3 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34) && LevelChecked(FanDance3) && fd3)
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34) && fd3)
                             return FanDance3;
 
                         // AoE Fan Dance overcap protection
@@ -316,7 +316,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return FanDance2;
                         
                         // AoE Fan Dance 4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34) && LevelChecked(FanDance4) && fd4)
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34) && fd4)
                             return FanDance4;
                     }
 
