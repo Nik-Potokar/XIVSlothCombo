@@ -287,12 +287,6 @@ namespace XIVSlothCombo.Combos.PvE
                             GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_ChainStratagemOption) &&
                             CanSpellWeave(actionID)) return ChainStratagem;
 
-                        //Ruin 2 Movement 
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
-                            LevelChecked(Ruin2) &&
-                            IsOffCooldown(actionID) && //Check against actionID to stop seizure during cooldown 
-                            IsMoving) return OriginalHook(Ruin2); //Who knows in the future
-
                         //Bio/Biolysis
                         if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio))
                         {
@@ -306,6 +300,12 @@ namespace XIVSlothCombo.Combos.PvE
                             //AlterateMode idles as Ruin/Broil
                             if (AlternateMode) return OriginalHook(Ruin);
                         }
+
+                        //Ruin 2 Movement 
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
+                            LevelChecked(Ruin2) &&
+                            IsOffCooldown(actionID) && //Check against actionID to stop seizure during cooldown 
+                            IsMoving) return OriginalHook(Ruin2); //Who knows in the future
                     }
                 }
                 return actionID;
