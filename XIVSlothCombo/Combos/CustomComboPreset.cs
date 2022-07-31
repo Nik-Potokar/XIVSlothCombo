@@ -350,7 +350,7 @@ namespace XIVSlothCombo.Combos
         BLM_SimpleMode = 2012,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("CDs Option", "Adds Manafont, Sharpcast, Amplifier onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Cooldowns Option", "Adds Manafont, Sharpcast, Amplifier onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
         BLM_Simple_Buffs = 2013,
 
         [ParentCombo(BLM_SimpleMode)]
@@ -884,12 +884,12 @@ namespace XIVSlothCombo.Combos
         #region DARK KNIGHT
 
         [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("Buffs on Main Combo", "Collection of Buffs to add to main combo", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Buffs on Main Combo", "Collection of buffs to add to the main combo", DRK.JobID, 0, "", "")]
         DRK_MainComboBuffs_Group = 5098,
 
         [ConflictingCombos(DRK_oGCD)]
         [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("CDs on Main Combo", "Collection of CDs to add to main combo", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID, 0, "", "")]
         DRK_MainComboCDs_Group = 5099,
 
         [ReplaceSkill(DRK.Souleater)]
@@ -911,7 +911,7 @@ namespace XIVSlothCombo.Combos
         DRK_Overcap = 5003,
 
         [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on CD and you have gauge for it.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on cooldown and you have gauge for it.", DRK.JobID, 0, "", "")]
         DRK_LivingShadow = 5004,
 
         [ParentCombo(DRK_SouleaterCombo)]
@@ -956,7 +956,7 @@ namespace XIVSlothCombo.Combos
         DRK_BloodGaugeOvercap = 5016,
 
         [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on main combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on main combo while Darkside is up. Will use all stacks on cooldown.", DRK.JobID, 0, "", "")]
         DRK_Shadowbringer = 5019,
 
         [ParentCombo(DRK_ManaOvercap)]
@@ -980,27 +980,27 @@ namespace XIVSlothCombo.Combos
         DRK_SaltedEarth = 5024,
 
         [ParentCombo(DRK_MainComboBuffs_Group)]
-        [CustomComboInfo("Delirium on CD", "Adds Delirium to main combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Delirium on Cooldown", "Adds Delirium to main combo on cooldown and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0, "", "")]
         DRK_Delirium = 5025,
 
         [ParentCombo(DRK_MainComboBuffs_Group)]
-        [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to main combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Blood Weapon on Cooldown", "Adds Blood Weapon to main combo on cooldown and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_BloodWeapon = 5026,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Blood Weapon Option", "Adds Blood Weapon to AoE combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Blood Weapon Option", "Adds Blood Weapon to AoE combo on cooldown and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_BloodWeapon = 5027,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Delirium Option", "Adds Deliriun to AoE combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Delirium Option", "Adds Deliriun to AoE combo on cooldown and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_Delirium = 5028,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AoE on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AoE on cooldown and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_SaltedEarth = 5029,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AoE on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AoE on cooldown and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_LivingShadow = 5030,
 
         #endregion
@@ -1207,7 +1207,7 @@ namespace XIVSlothCombo.Combos
         GNB_ST_Gnashing = 7001,
 
         [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the main combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Cooldowns on Main Combo", "Adds various cooldowns to the main combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
         GNB_ST_MainCombo_CooldownsGroup = 7002,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
