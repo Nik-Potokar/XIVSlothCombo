@@ -439,12 +439,12 @@ namespace XIVSlothCombo.Combos
 
         [BlueInactive(BLU.MoonFlute, BLU.Tingle, BLU.ShockStrike, BLU.Whistle, BLU.FinalSting)]
         [ReplaceSkill(BLU.FinalSting)]
-        [CustomComboInfo("Final Sting Combo", "Turns Final Sting into the buff combo of: Moon Flute, Tingle, Whistle, Final Sting. Will use any primals off CD before casting Final Sting.", BLU.JobID)]
+        [CustomComboInfo("Final Sting Combo Feature", "Turns Final Sting into the buff combo of: Moon Flute, Tingle, Whistle, Final Sting. Will use any primals off cooldown before casting Final Sting.", BLU.JobID)]
         BLU_FinalSting = 70002,
 
         [BlueInactive(BLU.RoseOfDestruction, BLU.FeatherRain, BLU.GlassDance, BLU.JKick)]
         [ParentCombo(BLU_FinalSting)]
-        [CustomComboInfo("Off CD Primal Additions", "Adds any Primals that are off CD to the Final Sting Combo.", BLU.JobID)]
+        [CustomComboInfo("Off-cooldown Primal Additions", "Adds any Primals that are off cooldown to the Final Sting Combo Feature.", BLU.JobID)]
         BLU_Primals = 70003,
 
         [BlueInactive(BLU.RamsVoice, BLU.Ultravibration)]
@@ -1181,7 +1181,7 @@ namespace XIVSlothCombo.Combos
             DRG_AoE_Simple_LifeSurge = 6611,
 
             [ParentCombo(DRG_AoE_SimpleMode)]
-            [CustomComboInfo("Ranged Uptime Option", "Replaces Main AoE combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 40, "", "")]
+            [CustomComboInfo("Ranged Uptime Option", "Replaces main AoE combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 40, "", "")]
             DRG_AoE_Simple_RangedUptime = 6612,
             #endregion
 
@@ -1522,15 +1522,15 @@ namespace XIVSlothCombo.Combos
         MNK_ST_SimpleMode = 9006,
 
         [ReplaceSkill(MNK.MasterfulBlitz)]
-        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (Optimal?) Blitz combos on Masterful Blitz when Perfect Balance Is Active", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (optimal?) Blitz combos on Masterful Blitz when Perfect Balance is active", MNK.JobID, 0, "", "")]
         MNK_PerfectBalance_Plus = 9007,
 
         [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the Main Combo", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the main combo", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_MasterfulBlitz = 9008,
 
         [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE combo.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_MasterfulBlitz = 9009,
 
         [ReplaceSkill(MNK.RiddleOfFire)]
@@ -1538,55 +1538,55 @@ namespace XIVSlothCombo.Combos
         MNK_Riddle_Brotherhood = 9012,
 
         [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the Main Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the main combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_CDs = 9013,
 
         [ParentCombo(MNK_ST_Simple_CDs)]
-        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the Main Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_CDs_RiddleOfWind = 9014,
 
         [ParentCombo(MNK_ST_Simple_CDs)]
-        [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the Main Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_CDs_PerfectBalance = 9015,
 
         [ParentCombo(MNK_ST_Simple_CDs)]
-        [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the Main Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_CDs_Brotherhood = 9016,
 
         [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the Main Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Meditation = 9017,
 
         [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the Main Combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the main combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_LunarSolarOpener = 9018,
 
         [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE Combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_CDs = 9019,
 
         [ParentCombo(MNK_AoE_Simple_CDs)]
-        [CustomComboInfo("Riddle of Wind on AoE Combo", "Adds Riddle of Wind to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Riddle of Wind on AoE Combo", "Adds Riddle of Wind to the AoE combo.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_CDs_RiddleOfWind = 9020,
 
         [ParentCombo(MNK_AoE_Simple_CDs)]
-        [CustomComboInfo("Perfect Balance on AoE Combo", "Adds Perfect Balance to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Perfect Balance on AoE Combo", "Adds Perfect Balance to the AoE combo.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_CDs_PerfectBalance = 9021,
 
         [ParentCombo(MNK_AoE_Simple_CDs)]
-        [CustomComboInfo("Brotherhood on AoE Combo", "Adds Brotherhood to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Brotherhood on AoE Combo", "Adds Brotherhood to the AoE combo.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_CDs_Brotherhood = 9022,
 
         [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE combo.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_Meditation = 9023,
 
         [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Thunderclap on AoE Combo", "Adds Thunderclap when out of combat to the AoE Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Thunderclap on AoE Combo", "Adds Thunderclap when out of combat to the AoE combo.", MNK.JobID, 0, "", "")]
         MNK_AoE_Simple_Thunderclap = 9024,
 
         [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the Main Combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Thunderclap = 9025,
 
         #endregion
@@ -1776,11 +1776,11 @@ namespace XIVSlothCombo.Combos
         PLD_HolyCircle_Standalone = 11009,
 
         [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Intervene Feature", "Adds Intervene onto Main Combo whenever it's available.", PLD.JobID, 4, "", "")]
+        [CustomComboInfo("Intervene Feature", "Adds Intervene onto main combo whenever it's available.", PLD.JobID, 4, "", "")]
         PLD_ST_RoyalAuth_Intervene = 11010,
 
         [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Uptime Feature", "Replace Main Combo with Shield Lob/Holy Spirit when out of range.\nWill use Holy Spirit if you're not moving or have the Requiescat buff\nOtherwise will use Shield lob when moving and if you don't have the Requiescat buff.", PLD.JobID, 4, "", "")]
+        [CustomComboInfo("Uptime Feature", "Replace main combo with Shield Lob/Holy Spirit when out of range.\nWill use Holy Spirit if you're not moving or have the Requiescat buff\nOtherwise will use Shield lob when moving and if you don't have the Requiescat buff.", PLD.JobID, 4, "", "")]
         PLD_ST_RoyalAuth_RangedUptime = 11012,
 
         // This is a parent of itself? Bruh moment. I don't 'do' PLD, so I'm just leaving this note here. - K
@@ -1921,11 +1921,11 @@ namespace XIVSlothCombo.Combos
         RPR_AoE_ScytheCombo = 12020,
 
         [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to AoE Combo when Soul Gauge is 50 or less and current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to AoE combo when Soul Gauge is 50 or less and current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
         RPR_AoE_ScytheCombo_SoulScythe = 12021,
 
         [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Whorl Of Death Option", "Adds Whorl of Death to AoE Combo if Death's Design is not present on current target, or is about to expire.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Whorl Of Death Option", "Adds Whorl of Death to AoE combo if Death's Design is not present on current target, or is about to expire.", RPR.JobID, 0, "", "")]
         RPR_AoE_ScytheCombo_WoD = 12022,
 
         [ParentCombo(RPR_AoE_ScytheCombo)]
@@ -1967,7 +1967,7 @@ namespace XIVSlothCombo.Combos
         RPR_GluttonyBloodSwathe_BloodSwatheCombo = 12040,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
-        [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud Combo (Void/Cross Reaping, Communio, and Lemure's Slice) on Blood Stalk and Grim Swathe.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, and Lemure's Slice) on Blood Stalk and Grim Swathe.", RPR.JobID, 0, "", "")]
         RPR_GluttonyBloodSwathe_Enshroud = 12042,
         #endregion
 
@@ -2116,7 +2116,7 @@ namespace XIVSlothCombo.Combos
 
         # region Sections 4 to 5 - Melee
         [ReplaceSkill(RDM.Jolt, RDM.Jolt2, RDM.Riposte)]
-        [CustomComboInfo("Single Target Melee Combo Feature", "Stack Reposte Combo on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410, "", "")]
+        [CustomComboInfo("Single Target Melee Combo Feature", "Stack Reposte combo on specified action(s)\n**Must be in melee range or have Gap close with Corps-a-corps enabled**", RDM.JobID, 410, "", "")]
         RDM_ST_MeleeCombo = 13410,
 
         [ParentCombo(RDM_ST_MeleeCombo)]
@@ -2364,30 +2364,30 @@ namespace XIVSlothCombo.Combos
         SAM_ST_GekkoCombo = 15003,
 
             [ParentCombo(SAM_ST_GekkoCombo)]
-            [CustomComboInfo("Enpi Uptime Feature", "Replace Main Combo with Enpi when you are out of range.", SAM.JobID, 0, "", "")]
+            [CustomComboInfo("Enpi Uptime Feature", "Replace main combo with Enpi when you are out of range.", SAM.JobID, 0, "", "")]
             SAM_ST_GekkoCombo_RangedUptime = 15004,
 
             [ParentCombo(SAM_ST_GekkoCombo)]
-            [CustomComboInfo("Yukikaze Combo on Main Combo", "Adds Yukikaze Combo to Main Combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID, 0, "", "")]
+            [CustomComboInfo("Yukikaze Combo on Main Combo", "Adds Yukikaze combo to main combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID, 0, "", "")]
             SAM_ST_GekkoCombo_Yukikaze = 15005,
 
             [ParentCombo(SAM_ST_GekkoCombo)]
-            [CustomComboInfo("Kasha Combo on Main Combo", "Adds Kasha Combo to Main Combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID, 0, "", "")]
+            [CustomComboInfo("Kasha Combo on Main Combo", "Adds Kasha combo to main combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID, 0, "", "")]
             SAM_ST_GekkoCombo_Kasha = 15006,
 
             [ConflictingCombos(SAM_GyotenYaten)]
             [ParentCombo(SAM_ST_GekkoCombo)]
-            [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the Main Combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation. \nIf the Opener is interrupted, it will exit the opener via a Goken and a Kaeshi: Goken at the end or via the last Yukikaze. If the latter, CDs will be used on cooldown regardless of burst options.", SAM.JobID, 0, "", "")]
+            [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the main combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation. \nIf the Opener is interrupted, it will exit the opener via a Goken and a Kaeshi: Goken at the end or via the last Yukikaze. If the latter, CDs will be used on cooldown regardless of burst options.", SAM.JobID, 0, "", "")]
             SAM_ST_GekkoCombo_Opener = 15007,
 
             [ConflictingCombos(SAM_GyotenYaten)]
             [ParentCombo(SAM_ST_GekkoCombo)]
-            [CustomComboInfo("Filler Combo Feature", "Adds selected Filler Combos to Main Combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.\nWill disable if you die or if you don't activate the opener.", SAM.JobID, 0, "", "")]
+            [CustomComboInfo("Filler Combo Feature", "Adds selected Filler combos to main combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.\nWill disable if you die or if you don't activate the opener.", SAM.JobID, 0, "", "")]
             SAM_ST_GekkoCombo_FillerCombos = 15008,
 
             #region CDs on Main Combo
             [ParentCombo(SAM_ST_GekkoCombo)]
-            [CustomComboInfo("CDs on Main Combo", "Collection of CD features on Main Combo.", SAM.JobID, 0, "", "")]
+            [CustomComboInfo("CDs on Main Combo", "Collection of CD features on main combo.", SAM.JobID, 0, "", "")]
             SAM_ST_GekkoCombo_CDs = 15099,
 
                 [ParentCombo(SAM_ST_GekkoCombo_CDs)]
@@ -2395,12 +2395,12 @@ namespace XIVSlothCombo.Combos
                 SAM_ST_GekkoCombo_CDs_Ikishoten = 15009,
 
                 [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-                [CustomComboInfo("Iaijutsu on Main Combo", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka when ready and when you're not moving to Main Combo.", SAM.JobID, 0, "", "")]
+                [CustomComboInfo("Iaijutsu on Main Combo", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka when ready and when you're not moving to main combo.", SAM.JobID, 0, "", "")]
                 SAM_ST_GekkoCombo_CDs_Iaijutsu = 15010,
 
                 #region Ogi Namikiri on Main Combo
                 [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-                [CustomComboInfo("Ogi Namikiri on Main Combo", "Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to Main Combo.", SAM.JobID, 0, "", "")]
+                [CustomComboInfo("Ogi Namikiri on Main Combo", "Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to main combo.", SAM.JobID, 0, "", "")]
                 SAM_ST_GekkoCombo_CDs_OgiNamikiri = 15011,
 
                     [ParentCombo(SAM_ST_GekkoCombo_CDs_OgiNamikiri)]
@@ -2409,7 +2409,7 @@ namespace XIVSlothCombo.Combos
                     #endregion
 
                 [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-                [CustomComboInfo("Meikyo Shisui on Main Combo", "Adds Meikyo Shisui to Main Combo when off cooldown.", SAM.JobID, 0, "", "")]
+                [CustomComboInfo("Meikyo Shisui on Main Combo", "Adds Meikyo Shisui to main combo when off cooldown.", SAM.JobID, 0, "", "")]
                 SAM_ST_GekkoCombo_CDs_MeikyoShisui = 15013,
 
                     #region Meikyo Shisui on Main Combo
@@ -2419,12 +2419,12 @@ namespace XIVSlothCombo.Combos
                     #endregion
 
                 [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-                [CustomComboInfo("Shoha on Main Combo", "Adds Shoha to Main Combo when there are three meditation stacks.", SAM.JobID, 0, "", "")]
+                [CustomComboInfo("Shoha on Main Combo", "Adds Shoha to main combo when there are three meditation stacks.", SAM.JobID, 0, "", "")]
                 SAM_ST_GekkoCombo_CDs_Shoha = 15015,
 
                 [ConflictingCombos(SAM_Shinten_Shoha_Senei)]
                 [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-                [CustomComboInfo("Senei on Main Combo", "Adds Senei to Main Combo when off cooldown and above 25 Kenki.", SAM.JobID, 0, "", "")]
+                [CustomComboInfo("Senei on Main Combo", "Adds Senei to main combo when off cooldown and above 25 Kenki.", SAM.JobID, 0, "", "")]
                 SAM_ST_GekkoCombo_CDs_Senei = 15016,
 
                     [ParentCombo(SAM_ST_GekkoCombo_CDs_Senei)]
@@ -2489,7 +2489,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(SAM_AoE_OkaCombo)]
         [ConflictingCombos(SAM_AoE_MangetsuCombo_Oka)]
-        [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze Combo, Mangetsu Combo, Senei, Shinten, and Shoha to Oka Combo.\nUsed for two targets only and when Lv86 and above.", SAM.JobID, 0, "", "")]
+        [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze combo, Mangetsu combo, Senei, Shinten, and Shoha to Oka combo.\nUsed for two targets only and when Lv86 and above.", SAM.JobID, 0, "", "")]
         SAM_AoE_OkaCombo_TwoTarget = 150261,
         #endregion
 
@@ -2550,7 +2550,7 @@ namespace XIVSlothCombo.Combos
         SAM_Ikishoten_OgiNamikiri = 15037,
 
         [ReplaceSkill(SAM.Gekko, SAM.Yukikaze, SAM.Kasha)]
-        [CustomComboInfo("True North Feature", "Adds True North on all ST Combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0, "", "")]
+        [CustomComboInfo("True North Feature", "Adds True North on all single target combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0, "", "")]
         SAM_TrueNorth = 15038,
         #endregion
 
@@ -2808,11 +2808,11 @@ namespace XIVSlothCombo.Combos
         WAR_ST_StormsPath_Onslaught = 18012,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Infuriate AoE Feature", "Adds Infuriate to AoE Combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Infuriate AoE Feature", "Adds Infuriate to AoE combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_Infuriate = 18013,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Inner Release AoE Feature", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Inner Release AoE Feature", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_InnerRelease = 18014,
 
         [ParentCombo(WAR_ST_StormsPath)]
@@ -2828,11 +2828,11 @@ namespace XIVSlothCombo.Combos
         WAR_PrimalRend_InnerRelease = 18019,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path Combo.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_InnerRelease = 18020,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path Combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Infuriate = 18021,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
