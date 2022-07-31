@@ -493,18 +493,17 @@ namespace XIVSlothCombo.Combos
         BLU_PrimalCombo_JKick = 70013,
 
         [BlueInactive(BLU.PerpetualRay, BLU.SharpenedKnife)]
-        [CustomComboInfo("Perpetual Ray into Sharpened Knife", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID)]
+        [CustomComboInfo("Perpetual Ray into Sharpened Knife Feature", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID)]
         BLU_PerpetualRayStunCombo = 70014,
 
         [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
         [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Burst Pooling Option", "Holds spells if Moon Flute bursts is about to come and spells are off cooldown.", BLU.JobID)]
+        [CustomComboInfo("Moon Flute Burst Pooling Option", "Holds spells if Moon Flute burst is about to occur and spells are off cooldown.", BLU.JobID)]
         BLU_PrimalCombo_Pool = 70015,
 
         [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
-        [CustomComboInfo("Melee Feature", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID)]
+        [CustomComboInfo("Sonic Boom Melee Feature", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID)]
         BLU_MeleeCombo = 70016,
-
 
         #endregion
 
