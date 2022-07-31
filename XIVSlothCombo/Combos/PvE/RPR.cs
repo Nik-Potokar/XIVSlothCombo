@@ -218,9 +218,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_EnshroudPooling) &&
                                     ((!LevelChecked(PlentifulHarvest) && gauge.Shroud >= 50) ||             // Before Plentiful Harvest
-                                    (HasEffect(Buffs.ArcaneCircle) && gauge.Shroud >= 50) ||                // Shroud in Arcane Circle
+                                    (HasEffectAny(Buffs.ArcaneCircle) && gauge.Shroud >= 50) ||                // Shroud in Arcane Circle
                                     (gauge.Shroud >= 50 && GetCooldownRemainingTime(ArcaneCircle) < 8) ||   // Prep for double Enshroud
-                                    (!HasEffect(Buffs.ArcaneCircle) && gauge.Shroud >= 90)))                // Shroud pooling
+                                    (!HasEffectAny(Buffs.ArcaneCircle) && gauge.Shroud >= 90)))                // Shroud pooling
                                     return Enshroud;
                             }
                         }

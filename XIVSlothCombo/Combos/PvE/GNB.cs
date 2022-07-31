@@ -409,9 +409,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
-                if (actionID == BurstStrike && gauge == 0 && level >= Levels.Bloodfest && !HasEffect(Buffs.ReadyToBlast))
-                    return Bloodfest;
-                return actionID;
+                return (actionID == BurstStrike && gauge == 0 && level >= Levels.Bloodfest && !HasEffect(Buffs.ReadyToBlast)) ? Bloodfest : actionID;
             }
         }
 
@@ -422,9 +420,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
-                if (actionID == BurstStrike && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && gauge >= 2)
-                    return DoubleDown;
-                return actionID;
+                return (actionID is BurstStrike && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && gauge >= 2 && LevelChecked(DoubleDown)) ? DoubleDown : actionID;
             }
         }
 
@@ -436,12 +432,18 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == NoMercy)
                 {
+                    var gauge = GetJobGauge<GNBGauge>().Ammo;
                     if (IsOnCooldown(NoMercy) && InCombat())
                     {
-                        if (IsOffCooldown(SonicBreak))
-                            return SonicBreak;
-                        if (IsOffCooldown(BowShock))
-                            return BowShock;
+                        if (IsEnabled(CustomComboPreset.GNB_NoMercy_Cooldowns_DD) && GetCooldownRemainingTime(NoMercy) < 60 && IsOffCooldown(DoubleDown) && gauge >= 2 && LevelChecked(DoubleDown))
+                            return DoubleDown;
+                        if (IsEnabled(CustomComboPreset.GNB_NoMercy_Cooldowns_SonicBreakBowShock))
+                        {
+                            if (IsOffCooldown(SonicBreak))
+                                return SonicBreak;
+                            if (IsOffCooldown(BowShock))
+                                return BowShock;
+                        }
                     }
                 }
 
@@ -455,8 +457,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Aurora && HasEffect(Buffs.Aurora)) return WAR.NascentFlash;
-                return actionID;
+                return (actionID is Aurora && HasEffect(Buffs.Aurora)) ? WAR.NascentFlash: actionID;
             }
         }
     }
