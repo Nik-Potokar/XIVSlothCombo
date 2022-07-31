@@ -2572,6 +2572,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SCH_DeploymentTactics)]
             [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
             SCH_DeploymentTactics_Recitation = 16610,
+            
+            [ParentCombo(SCH_DeploymentTactics)]
+            [CustomComboInfo("Show Cooldown", "Show Deployment Tactics when it's in cooldown instead of Adloquium.", SCH.JobID, 602, "", "")]
+            SCH_DeploymentTactics_ShowCooldown = 16620,
         
         #endregion
 

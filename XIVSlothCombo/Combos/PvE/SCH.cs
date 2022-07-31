@@ -121,7 +121,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_FeyIllumination;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is WhisperingDawn && LevelChecked(FeyIllumination) && IsOnCooldown(WhisperingDawn) ? FeyIllumination : actionID;
+                => actionID is WhisperingDawn && LevelChecked(FeyIllumination) && IsOnCooldown(WhisperingDawn) && IsOffCooldown(FeyIllumination) ? FeyIllumination : actionID;
         }
 
         // Replaces all Energy Drain actions with Aetherflow when depleted
@@ -244,7 +244,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Recitation;
                         }
                     }
-                    return Adloquium;
+                    return IsEnabled(CustomComboPreset.SCH_DeploymentTactics_ShowCooldown) ? DeploymentTactics : Adloquium;
                 }
                 return actionID;
             }
