@@ -884,12 +884,12 @@ namespace XIVSlothCombo.Combos
         #region DARK KNIGHT
 
         [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("Buffs on Main Combo", "Collection of Buffs to add to Main Combo", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Buffs on Main Combo", "Collection of Buffs to add to main combo", DRK.JobID, 0, "", "")]
         DRK_MainComboBuffs_Group = 5098,
 
         [ConflictingCombos(DRK_oGCD)]
         [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("CDs on Main Combo", "Collection of CDs to add to Main Combo", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("CDs on Main Combo", "Collection of CDs to add to main combo", DRK.JobID, 0, "", "")]
         DRK_MainComboCDs_Group = 5099,
 
         [ReplaceSkill(DRK.Souleater)]
@@ -940,11 +940,11 @@ namespace XIVSlothCombo.Combos
         DRK_RangedUptime = 5011,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE Combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE combo when you fall below 60 percent hp.", DRK.JobID, 0, "", "")]
         DRK_AoE_AbyssalDrain = 5013,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE Combo.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE combo.", DRK.JobID, 0, "", "")]
         DRK_AoE_Shadowbringer = 5014,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
@@ -956,7 +956,7 @@ namespace XIVSlothCombo.Combos
         DRK_BloodGaugeOvercap = 5016,
 
         [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on Main Combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on main combo while Darkside is up. Will use all stacks on CD.", DRK.JobID, 0, "", "")]
         DRK_Shadowbringer = 5019,
 
         [ParentCombo(DRK_ManaOvercap)]
@@ -968,7 +968,7 @@ namespace XIVSlothCombo.Combos
         DRK_ShadowbringerBurst = 5021,
 
         [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on Main Combo while Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on main combo while Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_CarveAndSpit = 5022,
 
         [ParentCombo(DRK_Plunge)]
@@ -976,23 +976,23 @@ namespace XIVSlothCombo.Combos
         DRK_MeleePlunge = 5023,
 
         [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on Main Combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on main combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID, 0, "", "")]
         DRK_SaltedEarth = 5024,
 
         [ParentCombo(DRK_MainComboBuffs_Group)]
-        [CustomComboInfo("Delirium on CD", "Adds Delirium to Main Combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Delirium on CD", "Adds Delirium to main combo on CD and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID, 0, "", "")]
         DRK_Delirium = 5025,
 
         [ParentCombo(DRK_MainComboBuffs_Group)]
-        [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to Main Combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Blood Weapon on CD", "Adds Blood Weapon to main combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_BloodWeapon = 5026,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Blood Weapon Option", "Adds Blood Weapon to AoE Combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Blood Weapon Option", "Adds Blood Weapon to AoE combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_BloodWeapon = 5027,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Delirium Option", "Adds Deliriun to AoE Combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Delirium Option", "Adds Deliriun to AoE combo on CD and when Darkside is up.", DRK.JobID, 0, "", "")]
         DRK_AoE_Delirium = 5028,
 
         [ParentCombo(DRK_StalwartSoulCombo)]
@@ -1019,7 +1019,7 @@ namespace XIVSlothCombo.Combos
         DRG_ChaosThrustCombo = 6200,
 
             [ParentCombo(DRG_ChaosThrustCombo)]
-            [CustomComboInfo("Chaos Piercing Talon Uptime", "Replaces Chaos Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 3, "", "")]
+            [CustomComboInfo("Chaos Piercing Talon Uptime", "Replaces Chaos Thrust combo with Piercing Talon when you are out of range.", DRG.JobID, 3, "", "")]
             DRG_RangedUptimeChaos = 6201,
             #endregion
 
@@ -1030,14 +1030,14 @@ namespace XIVSlothCombo.Combos
         DRG_FullThrustCombo = 6300,
 
             [ParentCombo(DRG_FullThrustCombo)]
-            [CustomComboInfo("Full Piercing Talon Uptime", "Replaces Full Thrust Combo with Piercing Talon when you are out of range.", DRG.JobID, 5, "", "")]
+            [CustomComboInfo("Full Piercing Talon Uptime", "Replaces Full Thrust combo with Piercing Talon when you are out of range.", DRG.JobID, 5, "", "")]
             DRG_RangedUptimeFullThrust = 6301,
             #endregion
 
         #region Full Thrust Combo Plus
         [ReplaceSkill(DRG.FullThrust)]
         [ConflictingCombos(DRG_FullThrustCombo, DRG_SimpleMode)]
-        [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust Plus Combo with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 6, "", "")]
+        [CustomComboInfo("Full Thrust Combo Plus", "Replace Full Thrust Plus combo with its combo chain (Disembowel/Chaosthrust/life surge added).", DRG.JobID, 6, "", "")]
         DRG_FullThrustComboPlus = 6400,
 
             [ParentCombo(DRG_FullThrustComboPlus)]
@@ -1120,7 +1120,7 @@ namespace XIVSlothCombo.Combos
             DRG_Simple_LifeSurge = 6512,
 
             [ParentCombo(DRG_SimpleMode)]
-            [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 25, "", "")]
+            [CustomComboInfo("Ranged Uptime Option", "Replaces main combo with Piercing Talon when you are out of melee range.\nNOT OPTIMAL.", DRG.JobID, 25, "", "")]
             DRG_Simple_RangedUptime = 6513,
             #endregion
 
@@ -1186,7 +1186,7 @@ namespace XIVSlothCombo.Combos
             #endregion
 
         [ConflictingCombos(DRG_SimpleMode)]
-        [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust, Chaos Thrust combo becomes Wheeling Thrust and Full Thrust Combo becomes Fang and Claw. Requires Chaos Thrust Combo and Full Thrust Combo.", DRG.JobID, 38, "", "")]
+        [CustomComboInfo("Wheeling Thrust/Fang and Claw Option", "When you have either Enhanced Fang and Claw or Wheeling Thrust, Chaos Thrust combo becomes Wheeling Thrust and Full Thrust combo becomes Fang and Claw. Requires Chaos Thrust combo and Full Thrust combo.", DRG.JobID, 38, "", "")]
         DRG_FangThrust = 6700,
 
         [ReplaceSkill(DRG.FangAndClaw)]
