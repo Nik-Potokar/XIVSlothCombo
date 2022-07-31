@@ -2529,10 +2529,6 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SCH.Excogitation)]
         [CustomComboInfo("Excogitation to Lustrate", "Change Excogitation into Lustrate when Excogitation is in cooldown.", SCH.JobID, 220, "", "")]
         SCH_Lustrate = 16220,
-
-        [ReplaceSkill(SCH.WhisperingDawn)]
-        [CustomComboInfo("Whispering Dawn to Fey Illumination", "Change Whispering Dawn into Fey Illumination when Whispering Dawn is in cooldown.", SCH.JobID, 230, "", "")]
-        SCH_FeyIllumination = 16230,
         #endregion
 
         #region Utilities

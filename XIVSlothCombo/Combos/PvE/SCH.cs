@@ -115,15 +115,6 @@ namespace XIVSlothCombo.Combos.PvE
                 => actionID is Excogitation && LevelChecked(Lustrate) && IsOnCooldown(Excogitation) ? Lustrate : actionID;
         }
 
-
-        // This feature replaces Whispering Dawn with Fey Illumination when Whispering Dawn is in cooldown.
-        internal class SCH_FeyIllumination : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_FeyIllumination;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is WhisperingDawn && LevelChecked(FeyIllumination) && IsOnCooldown(WhisperingDawn) && IsOffCooldown(FeyIllumination) ? FeyIllumination : actionID;
-        }
-
         // Replaces all Energy Drain actions with Aetherflow when depleted
         // Revised to a similar flow as SGE Rhizomata, but with Dissipation / Recitation as a backup
         internal class SCH_Aetherflow : CustomCombo
