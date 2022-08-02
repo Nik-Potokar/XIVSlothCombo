@@ -121,17 +121,17 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Recitation;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionId is Recitation)
+                if (actionID is Recitation)
                 {
                     if (HasEffect(Buffs.Recitation))
                     {
-                        if (LevelChecked(Adloquium) && IsEnabled(SCH_Recitation_Adloquium))
+                        if (LevelChecked(Adloquium) && IsEnabled(CustomComboPreset.SSCH_Recitation_Adloquium))
                             return Adloquium;
-                        if (LevelChecked(Succor) && IsEnabled(SCH_Recitation_Succor))
+                        if (LevelChecked(Succor) && IsEnabled(CustomComboPreset.SSCH_Recitation_Succor))
                             return Succor;
-                        if (LevelChecked(Indomitability) && IsEnabled(SCH_Recitation_Indomitability))
+                        if (LevelChecked(Indomitability) && IsEnabled(CustomComboPreset.SSCH_Recitation_Indomitability))
                             return Indomitability;
-                        if (LevelChecked(Excogitation) && IsEnabled(SCH_Recitation_Excogitation))
+                        if (LevelChecked(Excogitation) && IsEnabled(CustomComboPreset.SSCH_Recitation_Excogitation))
                             return Excogitation;
                     }
                     return Recitation;
