@@ -115,6 +115,31 @@ namespace XIVSlothCombo.Combos.PvE
                 => actionID is Excogitation && LevelChecked(Lustrate) && IsOnCooldown(Excogitation) ? Lustrate : actionID;
         }
 
+        // This feature replaces Recitation with one of its combo skills.
+        internal class SCH_Recitation : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Recitation;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionId is Recitation)
+                {
+                    if (HasEffect(Buffs.Recitation))
+                    {
+                        if (LevelChecked(Adloquium) && IsEnabled(SCH_Recitation_Adloquium))
+                            return Adloquium;
+                        if (LevelChecked(Succor) && IsEnabled(SCH_Recitation_Succor))
+                            return Succor;
+                        if (LevelChecked(Indomitability) && IsEnabled(SCH_Recitation_Indomitability))
+                            return Indomitability;
+                        if (LevelChecked(Excogitation) && IsEnabled(SCH_Recitation_Excogitation))
+                            return Excogitation;
+                    }
+                    return Recitation;
+                }
+                return actionID;
+            }
+        }
+
         // Replaces all Energy Drain actions with Aetherflow when depleted
         // Revised to a similar flow as SGE Rhizomata, but with Dissipation / Recitation as a backup
         internal class SCH_Aetherflow : CustomCombo
