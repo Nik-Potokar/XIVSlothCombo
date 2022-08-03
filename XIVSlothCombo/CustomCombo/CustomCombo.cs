@@ -66,7 +66,7 @@ namespace XIVSlothCombo.CustomComboNS
                 classJobID = DOH.JobID;
 
             if (classJobID is >= 16 and <= 18)
-                classJobID = DoL.JobID;
+                classJobID = DOL.JobID;
 
             if (JobID != ADV.JobID && ClassID != ADV.ClassID &&
                 JobID != classJobID && ClassID != classJobID)

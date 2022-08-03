@@ -29,8 +29,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DOH.JobID)]
         DohAny = AdvAny + DOH.JobID,
 
-        [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DoL.JobID)]
-        FSH_Cast = AdvAny + DoL.JobID,
+        [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DOL.JobID)]
+        DolAny = AdvAny + DOL.JobID,
 
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DRG.JobID)]
         DrgAny = AdvAny + DRG.JobID,
@@ -2944,26 +2944,41 @@ namespace XIVSlothCombo.Combos
 
         #region DOL
 
-        [CustomComboInfo("Eureka Feature", "Replace Ageless Words and Solid Reason with Wise to the World when available.", DoL.JobID)]
-        DoL_Eureka = 51001,
+        [ReplaceSkill(DOL.AgelessWords, DOL.SolidReason)]
+        [CustomComboInfo("Eureka Feature", "Replace Ageless Words and Solid Reason with Wise to the World when available", DOL.JobID)]
+        DOL_Eureka = 51001,
 
-        [CustomComboInfo("Cast / Hook Feature", "Replace Cast with Hook when fishing.", DoL.JobID)]
+        [ReplaceSkill(DOL.Cast)]
+        [CustomComboInfo("Fisher Cast to Hook Feature", "Replace Cast with Hook when fishing", DOL.JobID)]
         FSH_CastHook = 51002,
 
-        [CustomComboInfo("Cast / Gig Feature", "Replace Cast with Gig when underwater.", DoL.JobID)]
-        FSH_CastGig = 51003,
+        [CustomComboInfo("Fisher Diving Feature", "Change Fishing abilities to diving abilities", DOL.JobID)]
+        FSH_Swim = 51008,
 
-        [CustomComboInfo("Surface Slap / Veteran Trade Feature", "Replace Surface Slap with Veteran Trade when underwater.", DoL.JobID)]
-        FSH_SurfaceTrade = 51004,
+            [ReplaceSkill(DOL.Cast)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Cast to Gig Option", "", DOL.JobID)]
+            FSH_CastGig = 51003,
 
-        [CustomComboInfo("Prize Catch / Nature's Bounty Feature", "Replace Prize Catch with Nature's Bounty when underwater.", DoL.JobID)]
-        FSH_PrizeBounty = 51005,
+            [ReplaceSkill(DOL.SurfaceSlap)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Surface Slap to Veteran Trade Option", "", DOL.JobID)]
+            FSH_SurfaceTrade = 51004,
 
-        [CustomComboInfo("Snagging / Salvage Feature", "Replace Snagging with Salvage when underwater.", DoL.JobID)]
-        FSH_SnaggingSalvage = 51006,
+            [ReplaceSkill(DOL.PrizeCatch)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Prize Catch to Nature's Bounty Option", "", DOL.JobID)]
+            FSH_PrizeBounty = 51005,
 
-        [CustomComboInfo("Cast Light / Electric Current Feature", "Replace Cast Light with Electric Current when underwater.", DoL.JobID)]
-        FSH_CastLight_ElectricCurrent = 51007,
+            [ReplaceSkill(DOL.Snagging)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Snagging to Salvage Option", "", DOL.JobID)]
+            FSH_SnaggingSalvage = 51006,
+
+            [ReplaceSkill(DOL.CastLight)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Cast Light to Electric Current Option", "", DOL.JobID)]
+            FSH_CastLight_ElectricCurrent = 51007,
 
         #endregion
 
