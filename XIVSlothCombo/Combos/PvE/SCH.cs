@@ -102,8 +102,11 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool SCH_FairyFeature => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_FairyFeature));
         }
 
-
-        // Even though Summon Seraph becomes Consolation, this Feature puts the temporary Fairy AoE heal+barrier ontop of the existing fairy AoE skill, Fey Blessing
+        /*
+         * SCH_Consolation
+         * Even though Summon Seraph becomes Consolation, 
+         * This Feature also places Seraph's AoE heal+barrier ontop of the existing fairy AoE skill, Fey Blessing
+         */ 
         internal class SCH_Consolation : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Consolation;
@@ -111,8 +114,12 @@ namespace XIVSlothCombo.Combos.PvE
                 => actionID is FeyBlessing && LevelChecked(SummonSeraph) && Gauge.SeraphTimer > 0 ? Consolation : actionID;
         }
 
-        // Replaces all Energy Drain actions with Aetherflow when depleted
-        // Revised to a similar flow as SGE Rhizomata, but with Dissipation / Recitation as a backup
+        /*
+         * SCH_Aetherflow
+         * Replaces all Energy Drain actions with Aetherflow when depleted, or just Energy Drain
+         * Dissipation option to show if Aetherflow is on Cooldown
+         * Recitation also an option
+        */
         internal class SCH_Aetherflow : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Aetherflow;
@@ -161,7 +168,10 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        // Swiftcast changes to Raise when activated / on cooldown
+        /*
+         * SCH_Raise (Swiftcast Raise combo)
+         * Swiftcast changes to Raise when swiftcast is on cooldown
+         */
         internal class SCH_Raise : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Raise;
@@ -180,67 +190,43 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         /*
-         * Combos Deployment Tactics with Adloquium by showing Adloquim instead,
-         * while leaving the real Adloquim alone.
-         * Will work on Party/Trust/Chocobo hard/soft targets
+         * SCH_DeploymentTactics
+         * Combos Deployment Tactics with Adloquium by showing Adloquim when Deployment Tactics is ready,
          * Recitation is optional, if one wishes to Crit the shield first
+         * Supports soft targetting and self as a fallback.
          */
         internal class SCH_DeploymentTactics : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DeploymentTactics;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is DeploymentTactics)
+                if (actionID is DeploymentTactics && ActionReady(DeploymentTactics))
                 {
-                    if (ActionReady(DeploymentTactics)) //Allows Adlo to work at sync, do not nest with above
+                    //Grab our target (Soft->Hard->Self)
+                    GameObject? healTarget = null;
+                    GameObject? softTarget = Service.TargetManager.SoftTarget;
+                    if (HasFriendlyTarget(softTarget)) healTarget = softTarget;
+                    if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
+                    if (healTarget is null) healTarget = LocalPlayer;
+
+                    //Check for the Galvanize shield buff. Start applying if it doesn't exist
+                    if (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null)
                     {
-                        bool found = false;
-                        //If we have a soft target, use that, else CurrentTarget.
-                        GameObject? target = Service.TargetManager.SoftTarget is not null ? Service.TargetManager.SoftTarget : CurrentTarget;
+                        if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
+                            return Recitation;
 
-                        if (target is not null)
-                        {
-                            if (IsInParty())
-                            {
-                                //Search the party
-                                for (int i = 1; i <= 8; i++)
-                                {
-                                    GameObject? member = GetPartySlot(i);
-                                    if (member == null) continue; //Skip nulls/disconnected people
-
-                                    found = (member.ObjectId == target.ObjectId);
-                                    if (found) break;
-                                }
-                            }
-                            //Check if it's our chocobo?
-                            if (found is false) found = HasCompanionPresent() && target.ObjectId == Service.BuddyList.CompanionBuddy.GameObject.ObjectId;
-                        }
-
-                        //Fall back to self, skills won't work with anyone else.
-                        if (target is null || found is false)
-                        {
-                            target = LocalPlayer;
-                            found = true;
-                        }
-
-                        if (found)
-                        {
-                            if (FindEffect(Buffs.Galvanize, target, LocalPlayer.ObjectId) is not null) return DeploymentTactics;
-                            //Recitation is down here as not to waste it on bad targets.
-                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
-                                return Recitation;
-                        }
+                        return Adloquium;
                     }
-                    return Adloquium;
                 }
                 return actionID;
             }
         }
 
         /*
-        Overrides main DPS ability family, The Broils (and Ruin 1)
-        Implements Ruin 2 as the movement option
-        Chain Stratagem has overlap protection
+         * SCH_DPS
+         * Overrides main DPS ability family, The Broils (and Ruin 1)
+         * Implements Ruin 2 as the movement option
+         * Chain Stratagem has overlap protection
         */
         internal class SCH_DPS : CustomCombo
         {
