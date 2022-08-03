@@ -125,13 +125,13 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (HasEffect(Buffs.Recitation))
                     {
-                        if (LevelChecked(Adloquium) && IsEnabled(CustomComboPreset.SSCH_Recitation_Adloquium))
+                        if (LevelChecked(Adloquium) && IsEnabled(CustomComboPreset.SCH_Recitation_Adloquium))
                             return Adloquium;
-                        if (LevelChecked(Succor) && IsEnabled(CustomComboPreset.SSCH_Recitation_Succor))
+                        if (LevelChecked(Succor) && IsEnabled(CustomComboPreset.SCH_Recitation_Succor))
                             return Succor;
-                        if (LevelChecked(Indomitability) && IsEnabled(CustomComboPreset.SSCH_Recitation_Indomitability))
+                        if (LevelChecked(Indomitability) && IsEnabled(CustomComboPreset.SCH_Recitation_Indomitability))
                             return Indomitability;
-                        if (LevelChecked(Excogitation) && IsEnabled(CustomComboPreset.SSCH_Recitation_Excogitation))
+                        if (LevelChecked(Excogitation) && IsEnabled(CustomComboPreset.SCH_Recitation_Excogitation))
                             return Excogitation;
                     }
                     return Recitation;
