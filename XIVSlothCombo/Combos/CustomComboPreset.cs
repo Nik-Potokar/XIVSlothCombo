@@ -2944,53 +2944,53 @@ namespace XIVSlothCombo.Combos
 
         #region DOL
 
-        [ReplaceSkill(DOL.AgelessWords, DOL.SolidReason)]
+        //[ReplaceSkill(DOL.AgelessWords, DOL.SolidReason)]
         [CustomComboInfo("Eureka Feature", "Replace Ageless Words and Solid Reason with Wise to the World when available", DOL.JobID)]
         DOL_Eureka = 51001,
 
-        [ReplaceSkill(DOL.Cast)]
+        //[ReplaceSkill(DOL.Cast)]
         [CustomComboInfo("Fisher Cast to Hook Feature", "Replace Cast with Hook when fishing", DOL.JobID)]
         FSH_CastHook = 51002,
 
         [CustomComboInfo("Fisher Diving Feature", "Change fishing abilities to diving abilities", DOL.JobID)]
         FSH_Swim = 51008,
 
-            [ReplaceSkill(DOL.Cast)]
+            //[ReplaceSkill(DOL.Cast)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Cast to Gig Option", "", DOL.JobID)]
             FSH_CastGig = 51003,
 
-            [ReplaceSkill(DOL.SurfaceSlap)]
+            //[ReplaceSkill(DOL.SurfaceSlap)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Surface Slap to Veteran Trade Option", "", DOL.JobID)]
             FSH_SurfaceTrade = 51004,
 
-            [ReplaceSkill(DOL.PrizeCatch)]
+            //[ReplaceSkill(DOL.PrizeCatch)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Prize Catch to Nature's Bounty Option", "", DOL.JobID)]
             FSH_PrizeBounty = 51005,
 
-            [ReplaceSkill(DOL.Snagging)]
+            //[ReplaceSkill(DOL.Snagging)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Snagging to Salvage Option", "", DOL.JobID)]
             FSH_SnaggingSalvage = 51006,
 
-            [ReplaceSkill(DOL.CastLight)]
+            //[ReplaceSkill(DOL.CastLight)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Cast Light to Electric Current Option", "", DOL.JobID)]
             FSH_CastLight_ElectricCurrent = 51007,
 
-            [ReplaceSkill(DOL.Mooch, DOL.MoochII)]
+            //[ReplaceSkill(DOL.Mooch, DOL.MoochII)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Mooch to Shark Eye Option", "", DOL.JobID)]
             FSH_Mooch_SharkEye = 51009,
 
-            [ReplaceSkill(DOL.FishEyes)]
+            //[ReplaceSkill(DOL.FishEyes)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Fish Eyes to Vital Sight Option", "", DOL.JobID)]
             FSH_FishEyes_VitalSight = 51010,
 
-            [ReplaceSkill(DOL.Chum)]
+            //[ReplaceSkill(DOL.Chum)]
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Chum to Baited Breath Option", "", DOL.JobID)]
             FSH_Chum_BaitedBreath = 51011,
