@@ -8,34 +8,43 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte ClassID = 0;
         public const byte JobID = 51;
 
-        public const uint
+        internal const uint
             //BTN & MIN
             AgelessWords = 215,
             SolidReason = 232,
+            MinWiseToTheWorld = 26521,
+            BtnWiseToTheWorld = 26522,
             //FSH
             Cast = 289,
             Hook = 296,
+            Mooch = 297,
+            MoochII = 268,
             CastLight = 2135,
             Snagging = 4100,
+            Chum = 4104,
+            FishEyes = 4105,
             SurfaceSlap = 4595,
-            Gig = 7632,
+            //FSH Diving
+            Gig = 7652,
+            SharkEye = 7904,
+            SharkEyeII = 7905,
             VeteranTrade = 7906,
             NaturesBounty = 7909,
             Salvage = 7910,
-            MinWiseToTheWorld = 26521,
-            BtnWiseToTheWorld = 26522,
-            ElectricCurrent = 26872,
-            PrizeCatch = 26806;
+            PrizeCatch = 26806,
+            VitalSight = 26870,
+            BaitedBreath = 26871,
+            ElectricCurrent = 26872;
 
-        public static class Buffs
+        internal static class Buffs
         {
-            public const ushort
+            internal const ushort
                 EurekaMoment = 2765;
         }
 
-        public static class Debuffs
+        internal static class Debuffs
         {
-            public const ushort
+            internal const ushort
                 Placeholder = 0;
         }
 
@@ -67,6 +76,14 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is PrizeCatch && IsEnabled(CustomComboPreset.FSH_PrizeBounty) && HasCondition(ConditionFlag.Diving)) return NaturesBounty;
                 if (actionID is Snagging && IsEnabled(CustomComboPreset.FSH_SnaggingSalvage) && HasCondition(ConditionFlag.Diving)) return Salvage;
                 if (actionID is CastLight && IsEnabled(CustomComboPreset.FSH_CastLight_ElectricCurrent) && HasCondition(ConditionFlag.Diving)) return ElectricCurrent;
+                if (IsEnabled(CustomComboPreset.FSH_Mooch_SharkEye) && HasCondition(ConditionFlag.Diving))
+                {
+                    if (actionID is Mooch) return SharkEye;
+                    if (actionID is MoochII) return SharkEyeII;
+                }
+                if (actionID is FishEyes && IsEnabled(CustomComboPreset.FSH_FishEyes_VitalSight) && HasCondition(ConditionFlag.Diving)) return VitalSight;
+                if (actionID is Chum && IsEnabled(CustomComboPreset.FSH_Chum_BaitedBreath) && HasCondition(ConditionFlag.Diving)) return BaitedBreath;
+
                 return actionID;
             }
         }

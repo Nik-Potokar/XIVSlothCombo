@@ -2980,6 +2980,21 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Cast Light to Electric Current Option", "", DOL.JobID)]
             FSH_CastLight_ElectricCurrent = 51007,
 
+            [ReplaceSkill(DOL.Mooch, DOL.MoochII)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Mooch to Shark Eye Option", "", DOL.JobID)]
+            FSH_Mooch_SharkEye = 51009,
+
+            [ReplaceSkill(DOL.FishEyes)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Fish Eyes to Vital Sight Option", "", DOL.JobID)]
+            FSH_FishEyes_VitalSight = 51010,
+
+            [ReplaceSkill(DOL.Chum)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Chum to Baited Breath Option", "", DOL.JobID)]
+            FSH_Chum_BaitedBreath = 51011,
+
         #endregion
 
         #endregion
