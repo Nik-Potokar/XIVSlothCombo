@@ -2952,7 +2952,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Fisher Cast to Hook Feature", "Replace Cast with Hook when fishing", DOL.JobID)]
         FSH_CastHook = 51002,
 
-        [CustomComboInfo("Fisher Diving Feature", "Change Fishing abilities to diving abilities", DOL.JobID)]
+        [CustomComboInfo("Fisher Diving Feature", "Change fishing abilities to diving abilities", DOL.JobID)]
         FSH_Swim = 51008,
 
             [ReplaceSkill(DOL.Cast)]

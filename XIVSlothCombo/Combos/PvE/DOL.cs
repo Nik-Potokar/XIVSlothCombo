@@ -25,7 +25,7 @@ namespace XIVSlothCombo.Combos.PvE
             FishEyes = 4105,
             SurfaceSlap = 4595,
             //FSH Diving
-            Gig = 7652,
+            Gig = 7632,
             SharkEye = 7904,
             SharkEyeII = 7905,
             VeteranTrade = 7906,
