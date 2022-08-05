@@ -53,8 +53,8 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DOL_Eureka;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is SolidReason && LevelChecked(MinWiseToTheWorld) && HasEffect(Buffs.EurekaMoment)) return MinWiseToTheWorld;
-                if (actionID is AgelessWords && LevelChecked(BtnWiseToTheWorld) && HasEffect(Buffs.EurekaMoment)) return BtnWiseToTheWorld;
+                if (actionID is SolidReason && HasEffect(Buffs.EurekaMoment)) return MinWiseToTheWorld;
+                if (actionID is AgelessWords && HasEffect(Buffs.EurekaMoment)) return BtnWiseToTheWorld;
                 return actionID;
             }
         }
