@@ -71,18 +71,21 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_Swim;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Cast && IsEnabled(CustomComboPreset.FSH_CastGig) && HasCondition(ConditionFlag.Diving)) return Gig;
-                if (actionID is SurfaceSlap && IsEnabled(CustomComboPreset.FSH_SurfaceTrade) && HasCondition(ConditionFlag.Diving)) return VeteranTrade;
-                if (actionID is PrizeCatch && IsEnabled(CustomComboPreset.FSH_PrizeBounty) && HasCondition(ConditionFlag.Diving)) return NaturesBounty;
-                if (actionID is Snagging && IsEnabled(CustomComboPreset.FSH_SnaggingSalvage) && HasCondition(ConditionFlag.Diving)) return Salvage;
-                if (actionID is CastLight && IsEnabled(CustomComboPreset.FSH_CastLight_ElectricCurrent) && HasCondition(ConditionFlag.Diving)) return ElectricCurrent;
-                if (IsEnabled(CustomComboPreset.FSH_Mooch_SharkEye) && HasCondition(ConditionFlag.Diving))
-                {
-                    if (actionID is Mooch) return SharkEye;
-                    if (actionID is MoochII) return SharkEyeII;
+                if (HasCondition(ConditionFlag.Diving))
+                { 
+                    if (actionID is Cast && IsEnabled(CustomComboPreset.FSH_CastGig)) return Gig;
+                    if (actionID is SurfaceSlap && IsEnabled(CustomComboPreset.FSH_SurfaceTrade)) return VeteranTrade;
+                    if (actionID is PrizeCatch && IsEnabled(CustomComboPreset.FSH_PrizeBounty)) return NaturesBounty;
+                    if (actionID is Snagging && IsEnabled(CustomComboPreset.FSH_SnaggingSalvage)) return Salvage;
+                    if (actionID is CastLight && IsEnabled(CustomComboPreset.FSH_CastLight_ElectricCurrent)) return ElectricCurrent;
+                    if (IsEnabled(CustomComboPreset.FSH_Mooch_SharkEye))
+                    {
+                        if (actionID is Mooch) return SharkEye;
+                        if (actionID is MoochII) return SharkEyeII;
+                    }
+                    if (actionID is FishEyes && IsEnabled(CustomComboPreset.FSH_FishEyes_VitalSight)) return VitalSight;
+                    if (actionID is Chum && IsEnabled(CustomComboPreset.FSH_Chum_BaitedBreath)) return BaitedBreath;
                 }
-                if (actionID is FishEyes && IsEnabled(CustomComboPreset.FSH_FishEyes_VitalSight) && HasCondition(ConditionFlag.Diving)) return VitalSight;
-                if (actionID is Chum && IsEnabled(CustomComboPreset.FSH_Chum_BaitedBreath) && HasCondition(ConditionFlag.Diving)) return BaitedBreath;
 
                 return actionID;
             }
