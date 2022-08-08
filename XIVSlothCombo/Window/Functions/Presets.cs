@@ -74,7 +74,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener || preset == CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener)
             {
                 ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
-                if (ImGui.Button("Image of rotation"))
+                if (ImGui.Button($"Image of rotation###ninrtn{i}"))
                 {
                     Util.OpenLink("https://i.imgur.com/q3lXeSZ.png");
                 }
