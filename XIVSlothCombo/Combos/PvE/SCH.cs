@@ -235,44 +235,42 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 bool AlternateMode = Config.SCH_ST_DPS_AltMode; //(0 or 1 radio values)
                 if (((!AlternateMode && BroilList.Contains(actionID)) ||
-                     (AlternateMode && BioList.ContainsKey(actionID))) &&
-                    InCombat())
+                     (AlternateMode && BioList.ContainsKey(actionID))))
                 {
-                    if (CanSpellWeave(actionID))
-                    { 
-                        // Lucid Dreaming
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
-                            ActionReady(All.LucidDreaming) &&
-                            LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption)
-                            return All.LucidDreaming;
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
 
-                        // Aetherflow
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
-                            ActionReady(Aetherflow) && !Gauge.HasAetherflow())
-                            return Aetherflow;
-                    }
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() && 
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
 
                     //Target based options
                     if (HasBattleTarget())
                     {
-                        if (CanSpellWeave(actionID))
-                        {
-                            // Energy Drain
-                            if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain) &&
-                                LevelChecked(EnergyDrain) && Gauge.HasAetherflow() &&
-                                GetCooldownRemainingTime(Aetherflow) <= Config.SCH_ST_DPS_EnergyDrain)
-                                return EnergyDrain;
+                        // Energy Drain
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain) &&
+                            LevelChecked(EnergyDrain) && InCombat() &&
+                            Gauge.HasAetherflow() &&
+                            GetCooldownRemainingTime(Aetherflow) <= Config.SCH_ST_DPS_EnergyDrain &&
+                            CanSpellWeave(actionID))
+                            return EnergyDrain;
 
-                            // Chain Stratagem
-                            if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
-                                ActionReady(ChainStratagem) &&
-                                !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
-                                GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption)
-                                return ChainStratagem;
-                        }
+                        // Chain Stratagem
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
+                            ActionReady(ChainStratagem) && InCombat() &&
+                            !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
+                            GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption &&
+                            CanSpellWeave(actionID))
+                            return ChainStratagem;
 
                         //Bio/Biolysis
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio))
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio) && InCombat())
                         {
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
@@ -287,7 +285,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         //Ruin 2 Movement 
                         if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
-                            LevelChecked(Ruin2) &&
+                            LevelChecked(Ruin2) && InCombat() &&
                             IsOffCooldown(actionID) && //Check against actionID to stop seizure during cooldown 
                             IsMoving) return OriginalHook(Ruin2); //Who knows in the future
                     }
