@@ -1391,50 +1391,56 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SAGE
 
+            if (preset is CustomComboPreset.SGE_ST_Dosis)
+            {
+                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_AltMode), "On All Dosis Actions", "", 0);
+                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_AltMode), "On Dosis II", "Alternative DPS Mode. Leaves Dosis & Dosis III alone for normal DPS", 1);
+            }
+
             if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Dosis_EDosisHPPer, "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Dosis_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
             {
-                UserConfig.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show when moving only", "", 0);
-                UserConfig.DrawRadioButton(SGE.Config.SGE_ST_Dosis_Toxikon, "Show at all times", "", 1);
+                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_Toxikon), "Show when moving only", "", 0);
+                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_Toxikon), "Show at all times", "", 1);
             }
 
             if (preset is CustomComboPreset.SGE_AoE_Phlegma_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_AoE_Phlegma_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_AoE_Phlegma_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Use Soteria when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Soteria), "Use Soteria when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Use Zoe when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Zoe), "Use Zoe when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Use Pepsis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Pepsis), "Use Pepsis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Use Taurochole when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Taurochole), "Use Taurochole when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Use Haima when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Haima), "Use Haima when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Use Krasis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Krasis), "Use Krasis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Use Druochole when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Druochole), "Use Druochole when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Diagnosis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Use Diagnosis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Diagnosis), "Use Diagnosis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_Eukrasia)
             {
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Dosis", "", 0);
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Diagnosis", "", 1);
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Prognosis", "", 2);
+                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_Eukrasia_Mode), "Eukrasian Dosis", "", 0);
+                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_Eukrasia_Mode), "Eukrasian Diagnosis", "", 1);
+                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_Eukrasia_Mode), "Eukrasian Prognosis", "", 2);
             }
 
             #endregion

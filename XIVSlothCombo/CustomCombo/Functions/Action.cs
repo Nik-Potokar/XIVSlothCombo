@@ -31,6 +31,21 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
 
+        /// <summary> Checks if the player is in range to use an action. Best used with actions with irregular ranges.</summary>
+        /// <param name="id"> ID of the action. </param>
+        /// <returns></returns>
+        public static bool InActionRange(uint id)
+        {
+            int range = ActionWatching.GetActionRange(id);
+            return range switch
+            {
+                -2 => false,//Doesn't exist in ActionWatching
+                -1 => InMeleeRange(),//In the Sheet, all Melee skills appear to be -1
+                0 => true,//In the Sheet, all self use abilities appear to be 0 (ie no range restriction)
+                _ => GetTargetDistance() <= range,
+            };
+        } 
+
         /// <summary> Checks if the player can use an action based on the level required and off cooldown / has charges.</summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>

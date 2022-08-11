@@ -2333,8 +2333,17 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Dosis_EDosis = 14120,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving.", SGE.JobID, 130, "", "")]
+            [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 130, "", "")]
             SGE_ST_Dosis_Toxikon = 14130,
+
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 129, "", "")]
+            SGE_ST_Dosis_Phlegma = 14140,
+
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 109, "", "")]
+            SGE_ST_Dosis_Kardia = 14150,
+            
             #endregion
 
         #region AoE DPS Feature
@@ -2376,6 +2385,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
             SGE_ST_Heal_Diagnosis = 14320,
+                
+                [ParentCombo(SGE_ST_Heal_Diagnosis)]
+                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID, 313, "", "")]
+                SGE_ST_Heal_Diagnosis_IgnoreShield = 14321,
 
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
@@ -2417,35 +2430,39 @@ namespace XIVSlothCombo.Combos
         SGE_AoE_Heal = 14500,
             
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 510, "", "")]
+            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 504, "", "")]
             SGE_AoE_Heal_Physis = 14510,
 
             [ParentCombo(SGE_AoE_Heal)]
             [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 520, "", "")]
             SGE_AoE_Heal_EPrognosis = 14520,
 
+                [ParentCombo(SGE_AoE_Heal_EPrognosis)]
+                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Prognosis, and normal Prognosis will be unavailable.", SGE.JobID, 520, "", "")]
+                SGE_AoE_Heal_EPrognosis_IgnoreShield = 14521,
+
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 530, "", "")]
+            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 505, "", "")]
             SGE_AoE_Heal_Holos = 14530,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 540, "", "")]
+            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 506, "", "")]
             SGE_AoE_Heal_Panhaima = 14540,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 550, "", "")]
+            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 507, "", "")]
             SGE_AoE_Heal_Pepsis = 14550,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 560, "", "")]
+            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 503, "", "")]
             SGE_AoE_Heal_Ixochole = 14560,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 570, "", "")]
+            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 502, "", "")]
             SGE_AoE_Heal_Kerachole = 14570,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 580, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
             SGE_AoE_Heal_Rhizomata = 14580,
             #endregion
 
