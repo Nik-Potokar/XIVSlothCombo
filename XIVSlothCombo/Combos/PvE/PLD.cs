@@ -142,7 +142,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InMeleeRange() && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) &&
                         !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth) && HasBattleTarget())
                     {
-                        if (LevelChecked(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !this.IsMoving && !HasEffect(Buffs.Requiescat) ||
+                        if (LevelChecked(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !IsMoving && !HasEffect(Buffs.Requiescat) ||
                             LevelChecked(Confiteor) && HasEffect(Buffs.Requiescat) && GetBuffStacks(Buffs.Requiescat) is not 1 && (GetBuffRemainingTime(Buffs.Requiescat) >= 3) && LocalPlayer.CurrentMp >= 2000)
                         {
                             return HolySpirit;

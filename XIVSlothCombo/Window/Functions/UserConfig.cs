@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Dalamud.Interface.Colors;
+using Dalamud.Utility;
+using ImGuiNET;
+using System;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Interface.Colors;
-using Dalamud.Utility;
-using ImGuiNET;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
+using Dalamud.Interface;
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -22,29 +23,97 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
         /// <param name="itemWidth"> How long the slider should be. </param>
         /// <param name="sliderIncrement"> How much you want the user to increment the slider by. Uses SliderIncrements as a preset. </param>
-        public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150, uint sliderIncrement = SliderIncrements.Ones)
+        /// <param name="hasAdditionalChoice">True if this config can trigger additional configs depending on value.</param>
+        /// <param name="additonalChoiceCondition">What the condition is to convey to the user what triggers it.</param>
+        public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150, uint sliderIncrement = SliderIncrements.Ones, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
             int output = PluginConfiguration.GetCustomIntValue(config, minValue);
-            bool inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
-            inputChanged |= ImGui.SliderInt($"{sliderDescription}###{config}", ref output, minValue, maxValue);
-
-            if (inputChanged)
+            if (output < minValue)
             {
-                if (output % sliderIncrement != 0)
-                {
-                    output = output.RoundOff(sliderIncrement);
-                    if (output < minValue) output = minValue;
-                    if (output > maxValue) output = maxValue;
-                }
-
+                output = minValue;
                 PluginConfiguration.SetCustomIntValue(config, output);
                 Service.Configuration.Save();
             }
 
+            sliderDescription = sliderDescription.Replace("%", "%%");
+            float contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            float wrapPos = ImGui.GetContentRegionMax().X - 35f;
+
+            InfoBox box = new()
+            {
+                Color = Colors.White,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                    {
+                        bool inputChanged = false;
+                        Vector2 currentPos = ImGui.GetCursorPos();
+                        ImGui.SetCursorPosX(currentPos.X + itemWidth);
+                        ImGui.PushTextWrapPos(wrapPos);
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
+                        ImGui.Text($"{sliderDescription}");
+                        Vector2 height = ImGui.GetItemRectSize();
+                        float lines = (height.Y / ImGui.GetFontSize());
+                        Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
+                        string newLines = "";
+                        for (int i = 1; i < lines; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                newLines += "\n";
+                            }
+                            else
+                            {
+                                newLines += "\n\n";
+                            }
+                           
+                        }
+
+                        if (hasAdditionalChoice)
+                        {
+                            ImGui.SameLine();
+                            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                            ImGui.PushFont(UiBuilder.IconFont);
+                            ImGui.Dummy(new Vector2(5, 0));
+                            ImGui.SameLine();
+                            ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
+                            ImGui.PopFont();
+                            ImGui.PopStyleColor();
+
+                            if (ImGui.IsItemHovered())
+                            {
+                                ImGui.BeginTooltip();
+                                ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                                ImGui.EndTooltip();
+                            }
+                        }
+
+                        ImGui.PopStyleColor();
+                        ImGui.PopTextWrapPos();
+                        ImGui.SameLine();
+                        ImGui.SetCursorPosX(currentPos.X);
+                        ImGui.PushItemWidth(itemWidth);
+                        inputChanged |= ImGui.SliderInt($"{newLines}###{config}", ref output, minValue, maxValue);
+
+                        if (inputChanged)
+                        {
+                            if (output % sliderIncrement != 0)
+                            {
+                                output = output.RoundOff(sliderIncrement);
+                                if (output < minValue) output = minValue;
+                                if (output > maxValue) output = maxValue;
+                            }
+
+                            PluginConfiguration.SetCustomIntValue(config, output);
+                            Service.Configuration.Save();
+                        }
+                    }
+            };
+
+            box.Draw();
             ImGui.Spacing();
         }
 
@@ -54,22 +123,91 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="config"> The config ID. </param>
         /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
         /// <param name="itemWidth"> How long the slider should be. </param>
-        public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
+        /// <param name="hasAdditionalChoice"></param>
+        /// <param name="additonalChoiceCondition"></param>
+        public static void DrawSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
             float output = PluginConfiguration.GetCustomFloatValue(config, minValue);
-            bool inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
-            inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue);
-
-            if (inputChanged)
+            if (output < minValue)
             {
+                output = minValue;
                 PluginConfiguration.SetCustomFloatValue(config, output);
                 Service.Configuration.Save();
             }
 
+            sliderDescription = sliderDescription.Replace("%", "%%");
+            float contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            float wrapPos = ImGui.GetContentRegionMax().X - 35f;
+
+
+            InfoBox box = new()
+            {
+                Color = Colors.White,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                {
+                    bool inputChanged = false;
+                    Vector2 currentPos = ImGui.GetCursorPos();
+                    ImGui.SetCursorPosX(currentPos.X + itemWidth);
+                    ImGui.PushTextWrapPos(wrapPos);
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
+                    ImGui.Text($"{sliderDescription}");
+                    Vector2 height = ImGui.GetItemRectSize();
+                    float lines = (height.Y / ImGui.GetFontSize());
+                    Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
+                    string newLines = "";
+                    for (int i = 1; i < lines; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            newLines += "\n";
+                        }
+                        else
+                        {
+                            newLines += "\n\n";
+                        }
+
+                    }
+
+                    if (hasAdditionalChoice)
+                    {
+                        ImGui.SameLine();
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                        ImGui.PushFont(UiBuilder.IconFont);
+                        ImGui.Dummy(new Vector2(5, 0));
+                        ImGui.SameLine();
+                        ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
+                        ImGui.PopFont();
+                        ImGui.PopStyleColor();
+
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.BeginTooltip();
+                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            ImGui.EndTooltip();
+                        }
+                    }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopTextWrapPos();
+                    ImGui.SameLine();
+                    ImGui.SetCursorPosX(currentPos.X);
+                    ImGui.PushItemWidth(itemWidth);
+                    inputChanged |= ImGui.SliderFloat($"{newLines}###{config}", ref output, minValue, maxValue);
+
+                    if (inputChanged)
+                    {
+                        PluginConfiguration.SetCustomFloatValue(config, output);
+                        Service.Configuration.Save();
+                    }
+                }
+            };
+
+            box.Draw();
             ImGui.Spacing();
         }
 
@@ -79,22 +217,91 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="config"> The config ID. </param>
         /// <param name="sliderDescription"> Description of the slider. Appends to the right of the slider. </param>
         /// <param name="itemWidth"> How long the slider should be. </param>
-        public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150)
+        /// <param name="hasAdditionalChoice"></param>
+        /// <param name="additonalChoiceCondition"></param>
+        public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
             float output = PluginConfiguration.GetCustomFloatValue(config, minValue);
-            bool inputChanged = false;
-            ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
-            inputChanged |= ImGui.SliderFloat($"{sliderDescription}###{config}", ref output, minValue, maxValue, "%.1f");
-
-            if (inputChanged)
+            if (output < minValue)
             {
+                output = minValue;
                 PluginConfiguration.SetCustomFloatValue(config, output);
                 Service.Configuration.Save();
             }
 
+            sliderDescription = sliderDescription.Replace("%", "%%");
+            float contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            float wrapPos = ImGui.GetContentRegionMax().X - 35f;
+
+
+            InfoBox box = new()
+            {
+                Color = Colors.White,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                {
+                    bool inputChanged = false;
+                    Vector2 currentPos = ImGui.GetCursorPos();
+                    ImGui.SetCursorPosX(currentPos.X + itemWidth);
+                    ImGui.PushTextWrapPos(wrapPos);
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
+                    ImGui.Text($"{sliderDescription}");
+                    Vector2 height = ImGui.GetItemRectSize();
+                    float lines = (height.Y / ImGui.GetFontSize());
+                    Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
+                    string newLines = "";
+                    for (int i = 1; i < lines; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            newLines += "\n";
+                        }
+                        else
+                        {
+                            newLines += "\n\n";
+                        }
+
+                    }
+
+                    if (hasAdditionalChoice)
+                    {
+                        ImGui.SameLine();
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                        ImGui.PushFont(UiBuilder.IconFont);
+                        ImGui.Dummy(new Vector2(5, 0));
+                        ImGui.SameLine();
+                        ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
+                        ImGui.PopFont();
+                        ImGui.PopStyleColor();
+
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.BeginTooltip();
+                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            ImGui.EndTooltip();
+                        }
+                    }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopTextWrapPos();
+                    ImGui.SameLine();
+                    ImGui.SetCursorPosX(currentPos.X);
+                    ImGui.PushItemWidth(itemWidth);
+                    inputChanged |= ImGui.SliderFloat($"{newLines}###{config}", ref output, minValue, maxValue, "%.1f");
+
+                    if (inputChanged)
+                    {
+                        PluginConfiguration.SetCustomFloatValue(config, output);
+                        Service.Configuration.Save();
+                    }
+                }
+            };
+
+            box.Draw();
             ImGui.Spacing();
         }
 
@@ -169,7 +376,44 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.Unindent();
         }
-
+      
+        /// <summary>A true or false configuration. Similar to presets except can be used as part of a condition on another config.</summary>
+        /// <param name="config">The config ID.</param>
+        /// <param name="checkBoxName">The name of the feature.</param>
+        /// <param name="checkboxDescription">The description of the feature</param>
+        /// <param name="itemWidth"></param>
+        /// <param name="isConditionalChoice"></param>
+        public static void DrawAdditionalBoolChoice(string config, string checkBoxName, string checkboxDescription, float itemWidth = 150, bool isConditionalChoice = false)
+        {
+            bool output = PluginConfiguration.GetCustomBoolValue(config);
+            ImGui.PushItemWidth(itemWidth);
+            if (!isConditionalChoice)
+                ImGui.Indent();
+            else
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                ImGui.PushFont(UiBuilder.IconFont);
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextWrapped($"{FontAwesomeIcon.Plus.ToIconString()}");
+                ImGui.PopFont();
+                ImGui.PopStyleColor();
+                ImGui.SameLine();
+                ImGui.Dummy(new Vector2(3));
+                ImGui.SameLine();
+            }
+            if (ImGui.Checkbox($"{checkBoxName}###{config}", ref output))
+            {
+                PluginConfiguration.SetCustomBoolValue(config, output);
+                Service.Configuration.Save();
+            }
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
+            ImGui.TextWrapped(checkboxDescription);
+            ImGui.PopStyleColor();
+            if (!isConditionalChoice)
+                ImGui.Unindent();
+            ImGui.Spacing();
+        }
+      
         /// <summary> Draws multi choice checkboxes in a horizontal configuration. </summary>
         /// <param name="config"> The config ID. </param>
         /// <param name="checkBoxName"> The name of the feature. </param>
@@ -996,54 +1240,68 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.NIN_Simple_Mudras)
             {
-                int mudrapath = Service.Configuration.MudraPathSelection;
-                bool path1 = mudrapath == 1;
-                bool path2 = mudrapath == 2;
-
-                ImGui.Indent();
-                ImGui.PushItemWidth(75);
-
-                if (ImGui.Checkbox("Mudra Path Set 1", ref path1))
-                {
-                    Service.Configuration.MudraPathSelection = 1;
-                    Service.Configuration.Save();
-                }
-
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
-                ImGui.TextWrapped($"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton");
-                ImGui.PopStyleColor();
-
-                if (ImGui.Checkbox("Mudra Path Set 2", ref path2))
-                {
-                    Service.Configuration.MudraPathSelection = 2;
-                    Service.Configuration.Save();
-                }
-
-                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
-                ImGui.TextWrapped($"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).");
-                ImGui.PopStyleColor();
-
-                ImGui.Unindent();
-                ImGui.Spacing();
+                UserConfig.DrawRadioButton(NIN.Config.NIN_SimpleMudra_Choice, "Mudra Path Set 1", $"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton", 1);
+                UserConfig.DrawRadioButton(NIN.Config.NIN_SimpleMudra_Choice, "Mudra Path Set 2", $"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).", 2);
             }
 
-            if (preset == CustomComboPreset.NIN_ST_Simple_Trick)
-                UserConfig.DrawSliderInt(0, 15, NIN.Config.Trick_CooldownRemaining, "Set the amount of time in seconds for the feature to try and set up \nSuiton in advance of Trick Attack coming off cooldown");
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Huraijin)
+                UserConfig.DrawSliderInt(0, 60, NIN.Config.Huton_RemainingHuraijinST, "Set the amount of time remaining on Huton the feature should wait before using Huraijin");
 
-            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_Huraijin)
-                UserConfig.DrawSliderInt(0, 60, NIN.Config.Huton_RemainingTimer, "Set the amount of time remaining on Huton the feature\nshould wait before using Huraijin", 200);
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush)
+            {
+                UserConfig.DrawSliderInt(0, 30, NIN.Config.Huton_RemainingArmorCrush, "Set the amount of time remaining on Huton the feature should wait before using Armor Crush", hasAdditionalChoice: true, additonalChoiceCondition: "Value set to 12 or less.");
 
-            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_Mug)
-                UserConfig.DrawSliderInt(0, 100, NIN.Config.Mug_NinkiGauge, $"Set the amount of Ninki to be at or under for this feature (level {NIN.TraitLevels.Shukiho} onwards)");
+                if (PluginConfiguration.GetCustomIntValue(NIN.Config.Huton_RemainingArmorCrush) <= 12)
+                    UserConfig.DrawAdditionalBoolChoice(NIN.Config.Advanced_DoubleArmorCrush, "Double Armor Crush Feature", "Uses the Armor Crush ender twice before switching back to Aeolian Edge.", isConditionalChoice: true);
+            }
 
-            if (preset == CustomComboPreset.NIN_AeolianEdgeCombo_ArmorCrush)
-                UserConfig.DrawSliderInt(0, 30, NIN.Config.Huton_RemainingArmorCrush, "Set the amount of time remaining on Huton the feature\nshould wait before using Armor Crush", 200);
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra)
+                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BhavaPooling, "Set the minimal amount of Ninki required to have before spending on Bhavacakra.");
 
-            if (preset == CustomComboPreset.NIN_NinkiPooling_Bhavacakra)
-                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BhavaPooling, "The minimum value of Ninki to have before spending.");
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)
+                UserConfig.DrawSliderInt(0, 15, NIN.Config.Trick_CooldownRemaining, "Set the amount of time remaining on Trick Attack cooldown before trying to set up with Suiton.");
 
-            if (preset == CustomComboPreset.NIN_NinkiPooling_Bunshin)
-                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BunshinPooling, "The minimum value of Ninki to have before spending.");
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bunshin)
+                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BunshinPoolingST, "Set the amount of Ninki required to have before spending on Bunshin.");
+
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_Bunshin)
+                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BunshinPoolingAoE, "Set the amount of Ninki required to have before spending on Bunshin.");
+
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Cooldowns)
+                UserConfig.DrawSliderInt(0, 15, NIN.Config.Advanced_Trick_Cooldown, "Set the amount of time remaining on Trick Attack cooldown to start saving cooldowns.");
+
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdST, "Set a HP% threshold for when Second Wind will be used.");
+            
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ShadeShift)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdST, "Set a HP% threshold for when Shade Shift will be used.");
+            
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bloodbath)            
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdST, "Set a HP% threshold for when Bloodbath will be used.");
+            
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdAoE, "Set a HP% threshold for when Second Wind will be used.");
+            
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_ShadeShift)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdAoE, "Set a HP% threshold for when Shade Shift will be used.");
+            
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_Bloodbath)
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdAoE, "Set a HP% threshold for when Bloodbath will be used.");
+            
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_HellfrogMedium)
+                UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_HellfrogPooling, "Set the amount of Ninki required to have before spending on Hellfrog Medium.");
+
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_Doton)
+            {
+                UserConfig.DrawSliderInt(0, 18, NIN.Config.Advanced_DotonTimer, "Sets the amount of time remaining on Doton before casting again.");
+                UserConfig.DrawSliderInt(0, 100, NIN.Config.Advanced_DotonHP, "Sets the max remaining HP percentage of the current target to cast Doton.");
+            }
+
+            if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_TCJ)
+            {
+                UserConfig.DrawRadioButton(NIN.Config.Advanced_TCJEnderAoE, "Ten Chi Jin Ender 1", "Ends Ten Chi Jin with Suiton.", 0);
+                UserConfig.DrawRadioButton(NIN.Config.Advanced_TCJEnderAoE, $"Ten Chi Jin Ender 2", "Ends Ten Chi Jin with Doton.\nIf you have Doton enabled, Ten Chi Jin will be delayed according to the settings in that feature.", 1);
+            }
 
             #endregion
             // ====================================================================================
