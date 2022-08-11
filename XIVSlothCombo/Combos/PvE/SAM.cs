@@ -1,7 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Objects.Enums;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -618,6 +616,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_TenkaGoken) && LevelChecked(TenkaGoken))
                     {
+
                         if (!IsMoving && (OriginalHook(Iaijutsu) == TenkaGoken || (OriginalHook(Iaijutsu) == Setsugekka && LevelChecked(Setsugekka))))
                             return OriginalHook(Iaijutsu);
 
