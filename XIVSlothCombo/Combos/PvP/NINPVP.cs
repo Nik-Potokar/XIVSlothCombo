@@ -46,13 +46,20 @@ namespace XIVSlothCombo.Combos.PvP
                 SealedMeisui = 3198;
         }
 
+        internal class Config
+        {
+            internal const string
+                NINPvP_Meisui_ST = "NINPvP_Meisui_ST",
+                NINPvP_Meisui_AoE = "NINPvP_Meisui_AoE";
+        }
+
         internal class NINPvP_ST_BurstMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NINPvP_ST_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID is SpinningEdge or AeolianEdge or GustSlash)
+                if (actionID is SpinningEdge or GustSlash or AeolianEdge)
                 {
                     var threeMudrasCD = GetCooldown(ThreeMudra);
                     var fumaCD = GetCooldown(FumaShuriken);
@@ -64,7 +71,13 @@ namespace XIVSlothCombo.Combos.PvP
                     bool gokaLocked = HasEffect(Debuffs.SealedGokaMekkyaku);
                     bool hutonLocked = HasEffect(Debuffs.SealedHuton);
                     bool mudraMode = HasEffect(Buffs.ThreeMudra);
-                    bool canWeave = CanWeave(actionID);
+                    bool canWeave = CanWeave(SpinningEdge);
+                    var jobMaxHp = LocalPlayer.MaxHp;
+                    var threshold = GetOptionValue(Config.NINPvP_Meisui_ST);
+                    var maxHPThreshold = jobMaxHp - 8000;
+                    var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)maxHPThreshold;
+                    bool inMeisuiRange = threshold >= (remainingPercentage * 100);
+
 
                     if (HasEffect(Buffs.Hidden))
                         return OriginalHook(Assassinate);
@@ -83,6 +96,9 @@ namespace XIVSlothCombo.Combos.PvP
 
                     if (mudraMode)
                     {
+                        if (IsEnabled(CustomComboPreset.NINPvP_ST_Meisui) && inMeisuiRange && !meisuiLocked)
+                            return OriginalHook(Meisui);
+
                         if (!hyoshoLocked)
                             return OriginalHook(HyoshoRanryu);
 
@@ -90,7 +106,7 @@ namespace XIVSlothCombo.Combos.PvP
                             return OriginalHook(ForkedRaiju);
 
                         if (!hutonLocked)
-                            return Huton;
+                            return OriginalHook(Huton);
                     }
 
                     if (fumaCD.RemainingCharges > 0)
@@ -120,15 +136,23 @@ namespace XIVSlothCombo.Combos.PvP
                     bool gokaLocked = HasEffect(Debuffs.SealedGokaMekkyaku);
                     bool hutonLocked = HasEffect(Debuffs.SealedHuton);
                     bool mudraMode = HasEffect(Buffs.ThreeMudra);
-                    bool canWeave = CanWeave(actionID);
+                    bool canWeave = CanWeave(SpinningEdge);
+                    var jobMaxHp = LocalPlayer.MaxHp;
+                    var threshold = GetOptionValue(Config.NINPvP_Meisui_AoE);
+                    var maxHPThreshold = jobMaxHp - 8000;
+                    var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)maxHPThreshold;
+                    bool inMeisuiRange = threshold >= (remainingPercentage * 100);
+
+                    if (HasEffect(Buffs.Hidden))
+                        return OriginalHook(Assassinate);
 
                     if (canWeave)
                     {
                         if (InMeleeRange() && !GetCooldown(Mug).IsCooldown)
-                            return Mug;
+                            return OriginalHook(Mug);
 
                         if (!GetCooldown(Bunshin).IsCooldown)
-                            return Bunshin;
+                            return OriginalHook(Bunshin);
 
                         if (threeMudrasCD.RemainingCharges > 0 && !mudraMode)
                             return OriginalHook(ThreeMudra);
@@ -136,6 +160,9 @@ namespace XIVSlothCombo.Combos.PvP
 
                     if (mudraMode)
                     {
+                        if (IsEnabled(CustomComboPreset.NINPvP_AoE_Meisui) && inMeisuiRange && !meisuiLocked)
+                            return OriginalHook(Meisui);
+
                         if (!dotonLocked)
                             return OriginalHook(Doton);
 
