@@ -8,6 +8,7 @@ using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Services;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Core
 {
@@ -210,8 +211,63 @@ namespace XIVSlothCombo.Core
             DNC.FanDance2,
         };
 
-        /// <summary> Handles Mudra path selection for <see cref="CustomComboPreset.NIN_Simple_Mudras"/>. </summary>
-        public int MudraPathSelection { get; set; } = 0;
+        #endregion
+
+        #region Preset Resetting
+
+        [JsonProperty]
+        private static Dictionary<string, bool> ResetFeatureCatalog { get; set; } = new Dictionary<string, bool>();
+
+        private bool GetResetValues(string config)
+        {
+            if (ResetFeatureCatalog.TryGetValue(config, out var value)) return value;
+
+            return false;
+        }
+
+        private void SetResetValues(string config, bool value)
+        {
+            ResetFeatureCatalog[config] = value;
+        }
+
+        public void ResetFeatures(string config, int[] values)
+        {
+            Dalamud.Logging.PluginLog.Debug($"{config} {GetResetValues(config)}");
+            if (!GetResetValues(config))
+            {
+                bool needToResetMessagePrinted = false;
+
+                var presets = Enum.GetValues<CustomComboPreset>().Cast<int>();
+
+                foreach (int value in values)
+                {
+                    Dalamud.Logging.PluginLog.Debug(value.ToString());
+                    if (presets.Contains(value))
+                    {
+                        var preset = Enum.GetValues<CustomComboPreset>()
+                            .Where(preset => (int)preset == value)
+                            .First();
+
+                        if (!IsEnabled(preset)) continue;
+
+                        if (!needToResetMessagePrinted)
+                        {
+                            Service.ChatGui.PrintError($"[XIV Sloth Combo] Some features have been un-enabled due to an update:");
+                            needToResetMessagePrinted = !needToResetMessagePrinted;
+                        }
+
+                        var info = preset.GetComboAttribute();
+                        Service.ChatGui.PrintError($"[XIV Sloth Combo] - {info.JobName}: {info.FancyName}");
+                        EnabledActions.Remove(preset);
+                    }
+                }
+                
+                if (needToResetMessagePrinted)
+                Service.ChatGui.PrintError($"[XIV Sloth Combo] Please re-enable these features if you wish to use them again. We apologise for the inconvenience.");
+            }
+            SetResetValues(config, true);
+            Save();
+        }
 
         #endregion
 

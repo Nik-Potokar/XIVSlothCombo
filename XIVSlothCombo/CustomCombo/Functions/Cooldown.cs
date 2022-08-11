@@ -20,6 +20,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> Remaining time for the next charge of the cooldown. </returns>
         public static float GetCooldownChargeRemainingTime(uint actionID) => Service.ComboCache.GetCooldown(actionID).ChargeCooldownRemaining;
 
+        /// <summary> Gets the elapsed cooldown time.</summary>
+        /// <param name="actionID">Action ID to check</param>
+        /// <returns> Time passed since action went on cooldown.</returns>
+        public static float GetCooldownElapsed(uint actionID) => Service.ComboCache.GetCooldown(actionID).CooldownElapsed;
+
         /// <summary> Gets a value indicating whether an action is on cooldown. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> True or false. </returns>

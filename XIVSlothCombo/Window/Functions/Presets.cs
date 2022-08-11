@@ -1,11 +1,13 @@
 ﻿using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ImGuiNET;
+using System;
 using System.Linq;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Functions
@@ -45,17 +47,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.PopItemWidth();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
 
-            if (preset.GetAttribute<ReplaceSkillAttribute>() != null)
-            {
-                string skills = string.Join(", ", preset.GetAttribute<ReplaceSkillAttribute>().ActionNames);
-
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.BeginTooltip();
-                    ImGui.TextUnformatted($"Replaces: {skills}");
-                    ImGui.EndTooltip();
-                }
-            }
+            DrawOpenerButtons(preset);
 
             ImGui.Text($"#{i}: ");
             var length = ImGui.CalcTextSize($"#{i}: ");
@@ -63,12 +55,12 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.PushItemWidth(length.Length());
             ImGui.TextWrapped($"{info.Description}");
 
-            if (preset.GetAttribute<HoverInfoAttribute>() != null)
+            if (preset.GetHoverAttribute() != null)
             {
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.BeginTooltip();
-                    ImGui.TextUnformatted(preset.GetAttribute<HoverInfoAttribute>().HoverText);
+                    ImGui.TextUnformatted(preset.GetHoverAttribute().HoverText);
                     ImGui.EndTooltip();
                 }
             }
@@ -79,11 +71,20 @@ namespace XIVSlothCombo.Window.Functions
 
             UserConfigItems.Draw(preset, enabled);
 
+            if (preset == CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener || preset == CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener)
+            {
+                ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+                if (ImGui.Button($"Image of rotation###ninrtn{i}"))
+                {
+                    Util.OpenLink("https://i.imgur.com/q3lXeSZ.png");
+                }
+            }
+
             if (conflicts.Length > 0)
             {
                 var conflictText = conflicts.Select(conflict =>
                 {
-                    var conflictInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
+                    var conflictInfo = conflict.GetComboAttribute();
 
                     return $"\n - {conflictInfo.FancyName}";
 
@@ -163,6 +164,21 @@ namespace XIVSlothCombo.Window.Functions
                 {
                     i += AllChildren(presetChildren[preset]);
 
+                }
+            }
+        }
+
+        private static void DrawOpenerButtons(CustomComboPreset preset)
+        {
+            if (preset.GetReplaceAttribute() != null)
+            {
+                string skills = string.Join(", ", preset.GetReplaceAttribute().ActionNames);
+
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.BeginTooltip();
+                    ImGui.TextUnformatted($"Replaces: {skills}");
+                    ImGui.EndTooltip();
                 }
             }
         }
