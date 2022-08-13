@@ -278,9 +278,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
                                 (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
                                 return dot; //Use appropriate DoT Action
-
-                            //AlterateMode idles as Ruin/Broil
-                            if (AlternateMode) return OriginalHook(Ruin);
                         }
 
                         //Ruin 2 Movement 
@@ -288,6 +285,9 @@ namespace XIVSlothCombo.Combos.PvE
                             LevelChecked(Ruin2) && InCombat() &&
                             IsOffCooldown(actionID) && //Check against actionID to stop seizure during cooldown 
                             IsMoving) return OriginalHook(Ruin2); //Who knows in the future
+
+                        //AlterateMode idles as Ruin/Broil
+                        if (AlternateMode && InCombat()) return OriginalHook(Ruin);
                     }
                 }
                 return actionID;
