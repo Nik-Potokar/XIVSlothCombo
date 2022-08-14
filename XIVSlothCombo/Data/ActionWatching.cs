@@ -17,6 +17,10 @@ namespace XIVSlothCombo.Data
         internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
             .ToDictionary(i => i.RowId, i => i);
 
+        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Trait> TraitSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Trait>()!
+            .Where(i => i.ClassJobCategory is not null) //All player traits are assigned to a category. Chocobo and other garbage lacks this, thus excluded.
+            .ToDictionary(i => i.RowId, i => i);
+
         private static readonly Dictionary<string, List<uint>> statusCache = new();
 
         public static List<uint> CombatActions = new List<uint>();
@@ -162,6 +166,7 @@ namespace XIVSlothCombo.Data
         }
 
         public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.ClassJobLevel : 0;
+        public static int GetTraitLevel(uint id) => TraitSheet.TryGetValue(id, out var trait) ? trait.Level : 0;
         public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
         public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 
