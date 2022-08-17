@@ -36,7 +36,6 @@ namespace XIVSlothCombo.Combos.PvE
             Broil2 = 7435,
             Broil3 = 16541,
             Broil4 = 25865,
-            Scourge = 16539,
             EnergyDrain = 167,
             ArtOfWar = 16539,
             ArtOfWarII = 25866,
