@@ -1481,6 +1481,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.SCH_AoE_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+
             if (preset is CustomComboPreset.SCH_FairyReminder)
             {
                 UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_FairyFeature), "Eos", "", 0);

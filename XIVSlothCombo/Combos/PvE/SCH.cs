@@ -38,6 +38,8 @@ namespace XIVSlothCombo.Combos.PvE
             Broil4 = 25865,
             Scourge = 16539,
             EnergyDrain = 167,
+            ArtOfWar = 16539,
+            ArtOfWarII = 25866,
 
             // Faerie
             SummonSeraph = 16545,
@@ -92,10 +94,11 @@ namespace XIVSlothCombo.Combos.PvE
         internal static class Config
         {
             internal static bool SCH_ST_DPS_AltMode => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_ST_DPS_AltMode));
-            internal static int  SCH_ST_DPS_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_LucidOption));
-            internal static int  SCH_ST_DPS_BioOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_BioOption));
-            internal static int  SCH_ST_DPS_ChainStratagemOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_ChainStratagemOption));
-            internal static int  SCH_ST_DPS_EnergyDrain => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_EnergyDrain));
+            internal static int SCH_ST_DPS_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_LucidOption));
+            internal static int SCH_ST_DPS_BioOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_BioOption));
+            internal static int SCH_ST_DPS_ChainStratagemOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_ChainStratagemOption));
+            internal static int SCH_ST_DPS_EnergyDrain => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_EnergyDrain));
+            internal static int SCH_AoE_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_AoE_LucidOption));
             internal static bool SCH_Aetherflow_Display => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Display));
             internal static bool SCH_Aetherflow_Recite_Excog => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Excog));
             internal static bool SCH_Aetherflow_Recite_Indom => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Indom));
@@ -106,7 +109,7 @@ namespace XIVSlothCombo.Combos.PvE
          * SCH_Consolation
          * Even though Summon Seraph becomes Consolation, 
          * This Feature also places Seraph's AoE heal+barrier ontop of the existing fairy AoE skill, Fey Blessing
-         */ 
+         */
         internal class SCH_Consolation : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Consolation;
@@ -246,7 +249,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Aetherflow
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
-                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() && 
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
                         InCombat() && CanSpellWeave(actionID))
                         return Aetherflow;
 
@@ -289,6 +292,35 @@ namespace XIVSlothCombo.Combos.PvE
                         //AlterateMode idles as Ruin/Broil
                         if (AlternateMode && InCombat()) return OriginalHook(Ruin);
                     }
+                }
+                return actionID;
+            }
+        }
+
+        /*
+        * SCH_AoE
+        * Overrides main AoE DPS ability, Art of War
+        * Lucid Dreaming and Aetherflow weave options
+       */
+        internal class SCH_AoE : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_AoE;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is ArtOfWar or ArtOfWarII)
+                {
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_AoE_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
+
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
                 }
                 return actionID;
             }

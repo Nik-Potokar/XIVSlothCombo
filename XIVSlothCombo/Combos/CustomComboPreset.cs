@@ -2702,7 +2702,7 @@ namespace XIVSlothCombo.Combos
 
         #region DPS
         [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
-        [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
+        [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
         SCH_DPS = 16100,
 
             [ParentCombo(SCH_DPS)]
@@ -2727,8 +2727,21 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
-            SCH_DPS_Bio = 16150,        
-            #endregion
+            SCH_DPS_Bio = 16150,
+
+        [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
+        [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 101)]
+        SCH_AoE = 16101,
+
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            SCH_AoE_Lucid = 16111,
+
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            SCH_AoE_Aetherflow = 16121,
+
+        #endregion
 
         #region Healing
         [ReplaceSkill(SCH.FeyBlessing)]
