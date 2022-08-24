@@ -2,7 +2,7 @@
     "Author": "Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal",
     "Name": "XIVSlothCombo",
     "InternalName": "XIVSlothCombo",
-    "DalamudApiLevel": 6,
+    "DalamudApiLevel": 7,
     "Punchline": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
     "Description": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
     "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
