@@ -161,7 +161,7 @@ namespace XIVSlothCombo.Data
             SendActionHook?.Disable();
         }
 
-        public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.ClassJobLevel : 0;
+        public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;
         public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
         public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 
