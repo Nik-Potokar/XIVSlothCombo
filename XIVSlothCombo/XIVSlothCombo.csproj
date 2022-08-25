@@ -4,7 +4,7 @@
 	<PropertyGroup>
 		<Authors>Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal</Authors>
 		<Company>-</Company>
-		<Version>3.0.16.5</Version>
+		<Version>3.0.17.0</Version>
 		<!-- This is the version that will be used when pushing to the repo.-->
 		<Description>XIVCombo for lazy players</Description>
 		<Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
