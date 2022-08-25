@@ -206,7 +206,7 @@ namespace XIVSlothCombo.Combos
             AST_DPS_Astrodyne = 1009,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Crown Card Draw Weave Option", "Adds Auto Crown Card Draw", AST.JobID, 7, "", "")]
+            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 7, "", "")]
             AST_DPS_AutoCrownDraw = 1012,
 
             [ParentCombo(AST_ST_DPS)]
@@ -294,10 +294,6 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
             AST_Cards_DrawOnPlay_ReFocusTarget = 1034,
-
-        [ReplaceSkill(AST.CrownPlay)]
-        [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 17, "", "")]
-        AST_Cards_CrownPlay = 1001,
 
         [ReplaceSkill(AST.Play)]
         //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
