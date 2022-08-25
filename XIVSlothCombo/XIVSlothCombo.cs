@@ -366,7 +366,7 @@ namespace XIVSlothCombo
                                 file.WriteLine($"START STATUS EFFECTS");
                                 foreach (Status? status in Service.ClientState.LocalPlayer.StatusList)
                                 {
-                                    file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceID}");
+                                    file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceId}");
                                 }
 
                                 file.WriteLine($"END STATUS EFFECTS");
