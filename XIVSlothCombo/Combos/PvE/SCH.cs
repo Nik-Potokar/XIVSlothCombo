@@ -107,12 +107,12 @@ namespace XIVSlothCombo.Combos.PvE
                 => actionID is FeyBlessing && LevelChecked(SummonSeraph) && Gauge.SeraphTimer > 0 ? Consolation : actionID;
         }
 
-        // This feature replaces Excogitation with Lustrate when Excogitation is in cooldown.
+        // This feature replaces Lustrate with Excogitation when Excogitation is ready.
         internal class SCH_Lustrate : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Lustrate;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is Excogitation && LevelChecked(Lustrate) && IsOnCooldown(Excogitation) ? Lustrate : actionID;
+                => actionID is Lustrate && LevelChecked(Excogitation) && IsOffCooldown(Excogitation) ? Excogitation : actionID;
         }
 
         // This feature replaces Recitation with one of its combo skills.
