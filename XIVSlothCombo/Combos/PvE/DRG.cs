@@ -72,6 +72,14 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_OpenerOptions = "DRG_OpenerOptions";
         }
 
+        internal class DRG_JumpFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_Jump;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) => 
+                actionID is DRG.Jump or DRG.HighJump && HasEffect(DRG.Buffs.DiveReady) ? DRG.MirageDive : actionID;
+        }
+
         internal class DRG_STCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_STCombo;
@@ -164,7 +172,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (GetRemainingCharges(LifeSurge) > 0 && !HasEffect(Buffs.LifeSurge))
                                         return LifeSurge;
                                     if (HasEffect(Buffs.DiveReady))
-                                        return OriginalHook(Jump);
+                                        return MirageDive;
                                 }
 
                                 if (WasLastWeaponskill(HeavensThrust) && GetRemainingCharges(SpineshatterDive) > 0 && !WasLastAction(SpineshatterDive) && openerOptions is 0 or 1 or 2)
@@ -203,10 +211,13 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Geirskogul) && ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
                                             return OriginalHook(Geirskogul);
 
-                                        //(High) Jump Feature + Mirage Feature
-                                        if ((IsEnabled(CustomComboPreset.DRG_ST_HighJump) && LevelChecked(Jump) && IsOffCooldown(OriginalHook(Jump))) ||
-                                            (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && LevelChecked(MirageDive) && HasEffect(Buffs.DiveReady)))
+                                        //(High) Jump Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)))
                                             return OriginalHook(Jump);
+
+                                        //Mirage Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
+                                            return MirageDive;
 
                                         //Life Surge Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
@@ -297,10 +308,13 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.DRG_AoE_GeirskogulNastrond) && LevelChecked(Geirskogul) && ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
                                 return OriginalHook(Geirskogul);
 
-                            //(High) Jump AoE Feature + Mirage Dive Feature
-                            if ((IsEnabled(CustomComboPreset.DRG_AoE_HighJump) && LevelChecked(Jump) && IsOffCooldown(OriginalHook(Jump)) && CanWeave(actionID, 1)) ||
-                                (IsEnabled(CustomComboPreset.DRG_AoE_Mirage) && LevelChecked(MirageDive) && HasEffect(Buffs.DiveReady)))
+                            //(High) Jump AoE Feature
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_HighJump) && ActionReady(OriginalHook(Jump)) && CanWeave(actionID, 1))
                                 return OriginalHook(Jump);
+
+                            //Mirage Dive Feature
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Mirage) && HasEffect(Buffs.DiveReady))
+                                return MirageDive;
 
                             //Life Surge AoE Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_LifeSurge) &&
