@@ -29,7 +29,6 @@ namespace XIVSlothCombo.Combos.PvE
             //SleeveDraw = 7448,
             Malefic4 = 16555,
             Ascend = 3603,
-            CrownPlay = 25869,
             Astrodyne = 25870,
             FallMalefic = 25871,
             Malefic1 = 3596,
@@ -246,22 +245,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class AST_Cards_CrownPlay : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_CrownPlay;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == CrownPlay)
-                {
-                    if (LevelChecked(MinorArcana) && Gauge.DrawnCrownCard == CardType.NONE)
-                        return MinorArcana;
-                }
-
-                return actionID;
-            }
-        }
-
         internal class AST_Benefic : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Benefic;
@@ -334,20 +317,12 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID)
                        ) return Draw;
 
-                    //Minor Arcana
-                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoCrownDraw) &&
-                        LevelChecked(MinorArcana) &&
-                        Gauge.DrawnCrownCard == CardType.NONE &&
-                        IsOffCooldown(MinorArcana) &&
-                        CanSpellWeave(actionID)
-                       ) return MinorArcana;
-
-                    //Lord of Crowns
-                    if (IsEnabled(CustomComboPreset.AST_DPS_LazyLord) &&
-                        LevelChecked(CrownPlay) &&
-                        Gauge.DrawnCrownCard is CardType.LORD &&
-                        CanSpellWeave(actionID)
-                       ) return LordOfCrowns;
+                   //Minor Arcana / Lord of Crowns
+                    if (ActionReady(OriginalHook(MinorArcana)) &&
+                        ((IsEnabled(CustomComboPreset.AST_DPS_AutoCrownDraw) && Gauge.DrawnCrownCard is CardType.NONE) ||
+                        (IsEnabled(CustomComboPreset.AST_DPS_LazyLord) && Gauge.DrawnCrownCard is CardType.LORD && HasBattleTarget())) &&
+                        CanSpellWeave(actionID))
+                        return OriginalHook(MinorArcana);
 
                     //Combust
                     if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) &&
@@ -386,10 +361,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return Helios;
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
-                        LevelChecked(CrownPlay) &&
+                        LevelChecked(MinorArcana) &&
                         InCombat() &&
-                        Gauge.DrawnCrownCard == CardType.LADY
-                       ) return LadyOfCrown;
+                        Gauge.DrawnCrownCard is CardType.LADY)
+                        return OriginalHook(MinorArcana);
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_CelestialOpposition) &&
                         LevelChecked(CelestialOpposition) &&
