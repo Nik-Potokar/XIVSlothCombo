@@ -259,9 +259,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
                                 return Recitation;
                         }
-                        return Adloquium;
                     }
-                    return IsEnabled(CustomComboPreset.SCH_DeploymentTactics_ShowCooldown) ? DeploymentTactics : Adloquium;
+                    return Adloquium;
                 }
                 return actionID;
             }
