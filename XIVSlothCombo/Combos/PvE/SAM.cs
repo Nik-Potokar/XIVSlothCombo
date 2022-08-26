@@ -584,12 +584,14 @@ namespace XIVSlothCombo.Combos.PvE
                     //oGCD Features
                     if (CanSpellWeave(actionID))
                     {
+                        /*
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Hagakure) && OriginalHook(Iaijutsu) == Setsugekka)
                             return Hagakure;
+                        */
                       
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Guren) && IsOffCooldown(Guren) && LevelChecked(Guren) && gauge.Kenki >= 25)
                             return Guren;
-
+                        /*
                         if (IsEnabled(CustomComboPreset.SAM_AOE_GekkoCombo_CDs_Ikishoten) && LevelChecked(Ikishoten))
                         {
                             //Dumps Kenki in preparation for Ikishoten
@@ -599,6 +601,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
                                 return Ikishoten;
                         }
+                        */
 
                         if (IsEnabled(CustomComboPreset.SAM_AoE_Overcap) && gauge.Kenki >= SamAOEKenkiOvercapAmount && LevelChecked(Kyuten))
                             return Kyuten;
@@ -682,6 +685,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.SAM_AoE_Overcap) && IsNotEnabled(CustomComboPreset.SAM_AoE_OkaCombo_TwoTarget) && gauge.Kenki >= SamAOEKenkiOvercapAmount && Kyuten.LevelChecked())
                             return Kyuten;
+                            
                         if (!HasEffect(Buffs.MeikyoShisui) && GetRemainingCharges(MeikyoShisui) > 0 && LevelChecked(MeikyoShisui))
                             return MeikyoShisui;
                     }
