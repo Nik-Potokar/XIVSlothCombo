@@ -1002,6 +1002,10 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
 
+        [ReplaceSkill(DRG.Jump, DRG.HighJump)]
+        [CustomComboInfo("Jump to Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, 0)]
+        DRG_Jump = 6000,
+
         #region Advanced Dragoon
         [ReplaceSkill(DRG.FullThrust)]
         [CustomComboInfo("Advanced Dragoon", "Replaces Full Thrust with the entire ST combo chain.", DRG.JobID, 1, "", "")]
