@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using System.Runtime.InteropServices;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
@@ -162,20 +161,11 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal NINOpenerLogic openerLogic = new NINOpenerLogic();
 
-            protected unsafe override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == SpinningEdge)
                 {
-                    //NINGauge gauge = GetJobGauge<NINGauge>();
-                    NINGauge g = GetJobGauge<NINGauge>();
-                    TmpNinjaGauge* g2 = (TmpNinjaGauge*)g.Address;
-                    TmpNINGauge gauge = new TmpNINGauge()
-                    {
-                        HutonTimer = g2->HutonTimer,
-                        Ninki = g2->Ninki,
-                        HutonManualCasts = g2->HutonManualCasts
-                    };
-
+                    NINGauge gauge = GetJobGauge<NINGauge>();
                     bool canWeave = CanWeave(SpinningEdge);
                     bool inTrickBurstSaveWindow = IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Cooldowns) && IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) ? GetCooldownRemainingTime(TrickAttack) <= GetOptionValue(Config.Advanced_Trick_Cooldown) : false;
                     bool useBhakaBeforeTrickWindow = GetCooldownRemainingTime(TrickAttack) >= 3;
@@ -405,21 +395,12 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal MudraCasting mudraState = new MudraCasting();
 
-            protected unsafe override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == DeathBlossom)
                 {
                     Status? dotonBuff = FindEffect(Buffs.Doton);
-                    //NINGauge? gauge = GetJobGauge<NINGauge>();
-                    NINGauge g = GetJobGauge<NINGauge>();
-                    TmpNinjaGauge* g2 = (TmpNinjaGauge*)g.Address;
-                    TmpNINGauge gauge = new TmpNINGauge()
-                    {
-                        HutonTimer = g2->HutonTimer,
-                        Ninki = g2->Ninki,
-                        HutonManualCasts = g2->HutonManualCasts
-                    };
-
+                    NINGauge? gauge = GetJobGauge<NINGauge>();
                     bool canWeave = CanWeave(GustSlash);
                     bool chargeCheck = IsNotEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_ChargeHold) || (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_ChargeHold) && GetRemainingCharges(Ten) == 2);
                     bool inMudraState = HasEffect(Buffs.Mudra);
@@ -578,19 +559,11 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal NINOpenerLogic openerLogic = new NINOpenerLogic();
 
-            protected unsafe override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == SpinningEdge)
                 {
-                    //NINGauge gauge = GetJobGauge<NINGauge>();
-                    NINGauge g = GetJobGauge<NINGauge>();
-                    TmpNinjaGauge* g2 = (TmpNinjaGauge*)g.Address;
-                    TmpNINGauge gauge = new TmpNINGauge()
-                    {
-                        HutonTimer = g2->HutonTimer,
-                        Ninki = g2->Ninki,
-                        HutonManualCasts = g2->HutonManualCasts
-                    };
+                    NINGauge gauge = GetJobGauge<NINGauge>();
                     bool canWeave = CanWeave(SpinningEdge);
                     bool inTrickBurstSaveWindow = GetCooldownRemainingTime(TrickAttack) <= 15 && Suiton.LevelChecked();
                     bool useBhakaBeforeTrickWindow = GetCooldownRemainingTime(TrickAttack) >= 3;
@@ -703,21 +676,12 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal MudraCasting mudraState = new MudraCasting();
 
-            protected unsafe override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == DeathBlossom)
                 {
                     var dotonBuff = FindEffect(Buffs.Doton);
-                    //var gauge = GetJobGauge<NINGauge>();
-                    NINGauge g = GetJobGauge<NINGauge>();
-                    TmpNinjaGauge* g2 = (TmpNinjaGauge*)g.Address;
-                    TmpNINGauge gauge = new TmpNINGauge()
-                    {
-                        HutonTimer = g2->HutonTimer,
-                        Ninki = g2->Ninki,
-                        HutonManualCasts = g2->HutonManualCasts
-                    };
-
+                    var gauge = GetJobGauge<NINGauge>();
                     var canWeave = CanWeave(GustSlash);
 
                     if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat())
@@ -1081,23 +1045,6 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 return actionID;
             }
-        }
-
-        [StructLayout(LayoutKind.Explicit, Size = 0x10)]
-        public struct TmpNinjaGauge
-        {
-            [FieldOffset(0x08)] public ushort HutonTimer;
-            [FieldOffset(0x0A)] public byte Ninki;
-            [FieldOffset(0x0B)] public byte HutonManualCasts;
-        }
-
-        public class TmpNINGauge
-        {
-            public ushort HutonTimer;
-
-            public byte Ninki;
-
-            public byte HutonManualCasts;
         }
     }
 }
