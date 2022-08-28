@@ -1253,6 +1253,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Sonic Break on AoE Feature", "Adds Sonic Break to the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
         GNB_AOE_SonicBreak = 7030,
 
+        [ParentCombo(GNB_NoMercy_Cooldowns)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
+        GNB_NoMercy_Cooldowns_DD = 7031,
+
+        [ParentCombo(GNB_NoMercy_Cooldowns)]
+        [CustomComboInfo("Sonic Break/Bow Shock Option", "Adds Sonic Break and Bow Shock to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
+        GNB_NoMercy_Cooldowns_SonicBreakBowShock = 7032,
+
         #endregion
 
         #region MACHINIST
@@ -2534,6 +2542,14 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SAM_AoE_MangetsuCombo)]
             [CustomComboInfo("Meikyo Shisui on Mangetsu Combo", "Adds Meikyo Shisui to Mangetsu combo.", SAM.JobID, 0, "", "")]
             SAM_AoE_MangetsuCombo_MeikyoShisui = 15039,
+
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Ikishoten on Mangetsu Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "", "")]
+            SAM_AOE_GekkoCombo_CDs_Ikishoten = 15040,
+
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Hagakure on Mangetsu Combo", "Adds Hagakure to Mangetsu combo when there are three Sen.", SAM.JobID, 0, "", "")]
+            SAM_AoE_MangetsuCombo_Hagakure = 15041,
 
         [ReplaceSkill(SAM.Oka)]
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "", "")]
