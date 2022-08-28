@@ -500,6 +500,26 @@ namespace XIVSlothCombo.Combos
         [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
         [CustomComboInfo("Sonic Boom Melee Feature", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID)]
         BLU_MeleeCombo = 70016,
+
+        [BlueInactive(BLU.MatraMagic)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Matra Magic Option", "Adds Matra Magic to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Matra = 70017,
+
+        [BlueInactive(BLU.Surpanakha)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Surpanakha Option", "Adds Surpanakha to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Suparnakha = 70018,
+
+        [BlueInactive(BLU.PhantomFlurry)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Phantom Flurry Option", "Adds Phantom Flurry to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_PhantomFlurry = 70019,
+
+        [BlueInactive(BLU.Nightbloom, BLU.Bristle)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Nightbloom = 70020,
         #endregion
 
         #region BARD
