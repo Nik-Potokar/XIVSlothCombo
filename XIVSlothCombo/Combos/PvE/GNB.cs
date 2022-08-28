@@ -433,7 +433,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<GNBGauge>().Ammo;
                     if (IsOnCooldown(NoMercy) && InCombat())
                     {
-                        /*
                         if (IsEnabled(CustomComboPreset.GNB_NoMercy_Cooldowns_DD) && GetCooldownRemainingTime(NoMercy) < 60 && IsOffCooldown(DoubleDown) && gauge >= 2 && LevelChecked(DoubleDown))
                             return DoubleDown;
                         if (IsEnabled(CustomComboPreset.GNB_NoMercy_Cooldowns_SonicBreakBowShock))
@@ -443,7 +442,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOffCooldown(BowShock))
                                 return BowShock;
                         }
-                        */
                     }
                 }
 
