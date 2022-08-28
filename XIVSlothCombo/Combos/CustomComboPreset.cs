@@ -2543,6 +2543,14 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Meikyo Shisui on Mangetsu Combo", "Adds Meikyo Shisui to Mangetsu combo.", SAM.JobID, 0, "", "")]
             SAM_AoE_MangetsuCombo_MeikyoShisui = 15039,
 
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Ikishoten on Mangetsu Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "", "")]
+            SAM_AOE_GekkoCombo_CDs_Ikishoten = 15040,
+
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Hagakure on Mangetsu Combo", "Adds Hagakure to Mangetsu combo when there are three Sen.", SAM.JobID, 0, "", "")]
+            SAM_AoE_MangetsuCombo_Hagakure = 15041,
+
         [ReplaceSkill(SAM.Oka)]
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "", "")]
         SAM_AoE_OkaCombo = 15026,
