@@ -169,7 +169,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (level >= Levels.RoughDivide && IsEnabled(CustomComboPreset.GNB_ST_RoughDivide) && GetRemainingCharges(RoughDivide) > roughDivideChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.GNB_ST_MeleeRoughDivide) ||
-                                    (IsEnabled(CustomComboPreset.GNB_ST_MeleeRoughDivide) && GetTargetDistance() <= 1 && HasEffect(Buffs.NoMercy) && IsOnCooldown(OriginalHook(DangerZone)) && IsOnCooldown(BowShock) && IsOnCooldown(Bloodfest)))
+                                    (IsEnabled(CustomComboPreset.GNB_ST_MeleeRoughDivide) && GetTargetDistance() <= 1 && HasEffect(Buffs.NoMercy) && IsOnCooldown(OriginalHook(DangerZone)) && IsOnCooldown(BowShock)))
                                     return RoughDivide;
                             }
                         }

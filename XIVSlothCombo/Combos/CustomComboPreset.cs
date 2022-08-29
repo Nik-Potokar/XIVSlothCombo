@@ -500,6 +500,26 @@ namespace XIVSlothCombo.Combos
         [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
         [CustomComboInfo("Sonic Boom Melee Feature", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID)]
         BLU_MeleeCombo = 70016,
+
+        [BlueInactive(BLU.MatraMagic)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Matra Magic Option", "Adds Matra Magic to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Matra = 70017,
+
+        [BlueInactive(BLU.Surpanakha)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Surpanakha Option", "Adds Surpanakha to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Suparnakha = 70018,
+
+        [BlueInactive(BLU.PhantomFlurry)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Phantom Flurry Option", "Adds Phantom Flurry to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_PhantomFlurry = 70019,
+
+        [BlueInactive(BLU.Nightbloom, BLU.Bristle)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Nightbloom = 70020,
         #endregion
 
         #region BARD
@@ -1198,6 +1218,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Lightning Shot Uptime", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID, 0, "", "")]
         GNB_RangedUptime = 7015,
 
+        [ConflictingCombos(GNB_NoMercy_Cooldowns)]
         [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("No Mercy AoE Option", "Adds No Mercy to AoE combo when it's available.", GNB.JobID, 0, "", "")]
         GNB_AoE_NoMercy = 7016,
@@ -1206,6 +1227,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
         GNB_AoE_BowShock = 7017,
 
+        [ConflictingCombos(GNB_NoMercy_Cooldowns)]
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to the main combo when at full ammo.", GNB.JobID, 0, "", "")]
         GNB_ST_NoMercy = 7018,
@@ -1222,8 +1244,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the main combo.", GNB.JobID, 0, "", "")]
         GNB_ST_SonicBreak = 7021,
 
+        [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy)]
         [ReplaceSkill(GNB.NoMercy)]
-        [CustomComboInfo("Sonic Break/Bow Shock on No Mercy", "Adds Sonic Break and Bow Shock to No Mercy when it is on cooldown.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Cooldowns on No Mercy", "Adds Cooldowns to No Mercy when No Mercy is on cooldown.", GNB.JobID, 0, "", "")]
         GNB_NoMercy_Cooldowns = 7022,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
