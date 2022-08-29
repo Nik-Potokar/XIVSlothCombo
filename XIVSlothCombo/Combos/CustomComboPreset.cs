@@ -29,8 +29,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DOH.JobID)]
         DohAny = AdvAny + DOH.JobID,
 
-        [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DoL.JobID)]
-        FSH_Cast = AdvAny + DoL.JobID,
+        [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DOL.JobID)]
+        DolAny = AdvAny + DOL.JobID,
 
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DRG.JobID)]
         DrgAny = AdvAny + DRG.JobID,
@@ -3108,26 +3108,55 @@ namespace XIVSlothCombo.Combos
 
         #region DOL
 
-        [CustomComboInfo("Eureka Feature", "Replace Ageless Words and Solid Reason with Wise to the World when available.", DoL.JobID)]
-        DoL_Eureka = 51001,
+        [CustomComboInfo("[BTN/MIN] Eureka Feature", "Replaces Ageless Words and Solid Reason with Wise to the World when available", DOL.JobID)]
+        DOL_Eureka = 51001,
 
-        [CustomComboInfo("Cast / Hook Feature", "Replace Cast with Hook when fishing.", DoL.JobID)]
+        [ReplaceSkill(DOL.Cast)]
+        [CustomComboInfo("[FSH] Cast to Hook Feature", "Replaces Cast with Hook when fishing", DOL.JobID)]
         FSH_CastHook = 51002,
 
-        [CustomComboInfo("Cast / Gig Feature", "Replace Cast with Gig when underwater.", DoL.JobID)]
+        [CustomComboInfo("[FSH] Diving Feature", "Replace fishing abilities with diving abilities when underwater", DOL.JobID)]
+        FSH_Swim = 51008,
+
+        [ReplaceSkill(DOL.Cast)]
+        [ParentCombo(FSH_Swim)]
+        [CustomComboInfo("[FSH] Cast to Gig Option", "Replaces Cast with Gig when diving.", DOL.JobID)]
         FSH_CastGig = 51003,
 
-        [CustomComboInfo("Surface Slap / Veteran Trade Feature", "Replace Surface Slap with Veteran Trade when underwater.", DoL.JobID)]
-        FSH_SurfaceTrade = 51004,
+            [ReplaceSkill(DOL.SurfaceSlap)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Surface Slap to Veteran Trade Option", "Replaces Surface Slap with Veteran Trade when diving.", DOL.JobID)]
+            FSH_SurfaceTrade = 51004,
 
-        [CustomComboInfo("Prize Catch / Nature's Bounty Feature", "Replace Prize Catch with Nature's Bounty when underwater.", DoL.JobID)]
-        FSH_PrizeBounty = 51005,
+            [ReplaceSkill(DOL.PrizeCatch)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Prize Catch to Nature's Bounty Option", "Replaces Prize Catch with Nature's Bounty when diving.", DOL.JobID)]
+            FSH_PrizeBounty = 51005,
 
-        [CustomComboInfo("Snagging / Salvage Feature", "Replace Snagging with Salvage when underwater.", DoL.JobID)]
-        FSH_SnaggingSalvage = 51006,
+            [ReplaceSkill(DOL.Snagging)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Snagging to Salvage Option", "Replaces Snagging with Salvage when diving.", DOL.JobID)]
+            FSH_SnaggingSalvage = 51006,
 
-        [CustomComboInfo("Cast Light / Electric Current Feature", "Replace Cast Light with Electric Current when underwater.", DoL.JobID)]
-        FSH_CastLight_ElectricCurrent = 51007,
+            [ReplaceSkill(DOL.CastLight)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Cast Light to Electric Current Option", "Replaces Cast Light with Electric Current when diving.", DOL.JobID)]
+            FSH_CastLight_ElectricCurrent = 51007,
+
+            [ReplaceSkill(DOL.Mooch, DOL.MoochII)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Mooch to Shark Eye Option", "Replaces Mooch with Shark Eye when diving.", DOL.JobID)]
+            FSH_Mooch_SharkEye = 51009,
+
+            [ReplaceSkill(DOL.FishEyes)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Fish Eyes to Vital Sight Option", "Replaces Fish Eyes with Vital Sight when diving.", DOL.JobID)]
+            FSH_FishEyes_VitalSight = 51010,
+
+            [ReplaceSkill(DOL.Chum)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Chum to Baited Breath Option", "Replaces Chum with Baited Breath when diving.", DOL.JobID)]
+            FSH_Chum_BaitedBreath = 51011,
 
         #endregion
 
