@@ -54,9 +54,6 @@ namespace XIVSlothCombo.CustomComboNS
         {
             newActionID = 0;
 
-            // Movement
-            CheckMovement();
-
             if (!IsEnabled(Preset))
                 return false;
 
