@@ -139,7 +139,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(Delirium) && IsEnabled(CustomComboPreset.DRK_Bloodspiller) && IsEnabled(CustomComboPreset.DRK_MainComboCDs_Group))
                         {
                             //Regular Delirium
-                            if (GetBuffStacks(Buffs.Delirium) > 0 && !LevelChecked(LivingShadow) || IsNotEnabled(CustomComboPreset.DRK_DelayedBloodspiller))
+                            if (GetBuffStacks(Buffs.Delirium) > 0 && (!LevelChecked(LivingShadow) || IsNotEnabled(CustomComboPreset.DRK_DelayedBloodspiller)))
                                 return Bloodspiller;
 
                             //Delayed Delirium
