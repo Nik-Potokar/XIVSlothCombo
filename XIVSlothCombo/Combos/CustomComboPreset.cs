@@ -2661,7 +2661,7 @@ namespace XIVSlothCombo.Combos
 
         #region DPS
         [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
-        [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
+        [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
         SCH_DPS = 16100,
 
             [ParentCombo(SCH_DPS)]
@@ -2677,13 +2677,30 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflows stacks when Aetherflow's cooldown has been set below", SCH.JobID, 131, "", "")]
+            SCH_DPS_EnergyDrain = 16160,
+
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move", SCH.JobID, 150, "", "")]
             SCH_DPS_Ruin2Movement = 16140,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150, "", "")]
-            SCH_DPS_Bio = 16150,        
-            #endregion
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
+            SCH_DPS_Bio = 16150,
+
+        [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
+        [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 101)]
+        SCH_AoE = 16101,
+
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            SCH_AoE_Lucid = 16111,
+
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            SCH_AoE_Aetherflow = 16121,
+
+        #endregion
 
         #region Healing
         [ReplaceSkill(SCH.FeyBlessing)]

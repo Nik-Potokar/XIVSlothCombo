@@ -1492,41 +1492,44 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_DPS)
             {
-                UserConfig.DrawRadioButton(SCH.Config.SCH_ST_DPS_AltMode, "On Ruin I / Broils", "", 0);
-                UserConfig.DrawRadioButton(SCH.Config.SCH_ST_DPS_AltMode, "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown", 1);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Ruin I / Broils", "", 0);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown", 1);
             }
 
             if (preset is CustomComboPreset.SCH_DPS_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_DPS_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_DPS_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_DPS_Bio)
-                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_BioOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
-                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_ChainStratagemOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+            if (preset is CustomComboPreset.SCH_AoE_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_FairyReminder)
             {
-                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 0);
-                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 1);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_FairyFeature), "Eos", "", 0);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_FairyFeature), "Selene", "", 1);
             }
 
             if (preset is CustomComboPreset.SCH_Aetherflow)
             {
-                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only", "", 0);
-                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 1);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Display), "Show Aetherflow On Energy Drain Only", "", 0);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Display), "Show Aetherflow On All Aetherflow Skills", "", 1);
             }
 
             if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Excog)
             {
-                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Only when out of Aetherflow Stacks", "", 0);
-                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Excog, "Always when available", "", 1);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Excog), "Only when out of Aetherflow Stacks", "", 0);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Excog), "Always when available", "", 1);
             }
 
             if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Indom)
             {
-                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Only when out of Aetherflow Stacks", "", 0);
-                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_Indom, "Always when available", "", 1);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Indom), "Only when out of Aetherflow Stacks", "", 0);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Indom), "Always when available", "", 1);
             }
 
             #endregion
