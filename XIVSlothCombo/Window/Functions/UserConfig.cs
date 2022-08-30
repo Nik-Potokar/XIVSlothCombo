@@ -1541,7 +1541,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Indom), "Always when available", "", 1);
             }
 
-            if (preset is CustomComboPreset.SCH_Recitation_Mode)
+            if (preset is CustomComboPreset.SCH_Recitation)
             {
                 UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Adloquium", "", 0);
                 UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Excogitation", "", 1);
