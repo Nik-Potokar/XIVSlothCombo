@@ -2729,28 +2729,8 @@ namespace XIVSlothCombo.Combos
         SCH_Lustrate = 16220,
 
         [ReplaceSkill(SCH.Recitation)]
-        [CustomComboInfo("Recitation to follow up skills", "Change Recitation into one of Adloquium, Succor, Indomitability, and Excogitation.", SCH.JobID, 230, "", "")]
+        [CustomComboInfo("Recitation to follow up skills", "Change Recitation into one of Adloquium, Succor, Indomitability, and Excogitation when used.", SCH.JobID, 230, "", "")]
         SCH_Recitation = 16230,
-
-            [ParentCombo(SCH_Recitation)]
-            [ConflictingCombos(SCH_Recitation_Succor, SCH_Recitation_Indomitability, SCH_Recitation_Excogitation)]
-            [CustomComboInfo("Recitation to Adloquium", "Change Recitation to Adloquium when Recitation is available", SCH.JobID, 231, "", "")]
-            SCH_Recitation_Adloquium = 16231,
-
-            [ParentCombo(SCH_Recitation)]
-            [ConflictingCombos(SCH_Recitation_Adloquium, SCH_Recitation_Indomitability, SCH_Recitation_Excogitation)]
-            [CustomComboInfo("Recitation to Succor", "Change Recitation to Succor when Recitation is available", SCH.JobID, 232, "", "")]
-            SCH_Recitation_Succor = 16232,
-
-            [ParentCombo(SCH_Recitation)]
-            [ConflictingCombos(SCH_Recitation_Adloquium, SCH_Recitation_Succor, SCH_Recitation_Excogitation)]
-            [CustomComboInfo("Recitation to Indomitability", "Change Recitation to Indomitability when Recitation is available", SCH.JobID, 233, "", "")]
-            SCH_Recitation_Indomitability = 16233,
-
-            [ParentCombo(SCH_Recitation)]
-            [ConflictingCombos(SCH_Recitation_Adloquium, SCH_Recitation_Succor, SCH_Recitation_Indomitability)]
-            [CustomComboInfo("Recitation to Excogitation", "Change Recitation to Excogitation when Recitation is available", SCH.JobID, 234, "", "")]
-            SCH_Recitation_Excogitation = 16234,
 
         #endregion
 

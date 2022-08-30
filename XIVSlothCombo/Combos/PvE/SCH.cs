@@ -102,6 +102,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool SCH_Aetherflow_Recite_Excog => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Excog));
             internal static bool SCH_Aetherflow_Recite_Indom => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Indom));
             internal static bool SCH_FairyFeature => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_FairyFeature));
+            internal static int SCH_Recitation_Mode => CustomComboFunctions.GetOptionValue(nameof(SCH_Recitation_Mode));
         }
 
         /*
@@ -136,21 +137,18 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Recitation;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Recitation)
+                if (actionID is Recitation && HasEffect(Buffs.Recitation))
                 {
-                    if (HasEffect(Buffs.Recitation))
+                    switch (Config.SCH_Recitation_Mode)
                     {
-                        if (LevelChecked(Adloquium) && IsEnabled(CustomComboPreset.SCH_Recitation_Adloquium))
-                            return Adloquium;
-                        if (LevelChecked(Succor) && IsEnabled(CustomComboPreset.SCH_Recitation_Succor))
-                            return Succor;
-                        if (LevelChecked(Indomitability) && IsEnabled(CustomComboPreset.SCH_Recitation_Indomitability))
-                            return Indomitability;
-                        if (LevelChecked(Excogitation) && IsEnabled(CustomComboPreset.SCH_Recitation_Excogitation))
-                            return Excogitation;
+                        case 0: return OriginalHook(Adloquium);
+                        case 1: return OriginalHook(Succor);
+                        case 2: return OriginalHook(Indomitability);
+                        case 3: return OriginalHook(Excogitation);
+                        default: break;
                     }
-                    return Recitation;
                 }
+
                 return actionID;
             }
         }
