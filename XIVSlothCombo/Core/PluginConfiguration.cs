@@ -252,18 +252,18 @@ namespace XIVSlothCombo.Core
 
                         if (!needToResetMessagePrinted)
                         {
-                            Service.ChatGui.PrintError($"[XIV Sloth Combo] Some features have been un-enabled due to an update:");
+                            Service.ChatGui.PrintError($"[XIVSlothCombo] Some features have been disabled due to an internal configuration update:");
                             needToResetMessagePrinted = !needToResetMessagePrinted;
                         }
 
                         var info = preset.GetComboAttribute();
-                        Service.ChatGui.PrintError($"[XIV Sloth Combo] - {info.JobName}: {info.FancyName}");
+                        Service.ChatGui.PrintError($"[XIVSlothCombo] - {info.JobName}: {info.FancyName}");
                         EnabledActions.Remove(preset);
                     }
                 }
                 
                 if (needToResetMessagePrinted)
-                Service.ChatGui.PrintError($"[XIV Sloth Combo] Please re-enable these features if you wish to use them again. We apologise for the inconvenience.");
+                Service.ChatGui.PrintError($"[XIVSlothCombo] Please re-enable these features to use them again. We apologise for the inconvenience");
             }
             SetResetValues(config, true);
             Save();

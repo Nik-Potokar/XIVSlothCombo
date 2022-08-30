@@ -29,8 +29,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DOH.JobID)]
         DohAny = AdvAny + DOH.JobID,
 
-        [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DoL.JobID)]
-        FSH_Cast = AdvAny + DoL.JobID,
+        [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DOL.JobID)]
+        DolAny = AdvAny + DOL.JobID,
 
         [CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled.", DRG.JobID)]
         DrgAny = AdvAny + DRG.JobID,
@@ -170,7 +170,7 @@ namespace XIVSlothCombo.Combos
         #region ASTROLOGIAN
 
         #region DPS
-        [ReplaceSkill(AST.Malefic1, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust1, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
+        [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
         //[ConflictingCombos(AstrologianAlternateDpsFeature)]
         [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 0, "", "")]
         AST_ST_DPS = 1004,
@@ -206,7 +206,7 @@ namespace XIVSlothCombo.Combos
             AST_DPS_Astrodyne = 1009,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Crown Card Draw Weave Option", "Adds Auto Crown Card Draw", AST.JobID, 7, "", "")]
+            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 7, "", "")]
             AST_DPS_AutoCrownDraw = 1012,
 
             [ParentCombo(AST_ST_DPS)]
@@ -294,10 +294,6 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
             AST_Cards_DrawOnPlay_ReFocusTarget = 1034,
-
-        [ReplaceSkill(AST.CrownPlay)]
-        [CustomComboInfo("Crown Play to Minor Arcana", "Changes Crown Play to Minor Arcana when a card is not drawn or has Lord Or Lady Buff.", AST.JobID, 17, "", "")]
-        AST_Cards_CrownPlay = 1001,
 
         [ReplaceSkill(AST.Play)]
         //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
@@ -504,6 +500,26 @@ namespace XIVSlothCombo.Combos
         [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
         [CustomComboInfo("Sonic Boom Melee Feature", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID)]
         BLU_MeleeCombo = 70016,
+
+        [BlueInactive(BLU.MatraMagic)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Matra Magic Option", "Adds Matra Magic to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Matra = 70017,
+
+        [BlueInactive(BLU.Surpanakha)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Surpanakha Option", "Adds Surpanakha to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Suparnakha = 70018,
+
+        [BlueInactive(BLU.PhantomFlurry)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Phantom Flurry Option", "Adds Phantom Flurry to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_PhantomFlurry = 70019,
+
+        [BlueInactive(BLU.Nightbloom, BLU.Bristle)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_Nightbloom = 70020,
         #endregion
 
         #region BARD
@@ -1006,6 +1022,10 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
 
+        [ReplaceSkill(DRG.Jump, DRG.HighJump)]
+        [CustomComboInfo("Jump to Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, 0)]
+        DRG_Jump = 6000,
+
         #region Advanced Dragoon
         [ReplaceSkill(DRG.FullThrust)]
         [CustomComboInfo("Advanced Dragoon", "Replaces Full Thrust with the entire ST combo chain.", DRG.JobID, 1, "", "")]
@@ -1198,6 +1218,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Lightning Shot Uptime", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID, 0, "", "")]
         GNB_RangedUptime = 7015,
 
+        [ConflictingCombos(GNB_NoMercy_Cooldowns)]
         [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("No Mercy AoE Option", "Adds No Mercy to AoE combo when it's available.", GNB.JobID, 0, "", "")]
         GNB_AoE_NoMercy = 7016,
@@ -1206,6 +1227,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
         GNB_AoE_BowShock = 7017,
 
+        [ConflictingCombos(GNB_NoMercy_Cooldowns)]
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to the main combo when at full ammo.", GNB.JobID, 0, "", "")]
         GNB_ST_NoMercy = 7018,
@@ -1222,8 +1244,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the main combo.", GNB.JobID, 0, "", "")]
         GNB_ST_SonicBreak = 7021,
 
+        [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy)]
         [ReplaceSkill(GNB.NoMercy)]
-        [CustomComboInfo("Sonic Break/Bow Shock on No Mercy", "Adds Sonic Break and Bow Shock to No Mercy when it is on cooldown.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Cooldowns on No Mercy", "Adds Cooldowns to No Mercy when No Mercy is on cooldown.", GNB.JobID, 0, "", "")]
         GNB_NoMercy_Cooldowns = 7022,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
@@ -1256,6 +1279,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("Sonic Break on AoE Feature", "Adds Sonic Break to the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
         GNB_AOE_SonicBreak = 7030,
+
+        [ParentCombo(GNB_NoMercy_Cooldowns)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
+        GNB_NoMercy_Cooldowns_DD = 7031,
+
+        [ParentCombo(GNB_NoMercy_Cooldowns)]
+        [CustomComboInfo("Sonic Break/Bow Shock Option", "Adds Sonic Break and Bow Shock to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
+        GNB_NoMercy_Cooldowns_SonicBreakBowShock = 7032,
 
         #endregion
 
@@ -2261,8 +2292,17 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Dosis_EDosis = 14120,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon Movement Option", "Use Toxikon when you have Addersting charges and are moving.", SGE.JobID, 130, "", "")]
+            [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 130, "", "")]
             SGE_ST_Dosis_Toxikon = 14130,
+
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 129, "", "")]
+            SGE_ST_Dosis_Phlegma = 14140,
+
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 109, "", "")]
+            SGE_ST_Dosis_Kardia = 14150,
+            
             #endregion
 
         #region AoE DPS Feature
@@ -2304,6 +2344,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
             SGE_ST_Heal_Diagnosis = 14320,
+                
+                [ParentCombo(SGE_ST_Heal_Diagnosis)]
+                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID, 313, "", "")]
+                SGE_ST_Heal_Diagnosis_IgnoreShield = 14321,
 
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
@@ -2345,35 +2389,39 @@ namespace XIVSlothCombo.Combos
         SGE_AoE_Heal = 14500,
             
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 510, "", "")]
+            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 504, "", "")]
             SGE_AoE_Heal_Physis = 14510,
 
             [ParentCombo(SGE_AoE_Heal)]
             [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 520, "", "")]
             SGE_AoE_Heal_EPrognosis = 14520,
 
+                [ParentCombo(SGE_AoE_Heal_EPrognosis)]
+                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Prognosis, and normal Prognosis will be unavailable.", SGE.JobID, 520, "", "")]
+                SGE_AoE_Heal_EPrognosis_IgnoreShield = 14521,
+
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 530, "", "")]
+            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 505, "", "")]
             SGE_AoE_Heal_Holos = 14530,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 540, "", "")]
+            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 506, "", "")]
             SGE_AoE_Heal_Panhaima = 14540,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 550, "", "")]
+            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 507, "", "")]
             SGE_AoE_Heal_Pepsis = 14550,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 560, "", "")]
+            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 503, "", "")]
             SGE_AoE_Heal_Ixochole = 14560,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 570, "", "")]
+            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 502, "", "")]
             SGE_AoE_Heal_Kerachole = 14570,
 
             [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 580, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
             SGE_AoE_Heal_Rhizomata = 14580,
             #endregion
 
@@ -2539,6 +2587,14 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Meikyo Shisui on Mangetsu Combo", "Adds Meikyo Shisui to Mangetsu combo.", SAM.JobID, 0, "", "")]
             SAM_AoE_MangetsuCombo_MeikyoShisui = 15039,
 
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Ikishoten on Mangetsu Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "", "")]
+            SAM_AOE_GekkoCombo_CDs_Ikishoten = 15040,
+
+            [ParentCombo(SAM_AoE_MangetsuCombo)]
+            [CustomComboInfo("Hagakure on Mangetsu Combo", "Adds Hagakure to Mangetsu combo when there are three Sen.", SAM.JobID, 0, "", "")]
+            SAM_AoE_MangetsuCombo_Hagakure = 15041,
+
         [ReplaceSkill(SAM.Oka)]
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, 0, "", "")]
         SAM_AoE_OkaCombo = 15026,
@@ -2622,7 +2678,7 @@ namespace XIVSlothCombo.Combos
 
         #region DPS
         [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
-        [CustomComboInfo("Single Target DPS Feature", "Replace Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
+        [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
         SCH_DPS = 16100,
 
             [ParentCombo(SCH_DPS)]
@@ -2638,13 +2694,30 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Ruin II Moving Option", "Use Ruin 2 when you have to move", SCH.JobID, 140, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflows stacks when Aetherflow's cooldown has been set below", SCH.JobID, 131, "", "")]
+            SCH_DPS_EnergyDrain = 16160,
+
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move", SCH.JobID, 150, "", "")]
             SCH_DPS_Ruin2Movement = 16140,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 150, "", "")]
-            SCH_DPS_Bio = 16150,        
-            #endregion
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
+            SCH_DPS_Bio = 16150,
+
+        [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
+        [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 101)]
+        SCH_AoE = 16101,
+
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            SCH_AoE_Lucid = 16111,
+
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            SCH_AoE_Aetherflow = 16121,
+
+        #endregion
 
         #region Healing
         [ReplaceSkill(SCH.FeyBlessing)]
@@ -3069,26 +3142,55 @@ namespace XIVSlothCombo.Combos
 
         #region DOL
 
-        [CustomComboInfo("Eureka Feature", "Replace Ageless Words and Solid Reason with Wise to the World when available.", DoL.JobID)]
-        DoL_Eureka = 51001,
+        [CustomComboInfo("[BTN/MIN] Eureka Feature", "Replaces Ageless Words and Solid Reason with Wise to the World when available", DOL.JobID)]
+        DOL_Eureka = 51001,
 
-        [CustomComboInfo("Cast / Hook Feature", "Replace Cast with Hook when fishing.", DoL.JobID)]
+        [ReplaceSkill(DOL.Cast)]
+        [CustomComboInfo("[FSH] Cast to Hook Feature", "Replaces Cast with Hook when fishing", DOL.JobID)]
         FSH_CastHook = 51002,
 
-        [CustomComboInfo("Cast / Gig Feature", "Replace Cast with Gig when underwater.", DoL.JobID)]
+        [CustomComboInfo("[FSH] Diving Feature", "Replace fishing abilities with diving abilities when underwater", DOL.JobID)]
+        FSH_Swim = 51008,
+
+        [ReplaceSkill(DOL.Cast)]
+        [ParentCombo(FSH_Swim)]
+        [CustomComboInfo("[FSH] Cast to Gig Option", "Replaces Cast with Gig when diving.", DOL.JobID)]
         FSH_CastGig = 51003,
 
-        [CustomComboInfo("Surface Slap / Veteran Trade Feature", "Replace Surface Slap with Veteran Trade when underwater.", DoL.JobID)]
-        FSH_SurfaceTrade = 51004,
+            [ReplaceSkill(DOL.SurfaceSlap)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Surface Slap to Veteran Trade Option", "Replaces Surface Slap with Veteran Trade when diving.", DOL.JobID)]
+            FSH_SurfaceTrade = 51004,
 
-        [CustomComboInfo("Prize Catch / Nature's Bounty Feature", "Replace Prize Catch with Nature's Bounty when underwater.", DoL.JobID)]
-        FSH_PrizeBounty = 51005,
+            [ReplaceSkill(DOL.PrizeCatch)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Prize Catch to Nature's Bounty Option", "Replaces Prize Catch with Nature's Bounty when diving.", DOL.JobID)]
+            FSH_PrizeBounty = 51005,
 
-        [CustomComboInfo("Snagging / Salvage Feature", "Replace Snagging with Salvage when underwater.", DoL.JobID)]
-        FSH_SnaggingSalvage = 51006,
+            [ReplaceSkill(DOL.Snagging)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Snagging to Salvage Option", "Replaces Snagging with Salvage when diving.", DOL.JobID)]
+            FSH_SnaggingSalvage = 51006,
 
-        [CustomComboInfo("Cast Light / Electric Current Feature", "Replace Cast Light with Electric Current when underwater.", DoL.JobID)]
-        FSH_CastLight_ElectricCurrent = 51007,
+            [ReplaceSkill(DOL.CastLight)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Cast Light to Electric Current Option", "Replaces Cast Light with Electric Current when diving.", DOL.JobID)]
+            FSH_CastLight_ElectricCurrent = 51007,
+
+            [ReplaceSkill(DOL.Mooch, DOL.MoochII)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Mooch to Shark Eye Option", "Replaces Mooch with Shark Eye when diving.", DOL.JobID)]
+            FSH_Mooch_SharkEye = 51009,
+
+            [ReplaceSkill(DOL.FishEyes)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Fish Eyes to Vital Sight Option", "Replaces Fish Eyes with Vital Sight when diving.", DOL.JobID)]
+            FSH_FishEyes_VitalSight = 51010,
+
+            [ReplaceSkill(DOL.Chum)]
+            [ParentCombo(FSH_Swim)]
+            [CustomComboInfo("Chum to Baited Breath Option", "Replaces Chum with Baited Breath when diving.", DOL.JobID)]
+            FSH_Chum_BaitedBreath = 51011,
 
         #endregion
 

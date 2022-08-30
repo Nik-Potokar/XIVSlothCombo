@@ -434,18 +434,18 @@ namespace XIVSlothCombo.Combos.PvE
                     if (CanWeave(actionID) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire))
                     {
                         //overflow protection
-                        if (gauge.Battery == 100 && level >= Levels.RookOverdrive)
+                        if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Seconds < 55)
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 55 || CombatEngageDuration().Seconds <= 05 || (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))) ))
+                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Seconds >= 59 || CombatEngageDuration().Seconds <= 05 || (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))) ))
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (gauge.Battery >= 80 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 50 || CombatEngageDuration().Seconds <= 05))
-                        {
-                            return OriginalHook(RookAutoturret);
-                        }
+                        //else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 58 || CombatEngageDuration().Seconds <= 05))
+                        //{
+                        //    return OriginalHook(RookAutoturret);
+                        //}
 
                     }
 
