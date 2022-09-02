@@ -2367,7 +2367,6 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 310, "", "")]
             SGE_ST_Heal_Haima = 14370,
 
-            [ConflictingCombos(SGE_Rhizo)]
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 303, "", "")]
             SGE_ST_Heal_Rhizomata = 14380,
@@ -2376,7 +2375,6 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 308, "", "")]
             SGE_ST_Heal_Krasis = 14390,
 
-            [ConflictingCombos(SGE_DruoTauro)]
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 301, "", "")]
             SGE_ST_Heal_Druochole = 14400,
@@ -2425,12 +2423,10 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Misc Healing
-        [ConflictingCombos(SGE_ST_Heal_Rhizomata)]
         [ReplaceSkill(SGE.Taurochole, SGE.Druochole, SGE.Ixochole, SGE.Kerachole)]
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
         SGE_Rhizo = 14600,
 
-        [ConflictingCombos(SGE_ST_Heal_Druochole)]
         [ReplaceSkill(SGE.Druochole)]
         [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
         SGE_DruoTauro = 14700,
