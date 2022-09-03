@@ -1544,9 +1544,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SCH_Recitation)
             {
                 UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Adloquium", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Excogitation", "", 1);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Succor", "", 1);
                 UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Indomitability", "", 2);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Succor", "", 3);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Excogitation", "", 3);
             }
 
             #endregion
