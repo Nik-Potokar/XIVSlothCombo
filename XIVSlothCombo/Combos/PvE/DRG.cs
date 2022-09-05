@@ -94,10 +94,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is FullThrust)
                 {
-                    // Piercing Talon Uptime Option
-                    if (IsEnabled(CustomComboPreset.DRG_ST_RangedUptime) && LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
-                        return PiercingTalon;
-
                     // Lvl88+ Opener
                     if (!InCombat() && IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88)
                     {
@@ -108,6 +104,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (inOpener)
                             return OriginalHook(TrueThrust);
                     }
+
+                    // Piercing Talon Uptime Option
+                    if (IsEnabled(CustomComboPreset.DRG_ST_RangedUptime) && LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
+                        return PiercingTalon;
 
                     if (InCombat())
                     {
