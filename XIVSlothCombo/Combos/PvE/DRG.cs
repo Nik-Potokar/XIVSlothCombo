@@ -284,7 +284,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var DiveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_AOE_DiveOptions);
 
                     // Piercing Talon Uptime Option
-                    if (IsEnabled(CustomComboPreset.DRG_AoE_RangedUptime) && LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
+                    if (IsEnabled(CustomComboPreset.DRG_AoE_RangedUptime) && LevelChecked(PiercingTalon) && GetTargetDistance() > 10 && HasBattleTarget())
                         return PiercingTalon;
 
                     if (CanWeave(actionID))
