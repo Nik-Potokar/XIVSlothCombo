@@ -78,7 +78,6 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_FillerCombo = "SamFillerCombo";
         }
 
-
         internal class SAM_ST_YukikazeCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_YukikazeCombo;
@@ -130,7 +129,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Gekko)
                 {
-                    Dalamud.Logging.PluginLog.Debug($"In Opener: {inOpener} Non Opener: {nonOpener}");
                     var gauge = GetJobGauge<SAMGauge>();
                     var SamKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_KenkiOvercapAmount);
                     var meikyoBuff = HasEffect(Buffs.MeikyoShisui);
@@ -208,14 +206,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (gauge.Kenki >= 25)
                                 {
-                                    if (oneSeal && GetRemainingCharges(MeikyoShisui) == 0 && oneSeal)
+                                    if (oneSeal && GetRemainingCharges(MeikyoShisui) == 0)
                                         return Shinten;
 
                                     if (GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && (gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Sen == Sen.NONE))
                                         return Senei;
                                 }
 
-                                if (gauge.Sen == Sen.NONE && GetRemainingCharges(MeikyoShisui) == 1 && GetRemainingCharges(TsubameGaeshi) == 1)
+                                if (gauge.Sen == Sen.NONE && GetRemainingCharges(MeikyoShisui) == 1 && GetRemainingCharges(TsubameGaeshi) == 1 && !HasEffect(Buffs.MeikyoShisui))
                                     return MeikyoShisui;
 
                                 if (gauge.Kenki >= 25 && IsOnCooldown(Shoha))
@@ -276,10 +274,10 @@ namespace XIVSlothCombo.Combos.PvE
                             //Filler Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_FillerCombos) && !hasDied && !nonOpener && OgiNamikiri.LevelChecked() && CombatEngageDuration().Minutes > 0)
                             {
-                                bool oddMinute = CombatEngageDuration().Minutes % 2 == 1 && gauge.Sen == Sen.NONE && !meikyoBuff && GetDebuffRemainingTime(Debuffs.Higanbana) > 45;
-                                bool evenMinute = !meikyoBuff && CombatEngageDuration().Minutes % 2 == 0 && gauge.Sen == Sen.NONE && GetRemainingCharges(TsubameGaeshi) == 0 && GetDebuffRemainingTime(Debuffs.Higanbana) > 42;
+                                bool oddMinute = CombatEngageDuration().Minutes % 2 == 1 && gauge.Sen == Sen.NONE && !meikyoBuff && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
+                                bool evenMinute = !meikyoBuff && CombatEngageDuration().Minutes % 2 == 0 && gauge.Sen == Sen.NONE && GetRemainingCharges(TsubameGaeshi) == 0 && GetDebuffRemainingTime(Debuffs.Higanbana) >= 44 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 47;
 
-                                if (GetDebuffRemainingTime(Debuffs.Higanbana) < 40)
+                                if (GetDebuffRemainingTime(Debuffs.Higanbana) < 42)
                                 {
                                     if (inOddFiller || inEvenFiller)
                                     {
@@ -303,7 +301,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (SamFillerCombo == 2)
                                     {
-                                        if (WasLastAbility(Hagakure))
+                                        if (WasLastAbility(Gyoten))
                                             fillerComplete = true;
 
                                         if (WasLastAction(Enpi) && IsOffCooldown(Gyoten))
@@ -628,7 +626,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Dumps Kenki in preparation for Ikishoten
                             if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
-                                return Guren;
+                                return Kyuten;
 
                             if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
                                 return Ikishoten;
