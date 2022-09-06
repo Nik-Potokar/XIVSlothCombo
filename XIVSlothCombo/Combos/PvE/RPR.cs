@@ -76,6 +76,7 @@ namespace XIVSlothCombo.Combos.PvE
                 RPR_PositionalChoice = "RPRPositionChoice",
                 RPR_SoDThreshold = "RPRSoDThreshold",
                 RPR_SoDRefreshRange = "RPRSoDRefreshRange",
+                RPR_OpenerChoice = "RPR_OpenerChoice",
                 RPR_SoulsowOptions = "RPRSoulsowOptions";
         }
 
@@ -92,6 +93,7 @@ namespace XIVSlothCombo.Combos.PvE
                 double playerHP = PlayerHealthPercentageHp();
                 double enemyHP = GetTargetHPPercent();
                 int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
+                int openerChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_OpenerChoice);
                 int sodThreshold = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDThreshold);
                 int sodRefreshRange = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
                 bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
@@ -179,9 +181,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD) && LevelChecked(ShadowOfDeath) && !soulReaver && enemyHP > sodThreshold)
                     {
                         if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD_Double) && LevelChecked(PlentifulHarvest) && enshrouded && GetCooldownRemainingTime(ArcaneCircle) < 9 &&
-                            ((gauge.LemureShroud is 4 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30) || (gauge.LemureShroud is 3 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 50))) ||    // Double Enshroud windows
-                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOffCooldown(ArcaneCircle)) ||                                                                     // Opener condition
-                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOnCooldown(ArcaneCircle)))                                                                        // Non-2-minute windows  
+                            ((gauge.LemureShroud is 4 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30) || (gauge.LemureShroud is 3 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 50))) || // Double Enshroud windows
+                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOffCooldown(ArcaneCircle)) || // Opener condition
+                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && IsOnCooldown(ArcaneCircle))) // Non-2-minute windows  
                             return ShadowOfDeath;
                     }
 
@@ -201,9 +203,9 @@ namespace XIVSlothCombo.Combos.PvE
                         bool arcaneReady = LevelChecked(ArcaneCircle) && IsOffCooldown(ArcaneCircle);
                         bool plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
 
-                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_ArcaneCircle) && CanWeave(actionID) && arcaneReady)
+                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_ArcaneCircle) && arcaneReady && CanWeave(actionID))
                             return ArcaneCircle;
-                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_PlentifulHarvest) && plentifulReady && GetBuffRemainingTime(Buffs.ImmortalSacrifice) < 26 && !soulReaver && !enshrouded)
+                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_PlentifulHarvest) && plentifulReady && GetBuffRemainingTime(Buffs.BloodsownCircle) <= 1 && !soulReaver && !enshrouded)
                             return PlentifulHarvest;
                     }
 
@@ -216,11 +218,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsNotEnabled(CustomComboPreset.RPR_ST_SliceCombo_EnshroudPooling) && gauge.Shroud >= 50)
                                     return Enshroud;
 
-                                if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_EnshroudPooling) &&
-                                    ((!LevelChecked(PlentifulHarvest) && gauge.Shroud >= 50) ||             // Before Plentiful Harvest
-                                    (HasEffectAny(Buffs.ArcaneCircle) && gauge.Shroud >= 50) ||                // Shroud in Arcane Circle
-                                    (gauge.Shroud >= 50 && GetCooldownRemainingTime(ArcaneCircle) < 8) ||   // Prep for double Enshroud
-                                    (!HasEffectAny(Buffs.ArcaneCircle) && gauge.Shroud >= 90)))                // Shroud pooling
+                                if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_EnshroudPooling) && gauge.Shroud >= 50 &&
+                                    (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest
+                                    HasEffectAny(Buffs.ArcaneCircle) || // Shroud in Arcane Circle
+                                    GetCooldownRemainingTime(ArcaneCircle) < 8 || // Prep for double Enshroud
+                                    (!HasEffectAny(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) is >= 50 and <= 65) || //Natural Odd Minute Shrouds
+                                    (!HasEffectAny(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
                                     return Enshroud;
                             }
                         }
@@ -251,17 +254,39 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!(comboTime > 0) || lastComboMove is InfernalSlice || comboTime > 10)
                         {
-                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GluttonyBloodStalk) && !soulReaver && !enshrouded && gauge.Soul >= 50 && CanWeave(actionID) && LevelChecked(BloodStalk))
+                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GluttonyBloodStalk) && !soulReaver && !enshrouded && CanWeave(actionID) && LevelChecked(BloodStalk) && gauge.Soul >= 50)
                             {
-                                return gauge.Soul >= 50 && IsOffCooldown(Gluttony) && LevelChecked(Gluttony)
-                                    ? Gluttony
-                                    : OriginalHook(BloodStalk);
+                                if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 16 && LevelChecked(Communio))
+                                {
+                                    if (openerChoice is 0 or 1 && gauge.Soul is 50)
+                                        return Gluttony;
+                                    if (openerChoice is 2 && WasLastAbility(Communio) && gauge.Soul is 100)
+                                        return Gluttony;
+                                }
+
+                                if (CombatEngageDuration().TotalSeconds >= 16 || !LevelChecked(Communio))
+                                {
+                                    if (IsOffCooldown(Gluttony) && LevelChecked(Gluttony))
+                                        return Gluttony;
+                                    if (!LevelChecked(Gluttony) || gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) >= 15)
+                                        return OriginalHook(BloodStalk);
+                                }
                             }
 
                             bool soulSliceReady = LevelChecked(SoulSlice) && GetRemainingCharges(SoulSlice) > 0;
 
-                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoulSlice) && !enshrouded && !soulReaver && gauge.Soul <= 50 && soulSliceReady)
-                                return SoulSlice;
+                            if (soulSliceReady && !enshrouded && !soulReaver)
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoulSlice) && !enshrouded && !soulReaver && gauge.Soul <= 50)
+                                    return SoulSlice;
+                                if (CombatEngageDuration().TotalSeconds < 16 && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && LevelChecked(Communio))
+                                {
+                                    if (openerChoice is 0 or 1 && gauge.Soul <= 50)
+                                        return SoulSlice;
+                                    if (openerChoice is 2)
+                                        return SoulSlice;
+                                }
+                            }
                         }
                     }
 
