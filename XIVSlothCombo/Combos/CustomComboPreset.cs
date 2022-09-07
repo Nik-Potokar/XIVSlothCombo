@@ -1972,7 +1972,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_Enshroud = 12008,
 
         [ParentCombo(RPR_ST_SliceCombo_Enshroud)]
-        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window), but will pool Shroud outside of burst windows.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window) and will use Enshroud for odd minute bursts.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_EnshroudPooling = 12009,
 
         [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]

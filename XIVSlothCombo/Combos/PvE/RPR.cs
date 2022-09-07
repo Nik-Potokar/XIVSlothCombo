@@ -97,6 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
                 int sodThreshold = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDThreshold);
                 int sodRefreshRange = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
                 bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                bool opener = IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 30 && LevelChecked(Communio);
 
                 // Gibbet and Gallows on Shadow of Death
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) && soulReaver && LevelChecked(Gibbet))
@@ -134,7 +135,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
                         return All.TrueNorth;
 
-                    if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
+                    if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) || opener) && HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
                     {
                         if (positionalChoice is 0 or 1 or 2)
                         {
@@ -178,7 +179,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Stun) && interruptReady)
                         return All.LegSweep;
 
-                    if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD) && LevelChecked(ShadowOfDeath) && !soulReaver && enemyHP > sodThreshold)
+                    if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD) || opener) && LevelChecked(ShadowOfDeath) && !soulReaver && enemyHP > sodThreshold)
                     {
                         if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD_Double) && LevelChecked(PlentifulHarvest) && enshrouded && GetCooldownRemainingTime(ArcaneCircle) < 9 &&
                             ((gauge.LemureShroud is 4 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30) || (gauge.LemureShroud is 3 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 50))) || // Double Enshroud windows
@@ -203,15 +204,15 @@ namespace XIVSlothCombo.Combos.PvE
                         bool arcaneReady = LevelChecked(ArcaneCircle) && IsOffCooldown(ArcaneCircle);
                         bool plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
 
-                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_ArcaneCircle) && arcaneReady && CanWeave(actionID))
+                        if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_ArcaneCircle) || opener) && arcaneReady && CanWeave(actionID))
                             return ArcaneCircle;
-                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_PlentifulHarvest) && plentifulReady && GetBuffRemainingTime(Buffs.BloodsownCircle) <= 1 && !soulReaver && !enshrouded)
+                        if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_PlentifulHarvest) || opener) && plentifulReady && GetBuffRemainingTime(Buffs.BloodsownCircle) <= 1 && !soulReaver && !enshrouded)
                             return PlentifulHarvest;
                     }
 
                     if (HasBattleTarget() && (deathsDesign || (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoD) && enemyHP < sodThreshold)))
                     {
-                        if (!soulReaver && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Enshroud))
+                        if (!soulReaver && (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Enshroud) || opener))
                         {
                             if (!enshrouded && LevelChecked(Enshroud) && IsOffCooldown(Enshroud) && CanWeave(actionID))
                             {
@@ -230,7 +231,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (enshrouded)
                         {
-                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows))
+                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) || opener)
                             {
                                 if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
                                     return !IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio_Movement) ? Communio : IsMoving ? ShadowOfDeath : Communio;
@@ -254,9 +255,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!(comboTime > 0) || lastComboMove is InfernalSlice || comboTime > 10)
                         {
-                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GluttonyBloodStalk) && !soulReaver && !enshrouded && CanWeave(actionID) && LevelChecked(BloodStalk) && gauge.Soul >= 50)
+                            if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GluttonyBloodStalk) || opener) && CanWeave(actionID) && !soulReaver && !enshrouded && LevelChecked(BloodStalk) && gauge.Soul >= 50)
                             {
-                                if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 16 && LevelChecked(Communio))
+                                if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 40 && IsOffCooldown(Gluttony))
                                 {
                                     if (openerChoice is 0 or 1 && gauge.Soul is 50)
                                         return Gluttony;
@@ -264,11 +265,11 @@ namespace XIVSlothCombo.Combos.PvE
                                         return Gluttony;
                                 }
 
-                                if (CombatEngageDuration().TotalSeconds >= 16 || !LevelChecked(Communio))
+                                if (CombatEngageDuration().TotalSeconds >= 10 || !LevelChecked(Communio))
                                 {
                                     if (IsOffCooldown(Gluttony) && LevelChecked(Gluttony))
                                         return Gluttony;
-                                    if (!LevelChecked(Gluttony) || gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) >= 15)
+                                    if (!LevelChecked(Gluttony) || gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) >= 25)
                                         return OriginalHook(BloodStalk);
                                 }
                             }
@@ -279,7 +280,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoulSlice) && !enshrouded && !soulReaver && gauge.Soul <= 50)
                                     return SoulSlice;
-                                if (CombatEngageDuration().TotalSeconds < 16 && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && LevelChecked(Communio))
+                                if (opener)
                                 {
                                     if (openerChoice is 0 or 1 && gauge.Soul <= 50)
                                         return SoulSlice;
