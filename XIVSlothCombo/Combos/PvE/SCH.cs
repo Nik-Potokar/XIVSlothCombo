@@ -315,7 +315,7 @@ namespace XIVSlothCombo.Combos.PvE
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
+                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= Config.SCH_ST_DPS_EnergyDrain) &&
                                 (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
                                 return dot; //Use appropriate DoT Action
                         }
@@ -377,7 +377,7 @@ namespace XIVSlothCombo.Combos.PvE
                     uint dot = OriginalHook(Bio); // Grab the appropriate DoT Action
                     Status? dotDebuff = FindTargetEffect(BioList[dot]); // Match it with it's Debuff ID, and check for the Debuff
 
-                    if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
+                    if ((dotDebuff is null || dotDebuff?.RemainingTime <= Config.SCH_ST_DPS_EnergyDrain) &&
                         (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
                         return dot; // Use appropriate DoT Action
                 }
