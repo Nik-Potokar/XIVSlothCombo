@@ -102,6 +102,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool SCH_Aetherflow_Recite_Excog => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Excog));
             internal static bool SCH_Aetherflow_Recite_Indom => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Indom));
             internal static bool SCH_FairyFeature => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_FairyFeature));
+            internal static int SCH_Recitation_Mode => CustomComboFunctions.GetOptionValue(nameof(SCH_Recitation_Mode));
         }
 
         /*
@@ -115,6 +116,43 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 => actionID is FeyBlessing && LevelChecked(SummonSeraph) && Gauge.SeraphTimer > 0 ? Consolation : actionID;
         }
+
+        /*
+         * SCH_Lustrate
+         * Replaces Lustrate with Excogitation when Excogitation is ready.
+        */
+        internal class SCH_Lustrate : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Lustrate;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                => actionID is Lustrate && LevelChecked(Excogitation) && IsOffCooldown(Excogitation) ? Excogitation : actionID;
+        }
+
+        /*
+         * SCH_Recitation
+         * Replaces Recitation with selected one of its combo skills.
+        */
+        internal class SCH_Recitation : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Recitation;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Recitation && HasEffect(Buffs.Recitation))
+                {
+                    switch (Config.SCH_Recitation_Mode)
+                    {
+                        case 0: return OriginalHook(Adloquium);
+                        case 1: return OriginalHook(Succor);
+                        case 2: return OriginalHook(Indomitability);
+                        case 3: return OriginalHook(Excogitation);
+                        default: break;
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
 
         /*
          * SCH_Aetherflow
@@ -288,7 +326,8 @@ namespace XIVSlothCombo.Combos.PvE
                             IsMoving) return OriginalHook(Ruin2); //Who knows in the future
 
                         //AlterateMode idles as Ruin/Broil
-                        if (AlternateMode && InCombat()) return OriginalHook(Ruin);
+                        if (AlternateMode && InCombat())
+                            return OriginalHook(Ruin);
                     }
                 }
                 return actionID;

@@ -2722,6 +2722,15 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SCH.FeyBlessing)]
         [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "")]
         SCH_Consolation = 16210,
+
+        [ReplaceSkill(SCH.Lustrate)]
+        [CustomComboInfo("Lustrate to Excogitation Feature", "Change Lustrate into Excogitation when Excogitation is ready.", SCH.JobID, 220, "", "")]
+        SCH_Lustrate = 16220,
+
+        [ReplaceSkill(SCH.Recitation)]
+        [CustomComboInfo("Recitation Combo Feature", "Change Recitation into either Adloquium, Succor, Indomitability, or Excogitation when used.", SCH.JobID, 230, "", "")]
+        SCH_Recitation = 16230,
+
         #endregion
 
         #region Utilities
