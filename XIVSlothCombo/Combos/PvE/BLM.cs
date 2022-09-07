@@ -78,7 +78,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static int Fire => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire));
             internal static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire2));
             internal static int Fire3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire3));
-            internal static int Despair => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Despair));
+            internal static int Despair = 800; //"ALL MP" spell. Only caring about the absolute minimum. CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Despair));
             internal static int Blizzard3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Blizzard3));
         }
 
