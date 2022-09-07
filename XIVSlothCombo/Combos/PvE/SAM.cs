@@ -75,7 +75,11 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_ST_KenkiOvercapAmount = "SamKenkiOvercapAmount",
                 SAM_AoE_KenkiOvercapAmount = "SamAOEKenkiOvercapAmount",
                 SAM_MeikyoChoice = "SAM_MeikyoChoice",
-                SAM_FillerCombo = "SamFillerCombo";
+                SAM_FillerCombo = "SamFillerCombo",
+                SAM_STSecondWindThreshold = "SAM_STSecondWindThreshold",
+                SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoESecondWindThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold";
         }
 
 
@@ -219,6 +223,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (gauge.Kenki >= 25 && IsOnCooldown(Shoha))
                                     return Shinten;
+
+                                // healing - please move if not appropriate this high priority
+                                if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
+                                {
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                        return All.SecondWind;
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                        return All.Bloodbath;
+                                }
                             }
 
                             //GCDs
@@ -482,6 +495,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_Shoha) && Shoha.LevelChecked() && gauge.MeditationStacks == 3)
                                         return Shoha;
+
+                                    // healing - please move if not appropriate this high priority
+                                    if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
+                                    {
+                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                            return All.SecondWind;
+                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                            return All.Bloodbath;
+                                    }
                                 }
 
                                 // Iaijutsu Features
@@ -641,6 +663,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_MeikyoShisui) && LevelChecked(MeikyoShisui) && !HasEffect(Buffs.MeikyoShisui) && GetRemainingCharges(MeikyoShisui) > 0)
                             return MeikyoShisui;
+
+                        // healing - please move if not appropriate this high priority
+                        if (IsEnabled(CustomComboPreset.SAM_AoE_ComboHeals))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                return All.Bloodbath;
+                        }
                     }
 
                     if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_OgiNamikiri) && OgiNamikiri.LevelChecked())

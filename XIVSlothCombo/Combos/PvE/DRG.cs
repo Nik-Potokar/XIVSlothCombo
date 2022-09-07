@@ -69,7 +69,11 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 DRG_ST_DiveOptions = "DRG_ST_DiveOptions",
                 DRG_AOE_DiveOptions = "DRG_AOE_DiveOptions",
-                DRG_OpenerOptions = "DRG_OpenerOptions";
+                DRG_OpenerOptions = "DRG_OpenerOptions",
+                DRG_STSecondWindThreshold = "DRG_STSecondWindThreshold",
+                DRG_STBloodbathThreshold = "DRG_STBloodbathThreshold",
+                DRG_AoESecondWindThreshold = "DRG_AoESecondWindThreshold",
+                DRG_AoEBloodbathThreshold = "DRG_AoEBloodbathThreshold";
         }
 
         internal class DRG_JumpFeature : CustomCombo
@@ -177,6 +181,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (WasLastWeaponskill(HeavensThrust) && GetRemainingCharges(SpineshatterDive) > 0 && !WasLastAction(SpineshatterDive) && openerOptions is 0 or 1 or 2)
                                     return SpineshatterDive;
+
+                                // healing - please move if not appropriate priority
+                                if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
+                                {
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                        return All.SecondWind;
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                        return All.Bloodbath;
+                                }
                             }
                         }
 
@@ -242,6 +255,15 @@ namespace XIVSlothCombo.Combos.PvE
                                             }
                                         }
                                     }
+                                }
+
+                                // healing - please move if not appropriate this high priority
+                                if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
+                                {
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                        return All.SecondWind;
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                        return All.Bloodbath;
                                 }
                             }
                         }
@@ -345,6 +367,16 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
                         }
+
+                        // healing - please move if not appropriate priority
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_ComboHeals))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                return All.Bloodbath;
+                        }
+
                     }
 
                     if (comboTime > 0)
