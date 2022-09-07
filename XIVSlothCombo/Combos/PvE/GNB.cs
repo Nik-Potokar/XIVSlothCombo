@@ -113,7 +113,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (LevelChecked(BurstStrike) &&
                                    ((gauge.Ammo is 0 && lastComboMove is KeenEdge && CombatEngageDuration().TotalSeconds < 6 && IsOffCooldown(Bloodfest)) || //Opener Conditions
                                    (CombatEngageDuration().Minutes == 2 && GetCooldownRemainingTime(DoubleDown) < 4) || //2 min delay
-                                   (CombatEngageDuration().Minutes != 2 && gauge.Ammo == MaxCartridges(level) && GetCooldownRemainingTime(GnashingFang) < 4))) //Regular NMGF
+                                   (CombatEngageDuration().Minutes != 2 && gauge.Ammo == MaxCartridges(level) && GetCooldownRemainingTime(GnashingFang) <= 3))) //Regular NMGF
                                     return NoMercy;
                                 if (!LevelChecked(BurstStrike)) //no cartridges unlocked
                                     return NoMercy;
