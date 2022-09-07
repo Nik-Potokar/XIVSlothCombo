@@ -2689,7 +2689,7 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflows stacks when Aetherflow's cooldown has been set below", SCH.JobID, 140, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflow stacks before Aetherflow's cooldown based remaining time set below", SCH.JobID, 140, "", "")]
             SCH_DPS_EnergyDrain = 16140,
 
             [ParentCombo(SCH_DPS)]
