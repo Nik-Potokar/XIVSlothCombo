@@ -24,6 +24,9 @@ namespace XIVSlothCombo.Combos.PvE
             Gibbet = 24382,
             Gallows = 24383,
             Guillotine = 24384,
+            UnveiledGibbet = 24390,
+            UnveiledGallows = 24391,
+
             // Reaver
             BloodStalk = 24389,
             GrimSwathe = 24392,
@@ -131,15 +134,25 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
                         return All.TrueNorth;
-
+                    
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
                     {
                         if (positionalChoice is 0 or 1 or 2)
                         {
-                            if (HasEffect(Buffs.EnhancedGibbet))
+                            if (HasEffect(Buffs.EnhancedGibbet)) {
+                                // If we are not on the flank, but need to use gibbet, pop true north if not already up
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
+                                    return All.TrueNorth;
+                                }
                                 return OriginalHook(Gibbet);
-                            if (HasEffect(Buffs.EnhancedGallows))
+                            }
+                            if (HasEffect(Buffs.EnhancedGallows)) {
+                                // If we are not on the rear, but need to use gallows, pop true north if not already up
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                                    return All.TrueNorth;
+                                }
                                 return OriginalHook(Gallows);
+                            }
                         }
 
                         if (positionalChoice == 3)
@@ -147,12 +160,20 @@ namespace XIVSlothCombo.Combos.PvE
                         if (positionalChoice == 4)
                             return OriginalHook(Gibbet);
 
-                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
+                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget() )
                         {
-                            if (positionalChoice is 0 or 1)
+                            if (positionalChoice is 0 or 1) {
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                                    return All.TrueNorth;
+                                }
                                 return Gallows;
-                            if (positionalChoice == 2)
+                            }
+                            if (positionalChoice == 2) {
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
+                                    return All.TrueNorth;
+                                }
                                 return Gibbet;
+                            }
                         }
                     }
 
