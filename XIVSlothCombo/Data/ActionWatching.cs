@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Services;
+using Lumina.Excel.GeneratedSheets;
 
 namespace XIVSlothCombo.Data
 {
@@ -17,8 +18,11 @@ namespace XIVSlothCombo.Data
         internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
             .ToDictionary(i => i.RowId, i => i);
 
-        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Trait> TraitSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Trait>()!
+        internal static Dictionary<uint, Trait> TraitSheet = Service.DataManager.GetExcelSheet<Trait>()!
             .Where(i => i.ClassJobCategory is not null) //All player traits are assigned to a category. Chocobo and other garbage lacks this, thus excluded.
+            .ToDictionary(i => i.RowId, i => i);
+
+        internal static Dictionary<uint, BNpcBase> BNpcSheet = Service.DataManager.GetExcelSheet<BNpcBase>()!
             .ToDictionary(i => i.RowId, i => i);
 
         private static readonly Dictionary<string, List<uint>> statusCache = new();

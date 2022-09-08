@@ -171,7 +171,6 @@ namespace XIVSlothCombo.Combos
 
         #region DPS
         [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
-        //[ConflictingCombos(AstrologianAlternateDpsFeature)]
         [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 0, "", "")]
         AST_ST_DPS = 1004,
 
@@ -2333,7 +2332,6 @@ namespace XIVSlothCombo.Combos
 
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
         [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
@@ -2384,7 +2382,6 @@ namespace XIVSlothCombo.Combos
 
         #region Sage Simple AoE Heal
         [ReplaceSkill(SGE.Prognosis)]
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
         [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking.", SGE.JobID, 500, "", "")]
         SGE_AoE_Heal = 14500,
             
@@ -2423,15 +2420,13 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SGE_AoE_Heal)]
             [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
             SGE_AoE_Heal_Rhizomata = 14580,
-            #endregion
+        #endregion
 
         #region Misc Healing
-        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Taurochole, SGE.Druochole, SGE.Ixochole, SGE.Kerachole)]
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
         SGE_Rhizo = 14600,
 
-        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Druochole)]
         [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
         SGE_DruoTauro = 14700,
@@ -2723,6 +2718,15 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SCH.FeyBlessing)]
         [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "")]
         SCH_Consolation = 16210,
+
+        [ReplaceSkill(SCH.Lustrate)]
+        [CustomComboInfo("Lustrate to Excogitation Feature", "Change Lustrate into Excogitation when Excogitation is ready.", SCH.JobID, 220, "", "")]
+        SCH_Lustrate = 16220,
+
+        [ReplaceSkill(SCH.Recitation)]
+        [CustomComboInfo("Recitation Combo Feature", "Change Recitation into either Adloquium, Succor, Indomitability, or Excogitation when used.", SCH.JobID, 230, "", "")]
+        SCH_Recitation = 16230,
+
         #endregion
 
         #region Utilities

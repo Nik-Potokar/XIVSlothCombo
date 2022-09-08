@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using StructsObject = FFXIVClientStructs.FFXIV.Client.Game.Object;
 
@@ -138,6 +139,13 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 return false;
 
             return true;
+        }
+
+        public static bool TargetNeedsPositionals()
+        {
+            if (!HasBattleTarget()) return false;
+            if (ActionWatching.BNpcSheet.TryGetValue(CurrentTarget.DataId, out var bnpc) && !bnpc.Unknown10) return true;
+            return false;
         }
 
         /// <summary> Attempts to target the given party member </summary>
