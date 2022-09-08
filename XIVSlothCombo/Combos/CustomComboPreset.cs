@@ -3146,8 +3146,13 @@ namespace XIVSlothCombo.Combos
 
         #region DOL
 
+        [ReplaceSkill(DOL.AgelessWords, DOL.SolidReason)] 
         [CustomComboInfo("[BTN/MIN] Eureka Feature", "Replaces Ageless Words and Solid Reason with Wise to the World when available", DOL.JobID)]
         DOL_Eureka = 51001,
+
+        [ReplaceSkill(DOL.ArborCall, DOL.ArborCall2, DOL.LayOfTheLand, DOL.LayOfTheLand2)]
+        [CustomComboInfo("[BTN/MIN] Locate & Truth Feature", "Replaces Lay of the Lands or Arbor Calls with Prospect/Triangulate and Truth of Mountains/Forests if not active.", DOL.JobID)]
+        DOL_NodeSearchingBuffs = 51012,
 
         [ReplaceSkill(DOL.Cast)]
         [CustomComboInfo("[FSH] Cast to Hook Feature", "Replaces Cast with Hook when fishing", DOL.JobID)]
@@ -3195,7 +3200,7 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Chum to Baited Breath Option", "Replaces Chum with Baited Breath when diving.", DOL.JobID)]
             FSH_Chum_BaitedBreath = 51011,
-
+        
         #endregion
 
         #endregion
