@@ -38,10 +38,9 @@ namespace XIVSlothCombo.Combos.PvE
             FleetingRaiju = 25778,
             Hellfrog = 7401,
             HollowNozuchi = 25776,
-            Shukuchi = 2262,
 
-        //Mudras
-        Ninjutsu = 2260,
+            //Mudras
+            Ninjutsu = 2260,
             Rabbit = 2272,
 
             //-- initial state mudras (the ones with charges)
@@ -166,11 +165,10 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SpinningEdge || ((actionID == Shukuchi || actionID == 7548 || actionID == 7549 || actionID == Hide) && HasEffect(Buffs.Mudra))) // or Shukuchi, Arm's Length, Feint, Hide
+                if (actionID == SpinningEdge)
                 {
                     NINGauge gauge = GetJobGauge<NINGauge>();
                     bool canWeave = CanWeave(SpinningEdge);
-                    bool canDelayedWeave = CanDelayedWeave(SpinningEdge, 0.82f);
                     bool inTrickBurstSaveWindow = IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Cooldowns) && IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) ? GetCooldownRemainingTime(TrickAttack) <= GetOptionValue(Config.Advanced_Trick_Cooldown) : false;
                     bool useBhakaBeforeTrickWindow = GetCooldownRemainingTime(TrickAttack) >= 3;
                     bool inMudraState = HasEffect(Buffs.Mudra);
@@ -255,12 +253,7 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(TrickAttack) &&
                             ((IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Delayed) && InCombat() && combatDuration.TotalSeconds > 8) ||
                             IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Delayed)))
-                        {
-                            if (canDelayedWeave) //|| GetBuffRemainingTime(Buffs.Suiton) <= GetCooldown(SpinningEdge).CooldownRemaining - 0.625f) // if can delayed weave or Suiton will run out
-                                return OriginalHook(TrickAttack);
-                            else
-                                return 141; // Fire (delay until Trick attack)
-                        }
+                            return OriginalHook(TrickAttack);
 
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshin) && Bunshin.LevelChecked() && IsOffCooldown(Bunshin) && gauge.Ninki >= bunshinPool)
                             return OriginalHook(Bunshin);
@@ -277,8 +270,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!inTrickBurstSaveWindow)
                         {
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) && IsOffCooldown(Mug) && Mug.LevelChecked())
+                            {
                                 if (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug_AlignAfter) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug_AlignAfter) && TargetHasEffect(Debuffs.TrickAttack)))
                                     return OriginalHook(Mug);
+                            }
 
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Meisui) && HasEffect(Buffs.Suiton) && gauge.Ninki <= 50 && IsOffCooldown(Meisui) && Meisui.LevelChecked())
                                 return OriginalHook(Meisui);
@@ -353,7 +348,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return actionID;
 
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton) &&
-                                !inTrickBurstSaveWindow && 
+                                !inTrickBurstSaveWindow &&
                                 chargeCheck &&
                                 ((GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 2) || TargetHasEffect(Debuffs.TrickAttack) || !InMeleeRange()) && // if at/near cap, in burst window or out of melee range
                                 mudraState.CastRaiton(ref actionID))
