@@ -1259,7 +1259,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BhavaPooling, "Set the minimal amount of Ninki required to have before spending on Bhavacakra.");
 
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)
-                UserConfig.DrawSliderInt(0, 15, NIN.Config.Trick_CooldownRemaining, "Set the amount of time remaining on Trick Attack cooldown before trying to set up with Suiton.");
+                UserConfig.DrawSliderInt(0, 21, NIN.Config.Trick_CooldownRemaining, "Set the amount of time remaining on Trick Attack cooldown before trying to set up with Suiton.");
 
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bunshin)
                 UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BunshinPoolingST, "Set the amount of Ninki required to have before spending on Bunshin.");
