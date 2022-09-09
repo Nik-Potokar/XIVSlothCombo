@@ -463,7 +463,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                                 if (HasEffect(Buffs.Thundercloud))
                                 {
-                                    if (lastComboMove is not Thunder or Thunder3 or Thunder2 or Thunder4 &&
+                                    if (lastComboMove is not Thunder and not Thunder3 and not Thunder2 and not Thunder4 &&
                                         !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
                                     {
                                         uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
@@ -499,7 +499,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Thunder uptime
                         if (IsEnabled(CustomComboPreset.BLM_Thunder) && Gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
-                            if (lastComboMove is not Thunder or Thunder3 or Thunder2 or Thunder4 && 
+                            if (lastComboMove is not Thunder and not Thunder3 and not Thunder2 and not Thunder4 && 
                                 !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
                             {
                                 if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && currentMP >= MP.Thunder))
@@ -910,7 +910,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Thunder
                         if (IsEnabled(CustomComboPreset.BLM_Thunder) && Gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
-                            if (lastComboMove is not Thunder or Thunder3 or Thunder2 or Thunder4 &&
+                            if (lastComboMove is not Thunder and not Thunder3 and not Thunder2 and not Thunder4 &&
                                 !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4) && thunder3Recast(4))
                             {
                                 if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && currentMP >= MP.Thunder))
