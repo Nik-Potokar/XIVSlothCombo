@@ -113,7 +113,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (LevelChecked(BurstStrike) &&
                                    ((gauge.Ammo is 0 && lastComboMove is KeenEdge && CombatEngageDuration().TotalSeconds < 6 && IsOffCooldown(Bloodfest)) || //Opener Conditions
                                    (CombatEngageDuration().Minutes == 2 && GetCooldownRemainingTime(DoubleDown) < 4) || //2 min delay
-                                   (CombatEngageDuration().Minutes != 2 && gauge.Ammo == MaxCartridges(level) && GetCooldownRemainingTime(GnashingFang) <= 3))) //Regular NMGF
+                                   (CombatEngageDuration().Minutes != 2 && gauge.Ammo == MaxCartridges(level) && GetCooldownRemainingTime(GnashingFang) < 4))) //Regular NMGF
                                     return NoMercy;
                                 if (!LevelChecked(BurstStrike)) //no cartridges unlocked
                                     return NoMercy;
@@ -132,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && LevelChecked(DangerZone) && IsOffCooldown(DangerZone) && !HasEffect(Buffs.NoMercy))
                                 {
                                     if ((IsOnCooldown(GnashingFang) && gauge.AmmoComboStep != 1 && GetCooldownRemainingTime(NoMercy) > 17) || //Post Gnashing Fang
-                                        (!LevelChecked(DangerZone) && IsOnCooldown(NoMercy))) //Pre Gnashing Fang
+                                        !LevelChecked(GnashingFang)) //Pre Gnashing Fang
                                         return OriginalHook(DangerZone);
                                 }
 
