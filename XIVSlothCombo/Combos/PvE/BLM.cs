@@ -581,7 +581,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Use Swiftcast in Astral Fire
-                                if (!IsEnabled(CustomComboPreset.BLM_Simple_Casts_Pooling) && level >= All.Levels.Swiftcast && IsOffCooldown(All.Swiftcast) &&
+                                if (!IsEnabled(CustomComboPreset.BLM_Simple_Casts_Pooling) && ActionReady(All.Swiftcast) &&
                                      gauge.InAstralFire && currentMP >= MP.AspectFire * (HasEffect(Buffs.Triplecast) ? 3 : 1))
                                 {
                                     if (level >= Levels.Despair && currentMP >= MP.Despair)
