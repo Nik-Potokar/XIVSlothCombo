@@ -45,10 +45,9 @@ namespace XIVSlothCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var canWeave = CanSpellWeave(actionID);
-
                 if (actionID is Fire or Fire4 or Flare)
                 {
+                    var canWeave = CanSpellWeave(actionID);
                     if (HasEffect(Buffs.Polyglot))
                         return Foul;
 
@@ -81,6 +80,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (actionID is Blizzard or Blizzard4 or Freeze)
                 {
+                    var canWeave = CanSpellWeave(actionID);
                     if (HasEffect(Buffs.Polyglot))
                         return Foul;
 
