@@ -84,6 +84,10 @@ namespace XIVSlothCombo.Combos
 
         #region GLOBAL FEATURES
 
+        [ReplaceSkill(All.Sprint)]
+        [CustomComboInfo("Island Sanctuary Sprint Feature", "Replaces Sprint with Isle Sprint.\nOnly works at the Island Sanctuary. Icon does not change.\nDo not use with SimpleTweaks' Island Sanctuary Sprint fix.", ADV.JobID)]
+        ALL_IslandSanctuary_Sprint = 100093,
+
         #region Global Tank Features
         [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         ALL_Tank_Menu = 100099,

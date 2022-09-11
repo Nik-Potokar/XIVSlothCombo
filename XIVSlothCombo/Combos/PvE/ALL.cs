@@ -1,4 +1,5 @@
 ﻿using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -34,7 +35,10 @@ namespace XIVSlothCombo.Combos.PvE
             Interject = 7538,
             Peloton = 7557,
             LegSweep = 7863,
-            Repose = 16560;
+            Repose = 16560,
+            Sprint = 3;
+        private const uint
+            IsleSprint = 31314;
 
         public static class Buffs
         {
@@ -87,6 +91,16 @@ namespace XIVSlothCombo.Combos.PvE
                 TrueNorth = 50;
         }
 
+        internal class ALL_IslandSanctuary_Sprint : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_IslandSanctuary_Sprint;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Sprint && Service.ClientState.TerritoryType is 1055) return IsleSprint;
+                else return actionID;
+            }
+        }
 
         //Tank Features
         internal class ALL_Tank_Interrupt : CustomCombo
