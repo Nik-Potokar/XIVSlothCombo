@@ -72,14 +72,14 @@ namespace XIVSlothCombo.Combos.PvE
         }
         internal static class MP
         {
-            internal const uint MaxMP = 10000;
+            internal const int MaxMP = 10000;
+            internal const int Despair = 800; //"ALL MP" spell. Only caring about the absolute minimum.
             internal static int Thunder => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Thunder));
             internal static int ThunderAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Thunder2));
             internal static int Fire => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire));
             internal static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire2));
             internal static int Fire3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire3));
-            internal static int Despair = 800; //"ALL MP" spell. Only caring about the absolute minimum. CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Despair));
-            internal static int Blizzard3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Blizzard3));
+            //internal static int Blizzard3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Blizzard3));
         }
 
         // Debuff Pairs of Actions and Debuff
