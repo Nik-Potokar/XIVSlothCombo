@@ -1265,7 +1265,7 @@ namespace XIVSlothCombo.Combos
         GNB_BurstStrike_DoubleDown = 7026,
 
         [ParentCombo(GNB_ST_RoughDivide)]
-        [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst cooldowns when available, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst cooldowns when available, not moving, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
         GNB_ST_MeleeRoughDivide = 7027,
 
         [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
@@ -1972,7 +1972,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_Enshroud = 12008,
 
         [ParentCombo(RPR_ST_SliceCombo_Enshroud)]
-        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window), but will pool Shroud outside of burst windows.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window) and will use Enshroud for odd minute bursts.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_EnshroudPooling = 12009,
 
         [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
@@ -2007,6 +2007,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_ST_SliceCombo_GibbetGallows_Communio)]
         [CustomComboInfo("Communio Movement Option", "Uses Shadow of Death instead of Communio when moving.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_GibbetGallows_Communio_Movement = 12017,
+
+        [ParentCombo(RPR_ST_SliceCombo)]
+        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", RPR.JobID, -1, "", "")]
+        RPR_ST_SliceCombo_Opener = 12018,
         #endregion
 
         #region AoE (Scythe) Combo Section
@@ -2973,11 +2977,11 @@ namespace XIVSlothCombo.Combos
         WAR_InfuriateFellCleave_IRFirst = 18022,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
         [ParentCombo(WAR_ST_StormsPath_Onslaught)]
-        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm) and when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Onslaught_MeleeSpender = 18024,
 
         #endregion
