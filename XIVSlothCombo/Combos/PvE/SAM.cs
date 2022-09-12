@@ -82,7 +82,6 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold";
         }
 
-
         internal class SAM_ST_YukikazeCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_YukikazeCombo;
@@ -125,7 +124,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool inOpener = false;
             internal static bool inOddFiller = false;
             internal static bool inEvenFiller = false;
-            internal static bool nonOpener = false;
+            internal static bool nonOpener = true;
             internal static bool hasDied = false;
             internal static bool fillerComplete = false;
             internal static bool fastFillerReady = false;
@@ -145,12 +144,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var SamMeikyoChoice = PluginConfiguration.GetCustomIntValue(Config.SAM_MeikyoChoice);
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
                     
-                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_RangedUptime) && Enpi.LevelChecked() && !inEvenFiller && !inOddFiller && !InMeleeRange() && HasBattleTarget())
-                        return Enpi;
-
-                    if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SAM_TrueNorth) && GetBuffStacks(Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked())
-                        return All.TrueNorth;
-
                     if (!InCombat())
                     {
                         hasDied = false;
@@ -159,7 +152,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (OgiNamikiri.LevelChecked() && IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener))
                         {
-                            if (meikyoBuff && openerReady && !WasLastWeaponskill(Enpi))
+                            if ((WasLastAbility(MeikyoShisui) || meikyoBuff) && openerReady)
                             {
                                 if (!inOpener)
                                     inOpener = true;
@@ -187,6 +180,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_RangedUptime) && Enpi.LevelChecked() && !inEvenFiller && !inOddFiller && !InMeleeRange() && HasBattleTarget())
+                        return Enpi;
+
+                    if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SAM_TrueNorth) && GetBuffStacks(Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked())
+                        return All.TrueNorth;
+
                     if (InCombat())
                     {
                         if (inOpener && IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener) && OgiNamikiri.LevelChecked() && !hasDied && !nonOpener)
@@ -211,14 +210,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (gauge.Kenki >= 25)
                                 {
-                                    if (oneSeal && GetRemainingCharges(MeikyoShisui) == 0 && oneSeal)
+                                    if (oneSeal && GetRemainingCharges(MeikyoShisui) == 0)
                                         return Shinten;
 
                                     if (GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && (gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Sen == Sen.NONE))
                                         return Senei;
                                 }
 
-                                if (gauge.Sen == Sen.NONE && GetRemainingCharges(MeikyoShisui) == 1)
+                                if (gauge.Sen == Sen.NONE && GetRemainingCharges(MeikyoShisui) == 1 && GetRemainingCharges(TsubameGaeshi) == 1 && !HasEffect(Buffs.MeikyoShisui))
                                     return MeikyoShisui;
 
                                 if (gauge.Kenki >= 25 && IsOnCooldown(Shoha))
@@ -272,7 +271,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetRemainingCharges(TsubameGaeshi) == 0)
                                 inOpener = false;
 
-                            if ((lastComboMove == Yukikaze && oneSeal) || (lastComboMove is Hakaze && (threeSeal || gauge.Sen is Sen.SETSU)) || CombatEngageDuration().TotalSeconds > 35)
+                            if ((lastComboMove == Yukikaze && oneSeal) || (lastComboMove is Hakaze && (threeSeal || gauge.Sen is Sen.SETSU)) || CombatEngageDuration().TotalSeconds > 40)
                             {
                                 inOpener = false;
                                 nonOpener = true;
@@ -288,10 +287,10 @@ namespace XIVSlothCombo.Combos.PvE
                             //Filler Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_FillerCombos) && !hasDied && !nonOpener && OgiNamikiri.LevelChecked() && CombatEngageDuration().Minutes > 0)
                             {
-                                bool oddMinute = CombatEngageDuration().Minutes % 2 == 1 && gauge.Sen == Sen.NONE && !meikyoBuff && GetDebuffRemainingTime(Debuffs.Higanbana) > 45;
-                                bool evenMinute = !meikyoBuff && CombatEngageDuration().Minutes % 2 == 0 && gauge.Sen == Sen.NONE && GetRemainingCharges(TsubameGaeshi) == 0 && GetDebuffRemainingTime(Debuffs.Higanbana) > 42;
+                                bool oddMinute = CombatEngageDuration().Minutes % 2 == 1 && gauge.Sen == Sen.NONE && !meikyoBuff && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
+                                bool evenMinute = !meikyoBuff && CombatEngageDuration().Minutes % 2 == 0 && gauge.Sen == Sen.NONE && GetRemainingCharges(TsubameGaeshi) == 0 && GetDebuffRemainingTime(Debuffs.Higanbana) >= 44 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 47;
 
-                                if (GetDebuffRemainingTime(Debuffs.Higanbana) < 40)
+                                if (GetDebuffRemainingTime(Debuffs.Higanbana) < 42)
                                 {
                                     if (inOddFiller || inEvenFiller)
                                     {
@@ -315,7 +314,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (SamFillerCombo == 2)
                                     {
-                                        if (WasLastAbility(Hagakure))
+                                        if (WasLastAbility(Gyoten))
                                             fillerComplete = true;
 
                                         if (WasLastAction(Enpi) && IsOffCooldown(Gyoten))
@@ -423,7 +422,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Meikyo Waste Protection (Stops waste during even minute windows)
                             if (meikyoBuff && GetBuffRemainingTime(Buffs.MeikyoShisui) < 6 && HasEffect(Buffs.OgiNamikiriReady))
                             {
-                                if (gauge.Sen.HasFlag(Sen.GETSU) == false && Gekko.LevelChecked())
+                                if (!gauge.Sen.HasFlag(Sen.GETSU) && Gekko.LevelChecked())
                                     return Gekko;
 
                                 if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && gauge.Sen.HasFlag(Sen.KA) == false && Kasha.LevelChecked())
@@ -448,12 +447,12 @@ namespace XIVSlothCombo.Combos.PvE
                                         {
                                             if (IsNotEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui_Burst))
                                                 return MeikyoShisui;
+                                        }
 
-                                            if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui_Burst))
-                                            {
-                                                if (hasDied || nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && GetDebuffRemainingTime(Debuffs.Higanbana) <= 15))
-                                                    return MeikyoShisui;
-                                            }
+                                        if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui_Burst))
+                                        {
+                                            if (hasDied || nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && GetDebuffRemainingTime(Debuffs.Higanbana) <= 15))
+                                                return MeikyoShisui;
                                         }
                                     }
 
@@ -649,7 +648,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Dumps Kenki in preparation for Ikishoten
                             if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
-                                return Guren;
+                                return Kyuten;
 
                             if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
                                 return Ikishoten;
