@@ -1498,6 +1498,11 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nUses double Yukikaze loop.", 3);
             }
 
+            if (preset == CustomComboPreset.SAM_ST_GekkoCombo_CDs_Iaijutsu)
+            {
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_Higanbana_Threshold, "Stop using Higanbana on targets below this HP % (0% = always use).", 150, SliderIncrements.Ones);
+            }
+
             #endregion
             // ====================================================================================
             #region SCHOLAR
