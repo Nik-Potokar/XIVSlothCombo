@@ -90,6 +90,13 @@ namespace XIVSlothCombo.Combos.PvE
         private static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
         private static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
 
+        internal enum OpenerState
+        {
+            PreOpener,
+            InOpener,
+            PostOpener,
+        }
+
         internal static class Config
         {
             internal static bool SCH_ST_DPS_AltMode => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_ST_DPS_AltMode));
@@ -272,8 +279,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DPS;
 
-            internal static bool inOpener = false;
-            internal static bool openerFinished = false;
+            internal OpenerState openerState = OpenerState.PreOpener;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -284,22 +290,22 @@ namespace XIVSlothCombo.Combos.PvE
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     if (!incombat)
                     {
-                        inOpener = false;
-                        openerFinished = false;
+                        openerState = OpenerState.PreOpener;
                     }
-                    else if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) && !openerFinished && !inOpener)
+                    else if (Gauge.HasAetherflow())
                     {
-                        inOpener = true;
+                        openerState = OpenerState.PostOpener;
+                    }
+                    else if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) && (openerState != OpenerState.PostOpener))
+                    {
+                        openerState = OpenerState.InOpener;
                     }
 
                     // Dissipation
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) &&
                         ActionReady(Dissipation) && HasPetPresent() && !Gauge.HasAetherflow() &&
-                        InCombat() && CanSpellWeave(actionID))
-                    {
-                        openerFinished = true;
+                        (openerState == OpenerState.InOpener) && InCombat() && CanSpellWeave(actionID))
                         return Dissipation;
-                    }
 
                     // Aetherflow
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
