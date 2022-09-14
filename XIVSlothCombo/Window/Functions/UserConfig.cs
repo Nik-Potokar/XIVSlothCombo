@@ -323,7 +323,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.SameLine();
             bool enabled = output == outputValue;
 
-            if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
+            if (ImGui.RadioButton($"{checkBoxName}###{config}{outputValue}", enabled))
             {
                 PluginConfiguration.SetCustomIntValue(config, outputValue);
                 Service.Configuration.Save();
