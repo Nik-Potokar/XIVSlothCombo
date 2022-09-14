@@ -298,6 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
                             LevelChecked(EnergyDrain) && InCombat() &&
                             Gauge.HasAetherflow() &&
                             GetCooldownRemainingTime(Aetherflow) <= (Config.SCH_ST_DPS_EnergyDrain * Gauge.Aetherflow) &&
+                            (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
                             CanSpellWeave(actionID))
                             return EnergyDrain;
 

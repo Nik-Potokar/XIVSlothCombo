@@ -2692,6 +2692,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflow stacks before Aetherflow's cooldown based remaining time set below", SCH.JobID, 140, "", "")]
             SCH_DPS_EnergyDrain = 16140,
 
+                [ParentCombo(SCH_DPS_EnergyDrain)]
+                [CustomComboInfo("Save Energy Drain for burst window", "Do not weave when Chain Stratagem is ready or will be ready within 10s", SCH.JobID, 161, "", "")]
+                SCH_DPS_EnergyDrain_BurstSaver = 16161,
+
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move", SCH.JobID, 150, "", "")]
             SCH_DPS_Ruin2Movement = 16150,
