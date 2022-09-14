@@ -2692,6 +2692,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflows stacks when Aetherflow's cooldown has been set below", SCH.JobID, 131, "", "")]
             SCH_DPS_EnergyDrain = 16160,
 
+                [ParentCombo(SCH_DPS_EnergyDrain)]
+                [CustomComboInfo("Save Energy Drain for burst window", "Do not weave when Chain Stratagem is ready or will be ready within 10s", SCH.JobID, 161, "", "")]
+                SCH_DPS_EnergyDrain_BurstSaver = 16161,
+
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move", SCH.JobID, 150, "", "")]
             SCH_DPS_Ruin2Movement = 16140,
@@ -2699,6 +2703,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
             SCH_DPS_Bio = 16150,
+
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle", SCH.JobID, 170, "", "")]
+            SCH_DPS_Dissipation_Opener = 16170,
 
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 101)]
@@ -2711,6 +2719,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SCH_AoE)]
             [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
             SCH_AoE_Aetherflow = 16121,
+
+        [ReplaceSkill(SCH.Ruin2)]
+        [CustomComboInfo("Bio I/II on Ruin II", "Replaces Ruin II with Bio I/II for DoT Uptime", SCH.JobID, 180, "", "")]
+        SCH_Ruin2 = 16180,
 
         #endregion
 

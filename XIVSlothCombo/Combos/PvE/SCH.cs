@@ -96,7 +96,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static int SCH_ST_DPS_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_LucidOption));
             internal static int SCH_ST_DPS_BioOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_BioOption));
             internal static int SCH_ST_DPS_ChainStratagemOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_ChainStratagemOption));
-            internal static int SCH_ST_DPS_EnergyDrain => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_EnergyDrain));
+            internal static float SCH_ST_DPS_EnergyDrain => CustomComboFunctions.GetOptionFloat(nameof(SCH_ST_DPS_EnergyDrain));
             internal static int SCH_AoE_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_AoE_LucidOption));
             internal static bool SCH_Aetherflow_Display => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Display));
             internal static bool SCH_Aetherflow_Recite_Excog => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Excog));
@@ -271,24 +271,48 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SCH_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DPS;
+
+            internal static bool inOpener = false;
+            internal static bool openerFinished = false;
+
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 bool AlternateMode = Config.SCH_ST_DPS_AltMode; //(0 or 1 radio values)
                 if (((!AlternateMode && BroilList.Contains(actionID)) ||
                      (AlternateMode && BioList.ContainsKey(actionID))))
                 {
-                    // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption &&
-                        CanSpellWeave(actionID))
-                        return All.LucidDreaming;
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    if (!incombat)
+                    {
+                        inOpener = false;
+                        openerFinished = false;
+                    }
+                    else if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) && !openerFinished && !inOpener)
+                    {
+                        inOpener = true;
+                    }
+
+                    // Dissipation
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) &&
+                        ActionReady(Dissipation) && HasPetPresent() && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                    {
+                        openerFinished = true;
+                        return Dissipation;
+                    }
 
                     // Aetherflow
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
                         ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
                         InCombat() && CanSpellWeave(actionID))
                         return Aetherflow;
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
 
                     //Target based options
                     if (HasBattleTarget())
@@ -297,7 +321,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain) &&
                             LevelChecked(EnergyDrain) && InCombat() &&
                             Gauge.HasAetherflow() &&
-                            GetCooldownRemainingTime(Aetherflow) <= Config.SCH_ST_DPS_EnergyDrain &&
+                            GetCooldownRemainingTime(Aetherflow) <= (Config.SCH_ST_DPS_EnergyDrain * Gauge.Aetherflow) &&
+                            (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
                             CanSpellWeave(actionID))
                             return EnergyDrain;
 
@@ -346,18 +371,40 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is ArtOfWar or ArtOfWarII)
                 {
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
+
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_AoE_Lucid) &&
                         ActionReady(All.LucidDreaming) &&
                         LocalPlayer.CurrentMp <= Config.SCH_AoE_LucidOption &&
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
+                }
+                return actionID;
+            }
+        }
 
-                    // Aetherflow
-                    if (IsEnabled(CustomComboPreset.SCH_AoE_Aetherflow) &&
-                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
-                        InCombat() && CanSpellWeave(actionID))
-                        return Aetherflow;
+        /*
+        * SCH_Ruin2
+        * Replaces Ruin II with Bio I/II for DoT Uptime
+       */
+        internal class SCH_Ruin2 : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Ruin2;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Ruin2 && LevelChecked(Bio))
+                {
+                    uint dot = OriginalHook(Bio); // Grab the appropriate DoT Action
+                    Status? dotDebuff = FindTargetEffect(BioList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+
+                    if ((dotDebuff is null || dotDebuff?.RemainingTime <= Config.SCH_ST_DPS_EnergyDrain) &&
+                        (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
+                        return dot; // Use appropriate DoT Action
                 }
                 return actionID;
             }
