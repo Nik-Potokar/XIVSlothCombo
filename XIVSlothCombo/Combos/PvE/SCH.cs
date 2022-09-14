@@ -271,24 +271,49 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SCH_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DPS;
+
+            internal static bool inOpener = false;
+            internal static bool openerFinished = false;
+
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                if (!incombat)
+                {
+                    inOpener = false;
+                    openerFinished = false;
+                }
+                else if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener)&& !openerFinished && !inOpener)
+                {
+                    inOpener = true;
+                }
+
+
                 bool AlternateMode = Config.SCH_ST_DPS_AltMode; //(0 or 1 radio values)
                 if (((!AlternateMode && BroilList.Contains(actionID)) ||
                      (AlternateMode && BioList.ContainsKey(actionID))))
                 {
-                    // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption &&
-                        CanSpellWeave(actionID))
-                        return All.LucidDreaming;
+                    // Dissipation
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) &&
+                        ActionReady(Dissipation) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                    {
+                        openerFinished = true;
+                        return Dissipation;
+                    }
 
                     // Aetherflow
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
                         ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
                         InCombat() && CanSpellWeave(actionID))
                         return Aetherflow;
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
 
                     //Target based options
                     if (HasBattleTarget())

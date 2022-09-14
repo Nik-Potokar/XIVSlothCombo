@@ -2700,6 +2700,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
             SCH_DPS_Bio = 16150,
 
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle", SCH.JobID, 170, "", "")]
+            SCH_DPS_Dissipation_Opener = 16170,
+
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 101)]
         SCH_AoE = 16101,
