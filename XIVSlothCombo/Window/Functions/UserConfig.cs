@@ -219,7 +219,8 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="itemWidth"> How long the slider should be. </param>
         /// <param name="hasAdditionalChoice"></param>
         /// <param name="additonalChoiceCondition"></param>
-        public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
+        /// <param name="digits"></param>
+        public static void DrawRoundedSliderFloat(float minValue, float maxValue, string config, string sliderDescription, float itemWidth = 150, bool hasAdditionalChoice = false, string additonalChoiceCondition = "", int digits = 1)
         {
             float output = PluginConfiguration.GetCustomFloatValue(config, minValue);
             if (output < minValue)
@@ -291,7 +292,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.SameLine();
                     ImGui.SetCursorPosX(currentPos.X);
                     ImGui.PushItemWidth(itemWidth);
-                    inputChanged |= ImGui.SliderFloat($"{newLines}###{config}", ref output, minValue, maxValue, "%.1f");
+                    inputChanged |= ImGui.SliderFloat($"{newLines}###{config}", ref output, minValue, maxValue, $"%.{digits}f");
 
                     if (inputChanged)
                     {
@@ -323,7 +324,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.SameLine();
             bool enabled = output == outputValue;
 
-            if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
+            if (ImGui.RadioButton($"{checkBoxName}###{config}{outputValue}", enabled))
             {
                 PluginConfiguration.SetCustomIntValue(config, outputValue);
                 Service.Configuration.Save();
@@ -1512,7 +1513,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
             
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
-                UserConfig.DrawSliderInt(0, 10, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Time remaining in seconds");
+                UserConfig.DrawRoundedSliderFloat(0f, 2.5f, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Time remaining in seconds for each stack (Recommend GCD)", digits: 2);
 
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
