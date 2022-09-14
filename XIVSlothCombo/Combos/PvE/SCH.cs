@@ -316,7 +316,7 @@ namespace XIVSlothCombo.Combos.PvE
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
+                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= Config.SCH_ST_DPS_EnergyDrain) &&
                                 (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
                                 return dot; //Use appropriate DoT Action
                         }
@@ -359,6 +359,28 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
                         InCombat() && CanSpellWeave(actionID))
                         return Aetherflow;
+                }
+                return actionID;
+            }
+        }
+
+        /*
+        * SCH_Ruin2
+        * Replaces Ruin II with Bio I/II for DoT Uptime
+       */
+        internal class SCH_Ruin2 : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Ruin2;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Ruin2 && LevelChecked(Bio))
+                {
+                    uint dot = OriginalHook(Bio); // Grab the appropriate DoT Action
+                    Status? dotDebuff = FindTargetEffect(BioList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+
+                    if ((dotDebuff is null || dotDebuff?.RemainingTime <= Config.SCH_ST_DPS_EnergyDrain) &&
+                        (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
+                        return dot; // Use appropriate DoT Action
                 }
                 return actionID;
             }

@@ -2689,8 +2689,8 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflow stacks before Aetherflow's cooldown based on the remaining time set below", SCH.JobID, 131, "", "")]
-            SCH_DPS_EnergyDrain = 16160,
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflow stacks before Aetherflow's cooldown based remaining time set below", SCH.JobID, 140, "", "")]
+            SCH_DPS_EnergyDrain = 16140,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
                 [CustomComboInfo("Save Energy Drain for burst window", "Do not weave when Chain Stratagem is ready or will be ready within 10s", SCH.JobID, 161, "", "")]
@@ -2698,23 +2698,27 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move", SCH.JobID, 150, "", "")]
-            SCH_DPS_Ruin2Movement = 16140,
+            SCH_DPS_Ruin2Movement = 16150,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
-            SCH_DPS_Bio = 16150,
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 160, "", "")]
+            SCH_DPS_Bio = 16160,
 
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
-        [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 101)]
-        SCH_AoE = 16101,
+        [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 170, "", "")]
+        SCH_AoE = 16170,
 
             [ParentCombo(SCH_AoE)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
-            SCH_AoE_Lucid = 16111,
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 171, "", "")]
+            SCH_AoE_Lucid = 16171,
 
             [ParentCombo(SCH_AoE)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
-            SCH_AoE_Aetherflow = 16121,
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID, 172, "", "")]
+            SCH_AoE_Aetherflow = 16172,
+
+        [ReplaceSkill(SCH.Ruin2)]
+        [CustomComboInfo("Bio I/II on Ruin II", "Replaces Ruin II with Bio I/II for DoT Uptime", SCH.JobID, 180, "", "")]
+        SCH_Ruin2 = 16180,
 
         #endregion
 
