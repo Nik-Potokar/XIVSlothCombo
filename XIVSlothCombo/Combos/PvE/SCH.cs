@@ -295,7 +295,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     // Dissipation
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) &&
-                        ActionReady(Dissipation) && !Gauge.HasAetherflow() &&
+                        ActionReady(Dissipation) && HasPetPresent() && !Gauge.HasAetherflow() &&
                         InCombat() && CanSpellWeave(actionID))
                     {
                         openerFinished = true;
