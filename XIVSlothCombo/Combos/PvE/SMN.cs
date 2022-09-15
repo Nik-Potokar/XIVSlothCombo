@@ -216,7 +216,7 @@ namespace XIVSlothCombo.Combos.PvE
                 var STCombo = actionID is Ruin or Ruin2;
                 var AoECombo = actionID is Outburst or Tridisaster;
 
-                if (actionID is Ruin or Ruin2 or Outburst or Tridisaster && InCombat())
+                if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
                     if (CanSpellWeave(actionID))
                     {
@@ -269,7 +269,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.LucidDreaming;
                     }
                     
-                    if (gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
+                    if (InCombat() && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
                         (LevelChecked(Aethercharge) && !LevelChecked(SummonBahamut) ||
                          gauge.IsBahamutReady && LevelChecked(SummonBahamut) ||
                          gauge.IsPhoenixReady && LevelChecked(SummonPhoenix)))
@@ -304,7 +304,7 @@ namespace XIVSlothCombo.Combos.PvE
                         HasEffect(Buffs.IfritsFavor) && (IsMoving || gauge.Attunement is 0) || lastComboMove == CrimsonCyclone)
                         return OriginalHook(AstralFlow);
 
-                    if (gauge.IsIfritAttuned && IsMoving && HasEffect(Buffs.FurtherRuin))
+                    if (HasEffect(Buffs.FurtherRuin) && ((!HasEffect(All.Buffs.Swiftcast) && gauge.IsIfritAttuned && IsMoving) || (GetCooldownRemainingTime(OriginalHook(Aethercharge)) is < 2.5f and > 0)))
                         return Ruin4;
                     
                     if (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned)
@@ -371,7 +371,7 @@ namespace XIVSlothCombo.Combos.PvE
                 //CHECK_DEMIATTACK_USE_RESET
                 if (UsedDemiAttack && GetCooldownRemainingTime(AstralImpulse) < 1) UsedDemiAttack = false;  // Resets block to allow CHECK_DEMIATTACK_USE
 
-                if (actionID is Ruin or Ruin2 or Outburst or Tridisaster && InCombat())
+                if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
                     if (CanSpellWeave(actionID))
                     {
@@ -429,7 +429,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetCooldown(EnergyDrain).CooldownRemaining <= 3.2)
                             {
                                 if (HasEffect(Buffs.SearingLight) &&
-                                    (SummonerBurstPhase is 0 or 1 or 2 or 3) ||
+                                    (SummonerBurstPhase is not 4) ||
                                     (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                 {
                                     if (STCombo)
@@ -508,16 +508,17 @@ namespace XIVSlothCombo.Combos.PvE
                     // Demi
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons))
                     {
-                        if (gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
+                        if (InCombat() && gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
                             (LevelChecked(Aethercharge) && !LevelChecked(SummonBahamut) ||   // Pre-Bahamut Phase
                              gauge.IsBahamutReady && LevelChecked(SummonBahamut) ||            // Bahamut Phase
                              gauge.IsPhoenixReady && LevelChecked(SummonPhoenix)))             // Phoenix Phase
                             return OriginalHook(Aethercharge);
                     }
                     
-                    //Movement Ruin4 in Egi Phases
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && !HasEffect(All.Buffs.Swiftcast) && IsMoving && HasEffect(Buffs.FurtherRuin) &&
-                        ((HasEffect(Buffs.GarudasFavor) && !gauge.IsGarudaAttuned) || (gauge.IsIfritAttuned && lastComboMove is not CrimsonCyclone)))
+                    //Ruin4 in Egi Phases
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.FurtherRuin) && ((!HasEffect(All.Buffs.Swiftcast) && IsMoving &&
+                        ((HasEffect(Buffs.GarudasFavor) && !gauge.IsGarudaAttuned) || (gauge.IsIfritAttuned && lastComboMove is not CrimsonCyclone))) || 
+                        GetCooldownRemainingTime(OriginalHook(Aethercharge)) is < 2.5f and > 0))
                         return Ruin4;
                     
                     // Egi Features
