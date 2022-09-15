@@ -516,8 +516,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     
                     //Ruin4 in Egi Phases
-                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.FurtherRuin) && ((!HasEffect(All.Buffs.Swiftcast) && IsMoving &&
-                        ((HasEffect(Buffs.GarudasFavor) && !gauge.IsGarudaAttuned) || (gauge.IsIfritAttuned && lastComboMove is not CrimsonCyclone))) || 
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_Ruin4) && HasEffect(Buffs.FurtherRuin) && 
+                        ((!HasEffect(All.Buffs.Swiftcast) && IsMoving && ((HasEffect(Buffs.GarudasFavor) && !gauge.IsGarudaAttuned) || (gauge.IsIfritAttuned && lastComboMove is not CrimsonCyclone))) || 
                         GetCooldownRemainingTime(OriginalHook(Aethercharge)) is < 2.5f and > 0))
                         return Ruin4;
                     
