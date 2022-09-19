@@ -70,7 +70,9 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 BRD_RagingJawsRenewTime = "ragingJawsRenewTime",
-                BRD_NoWasteHPPercentage = "noWasteHpPercentage";
+                BRD_NoWasteHPPercentage = "noWasteHpPercentage",
+                BRD_STSecondWindThreshold = "BRD_STSecondWindThreshold",
+                BRD_AoESecondWindThreshold = "BRD_STSecondWindThreshold";
         }
 
         #region Song status
@@ -357,6 +359,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return RainOfDeath;
                         if (sidewinderReady)
                             return Sidewinder;
+
+                        // healing - please move if not appropriate priority
+                        if (IsEnabled(CustomComboPreset.BRD_ST_SecondWind))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+                        }
                     }
 
                     bool shadowbiteReady = LevelChecked(Shadowbite) && HasEffect(Buffs.ShadowbiteReady);

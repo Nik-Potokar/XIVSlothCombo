@@ -14,6 +14,14 @@ namespace XIVSlothCombo.Combos.PvE
             SolidReason = 232,
             MinWiseToTheWorld = 26521,
             BtnWiseToTheWorld = 26522,
+            Prospect = 227,
+            LayOfTheLand = 228,
+            LayOfTheLand2 = 291,
+            TruthOfMountains = 238,
+            Triangulate = 210,
+            ArborCall = 211,
+            ArborCall2 = 290,
+            TruthOfForests = 221, 
             //FSH
             Cast = 289,
             Hook = 296,
@@ -39,6 +47,10 @@ namespace XIVSlothCombo.Combos.PvE
         internal static class Buffs
         {
             internal const ushort
+                TruthOfForests = 221,
+                TruthOfMountains = 222,
+                Triangulate = 217,
+                Prospect = 225,
                 EurekaMoment = 2765;
         }
 
@@ -55,6 +67,21 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is SolidReason && HasEffect(Buffs.EurekaMoment)) return MinWiseToTheWorld;
                 if (actionID is AgelessWords && HasEffect(Buffs.EurekaMoment)) return BtnWiseToTheWorld;
+                return actionID;
+            }
+        }
+
+        internal class DOL_NodeSearchingBuffs : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DOL_NodeSearchingBuffs;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                //MIN
+                if (actionID is DOL.LayOfTheLand && !HasEffect(Buffs.Prospect)) return DOL.Prospect;
+                if (actionID is DOL.LayOfTheLand2 && LevelChecked(TruthOfMountains) && !HasEffect(Buffs.TruthOfMountains)) return DOL.TruthOfMountains;
+                //BTN
+                if (actionID is DOL.ArborCall && !HasEffect(Buffs.Triangulate)) return DOL.Triangulate;
+                if (actionID is DOL.ArborCall2 && LevelChecked(TruthOfForests) && !HasEffect(Buffs.TruthOfForests)) return DOL.TruthOfForests;
                 return actionID;
             }
         }
