@@ -494,15 +494,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_Shoha) && Shoha.LevelChecked() && gauge.MeditationStacks == 3)
                                         return Shoha;
-
-                                    // healing - please move if not appropriate this high priority
-                                    if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
-                                    {
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                            return All.SecondWind;
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                            return All.Bloodbath;
-                                    }
                                 }
 
                                 // Iaijutsu Features
@@ -535,6 +526,14 @@ namespace XIVSlothCombo.Combos.PvE
                                         }
                                     }
                                 }
+                            }
+                            // healing - please move if not appropriate this high priority
+                            if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals) && CanSpellWeave(actionID))
+                            {
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                    return All.SecondWind;
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                    return All.Bloodbath;
                             }
                         }
                     }
