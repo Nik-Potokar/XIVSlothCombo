@@ -2125,7 +2125,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_Soulsow)]
         [CustomComboInfo("Soulsow Reminder during Combat", "Adds Soulsow to Harpe during combat when no target is selected.", RPR.JobID, 0, "", "")]
         RPR_Soulsow_Combat = 12062,
-        
+
+        [ReplaceSkill(RPR.Gibbet,RPR.Gallows)]
+        [CustomComboInfo("True North Feature (Dynamic)", "Adds True North to Slice when Gibbet/Gallows proc based on position to target, essentially only use True North if needed in the moment.", RPR.JobID, 0, "", "")]
+        RPR_TrueNorthDynamic = 12063,
         #endregion
 
         #endregion
