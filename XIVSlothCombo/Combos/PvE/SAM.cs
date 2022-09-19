@@ -75,6 +75,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_ST_KenkiOvercapAmount = "SamKenkiOvercapAmount",
                 SAM_AoE_KenkiOvercapAmount = "SamAOEKenkiOvercapAmount",
                 SAM_MeikyoChoice = "SAM_MeikyoChoice",
+                SAM_ST_Higanbana_Threshold = "SAM_ST_Higanbana_Threshold",
                 SAM_FillerCombo = "SamFillerCombo",
                 SAM_STSecondWindThreshold = "SAM_STSecondWindThreshold",
                 SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
@@ -142,7 +143,10 @@ namespace XIVSlothCombo.Combos.PvE
                     var meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
                     var SamFillerCombo = PluginConfiguration.GetCustomIntValue(Config.SAM_FillerCombo);
                     var SamMeikyoChoice = PluginConfiguration.GetCustomIntValue(Config.SAM_MeikyoChoice);
+                    var HiganbanaThreshold = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_Higanbana_Threshold);
+                    var enemyHP = GetTargetHPPercent();
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
+
                     
                     if (!InCombat())
                     {
@@ -236,7 +240,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //GCDs
                             if ((twoSeal && lastComboMove == Yukikaze) ||
                                 (threeSeal && (GetRemainingCharges(MeikyoShisui) == 1 || !HasEffect(Buffs.OgiNamikiriReady))) ||
-                                (oneSeal && !TargetHasEffect(Debuffs.Higanbana) && GetRemainingCharges(TsubameGaeshi) == 1))
+                                (oneSeal && !TargetHasEffect(Debuffs.Higanbana) && GetRemainingCharges(TsubameGaeshi) == 1) && enemyHP > HiganbanaThreshold)
                                 return OriginalHook(Iaijutsu);
 
                             if ((gauge.Kaeshi == Kaeshi.NAMIKIRI) ||
@@ -504,7 +508,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (!IsMoving)
                                     {
-                                        if (((oneSeal || (oneSeal && meikyostacks == 2)) && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10) ||
+                                        if (((oneSeal || (oneSeal && meikyostacks == 2)) && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold) ||
                                             (twoSeal && !Setsugekka.LevelChecked()) ||
                                             (threeSeal && Setsugekka.LevelChecked()))
                                             return OriginalHook(Iaijutsu);
