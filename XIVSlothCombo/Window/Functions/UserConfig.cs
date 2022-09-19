@@ -1110,6 +1110,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.BRD_Simple_NoWaste)
                 UserConfig.DrawSliderInt(1, 10, BRD.Config.BRD_NoWasteHPPercentage, "Remaining target HP percentage");
 
+            if (preset == CustomComboPreset.BRD_ST_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, BRD.Config.BRD_STSecondWindThreshold, "HP percent threshold to use Second Wind below.", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.BRD_AoE_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, BRD.Config.BRD_AoESecondWindThreshold, "HP percent threshold to use Second Wind below.", 150, SliderIncrements.Ones);
+
             #endregion
             // ====================================================================================
             #region DANCER
@@ -1213,6 +1219,18 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Standard Opener", "Uses the Standard Tincture Opener.", 1);
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Low Ping Opener", "Uses the Low Ping Opener. Use Lance Charge after True Thrust for the No Tincture opener.", 2);                
             }
+
+            if (preset == CustomComboPreset.DRG_ST_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_STSecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_STBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.DRG_AoE_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
             #endregion
             // ====================================================================================
             #region GUNBREAKER
@@ -1224,6 +1242,11 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
+            if (preset == CustomComboPreset.MCH_ST_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_AoE_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
             #endregion
             // ====================================================================================
             #region MONK
@@ -1233,6 +1256,18 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MNK_ST_SimpleMode)
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_DisciplinedFist_Apply, "Seconds remaining before refreshing Disciplined Fist.");
+
+            if (preset == CustomComboPreset.MNK_ST_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_STSecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_STBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.MNK_AoE_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
 
             #endregion
             // ====================================================================================
@@ -1496,6 +1531,18 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.14+", "2 Filler GCDs", 1);
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nUses double Yukikaze loop.", 3);
+            }
+
+            if (preset == CustomComboPreset.SAM_ST_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_STSecondWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_STBloodbathThreshold, "HP percent threshold to use Bloodbath (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.SAM_AoE_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_AoESecondWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_AoEBloodbathThreshold, "HP percent threshold to use Bloodbath below (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
             #endregion

@@ -643,6 +643,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
         BRD_AoE_Simple_SongsExcludeWM = 3027,
 
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_ST_SecondWind = 3028,
+
+        [ParentCombo(BRD_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_AoE_SecondWind = 3029,
+
         #endregion
 
         #region DANCER
@@ -1090,6 +1098,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 14, "", "")]
             DRG_ST_Dives_Melee = 6112,
 
+            [ParentCombo(DRG_STCombo)]
+            [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+            DRG_ST_ComboHeals = 6113,
+
         #endregion
 
         #region Advanced Dragoon AoE
@@ -1139,6 +1151,9 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 29, "", "")]
             DRG_AoE_Dives_Melee= 6210,
 
+            [ParentCombo(DRG_AoECombo)]
+            [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+            DRG_AoE_ComboHeals = 6211,
 
         #endregion
         [ReplaceSkill(DRG.Stardiver)]
@@ -1445,6 +1460,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("High Ping Mode", "A high ping friendly mode.\nIt limits the uses of Gauss/Ricochet inside Hypercharge windows.\nThere will be a little dps loss.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_High_Latency_Mode = 8036,
 
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_ST_SecondWind = 8037,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_AoE_SecondWind = 8038,
         #endregion
 
         #region MONK
@@ -1550,6 +1572,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Thunderclap = 9025,
+
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 0, "", "")]
+        MNK_ST_ComboHeals = 9026,
+
+        [ParentCombo(MNK_AoE_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 0, "", "")]
+        MNK_AoE_ComboHeals = 9027,
 
         #endregion
 
@@ -2670,6 +2700,14 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SAM.Gekko, SAM.Yukikaze, SAM.Kasha)]
         [CustomComboInfo("True North Feature", "Adds True North on all single target combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0, "", "")]
         SAM_TrueNorth = 15038,
+
+        [ParentCombo(SAM_ST_GekkoCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
+        SAM_ST_ComboHeals = 15043,
+
+        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
+        SAM_AoE_ComboHeals = 15045,
         #endregion
 
         #endregion
