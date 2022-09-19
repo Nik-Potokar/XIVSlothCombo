@@ -1538,8 +1538,12 @@ namespace XIVSlothCombo.Combos
         MNK_ST_Simple_CDs_Brotherhood = 9016,
 
         [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the main combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation spender to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Meditation = 9017,
+
+        [ParentCombo(MNK_ST_Simple_Meditation)]
+        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 0, "", "")]
+        MNK_ST_Meditation_Uptime = 9026,
 
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the main combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 0, "", "")]

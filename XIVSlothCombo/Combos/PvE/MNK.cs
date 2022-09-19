@@ -586,6 +586,11 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Monk Rotation
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
+                    {
+                        return Meditation;
+                    }
+
                     if ((level >= Levels.DragonKick && HasEffect(Buffs.OpoOpoForm)) || HasEffect(Buffs.FormlessFist))
                     {
                         return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
