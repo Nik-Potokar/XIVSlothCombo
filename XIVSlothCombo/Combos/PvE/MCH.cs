@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -46,6 +47,12 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Debuffs
         {
             // public const short placeholder = 0;
+        }
+        public static class Config
+        {
+            public const string
+                MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
+                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold";
         }
 
         public static class Levels
@@ -167,7 +174,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return AutomatonQueen;
                     }
 
-                    if (comboTime > 0)
+                if (comboTime > 0)
                     {
                         if (lastComboMove == SplitShot && level >= Levels.SlugShot)
                             return OriginalHook(SlugShot);
@@ -296,6 +303,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.Heat >= 50 && level >= Levels.AutoCrossbow && !gauge.IsOverheated)
                             return Hypercharge;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_SecondWind) && CanWeave(actionID, 0.6))
+                    {
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_SecondWindThreshold) && (LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind)))
+                            return All.SecondWind;
                     }
 
                     if (gauge.IsOverheated && level >= Levels.AutoCrossbow)
@@ -512,6 +525,13 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (UseHypercharge(gauge, wildfireCDTime)) return Hypercharge; 
                         }
+                    }
+
+                    // healing - please move if not appropriate priority
+                    if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && CanWeave(actionID, 0.6))
+                    {
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_ST_SecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
                     }
 
                     if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
