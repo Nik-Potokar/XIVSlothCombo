@@ -75,7 +75,12 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_ST_KenkiOvercapAmount = "SamKenkiOvercapAmount",
                 SAM_AoE_KenkiOvercapAmount = "SamAOEKenkiOvercapAmount",
                 SAM_MeikyoChoice = "SAM_MeikyoChoice",
-                SAM_FillerCombo = "SamFillerCombo";
+                SAM_ST_Higanbana_Threshold = "SAM_ST_Higanbana_Threshold",
+                SAM_FillerCombo = "SamFillerCombo",
+                SAM_STSecondWindThreshold = "SAM_STSecondWindThreshold",
+                SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoESecondWindThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold";
         }
 
         internal class SAM_ST_YukikazeCombo : CustomCombo
@@ -138,7 +143,10 @@ namespace XIVSlothCombo.Combos.PvE
                     var meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
                     var SamFillerCombo = PluginConfiguration.GetCustomIntValue(Config.SAM_FillerCombo);
                     var SamMeikyoChoice = PluginConfiguration.GetCustomIntValue(Config.SAM_MeikyoChoice);
+                    var HiganbanaThreshold = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_Higanbana_Threshold);
+                    var enemyHP = GetTargetHPPercent();
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
+
                     
                     if (!InCombat())
                     {
@@ -218,12 +226,21 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (gauge.Kenki >= 25 && IsOnCooldown(Shoha))
                                     return Shinten;
+
+                                // healing - please move if not appropriate this high priority
+                                if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
+                                {
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                        return All.SecondWind;
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                        return All.Bloodbath;
+                                }
                             }
 
                             //GCDs
                             if ((twoSeal && lastComboMove == Yukikaze) ||
                                 (threeSeal && (GetRemainingCharges(MeikyoShisui) == 1 || !HasEffect(Buffs.OgiNamikiriReady))) ||
-                                (oneSeal && !TargetHasEffect(Debuffs.Higanbana) && GetRemainingCharges(TsubameGaeshi) == 1))
+                                (oneSeal && !TargetHasEffect(Debuffs.Higanbana) && GetRemainingCharges(TsubameGaeshi) == 1) && enemyHP > HiganbanaThreshold)
                                 return OriginalHook(Iaijutsu);
 
                             if ((gauge.Kaeshi == Kaeshi.NAMIKIRI) ||
@@ -491,7 +508,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (!IsMoving)
                                     {
-                                        if (((oneSeal || (oneSeal && meikyostacks == 2)) && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10) ||
+                                        if (((oneSeal || (oneSeal && meikyostacks == 2)) && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold) ||
                                             (twoSeal && !Setsugekka.LevelChecked()) ||
                                             (threeSeal && Setsugekka.LevelChecked()))
                                             return OriginalHook(Iaijutsu);
@@ -513,6 +530,14 @@ namespace XIVSlothCombo.Combos.PvE
                                         }
                                     }
                                 }
+                            }
+                            // healing - please move if not appropriate this high priority
+                            if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals) && CanSpellWeave(actionID))
+                            {
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                    return All.SecondWind;
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                    return All.Bloodbath;
                             }
                         }
                     }
@@ -640,6 +665,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_MeikyoShisui) && LevelChecked(MeikyoShisui) && !HasEffect(Buffs.MeikyoShisui) && GetRemainingCharges(MeikyoShisui) > 0)
                             return MeikyoShisui;
+
+                        // healing - please move if not appropriate this high priority
+                        if (IsEnabled(CustomComboPreset.SAM_AoE_ComboHeals))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                return All.SecondWind;
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                return All.Bloodbath;
+                        }
                     }
 
                     if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_OgiNamikiri) && OgiNamikiri.LevelChecked())
