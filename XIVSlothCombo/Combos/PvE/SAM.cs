@@ -79,7 +79,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_FillerCombo = "SamFillerCombo",
                 SAM_STSecondWindThreshold = "SAM_STSecondWindThreshold",
                 SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
-                SAM_AoESecondWindThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoESecondWindThreshold = "SAM_AoEBloodbathThreshold",
                 SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold";
         }
 
