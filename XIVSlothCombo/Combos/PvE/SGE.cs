@@ -258,7 +258,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Toxikon
                         bool alwaysShowToxikon = Config.SGE_ST_Dosis_Toxikon;    // False for moving only, True for Show All Times
                         if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Toxikon) && InCombat() &&
-                            LevelChecked(Toxikon) && IsOffCooldown(actionID) &&  // Cooldown check against original action to stop cooldown animation seizure
+                            LevelChecked(Toxikon) &&
                             ((!alwaysShowToxikon && IsMoving) || alwaysShowToxikon) &&
                             Gauge.HasAddersting())
                             return OriginalHook(Toxikon);

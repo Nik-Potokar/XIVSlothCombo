@@ -149,7 +149,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Blood management before Delirium
                             if (IsEnabled(CustomComboPreset.DRK_Delirium) &&
-                                ((gauge.Blood >= 70 && GetCooldownRemainingTime(BloodWeapon) is > 0 and < 3) || (gauge.Blood >= 50 && GetCooldownRemainingTime(Delirium) > 37 && !HasEffect(Buffs.Delirium))))
+                                ((gauge.Blood >= 60 && GetCooldownRemainingTime(BloodWeapon) is > 0 and < 3) || (gauge.Blood >= 50 && GetCooldownRemainingTime(Delirium) > 37 && !HasEffect(Buffs.Delirium))))
                                 return Bloodspiller;
                         }
 

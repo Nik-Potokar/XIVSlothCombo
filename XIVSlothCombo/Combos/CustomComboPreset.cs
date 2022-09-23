@@ -84,6 +84,10 @@ namespace XIVSlothCombo.Combos
 
         #region GLOBAL FEATURES
 
+        [ReplaceSkill(All.Sprint)]
+        [CustomComboInfo("Island Sanctuary Sprint Feature", "Replaces Sprint with Isle Sprint.\nOnly works at the Island Sanctuary. Icon does not change.\nDo not use with SimpleTweaks' Island Sanctuary Sprint fix.", ADV.JobID)]
+        ALL_IslandSanctuary_Sprint = 100093,
+
         #region Global Tank Features
         [CustomComboInfo("Global Tank Features", "Features and options involving shared role actions for Tanks.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
         ALL_Tank_Menu = 100099,
@@ -171,7 +175,6 @@ namespace XIVSlothCombo.Combos
 
         #region DPS
         [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
-        //[ConflictingCombos(AstrologianAlternateDpsFeature)]
         [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 0, "", "")]
         AST_ST_DPS = 1004,
 
@@ -640,6 +643,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Exclude Wanderer's Minuet", "Dont use Wanderer's Minuet.", BRD.JobID, 0, "", "")]
         BRD_AoE_Simple_SongsExcludeWM = 3027,
 
+        [ParentCombo(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_ST_SecondWind = 3028,
+
+        [ParentCombo(BRD_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Uses Second Wind when below set HP percentage.", BRD.JobID, 0, "", "")]
+        BRD_AoE_SecondWind = 3029,
+
         #endregion
 
         #region DANCER
@@ -1087,6 +1098,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 14, "", "")]
             DRG_ST_Dives_Melee = 6112,
 
+            [ParentCombo(DRG_STCombo)]
+            [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+            DRG_ST_ComboHeals = 6113,
+
         #endregion
 
         #region Advanced Dragoon AoE
@@ -1136,6 +1151,9 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 29, "", "")]
             DRG_AoE_Dives_Melee= 6210,
 
+            [ParentCombo(DRG_AoECombo)]
+            [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
+            DRG_AoE_ComboHeals = 6211,
 
         #endregion
         [ReplaceSkill(DRG.Stardiver)]
@@ -1266,7 +1284,7 @@ namespace XIVSlothCombo.Combos
         GNB_BurstStrike_DoubleDown = 7026,
 
         [ParentCombo(GNB_ST_RoughDivide)]
-        [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst cooldowns when available, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst cooldowns when available, not moving, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
         GNB_ST_MeleeRoughDivide = 7027,
 
         [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
@@ -1442,6 +1460,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("High Ping Mode", "A high ping friendly mode.\nIt limits the uses of Gauss/Ricochet inside Hypercharge windows.\nThere will be a little dps loss.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_High_Latency_Mode = 8036,
 
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_ST_SecondWind = 8037,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_AoE_SecondWind = 8038,
         #endregion
 
         #region MONK
@@ -1513,7 +1538,7 @@ namespace XIVSlothCombo.Combos
         MNK_ST_Simple_CDs_Brotherhood = 9016,
 
         [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation to the main combo.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation spender to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Meditation = 9017,
 
         [ParentCombo(MNK_ST_SimpleMode)]
@@ -1547,6 +1572,18 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Thunderclap = 9025,
+
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 0, "", "")]
+        MNK_ST_ComboHeals = 9026,
+
+        [ParentCombo(MNK_AoE_SimpleMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 0, "", "")]
+        MNK_AoE_ComboHeals = 9027,
+
+        [ParentCombo(MNK_ST_Simple_Meditation)]
+        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 0, "", "")]
+        MNK_ST_Meditation_Uptime = 9028,
 
         #endregion
 
@@ -1973,7 +2010,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_Enshroud = 12008,
 
         [ParentCombo(RPR_ST_SliceCombo_Enshroud)]
-        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window), but will pool Shroud outside of burst windows.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window) and will use Enshroud for odd minute bursts.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_EnshroudPooling = 12009,
 
         [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
@@ -2008,6 +2045,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_ST_SliceCombo_GibbetGallows_Communio)]
         [CustomComboInfo("Communio Movement Option", "Uses Shadow of Death instead of Communio when moving.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_GibbetGallows_Communio_Movement = 12017,
+
+        [ParentCombo(RPR_ST_SliceCombo)]
+        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", RPR.JobID, -1, "", "")]
+        RPR_ST_SliceCombo_Opener = 12018,
         #endregion
 
         #region AoE (Scythe) Combo Section
@@ -2118,7 +2159,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_Soulsow)]
         [CustomComboInfo("Soulsow Reminder during Combat", "Adds Soulsow to Harpe during combat when no target is selected.", RPR.JobID, 0, "", "")]
         RPR_Soulsow_Combat = 12062,
-        
+
+        [ReplaceSkill(RPR.Gibbet,RPR.Gallows)]
+        [CustomComboInfo("True North Feature (Dynamic)", "Adds True North to Slice when Gibbet/Gallows proc based on position to target, essentially only use True North if needed in the moment.", RPR.JobID, 0, "", "")]
+        RPR_TrueNorthDynamic = 12063,
         #endregion
 
         #endregion
@@ -2333,7 +2377,6 @@ namespace XIVSlothCombo.Combos
 
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
         [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
@@ -2384,7 +2427,6 @@ namespace XIVSlothCombo.Combos
 
         #region Sage Simple AoE Heal
         [ReplaceSkill(SGE.Prognosis)]
-        [ConflictingCombos(SGE_Rhizo, SGE_DruoTauro)]
         [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking.", SGE.JobID, 500, "", "")]
         SGE_AoE_Heal = 14500,
             
@@ -2423,15 +2465,13 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SGE_AoE_Heal)]
             [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
             SGE_AoE_Heal_Rhizomata = 14580,
-            #endregion
+        #endregion
 
         #region Misc Healing
-        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Taurochole, SGE.Druochole, SGE.Ixochole, SGE.Kerachole)]
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
         SGE_Rhizo = 14600,
 
-        [ConflictingCombos(SGE_ST_Heal, SGE_AoE_Heal)]
         [ReplaceSkill(SGE.Druochole)]
         [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
         SGE_DruoTauro = 14700,
@@ -2664,6 +2704,14 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SAM.Gekko, SAM.Yukikaze, SAM.Kasha)]
         [CustomComboInfo("True North Feature", "Adds True North on all single target combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0, "", "")]
         SAM_TrueNorth = 15038,
+
+        [ParentCombo(SAM_ST_GekkoCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
+        SAM_ST_ComboHeals = 15043,
+
+        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
+        SAM_AoE_ComboHeals = 15045,
         #endregion
 
         #endregion
@@ -2697,6 +2745,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to use up aetherflows stacks when Aetherflow's cooldown has been set below", SCH.JobID, 131, "", "")]
             SCH_DPS_EnergyDrain = 16160,
 
+                [ParentCombo(SCH_DPS_EnergyDrain)]
+                [CustomComboInfo("Save Energy Drain for burst window", "Do not weave when Chain Stratagem is ready or will be ready within 10s", SCH.JobID, 161, "", "")]
+                SCH_DPS_EnergyDrain_BurstSaver = 16161,
+
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move", SCH.JobID, 150, "", "")]
             SCH_DPS_Ruin2Movement = 16140,
@@ -2704,6 +2756,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT Uptime", SCH.JobID, 140, "", "")]
             SCH_DPS_Bio = 16150,
+
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle", SCH.JobID, 170, "", "")]
+            SCH_DPS_Dissipation_Opener = 16170,
 
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below", SCH.JobID, 101)]
@@ -2717,12 +2773,25 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
             SCH_AoE_Aetherflow = 16121,
 
+        [ReplaceSkill(SCH.Ruin2)]
+        [CustomComboInfo("Bio I/II on Ruin II", "Replaces Ruin II with Bio I/II for DoT Uptime", SCH.JobID, 180, "", "")]
+        SCH_Ruin2 = 16180,
+
         #endregion
 
         #region Healing
         [ReplaceSkill(SCH.FeyBlessing)]
         [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "")]
         SCH_Consolation = 16210,
+
+        [ReplaceSkill(SCH.Lustrate)]
+        [CustomComboInfo("Lustrate to Excogitation Feature", "Change Lustrate into Excogitation when Excogitation is ready.", SCH.JobID, 220, "", "")]
+        SCH_Lustrate = 16220,
+
+        [ReplaceSkill(SCH.Recitation)]
+        [CustomComboInfo("Recitation Combo Feature", "Change Recitation into either Adloquium, Succor, Indomitability, or Excogitation when used.", SCH.JobID, 230, "", "")]
+        SCH_Recitation = 16230,
+
         #endregion
 
         #region Utilities
@@ -2969,11 +3038,11 @@ namespace XIVSlothCombo.Combos
         WAR_InfuriateFellCleave_IRFirst = 18022,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and closer otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
         [ParentCombo(WAR_ST_StormsPath_Onslaught)]
-        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm) and when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Onslaught_MeleeSpender = 18024,
 
         #endregion
@@ -3142,8 +3211,13 @@ namespace XIVSlothCombo.Combos
 
         #region DOL
 
+        [ReplaceSkill(DOL.AgelessWords, DOL.SolidReason)] 
         [CustomComboInfo("[BTN/MIN] Eureka Feature", "Replaces Ageless Words and Solid Reason with Wise to the World when available", DOL.JobID)]
         DOL_Eureka = 51001,
+
+        [ReplaceSkill(DOL.ArborCall, DOL.ArborCall2, DOL.LayOfTheLand, DOL.LayOfTheLand2)]
+        [CustomComboInfo("[BTN/MIN] Locate & Truth Feature", "Replaces Lay of the Lands or Arbor Calls with Prospect/Triangulate and Truth of Mountains/Forests if not active.", DOL.JobID)]
+        DOL_NodeSearchingBuffs = 51012,
 
         [ReplaceSkill(DOL.Cast)]
         [CustomComboInfo("[FSH] Cast to Hook Feature", "Replaces Cast with Hook when fishing", DOL.JobID)]
@@ -3191,7 +3265,7 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Chum to Baited Breath Option", "Replaces Chum with Baited Breath when diving.", DOL.JobID)]
             FSH_Chum_BaitedBreath = 51011,
-
+        
         #endregion
 
         #endregion
