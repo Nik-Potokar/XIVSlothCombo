@@ -464,6 +464,11 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Hellfrog);
                         }
 
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_HellfrogMedium) && gauge.Ninki >= hellfrogPool && !Hellfrog.LevelChecked() && Bhavacakra.LevelChecked())
+                        {
+                            return OriginalHook(Bhavacakra);
+                        }
+
                         if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Kassatsu) &&
                             IsOffCooldown(Kassatsu) &&
                             Kassatsu.LevelChecked() &&
@@ -751,6 +756,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.Ninki >= 50 && Hellfrog.LevelChecked())
                             return OriginalHook(Hellfrog);
+
+                        if (gauge.Ninki >= 50 && !Hellfrog.LevelChecked() && Bhavacakra.LevelChecked())
+                            return OriginalHook(Bhavacakra);
 
                         if (IsOffCooldown(Kassatsu) && Kassatsu.LevelChecked())
                             return OriginalHook(Kassatsu);
