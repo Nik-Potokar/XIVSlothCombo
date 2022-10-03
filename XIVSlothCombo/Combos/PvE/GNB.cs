@@ -420,7 +420,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
-                return (actionID is BurstStrike && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && gauge >= 2 && LevelChecked(DoubleDown)) ? DoubleDown : actionID;
+                return (actionID is BurstStrike && HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) < 2 && gauge >= 2 && LevelChecked(DoubleDown)) ? DoubleDown : actionID;
             }
         }
 
