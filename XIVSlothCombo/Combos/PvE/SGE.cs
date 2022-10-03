@@ -59,7 +59,7 @@ namespace XIVSlothCombo.Combos.PvE
         // Action Groups
         internal static readonly List<uint>
             AddersgallList = new() { Taurochole, Druochole, Ixochole, Kerachole },
-            PhlegmaList =    new() { Phlegma, Phlegma2, Phlegma3 };
+            PhlegmaList = new() { Phlegma, Phlegma2, Phlegma3 };
 
         // Action Buffs
         internal static class Buffs
@@ -96,7 +96,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal static class Config
         {
-            internal static bool SGE_ST_Dosis_AltMode => CustomComboFunctions.GetIntOptionAsBool(nameof(SGE_ST_Dosis_AltMode)); 
+            internal static bool SGE_ST_Dosis_AltMode => CustomComboFunctions.GetIntOptionAsBool(nameof(SGE_ST_Dosis_AltMode));
             internal static bool SGE_ST_Dosis_Toxikon => CustomComboFunctions.GetIntOptionAsBool(nameof(SGE_ST_Dosis_Toxikon));
             internal static int SGE_ST_Dosis_EDosisHPPer => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Dosis_EDosisHPPer));
             internal static int SGE_ST_Dosis_Lucid => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Dosis_Lucid));
@@ -110,6 +110,9 @@ namespace XIVSlothCombo.Combos.PvE
             internal static int SGE_ST_Heal_Taurochole => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Taurochole));
             internal static int SGE_AoE_Phlegma_Lucid => CustomComboFunctions.GetOptionValue(nameof(SGE_AoE_Phlegma_Lucid));
             internal static int SGE_Eukrasia_Mode => CustomComboFunctions.GetOptionValue(nameof(SGE_Eukrasia_Mode));
+
+            internal const string SGE_ST_Dosis_Threshold = "SGE_ST_Dosis_Threshold";
+
         }
 
         /*
@@ -242,8 +245,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (DosisList.TryGetValue(OriginalHook(actionID), out ushort dotDebuffID))
                             {
                                 Status? dotDebuff = FindTargetEffect(dotDebuffID);
-                                if (((dotDebuff is null) || (dotDebuff.RemainingTime <= 3)) &&
+                                if ((dotDebuff is null) || (dotDebuff.RemainingTime <= GetOptionFloat(Config.SGE_ST_Dosis_Threshold)) &&
                                     (GetTargetHPPercent() > Config.SGE_ST_Dosis_EDosisHPPer))
+                                    return Eukrasia;
+
+                                // DoT Uptime Timer
+                                if ((dotDebuff is null) || (dotDebuff.RemainingTime <= GetOptionFloat(Config.SGE_ST_Dosis_Threshold)))
                                     return Eukrasia;
                             }
                         }
@@ -368,7 +375,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis) && LevelChecked(Eukrasia) &&
                         GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Diagnosis &&
-                        (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis_IgnoreShield) || 
+                        (IsEnabled(CustomComboPreset.SGE_ST_Heal_Diagnosis_IgnoreShield) ||
                          FindEffect(Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.ObjectId) is null))
                         return Eukrasia;
                 }
