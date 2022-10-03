@@ -272,7 +272,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.Bloodbath;
 
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra) &&
-                            ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki >= 60)) &&
+                            ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100)) &&
                             (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) && IsOnCooldown(Mug))) &&
                             Bhavacakra.LevelChecked())
                             return OriginalHook(Bhavacakra);
@@ -330,8 +330,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshing_Phantom) &&
                         HasEffect(Buffs.PhantomReady) &&
-
-                        ((GetCooldownRemainingTime(TrickAttack) > GetBuffRemainingTime(Buffs.PhantomReady)) || GetBuffRemainingTime(Buffs.PhantomReady) < 5 || TargetHasEffect(Debuffs.TrickAttack) || !InMeleeRange() || (HasEffect(Buffs.Bunshin) && TargetHasEffect(Debuffs.Mug))) &&
+                        ((GetCooldownRemainingTime(TrickAttack) > GetBuffRemainingTime(Buffs.PhantomReady) && GetBuffRemainingTime(Buffs.PhantomReady) < 5) || TargetHasEffect(Debuffs.TrickAttack) || !InMeleeRange() || (HasEffect(Buffs.Bunshin) && TargetHasEffect(Debuffs.Mug))) &&
                         PhantomKamaitachi.LevelChecked())
                         return OriginalHook(PhantomKamaitachi);
 
