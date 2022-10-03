@@ -229,12 +229,8 @@ namespace XIVSlothCombo.Combos.PvE
                         else DoTDebuff = FindTargetEffect(Debuffs.Aero1);
 
                         // DoT Uptime & HP% threshold
-                        if ((DoTDebuff is null) || (DoTDebuff.RemainingTime <= GetOptionFloat(Config.WHM_ST_MainCombo_DoT_Threshold) &&
-                            (GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT))))
-                            return OriginalHook(Aero1);
-
-                        // DoT Uptime Timer
-                        if ((DoTDebuff is null) || (DoTDebuff.RemainingTime <= GetOptionFloat(Config.WHM_ST_MainCombo_DoT_Threshold)))
+                        if (((DoTDebuff is null) || (DoTDebuff.RemainingTime <= GetOptionFloat(Config.WHM_ST_MainCombo_DoT_Threshold))) &&
+                            (GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT)))
                             return OriginalHook(Aero1);
                     }
 
