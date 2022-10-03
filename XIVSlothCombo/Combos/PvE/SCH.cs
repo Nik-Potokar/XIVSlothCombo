@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
@@ -111,7 +112,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool SCH_FairyFeature => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_FairyFeature));
             internal static int SCH_Recitation_Mode => CustomComboFunctions.GetOptionValue(nameof(SCH_Recitation_Mode));
 
-            internal const string SCH_ST_DPS_Bio_Threshold = "SCH_ST_DPS_Bio_Threshold";
+            internal static float SCH_ST_DPS_Bio_Threshold = CustomComboFunctions.GetOptionFloat(nameof(SCH_ST_DPS_Bio_Threshold));
 
         }
 
@@ -349,13 +350,9 @@ namespace XIVSlothCombo.Combos.PvE
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                            if (dotDebuff is null || (dotDebuff.RemainingTime <= GetOptionFloat(Config.SCH_ST_DPS_Bio_Threshold) &&
-                                (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)))
+                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= Config.SCH_ST_DPS_Bio_Threshold) &&
+                                (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
                                 return dot; //Use appropriate DoT Action
-
-                            // DoT Uptime Timer
-                            if ((dotDebuff is null) || (dotDebuff.RemainingTime <= GetOptionFloat(Config.SCH_ST_DPS_Bio_Threshold)))
-                                return OriginalHook(dot);
                         }
 
                         //Ruin 2 Movement 
