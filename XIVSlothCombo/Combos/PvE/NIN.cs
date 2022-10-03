@@ -272,10 +272,17 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.Bloodbath;
 
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra) &&
-                            ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki >= 60)) &&
+                            ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100)) &&
                             (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) && IsOnCooldown(Mug))) &&
                             Bhavacakra.LevelChecked())
                             return OriginalHook(Bhavacakra);
+
+
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra) &&
+                            ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki >= 60)) &&
+                            (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) && IsOnCooldown(Mug))) &&
+                            !Bhavacakra.LevelChecked() && Hellfrog.LevelChecked())
+                            return OriginalHook(Hellfrog);
 
                         if (!inTrickBurstSaveWindow)
                         {
@@ -290,6 +297,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra) && gauge.Ninki >= bhavaPool && Bhavacakra.LevelChecked())
                                 return OriginalHook(Bhavacakra);
+
+                            if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra) && gauge.Ninki >= bhavaPool && !Bhavacakra.LevelChecked() && Hellfrog.LevelChecked())
+                                return OriginalHook(Hellfrog);
 
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_AssassinateDWAD) && IsOffCooldown(OriginalHook(Assassinate)) && Assassinate.LevelChecked())
                                 return OriginalHook(Assassinate);
@@ -323,7 +333,6 @@ namespace XIVSlothCombo.Combos.PvE
                         ((GetCooldownRemainingTime(TrickAttack) > GetBuffRemainingTime(Buffs.PhantomReady) && GetBuffRemainingTime(Buffs.PhantomReady) < 5) || TargetHasEffect(Debuffs.TrickAttack) || !InMeleeRange() || (HasEffect(Buffs.Bunshin) && TargetHasEffect(Debuffs.Mug))) &&
                         PhantomKamaitachi.LevelChecked())
                         return OriginalHook(PhantomKamaitachi);
-
 
                     if (!inTNWithDoubleArmorCrush)
                     {
@@ -463,6 +472,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Bhavacakra);
 
                             return OriginalHook(Hellfrog);
+                        }
+
+                        if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_HellfrogMedium) && gauge.Ninki >= hellfrogPool && !Hellfrog.LevelChecked() && Bhavacakra.LevelChecked())
+                        {
+                            return OriginalHook(Bhavacakra);
                         }
 
                         if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Kassatsu) &&
@@ -623,6 +637,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100) && Bhavacakra.LevelChecked())
                             return OriginalHook(Bhavacakra);
 
+                        if ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100) && !Bhavacakra.LevelChecked() && Hellfrog.LevelChecked())
+                            return OriginalHook(Hellfrog);
+
                         if (!inTrickBurstSaveWindow)
                         {
                             if (HasEffect(Buffs.Suiton) && gauge.Ninki <= 50 && IsOffCooldown(Meisui) && Meisui.LevelChecked())
@@ -752,6 +769,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.Ninki >= 50 && Hellfrog.LevelChecked())
                             return OriginalHook(Hellfrog);
+
+                        if (gauge.Ninki >= 50 && !Hellfrog.LevelChecked() && Bhavacakra.LevelChecked())
+                            return OriginalHook(Bhavacakra);
 
                         if (IsOffCooldown(Kassatsu) && Kassatsu.LevelChecked())
                             return OriginalHook(Kassatsu);

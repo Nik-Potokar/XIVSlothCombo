@@ -64,33 +64,6 @@ namespace XIVSlothCombo.Combos.PvE
                 Feint = 1195;
         }
 
-        public static class Levels
-        {
-            public const byte
-                LegGraze = 6,
-                Repose = 8,
-                SecondWind = 8,
-                Rampart = 8,
-                Addle = 8,
-                Sleep = 10,
-                Esuna = 10,
-                FootGraze = 10,
-                LegSweep = 10,
-                LowBlow = 12,
-                Bloodbath = 12,
-                Raise = 12,
-                LucidDreaming = 14,
-                Provoke = 15,
-                Interject = 18,
-                Swiftcast = 18,
-                Peloton = 20,
-                Feint = 22,
-                HeadGraze = 24,
-                Rescue = 48,
-                Shirk = 48,
-                TrueNorth = 50;
-        }
-
         internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_IslandSanctuary_Sprint;
@@ -111,9 +84,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is LowBlow or PLD.ShieldBash)
                 {
-                    if (CanInterruptEnemy() && IsOffCooldown(Interject) && level >= Levels.Interject)
+                    if (CanInterruptEnemy() && ActionReady(Interject))
                         return Interject;
-                    if (IsOffCooldown(LowBlow) && level >= Levels.LowBlow)
+                    if (ActionReady(LowBlow))
                         return LowBlow;
                     if (actionID == PLD.ShieldBash && IsOnCooldown(LowBlow))
                         return actionID;
@@ -149,10 +122,10 @@ namespace XIVSlothCombo.Combos.PvE
                 if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro) 
                     || (actionID is SCH.Resurrection && LocalPlayer.ClassJob.Id is SCH.JobID))
                 {
-                    if (IsOffCooldown(Swiftcast))
+                    if (ActionReady(Swiftcast))
                         return Swiftcast;
 
-                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && LevelChecked(WHM.ThinAir))
+                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
                         return WHM.ThinAir;
 
                     return actionID;
@@ -254,7 +227,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is FootGraze && CanInterruptEnemy() && IsOffCooldown(HeadGraze) && level >= Levels.HeadGraze) ? HeadGraze : actionID;
+                return (actionID is FootGraze && CanInterruptEnemy() && ActionReady(HeadGraze) ) ? HeadGraze : actionID;
             }
         }
     }

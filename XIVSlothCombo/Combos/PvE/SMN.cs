@@ -265,7 +265,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 4000 && level >= All.Levels.LucidDreaming)
+                        if (ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 4000)
                             return All.LucidDreaming;
                     }
                     
@@ -275,7 +275,7 @@ namespace XIVSlothCombo.Combos.PvE
                          gauge.IsPhoenixReady && LevelChecked(SummonPhoenix)))
                         return OriginalHook(Aethercharge);
                     
-                    if (level >= All.Levels.Swiftcast)
+                    if (LevelChecked(All.Swiftcast))
                     {
                         if (LevelChecked(Slipstream) && HasEffect(Buffs.GarudasFavor))
                         {
@@ -501,7 +501,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Lucid Dreaming
-                        if (IsEnabled(CustomComboPreset.SMN_Lucid) && IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold && level >= All.Levels.LucidDreaming)
+                        if (IsEnabled(CustomComboPreset.SMN_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold)
                             return All.LucidDreaming;
                     }
 
@@ -522,7 +522,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Ruin4;
                     
                     // Egi Features
-                    if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) && level >= All.Levels.Swiftcast)
+                    if (IsEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) && LevelChecked(All.Swiftcast))
                     {
                         // Swiftcast Garuda Feature
                         if (swiftcastPhase is 0 or 1 && LevelChecked(Slipstream) && HasEffect(Buffs.GarudasFavor))
