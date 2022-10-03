@@ -79,7 +79,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_FillerCombo = "SamFillerCombo",
                 SAM_STSecondWindThreshold = "SAM_STSecondWindThreshold",
                 SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
-                SAM_AoESecondWindThreshold = "SAM_STBloodbathThreshold",
+                SAM_AoESecondWindThreshold = "SAM_AoEBloodbathThreshold",
                 SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold";
         }
 
@@ -641,10 +641,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //oGCD Features
                     if (CanSpellWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Hagakure) && OriginalHook(Iaijutsu) == Setsugekka)
+                        if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Hagakure) && OriginalHook(Iaijutsu) == Setsugekka && LevelChecked(Hagakure))
                             return Hagakure;
                       
-                        if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Guren) && IsOffCooldown(Guren) && LevelChecked(Guren) && gauge.Kenki >= 25)
+                        if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Guren) && ActionReady(Guren) && gauge.Kenki >= 25)
                             return Guren;
 
                         if (IsEnabled(CustomComboPreset.SAM_AOE_GekkoCombo_CDs_Ikishoten) && LevelChecked(Ikishoten))
