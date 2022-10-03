@@ -360,7 +360,7 @@ namespace XIVSlothCombo.Window.Functions
             bool enabled = output == outputValue;
 
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
-            if (ImGui.Checkbox($"{checkBoxName}###{config}{outputValue}", ref enabled))
+            if (ImGui.RadioButton($"{checkBoxName}###{config}{outputValue}", enabled))
             {
                 PluginConfiguration.SetCustomIntValue(config, outputValue);
                 Service.Configuration.Save();
