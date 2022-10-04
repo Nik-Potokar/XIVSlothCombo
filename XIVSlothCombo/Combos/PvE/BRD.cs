@@ -363,7 +363,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // healing - please move if not appropriate priority
                         if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
                         {
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_AoESecondWindThreshold) && ActionReady(All.SecondWind))
                                 return All.SecondWind;
                         }
                     }
@@ -662,7 +662,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // healing - please move if not appropriate priority
                         if (IsEnabled(CustomComboPreset.BRD_ST_SecondWind))
                         {
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_STSecondWindThreshold) && ActionReady(All.SecondWind))
                                 return All.SecondWind;
                         }
                     }
