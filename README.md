@@ -1,3 +1,5 @@
+# Fork of the popular plugin "XIVSlothCombo"
+# Warning: This fork and its edits are very much done by someone with no prior coding knowledge, please use the original!
 # XIVSlothCombo - The Super Expanded XIVCombo
 ## NEW: Join our [Discord](https://discord.gg/xT7zyjzjtY) server!
 
