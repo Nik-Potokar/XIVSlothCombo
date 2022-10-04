@@ -318,7 +318,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.Bloodbath;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime) && HasTarget() && !InMeleeRange() && !HasEffect(Buffs.RaijuReady) && InCombat() && ThrowingDaggers.LevelChecked())
+                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime) && HasTarget() && !InMeleeRange() && !HasEffect(Buffs.RaijuReady) && InCombat() && ThrowingDaggers.LevelChecked() &&
+                        !((IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshing_Phantom) && HasEffect(Buffs.PhantomReady)) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton) && GetRemainingCharges(Ten) >= 1)))
                         return OriginalHook(ThrowingDaggers);
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiju) && HasEffect(Buffs.RaijuReady))
