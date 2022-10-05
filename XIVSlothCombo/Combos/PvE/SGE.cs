@@ -182,7 +182,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) &&
-                        ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) &&
+                        ActionReady(All.LucidDreaming) && CanSpellWeave(Dosis) &&
                         LocalPlayer.CurrentMp <= Config.SGE_AoE_Phlegma_Lucid)
                         return All.LucidDreaming;
 
