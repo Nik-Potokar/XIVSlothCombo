@@ -1,3 +1,4 @@
+###TEST TEST TEST TEST TEST###
 # XIVSlothCombo - The Super Expanded XIVCombo
 ## NEW: Join our [Discord](https://discord.gg/xT7zyjzjtY) server!
 
