@@ -319,7 +319,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime) && HasTarget() && !InMeleeRange() && !HasEffect(Buffs.RaijuReady) && InCombat() && ThrowingDaggers.LevelChecked()
-                        && !((IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshing_Phantom) && HasEffect(Buffs.PhantomReady)) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton) && GetRemainingCharges(Ten) >= 1))) // Uptime temporary fix
+                        && !((IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshing_Phantom) && HasEffect(Buffs.PhantomReady)) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton) && GetRemainingCharges(Ten) >= 1))) // Uptime temporary fix Taur is a good boy
                         return OriginalHook(ThrowingDaggers);
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiju) && HasEffect(Buffs.RaijuReady))
