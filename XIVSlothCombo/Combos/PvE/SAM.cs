@@ -80,7 +80,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_STSecondWindThreshold = "SAM_STSecondWindThreshold",
                 SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
                 SAM_AoESecondWindThreshold = "SAM_AoESecondWindThreshold",
-                SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold";
+                SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold",
+                SAM_ST_ExecuteThreshold = "SAM_ST_ExecuteThreshold";
         }
 
         internal class SAM_ST_YukikazeCombo : CustomCombo
@@ -144,6 +145,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var SamFillerCombo = PluginConfiguration.GetCustomIntValue(Config.SAM_FillerCombo);
                     var SamMeikyoChoice = PluginConfiguration.GetCustomIntValue(Config.SAM_MeikyoChoice);
                     var HiganbanaThreshold = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_Higanbana_Threshold);
+                    var executeThreshold = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_ExecuteThreshold);
                     var enemyHP = GetTargetHPPercent();
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
 
@@ -481,7 +483,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (Shinten.LevelChecked() && gauge.Kenki >= 25)
                                     {
-                                        if (GetCooldownRemainingTime(Senei) > 110 || (IsEnabled(CustomComboPreset.SAM_ST_Overcap) && gauge.Kenki >= SamKenkiOvercapAmount))
+                                        if (GetCooldownRemainingTime(Senei) > 110 || (IsEnabled(CustomComboPreset.SAM_ST_Overcap) && gauge.Kenki >= SamKenkiOvercapAmount) || GetTargetHPPercent() <= executeThreshold)
                                             return Shinten;
                                     }
 

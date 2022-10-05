@@ -2582,6 +2582,10 @@ namespace XIVSlothCombo.Combos
                     [ParentCombo(SAM_ST_GekkoCombo_CDs_Senei)]
                     [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.\nIf you don't activate the opener or die, Senei will instead be used on CD.", SAM.JobID, 0, "", "")]
                     SAM_ST_GekkoCombo_CDs_Senei_Burst = 15017,
+
+        [ParentCombo(SAM_ST_Overcap)]
+        [CustomComboInfo("Execute Feature", "Adds Shinten to main combo when off cooldown, above 25 Kenki and target is below HP percentage Threshold.", SAM.JobID, 0, "", "")]
+        SAM_ST_Execute = 15046,
         #endregion
 
         #endregion
