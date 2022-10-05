@@ -451,7 +451,6 @@ namespace XIVSlothCombo.Combos.PvE
                     // Indomitability
                     if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Indomitability) &&
                         ActionReady(Indomitability) &&
-                        LevelChecked(Indomitability) &&
                         Gauge.HasAetherflow())
                         return Indomitability;
                 }
@@ -471,11 +470,11 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is WhisperingDawn)
                 {
                     // FeyIllumination
-                    if (ActionReady(FeyIllumination) && LevelChecked(FeyIllumination))
+                    if (ActionReady(FeyIllumination))
                         return FeyIllumination;
                     
                     // FeyBlessing
-                    if (ActionReady(FeyBlessing) && LevelChecked(FeyBlessing))
+                    if (ActionReady(FeyBlessing))
                         return FeyBlessing;
                 }
                 return OriginalHook(actionID);
@@ -516,8 +515,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Check for the Galvanize shield buff. Start applying if it doesn't exist or Target HP is below %
                     if (IsEnabled(CustomComboPreset.SCH_Heal_Adloquium) &&
-                        ActionReady(Adloquium) && 
-                        LevelChecked(Adloquium) &&
+                        ActionReady(Adloquium) &&
                         (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null || GetTargetHPPercent(healTarget) < Config.SCH_Heal_AdloquiumOption))
                     {
                         return Adloquium;
@@ -526,8 +524,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Cast Lustrate if you have Aetherflow and Target HP is below %
                     if (IsEnabled(CustomComboPreset.SCH_Heal_Lustrate) &&
                         ActionReady(Lustrate) && 
-                        Gauge.HasAetherflow() && 
-                        LevelChecked(Lustrate) &&
+                        Gauge.HasAetherflow() &&
                         GetTargetHPPercent(healTarget) <= Config.SCH_Heal_LustrateOption)
                     {
                         return Lustrate;
