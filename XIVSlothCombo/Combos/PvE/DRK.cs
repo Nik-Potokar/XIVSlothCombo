@@ -144,7 +144,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Delayed Delirium
                             if (IsEnabled(CustomComboPreset.DRK_DelayedBloodspiller) && GetBuffStacks(Buffs.Delirium) > 0 &&
-                                (GetBuffStacks(Buffs.BloodWeapon) is 0 or 1 or 2))
+                                ((GetBuffStacks(Buffs.BloodWeapon) <= 2 && CombatEngageDuration().TotalSeconds < 30) || CombatEngageDuration().TotalSeconds >= 30))
                                 return Bloodspiller;
 
                             //Blood management before Delirium
