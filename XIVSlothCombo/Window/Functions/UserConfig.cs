@@ -1464,7 +1464,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
-                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT.Set to Zero to disable this check", digits: 1);
+                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
