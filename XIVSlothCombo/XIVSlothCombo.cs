@@ -308,6 +308,8 @@ namespace XIVSlothCombo
                             file.WriteLine("");
                             file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}");                          // Plugin version
                             file.WriteLine("");
+                            file.WriteLine($"Installation Repo: {RepoCheckFunctions.FetchCurrentRepo()?.InstalledFromUrl}");    // Installation Repo
+                            file.WriteLine("");
                             file.WriteLine($"Current Job: " +                                                                   // Current Job
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +                                // - Client Name
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
