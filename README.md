@@ -27,4 +27,4 @@ ________________________________________________________________________________
 
 We're building this as a side project but if you want something special added, let us know.
 
-### Brought to you with love and sloth, by:<b><br> Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal and many other contributors!
+### Brought to you with love and sloth, by:<b><br> Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal, Genesis-Nova, Tartarga and many other contributors!

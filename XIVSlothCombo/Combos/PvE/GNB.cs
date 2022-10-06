@@ -111,7 +111,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(NoMercy) && IsOffCooldown(NoMercy))
                             {
                                 if (LevelChecked(BurstStrike) &&
-                                   ((gauge.Ammo is 0 && lastComboMove is KeenEdge && CombatEngageDuration().TotalSeconds < 6 && IsOffCooldown(Bloodfest)) || //Opener Conditions
+                                   ((gauge.Ammo is 1 && IsOffCooldown(Bloodfest) && CombatEngageDuration().TotalSeconds < 30) || //Opener Conditions
                                    (CombatEngageDuration().Minutes == 2 && GetCooldownRemainingTime(DoubleDown) < 4) || //2 min delay
                                    (CombatEngageDuration().Minutes != 2 && gauge.Ammo == MaxCartridges(level) && GetCooldownRemainingTime(GnashingFang) < 4))) //Regular NMGF
                                     return NoMercy;
@@ -198,7 +198,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        //Pre Gnashing Fang stuff
+                        //Gnashing Fang stuff
                         if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && LevelChecked(GnashingFang))
                         {
                             if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Starter) && IsOffCooldown(GnashingFang) && gauge.AmmoComboStep == 0 &&
@@ -420,7 +420,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = GetJobGauge<GNBGauge>().Ammo;
-                return (actionID is BurstStrike && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && gauge >= 2 && LevelChecked(DoubleDown)) ? DoubleDown : actionID;
+                return (actionID is BurstStrike && HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) < 2 && gauge >= 2 && LevelChecked(DoubleDown)) ? DoubleDown : actionID;
             }
         }
 

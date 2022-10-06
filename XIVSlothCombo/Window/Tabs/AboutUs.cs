@@ -11,11 +11,11 @@ namespace XIVSlothCombo.Window.Tabs
         {
             ImGui.BeginChild("About", new Vector2(0, 0), true);
 
-            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.17.2\n- with love from Team Sloth.");
+            ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.17.3\n- with love from Team Sloth.");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
-            ImGui.TextWrapped("Brought to you by: \nAki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal and many other contributors!");
+            ImGui.TextWrapped("Brought to you by: \nAki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal, Genesis-Nova, Tartarga and many other contributors!");
             ImGui.Spacing();
             ImGui.Spacing();
             ImGui.Spacing();
