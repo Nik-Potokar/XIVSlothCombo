@@ -63,6 +63,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 WHM_ST_Lucid = "WHMLucidDreamingFeature",
                 WHM_ST_MainCombo_DoT = "WHM_ST_MainCombo_DoT",
+                WHM_ST_MainCombo_DoT_Threshold = "WHM_ST_MainCombo_DoT_Threshold",
                 WHM_AoE_Lucid = "WHM_AoE_Lucid",
                 WHM_oGCDHeals = "WHMogcdHealsShieldsFeature";
         }
@@ -228,7 +229,7 @@ namespace XIVSlothCombo.Combos.PvE
                         else DoTDebuff = FindTargetEffect(Debuffs.Aero1);
 
                         // DoT Uptime & HP% threshold
-                        if (((DoTDebuff is null) || (DoTDebuff.RemainingTime <= 3)) &&
+                        if (((DoTDebuff is null) || (DoTDebuff.RemainingTime <= GetOptionFloat(Config.WHM_ST_MainCombo_DoT_Threshold))) &&
                             (GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT)))
                             return OriginalHook(Aero1);
                     }

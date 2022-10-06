@@ -48,69 +48,69 @@ namespace XIVSlothCombo.Window.Functions
                 HasMaxWidth = true,
                 IsSubBox = true,
                 ContentsAction = () =>
+                {
+                    bool inputChanged = false;
+                    Vector2 currentPos = ImGui.GetCursorPos();
+                    ImGui.SetCursorPosX(currentPos.X + itemWidth);
+                    ImGui.PushTextWrapPos(wrapPos);
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
+                    ImGui.Text($"{sliderDescription}");
+                    Vector2 height = ImGui.GetItemRectSize();
+                    float lines = (height.Y / ImGui.GetFontSize());
+                    Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
+                    string newLines = "";
+                    for (int i = 1; i < lines; i++)
                     {
-                        bool inputChanged = false;
-                        Vector2 currentPos = ImGui.GetCursorPos();
-                        ImGui.SetCursorPosX(currentPos.X + itemWidth);
-                        ImGui.PushTextWrapPos(wrapPos);
-                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
-                        ImGui.Text($"{sliderDescription}");
-                        Vector2 height = ImGui.GetItemRectSize();
-                        float lines = (height.Y / ImGui.GetFontSize());
-                        Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
-                        string newLines = "";
-                        for (int i = 1; i < lines; i++)
+                        if (i % 2 == 0)
                         {
-                            if (i % 2 == 0)
-                            {
-                                newLines += "\n";
-                            }
-                            else
-                            {
-                                newLines += "\n\n";
-                            }
-                           
+                            newLines += "\n";
+                        }
+                        else
+                        {
+                            newLines += "\n\n";
                         }
 
-                        if (hasAdditionalChoice)
-                        {
-                            ImGui.SameLine();
-                            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
-                            ImGui.PushFont(UiBuilder.IconFont);
-                            ImGui.Dummy(new Vector2(5, 0));
-                            ImGui.SameLine();
-                            ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
-                            ImGui.PopFont();
-                            ImGui.PopStyleColor();
+                    }
 
-                            if (ImGui.IsItemHovered())
-                            {
-                                ImGui.BeginTooltip();
-                                ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
-                                ImGui.EndTooltip();
-                            }
-                        }
-
-                        ImGui.PopStyleColor();
-                        ImGui.PopTextWrapPos();
+                    if (hasAdditionalChoice)
+                    {
                         ImGui.SameLine();
-                        ImGui.SetCursorPosX(currentPos.X);
-                        ImGui.PushItemWidth(itemWidth);
-                        inputChanged |= ImGui.SliderInt($"{newLines}###{config}", ref output, minValue, maxValue);
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                        ImGui.PushFont(UiBuilder.IconFont);
+                        ImGui.Dummy(new Vector2(5, 0));
+                        ImGui.SameLine();
+                        ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
+                        ImGui.PopFont();
+                        ImGui.PopStyleColor();
 
-                        if (inputChanged)
+                        if (ImGui.IsItemHovered())
                         {
-                            if (output % sliderIncrement != 0)
-                            {
-                                output = output.RoundOff(sliderIncrement);
-                                if (output < minValue) output = minValue;
-                                if (output > maxValue) output = maxValue;
-                            }
-
-                            PluginConfiguration.SetCustomIntValue(config, output);
-                            Service.Configuration.Save();
+                            ImGui.BeginTooltip();
+                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            ImGui.EndTooltip();
                         }
                     }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopTextWrapPos();
+                    ImGui.SameLine();
+                    ImGui.SetCursorPosX(currentPos.X);
+                    ImGui.PushItemWidth(itemWidth);
+                    inputChanged |= ImGui.SliderInt($"{newLines}###{config}", ref output, minValue, maxValue);
+
+                    if (inputChanged)
+                    {
+                        if (output % sliderIncrement != 0)
+                        {
+                            output = output.RoundOff(sliderIncrement);
+                            if (output < minValue) output = minValue;
+                            if (output > maxValue) output = maxValue;
+                        }
+
+                        PluginConfiguration.SetCustomIntValue(config, output);
+                        Service.Configuration.Save();
+                    }
+                }
             };
 
             box.Draw();
@@ -377,7 +377,7 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.Unindent();
         }
-      
+
         /// <summary>A true or false configuration. Similar to presets except can be used as part of a condition on another config.</summary>
         /// <param name="config">The config ID.</param>
         /// <param name="checkBoxName">The name of the feature.</param>
@@ -414,7 +414,7 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Unindent();
             ImGui.Spacing();
         }
-      
+
         /// <summary> Draws multi choice checkboxes in a horizontal configuration. </summary>
         /// <param name="config"> The config ID. </param>
         /// <param name="checkBoxName"> The name of the feature. </param>
@@ -430,7 +430,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.PushItemWidth(itemWidth);
             ImGui.SameLine();
             ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine(); 
+            ImGui.SameLine();
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
 
             if (values.Length == 0) Array.Resize(ref values, totalChoices);
@@ -441,14 +441,14 @@ namespace XIVSlothCombo.Window.Functions
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-            
+
             if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
                 ImGui.TextUnformatted(checkboxDescription);
                 ImGui.EndTooltip();
             }
-            
+
             ImGui.PopStyleColor();
 
             ImGui.Unindent();
@@ -1075,6 +1075,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
+                UserConfig.DrawRoundedSliderFloat(0, 4, AST.Config.AST_ST_DPS_CombustUptime_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+
             if (preset is CustomComboPreset.AST_DPS_Divination)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
@@ -1218,7 +1221,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DRG_ST_Opener && enabled)
             {
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Standard Opener", "Uses the Standard Tincture Opener.", 1);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Low Ping Opener", "Uses the Low Ping Opener. Use Lance Charge after True Thrust for the No Tincture opener.", 2);                
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Low Ping Opener", "Uses the Low Ping Opener. Use Lance Charge after True Thrust for the No Tincture opener.", 2);
             }
 
             if (preset == CustomComboPreset.DRG_ST_ComboHeals)
@@ -1308,22 +1311,22 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdST, "Set a HP% threshold for when Second Wind will be used.");
-            
+
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_ShadeShift)
                 UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdST, "Set a HP% threshold for when Shade Shift will be used.");
-            
-            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bloodbath)            
+
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bloodbath)
                 UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdST, "Set a HP% threshold for when Bloodbath will be used.");
-            
+
             if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, NIN.Config.SecondWindThresholdAoE, "Set a HP% threshold for when Second Wind will be used.");
-            
+
             if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_ShadeShift)
                 UserConfig.DrawSliderInt(0, 100, NIN.Config.ShadeShiftThresholdAoE, "Set a HP% threshold for when Shade Shift will be used.");
-            
+
             if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_Bloodbath)
                 UserConfig.DrawSliderInt(0, 100, NIN.Config.BloodbathThresholdAoE, "Set a HP% threshold for when Bloodbath will be used.");
-            
+
             if (preset == CustomComboPreset.NIN_AoE_AdvancedMode_HellfrogMedium)
                 UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_HellfrogPooling, "Set the amount of Ninki required to have before spending on Hellfrog Medium.");
 
@@ -1460,6 +1463,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
                 UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
+                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT.Set to Zero to disable this check", digits: 1);
+
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
 
@@ -1516,7 +1522,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui && enabled)
             {
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_MeikyoChoice, "Use after Hakaze/Sen Applier", "Uses Meikyo Shisui after Hakaze, Gekko, Yukikaze, or Kasha.", 1);
-                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_MeikyoChoice,"Use outside of combo chain" ,"Uses Meikyo Shisui outside of a combo chain.", 2);
+                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_MeikyoChoice, "Use outside of combo chain", "Uses Meikyo Shisui outside of a combo chain.", 2);
             }
 
             //PvP
@@ -1566,9 +1572,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SCH_DPS_Bio)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.SCH_DPS_Bio)
+                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
-            
+
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
                 UserConfig.DrawRoundedSliderFloat(0f, 2.5f, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Time remaining in seconds for each stack (Recommend GCD)", digits: 2);
 
@@ -1671,10 +1680,10 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
             if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check");
-
+            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
+                UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
-
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% of target to use Tetragrammaton");
 
