@@ -2791,6 +2791,47 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SCH.Recitation)]
         [CustomComboInfo("Recitation Combo Feature", "Change Recitation into either Adloquium, Succor, Indomitability, or Excogitation when used.", SCH.JobID, 230, "", "")]
         SCH_Recitation = 16230,
+        
+        [ReplaceSkill(SCH.WhisperingDawn)]
+        [CustomComboInfo("Fairy Healing Combo", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
+        SCH_Fairy_Combo = 16240,
+        
+        [ReplaceSkill(SCH.Succor)]
+        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below", SCH.JobID, 250)]
+        SCH_AoE_Heal = 16250,
+
+            [ParentCombo(SCH_AoE_Heal)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            SCH_AoE_Heal_Lucid = 16251,
+
+            [ParentCombo(SCH_AoE_Heal)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            SCH_AoE_Heal_Aetherflow = 16252,
+            
+            [ParentCombo(SCH_AoE_Heal)]
+            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor", SCH.JobID)]
+            SCH_AoE_Heal_Indomitability = 16253,
+            
+        [ReplaceSkill(SCH.Physick)]
+        [CustomComboInfo("Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
+        SCH_Heal = 16260,
+
+            [ParentCombo(SCH_Heal)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            SCH_Heal_Lucid = 16261,
+
+            [ParentCombo(SCH_Heal)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            SCH_Heal_Aetherflow = 16262,
+            
+            [ParentCombo(SCH_Heal)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or Target HP% below", SCH.JobID)]
+            SCH_Heal_Adloquium = 16263,
+            
+            [ParentCombo(SCH_Heal)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when Target HP% below", SCH.JobID)]
+            SCH_Heal_Lustrate = 16264,
+            
 
         #endregion
 
