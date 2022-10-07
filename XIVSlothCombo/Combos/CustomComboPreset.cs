@@ -2819,7 +2819,8 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SCH_AoE_Heal)]
             [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor", SCH.JobID)]
             SCH_AoE_Heal_Indomitability = 16253,
-            
+
+        [ReplaceSkill(SCH.Physick)]
         [CustomComboInfo("Physick Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
         SCH_Heal = 16260,
 
