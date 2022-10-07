@@ -8,7 +8,7 @@ namespace XIVSlothCombo.Window.MessagesNS
     {
         internal static bool PrintBLUMessage(string jobName)
         {
-            if (jobName == "Blue Mage")
+            if (jobName == Attributes.CustomComboInfoAttribute.JobIDToName(36)) //Blue Mage ID
             {
                 if (Service.Configuration.ActiveBLUSpells.Count == 0)
                 {
