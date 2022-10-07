@@ -2797,11 +2797,11 @@ namespace XIVSlothCombo.Combos
         SCH_Recitation = 16230,
         
         [ReplaceSkill(SCH.WhisperingDawn)]
-        [CustomComboInfo("Fairy Healing Combo", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
+        [CustomComboInfo("Fairy Healing Combo Feature", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
         SCH_Fairy_Combo = 16240,
 
             [ParentCombo(SCH_Fairy_Combo)]
-            [CustomComboInfo("Consolation During Seraph", "Adds Consolation Seraph.", SCH.JobID, 240, "", "")]
+            [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID, 240, "", "")]
             SCH_Fairy_Combo_Consolation = 16241,
 
         [ReplaceSkill(SCH.Succor)]
@@ -2817,7 +2817,7 @@ namespace XIVSlothCombo.Combos
             SCH_AoE_Heal_Aetherflow = 16252,
 
         [ParentCombo(SCH_AoE_Heal_Aetherflow)]
-        [CustomComboInfo("Indomitability Ready Only", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+        [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
         SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
 
             [ParentCombo(SCH_AoE_Heal)]
@@ -2857,11 +2857,11 @@ namespace XIVSlothCombo.Combos
             SCH_Aetherflow_Recite = 16310,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 311, "", "")]
+                [CustomComboInfo("On Excogitation", "", SCH.JobID, 311, "", "")]
                 SCH_Aetherflow_Recite_Excog = 16311,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Indominability Option", "", SCH.JobID, 312, "", "")]
+                [CustomComboInfo("On Indominability", "", SCH.JobID, 312, "", "")]
                 SCH_Aetherflow_Recite_Indom = 16312,
 
             [ParentCombo(SCH_Aetherflow)]
