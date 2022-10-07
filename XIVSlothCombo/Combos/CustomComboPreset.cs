@@ -2805,7 +2805,7 @@ namespace XIVSlothCombo.Combos
             SCH_Fairy_Combo_Consolation = 16241,
 
         [ReplaceSkill(SCH.Succor)]
-        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below", SCH.JobID, 250)]
+        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below:", SCH.JobID, 250)]
         SCH_AoE_Heal = 16250,
 
             [ParentCombo(SCH_AoE_Heal)]
@@ -2813,7 +2813,7 @@ namespace XIVSlothCombo.Combos
             SCH_AoE_Heal_Lucid = 16251,
 
             [ParentCombo(SCH_AoE_Heal)]
-            [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of aetherflow stacks.", SCH.JobID)]
+            [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
             SCH_AoE_Heal_Aetherflow = 16252,
 
         [ParentCombo(SCH_AoE_Heal_Aetherflow)]
@@ -2825,7 +2825,7 @@ namespace XIVSlothCombo.Combos
             SCH_AoE_Heal_Indomitability = 16254,
 
         [ReplaceSkill(SCH.Physick)]
-        [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
+        [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 260)]
         SCH_ST_Heal = 16260,
 
             [ParentCombo(SCH_ST_Heal)]
@@ -2833,15 +2833,15 @@ namespace XIVSlothCombo.Combos
             SCH_ST_Heal_Lucid = 16261,
 
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
             SCH_ST_Heal_Aetherflow = 16262,
             
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or Target HP% below", SCH.JobID)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP% below:", SCH.JobID)]
             SCH_ST_Heal_Adloquium = 16263,
             
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Lustrate Option", "Use Lustrate when Target HP% below", SCH.JobID)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP% below:", SCH.JobID)]
             SCH_ST_Heal_Lustrate = 16264,
             
 
@@ -2849,11 +2849,11 @@ namespace XIVSlothCombo.Combos
 
         #region Utilities
         [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
-        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 300, "", "")]
+        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected.", SCH.JobID, 300, "", "")]
         SCH_Aetherflow = 16300,
 
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 310, "", "")]
+            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indomitability.", SCH.JobID, 310, "", "")]
             SCH_Aetherflow_Recite = 16310,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
@@ -2861,16 +2861,16 @@ namespace XIVSlothCombo.Combos
                 SCH_Aetherflow_Recite_Excog = 16311,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Indominability", "", SCH.JobID, 312, "", "")]
+                [CustomComboInfo("On Indomitability", "", SCH.JobID, 312, "", "")]
                 SCH_Aetherflow_Recite_Indom = 16312,
 
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 320, "", "")]
+            [CustomComboInfo("Dissipation Option", "If Aetherflow is on cooldown, show Dissipation instead.", SCH.JobID, 320, "", "")]
             SCH_Aetherflow_Dissipation = 16320,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
-        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 400, "", "")]
+        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown.", SCH.JobID, 400, "", "")]
         SCH_Raise = 16400,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
@@ -2878,11 +2878,11 @@ namespace XIVSlothCombo.Combos
         SCH_FairyReminder = 16500,
 
         [ReplaceSkill(SCH.DeploymentTactics)]
-        [CustomComboInfo("Deployment Tactics Feature", "Deployment Tactics idles as Adloquium until the Party Member has the Galvanize Buff", SCH.JobID, 600, "", "")]
+        [CustomComboInfo("Deployment Tactics Feature", "Changes Deployment Tactics to Adloquium until a party member has the Galvanize buff.", SCH.JobID, 600, "", "")]
         SCH_DeploymentTactics = 16600,
 
             [ParentCombo(SCH_DeploymentTactics)]
-            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
+            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize buff on a party member.", SCH.JobID, 601, "", "")]
             SCH_DeploymentTactics_Recitation = 16610,
         
         #endregion
