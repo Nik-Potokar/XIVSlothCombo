@@ -1589,14 +1589,14 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
                         
-            if (preset is CustomComboPreset.SCH_Physick_Combo_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_Physick_Combo_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
             
-            if (preset is CustomComboPreset.SCH_Physick_Combo_Adloquium)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_Physick_Combo_AdloquiumOption), "Start using when below HP %\nSet to 0 to always use Adloquim instead of Physick or 100 to disable this check\nWill still use Adloquim when target doesn't have Galvanize");
+            if (preset is CustomComboPreset.SCH_ST_Heal_Adloquium)
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_AdloquiumOption), "Start using when below HP %\nSet to 0 to always use Adloquim instead of Physick or 100 to disable this check\nWill still use Adloquim when target doesn't have Galvanize");
             
-            if (preset is CustomComboPreset.SCH_Physick_Combo_Lustrate)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_Physick_Combo_LustrateOption), "Start using when below HP %. Set to 100 to disable this check");
+            if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_LustrateOption), "Start using when below HP %. Set to 100 to disable this check");
 
             if (preset is CustomComboPreset.SCH_FairyReminder)
             {

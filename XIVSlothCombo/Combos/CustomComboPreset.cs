@@ -2805,44 +2805,44 @@ namespace XIVSlothCombo.Combos
             SCH_Fairy_Combo_Consolation = 16241,
 
         [ReplaceSkill(SCH.Succor)]
-        [CustomComboInfo("Succor Combo Feature", "Replaces Succor with options below", SCH.JobID, 250)]
-        SCH_Succor_Combo = 16250,
+        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below", SCH.JobID, 250)]
+        SCH_AoE_Heal = 16250,
 
-            [ParentCombo(SCH_Succor_Combo)]
+            [ParentCombo(SCH_AoE_Heal)]
             [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP isn't high enough to cast Succor.", SCH.JobID)]
-            SCH_Succor_Combo_Lucid = 16251,
+            SCH_AoE_Heal_Lucid = 16251,
 
-            [ParentCombo(SCH_Succor_Combo)]
+            [ParentCombo(SCH_AoE_Heal)]
             [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of aetherflow stacks.", SCH.JobID)]
-            SCH_Succor_Combo_Aetherflow = 16252,
+            SCH_AoE_Heal_Aetherflow = 16252,
 
-        [ParentCombo(SCH_Succor_Combo_Aetherflow)]
+        [ParentCombo(SCH_AoE_Heal_Aetherflow)]
         [CustomComboInfo("Indomitability Ready Only", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
-        SCH_Succor_Combo_Aetherflow_Indomitability = 16253,
+        SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
 
-        [ParentCombo(SCH_Succor_Combo)]
+            [ParentCombo(SCH_AoE_Heal)]
             [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
-            SCH_Succor_Combo_Indomitability = 16254,
+            SCH_AoE_Heal_Indomitability = 16254,
 
         [ReplaceSkill(SCH.Physick)]
-        [CustomComboInfo("Physick Combo Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
-        SCH_Physick_Combo = 16260,
+        [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
+        SCH_ST_Heal = 16260,
 
-            [ParentCombo(SCH_Physick_Combo)]
+            [ParentCombo(SCH_ST_Heal)]
             [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
-            SCH_Physick_Combo_Lucid = 16261,
+            SCH_ST_Heal_Lucid = 16261,
 
-            [ParentCombo(SCH_Physick_Combo)]
+            [ParentCombo(SCH_ST_Heal)]
             [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
-            SCH_Physick_Combo_Aetherflow = 16262,
+            SCH_ST_Heal_Aetherflow = 16262,
             
-            [ParentCombo(SCH_Physick_Combo)]
+            [ParentCombo(SCH_ST_Heal)]
             [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or Target HP% below", SCH.JobID)]
-            SCH_Physick_Combo_Adloquium = 16263,
+            SCH_ST_Heal_Adloquium = 16263,
             
-            [ParentCombo(SCH_Physick_Combo)]
+            [ParentCombo(SCH_ST_Heal)]
             [CustomComboInfo("Lustrate Option", "Use Lustrate when Target HP% below", SCH.JobID)]
-            SCH_Physick_Combo_Lustrate = 16264,
+            SCH_ST_Heal_Lustrate = 16264,
             
 
         #endregion
