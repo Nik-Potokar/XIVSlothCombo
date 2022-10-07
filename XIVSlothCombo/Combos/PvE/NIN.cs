@@ -188,7 +188,7 @@ namespace XIVSlothCombo.Combos.PvE
                     double playerHP = PlayerHealthPercentageHp();
 
 
-                    if (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
+                    if ((IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) && IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiton_Uptime)) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
                         mudraState.CurrentMudra = MudraCasting.MudraState.None;
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) && IsOnCooldown(TrickAttack) && mudraState.CurrentMudra == MudraCasting.MudraState.CastingSuiton && !setupSuitonWindow)
@@ -213,7 +213,7 @@ namespace XIVSlothCombo.Combos.PvE
                         (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) && IsOnCooldown(Mug))))
                         mudraState.CurrentMudra = MudraCasting.MudraState.CastingHyoshoRanryu;
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) && mudraState.CurrentMudra != MudraCasting.MudraState.None)
+                    if (mudraState.CurrentMudra != MudraCasting.MudraState.None)
                     {
                         if (mudraState.ContinueCurrentMudra(ref actionID))
                             return actionID;
@@ -235,6 +235,18 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(All.TrueNorth);
 
                         return OriginalHook(ArmorCrush);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime) && HasTarget() && !InMeleeRange() && !HasEffect(Buffs.RaijuReady) && InCombat())
+                    {
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Phantom_Uptime) && PhantomKamaitachi.LevelChecked() && HasEffect(Buffs.PhantomReady))
+                            return OriginalHook(PhantomKamaitachi);
+
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiton_Uptime) && Raiton.LevelChecked() && mudraState.CastRaiton(ref actionID))
+                            return actionID;
+
+                        if (ThrowingDaggers.LevelChecked())
+                        return OriginalHook(ThrowingDaggers);
                     }
 
                     if (canWeave && !inMudraState)
@@ -318,8 +330,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.Bloodbath;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime) && HasTarget() && !InMeleeRange() && !HasEffect(Buffs.RaijuReady) && InCombat() && ThrowingDaggers.LevelChecked())
-                        return OriginalHook(ThrowingDaggers);
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiju) && HasEffect(Buffs.RaijuReady))
                     {
@@ -328,9 +338,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(FleetingRaiju);
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshing_Phantom) &&
+                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshin_Phantom) &&
                         HasEffect(Buffs.PhantomReady) &&
-                        ((GetCooldownRemainingTime(TrickAttack) > GetBuffRemainingTime(Buffs.PhantomReady) && GetBuffRemainingTime(Buffs.PhantomReady) < 5) || TargetHasEffect(Debuffs.TrickAttack) || !InMeleeRange() || (HasEffect(Buffs.Bunshin) && TargetHasEffect(Debuffs.Mug))) &&
+                        ((GetCooldownRemainingTime(TrickAttack) > GetBuffRemainingTime(Buffs.PhantomReady) && GetBuffRemainingTime(Buffs.PhantomReady) < 5) || TargetHasEffect(Debuffs.TrickAttack) || (HasEffect(Buffs.Bunshin) && TargetHasEffect(Debuffs.Mug))) &&
                         PhantomKamaitachi.LevelChecked())
                         return OriginalHook(PhantomKamaitachi);
 
@@ -359,7 +369,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus))
                         {
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) &&
-                                setupSuitonWindow && (!InMeleeRange() || GetRemainingCharges(Ten) == 2 || (GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 3)) && // if at/near cap or not in melee while in setup window
+                                setupSuitonWindow && 
                                 TrickAttack.LevelChecked() &&
                                 !HasEffect(Buffs.Suiton) &&
                                 chargeCheck &&
@@ -369,7 +379,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton) &&
                                 !inTrickBurstSaveWindow &&
                                 chargeCheck &&
-                                ((GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 2) || TargetHasEffect(Debuffs.TrickAttack) || !InMeleeRange()) && // if at/near cap, in burst window or out of melee range
                                 mudraState.CastRaiton(ref actionID))
                                 return actionID;
 

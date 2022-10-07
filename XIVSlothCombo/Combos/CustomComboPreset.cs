@@ -1701,7 +1701,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(NIN_ST_AdvancedMode_Bunshin)]
         [CustomComboInfo("Phantom Kamaitachi Feature", "Adds Phantom Kamaitachi to Advanced Mode.", NIN.JobID)]
-        NIN_ST_AdvancedMode_Bunshing_Phantom = 10026,
+        NIN_ST_AdvancedMode_Bunshin_Phantom = 10026,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
         [CustomComboInfo("Raiju Feature", "Adds Fleeting/Forked Raiju to Advanced Mode.", NIN.JobID)]
@@ -1861,6 +1861,14 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(NIN.Huraijin)]
         [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash.", NIN.JobID)]
         NIN_HuraijinArmorCrush = 10064,
+
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [CustomComboInfo("Raiton Uptime Feature", "Adds Raiton as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Raiton_Uptime = 10065,
+
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [CustomComboInfo("Phantom Kamaitachi Uptime Feature", "Adds Phantom Kamaitachi as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Phantom_Uptime = 10066,
 
 
         #endregion
