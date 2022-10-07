@@ -329,6 +329,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && LevelChecked(AfflatusMisery) &&
                         gauge.BloodLily >= 3 && HasBattleTarget())
                         return AfflatusMisery;
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
+                        return Assize;
                 }
 
                 return actionID;
