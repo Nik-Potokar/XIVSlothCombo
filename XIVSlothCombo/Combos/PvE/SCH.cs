@@ -445,8 +445,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_Succor_Combo_Lucid) &&
                         ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= Config.SCH_Succor_Combo_LucidOption &&
-                        CanSpellWeave(actionID))
+                        LocalPlayer.CurrentMp < 1000)
                         return All.LucidDreaming;
 
                     // Indomitability
