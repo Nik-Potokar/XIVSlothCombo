@@ -2799,7 +2799,11 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SCH.WhisperingDawn)]
         [CustomComboInfo("Fairy Healing Combo", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
         SCH_Fairy_Combo = 16240,
-        
+
+            [ParentCombo(SCH_Fairy_Combo)]
+            [CustomComboInfo("Consolation During Seraph", "Adds Consolation Seraph.", SCH.JobID, 240, "", "")]
+            SCH_Fairy_Consolation = 16241,
+
         [ReplaceSkill(SCH.Succor)]
         [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below", SCH.JobID, 250)]
         SCH_AoE_Heal = 16250,
@@ -2816,8 +2820,7 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor", SCH.JobID)]
             SCH_AoE_Heal_Indomitability = 16253,
             
-        [ReplaceSkill(SCH.Physick)]
-        [CustomComboInfo("Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
+        [CustomComboInfo("Physick Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
         SCH_Heal = 16260,
 
             [ParentCombo(SCH_Heal)]

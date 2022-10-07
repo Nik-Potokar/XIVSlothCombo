@@ -469,13 +469,20 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is WhisperingDawn)
                 {
+
                     // FeyIllumination
                     if (ActionReady(FeyIllumination))
-                        return FeyIllumination;
-                    
+                        return OriginalHook(FeyIllumination);
+
                     // FeyBlessing
-                    if (ActionReady(FeyBlessing))
-                        return FeyBlessing;
+                    if (ActionReady(FeyBlessing) && !(Gauge.SeraphTimer > 0))
+                        return OriginalHook(FeyBlessing);
+
+                    if (IsEnabled(CustomComboPreset.SCH_Fairy_Consolation) && ActionReady(WhisperingDawn))
+                        return OriginalHook(actionID);
+
+                    if (IsEnabled(CustomComboPreset.SCH_Fairy_Consolation) && Gauge.SeraphTimer > 0 && GetRemainingCharges(Consolation) > 0)
+                    return OriginalHook(Consolation);
                 }
                 return OriginalHook(actionID);
             }
@@ -516,7 +523,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Check for the Galvanize shield buff. Start applying if it doesn't exist or Target HP is below %
                     if (IsEnabled(CustomComboPreset.SCH_Heal_Adloquium) &&
                         ActionReady(Adloquium) &&
-                        (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null || GetTargetHPPercent(healTarget) < Config.SCH_Heal_AdloquiumOption))
+                        (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null || GetTargetHPPercent(healTarget) <= Config.SCH_Heal_AdloquiumOption))
                     {
                         return Adloquium;
                     }
