@@ -1585,6 +1585,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 0, "", "")]
         MNK_ST_Meditation_Uptime = 9028,
 
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("True North Feature (Dynamic)", "Adds True North to Monk Combo right before abilities if you aren't in the correct position.\nThis will waste True North if you aren't already in position 0.7 seconds before the positional is due to be used.", MNK.JobID, 0, "", "")]
+        MNK_TrueNorthDynamic = 9030,
+
         #endregion
 
         #region NINJA
