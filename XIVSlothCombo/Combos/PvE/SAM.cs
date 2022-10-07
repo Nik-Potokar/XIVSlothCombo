@@ -483,7 +483,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (Shinten.LevelChecked() && gauge.Kenki >= 25)
                                     {
-                                        if (GetCooldownRemainingTime(Senei) > 110 || (IsEnabled(CustomComboPreset.SAM_ST_Overcap) && gauge.Kenki >= SamKenkiOvercapAmount) || GetTargetHPPercent() <= executeThreshold)
+                                        if (GetCooldownRemainingTime(Senei) > 110 || (IsEnabled(CustomComboPreset.SAM_ST_Overcap) && gauge.Kenki >= SamKenkiOvercapAmount) || (IsEnabled(CustomComboPreset.SAM_ST_Execute) && GetTargetHPPercent() <= executeThreshold))
                                             return Shinten;
                                     }
 
