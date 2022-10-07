@@ -29,7 +29,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (key is DOL.JobID) key = 08; //Set to Carpenter
             if (ClassJobs.TryGetValue(key, out ClassJob? job))
             {
-                string jobname = key is 08 or 16 ? (string)job.ClassJobCategory.Value.Name : (string)job.Name;
+                //Grab Category name for DOH/DOL, else the normal Name for the rest
+                string jobname = key is 08 or 16 ? job.ClassJobCategory.Value.Name : job.Name;
+                //Job names are all lowercase by default. This capitalizes based on regional rules
                 string cultureID = Service.ClientState.ClientLanguage switch
                 {
                     Dalamud.ClientLanguage.French => "fr-FR",
@@ -40,7 +42,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;
                 return textInfo.ToTitleCase(jobname);
 
-            }
+            } //Misc or unknown
             else return key == 99 ? "Global" : "Unknown";
         }
 
