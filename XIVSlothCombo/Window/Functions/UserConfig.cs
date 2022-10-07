@@ -1558,7 +1558,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SAM_ST_Execute)
             {
-                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "Execute Threshold %", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to use Shinten below", 150, SliderIncrements.Ones);
             }
 
             #endregion
