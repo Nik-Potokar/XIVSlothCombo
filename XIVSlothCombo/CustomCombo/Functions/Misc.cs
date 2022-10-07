@@ -1,9 +1,7 @@
 ﻿using Lumina.Excel.GeneratedSheets;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks.Dataflow;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Services;
