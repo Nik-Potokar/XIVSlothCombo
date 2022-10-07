@@ -2584,7 +2584,7 @@ namespace XIVSlothCombo.Combos
                     SAM_ST_GekkoCombo_CDs_Senei_Burst = 15017,
 
         [ParentCombo(SAM_ST_Overcap)]
-        [CustomComboInfo("Execute Feature", "Adds Shinten to the main combo when it's off cooldown, Kenki > 25 and your current target is below the HP percentage threshold.", SAM.JobID, 0, "", "")]
+        [CustomComboInfo("Execute Feature", "Adds Shinten to the main combo when Kenki > 25 and your current target is below the HP percentage threshold.", SAM.JobID, 0, "", "")]
         SAM_ST_Execute = 15046,
         #endregion
 
