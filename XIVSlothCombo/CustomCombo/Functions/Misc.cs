@@ -25,8 +25,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static string JobIDToName(byte key)
         {
             //Override DOH/DOL
-            if (key is DOH.JobID) key = 16; //Set to Miner
-            if (key is DOL.JobID) key = 08; //Set to Carpenter
+            if (key is DOH.JobID) key = 08; //Set to Carpenter
+            if (key is DOL.JobID) key = 16; //Set to Miner
             if (ClassJobs.TryGetValue(key, out ClassJob? job))
             {
                 //Grab Category name for DOH/DOL, else the normal Name for the rest
@@ -40,7 +40,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                     _ => "en-us",
                 };
                 TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;
-                return textInfo.ToTitleCase(jobname);
+                jobname = textInfo.ToTitleCase(jobname);
+                if (key is 0) jobname = " " + jobname; //Adding space to the front of Global moves it to the top. Shit hack but works
+                return jobname;
 
             } //Misc or unknown
             else return key == 99 ? "Global" : "Unknown";
