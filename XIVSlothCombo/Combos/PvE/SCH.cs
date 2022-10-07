@@ -439,7 +439,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Aetherflow
                     if (IsEnabled(CustomComboPreset.SCH_Succor_Combo_Aetherflow) &&
                         ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
-                        InCombat() && CanSpellWeave(actionID))
+                        !(IsEnabled(CustomComboPreset.SCH_Succor_Combo_Aetherflow_Indomitability) && GetCooldownRemainingTime(Indomitability) <= 0.6f) &&
+                            InCombat())
                         return Aetherflow;
 
                     // Lucid Dreaming

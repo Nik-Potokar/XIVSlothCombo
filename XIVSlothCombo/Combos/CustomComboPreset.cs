@@ -2809,16 +2809,20 @@ namespace XIVSlothCombo.Combos
         SCH_Succor_Combo = 16250,
 
             [ParentCombo(SCH_Succor_Combo)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP isn't high enough to cast Succor.", SCH.JobID)]
             SCH_Succor_Combo_Lucid = 16251,
 
             [ParentCombo(SCH_Succor_Combo)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of aetherflow stacks.", SCH.JobID)]
             SCH_Succor_Combo_Aetherflow = 16252,
-            
-            [ParentCombo(SCH_Succor_Combo)]
-            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor", SCH.JobID)]
-            SCH_Succor_Combo_Indomitability = 16253,
+
+        [ParentCombo(SCH_Succor_Combo_Aetherflow)]
+        [CustomComboInfo("Indomitability Ready Only", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+        SCH_Succor_Combo_Aetherflow_Indomitability = 16253,
+
+        [ParentCombo(SCH_Succor_Combo)]
+            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
+            SCH_Succor_Combo_Indomitability = 16254,
 
         [ReplaceSkill(SCH.Physick)]
         [CustomComboInfo("Physick Combo Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
