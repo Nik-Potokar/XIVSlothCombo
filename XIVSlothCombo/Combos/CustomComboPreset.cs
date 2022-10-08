@@ -3360,7 +3360,7 @@ namespace XIVSlothCombo.Combos
         
         [SecretCustomCombo]
         [ParentCombo(RDMPvP_BurstMode)]
-        [CustomComboInfo("Frazzle Option", "Removes Frazzle from being used as part of Burst Mode", RDMPVP.JobID)]
+        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle being used in Burst Mode.", RDMPVP.JobID)]
         RDMPvP_FrazzleOption = 80031,
         
         #endregion
