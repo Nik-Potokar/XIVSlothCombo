@@ -1642,9 +1642,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ninjitsu Option", "Adds Ninjitsu to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Ninjitsus = 10011,
 
+        [ConflictingCombos(NIN_ST_AdvancedMode_Ninjitsus_ChargeHoldForBurst)]
         [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus)]
         [CustomComboInfo("Hold 1 Charge", "Prevent using both charges of Mudra.", NIN.JobID)]
         NIN_ST_AdvancedMode_Ninjitsus_ChargeHold = 10012,
+
+        [ConflictingCombos(NIN_ST_AdvancedMode_Ninjitsus_ChargeHold)]
+        [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus)]
+        [CustomComboInfo("Hold 1 Charge For Burst/Uptime", "Prevent using both charges of Mudra except for burst or uptime features (if enabled).", NIN.JobID)]
+        NIN_ST_AdvancedMode_Ninjitsus_ChargeHoldForBurst = 10068,
 
         [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus)]
         [CustomComboInfo("Use Fuma Shuriken", "Spends Mudra charges on Fuma Shuriken (only before Raiton is available).", NIN.JobID)]
@@ -1867,11 +1873,11 @@ namespace XIVSlothCombo.Combos
         NIN_ST_AdvancedMode_Phantom_Uptime = 10065,
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
-        [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature. (Delays normal use of Suiton until nearly at two charges to avoid drift)", NIN.JobID)]
+        [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature. (Requires 'Hold 1 Charge For Burst / Uptime' Ninjustu feature to be enabled)", NIN.JobID)]
         NIN_ST_AdvancedMode_Suiton_Uptime = 10066,
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
-        [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature.", NIN.JobID)]
+        [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature. (Requires 'Hold 1 Charge For Burst / Uptime' Ninjustu feature to be enabled)", NIN.JobID)]
         NIN_ST_AdvancedMode_Raiton_Uptime = 10067,
 
 

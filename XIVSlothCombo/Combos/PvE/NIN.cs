@@ -174,7 +174,8 @@ namespace XIVSlothCombo.Combos.PvE
                     bool inMudraState = HasEffect(Buffs.Mudra);
                     bool setupSuitonWindow = GetCooldownRemainingTime(TrickAttack) <= GetOptionValue(Config.Trick_CooldownRemaining) && !HasEffect(Buffs.Suiton);
                     bool setupKassatsuWindow = GetCooldownRemainingTime(TrickAttack) <= 10 && HasEffect(Buffs.Suiton);
-                    bool chargeCheck = IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_ChargeHold) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_ChargeHold) && (GetRemainingCharges(Ten) == 2 || (GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 3)));
+                    bool chargeCheck = IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_ChargeHold) || GetRemainingCharges(Ten) == 2 || (GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 3);
+                    bool chargeHoldForBurst = IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_ChargeHoldForBurst) || (GetRemainingCharges(Ten) == 2 || (GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 3) || TargetHasEffect(Debuffs.TrickAttack) || TargetHasEffect (Debuffs.Mug) && chargeCheck);
                     bool doubleArmorCrush = IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush) && PluginConfiguration.GetCustomBoolValue(Config.Advanced_DoubleArmorCrush) && GetOptionValue(Config.Huton_RemainingArmorCrush) <= 12;
                     int timesLastEnderWasArmorCrush = ActionWatching.HowManyTimesUsedAfterAnotherAction(ArmorCrush, AeolianEdge);
                     bool inTNWithDoubleArmorCrush = doubleArmorCrush && HasEffect(All.Buffs.TrueNorth) && timesLastEnderWasArmorCrush == 1;
@@ -188,7 +189,7 @@ namespace XIVSlothCombo.Combos.PvE
                     double playerHP = PlayerHealthPercentageHp();
 
 
-                    if ((IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) && IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiton_Uptime)) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
+                    if ((IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) && IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiton_Uptime) && IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Suiton_Uptime)) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
                         mudraState.CurrentMudra = MudraCasting.MudraState.None;
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) && IsOnCooldown(TrickAttack) && mudraState.CurrentMudra == MudraCasting.MudraState.CastingSuiton && !setupSuitonWindow)
@@ -375,13 +376,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 setupSuitonWindow && 
                                 TrickAttack.LevelChecked() &&
                                 chargeCheck &&
-                                (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Suiton_Uptime) && GetRemainingCharges(Ten) == 2 || (GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 3)) &&
+                                chargeHoldForBurst &&
                                 mudraState.CastSuiton(ref actionID))
                                 return actionID;
 
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton) &&
                                 !inTrickBurstSaveWindow &&
                                 chargeCheck &&
+                                chargeHoldForBurst &&
                                 mudraState.CastRaiton(ref actionID))
                                 return actionID;
 
