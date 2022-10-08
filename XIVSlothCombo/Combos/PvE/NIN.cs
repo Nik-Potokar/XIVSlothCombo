@@ -242,6 +242,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Phantom_Uptime) && PhantomKamaitachi.LevelChecked() && HasEffect(Buffs.PhantomReady))
                             return OriginalHook(PhantomKamaitachi);
 
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Suiton_Uptime) && setupSuitonWindow && Suiton.LevelChecked() && mudraState.CastSuiton(ref actionID))
+                            return actionID;
+
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiton_Uptime) && Raiton.LevelChecked() && mudraState.CastRaiton(ref actionID))
                             return actionID;
 
@@ -371,8 +374,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) &&
                                 setupSuitonWindow && 
                                 TrickAttack.LevelChecked() &&
-                                !HasEffect(Buffs.Suiton) &&
                                 chargeCheck &&
+                                (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Suiton_Uptime) && GetRemainingCharges(Ten) == 2 || (GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 3)) &&
                                 mudraState.CastSuiton(ref actionID))
                                 return actionID;
 

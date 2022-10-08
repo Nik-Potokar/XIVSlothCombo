@@ -1863,12 +1863,16 @@ namespace XIVSlothCombo.Combos
         NIN_HuraijinArmorCrush = 10064,
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
-        [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature.", NIN.JobID)]
-        NIN_ST_AdvancedMode_Raiton_Uptime = 10065,
+        [CustomComboInfo("Phantom Kamaitachi Uptime Option", "Adds Phantom Kamaitachi as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Phantom_Uptime = 10065,
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
-        [CustomComboInfo("Phantom Kamaitachi Uptime Option", "Adds Phantom Kamaitachi as an uptime feature.", NIN.JobID)]
-        NIN_ST_AdvancedMode_Phantom_Uptime = 10066,
+        [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature. (Delays normal use of Suiton until nearly at two charges to avoid drift)", NIN.JobID)]
+        NIN_ST_AdvancedMode_Suiton_Uptime = 10066,
+
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Raiton_Uptime = 10067,
 
 
         #endregion
