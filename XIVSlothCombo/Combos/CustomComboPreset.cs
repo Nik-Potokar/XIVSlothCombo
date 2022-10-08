@@ -2837,11 +2837,11 @@ namespace XIVSlothCombo.Combos
             SCH_ST_Heal_Aetherflow = 16262,
             
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP% below:", SCH.JobID)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID)]
             SCH_ST_Heal_Adloquium = 16263,
             
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP% below:", SCH.JobID)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID)]
             SCH_ST_Heal_Lustrate = 16264,
             
 

@@ -523,7 +523,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Check for the Galvanize shield buff. Start applying if it doesn't exist or Target HP is below %
                     if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Adloquium) &&
                         ActionReady(Adloquium) &&
-                        (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null || GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_AdloquiumOption))
+                        (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer?.ObjectId) is null || GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_AdloquiumOption))
                     {
                         return Adloquium;
                     }
