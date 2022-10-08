@@ -47,7 +47,7 @@ namespace XIVSlothCombo.Combos.PvP
                 if (actionID is Verstone or Verfire)
                 {
 
-                    if (!GetCooldown(Frazzle).IsCooldown && HasEffect(Buffs.BlackShift))
+                    if (!GetCooldown(Frazzle).IsCooldown && HasEffect(Buffs.BlackShift) && IsNotEnabled(CustomComboPreset.RDMPvP_FrazzleOption))
                         return OriginalHook(Frazzle);
 
                     if (!GetCooldown(Resolution).IsCooldown)
