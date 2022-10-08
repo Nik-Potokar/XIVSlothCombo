@@ -3166,11 +3166,11 @@ namespace XIVSlothCombo.Combos
             WHM_AoE_DPS_LilyOvercap = 19193,
 
             [ParentCombo(WHM_AoE_DPS)]
-            [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo.", WHM.JobID, 24, "", "")]
+            [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo if you are moving or it can be weaved without GCD delay.", WHM.JobID, 24, "", "")]
             WHM_AoE_DPS_PresenceOfMind = 19195,
 
             [ParentCombo(WHM_AoE_DPS)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below set MP value.", WHM.JobID, 25, "", "")]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below the set MP value if you are moving or it can be weaved without GCD delay.", WHM.JobID, 25, "", "")]
             WHM_AoE_DPS_Lucid = 19191,
 
             #endregion

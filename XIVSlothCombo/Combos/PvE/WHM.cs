@@ -313,19 +313,14 @@ namespace XIVSlothCombo.Combos.PvE
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
 
-                    if (CanSpellWeave(actionID))
-                    {
-                        bool holyLast = WasLastAction(OriginalHook(Holy));
-                        int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid);
-                        bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold;
-                        bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
-                        bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
+                        return Assize;
 
-                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && pomReady)
+                    if (CanSpellWeave(actionID) || IsMoving)
+                    {
+                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
                             return PresenceOfMind;
-                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && holyLast && assizeReady)
-                            return Assize;
-                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && holyLast && lucidReady)
+                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid))
                             return All.LucidDreaming;
                     }
 
