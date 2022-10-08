@@ -3357,6 +3357,12 @@ namespace XIVSlothCombo.Combos
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
         RDMPvP_BurstMode = 80030,
+        
+        [SecretCustomCombo]
+        [ParentCombo(RDMPvP_BurstMode)]
+        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle being used in Burst Mode.", RDMPVP.JobID)]
+        RDMPvP_FrazzleOption = 80031,
+        
         #endregion
 
         #region WARRIOR
