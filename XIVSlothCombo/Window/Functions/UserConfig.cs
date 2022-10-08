@@ -1076,7 +1076,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
-                UserConfig.DrawRoundedSliderFloat(0, 4, AST.Config.AST_ST_DPS_CombustUptime_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+                UserConfig.DrawRoundedSliderFloat(0, 4, AST.Config.AST_ST_DPS_CombustUptime_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check (GCD recommended, ctrl + click bar to type)", digits: 2);
 
             if (preset is CustomComboPreset.AST_DPS_Divination)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
@@ -1464,7 +1464,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
-                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT.Set to Zero to disable this check (GCD recommended, ctrl + click bar to type)", digits: 2);
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
@@ -1578,7 +1578,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SCH_DPS_Bio)
-                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check (GCD recommended, ctrl + click bar to type)", digits: 2);
 
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
@@ -1698,7 +1698,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check");
             if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
-                UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+                UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check (GCD recommended, ctrl + click bar to type)", digits: 2);
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
