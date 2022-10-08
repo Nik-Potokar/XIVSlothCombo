@@ -105,6 +105,10 @@ namespace XIVSlothCombo.Combos.PvE
             internal static int SCH_ST_DPS_ChainStratagemOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_ChainStratagemOption));
             internal static float SCH_ST_DPS_EnergyDrain => CustomComboFunctions.GetOptionFloat(nameof(SCH_ST_DPS_EnergyDrain));
             internal static int SCH_AoE_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_AoE_LucidOption));
+            internal static int SCH_AoE_Heal_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_AoE_Heal_LucidOption));
+            internal static int SCH_Heal_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_Heal_LucidOption));
+            internal static int SCH_Heal_AdloquiumOption => CustomComboFunctions.GetOptionValue(nameof(SCH_Heal_AdloquiumOption));
+            internal static int SCH_Heal_LustrateOption => CustomComboFunctions.GetOptionValue(nameof(SCH_Heal_LustrateOption));
             internal static bool SCH_Aetherflow_Display => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Display));
             internal static bool SCH_Aetherflow_Recite_Excog => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Excog));
             internal static bool SCH_Aetherflow_Recite_Indom => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Indom));
@@ -416,6 +420,117 @@ namespace XIVSlothCombo.Combos.PvE
                         return dot; // Use appropriate DoT Action
                 }
                 return actionID;
+            }
+        }
+        
+        /*
+        * SCH_AoE_Heal
+        * Overrides main AoE Healing abiility, Succor
+        * Lucid Dreaming and Atherflow weave options
+        */
+        internal class SCH_AoE_Heal : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_AoE_Heal;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Succor)
+                {
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_AoE_Heal_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
+
+                    // Indomitability
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Indomitability) &&
+                        ActionReady(Indomitability) &&
+                        Gauge.HasAetherflow())
+                        return Indomitability;
+                }
+                return OriginalHook(actionID);
+            }
+        }
+        
+        /*
+        * SCH_Fairy_Combo
+        * Overrides Whispering Dawn
+        */
+        internal class SCH_Fairy_Combo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Fairy_Combo;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is WhisperingDawn)
+                {
+                    // FeyIllumination
+                    if (ActionReady(FeyIllumination))
+                        return FeyIllumination;
+                    
+                    // FeyBlessing
+                    if (ActionReady(FeyBlessing))
+                        return FeyBlessing;
+                }
+                return OriginalHook(actionID);
+            }
+        }
+        
+        /*
+        * SCH_AoE_Heal
+        * Overrides main AoE Healing abiility, Succor
+        * Lucid Dreaming and Atherflow weave options
+        */
+        internal class SCH_Heal : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Heal;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Physick)
+                {
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_Heal_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_Heal_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_Heal_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
+
+                    //Grab our target (Soft->Hard->Self)
+                    GameObject? healTarget = null;
+                    GameObject? softTarget = Service.TargetManager.SoftTarget;
+                    if (HasFriendlyTarget(softTarget)) healTarget = softTarget;
+                    if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
+                    if (healTarget is null) healTarget = LocalPlayer;
+
+                    //Check for the Galvanize shield buff. Start applying if it doesn't exist or Target HP is below %
+                    if (IsEnabled(CustomComboPreset.SCH_Heal_Adloquium) &&
+                        ActionReady(Adloquium) &&
+                        (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null || GetTargetHPPercent(healTarget) < Config.SCH_Heal_AdloquiumOption))
+                    {
+                        return Adloquium;
+                    }
+                    
+                    //Cast Lustrate if you have Aetherflow and Target HP is below %
+                    if (IsEnabled(CustomComboPreset.SCH_Heal_Lustrate) &&
+                        ActionReady(Lustrate) && 
+                        Gauge.HasAetherflow() &&
+                        GetTargetHPPercent(healTarget) <= Config.SCH_Heal_LustrateOption)
+                    {
+                        return Lustrate;
+                    }
+                }
+                return OriginalHook(actionID);
             }
         }
     }

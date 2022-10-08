@@ -54,15 +54,15 @@ namespace XIVSlothCombo.Data
                 ActionSheet.TryGetValue(header.ActionId, out var sheet);
                 if (sheet != null)
                 {
-                    switch (sheet.ActionCategory.Value.Name)
+                    switch (sheet.ActionCategory.Value.RowId)
                     {
-                        case "Spell":
+                        case 2: //Spell
                             LastSpell = header.ActionId;
                             break;
-                        case "Weaponskill":
+                        case 3: //Weaponskill
                             LastWeaponskill = header.ActionId;
                             break;
-                        case "Ability":
+                        case 4: //Ability
                             LastAbility = header.ActionId;
                             break;
                     }

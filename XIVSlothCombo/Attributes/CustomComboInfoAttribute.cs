@@ -1,6 +1,11 @@
+using Lumina.Excel.GeneratedSheets;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Attributes
 {
@@ -46,57 +51,36 @@ namespace XIVSlothCombo.Attributes
         /// <summary> Gets the job name. </summary>
         public string JobName => JobIDToName(JobID);
 
+        private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
+
+        public static string JobIDToName(byte key)
+        {
+            //Override DOH/DOL
+            if (key is DOH.JobID) key = 08; //Set to Carpenter
+            if (key is DOL.JobID) key = 16; //Set to Miner
+            if (ClassJobs.TryGetValue(key, out ClassJob? job))
+            {
+                //Grab Category name for DOH/DOL, else the normal Name for the rest
+                string jobname = key is 08 or 16 ? job.ClassJobCategory.Value.Name : job.Name;
+                //Job names are all lowercase by default. This capitalizes based on regional rules
+                string cultureID = Service.ClientState.ClientLanguage switch
+                {
+                    Dalamud.ClientLanguage.French => "fr-FR",
+                    Dalamud.ClientLanguage.Japanese => "ja-JP",
+                    Dalamud.ClientLanguage.German => "de-DE",
+                    _ => "en-us",
+                };
+                TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;
+                jobname = textInfo.ToTitleCase(jobname);
+                if (key is 0) jobname = " " + jobname; //Adding space to the front of Global moves it to the top. Shit hack but works
+                return jobname;
+
+            } //Misc or unknown
+            else return key == 99 ? "Global" : "Unknown";
+        }
+
         /// <summary> Gets the meme job name. </summary>
         public string MemeJobName => MemeJobIDToName(JobID);
-
-        private static string JobIDToName(byte key) => key switch
-        {
-            0 => "All Jobs",
-            1 => "Gladiator",
-            2 => "Pugilist",
-            3 => "Marauder",
-            4 => "Lancer",
-            5 => "Archer",
-            6 => "Conjurer",
-            7 => "Thaumaturge",
-            8 => "Carpenter",
-            9 => "Blacksmith",
-            10 => "Armorer",
-            11 => "Goldsmith",
-            12 => "Leatherworker",
-            13 => "Weaver",
-            14 => "Alchemist",
-            15 => "Culinarian",
-            16 => "Miner",
-            17 => "Botanist",
-            18 => "Fisher",
-            19 => "Paladin",
-            20 => "Monk",
-            21 => "Warrior",
-            22 => "Dragoon",
-            23 => "Bard",
-            24 => "White Mage",
-            25 => "Black Mage",
-            26 => "Arcanist",
-            27 => "Summoner",
-            28 => "Scholar",
-            29 => "Rogue",
-            30 => "Ninja",
-            31 => "Machinist",
-            32 => "Dark Knight",
-            33 => "Astrologian",
-            34 => "Samurai",
-            35 => "Red Mage",
-            36 => "Blue Mage",
-            37 => "Gunbreaker",
-            38 => "Dancer",
-            39 => "Reaper",
-            40 => "Sage",
-            99 => "Global",
-            DOH.JobID => "Disciples of the Hand",
-            DOL.JobID => "Disciples of the Land",
-            _ => "Unknown",
-        };
 
         private static string MemeJobIDToName(byte key) => key switch
         {
