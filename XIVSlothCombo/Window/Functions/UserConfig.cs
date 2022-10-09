@@ -1075,7 +1075,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
-            if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
+            if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime_Adv)
                 UserConfig.DrawRoundedSliderFloat(0, 4, AST.Config.AST_ST_DPS_CombustUptime_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
 
             if (preset is CustomComboPreset.AST_DPS_Divination)
@@ -1463,7 +1463,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
                 UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
-            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
+            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis_Adv)
                 UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
@@ -1577,7 +1577,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SCH_DPS_Bio)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
-            if (preset is CustomComboPreset.SCH_DPS_Bio)
+            if (preset is CustomComboPreset.SCH_DPS_Bio_Adv)
                 UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
 
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
@@ -1696,7 +1696,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check.");
             
-            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
+            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT_Adv)
                 UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
             
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)

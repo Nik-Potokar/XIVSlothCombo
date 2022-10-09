@@ -350,8 +350,9 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                            float refreshtimer = IsEnabled(CustomComboPreset.SCH_DPS_Bio_Adv) ? Config.SCH_ST_DPS_Bio_Threshold : 3;
 
-                            if (dotDebuff is null || dotDebuff?.RemainingTime <= Config.SCH_ST_DPS_Bio_Threshold &&
+                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= refreshtimer) &&
                                 GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)
                                 return dot; //Use appropriate DoT Action
                         }

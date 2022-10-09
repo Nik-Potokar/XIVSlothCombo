@@ -244,7 +244,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (DosisList.TryGetValue(OriginalHook(actionID), out ushort dotDebuffID))
                             {
                                 Status? dotDebuff = FindTargetEffect(dotDebuffID);
-                                if (dotDebuff is null || dotDebuff.RemainingTime <= Config.SGE_ST_Dosis_Threshold &&
+                                float refreshtimer = IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis_Adv) ? Config.SGE_ST_Dosis_Threshold : 3;
+
+                                if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
                                     GetTargetHPPercent() > Config.SGE_ST_Dosis_EDosisHPPer)
                                     return Eukrasia;
                             }
