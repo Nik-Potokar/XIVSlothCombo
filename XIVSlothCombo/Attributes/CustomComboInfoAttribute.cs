@@ -1,7 +1,11 @@
+using Lumina.Excel.GeneratedSheets;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Attributes
 {
@@ -45,7 +49,35 @@ namespace XIVSlothCombo.Attributes
         public int Order { get; }
 
         /// <summary> Gets the job name. </summary>
-        public string JobName => CustomComboFunctions.JobIDToName(JobID);
+        public string JobName => JobIDToName(JobID);
+
+        private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
+
+        public static string JobIDToName(byte key)
+        {
+            //Override DOH/DOL
+            if (key is DOH.JobID) key = 08; //Set to Carpenter
+            if (key is DOL.JobID) key = 16; //Set to Miner
+            if (ClassJobs.TryGetValue(key, out ClassJob? job))
+            {
+                //Grab Category name for DOH/DOL, else the normal Name for the rest
+                string jobname = key is 08 or 16 ? job.ClassJobCategory.Value.Name : job.Name;
+                //Job names are all lowercase by default. This capitalizes based on regional rules
+                string cultureID = Service.ClientState.ClientLanguage switch
+                {
+                    Dalamud.ClientLanguage.French => "fr-FR",
+                    Dalamud.ClientLanguage.Japanese => "ja-JP",
+                    Dalamud.ClientLanguage.German => "de-DE",
+                    _ => "en-us",
+                };
+                TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;
+                jobname = textInfo.ToTitleCase(jobname);
+                if (key is 0) jobname = " " + jobname; //Adding space to the front of Global moves it to the top. Shit hack but works
+                return jobname;
+
+            } //Misc or unknown
+            else return key == 99 ? "Global" : "Unknown";
+        }
 
         /// <summary> Gets the meme job name. </summary>
         public string MemeJobName => MemeJobIDToName(JobID);

@@ -1073,16 +1073,16 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(4000, 9500, AST.Config.AST_LucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
-                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
-            if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
-                UserConfig.DrawRoundedSliderFloat(0, 4, AST.Config.AST_ST_DPS_CombustUptime_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+            if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime_Adv)
+                UserConfig.DrawRoundedSliderFloat(0, 4, AST.Config.AST_ST_DPS_CombustUptime_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
 
             if (preset is CustomComboPreset.AST_DPS_Divination)
-                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
             if (preset is CustomComboPreset.AST_DPS_LightSpeed)
-                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
@@ -1463,8 +1463,8 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
                 UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
-            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
-                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis_Adv)
+                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
@@ -1568,38 +1568,35 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SCH_DPS)
             {
                 UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Ruin I / Broils", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown", 1);
+                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown.", 1);
             }
 
             if (preset is CustomComboPreset.SCH_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_DPS_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_DPS_Bio)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
-            if (preset is CustomComboPreset.SCH_DPS_Bio)
-                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+            if (preset is CustomComboPreset.SCH_DPS_Bio_Adv)
+                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
 
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP %. Set to Zero to disable this check");
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
-                UserConfig.DrawRoundedSliderFloat(0f, 2.5f, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Time remaining in seconds for each stack (Recommend GCD)", digits: 2);
+                UserConfig.DrawRoundedSliderFloat(0f, 2.5f, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Time remaining in seconds for each stack:", digits: 1);
 
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+                        
+            if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
             
-            if (preset is CustomComboPreset.SCH_AoE_Heal_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.SCH_ST_Heal_Adloquium)
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_AdloquiumOption), "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
             
-            if (preset is CustomComboPreset.SCH_Heal_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
-            
-            if (preset is CustomComboPreset.SCH_Heal_Adloquium)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_Heal_AdloquiumOption), "Start using when below HP %\nSet to 0 to always use Adloquim instead of Physick or 100 to disable this check\nWill still use Adloquim when target doesn't have Galvanize");
-            
-            if (preset is CustomComboPreset.SCH_Heal_Lustrate)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_Heal_LustrateOption), "Start using when below HP %. Set to 100 to disable this check");
+            if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
+                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_LustrateOption), "Start using when below HP %. Set to 100 to disable this check");
 
             if (preset is CustomComboPreset.SCH_FairyReminder)
             {
@@ -1694,15 +1691,19 @@ namespace XIVSlothCombo.Window.Functions
             #region WHITE MAGE
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work.", 150, SliderIncrements.Hundreds);
+            
             if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
-                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check");
-            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
-                UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check", digits: 1);
+                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check.");
+            
+            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT_Adv)
+                UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+            
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
-                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% of target to use Tetragrammaton");
+                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% to use Tetragrammaton on target at:");
 
             #endregion
             // ====================================================================================
