@@ -3318,7 +3318,7 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Chum to Baited Breath Option", "Replaces Chum with Baited Breath when diving.", DOL.JobID)]
             FSH_Chum_BaitedBreath = 51011,
-        
+
         #endregion
 
         #endregion
@@ -3328,7 +3328,17 @@ namespace XIVSlothCombo.Combos
         // full re-order pending - K
 
         #region ASTROLOGIAN
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Malefic into all-in-one damage button.", AST.JobID)]
+        ASTPvP_Burst = 80000,
 
+        [ParentCombo(ASTPvP_Burst)]
+        [CustomComboInfo("Double Cast Feature", "Adds Double Cast.", AST.JobID)]
+        ASTPvP_DoubleCast = 80001,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Double Cast Heal", "Adds Double Cast to Aspected Benefic", AST.JobID)]
+        ASTPvP_Heal = 80002,
         #endregion
 
         #region MACHINIST
@@ -3399,6 +3409,11 @@ namespace XIVSlothCombo.Combos
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
         SGEPvP_BurstMode = 80060,
+
+        [ParentCombo(SGEPvP_BurstMode)]
+        [CustomComboInfo("Pneuma Feature", "Removes Pneuma from being used as part of Burst Mode.", SGE.JobID)]
+        SGEPvP_BurstMode_Pneuma = 80061,
+
         #endregion
 
         #region DANCER
@@ -3543,7 +3558,39 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region DRAGOON
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Wheeling Thrust Combo into all-in-one damage button.", DRG.JobID)]
+        DRGPvP_Burst = 80200,
 
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("Geirskogul Feature", "Adds Geirskogul.", DRG.JobID)]
+        DRGPvP_Geirskogul = 80201,
+
+        [ParentCombo(DRGPvP_Geirskogul)]
+        [CustomComboInfo("Nastrond Feature", "Adds Nastrond.", DRG.JobID)]
+        DRGPvP_Nastrond = 80202,
+
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("Horrid Roar Feature", "Adds Horrid Roar.", DRG.JobID)]
+        DRGPvP_HorridRoar = 80203,
+
+        [ConflictingCombos(DRGPvP_ChaoticSpringBurst)]
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("Sustain Chaos Spring", "Burst option that will use Chaotic Spring off cooldown.", DRG.JobID)]
+        DRGPvP_ChaoticSpringSustain = 80204,
+
+        [ConflictingCombos(DRGPvP_ChaoticSpringSustain)]
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("Burst Chaos Spring", "Sustain option that will only use Chaotic Spring while its heal can be fully utilized.", DRG.JobID)]
+        DRGPvP_ChaoticSpringBurst = 80205,
+
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("Wyrmwind Thrust Feature", "Adds Wyrmwind Thrust onto main combo while you are not in melee range to maximize damage.", DRG.JobID)]
+        DRGPvP_WyrmwindThrust = 80206,
+
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("High Jump Weave Feature", "Adds High Jump onto main combo while you are in melee range.", DRG.JobID)]
+        DRGPvP_HighJump = 80207,
         #endregion
 
         #region GUNBREAKER
@@ -3551,11 +3598,36 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region PALADIN
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Royal Authority Combo into all-in-one damage button.", PLD.JobID)]
+        PLDPVP_Burst = 80340,
+
+        [ParentCombo(PLDPVP_Burst)]
+        [CustomComboInfo("Shiled Bash Feature", "Adds Shield Bash.", PLD.JobID)]
+        PLDPVP_ShieldBash = 80341,
+
+        [ParentCombo(PLDPVP_Burst)]
+        [CustomComboInfo("Confiteor Feature", "Adds Confiteor.", PLD.JobID)]
+        PLDPVP_Confiteor = 80342,
 
         #endregion
 
         #region SCHOLAR
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Broil 4 into all-in-one damage button.", SCH.JobID)]
+        SCHPVP_Burst = 80350,
 
+        [ParentCombo(SCHPVP_Burst)]
+        [CustomComboInfo("Expidient Feature", "Adds Expidient to empower Biolysis.", SCH.JobID)]
+        SCHPVP_Expedient = 80351,
+
+        [ParentCombo(SCHPVP_Burst)]
+        [CustomComboInfo("Biolysis Feature", "Adds Biolysis.", SCH.JobID)]
+        SCHPVP_Biolysis = 80352,
+
+        [ParentCombo(SCHPVP_Burst)]
+        [CustomComboInfo("Deployment Tactics Feature", "Adds Deployment Tactics.", SCH.JobID)]
+        SCHPVP_DeploymentTactics = 80353,
         #endregion
 
         #region SUMMONER
@@ -3575,6 +3647,21 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region WHITE MAGE
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Glare into all-in-one damage button.", WHM.JobID)]
+        WHMPvP_Burst = 80400,
+
+        [ParentCombo(WHMPvP_Burst)]
+        [CustomComboInfo("Misery Feature", "Adds Afflatus Misery.", WHM.JobID)]
+        WHMPvP_Afflatus_Misery = 80401,
+
+        [ParentCombo(WHMPvP_Burst)]
+        [CustomComboInfo("Seraph Strike Feature", "Adds Seraph Strike.", WHM.JobID)]
+        WHMPvP_Seraph_Strike = 80402,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Protect Feature", "Adds Aquaveil to Cure 2.", WHM.JobID)]
+        WHMPvP_Heal = 80403,
 
         #endregion
 

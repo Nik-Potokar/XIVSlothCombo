@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.Core;
+﻿using System.Collections.Generic;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
@@ -41,6 +42,10 @@ namespace XIVSlothCombo.Combos.PvP
                 Guard = 3054;
         }
 
+        // Lists of Excluded skills 
+        internal static readonly List<uint>
+            MovmentSkills = new() { WARPVP.Onslaught, NINPVP.Shukuchi, DNCPvP.EnAvant, MNKPvP.ThunderClap, RDMPVP.CorpsACorps, RDMPVP.Displacement, SGEPVP.Icarus, RPRPVP.HellsIngress, RPRPVP.Regress, BRDPvP.RepellingShot, BLMPVP.AetherialManipulation, DRGPVP.ElusiveJump },
+            GlobalSkills = new() { Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint };
 
         internal class GlobalEmergencyHeals : CustomCombo
         {
@@ -56,14 +61,9 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (Execute() &&
                      InPvP() &&
-                     actionID != Guard &&
-                     actionID != Recuperate &&
-                     actionID != Purify &&
-                     actionID != StandardElixir &&
-                     actionID != Sprint &&
-                     actionID != Teleport &&
-                     actionID != Return)
-                     return OriginalHook(Recuperate);
+                    !GlobalSkills.Contains(actionID) &&
+                    !MovmentSkills.Contains(actionID))
+                    return OriginalHook(Recuperate);
 
                 return actionID;
             }
@@ -99,13 +99,8 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (Execute() &&
                     InPvP() &&
-                    actionID != Guard &&
-                    actionID != Recuperate &&
-                    actionID != Purify &&
-                    actionID != StandardElixir &&
-                     actionID != Sprint &&
-                     actionID != Teleport &&
-                     actionID != Return)
+                    !GlobalSkills.Contains(actionID) &&
+                    !MovmentSkills.Contains(actionID))
                     return OriginalHook(Guard);
 
                 return actionID;

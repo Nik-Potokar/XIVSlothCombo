@@ -18,6 +18,8 @@ namespace XIVSlothCombo.Combos.PvP
             LemuresSlice = 29548,
             DeathWarrant = 29549,
             ArcaneCrest = 29552,
+            HellsIngress = 29550,
+            Regress = 29551,
             Communio = 29554,
             SoulSlice = 29566;
 
