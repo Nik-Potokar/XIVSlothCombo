@@ -2367,8 +2367,8 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Toxikon_Lucid = 141110,
 
             [ParentCombo(SGE_ST_Toxikon)]
-            [CustomComboInfo("Eukrasian Dosis Option", "Use Eukrasian Dosis if DoT is needed or nothing else can be used.", SGE.JobID, 1120, "", "")]
-            SGE_ST_Toxikon_EDosis = 141120,
+            [CustomComboInfo("Eukrasian Dosis Uptime Option", "Use Eukrasian Dosis for DoT uptime.", SGE.JobID, 1120, "", "")]
+            SGE_ST_Toxikon_EDosis_Uptime = 141120,
 
             [ParentCombo(SGE_ST_Toxikon)]
             [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 1130, "", "")]
@@ -2377,6 +2377,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SGE_ST_Toxikon)]
             [CustomComboInfo("Dyskrasia Option", "Use Dyskrasia if Toxikon is not available and within range.", SGE.JobID, 1140, "", "")]
             SGE_ST_Toxikon_Dyskrasia  = 141140,
+
+            [ParentCombo(SGE_ST_Toxikon)]
+            [CustomComboInfo("Eukrasian Dosis Option", "Use Eukrasian Dosis if no other skills can be used.", SGE.JobID, 1150, "", "")]
+            SGE_ST_Toxikon_EDosis = 141150,
             
             #endregion
 

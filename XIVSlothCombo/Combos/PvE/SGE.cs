@@ -296,7 +296,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.LucidDreaming;
 
                     // Eukrasia.
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Toxikon_EDosis) && LevelChecked(Eukrasia) && HasBattleTarget())
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Toxikon_EDosis_Uptime) && LevelChecked(Eukrasia) && HasBattleTarget())
                     {
                         // Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
                         // Using TryGetValue due to edge case where the actionID would be read as Eukrasian Dosis instead of Dosis
