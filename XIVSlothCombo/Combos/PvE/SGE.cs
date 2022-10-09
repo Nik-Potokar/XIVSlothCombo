@@ -110,8 +110,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static int SGE_ST_Heal_Taurochole => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Taurochole));
             internal static int SGE_AoE_Phlegma_Lucid => CustomComboFunctions.GetOptionValue(nameof(SGE_AoE_Phlegma_Lucid));
             internal static int SGE_Eukrasia_Mode => CustomComboFunctions.GetOptionValue(nameof(SGE_Eukrasia_Mode));
-
-            internal static float SGE_ST_Dosis_Threshold = CustomComboFunctions.GetOptionFloat(nameof(SGE_ST_Dosis_Threshold));
+            internal static float SGE_ST_Dosis_Threshold => CustomComboFunctions.GetOptionFloat(nameof(SGE_ST_Dosis_Threshold));
 
         }
 
@@ -245,8 +244,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (DosisList.TryGetValue(OriginalHook(actionID), out ushort dotDebuffID))
                             {
                                 Status? dotDebuff = FindTargetEffect(dotDebuffID);
-                                if (((dotDebuff is null) || (dotDebuff.RemainingTime <= Config.SGE_ST_Dosis_Threshold)) &&
-                                    (GetTargetHPPercent() > Config.SGE_ST_Dosis_EDosisHPPer))
+                                if (dotDebuff is null || dotDebuff.RemainingTime <= Config.SGE_ST_Dosis_Threshold &&
+                                    GetTargetHPPercent() > Config.SGE_ST_Dosis_EDosisHPPer)
                                     return Eukrasia;
                             }
                         }
