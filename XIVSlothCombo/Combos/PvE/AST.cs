@@ -335,7 +335,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Grab current DoT via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
                             uint dot = OriginalHook(Combust);
                             Status? dotDebuff = FindTargetEffect(CombustList[dot]);
-                            float refreshtimer = IsEnabled(CustomComboPreset.SCH_DPS_Bio_Adv) ? GetOptionFloat(Config.AST_ST_DPS_CombustUptime_Threshold) : 3;
+                            float refreshtimer = IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime_Adv) ? GetOptionFloat(Config.AST_ST_DPS_CombustUptime_Threshold) : 3;
 
                             if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
                                 GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption))
