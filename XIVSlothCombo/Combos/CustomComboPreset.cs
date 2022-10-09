@@ -182,6 +182,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Combust Uptime Option", "Adds Combust to the DPS feature if it's not present on current target, or is about to expire.", AST.JobID, 0, "", "")]
             AST_ST_DPS_CombustUptime = 1018,
 
+                [ParentCombo(AST_ST_DPS)]
+                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", AST.JobID, 0, "", "")]
+                AST_ST_DPS_CombustUptime_Adv = 1019,
+
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
@@ -1599,7 +1603,7 @@ namespace XIVSlothCombo.Combos
         NIN_ST_SimpleMode = 10000,
 
         [ParentCombo(NIN_ST_SimpleMode)]
-        [CustomComboInfo("Balance Opener Feature", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]
+        [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]
         NIN_ST_SimpleMode_BalanceOpener = 10001,
 
         [ReplaceSkill(NIN.DeathBlossom)]
@@ -1613,37 +1617,37 @@ namespace XIVSlothCombo.Combos
         NIN_ST_AdvancedMode = 10003,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Throwing Dagger Uptime Feature", "Adds Throwing Dagger to Advanced Mode if out of melee range.", NIN.JobID)]
+        [CustomComboInfo("Throwing Dagger Uptime Option", "Adds Throwing Dagger to Advanced Mode if out of melee range.", NIN.JobID)]
         NIN_ST_AdvancedMode_RangedUptime = 10004,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Mug Feature", "Adds Mug to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Mug Option", "Adds Mug to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Mug = 10005,
 
         [ConflictingCombos(NIN_ST_AdvancedMode_Mug_AlignBefore)]
         [ParentCombo(NIN_ST_AdvancedMode_Mug)]
-        [CustomComboInfo("Align Mug with Trick Attack", "Only uses Mug whilst the target has Trick Attack, otherwise will use on cooldown.", NIN.JobID)]
+        [CustomComboInfo("Align Mug with Trick Attack Option", "Only uses Mug whilst the target has Trick Attack, otherwise will use on cooldown.", NIN.JobID)]
         NIN_ST_AdvancedMode_Mug_AlignAfter = 10006,
 
         [ConflictingCombos(NIN_ST_AdvancedMode_Mug_AlignAfter)]
         [ParentCombo(NIN_ST_AdvancedMode_Mug)]
-        [CustomComboInfo("Use Mug before Trick Attack", "Aligns Mug with Trick Attack but weaves it at least 1 GCD before Trick Attack.", NIN.JobID)]
+        [CustomComboInfo("Use Mug before Trick Attack Option", "Aligns Mug with Trick Attack but weaves it at least 1 GCD before Trick Attack.", NIN.JobID)]
         NIN_ST_AdvancedMode_Mug_AlignBefore = 10007,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Trick Attack Feature", "Adds Trick Attack to Advanced Mode.", NIN.JobID)] //Has Config
+        [CustomComboInfo("Trick Attack Option", "Adds Trick Attack to Advanced Mode.", NIN.JobID)] //Has Config
         NIN_ST_AdvancedMode_TrickAttack = 10008,
 
         [ParentCombo(NIN_ST_AdvancedMode_TrickAttack)]
-        [CustomComboInfo("Save Cooldowns Before Trick Attack", "Stops using abilities with longer cooldowns up to 15 seconds before Trick Attack comes off cooldown.", NIN.JobID)] //HasConfig
+        [CustomComboInfo("Save Cooldowns Before Trick Attack Option", "Stops using abilities with longer cooldowns up to 15 seconds before Trick Attack comes off cooldown.", NIN.JobID)] //HasConfig
         NIN_ST_AdvancedMode_TrickAttack_Cooldowns = 10009,
 
         [ParentCombo(NIN_ST_AdvancedMode_TrickAttack)]
-        [CustomComboInfo("Delayed Trick Attack Feature", "Waits at least 8 seconds into combat before using Trick Attack.", NIN.JobID)]
+        [CustomComboInfo("Delayed Trick Attack Option", "Waits at least 8 seconds into combat before using Trick Attack.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrickAttack_Delayed = 10010,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Ninjitsu Feature", "Adds Ninjitsus to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Ninjitsu Option", "Adds Ninjitsu to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Ninjitsus = 10011,
 
         [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus)]
@@ -1667,77 +1671,77 @@ namespace XIVSlothCombo.Combos
         NIN_ST_AdvancedMode_Ninjitsus_Huton = 10016,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Assassinate/Dream Within a Dream Feature", "Adds Assassinate and Dream Within a Dream to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Assassinate/Dream Within a Dream Option", "Adds Assassinate and Dream Within a Dream to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_AssassinateDWAD = 10017,
 
         [ConflictingCombos(NIN_KassatsuTrick, NIN_KassatsuChiJin)]
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Kassatsu Feature", "Adds Kassatsu to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Kassatsu Option", "Adds Kassatsu to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Kassatsu = 10018,
 
         [ParentCombo(NIN_ST_AdvancedMode_Kassatsu)]
-        [CustomComboInfo($"Use Hyosho Ranryu", "Spends Kassatsu on Hyosho Ranryu.", NIN.JobID)]
+        [CustomComboInfo($"Use Hyosho Ranryu Option", "Spends Kassatsu on Hyosho Ranryu.", NIN.JobID)]
         NIN_ST_AdvancedMode_Kassatsu_HyoshoRaynryu = 10019,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Armor Crush Feature", "Adds Armor Crush to Advanced Mode.", NIN.JobID)] //Has Config
+        [CustomComboInfo("Armor Crush Option", "Adds Armor Crush to Advanced Mode.", NIN.JobID)] //Has Config
         NIN_ST_AdvancedMode_ArmorCrush = 10020,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Huraijin Feature", "Adds Huraijin to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Huraijin Option", "Adds Huraijin to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Huraijin = 10021,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Bhavacakra Feature", "Adds Bhavacakra to Advanced Mode.", NIN.JobID)] //Has Config
+        [CustomComboInfo("Bhavacakra Option", "Adds Bhavacakra to Advanced Mode.", NIN.JobID)] //Has Config
         NIN_ST_AdvancedMode_Bhavacakra = 10022,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Ten Chi Jin Feature", "Adds Ten Chi Jin (the cooldown) to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Ten Chi Jin Option", "Adds Ten Chi Jin (the cooldown) to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_TCJ = 10023,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Meisui Feature", "Adds Meisui to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Meisui Option", "Adds Meisui to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Meisui = 10024,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Bunshin Feature", "Adds Bunshin to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Bunshin Option", "Adds Bunshin to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Bunshin = 10025,
 
         [ParentCombo(NIN_ST_AdvancedMode_Bunshin)]
-        [CustomComboInfo("Phantom Kamaitachi Feature", "Adds Phantom Kamaitachi to Advanced Mode.", NIN.JobID)]
-        NIN_ST_AdvancedMode_Bunshing_Phantom = 10026,
+        [CustomComboInfo("Phantom Kamaitachi Option", "Adds Phantom Kamaitachi to Advanced Mode.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Bunshin_Phantom = 10026,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Raiju Feature", "Adds Fleeting/Forked Raiju to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Raiju Option", "Adds Fleeting/Forked Raiju to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Raiju = 10027,
 
         [ParentCombo(NIN_ST_AdvancedMode_Raiju)]
-        [CustomComboInfo("Forked Raiju Gapcloser Feature", "Uses Forked Raiju when out of range.", NIN.JobID)]
+        [CustomComboInfo("Forked Raiju Gap-Closer Option", "Uses Forked Raiju when out of range.", NIN.JobID)]
         NIN_ST_AdvancedMode_Raiju_Forked = 10028,
 
         [ConflictingCombos(NIN_KassatsuChiJin, NIN_KassatsuTrick)]
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Balance Opener Feature", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]
+        [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]
         NIN_ST_AdvancedMode_BalanceOpener = 10029,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("True North Feature", "Adds True North to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("True North Option", "Adds True North to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrueNorth = 10030,
 
         [ParentCombo(NIN_ST_AdvancedMode_TrueNorth)]
-        [CustomComboInfo("Use Before Armor Crush Only", "Only triggers the use of True North before Armor Crush.", NIN.JobID)]
+        [CustomComboInfo("Use Before Armor Crush Only Option", "Only triggers the use of True North before Armor Crush.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrueNorth_ArmorCrush = 10031,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Second Wind Feature", "Adds Second Wind to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Second Wind Option", "Adds Second Wind to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_SecondWind = 10032,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Shade Shift Feature", "Adds Shade Shift to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Shade Shift Option", "Adds Shade Shift to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_ShadeShift = 10033,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Bloodbath Feature", "Adds Bloodbath to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Bloodbath Option", "Adds Bloodbath to Advanced Mode.", NIN.JobID)]
         NIN_ST_AdvancedMode_Bloodbath = 10034,
 
         [ReplaceSkill(NIN.DeathBlossom)]
@@ -1746,11 +1750,11 @@ namespace XIVSlothCombo.Combos
         NIN_AoE_AdvancedMode = 10035,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Assassinate/Dream Within a Dream Feature", "Adds Assassinate/Dream Within a Dream to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Assassinate/Dream Within a Dream Option", "Adds Assassinate/Dream Within a Dream to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_AssassinateDWAD = 10036,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Ninjitsus Feature", "Adds Ninjitsus to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Ninjitsu Option", "Adds Ninjitsu to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Ninjitsus = 10037,
 
         [ParentCombo(NIN_AoE_AdvancedMode_Ninjitsus)]
@@ -1771,61 +1775,61 @@ namespace XIVSlothCombo.Combos
 
         [ConflictingCombos(NIN_KassatsuTrick, NIN_KassatsuChiJin)]
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Kassatsu Feature", "Adds Kassatsu to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Kassatsu Option", "Adds Kassatsu to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Kassatsu = 10042,
 
         [ParentCombo(NIN_AoE_AdvancedMode_Kassatsu)]
-        [CustomComboInfo("Goka Mekkyaku Feature", "Adds Goka Mekkyaku to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Goka Mekkyaku Option", "Adds Goka Mekkyaku to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_GokaMekkyaku = 10043,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Huraijin Feature", "Adds Huraijin to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Huraijin Option", "Adds Huraijin to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Huraijin = 10044,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Hellfrog Medium Feature", "Adds Hellfrog Medium to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Hellfrog Medium Option", "Adds Hellfrog Medium to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_HellfrogMedium = 10045,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Ten Chi Jin Feature", "Adds Ten Chi Jin (the cooldown) to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Ten Chi Jin Option", "Adds Ten Chi Jin (the cooldown) to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_TCJ = 10046,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Meisui Feature", "Adds Meisui to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Meisui Option", "Adds Meisui to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Meisui = 10047,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Bunshin Feature", "Adds Bunshin to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Bunshin Option", "Adds Bunshin to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Bunshin = 10048,
 
         [ParentCombo(NIN_AoE_AdvancedMode_Bunshin)]
-        [CustomComboInfo("Phantom Kamaitachi Feature", "Adds Phantom Kamaitachi to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Phantom Kamaitachi Option", "Adds Phantom Kamaitachi to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Bunshin_Phantom = 10049,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Second Wind Feature", "Adds Second Wind to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Second Wind Option", "Adds Second Wind to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_SecondWind = 10050,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Shade Shift Feature", "Adds Shade Shift to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Shade Shift Option", "Adds Shade Shift to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_ShadeShift = 10051,
 
         [ParentCombo(NIN_AoE_AdvancedMode)]
-        [CustomComboInfo("Bloodbath Feature", "Adds Bloodbath to Advanced Mode.", NIN.JobID)]
+        [CustomComboInfo("Bloodbath Option", "Adds Bloodbath to Advanced Mode.", NIN.JobID)]
         NIN_AoE_AdvancedMode_Bloodbath = 10052,
 
         [ReplaceSkill(NIN.ArmorCrush)]
         [ConflictingCombos(NIN_ST_SimpleMode)]
-        [CustomComboInfo("Armor Crush Combo", "Replace Armor Crush with its combo chain.", NIN.JobID)]
+        [CustomComboInfo("Armor Crush Combo Feature", "Replace Armor Crush with its combo chain.", NIN.JobID)]
         NIN_ArmorCrushCombo = 10053,
 
         [ConflictingCombos(NIN_ST_AdvancedMode_BalanceOpener, NIN_ST_AdvancedMode_BalanceOpener, NIN_ST_AdvancedMode_Kassatsu, NIN_AoE_AdvancedMode_Kassatsu, NIN_KassatsuChiJin)]
         [ReplaceSkill(NIN.Kassatsu)]
-        [CustomComboInfo("Kassatsu to Trick", "Replaces Kassatsu with Trick Attack while Suiton or Hidden is up.\nCooldown tracking plugin recommended.", NIN.JobID)]
+        [CustomComboInfo("Kassatsu to Trick Feature", "Replaces Kassatsu with Trick Attack while Suiton or Hidden is up.\nCooldown tracking plugin recommended.", NIN.JobID)]
         NIN_KassatsuTrick = 10054,
 
         [ReplaceSkill(NIN.TenChiJin)]
-        [CustomComboInfo("Ten Chi Jin to Meisui", "Replaces Ten Chi Jin (the move) with Meisui while Suiton is up.\nCooldown tracking plugin recommended.", NIN.JobID)]
+        [CustomComboInfo("Ten Chi Jin to Meisui Feature", "Replaces Ten Chi Jin (the move) with Meisui while Suiton is up.\nCooldown tracking plugin recommended.", NIN.JobID)]
         NIN_TCJMeisui = 10055,
 
         [ConflictingCombos(NIN_ST_AdvancedMode_BalanceOpener, NIN_ST_AdvancedMode_BalanceOpener, NIN_KassatsuTrick, NIN_ST_AdvancedMode_Kassatsu, NIN_AoE_AdvancedMode_Kassatsu)]
@@ -1834,7 +1838,7 @@ namespace XIVSlothCombo.Combos
         NIN_KassatsuChiJin = 10056,
 
         [ReplaceSkill(NIN.Hide)]
-        [CustomComboInfo("Hide to Mug/Trick Attack", "Replaces Hide with Mug while in combat and Trick Attack whilst Hidden.", NIN.JobID)]
+        [CustomComboInfo("Hide to Mug/Trick Attack Feature", "Replaces Hide with Mug while in combat and Trick Attack whilst Hidden.", NIN.JobID)]
         NIN_HideMug = 10057,
 
         [ReplaceSkill(NIN.AeolianEdge)]
@@ -1854,7 +1858,7 @@ namespace XIVSlothCombo.Combos
         NIN_HuraijinRaiju_Forked = 10061,
 
         [ReplaceSkill(NIN.Ten, NIN.Chi, NIN.Jin)]
-        [CustomComboInfo("Simple Mudras", "Simplify the mudra casting to avoid failing.", NIN.JobID)]
+        [CustomComboInfo("Simple Mudras Feature", "Simplify the mudra casting to avoid failing.", NIN.JobID)]
         NIN_Simple_Mudras = 10062,
 
         [ReplaceSkill(NIN.TenChiJin)]
@@ -1863,8 +1867,16 @@ namespace XIVSlothCombo.Combos
         NIN_TCJ = 10063,
 
         [ReplaceSkill(NIN.Huraijin)]
-        [CustomComboInfo("Huraijin / Armor Crush Combo", "Replace Huraijin with Armor Crush after using Gust Slash.", NIN.JobID)]
+        [CustomComboInfo("Huraijin / Armor Crush Combo Feature", "Replace Huraijin with Armor Crush after using Gust Slash.", NIN.JobID)]
         NIN_HuraijinArmorCrush = 10064,
+
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Raiton_Uptime = 10065,
+
+        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [CustomComboInfo("Phantom Kamaitachi Uptime Option", "Adds Phantom Kamaitachi as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Phantom_Uptime = 10066,
 
 
         #endregion
@@ -2339,6 +2351,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 120, "", "")]
             SGE_ST_Dosis_EDosis = 14120,
 
+                [ParentCombo(SGE_ST_Dosis_EDosis)]
+                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", SGE.JobID, 0, "", "")]
+                SGE_ST_Dosis_EDosis_Adv = 14121,
+
             [ParentCombo(SGE_ST_Dosis)]
             [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 130, "", "")]
             SGE_ST_Dosis_Toxikon = 14130,
@@ -2765,6 +2781,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140, "", "")]
             SCH_DPS_Bio = 16150,
 
+                [ParentCombo(SCH_DPS_Bio)]
+                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", SCH.JobID, 0, "", "")]
+                SCH_DPS_Bio_Adv = 16151,
+
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170, "", "")]
             SCH_DPS_Dissipation_Opener = 16170,
@@ -2801,72 +2821,80 @@ namespace XIVSlothCombo.Combos
         SCH_Recitation = 16230,
         
         [ReplaceSkill(SCH.WhisperingDawn)]
-        [CustomComboInfo("Fairy Healing Combo", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
+        [CustomComboInfo("Fairy Healing Combo Feature", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
         SCH_Fairy_Combo = 16240,
-        
+
+            [ParentCombo(SCH_Fairy_Combo)]
+            [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID, 240, "", "")]
+            SCH_Fairy_Combo_Consolation = 16241,
+
         [ReplaceSkill(SCH.Succor)]
-        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below", SCH.JobID, 250)]
+        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below:", SCH.JobID, 250)]
         SCH_AoE_Heal = 16250,
 
             [ParentCombo(SCH_AoE_Heal)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP isn't high enough to cast Succor.", SCH.JobID)]
             SCH_AoE_Heal_Lucid = 16251,
 
             [ParentCombo(SCH_AoE_Heal)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
             SCH_AoE_Heal_Aetherflow = 16252,
-            
+
+        [ParentCombo(SCH_AoE_Heal_Aetherflow)]
+        [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+        SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
+
             [ParentCombo(SCH_AoE_Heal)]
-            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor", SCH.JobID)]
-            SCH_AoE_Heal_Indomitability = 16253,
-            
+            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
+            SCH_AoE_Heal_Indomitability = 16254,
+
         [ReplaceSkill(SCH.Physick)]
-        [CustomComboInfo("Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
-        SCH_Heal = 16260,
+        [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 260)]
+        SCH_ST_Heal = 16260,
 
-            [ParentCombo(SCH_Heal)]
+            [ParentCombo(SCH_ST_Heal)]
             [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
-            SCH_Heal_Lucid = 16261,
+            SCH_ST_Heal_Lucid = 16261,
 
-            [ParentCombo(SCH_Heal)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
-            SCH_Heal_Aetherflow = 16262,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+            SCH_ST_Heal_Aetherflow = 16262,
             
-            [ParentCombo(SCH_Heal)]
-            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or Target HP% below", SCH.JobID)]
-            SCH_Heal_Adloquium = 16263,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID)]
+            SCH_ST_Heal_Adloquium = 16263,
             
-            [ParentCombo(SCH_Heal)]
-            [CustomComboInfo("Lustrate Option", "Use Lustrate when Target HP% below", SCH.JobID)]
-            SCH_Heal_Lustrate = 16264,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID)]
+            SCH_ST_Heal_Lustrate = 16264,
             
 
         #endregion
 
         #region Utilities
         [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
-        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 300, "", "")]
+        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected.", SCH.JobID, 300, "", "")]
         SCH_Aetherflow = 16300,
 
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 310, "", "")]
+            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indomitability.", SCH.JobID, 310, "", "")]
             SCH_Aetherflow_Recite = 16310,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 311, "", "")]
+                [CustomComboInfo("On Excogitation", "", SCH.JobID, 311, "", "")]
                 SCH_Aetherflow_Recite_Excog = 16311,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Indominability Option", "", SCH.JobID, 312, "", "")]
+                [CustomComboInfo("On Indomitability", "", SCH.JobID, 312, "", "")]
                 SCH_Aetherflow_Recite_Indom = 16312,
 
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 320, "", "")]
+            [CustomComboInfo("Dissipation Option", "If Aetherflow is on cooldown, show Dissipation instead.", SCH.JobID, 320, "", "")]
             SCH_Aetherflow_Dissipation = 16320,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
-        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 400, "", "")]
+        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown.", SCH.JobID, 400, "", "")]
         SCH_Raise = 16400,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
@@ -2874,11 +2902,11 @@ namespace XIVSlothCombo.Combos
         SCH_FairyReminder = 16500,
 
         [ReplaceSkill(SCH.DeploymentTactics)]
-        [CustomComboInfo("Deployment Tactics Feature", "Deployment Tactics idles as Adloquium until the Party Member has the Galvanize Buff", SCH.JobID, 600, "", "")]
+        [CustomComboInfo("Deployment Tactics Feature", "Changes Deployment Tactics to Adloquium until a party member has the Galvanize buff.", SCH.JobID, 600, "", "")]
         SCH_DeploymentTactics = 16600,
 
             [ParentCombo(SCH_DeploymentTactics)]
-            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
+            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize buff on a party member.", SCH.JobID, 601, "", "")]
             SCH_DeploymentTactics_Recitation = 16610,
         
         #endregion
@@ -3113,6 +3141,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Aero/Dia Uptime Option", "Adds Aero/Dia to the single target combo if the debuff is not present on current target, or is about to expire.", WHM.JobID, 12, "", "")]
             WHM_ST_MainCombo_DoT = 19013,
 
+                [ParentCombo(WHM_ST_MainCombo_DoT)]
+                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", WHM.JobID, 0, "", "")]
+                WHM_ST_MainCombo_DoT_Adv = 19025,
+
             [ParentCombo(WHM_ST_MainCombo)]
             [CustomComboInfo("Assize Option", "Adds Assize to the single target combo.", WHM.JobID, 13, "", "")]
             WHM_ST_MainCombo_Assize = 19009,
@@ -3154,11 +3186,11 @@ namespace XIVSlothCombo.Combos
             WHM_AoE_DPS_LilyOvercap = 19193,
 
             [ParentCombo(WHM_AoE_DPS)]
-            [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo.", WHM.JobID, 24, "", "")]
+            [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo if you are moving or it can be weaved without GCD delay.", WHM.JobID, 24, "", "")]
             WHM_AoE_DPS_PresenceOfMind = 19195,
 
             [ParentCombo(WHM_AoE_DPS)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below set MP value.", WHM.JobID, 25, "", "")]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below the set MP value if you are moving or it can be weaved without GCD delay.", WHM.JobID, 25, "", "")]
             WHM_AoE_DPS_Lucid = 19191,
 
             #endregion
@@ -3353,6 +3385,12 @@ namespace XIVSlothCombo.Combos
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
         RDMPvP_BurstMode = 80030,
+        
+        [SecretCustomCombo]
+        [ParentCombo(RDMPvP_BurstMode)]
+        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle being used in Burst Mode.", RDMPVP.JobID)]
+        RDMPvP_FrazzleOption = 80031,
+        
         #endregion
 
         #region WARRIOR

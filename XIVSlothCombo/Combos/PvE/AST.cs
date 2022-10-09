@@ -335,8 +335,10 @@ namespace XIVSlothCombo.Combos.PvE
                             //Grab current DoT via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
                             uint dot = OriginalHook(Combust);
                             Status? dotDebuff = FindTargetEffect(CombustList[dot]);
-                            if (((dotDebuff is null) || (dotDebuff.RemainingTime <= GetOptionFloat(Config.AST_ST_DPS_CombustUptime_Threshold))) &&
-                                (GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption)))
+                            float refreshtimer = IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime_Adv) ? GetOptionFloat(Config.AST_ST_DPS_CombustUptime_Threshold) : 3;
+
+                            if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
+                                GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption))
                                 return dot;
 
                             //AlterateMode idles as Malefic
