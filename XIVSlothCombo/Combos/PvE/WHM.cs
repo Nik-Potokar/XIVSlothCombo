@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using System.Collections.Generic;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -34,9 +35,9 @@ namespace XIVSlothCombo.Combos.PvE
             Holy = 139,
             Holy3 = 25860,
             // DoT
-            Dia = 16532,
-            Aero1 = 121,
+            Aero = 121,
             Aero2 = 132,
+            Dia = 16532,
             // Buffs
             ThinAir = 7430,
             PresenceOfMind = 136;
@@ -53,10 +54,18 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Debuffs
         {
             public const ushort
-            Dia = 1871,
-            Aero1 = 143,
-            Aero2 = 144;
+            Aero = 143,
+            Aero2 = 144,
+            Dia = 1871;
         }
+
+        //Debuff Pairs of Actions and Debuff
+        internal static readonly Dictionary<uint, ushort>
+            AeroList = new() {
+                { Aero, Debuffs.Aero },
+                { Aero2, Debuffs.Aero2 },
+                { Dia, Debuffs.Dia }
+            };
 
         public static class Config
         {
@@ -220,18 +229,16 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // DoTs
-                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat() && LevelChecked(Aero1))
+                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat() && LevelChecked(Aero))
                     {
-                        // Fetch appropriate debuff for player level
-                        Status? DoTDebuff;
-                        if (LevelChecked(Dia)) DoTDebuff = FindTargetEffect(Debuffs.Dia);
-                        else if (LevelChecked(Aero2)) DoTDebuff = FindTargetEffect(Debuffs.Aero2);
-                        else DoTDebuff = FindTargetEffect(Debuffs.Aero1);
+                        uint dot = OriginalHook(Aero); //Grab the appropriate DoT Action
+                        Status? dotDebuff = FindTargetEffect(AeroList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
                         // DoT Uptime & HP% threshold
-                        if (((DoTDebuff is null) || (DoTDebuff.RemainingTime <= GetOptionFloat(Config.WHM_ST_MainCombo_DoT_Threshold))) &&
-                            (GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT)))
-                            return OriginalHook(Aero1);
+                        float refreshtimer = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT_Adv) ? GetOptionFloat(Config.WHM_ST_MainCombo_DoT_Threshold) : 3;
+                        if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
+                            GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT))
+                            return OriginalHook(Aero);
                     }
 
                     if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
@@ -313,19 +320,14 @@ namespace XIVSlothCombo.Combos.PvE
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
 
-                    if (CanSpellWeave(actionID))
-                    {
-                        bool holyLast = WasLastAction(OriginalHook(Holy));
-                        int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid);
-                        bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold;
-                        bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
-                        bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
+                        return Assize;
 
-                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && pomReady)
+                    if (CanSpellWeave(actionID) || IsMoving)
+                    {
+                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
                             return PresenceOfMind;
-                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && holyLast && assizeReady)
-                            return Assize;
-                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && holyLast && lucidReady)
+                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid))
                             return All.LucidDreaming;
                     }
 
