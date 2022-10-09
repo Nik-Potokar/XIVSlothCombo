@@ -2357,6 +2357,29 @@ namespace XIVSlothCombo.Combos
             
             #endregion
 
+        #region Single Target No Cast DPS Feature
+        [ReplaceSkill(SGE.Toxikon, SGE.Toxikon2)]
+        [CustomComboInfo("Single Target No Cast DPS Feature, put spells with no cast time on Toxikon", "", SGE.JobID, 1100, "", "")]
+        SGE_ST_Toxikon = 141100,
+                
+            [ParentCombo(SGE_ST_Toxikon)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Toxikon when MP drops below slider value.", SGE.JobID, 1110, "", "")]
+            SGE_ST_Toxikon_Lucid = 141110,
+
+            [ParentCombo(SGE_ST_Toxikon)]
+            [CustomComboInfo("Eukrasian Dosis Option", "Use Eukrasian Dosis if DoT is needed or nothing else can be used.", SGE.JobID, 1120, "", "")]
+            SGE_ST_Toxikon_EDosis = 141120,
+
+            [ParentCombo(SGE_ST_Toxikon)]
+            [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 1130, "", "")]
+            SGE_ST_Toxikon_Phlegma = 141130,
+
+            [ParentCombo(SGE_ST_Toxikon)]
+            [CustomComboInfo("Dyskrasia Option", "Use Dyskrasia if Toxikon is not available and within range.", SGE.JobID, 1140, "", "")]
+            SGE_ST_Toxikon_Dyskrasia  = 141140,
+            
+            #endregion
+
         #region AoE DPS Feature
         [ReplaceSkill(SGE.Phlegma, SGE.Phlegma2, SGE.Phlegma3)]
         [CustomComboInfo("AoE DPS Feature", "", SGE.JobID, 200, "", "")]

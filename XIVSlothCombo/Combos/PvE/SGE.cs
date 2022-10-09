@@ -44,6 +44,7 @@ namespace XIVSlothCombo.Combos.PvE
             Dyskrasia = 24297,
             Dyskrasia2 = 24315,
             Toxikon = 24304,
+            Toxikon2 = 24316,
             Pneuma = 24318,
 
             // Buffs
@@ -59,7 +60,8 @@ namespace XIVSlothCombo.Combos.PvE
         // Action Groups
         internal static readonly List<uint>
             AddersgallList = new() { Taurochole, Druochole, Ixochole, Kerachole },
-            PhlegmaList = new() { Phlegma, Phlegma2, Phlegma3 };
+            PhlegmaList = new() { Phlegma, Phlegma2, Phlegma3 },
+            ToxikonList = new () {Toxikon, Toxikon2 };
 
         // Action Buffs
         internal static class Buffs
@@ -266,6 +268,72 @@ namespace XIVSlothCombo.Combos.PvE
                             Gauge.HasAddersting())
                             return OriginalHook(Toxikon);
                     }
+                }
+                return actionID;
+            }
+        }
+
+        /*
+         * SGE_ST_Toxikon (Single Target No Cast Spell)
+         * Optionally add Lucid Dreaming, Eukrasian Dosis, Phlegma and Dyskrasia to Toxikon.
+         * The goal is to have one button to spam when you are moving.
+         */
+        internal class SGE_ST_Toxikon : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_Toxikon;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (ToxikonList.Contains(actionID))
+                {
+                    // Eukrasian Dosis if Eukrasian
+                    if (HasEffect(Buffs.Eukrasia))
+                        return OriginalHook(Dosis);
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Toxikon_Lucid) &&
+                        ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) &&
+                        LocalPlayer.CurrentMp <= Config.SGE_ST_Dosis_Lucid)
+                        return All.LucidDreaming;
+
+                    // Eukrasia.
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Toxikon_EDosis) && LevelChecked(Eukrasia) && HasBattleTarget())
+                    {
+                        // Grab current Dosis via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
+                        // Using TryGetValue due to edge case where the actionID would be read as Eukrasian Dosis instead of Dosis
+                        // EDosis will show for half a second if the buff is removed manually or some other act of God
+                        if (DosisList.TryGetValue(OriginalHook(Dosis), out ushort dotDebuffID))
+                        {
+                            Status? dotDebuff = FindTargetEffect(dotDebuffID);
+                            if (((dotDebuff is null) || (dotDebuff.RemainingTime <= Config.SGE_ST_Dosis_Threshold)) &&
+                                (GetTargetHPPercent() > Config.SGE_ST_Dosis_EDosisHPPer))
+                                return Eukrasia;
+                        }
+                    }
+
+                    // Phlegma
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Toxikon_Phlegma))
+                    {
+                        uint phlegma = OriginalHook(Phlegma);
+                        if (InActionRange(phlegma) && ActionReady(phlegma))
+                            return phlegma;
+                    }
+
+                    // Toxikon
+                    if (LevelChecked(Toxikon) && Gauge.HasAddersting())
+                        return OriginalHook(Toxikon);
+
+                    // Dyskrasia
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Toxikon_Dyskrasia))
+                    {
+                        uint dyskrasia = OriginalHook(Dyskrasia);
+                        // 3.5 is the correct range after testing, although the radius of Dyskrasia is 5.
+                        if (LevelChecked(dyskrasia) && GetTargetDistance() < 3.5)
+                            return dyskrasia;
+                    }
+
+                    // When there's really nothing to use, use Eukrasia Dosis.
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Toxikon_EDosis))
+                        return Eukrasia;
                 }
                 return actionID;
             }
