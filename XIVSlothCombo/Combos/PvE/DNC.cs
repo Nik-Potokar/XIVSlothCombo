@@ -425,6 +425,15 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) && interruptable)
                         return All.HeadGraze;
 
+                    // Devilment
+                    if (canWeave)
+                    {
+                        bool devilmentReady = LevelChecked(Devilment) && IsOffCooldown(Devilment);
+
+                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) && devilmentReady && (techBurst || !LevelChecked(TechnicalStep)))
+                            return Devilment;
+                    }
+
                     // Simple ST Standard (activates dance with no target, or when target is over HP% threshold)
                     if ((!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold) &&
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && standardStepReady &&
@@ -436,14 +445,11 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && technicalStepReady && !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
-                    // Devilment & Flourish
+                    // Flourish
                     if (canWeave)
                     {
                         bool flourishReady = LevelChecked(Flourish) && IsOffCooldown(Flourish) && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) && !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow);
-                        bool devilmentReady = LevelChecked(Devilment) && IsOffCooldown(Devilment);
-
-                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) && devilmentReady && (techBurst || !LevelChecked(TechnicalStep)))
-                            return Devilment;
+                        
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) && flourishReady)
                             return Flourish;
                     }
