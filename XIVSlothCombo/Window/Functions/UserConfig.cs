@@ -1601,7 +1601,7 @@ namespace XIVSlothCombo.Window.Functions
                 if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)))
                 {
                     ImGui.Indent();
-                    UserConfig.DrawRoundedSliderFloat(0, 60, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Aetherflow's cooldown time remaining to use start weaving Energy Drain.", digits: 1);
+                    UserConfig.DrawRoundedSliderFloat(0, 60, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Aetherflow remaining cooldown:", digits: 1);
                     ImGui.Unindent();
                 }
             }
