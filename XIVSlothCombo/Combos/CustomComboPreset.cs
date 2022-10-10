@@ -2758,11 +2758,11 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_ChainStrat = 16120,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks", SCH.JobID, 130, "", "")]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130, "", "")]
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume Aetherflow stacks when Aetherflow is about to be off cooldown.", SCH.JobID, 131, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131, "", "")]
             SCH_DPS_EnergyDrain = 16160,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
