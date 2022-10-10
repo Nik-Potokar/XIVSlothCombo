@@ -2762,11 +2762,15 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume Aetherflow stacks when Aetherflow's cooldown has been set below.", SCH.JobID, 131, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume Aetherflow stacks when Aetherflow is about to be off cooldown.", SCH.JobID, 131, "", "")]
             SCH_DPS_EnergyDrain = 16160,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
-                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 161, "", "")]
+                [CustomComboInfo("Advanced User Options","Extra Fine Tuning."/*""Use Energy Drain to consume Aetherflow stacks when Aetherflow's cooldown has been set below."*/, SCH.JobID, 132, "", "")]
+                SCH_DPS_EnergyDrain_Adv = 16162,
+
+                [ParentCombo(SCH_DPS_EnergyDrain)]
+                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133, "", "")]
                 SCH_DPS_EnergyDrain_BurstSaver = 16161,
 
             [ParentCombo(SCH_DPS)]
@@ -2778,7 +2782,7 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_Bio = 16150,
 
                 [ParentCombo(SCH_DPS_Bio)]
-                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", SCH.JobID, 0, "", "")]
+                [CustomComboInfo("Advanced User Options", "Extra Fine Tuning."/* "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled."*/, SCH.JobID, 0, "", "")]
                 SCH_DPS_Bio_Adv = 16151,
 
             [ParentCombo(SCH_DPS)]

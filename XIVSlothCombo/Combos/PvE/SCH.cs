@@ -329,13 +329,16 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasBattleTarget())
                     {
                         // Energy Drain
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain) &&
-                            LevelChecked(EnergyDrain) && InCombat() &&
-                            Gauge.HasAetherflow() &&
-                            GetCooldownRemainingTime(Aetherflow) <= (Config.SCH_ST_DPS_EnergyDrain * Gauge.Aetherflow) &&
-                            (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
-                            CanSpellWeave(actionID))
-                            return EnergyDrain;
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain))
+                        {
+                            float edTime = IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_Adv) ? Config.SCH_ST_DPS_EnergyDrain : 10f;
+                            if (LevelChecked(EnergyDrain) && InCombat() &&
+                                Gauge.HasAetherflow() &&
+                                GetCooldownRemainingTime(Aetherflow) <= edTime &&
+                                (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
+                                CanSpellWeave(actionID))
+                                return EnergyDrain;
+                        }
 
                         // Chain Stratagem
                         if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
