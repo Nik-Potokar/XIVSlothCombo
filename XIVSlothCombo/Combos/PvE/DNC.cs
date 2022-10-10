@@ -425,7 +425,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) && interruptable)
                         return All.HeadGraze;
 
-                    // Devilment
+                    // Simple Tech Devilment
                     if (canWeave)
                     {
                         bool devilmentReady = LevelChecked(Devilment) && IsOffCooldown(Devilment);
@@ -445,7 +445,7 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && technicalStepReady && !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
-                    // Flourish
+                    // Simple Tech Flourish
                     if (canWeave)
                     {
                         bool flourishReady = LevelChecked(Flourish) && IsOffCooldown(Flourish) && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) && !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow);
@@ -554,6 +554,19 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Interrupt) && interruptable)
                         return All.HeadGraze;
 
+
+                    //Simple AOE Tech Devilment
+
+                    if (canWeave)
+                    {
+                        bool devilmentReady = LevelChecked(Devilment) && IsOffCooldown(Devilment);
+
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) && devilmentReady &&
+                            (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                            return Devilment;
+
+                    }
+
                     // Simple AoE Standard (activates dance with no target, or when target is over HP% threshold)
                     if ((!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold) &&
                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && standardStepReady &&
@@ -568,12 +581,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (canWeave)
                     {
                         bool flourishReady = LevelChecked(Flourish) && IsOffCooldown(Flourish) && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) && !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow);
-                        bool devilmentReady = LevelChecked(Devilment) && IsOffCooldown(Devilment);
+                        
 
-                        // Simple AoE Tech Devilment
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) && devilmentReady &&
-                            (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
-                            return Devilment;
+                        // Simple AoE Tech Flourish
+
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) && flourishReady)
                             return Flourish;
                     }
