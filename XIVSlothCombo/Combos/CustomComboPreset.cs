@@ -2766,10 +2766,6 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_EnergyDrain = 16160,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
-                [CustomComboInfo("Advanced User Options","Extra Fine Tuning."/*""Use Energy Drain to consume Aetherflow stacks when Aetherflow's cooldown has been set below."*/, SCH.JobID, 132, "", "")]
-                SCH_DPS_EnergyDrain_Adv = 16162,
-
-                [ParentCombo(SCH_DPS_EnergyDrain)]
                 [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133, "", "")]
                 SCH_DPS_EnergyDrain_BurstSaver = 16161,
 
@@ -2780,10 +2776,6 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140, "", "")]
             SCH_DPS_Bio = 16150,
-
-                [ParentCombo(SCH_DPS_Bio)]
-                [CustomComboInfo("Advanced User Options", "Extra Fine Tuning."/* "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled."*/, SCH.JobID, 0, "", "")]
-                SCH_DPS_Bio_Adv = 16151,
 
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170, "", "")]
