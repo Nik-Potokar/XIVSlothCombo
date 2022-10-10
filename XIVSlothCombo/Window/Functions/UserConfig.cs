@@ -407,9 +407,14 @@ namespace XIVSlothCombo.Window.Functions
                 PluginConfiguration.SetCustomBoolValue(config, output);
                 Service.Configuration.Save();
             }
-            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
-            ImGui.TextWrapped(checkboxDescription);
-            ImGui.PopStyleColor();
+
+            if (!checkboxDescription.IsNullOrEmpty())
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
+                ImGui.TextWrapped(checkboxDescription);
+                ImGui.PopStyleColor();
+            }
+
             if (!isConditionalChoice)
                 ImGui.Unindent();
             ImGui.Spacing();
@@ -1575,16 +1580,31 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_DPS_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_DPS_Bio)
+            {
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
-            if (preset is CustomComboPreset.SCH_DPS_Bio_Adv)
-                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv), "Advanced Options", "");
+                if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv)))
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    ImGui.Unindent();
+                }
+            }
 
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
-                UserConfig.DrawRoundedSliderFloat(0f, 2.5f, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Time remaining in seconds for each stack:", digits: 1);
+            {
+                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv), "Advanced Options","");
+                if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)))
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawRoundedSliderFloat(0, 60, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Aetherflow remaining cooldown:", digits: 1);
+                    ImGui.Unindent();
+                }
+            }
 
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
