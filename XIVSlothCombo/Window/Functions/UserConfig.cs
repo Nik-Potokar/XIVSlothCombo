@@ -1078,10 +1078,18 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(4000, 9500, AST.Config.AST_LucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
+            {
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
+                
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_ST_DPS_CombustUptime_Adv), "Advanced Options", "", isConditionalChoice: true);
+                if (PluginConfiguration.GetCustomBoolValue(nameof(AST.Config.AST_ST_DPS_CombustUptime_Adv)))
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(AST.Config.AST_ST_DPS_CombustUptime_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    ImGui.Unindent();
+                }
 
-            if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime_Adv)
-                UserConfig.DrawRoundedSliderFloat(0, 4, AST.Config.AST_ST_DPS_CombustUptime_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+            }
 
             if (preset is CustomComboPreset.AST_DPS_Divination)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
@@ -1466,10 +1474,17 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
+            {
                 UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
 
-            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis_Adv)
-                UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                UserConfig.DrawAdditionalBoolChoice(nameof(SGE.Config.SGE_ST_Dosis_EDosis_Adv), "Advanced Options", "", isConditionalChoice: true);
+                if (PluginConfiguration.GetCustomBoolValue(nameof(SGE.Config.SGE_ST_Dosis_EDosis_Adv)))
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_EDosisThreshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    ImGui.Unindent();
+                }
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
@@ -1583,7 +1598,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
-                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv), "Advanced Options", "");
+                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv), "Advanced Options", "", isConditionalChoice: true);
                 if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv)))
                 {
                     ImGui.Indent();
@@ -1597,7 +1612,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
             {
-                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv), "Advanced Options","");
+                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv), "Advanced Options","", isConditionalChoice: true);
                 if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)))
                 {
                     ImGui.Indent();
@@ -1712,12 +1727,19 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work.", 150, SliderIncrements.Hundreds);
-            
+
             if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
+            {
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check.");
-            
-            if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT_Adv)
-                UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+
+                UserConfig.DrawAdditionalBoolChoice(nameof(WHM.Config.WHM_ST_MainCombo_DoT_Adv), "Advanced Options", "", isConditionalChoice: true);
+                if (PluginConfiguration.GetCustomBoolValue(nameof(WHM.Config.WHM_ST_MainCombo_DoT_Adv)))
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(WHM.Config.WHM_ST_MainCombo_DoT_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    ImGui.Unindent();
+                }
+            }
             
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
