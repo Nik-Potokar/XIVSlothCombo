@@ -1411,7 +1411,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Scathe)
                 {
-                    if (Gauge.PolyglotStacks > 0)
+                    if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)
                         return Xenoglossy;
                 }
                 return actionID;
