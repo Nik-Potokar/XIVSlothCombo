@@ -342,7 +342,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MNKGauge>();
-                    var canWeave = CanWeave(actionID, 0.5);
+                    var canWeave = CanWeave(actionID, 0.64);
                     var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
                     var twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
                     var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
