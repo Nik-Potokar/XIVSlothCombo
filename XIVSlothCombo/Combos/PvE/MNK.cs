@@ -391,7 +391,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 // Delayed weave for Riddle of Fire specifically
                                 if (canDelayedWeave)
                                 {
-                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire))
+                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire) && InMeleeRange())
                                     {
                                         return RiddleOfFire;
                                     }
@@ -495,7 +495,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (canDelayedWeave)
                             {
-                                if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
+                                if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist) && InMeleeRange())
                                 {
                                     return RiddleOfFire;
                                 }
