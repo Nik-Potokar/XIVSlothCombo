@@ -400,7 +400,8 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.PopStyleColor();
                 ImGui.SameLine();
                 ImGui.Dummy(new Vector2(3));
-                ImGui.SameLine();
+                ImGui.SameLine(); 
+                if (isConditionalChoice) ImGui.Indent(); //Align checkbox after the + symbol
             }
             if (ImGui.Checkbox($"{checkBoxName}###{config}", ref output))
             {
@@ -415,8 +416,8 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.PopStyleColor();
             }
 
-            if (!isConditionalChoice)
-                ImGui.Unindent();
+            //if (!isConditionalChoice)
+            ImGui.Unindent();
             ImGui.Spacing();
         }
 
