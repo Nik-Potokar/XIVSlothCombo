@@ -1,7 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using System;
 using System.Collections.Generic;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
@@ -99,22 +101,37 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal static class Config
         {
-            internal static bool SCH_ST_DPS_AltMode => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_ST_DPS_AltMode));
-            internal static int SCH_ST_DPS_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_LucidOption));
-            internal static int SCH_ST_DPS_BioOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_BioOption));
-            internal static int SCH_ST_DPS_ChainStratagemOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_DPS_ChainStratagemOption));
-            internal static float SCH_ST_DPS_EnergyDrain => CustomComboFunctions.GetOptionFloat(nameof(SCH_ST_DPS_EnergyDrain));
-            internal static int SCH_AoE_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_AoE_LucidOption));
-            internal static int SCH_AoE_Heal_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_AoE_Heal_LucidOption));
-            internal static int SCH_ST_Heal_LucidOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_Heal_LucidOption));
-            internal static int SCH_ST_Heal_AdloquiumOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_Heal_AdloquiumOption));
-            internal static int SCH_ST_Heal_LustrateOption => CustomComboFunctions.GetOptionValue(nameof(SCH_ST_Heal_LustrateOption));
-            internal static bool SCH_Aetherflow_Display => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Display));
-            internal static bool SCH_Aetherflow_Recite_Excog => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Excog));
-            internal static bool SCH_Aetherflow_Recite_Indom => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_Aetherflow_Recite_Indom));
-            internal static bool SCH_FairyFeature => CustomComboFunctions.GetIntOptionAsBool(nameof(SCH_FairyFeature));
-            internal static int SCH_Recitation_Mode => CustomComboFunctions.GetOptionValue(nameof(SCH_Recitation_Mode));
-            internal static float SCH_ST_DPS_Bio_Threshold => CustomComboFunctions.GetOptionFloat(nameof(SCH_ST_DPS_Bio_Threshold));
+            #region DPS
+            //Temporary BoolConvert until GUI refactor post 3.0.17.4 release
+            internal static bool SCH_ST_DPS_AltMode => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_AltMode)));
+            internal static int SCH_ST_DPS_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_LucidOption));
+            
+            internal static int SCH_ST_DPS_BioOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_BioOption));
+            internal static bool SCH_ST_DPS_Bio_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_Bio_Adv));
+            internal static float SCH_ST_DPS_Bio_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_Bio_Threshold));
+
+            internal static int SCH_ST_DPS_ChainStratagemOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_ChainStratagemOption));
+            internal static bool SCH_ST_DPS_EnergyDrain_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_EnergyDrain_Adv));
+            internal static float SCH_ST_DPS_EnergyDrain => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_EnergyDrain));
+            #endregion
+
+            #region Healing
+            internal static int SCH_AoE_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_AoE_LucidOption));
+            internal static int SCH_AoE_Heal_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_AoE_Heal_LucidOption));
+            internal static int SCH_ST_Heal_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_Heal_LucidOption));
+            internal static int SCH_ST_Heal_AdloquiumOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_Heal_AdloquiumOption));
+            internal static int SCH_ST_Heal_LustrateOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_Heal_LustrateOption));
+            #endregion
+
+            #region Utility
+            //Temporary BoolConvert until GUI refactor post 3.0.17.4
+            internal static bool SCH_Aetherflow_Display => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Display)));
+            internal static bool SCH_Aetherflow_Recite_Excog => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Excog)));
+            internal static bool SCH_Aetherflow_Recite_Indom => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Indom)));
+            internal static bool SCH_FairyFeature => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_FairyFeature)));
+            internal static int SCH_Recitation_Mode => PluginConfiguration.GetCustomIntValue(nameof(SCH_Recitation_Mode));
+            #endregion
+
         }
 
         /*
@@ -329,13 +346,16 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasBattleTarget())
                     {
                         // Energy Drain
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain) &&
-                            LevelChecked(EnergyDrain) && InCombat() &&
-                            Gauge.HasAetherflow() &&
-                            GetCooldownRemainingTime(Aetherflow) <= (Config.SCH_ST_DPS_EnergyDrain * Gauge.Aetherflow) &&
-                            (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
-                            CanSpellWeave(actionID))
-                            return EnergyDrain;
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain))
+                        {
+                            float edTime = Config.SCH_ST_DPS_EnergyDrain_Adv ? Config.SCH_ST_DPS_EnergyDrain : 10f;
+                            if (LevelChecked(EnergyDrain) && InCombat() &&
+                                Gauge.HasAetherflow() &&
+                                GetCooldownRemainingTime(Aetherflow) <= edTime &&
+                                (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
+                                CanSpellWeave(actionID))
+                                return EnergyDrain;
+                        }
 
                         // Chain Stratagem
                         if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
@@ -350,7 +370,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-                            float refreshtimer = IsEnabled(CustomComboPreset.SCH_DPS_Bio_Adv) ? Config.SCH_ST_DPS_Bio_Threshold : 3;
+                            float refreshtimer = Config.SCH_ST_DPS_Bio_Adv ? Config.SCH_ST_DPS_Bio_Threshold : 3;
 
                             if ((dotDebuff is null || dotDebuff?.RemainingTime <= refreshtimer) &&
                                 GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)

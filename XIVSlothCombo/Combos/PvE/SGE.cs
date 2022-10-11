@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
@@ -96,10 +97,16 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal static class Config
         {
+            #region DPS
             internal static bool SGE_ST_Dosis_AltMode => CustomComboFunctions.GetIntOptionAsBool(nameof(SGE_ST_Dosis_AltMode));
             internal static bool SGE_ST_Dosis_Toxikon => CustomComboFunctions.GetIntOptionAsBool(nameof(SGE_ST_Dosis_Toxikon));
             internal static int SGE_ST_Dosis_EDosisHPPer => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Dosis_EDosisHPPer));
+            internal static bool SGE_ST_Dosis_EDosis_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SGE_ST_Dosis_EDosis_Adv));
+            internal static float SGE_ST_Dosis_EDosisThreshold => CustomComboFunctions.GetOptionFloat(nameof(SGE_ST_Dosis_EDosisThreshold));
             internal static int SGE_ST_Dosis_Lucid => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Dosis_Lucid));
+            #endregion
+
+            #region Healing
             internal static int SGE_ST_Heal_Zoe => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Zoe));
             internal static int SGE_ST_Heal_Haima => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Haima));
             internal static int SGE_ST_Heal_Krasis => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Krasis));
@@ -108,10 +115,10 @@ namespace XIVSlothCombo.Combos.PvE
             internal static int SGE_ST_Heal_Diagnosis => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Diagnosis));
             internal static int SGE_ST_Heal_Druochole => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Druochole));
             internal static int SGE_ST_Heal_Taurochole => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Heal_Taurochole));
+            #endregion
+
             internal static int SGE_AoE_Phlegma_Lucid => CustomComboFunctions.GetOptionValue(nameof(SGE_AoE_Phlegma_Lucid));
             internal static int SGE_Eukrasia_Mode => CustomComboFunctions.GetOptionValue(nameof(SGE_Eukrasia_Mode));
-            internal static float SGE_ST_Dosis_Threshold => CustomComboFunctions.GetOptionFloat(nameof(SGE_ST_Dosis_Threshold));
-
         }
 
         /*
@@ -244,7 +251,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (DosisList.TryGetValue(OriginalHook(actionID), out ushort dotDebuffID))
                             {
                                 Status? dotDebuff = FindTargetEffect(dotDebuffID);
-                                float refreshtimer = IsEnabled(CustomComboPreset.SGE_ST_Dosis_EDosis_Adv) ? Config.SGE_ST_Dosis_Threshold : 3;
+                                float refreshtimer = Config.SGE_ST_Dosis_EDosis_Adv ? Config.SGE_ST_Dosis_EDosisThreshold : 3;
 
                                 if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
                                     GetTargetHPPercent() > Config.SGE_ST_Dosis_EDosisHPPer)
