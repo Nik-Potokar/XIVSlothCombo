@@ -540,7 +540,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Masterful Blitz
                     if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance)
-                        && OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix && ((!IsMoving && GetTargetDistance() < 4.5f) || (IsMoving && GetTargetDistance() < 4)))
+                        && (OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix) && ((!IsMoving && GetTargetDistance() < 4.5f) || (IsMoving && GetTargetDistance() < 4)))
                         return OriginalHook(MasterfulBlitz);
 
                     // Meditation Uptime
@@ -551,7 +551,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Masterful Blitz
                     if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance)
-                        && !(OriginalHook(MasterfulBlitz) != MasterfulBlitz && OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix))
+                        && OriginalHook(MasterfulBlitz) != MasterfulBlitz && !(OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix))
                         return OriginalHook(MasterfulBlitz);
 
                     // Perfect Balance
