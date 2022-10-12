@@ -591,27 +591,34 @@ namespace XIVSlothCombo.Combos.PvE
                         return Meditation;
                     }
 
-                    if ((level >= Levels.DragonKick && HasEffect(Buffs.OpoOpoForm)) || HasEffect(Buffs.FormlessFist))
+                    if (!HasEffect(Buffs.PerfectBalance))
                     {
-                        return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
+                        if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
+                        {
+                            return level < Levels.DragonKick || HasEffect(Buffs.LeadenFist)
+                                ? MNK.Bootshine
+                                : MNK.DragonKick;
+                        }
                     }
 
-                    if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply)))
+                        if (level < Levels.TrueStrike)
                         {
-                            return TwinSnakes;
+                            return Bootshine;
                         }
-                        return TrueStrike;
-                    }
 
-                    if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
+                        return level < Levels.TwinSnakes || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
+                            ? TrueStrike
+                            : TwinSnakes;
+                    }
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply)))
-                        {
-                            return Demolish;
-                        }
-                        return SnapPunch;
+                        return level < Levels.SnapPunch
+                            ? Bootshine
+                            : level < Levels.Demolish || (demolishDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                                ? SnapPunch
+                                : Demolish;
                     }
                 }
                 return actionID;
