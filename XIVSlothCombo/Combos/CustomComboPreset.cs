@@ -182,10 +182,6 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Combust Uptime Option", "Adds Combust to the DPS feature if it's not present on current target, or is about to expire.", AST.JobID, 0, "", "")]
             AST_ST_DPS_CombustUptime = 1018,
 
-                [ParentCombo(AST_ST_DPS)]
-                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", AST.JobID, 0, "", "")]
-                AST_ST_DPS_CombustUptime_Adv = 1019,
-
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
@@ -2351,10 +2347,6 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 120, "", "")]
             SGE_ST_Dosis_EDosis = 14120,
 
-                [ParentCombo(SGE_ST_Dosis_EDosis)]
-                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", SGE.JobID, 0, "", "")]
-                SGE_ST_Dosis_EDosis_Adv = 14121,
-
             [ParentCombo(SGE_ST_Dosis)]
             [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 130, "", "")]
             SGE_ST_Dosis_Toxikon = 14130,
@@ -2762,15 +2754,15 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_ChainStrat = 16120,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks", SCH.JobID, 130, "", "")]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130, "", "")]
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume Aetherflow stacks when Aetherflow's cooldown has been set below.", SCH.JobID, 131, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131, "", "")]
             SCH_DPS_EnergyDrain = 16160,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
-                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 161, "", "")]
+                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133, "", "")]
                 SCH_DPS_EnergyDrain_BurstSaver = 16161,
 
             [ParentCombo(SCH_DPS)]
@@ -2780,10 +2772,6 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140, "", "")]
             SCH_DPS_Bio = 16150,
-
-                [ParentCombo(SCH_DPS_Bio)]
-                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", SCH.JobID, 0, "", "")]
-                SCH_DPS_Bio_Adv = 16151,
 
             [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170, "", "")]
@@ -3140,10 +3128,6 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(WHM_ST_MainCombo)]
             [CustomComboInfo("Aero/Dia Uptime Option", "Adds Aero/Dia to the single target combo if the debuff is not present on current target, or is about to expire.", WHM.JobID, 12, "", "")]
             WHM_ST_MainCombo_DoT = 19013,
-
-                [ParentCombo(WHM_ST_MainCombo_DoT)]
-                [CustomComboInfo("Overide Refresh Timer Option", "Override the seconds remaining before automatically refreshing the DoT.\nDefaults to 3s when disabled.", WHM.JobID, 0, "", "")]
-                WHM_ST_MainCombo_DoT_Adv = 19025,
 
             [ParentCombo(WHM_ST_MainCombo)]
             [CustomComboInfo("Assize Option", "Adds Assize to the single target combo.", WHM.JobID, 13, "", "")]
