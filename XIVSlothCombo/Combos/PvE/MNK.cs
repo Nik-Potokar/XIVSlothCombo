@@ -595,7 +595,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
                         {
-                            return level < Levels.DragonKick || HasEffect(Buffs.LeadenFist)
+                            return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
                                 ? MNK.Bootshine
                                 : MNK.DragonKick;
                         }
@@ -603,20 +603,20 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level < Levels.TrueStrike)
+                        if (!LevelChecked(TrueStrike)) 
                         {
                             return Bootshine;
                         }
 
-                        return level < Levels.TwinSnakes || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
+                        return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
                             ? TrueStrike
                             : TwinSnakes;
                     }
                     if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
                     {
-                        return level < Levels.SnapPunch
+                        return !LevelChecked(SnapPunch)
                             ? Bootshine
-                            : level < Levels.Demolish || (demolishDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                            : !LevelChecked(Demolish) || (demolishDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
                                 ? SnapPunch
                                 : Demolish;
                     }
