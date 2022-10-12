@@ -72,9 +72,12 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 WHM_ST_Lucid = "WHMLucidDreamingFeature",
                 WHM_ST_MainCombo_DoT = "WHM_ST_MainCombo_DoT",
-                WHM_ST_MainCombo_DoT_Threshold = "WHM_ST_MainCombo_DoT_Threshold",
                 WHM_AoE_Lucid = "WHM_AoE_Lucid",
                 WHM_oGCDHeals = "WHMogcdHealsShieldsFeature";
+
+            internal static bool WHM_ST_MainCombo_DoT_Adv => PluginConfiguration.GetCustomBoolValue(nameof(WHM_ST_MainCombo_DoT_Adv));
+            internal static float WHM_ST_MainCombo_DoT_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(WHM_ST_MainCombo_DoT_Threshold));
+            
         }
 
         internal class WHM_SolaceMisery : CustomCombo
@@ -235,7 +238,7 @@ namespace XIVSlothCombo.Combos.PvE
                         Status? dotDebuff = FindTargetEffect(AeroList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
                         // DoT Uptime & HP% threshold
-                        float refreshtimer = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT_Adv) ? GetOptionFloat(Config.WHM_ST_MainCombo_DoT_Threshold) : 3;
+                        float refreshtimer = Config.WHM_ST_MainCombo_DoT_Adv ? Config.WHM_ST_MainCombo_DoT_Threshold : 3;
                         if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
                             GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT))
                             return OriginalHook(Aero);
