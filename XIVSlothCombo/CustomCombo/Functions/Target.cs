@@ -121,7 +121,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 return false;
             if (CurrentTarget is not BattleChara chara)
                 return false;
-            if (chara.IsCasting)
+            if (chara.IsCasting && (chara.CurrentCastTime - 0.5f) > 0)
                 return chara.IsCastInterruptible;
 
             return false;
