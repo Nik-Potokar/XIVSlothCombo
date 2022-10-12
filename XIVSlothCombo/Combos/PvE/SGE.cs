@@ -67,10 +67,10 @@ namespace XIVSlothCombo.Combos.PvE
         {
             internal const ushort
                 Kardia = 2604,
+                Kardion = 2605,
                 Eukrasia = 2606,
                 EukrasianDiagnosis = 2607,
-                EukrasianPrognosis = 2609,
-                Kardion = 2872;
+                EukrasianPrognosis = 2609;
         }
 
         internal static class Debuffs
