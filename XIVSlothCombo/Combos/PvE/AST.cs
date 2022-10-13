@@ -4,6 +4,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
 using System.Linq;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
@@ -122,8 +123,10 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_DPS_AltMode = "AST_DPS_AltMode",
                 AST_DPS_DivinationOption = "AST_DPS_DivinationOption",
                 AST_DPS_LightSpeedOption = "AST_DPS_LightSpeedOption",
-                AST_DPS_CombustOption = "AST_DPS_CombustOption",
-                AST_ST_DPS_CombustUptime_Threshold = "AST_ST_DPS_CombustUptime_Threshold";
+                AST_DPS_CombustOption = "AST_DPS_CombustOption";
+
+            internal static bool AST_ST_DPS_CombustUptime_Adv => PluginConfiguration.GetCustomBoolValue(nameof(AST_ST_DPS_CombustUptime_Adv));
+            internal static float AST_ST_DPS_CombustUptime_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(AST_ST_DPS_CombustUptime_Threshold));
         }
 
         internal class AST_Cards_DrawOnPlay : CustomCombo
@@ -335,8 +338,10 @@ namespace XIVSlothCombo.Combos.PvE
                             //Grab current DoT via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
                             uint dot = OriginalHook(Combust);
                             Status? dotDebuff = FindTargetEffect(CombustList[dot]);
-                            if (((dotDebuff is null) || (dotDebuff.RemainingTime <= GetOptionFloat(Config.AST_ST_DPS_CombustUptime_Threshold))) &&
-                                (GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption)))
+                            float refreshtimer = Config.AST_ST_DPS_CombustUptime_Adv ? Config.AST_ST_DPS_CombustUptime_Threshold : 3;
+
+                            if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
+                                GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption))
                                 return dot;
 
                             //AlterateMode idles as Malefic

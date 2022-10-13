@@ -2760,15 +2760,15 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_ChainStrat = 16120,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks", SCH.JobID, 130, "", "")]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130, "", "")]
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume Aetherflow stacks when Aetherflow's cooldown has been set below.", SCH.JobID, 131, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131, "", "")]
             SCH_DPS_EnergyDrain = 16160,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
-                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 161, "", "")]
+                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133, "", "")]
                 SCH_DPS_EnergyDrain_BurstSaver = 16161,
 
             [ParentCombo(SCH_DPS)]
@@ -2815,72 +2815,80 @@ namespace XIVSlothCombo.Combos
         SCH_Recitation = 16230,
         
         [ReplaceSkill(SCH.WhisperingDawn)]
-        [CustomComboInfo("Fairy Healing Combo", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
+        [CustomComboInfo("Fairy Healing Combo Feature", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
         SCH_Fairy_Combo = 16240,
-        
+
+            [ParentCombo(SCH_Fairy_Combo)]
+            [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID, 240, "", "")]
+            SCH_Fairy_Combo_Consolation = 16241,
+
         [ReplaceSkill(SCH.Succor)]
-        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below", SCH.JobID, 250)]
+        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below:", SCH.JobID, 250)]
         SCH_AoE_Heal = 16250,
 
             [ParentCombo(SCH_AoE_Heal)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP isn't high enough to cast Succor.", SCH.JobID)]
             SCH_AoE_Heal_Lucid = 16251,
 
             [ParentCombo(SCH_AoE_Heal)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
+            [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
             SCH_AoE_Heal_Aetherflow = 16252,
-            
+
+        [ParentCombo(SCH_AoE_Heal_Aetherflow)]
+        [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+        SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
+
             [ParentCombo(SCH_AoE_Heal)]
-            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor", SCH.JobID)]
-            SCH_AoE_Heal_Indomitability = 16253,
-            
+            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
+            SCH_AoE_Heal_Indomitability = 16254,
+
         [ReplaceSkill(SCH.Physick)]
-        [CustomComboInfo("Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options", SCH.JobID, 260)]
-        SCH_Heal = 16260,
+        [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 260)]
+        SCH_ST_Heal = 16260,
 
-            [ParentCombo(SCH_Heal)]
+            [ParentCombo(SCH_ST_Heal)]
             [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
-            SCH_Heal_Lucid = 16261,
+            SCH_ST_Heal_Lucid = 16261,
 
-            [ParentCombo(SCH_Heal)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of aetherflow stacks", SCH.JobID)]
-            SCH_Heal_Aetherflow = 16262,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+            SCH_ST_Heal_Aetherflow = 16262,
             
-            [ParentCombo(SCH_Heal)]
-            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or Target HP% below", SCH.JobID)]
-            SCH_Heal_Adloquium = 16263,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID)]
+            SCH_ST_Heal_Adloquium = 16263,
             
-            [ParentCombo(SCH_Heal)]
-            [CustomComboInfo("Lustrate Option", "Use Lustrate when Target HP% below", SCH.JobID)]
-            SCH_Heal_Lustrate = 16264,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID)]
+            SCH_ST_Heal_Lustrate = 16264,
             
 
         #endregion
 
         #region Utilities
         [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
-        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected", SCH.JobID, 300, "", "")]
+        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected.", SCH.JobID, 300, "", "")]
         SCH_Aetherflow = 16300,
 
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indominability", SCH.JobID, 310, "", "")]
+            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indomitability.", SCH.JobID, 310, "", "")]
             SCH_Aetherflow_Recite = 16310,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Excogitation Option", "", SCH.JobID, 311, "", "")]
+                [CustomComboInfo("On Excogitation", "", SCH.JobID, 311, "", "")]
                 SCH_Aetherflow_Recite_Excog = 16311,
 
                 [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Indominability Option", "", SCH.JobID, 312, "", "")]
+                [CustomComboInfo("On Indomitability", "", SCH.JobID, 312, "", "")]
                 SCH_Aetherflow_Recite_Indom = 16312,
 
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Dissipation Option", "If Aetherflow itself is on cooldown, show Dissipation instead", SCH.JobID, 320, "", "")]
+            [CustomComboInfo("Dissipation Option", "If Aetherflow is on cooldown, show Dissipation instead.", SCH.JobID, 320, "", "")]
             SCH_Aetherflow_Dissipation = 16320,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
-        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown", SCH.JobID, 400, "", "")]
+        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown.", SCH.JobID, 400, "", "")]
         SCH_Raise = 16400,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
@@ -2888,11 +2896,11 @@ namespace XIVSlothCombo.Combos
         SCH_FairyReminder = 16500,
 
         [ReplaceSkill(SCH.DeploymentTactics)]
-        [CustomComboInfo("Deployment Tactics Feature", "Deployment Tactics idles as Adloquium until the Party Member has the Galvanize Buff", SCH.JobID, 600, "", "")]
+        [CustomComboInfo("Deployment Tactics Feature", "Changes Deployment Tactics to Adloquium until a party member has the Galvanize buff.", SCH.JobID, 600, "", "")]
         SCH_DeploymentTactics = 16600,
 
             [ParentCombo(SCH_DeploymentTactics)]
-            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize Buff on the Party Member.", SCH.JobID, 601, "", "")]
+            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize buff on a party member.", SCH.JobID, 601, "", "")]
             SCH_DeploymentTactics_Recitation = 16610,
         
         #endregion
@@ -3168,11 +3176,11 @@ namespace XIVSlothCombo.Combos
             WHM_AoE_DPS_LilyOvercap = 19193,
 
             [ParentCombo(WHM_AoE_DPS)]
-            [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo.", WHM.JobID, 24, "", "")]
+            [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo if you are moving or it can be weaved without GCD delay.", WHM.JobID, 24, "", "")]
             WHM_AoE_DPS_PresenceOfMind = 19195,
 
             [ParentCombo(WHM_AoE_DPS)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below set MP value.", WHM.JobID, 25, "", "")]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below the set MP value if you are moving or it can be weaved without GCD delay.", WHM.JobID, 25, "", "")]
             WHM_AoE_DPS_Lucid = 19191,
 
             #endregion
@@ -3367,6 +3375,12 @@ namespace XIVSlothCombo.Combos
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
         RDMPvP_BurstMode = 80030,
+        
+        [SecretCustomCombo]
+        [ParentCombo(RDMPvP_BurstMode)]
+        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle being used in Burst Mode.", RDMPVP.JobID)]
+        RDMPvP_FrazzleOption = 80031,
+        
         #endregion
 
         #region WARRIOR
