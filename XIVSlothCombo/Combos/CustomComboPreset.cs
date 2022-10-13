@@ -1870,15 +1870,15 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
         [CustomComboInfo("Phantom Kamaitachi Uptime Option", "Adds Phantom Kamaitachi as an uptime feature.", NIN.JobID)]
-        NIN_ST_AdvancedMode_Phantom_Uptime = 10065,
+        NIN_ST_AdvancedMode_Phantom_Uptime = 10066,
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
         [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature. (Requires 'Hold 1 Charge For Burst / Uptime' Ninjustu feature to be enabled)", NIN.JobID)]
-        NIN_ST_AdvancedMode_Suiton_Uptime = 10066,
+        NIN_ST_AdvancedMode_Suiton_Uptime = 10067,
 
         [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
         [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature. (Requires 'Hold 1 Charge For Burst / Uptime' Ninjustu feature to be enabled)", NIN.JobID)]
-        NIN_ST_AdvancedMode_Raiton_Uptime = 10067,
+        NIN_ST_AdvancedMode_Raiton_Uptime = 10065,
 
 
         #endregion
