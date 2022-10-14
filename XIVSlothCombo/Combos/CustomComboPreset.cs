@@ -3344,9 +3344,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Double Cast Feature", "Adds Double Cast.", AST.JobID)]
         ASTPvP_DoubleCast = 80001,
 
+        [ParentCombo(ASTPvP_Burst)]
+        [CustomComboInfo("Card Feature", "Adds Drawing and Playing Cards.", AST.JobID)]
+        ASTPvP_Card = 80002,
+
         [SecretCustomCombo]
         [CustomComboInfo("Double Cast Heal", "Adds Double Cast to Aspected Benefic", AST.JobID)]
-        ASTPvP_Heal = 80002,
+        ASTPvP_Heal = 80003,
         #endregion
 
         #region MACHINIST
