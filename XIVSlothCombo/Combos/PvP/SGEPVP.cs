@@ -45,7 +45,7 @@ namespace XIVSlothCombo.Combos.PvP
                     if (!HasEffectAny(Buffs.Kardia))
                         return Kardia;
 
-                    if (!GetCooldown(Pneuma).IsCooldown)
+                    if (IsEnabled(CustomComboPreset.SGEPvP_BurstMode_Pneuma) && !GetCooldown(Pneuma).IsCooldown)
                         return Pneuma;
 
                     if (InMeleeRange() && !HasEffect(Buffs.Eukrasia) && GetCooldown(Phlegma).RemainingCharges > 0)

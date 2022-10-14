@@ -45,7 +45,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.DRGPvP_HighJump) && IsOffCooldown(HighJump) && InMeleeRange())
+                        if (IsEnabled(CustomComboPreset.DRGPvP_HighJump) && IsOffCooldown(HighJump) && InMeleeRange() || IsEnabled(CustomComboPreset.DRGPvP_HighJump_WyrmwindThrust) && WasLastWeaponskill(WyrmwindThrust) && !InMeleeRange() && IsOffCooldown(HighJump) && CanWeave(actionID))
                             return HighJump;
                         if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && IsOffCooldown(Geirskogul))
                             return Geirskogul;

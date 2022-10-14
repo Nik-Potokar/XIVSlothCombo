@@ -3425,7 +3425,7 @@ namespace XIVSlothCombo.Combos
         SGEPvP_BurstMode = 80060,
 
         [ParentCombo(SGEPvP_BurstMode)]
-        [CustomComboInfo("Pneuma Feature", "Removes Pneuma from being used as part of Burst Mode.", SGE.JobID)]
+        [CustomComboInfo("Pneuma Feature", "Adds Pneuma to the Burst Mode Feature.", SGE.JobID)]
         SGEPvP_BurstMode_Pneuma = 80061,
 
         #endregion
@@ -3590,12 +3590,12 @@ namespace XIVSlothCombo.Combos
 
         [ConflictingCombos(DRGPvP_ChaoticSpringBurst)]
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Sustain Chaos Spring", "Burst option that will use Chaotic Spring off cooldown.", DRG.JobID)]
+        [CustomComboInfo("Sustain Chaos Spring", "Sustain  option that will only use Chaotic Spring while its heal can be fully utilized.", DRG.JobID)]
         DRGPvP_ChaoticSpringSustain = 80204,
 
         [ConflictingCombos(DRGPvP_ChaoticSpringSustain)]
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Burst Chaos Spring", "Sustain option that will only use Chaotic Spring while its heal can be fully utilized.", DRG.JobID)]
+        [CustomComboInfo("Burst Chaos Spring", "Burst option that will use Chaotic Spring on burst.", DRG.JobID)]
         DRGPvP_ChaoticSpringBurst = 80205,
 
         [ParentCombo(DRGPvP_Burst)]
@@ -3603,8 +3603,12 @@ namespace XIVSlothCombo.Combos
         DRGPvP_WyrmwindThrust = 80206,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("High Jump Weave Feature", "Adds High Jump onto main combo while you are in melee range.", DRG.JobID)]
+        [CustomComboInfo("High Jump Weave Feature", "Weaves High Jump on main combo while you are in melee range.", DRG.JobID)]
         DRGPvP_HighJump = 80207,
+
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("High Jump Wyrmwind Thrust Feature", "Adds High Jump after succesful use of Wyrmwind Thrust.", DRG.JobID)]
+        DRGPvP_HighJump_WyrmwindThrust = 80208,
         #endregion
 
         #region GUNBREAKER
