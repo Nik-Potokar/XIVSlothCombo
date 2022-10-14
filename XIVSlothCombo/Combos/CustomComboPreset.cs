@@ -3696,15 +3696,15 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WHMPvP_Burst)]
         [CustomComboInfo("Mirace of Nature Feature", "Adds Mirace of Nature.", WHM.JobID)]
-        WHMPvP_Mirace_of_Nature = 80401,
+        WHMPvP_Mirace_of_Nature = 80402,
 
         [ParentCombo(WHMPvP_Burst)]
         [CustomComboInfo("Seraph Strike Feature", "Adds Seraph Strike.", WHM.JobID)]
-        WHMPvP_Seraph_Strike = 80402,
+        WHMPvP_Seraph_Strike = 80403,
 
         [SecretCustomCombo]
         [CustomComboInfo("Protect Feature", "Adds Aquaveil to Cure 2.", WHM.JobID)]
-        WHMPvP_Heal = 80403,
+        WHMPvP_Heal = 80404,
 
         #endregion
 
