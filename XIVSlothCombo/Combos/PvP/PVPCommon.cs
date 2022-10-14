@@ -44,7 +44,7 @@ namespace XIVSlothCombo.Combos.PvP
 
         // Lists of Excluded skills 
         internal static readonly List<uint>
-            MovmentSkills = new() { WARPVP.Onslaught, NINPVP.Shukuchi, DNCPvP.EnAvant, MNKPvP.ThunderClap, RDMPVP.CorpsACorps, RDMPVP.Displacement, SGEPVP.Icarus, RPRPVP.HellsIngress, RPRPVP.Regress, BRDPvP.RepellingShot, BLMPVP.AetherialManipulation, DRGPVP.ElusiveJump },
+            MovmentSkills = new() { WARPVP.Onslaught, NINPVP.Shukuchi, DNCPvP.EnAvant, MNKPvP.ThunderClap, RDMPVP.CorpsACorps, RDMPVP.Displacement, SGEPVP.Icarus, RPRPVP.HellsIngress, RPRPVP.Regress, BRDPvP.RepellingShot, BLMPVP.AetherialManipulation, DRGPVP.ElusiveJump, GNBPVP.RoughDivide },
             GlobalSkills = new() { Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint };
 
         internal class GlobalEmergencyHeals : CustomCombo
@@ -136,13 +136,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (Execute() &&
                     InPvP() &&
-                    actionID != Guard &&
-                    actionID != Recuperate &&
-                    actionID != Purify &&
-                    actionID != StandardElixir &&
-                    actionID != Sprint &&
-                    actionID != Teleport &&
-                    actionID != Return)
+                    !GlobalSkills.Contains(actionID))
                     return OriginalHook(Purify);
 
                 return actionID;

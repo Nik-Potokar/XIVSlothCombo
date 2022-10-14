@@ -3573,7 +3573,7 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Wheeling Thrust Combo into all-in-one damage button.", DRG.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Wheeling Thrust Combo into all-in-one damage button.", DRG.JobID)]
         DRGPvP_Burst = 80200,
 
         [ParentCombo(DRGPvP_Burst)]
@@ -3612,6 +3612,23 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region GUNBREAKER
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Solid Barrel Combo into all-in-one damage button.", GNB.JobID)]
+        GNBPVP_Burst = 80250,
+
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Double Down Feature", "Adds Double Down onto the main combo while under No Mercy Buff.", GNB.JobID)]
+        GNBPVP_DoubleDown = 80251,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Gnashing Fang Continuation Feature", "Adds Continuation onto Gnashing Fang.", GNB.JobID)]
+        GNBPVP_GnashingFang = 80252,
+
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Draw And Junction Feature", "Adds Draw And Junction onto the main combo.", GNB.JobID)]
+        GNBPVP_DrawAndJunction = 80253,
+
 
         #endregion
 
