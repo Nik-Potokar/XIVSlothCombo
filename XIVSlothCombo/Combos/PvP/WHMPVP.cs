@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using XIVSlothCombo.Core;
-using XIVSlothCombo.CustomComboNS;
+﻿using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
@@ -13,6 +11,7 @@ namespace XIVSlothCombo.Combos.PvP
             Cure = 29224,
             AfflatusMisery = 29226,
             Aquaveil = 29227,
+            MiracleOfNature = 29228,
             SeraphStrike = 29229;
 
         internal class Buffs
@@ -29,13 +28,21 @@ namespace XIVSlothCombo.Combos.PvP
             {
                 if (actionID is Glare)
                 {
-                    if (IsEnabled(CustomComboPreset.WHMPvP_Afflatus_Misery) && IsOffCooldown(AfflatusMisery))
-                        return AfflatusMisery;
+                    bool enemyGuarded = TargetHasEffectAny(PvPCommon.Buffs.Guard);
 
-                    if (CanWeave(actionID))
+                    if (!enemyGuarded)
                     {
-                        if (IsEnabled(CustomComboPreset.WHMPvP_Seraph_Strike) && IsOffCooldown(SeraphStrike))
-                            return SeraphStrike;
+                        if (IsEnabled(CustomComboPreset.WHMPvP_Afflatus_Misery) && IsOffCooldown(AfflatusMisery))
+                            return AfflatusMisery;
+
+                        if (CanWeave(actionID))
+                        {
+                            if (IsEnabled(CustomComboPreset.WHMPvP_Mirace_of_Nature) && IsOffCooldown(MiracleOfNature))
+                                return MiracleOfNature;
+
+                            if (IsEnabled(CustomComboPreset.WHMPvP_Seraph_Strike) && IsOffCooldown(SeraphStrike))
+                                return SeraphStrike;
+                        }
                     }
                 }
                 return actionID;

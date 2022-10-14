@@ -3695,6 +3695,10 @@ namespace XIVSlothCombo.Combos
         WHMPvP_Afflatus_Misery = 80401,
 
         [ParentCombo(WHMPvP_Burst)]
+        [CustomComboInfo("Mirace of Nature Feature", "Adds Mirace of Nature.", WHM.JobID)]
+        WHMPvP_Mirace_of_Nature = 80401,
+
+        [ParentCombo(WHMPvP_Burst)]
         [CustomComboInfo("Seraph Strike Feature", "Adds Seraph Strike.", WHM.JobID)]
         WHMPvP_Seraph_Strike = 80402,
 
