@@ -145,24 +145,21 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                bool FD3Ready = HasEffect(Buffs.ThreeFoldFanDance);
-                bool FD4Ready = HasEffect(Buffs.FourFoldFanDance);
-
                 // FD 1 --> 3, FD 1 --> 4
                 if (actionID is FanDance1)
                 {
-                    if (FD3Ready && IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo))
+                    if (HasEffect(Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo))
                         return FanDance3;
-                    if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo))
+                    if (HasEffect(Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo))
                         return FanDance4;
                 }
 
                 // FD 2 --> 3, FD 2 --> 4
                 if (actionID is FanDance2)
                 {
-                    if (FD3Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo))
+                    if (HasEffect(Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo))
                         return FanDance3;
-                    if (FD4Ready && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
+                    if (HasEffect(Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
                         return FanDance4;
                 }
 
