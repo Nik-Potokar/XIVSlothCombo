@@ -188,16 +188,16 @@ namespace XIVSlothCombo.Combos.PvE
                     bool NoTargetDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
                     uint phlegma = OriginalHook(Phlegma); //Level appropriate Phlegma
 
-                    // Rhizomata
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Rhizo) && CanSpellWeave(actionID) &&
-                        ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_AoE_Phlegma_Rhizo)
-                        return Rhizomata;
-
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) &&
                         ActionReady(All.LucidDreaming) && CanSpellWeave(Dosis) &&
                         LocalPlayer.CurrentMp <= Config.SGE_AoE_Phlegma_Lucid)
                         return All.LucidDreaming;
+
+                    // Rhizomata
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Rhizo) && CanSpellWeave(Dosis) &&
+                        ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_AoE_Phlegma_Rhizo)
+                        return Rhizomata;
 
                     // Toxikon
                     if (LevelChecked(Toxikon) && HasBattleTarget() && Gauge.HasAddersting())
@@ -234,11 +234,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if ((!AlternateMode && DosisList.ContainsKey(actionID)) ||
                     (AlternateMode && actionID is Dosis2))
                 {
-                    // Rhizomata
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Rhizo) && CanSpellWeave(actionID) &&
-                        ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_ST_Dosis_Rhizo)
-                        return Rhizomata;
-
                     // Kardia Reminder
                     if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Kardia) && LevelChecked(Kardia) &&
                         FindEffect(Buffs.Kardia) is null)
@@ -249,6 +244,11 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) &&
                         LocalPlayer.CurrentMp <= Config.SGE_ST_Dosis_Lucid)
                         return All.LucidDreaming;
+
+                    // Rhizomata
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Rhizo) && CanSpellWeave(actionID) &&
+                        ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_ST_Dosis_Rhizo)
+                        return Rhizomata;
 
                     if (HasBattleTarget() && (!HasEffect(Buffs.Eukrasia)))
                     // Buff check Above. Without it, Toxikon and any future option will interfere in the Eukrasia->Eukrasia Dosis combo
