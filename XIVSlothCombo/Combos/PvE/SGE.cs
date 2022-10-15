@@ -104,6 +104,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool SGE_ST_Dosis_EDosis_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SGE_ST_Dosis_EDosis_Adv));
             internal static float SGE_ST_Dosis_EDosisThreshold => CustomComboFunctions.GetOptionFloat(nameof(SGE_ST_Dosis_EDosisThreshold));
             internal static int SGE_ST_Dosis_Lucid => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Dosis_Lucid));
+            internal static int SGE_ST_Dosis_Rhizo => CustomComboFunctions.GetOptionValue(nameof(SGE_ST_Dosis_Rhizo));
             #endregion
 
             #region Healing
@@ -118,6 +119,7 @@ namespace XIVSlothCombo.Combos.PvE
             #endregion
 
             internal static int SGE_AoE_Phlegma_Lucid => CustomComboFunctions.GetOptionValue(nameof(SGE_AoE_Phlegma_Lucid));
+            internal static int SGE_AoE_Phlegma_Rhizo => CustomComboFunctions.GetOptionValue(nameof(SGE_AoE_Phlegma_Rhizo));
             internal static int SGE_Eukrasia_Mode => CustomComboFunctions.GetOptionValue(nameof(SGE_Eukrasia_Mode));
         }
 
@@ -186,13 +188,18 @@ namespace XIVSlothCombo.Combos.PvE
                     bool NoTargetDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_NoTargetDyskrasia);
                     uint phlegma = OriginalHook(Phlegma); //Level appropriate Phlegma
 
+                    // Rhizomata
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Rhizo) && CanSpellWeave(actionID) &&
+                        ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_AoE_Phlegma_Rhizo)
+                        return Rhizomata;
+
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Phlegma_Lucid) &&
                         ActionReady(All.LucidDreaming) && CanSpellWeave(Dosis) &&
                         LocalPlayer.CurrentMp <= Config.SGE_AoE_Phlegma_Lucid)
                         return All.LucidDreaming;
 
-                    //Toxikon
+                    // Toxikon
                     if (LevelChecked(Toxikon) && HasBattleTarget() && Gauge.HasAddersting())
                     {
                         if ((NoPhlegmaToxikon && !HasCharges(phlegma)) ||
@@ -200,7 +207,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Toxikon);
                     }
 
-                    //Dyskrasia
+                    // Dyskrasia
                     if (LevelChecked(Dyskrasia))
                     {
                         if ((NoPhlegmaDyskrasia && !HasCharges(phlegma)) ||
@@ -227,6 +234,11 @@ namespace XIVSlothCombo.Combos.PvE
                 if ((!AlternateMode && DosisList.ContainsKey(actionID)) ||
                     (AlternateMode && actionID is Dosis2))
                 {
+                    // Rhizomata
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Rhizo) && CanSpellWeave(actionID) &&
+                        ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_ST_Dosis_Rhizo)
+                        return Rhizomata;
+
                     // Kardia Reminder
                     if (IsEnabled(CustomComboPreset.SGE_ST_Dosis_Kardia) && LevelChecked(Kardia) &&
                         FindEffect(Buffs.Kardia) is null)
