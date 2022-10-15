@@ -222,32 +222,31 @@ namespace XIVSlothCombo.Combos.PvE
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    bool canWeave = CanWeave(actionID);
-                    int espritThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST);
                     #endregion
 
-                    // ST Esprit overcap options
-                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) &&
-                        LevelChecked(SaberDance) && gauge.Esprit >= espritThreshold)
+                    // ST Esprit overcap protection
+                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
+                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
                         return SaberDance;
 
-                    if (canWeave)
+                    if (CanWeave(actionID))
                     {
                         // ST Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
-                            gauge.Feathers is 4 && LevelChecked(FanDance1))
+                            LevelChecked(FanDance1) && gauge.Feathers is 4)
                             return FanDance1;
 
                         // ST Fan Dance 3/4 on combo
                         if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
                         {
-                            if (HasEffect(Buffs.ThreeFoldFanDance) && LevelChecked(FanDance3))
+                            if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
-                            if (HasEffect(Buffs.FourFoldFanDance) && LevelChecked(FanDance4))
+                            if (HasEffect(Buffs.FourFoldFanDance))
                                 return FanDance4;
                         }
                     }
 
+                    // ST base combos
                     if (LevelChecked(Fountainfall) && flow)
                         return Fountainfall;
                     if (LevelChecked(ReverseCascade) && symmetry)
@@ -272,20 +271,18 @@ namespace XIVSlothCombo.Combos.PvE
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    bool canWeave = CanWeave(actionID);
-                    int espritThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE);
                     #endregion
 
-                    // AoE Esprit overcap
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) &&
-                        LevelChecked(SaberDance) && gauge.Esprit >= espritThreshold)
+                    // AoE Esprit overcap protection
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) && 
+                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
                         return SaberDance;
 
-                    if (canWeave)
+                    if (CanWeave(actionID))
                     {
                         // AoE Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
-                            gauge.Feathers is 4 && LevelChecked(FanDance2))
+                            LevelChecked(FanDance2) && gauge.Feathers is 4)
                             return FanDance2;
 
                         // AoE Fan Dance 3/4 on combo
@@ -298,6 +295,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    // AoE base combos
                     if (LevelChecked(Bloodshower) && flow)
                         return Bloodshower;
                     if (LevelChecked(RisingWindmill) && symmetry)
