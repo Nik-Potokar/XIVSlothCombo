@@ -1472,51 +1472,57 @@ namespace XIVSlothCombo.Combos
 
         #region MONK
 
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [CustomComboInfo("Advanced Mode -  AOE", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "")]
-        MNK_AoE_SimpleMode = 9000,
+        [ReplaceSkill(MNK.Bootshine)]
+        [ConflictingCombos(MNK_ST_AdvancedMode, MNK_BasicCombo)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.", MNK.JobID, 0, "", "")]
+        MNK_ST_SimpleMode = 9000,
 
-        [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 0, "", "")]
-        MNK_DragonKick_Bootshine = 9001,
-
-        [ReplaceSkill(MNK.TrueStrike)]
-        [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "")]
-        MNK_TwinSnakes = 9011,
+        [ReplaceSkill(MNK.Bootshine)]
+        [ConflictingCombos(MNK_BasicCombo, MNK_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk). Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
+        MNK_ST_AdvancedMode = 9001,
 
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_SimpleMode)]
-        [CustomComboInfo("Basic Rotation", "Basic Monk Combo on one button", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Basic Rotation", "Replaces Bootshine with Monk's basic Combo on one button.", MNK.JobID, 0, "", "")]
         MNK_BasicCombo = 9002,
+
+        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
+        [CustomComboInfo("Advanced Mode -  AOE", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "")]
+        MNK_AoE_SimpleMode = 9003,
+
+        [ReplaceSkill(MNK.DragonKick)]
+        [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 0, "", "")]
+        MNK_DragonKick_Bootshine = 9004,
+
+        [ReplaceSkill(MNK.TrueStrike)]
+        [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "")]
+        MNK_TwinSnakes = 905,
 
         [ReplaceSkill(MNK.PerfectBalance)]
         [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, 0, "", "")]
-        MNK_PerfectBalance = 9003,
+        MNK_PerfectBalance = 9006,
 
         [ReplaceSkill(MNK.DragonKick)]
         [CustomComboInfo("Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID, 0, "", "")]
-        MNK_BootshineBalance = 9004,
+        MNK_BootshineBalance = 9007,
 
         [ReplaceSkill(MNK.HowlingFist, MNK.Enlightenment)]
         [CustomComboInfo("Howling Fist/Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, 0, "", "")]
-        MNK_HowlingFistMeditation = 9005,
+        MNK_HowlingFistMeditation = 9008,
 
-        [ReplaceSkill(MNK.Bootshine)]
-        [ConflictingCombos(MNK_BasicCombo)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk). Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
-        MNK_ST_AdvancedMode = 9006,
 
         [ReplaceSkill(MNK.MasterfulBlitz)]
         [CustomComboInfo("Perfect Balance Feature Plus", "All of the (optimal?) Blitz combos on Masterful Blitz when Perfect Balance is active", MNK.JobID, 0, "", "")]
-        MNK_PerfectBalance_Plus = 9007,
+        MNK_PerfectBalance_Plus = 9009,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the main combo", MNK.JobID, 0, "", "")]
-        MNK_ST_Simple_MasterfulBlitz = 9008,
+        MNK_ST_Simple_MasterfulBlitz = 9010,
 
         [ParentCombo(MNK_AoE_SimpleMode)]
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE combo.", MNK.JobID, 0, "", "")]
-        MNK_AoE_Simple_MasterfulBlitz = 9009,
+        MNK_AoE_Simple_MasterfulBlitz = 9011,
 
         [ReplaceSkill(MNK.RiddleOfFire)]
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 0, "", "")]
@@ -1590,10 +1596,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Riddle Of Earth Protection", "Prevents the use of Riddle Of Earth when its buff is already active by replacing it with Fire.", MNK.JobID, 0, "", "")]
         MNK_RiddleOfEarthProtection = 9029,
 
-        [ReplaceSkill(MNK.Bootshine)]
-        [ConflictingCombos(MNK_ST_AdvancedMode, MNK_BasicCombo)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.", MNK.JobID, 0, "", "")]
-        MNK_ST_SimpleMode = 9030,
+
 
         #endregion
 
