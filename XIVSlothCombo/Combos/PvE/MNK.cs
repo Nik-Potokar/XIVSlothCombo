@@ -36,7 +36,8 @@ namespace XIVSlothCombo.Combos.PvE
             Brotherhood = 7396,
             ForbiddenChakra = 3546,
             FormShift = 4262,
-            Thunderclap = 25762;
+            Thunderclap = 25762,
+            RiddleOfEarth = 7394;
 
         public static class Buffs
         {
@@ -50,7 +51,8 @@ namespace XIVSlothCombo.Combos.PvE
                 LeadenFist = 1861,
                 FormlessFist = 2513,
                 DisciplinedFist = 3001,
-                Brotherhood = 1185;
+                Brotherhood = 1185,
+                RiddleOfEarth = 1179;
         }
 
         public static class Debuffs
@@ -90,7 +92,10 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_STSecondWindThreshold = "MNK_STSecondWindThreshold",
                 MNK_STBloodbathThreshold = "MNK_STBloodbathThreshold",
                 MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
-                MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold";
+                MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold",
+                MNK_DemolishTreshhold = "MNK_ST_DemolishThreshold";
+
+
         }
 
         internal class MNK_AoE_SimpleMode : CustomCombo
@@ -108,6 +113,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
+                    
 
                     if (!inCombat)
                     {
@@ -289,6 +295,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == Bootshine)
+
+                    var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
+                    var enemyHP = GetTargetHPPercent();
                 {
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
                     {
@@ -299,7 +308,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(Buffs.CoerlForm) && level >= Levels.SnapPunch)
                     {
-                        if (!TargetHasEffect(Debuffs.Demolish) && level >= Levels.Demolish)
+                        if (!TargetHasEffect(Debuffs.Demolish) && level >= Levels.Demolish && (enemyHP > DemolishTreshold))
                             return Demolish;
                         return SnapPunch;
                     }
@@ -349,6 +358,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
+                    var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
+                    var enemyHP = GetTargetHPPercent();
 
                     // Opener for MNK
                     if (IsEnabled(CustomComboPreset.MNK_ST_Simple_LunarSolarOpener))
@@ -528,7 +539,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
+                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
                             {
                                 if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
@@ -604,14 +615,15 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         return TrueStrike;
                     }
-
-                    if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply)))
+                        if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
                         {
-                            return Demolish;
+                            if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) && (enemyHP > DemolishTreshold) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply) && (enemyHP > DemolishTreshold)))
+                            {
+                                return Demolish;
+                            }
+                            return SnapPunch;
                         }
-                        return SnapPunch;
                     }
                 }
                 return actionID;
@@ -699,6 +711,19 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                 }
                 return actionID;
+            }
+        }
+        //Riddle Of Earth spam Protection 
+        internal class MNK_RiddleOfEarthProtection : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_RiddleOfEarthProtection;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is RiddleOfEarth && HasEffect(Buffs.RiddleOfEarth))
+                    return BLM.Fire;
+                else
+                    return actionID;
             }
         }
     }

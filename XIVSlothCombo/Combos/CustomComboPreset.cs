@@ -1585,6 +1585,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 0, "", "")]
         MNK_ST_Meditation_Uptime = 9028,
 
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Riddle Of Earth Protection", "Prevents the use of Riddle Of Earth when its buff is already active by replacing it with Fire.", MNK.JobID, 0, "", "")]
+        MNK_RiddleOfEarthProtection = 9029,
+
         #endregion
 
         #region NINJA
@@ -3611,6 +3615,7 @@ namespace XIVSlothCombo.Combos
         [SecretCustomCombo]
         [CustomComboInfo("Prevent Mash Cancelling", "Stops you cancelling your guard if you're mashing buttons", ADV.JobID, 3)]
         PvP_MashCancel = 90003,
+        
 
         #endregion
     }
