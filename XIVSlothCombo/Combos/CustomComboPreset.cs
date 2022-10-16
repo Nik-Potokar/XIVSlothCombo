@@ -1472,7 +1472,7 @@ namespace XIVSlothCombo.Combos
         #region MONK
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [CustomComboInfo("Arm of the Destroyer Combo", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Mode -  AOE", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID, 0, "", "")]
         MNK_AoE_SimpleMode = 9000,
 
         [ReplaceSkill(MNK.DragonKick)]
@@ -1502,7 +1502,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_BasicCombo)]
-        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk). Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk). Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
         MNK_ST_SimpleMode = 9006,
 
         [ReplaceSkill(MNK.MasterfulBlitz)]

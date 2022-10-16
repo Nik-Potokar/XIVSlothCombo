@@ -95,8 +95,6 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
                 MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold",
                 MNK_DemolishTreshhold = "MNK_ST_DemolishThreshold";
-
-
         }
 
         internal class MNK_BasicCombo : CustomCombo
@@ -149,10 +147,13 @@ namespace XIVSlothCombo.Combos.PvE
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
+                    var enemyHP = GetTargetHPPercent();
                     var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
                     var SecondWindTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold);
                     var BloodBathTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold);
-                    var enemyHP = GetTargetHPPercent();
+                    var DemolishApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply);
+                    var DisciplinedFistApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply);
+
 
                     // Opener for MNK
                     if (IsEnabled(CustomComboPreset.MNK_ST_Simple_LunarSolarOpener))
@@ -401,7 +402,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (LevelChecked(TrueStrike) && HasEffect(Buffs.RaptorForm))
                     {
-                        if (LevelChecked(TwinSnakes) && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply)))
+                        if (LevelChecked(TwinSnakes) && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= DisciplinedFistApply))
                         {
                             return TwinSnakes;
                         }
@@ -410,7 +411,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (LevelChecked(SnapPunch) && HasEffect(Buffs.CoerlForm))
                         {
-                            if (LevelChecked(Demolish) && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) && (enemyHP > DemolishTreshold) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply) && (enemyHP > DemolishTreshold)))
+                            if (LevelChecked(Demolish) && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) && (enemyHP > DemolishTreshold) || demolishDuration <= DemolishApply && (enemyHP > DemolishTreshold)))
                             {
                                 return Demolish;
                             }
@@ -493,12 +494,15 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                var gauge = GetJobGauge<MNKGauge>();
+                var pbStacks = FindEffectAny(Buffs.PerfectBalance);
+                var lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                var nadiNONE = gauge.Nadi == Nadi.NONE;
+
+
                 if (actionID == MasterfulBlitz)
                 {
-                    var gauge = GetJobGauge<MNKGauge>();
-                    var pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var nadiNONE = gauge.Nadi == Nadi.NONE;
+
                     if (!nadiNONE && !lunarNadi)
                     {
                         if (pbStacks?.StackCount == 3)
@@ -599,7 +603,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
-
+                    var SecondWindTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold);
+                    var BloodBathTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold);
 
                     if (!inCombat)
                     {
@@ -663,15 +668,15 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return LevelChecked(Enlightenment) ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
                         }
+                    }
 
-                        // healing - please move if not appropriate this high priority
-                        if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
-                        {
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                return All.SecondWind;
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                return All.Bloodbath;
-                        }
+                    // healing - please move if not appropriate this high priority
+                    if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
+                    {
+                        if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
+                        if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
                     }
 
                     // Masterful Blitz
