@@ -2385,7 +2385,7 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 250, "", "")]
             SGE_AoE_Phlegma_Lucid = 14250,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_AoE_Phlegma)]
             [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
             SGE_AoE_Phlegma_Rhizo = 14260,
         #endregion
