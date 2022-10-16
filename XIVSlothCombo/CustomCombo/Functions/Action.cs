@@ -59,9 +59,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                         //GetTargetDistance measures hitbox to hitbox (correct usage for ranged abilities so far)
                         //But attacks from player must include personal space (0.5y).
                         if (radius > 0)
-                        {
-                            //Don't nest this if with above. GTD's invalid target return is 0.
-                            if (GetTargetDistance() > 0) return GetTargetDistance() <= (radius - 0.5f); else return false;
+                        {   //Do not nest with above
+                            if (HasTarget()) return GetTargetDistance() <= (radius - 0.5f); else return false;
                         }
                         else return true; //Self use targets (Second Wind) have no radius
                     }
