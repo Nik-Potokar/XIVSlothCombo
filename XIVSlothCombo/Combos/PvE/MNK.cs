@@ -150,6 +150,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
                     var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
+                    var SecondWindTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold);
+                    var BloodBathTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold);
                     var enemyHP = GetTargetHPPercent();
 
                     // Opener for MNK
@@ -225,15 +227,6 @@ namespace XIVSlothCombo.Combos.PvE
                                             return OriginalHook(Meditation);
                                         }
                                     }
-
-                                    // healing - please move if not appropriate this high priority
-                                    if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
-                                    {
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                            return All.SecondWind;
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                            return All.Bloodbath;
-                                    }
                                 }
                             }
 
@@ -246,6 +239,14 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    // healing - please move if not appropriate this high priority
+                    if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
+                    {
+                        if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
+                        if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
+                    }
                     // Out of combat preparation
                     if (!inCombat)
                     {
@@ -254,7 +255,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Meditation;
                         }
 
-                        if (!inOpener && level >= Levels.FormShift && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                        if (!inOpener && LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
                         {
                             return FormShift;
                         }
@@ -316,15 +317,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     return RiddleOfWind;
                                 }
-
-                                // healing - please move if not appropriate this high priority
-                                if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
-                                {
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                        return All.SecondWind;
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                        return All.Bloodbath;
-                                }
                             }
                         }
 
@@ -338,6 +330,15 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
                         }
+                    }
+
+                    // healing - please move if not appropriate this high priority
+                    if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
+                    {
+                        if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
+                        if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
                     }
 
                     // Masterful Blitz
@@ -384,7 +385,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Demolish;
                             }
                         }
-                        return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
+                        return HasEffect(Buffs.LeadenFist) && HasEffect(Buffs.OpoOpoForm) ? Bootshine : DragonKick;
                     }
 
                     // Monk Rotation
