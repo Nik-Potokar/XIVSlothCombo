@@ -1497,7 +1497,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MNK.TrueStrike)]
         [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 0, "", "")]
-        MNK_TwinSnakes = 905,
+        MNK_TwinSnakes = 9005,
 
         [ReplaceSkill(MNK.PerfectBalance)]
         [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, 0, "", "")]
