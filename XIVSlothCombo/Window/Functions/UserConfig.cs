@@ -1748,6 +1748,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% to use Tetragrammaton on target at:");
 
+            if (preset == CustomComboPreset.WHM_Medica_ThinAir)
+                UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_Medica_ThinAir, "How many charges to keep ready? (0 = Use all)");
+
             #endregion
             // ====================================================================================
             #region DOH

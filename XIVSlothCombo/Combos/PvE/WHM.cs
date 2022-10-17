@@ -73,7 +73,8 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_ST_Lucid = "WHMLucidDreamingFeature",
                 WHM_ST_MainCombo_DoT = "WHM_ST_MainCombo_DoT",
                 WHM_AoE_Lucid = "WHM_AoE_Lucid",
-                WHM_oGCDHeals = "WHMogcdHealsShieldsFeature";
+                WHM_oGCDHeals = "WHMogcdHealsShieldsFeature",
+                WHM_Medica_ThinAir = "WHM_Medica_ThinAir";
 
             internal static bool WHM_ST_MainCombo_DoT_Adv => PluginConfiguration.GetCustomBoolValue(nameof(WHM_ST_MainCombo_DoT_Adv));
             internal static float WHM_ST_MainCombo_DoT_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(WHM_ST_MainCombo_DoT_Threshold));
@@ -265,7 +266,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Medica2)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
-                    bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > 0;
+                    bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && HasCharges(ThinAir) && GetRemainingCharges(ThinAir) > GetOptionValue(Config.WHM_Medica_ThinAir);
 
                     if (!LevelChecked(Medica2))
                         return Medica1;
