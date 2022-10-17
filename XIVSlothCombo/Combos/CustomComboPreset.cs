@@ -1479,27 +1479,27 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_SimpleMode)]
-        [CustomComboInfo("Basic Rotation - Single Target", "Replaces Bootshine with Monk's basic Single Target Combo on one button.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Basic Rotation - Single Target", "Replaces Bootshine with Monk's basic single target combo on one button.", MNK.JobID, 0, "", "")]
         MNK_ST_BasicCombo = 9001,
 
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_ST_BasicCombo, MNK_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation. Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replace Bootshine with its combo chain. \nIf all sub-options are selected will turn into a full one button rotation. Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
         MNK_ST_AdvancedMode = 9002,
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_SimpleMode)]
-        [CustomComboInfo("Basic Rotation - AOE", "Replace Arms Of The Destroyer with Monk's basic AOE Combo on one button.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Basic Rotation - AoE", "Replace Arms Of The Destroyer with Monk's basic AoE combo on one button.", MNK.JobID, 0, "", "")]
         MNK_AOE_BasicCombo = 9003,
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_BasicCombo)]
-        [CustomComboInfo("Simple Mode - AOE", "Replace Arms Of The Destroyer with a one-button full AOE target rotation.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Mode - AoE", "Replace Arms Of The Destroyer with a one-button full AoE target rotation.", MNK.JobID, 0, "", "")]
         MNK_AOE_SimpleMode = 9004,
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_SimpleMode, MNK_AOE_BasicCombo)]
-        [CustomComboInfo("Advanced Mode - AOE", "Replace Arms Of The Destroyer with its combo chain. \nIf all sub options are selected will turn into a full one button rotation.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Mode - AoE", "Replace Arms Of The Destroyer with its combo chain. \nIf all sub-options are selected will turn into a full one button rotation.", MNK.JobID, 0, "", "")]
         MNK_AOE_AdvancedMode = 9005,
 
         [ReplaceSkill(MNK.DragonKick)]
@@ -1523,7 +1523,7 @@ namespace XIVSlothCombo.Combos
         MNK_HowlingFistMeditation = 9010,
 
         [ReplaceSkill(MNK.MasterfulBlitz)]
-        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (optimal?) Blitz combos on Masterful Blitz when Perfect Balance is active", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (optimal?) Blitz combos on Masterful Blitz when Perfect Balance is active.", MNK.JobID, 0, "", "")]
         MNK_PerfectBalance_Plus = 9011,
 
         [ParentCombo(MNK_ST_ADV_CDs)]
