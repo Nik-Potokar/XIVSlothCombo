@@ -863,6 +863,134 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+
+        internal class MNK_AOE_SimpleMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_AOE_SimpleMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == ArmOfTheDestroyer || actionID == ShadowOfTheDestroyer)
+                {
+                    var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    var gauge = GetJobGauge<MNKGauge>();
+                    var canWeave = CanWeave(actionID, 0.5);
+                    var canWeaveChakra = CanWeave(actionID);
+                    var pbStacks = FindEffectAny(Buffs.PerfectBalance);
+                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                    var nadiNONE = gauge.Nadi == Nadi.NONE;
+
+                    if (!inCombat)
+                    {
+                        if (gauge.Chakra < 5 && LevelChecked(Meditation))
+                        {
+                            return Meditation;
+                        }
+
+                        if (LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                        {
+                            return FormShift;
+                        }
+
+                        if (!InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
+                        {
+                            return Thunderclap;
+                        }
+                    }
+
+                    // Buffs
+                    if (inCombat && canWeave)
+                    {
+                            if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire))
+                            {
+                                return RiddleOfFire;
+                            }
+
+                            if (LevelChecked(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
+                            {
+                                // Use Perfect Balance if:
+                                // 1. It's after Bootshine/Dragon Kick.
+                                // 2. At max stacks / before overcap.
+                                // 3. During Brotherhood.
+                                // 4. During Riddle of Fire.
+                                // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
+                                if ((GetRemainingCharges(PerfectBalance) == 2) ||
+                                    (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
+                                {
+                                    return PerfectBalance;
+                                }
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_Brotherhood) && LevelChecked(Brotherhood) && !IsOnCooldown(Brotherhood))
+                            {
+                                return Brotherhood;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_RiddleOfWind) && LevelChecked(RiddleOfWind) && !IsOnCooldown(RiddleOfWind))
+                            {
+                                return RiddleOfWind;
+                            }
+
+                        if (LevelChecked(Meditation) && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
+                            !LevelChecked(TwinSnakes)) && canWeaveChakra)
+                        {
+                            return LevelChecked(Enlightenment) ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
+                        }
+                    }
+
+                    // Masterful Blitz
+                    if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                    {
+                        return OriginalHook(MasterfulBlitz);
+                    }
+
+                    // Perfect Balance
+                    if (HasEffect(Buffs.PerfectBalance))
+                    {
+                        if (nadiNONE || !lunarNadi)
+                        {
+                            if (pbStacks?.StackCount > 0)
+                            {
+                                return LevelChecked(ShadowOfTheDestroyer) ? ShadowOfTheDestroyer : Rockbreaker;
+                            }
+                        }
+                        if (lunarNadi)
+                        {
+                            switch (pbStacks?.StackCount)
+                            {
+                                case 3:
+                                    return OriginalHook(ArmOfTheDestroyer);
+                                case 2:
+                                    return FourPointFury;
+                                case 1:
+                                    return Rockbreaker;
+                            }
+                        }
+                    }
+
+                    // Monk Rotation
+                    if (HasEffect(Buffs.OpoOpoForm))
+                    {
+                        return OriginalHook(ArmOfTheDestroyer);
+                    }
+
+                    if (HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury))
+                    {
+                        return FourPointFury;
+                    }
+
+                    if (HasEffect(Buffs.CoerlForm) && LevelChecked(Rockbreaker))
+                    {
+                        return Rockbreaker;
+                    }
+                }
+                return actionID;
+            }
+        }
+
         internal class MNK_AOE_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_AOE_AdvancedMode;
@@ -1004,6 +1132,5 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-
     }
 }
