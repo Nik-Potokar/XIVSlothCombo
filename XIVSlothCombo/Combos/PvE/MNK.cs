@@ -247,9 +247,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.LeadenFist) &&
                         (HasEffect(Buffs.FormlessFist) ||
                         HasEffect(Buffs.PerfectBalance) ||
-                        HasEffect(Buffs.OpoOpoForm) ||
-                        HasEffect(Buffs.RaptorForm) ||
-                        HasEffect(Buffs.CoerlForm)))
+                        HasEffect(Buffs.OpoOpoForm)))
                         return Bootshine;
 
                     if (level < Levels.DragonKick)
