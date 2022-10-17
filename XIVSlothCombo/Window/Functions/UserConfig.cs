@@ -1287,15 +1287,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
-            if (preset == CustomComboPreset.MNK_ST_ADV_CDs)
-            {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_DemolishTreshhold, "Stop using Demolish on targets below this HP % (0% = normal use).", 150, SliderIncrements.Ones);
-            }
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
-            {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_DemolishTreshhold, "Stop using Demolish on targets below this HP % (0% = normal use).", 150, SliderIncrements.Ones);
-            }
-            if (preset == CustomComboPreset.MNK_BasicCombo)
+            if (preset == (CustomComboPreset.MNK_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode)) 
             {
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_DemolishTreshhold, "Stop using Demolish on targets below this HP % (0% = normal use).", 150, SliderIncrements.Ones);
             }
