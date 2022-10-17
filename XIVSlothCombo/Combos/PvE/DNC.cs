@@ -98,6 +98,8 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 DNCSimpleFeatherBurstPercent = "DNCSimpleFeatherBurstPercent";              // Feather burst    target HP% threshold
             public const string
+                DNCSimpleSaberThreshold = "DNCSimpleSaberThreshold";                        // Saber Dance      Esprit threshold
+            public const string
                 DNCSimplePanicHealWaltzPercent = "DNCSimplePanicHealWaltzPercent";          // Curing Waltz     player HP% threshold
             public const string
                 DNCSimplePanicHealWindPercent = "DNCSimplePanicHealWindPercent";            // Second Wind      player HP% threshold
@@ -108,6 +110,8 @@ namespace XIVSlothCombo.Combos.PvE
                 DNCSimpleSSAoEBurstPercent = "DNCSimpleSSAoEBurstPercent";                  // Standard Step    target HP% threshold
             public const string
                 DNCSimpleTSAoEBurstPercent = "DNCSimpleTSAoEBurstPercent";                  // Technical Step   target HP% threshold
+            public const string
+                DNCSimpleAoESaberThreshold = "DNCSimpleAoESaberThreshold";                  // Saber Dance      Esprit threshold
             public const string
                 DNCSimpleAoEPanicHealWaltzPercent = "DNCSimpleAoEPanicHealWaltzPercent";    // Curing Waltz     player HP% threshold 
             public const string
@@ -477,8 +481,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // ST Saber Dance
-                    if (LevelChecked(SaberDance) &&
-                        (gauge.Esprit >= 85 || (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
+                        (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
+                        (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
                         return SaberDance;
 
                     // ST combos and burst attacks
@@ -562,8 +567,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return Flourish;
 
                     // AoE Saber Dance
-                    if (LevelChecked(SaberDance) &&
-                        (gauge.Esprit >= 85 || (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
+                        (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) ||
+                        (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
                         return SaberDance;
 
                     if (CanWeave(actionID))
