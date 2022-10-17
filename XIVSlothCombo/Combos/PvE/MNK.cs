@@ -98,9 +98,9 @@ namespace XIVSlothCombo.Combos.PvE
         }
         
 
-        internal class MNK_BasicCombo : CustomCombo
+        internal class MNK_ST_BasicCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_BasicCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_BasicCombo;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == Bootshine)
@@ -863,6 +863,31 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        internal class MNK_AOE_BasicCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_AOE_BasicCombo;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == ArmOfTheDestroyer)
+                {
+                    if (HasEffect(Buffs.OpoOpoForm))
+                    {
+                        return OriginalHook(ArmOfTheDestroyer);
+                    }
+
+                    if (HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury) || HasEffect(Buffs.FormlessFist))
+                    {
+                        return FourPointFury;
+                    }
+
+                    if (HasEffect(Buffs.CoerlForm) && LevelChecked(Rockbreaker))
+                    {
+                        return Rockbreaker;
+                    }
+                }
+                return actionID;
+            }
+        }
 
         internal class MNK_AOE_SimpleMode : CustomCombo
         {
@@ -924,12 +949,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_Brotherhood) && LevelChecked(Brotherhood) && !IsOnCooldown(Brotherhood))
+                            if (LevelChecked(Brotherhood) && !IsOnCooldown(Brotherhood))
                             {
                                 return Brotherhood;
                             }
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_RiddleOfWind) && LevelChecked(RiddleOfWind) && !IsOnCooldown(RiddleOfWind))
+                            if (LevelChecked(RiddleOfWind) && !IsOnCooldown(RiddleOfWind))
                             {
                                 return RiddleOfWind;
                             }
@@ -977,7 +1002,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(ArmOfTheDestroyer);
                     }
 
-                    if (HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury))
+                    if (HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury) || HasEffect(Buffs.FormlessFist))
                     {
                         return FourPointFury;
                     }
@@ -1030,7 +1055,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (inCombat && canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.MNK_AoE_CDs))
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_ADV_CDs))
                         {
                             if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire))
                             {
@@ -1119,7 +1144,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(ArmOfTheDestroyer);
                     }
 
-                    if (HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury))
+                    if (HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury) || HasEffect(Buffs.FormlessFist))
                     {
                         return FourPointFury;
                     }
