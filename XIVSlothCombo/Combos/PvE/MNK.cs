@@ -154,7 +154,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
 
 
-                    // Opener for MNK
+                        // Opener for MNK
                         // Re-enter opener when Brotherhood is used
                         if (lastComboMove == Brotherhood)
                         {
