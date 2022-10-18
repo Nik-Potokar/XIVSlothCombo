@@ -422,6 +422,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Advanced BLM.", BLM.JobID, 0, "", "")]
         BLM_TransposeThunderUptime = 2030,
 
+        [ReplaceSkill(BLM.AetherialManipulation)]
+        [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
+        BLM_AetherialManipulation = 2031,
+
         #endregion
 
         #region BLUE MAGE
