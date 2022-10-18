@@ -155,6 +155,8 @@ namespace XIVSlothCombo.Combos.PvE
 
 
                     // Opener for MNK
+                    if (IsEnabled(CustomComboPreset.MNK_ST_LunarSolarOpener))
+                    {
                         // Re-enter opener when Brotherhood is used
                         if (lastComboMove == Brotherhood)
                         {
@@ -184,7 +186,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(RiddleOfFire))
                             {
                                 // Early exit out of opener
-                                if (!ActionReady(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 40)
+                                if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 40)
                                 {
                                     inOpener = false;
                                     openerFinished = true;
@@ -193,7 +195,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 // Delayed weave for Riddle of Fire specifically
                                 if (canDelayedWeave)
                                 {
-                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && ActionReady(RiddleOfFire))
+                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire))
                                     {
                                         return RiddleOfFire;
                                     }
@@ -201,9 +203,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (canWeave)
                                 {
-                                    if (!ActionReady(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 59)
+                                    if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 59)
                                     {
-                                        if (LevelChecked(Brotherhood) && ActionReady(Brotherhood) && !ActionReady(RiddleOfFire) &&
+                                        if (LevelChecked(Brotherhood) && !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire) &&
                                            (lastComboMove == Bootshine || lastComboMove == DragonKick))
                                         {
                                             return Brotherhood;
@@ -215,7 +217,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return PerfectBalance;
                                         }
 
-                                        if (LevelChecked(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) && ActionReady(RiddleOfWind))
+                                        if (LevelChecked(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) && !IsOnCooldown(RiddleOfWind))
                                         {
                                             return RiddleOfWind;
                                         }
@@ -235,6 +237,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 openerFinished = true;
                             }
                         }
+                    }
                     // Out of combat preparation
                     if (!inCombat)
                     {
@@ -248,7 +251,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return FormShift;
                         }
 
-                        if (!InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
+                        if (IsEnabled(CustomComboPreset.MNK_ST_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                         {
                             return Thunderclap;
                         }
@@ -285,7 +288,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (canDelayedWeave)
                             {
-                                if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
+                                if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
                                 {
                                     return RiddleOfFire;
                                 }
@@ -294,13 +297,13 @@ namespace XIVSlothCombo.Combos.PvE
                             if (canWeave)
                             {
                                 if (LevelChecked(Brotherhood) &&
-                                   ActionReady(Brotherhood) && !ActionReady(RiddleOfFire))
+                                   !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire))
                                 {
                                     return Brotherhood;
                                 }
 
                                 if (LevelChecked(RiddleOfWind) &&
-                                   ActionReady(RiddleOfWind) && !ActionReady(RiddleOfFire) && !ActionReady(Brotherhood))
+                                   !IsOnCooldown(RiddleOfWind) && IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
                                 {
                                     return RiddleOfWind;
                                 }
@@ -309,9 +312,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeave)
                         {
-                            if (LevelChecked(Meditation) && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
+                            if (IsEnabled(CustomComboPreset.MNK_ST_Meditation) && LevelChecked(Meditation) && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
                             {
-                                if (!LevelChecked(RiddleOfFire) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && !ActionReady(RiddleOfFire) && lastComboMove != RiddleOfFire))
+                                if (!LevelChecked(RiddleOfFire) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
                                     return OriginalHook(Meditation);
                                 }
@@ -319,7 +322,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
                     // Masterful Blitz
-                    if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                    if (IsEnabled(CustomComboPreset.MNK_ST_MasterfulBlitz) && LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                     {
                         return OriginalHook(MasterfulBlitz);
                     }
@@ -366,7 +369,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Monk Rotation
-                    if (!InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
                     {
                         return Meditation;
                     }
@@ -459,7 +462,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(RiddleOfFire))
                             {
                                 // Early exit out of opener
-                                if (!ActionReady(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 40)
+                                if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 40)
                                 {
                                     inOpener = false;
                                     openerFinished = true;
@@ -468,7 +471,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 // Delayed weave for Riddle of Fire specifically
                                 if (canDelayedWeave)
                                 {
-                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && ActionReady(RiddleOfFire))
+                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire))
                                     {
                                         return RiddleOfFire;
                                     }
@@ -476,9 +479,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (canWeave)
                                 {
-                                    if (!ActionReady(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 59)
+                                    if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 59)
                                     {
-                                        if (LevelChecked(Brotherhood) && ActionReady(Brotherhood) && !ActionReady(RiddleOfFire) &&
+                                        if (LevelChecked(Brotherhood) && !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire) &&
                                            (lastComboMove == Bootshine || lastComboMove == DragonKick))
                                         {
                                             return Brotherhood;
@@ -490,7 +493,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return PerfectBalance;
                                         }
 
-                                        if (LevelChecked(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) && ActionReady(RiddleOfWind))
+                                        if (LevelChecked(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) && !IsOnCooldown(RiddleOfWind))
                                         {
                                             return RiddleOfWind;
                                         }
@@ -513,9 +516,9 @@ namespace XIVSlothCombo.Combos.PvE
                             // healing - please move if not appropriate this high priority
                             if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                             {
-                                if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && ActionReady(All.SecondWind))
+                                if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                                     return All.SecondWind;
-                                if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && ActionReady(All.Bloodbath))
+                                if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                                     return All.Bloodbath;
                             }
                         }
@@ -572,7 +575,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (canDelayedWeave)
                             {
-                                if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
+                                if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
                                 {
                                     return RiddleOfFire;
                                 }
@@ -581,13 +584,13 @@ namespace XIVSlothCombo.Combos.PvE
                             if (canWeave)
                             {
                                 if (IsEnabled(CustomComboPreset.MNK_ST_ADV_CDs_Brotherhood) && LevelChecked(Brotherhood) &&
-                                   ActionReady(Brotherhood) && !ActionReady(RiddleOfFire))
+                                   !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire))
                                 {
                                     return Brotherhood;
                                 }
 
                                 if (IsEnabled(CustomComboPreset.MNK_ST_ADV_CDs_RiddleOfWind) && LevelChecked(RiddleOfWind) &&
-                                   ActionReady(RiddleOfWind) && !ActionReady(RiddleOfFire) && !ActionReady(Brotherhood))
+                                   !IsOnCooldown(RiddleOfWind) && IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
                                 {
                                     return RiddleOfWind;
                                 }
@@ -598,7 +601,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.MNK_ST_Meditation) && LevelChecked(Meditation) && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
                             {
-                                if (!LevelChecked(RiddleOfFire) || !IsEnabled(CustomComboPreset.MNK_ST_ADV_CDs) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && !ActionReady(RiddleOfFire) && lastComboMove != RiddleOfFire))
+                                if (!LevelChecked(RiddleOfFire) || !IsEnabled(CustomComboPreset.MNK_ST_ADV_CDs) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
                                     return OriginalHook(Meditation);
                                 }
@@ -607,9 +610,9 @@ namespace XIVSlothCombo.Combos.PvE
                         // healing - please move if not appropriate this high priority
                         if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                         {
-                            if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && ActionReady(All.SecondWind))
+                            if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                                 return All.SecondWind;
-                            if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && ActionReady(All.Bloodbath))
+                            if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                                 return All.Bloodbath;
                         }
                     }
@@ -706,10 +709,12 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MNK_BootshineBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
 
-                     if (HasEffect(Buffs.LeadenFist) &&
+                    if (HasEffect(Buffs.LeadenFist) &&
                         (HasEffect(Buffs.FormlessFist) ||
                         HasEffect(Buffs.PerfectBalance) ||
-                        HasEffect(Buffs.OpoOpoForm)))
+                        HasEffect(Buffs.OpoOpoForm) ||
+                        HasEffect(Buffs.RaptorForm) ||
+                        HasEffect(Buffs.CoerlForm)))
                         return Bootshine;
 
                     if (!LevelChecked(DragonKick))
@@ -820,7 +825,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is RiddleOfFire && LevelChecked(Brotherhood) && !ActionReady(RiddleOfFire) && ActionReady(Brotherhood))
+                if (actionID is RiddleOfFire && LevelChecked(Brotherhood) && IsOnCooldown(RiddleOfFire) && IsOffCooldown(Brotherhood))
                     return Brotherhood;
                 else return actionID;
             }
@@ -863,7 +868,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_AOE_BasicCombo;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == ArmOfTheDestroyer || actionID == ShadowOfTheDestroyer)
+                if (actionID == ArmOfTheDestroyer)
                 {
                     if (HasEffect(Buffs.OpoOpoForm))
                     {
@@ -944,12 +949,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (LevelChecked(Brotherhood) && ActionReady(Brotherhood))
+                            if (LevelChecked(Brotherhood) && !IsOnCooldown(Brotherhood))
                             {
                                 return Brotherhood;
                             }
 
-                            if (LevelChecked(RiddleOfWind) && ActionReady(RiddleOfWind))
+                            if (LevelChecked(RiddleOfWind) && !IsOnCooldown(RiddleOfWind))
                             {
                                 return RiddleOfWind;
                             }
@@ -1041,7 +1046,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return FormShift;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_AoE_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                         {
                             return Thunderclap;
                         }
@@ -1052,7 +1057,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.MNK_AoE_ADV_CDs))
                         {
-                            if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire))
+                            if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire))
                             {
                                 return RiddleOfFire;
                             }
@@ -1075,12 +1080,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_Brotherhood) && LevelChecked(Brotherhood) && ActionReady(Brotherhood))
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_Brotherhood) && LevelChecked(Brotherhood) && !IsOnCooldown(Brotherhood))
                             {
                                 return Brotherhood;
                             }
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_RiddleOfWind) && LevelChecked(RiddleOfWind) && ActionReady(RiddleOfWind))
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_RiddleOfWind) && LevelChecked(RiddleOfWind) && !IsOnCooldown(RiddleOfWind))
                             {
                                 return RiddleOfWind;
                             }
@@ -1096,9 +1101,9 @@ namespace XIVSlothCombo.Combos.PvE
                     // healing - please move if not appropriate this high priority
                     if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                     {
-                        if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && ActionReady(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= SecondWindTreshold && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                             return All.SecondWind;
-                        if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && ActionReady(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= BloodBathTreshold && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                             return All.Bloodbath;
                     }
 
