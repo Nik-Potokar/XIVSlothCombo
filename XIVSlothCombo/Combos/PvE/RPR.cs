@@ -477,7 +477,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is HellsEgress or HellsIngress) && FindEffect(Buffs.Threshold).RemainingTime <= 9
+                return (actionID is HellsEgress or HellsIngress) && FindEffect(Buffs.Threshold)?.RemainingTime <= 9
                     ? Regress
                     : actionID;
             }
