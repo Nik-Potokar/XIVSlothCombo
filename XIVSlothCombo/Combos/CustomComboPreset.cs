@@ -1588,7 +1588,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 19, "", "")]
-        MNK_ST_Thunderclap = 9025,
+        MNK_ST_ADV_Thunderclap = 9025,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 20, "", "")]
@@ -1604,6 +1604,14 @@ namespace XIVSlothCombo.Combos
 
         [CustomComboInfo("Riddle Of Earth Protection", "Prevents the use of Riddle Of Earth when its buff is already active by replacing it with Fire.", MNK.JobID, 67, "", "")]
         MNK_RiddleOfEarthProtection = 9029,
+
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
+        MNK_ST_Simple_Thunderclap = 9033,
+
+        [ParentCombo(MNK_AoE_Meditation)]
+        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 0, "", "")]
+        MNK_AoE_Meditation_Uptime = 9034,
 
         #endregion
 
