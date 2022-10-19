@@ -1610,7 +1610,7 @@ namespace XIVSlothCombo.Combos
         MNK_ST_Simple_Thunderclap = 9033,
 
         [ParentCombo(MNK_AoE_Meditation)]
-        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 0, "", "")]
+        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range.", MNK.JobID, 0, "", "")]
         MNK_AoE_Meditation_Uptime = 9034,
 
         #endregion
