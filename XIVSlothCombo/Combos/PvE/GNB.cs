@@ -410,7 +410,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 
-                if (actionID == DemonSlaughter)
+                if (actionID == DemonSlice)
                 {
                     var gauge = GetJobGauge<GNBGauge>();
 

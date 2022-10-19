@@ -1177,7 +1177,7 @@ namespace XIVSlothCombo.Combos
 
         #region ST
         [ReplaceSkill(GNB.KeenEdge)]
-        [CustomComboInfo("Advanced Gunbreaker", "Replace Solid Barrel with its combo chain and uses Burst Strike to prevent ammo overcap.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Gunbreaker", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap.", GNB.JobID, 0, "", "")]
         GNB_ST_MainCombo = 7001,
 
         #region Gnashing Fang
@@ -1259,8 +1259,8 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region AOE
-        [ReplaceSkill(GNB.DemonSlaughter)]
-        [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "", "")]
+        [ReplaceSkill(GNB.DemonSlice)]
+        [CustomComboInfo("AoE Combo", "Replace Demon Slice with its combo chain.", GNB.JobID, 0, "", "")]
         GNB_AoE_MainCombo = 7300,
 
         [ConflictingCombos(GNB_NoMercy_Cooldowns)]
