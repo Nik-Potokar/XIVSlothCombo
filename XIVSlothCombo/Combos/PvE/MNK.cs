@@ -999,12 +999,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(MasterfulBlitz);
                     }
 
-                    // Meditation Uptime
-                    if (!InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
-                    {
-                        return Meditation;
-                    }
-
                     // Perfect Balance
                     if (HasEffect(Buffs.PerfectBalance))
                     {
@@ -1152,12 +1146,6 @@ namespace XIVSlothCombo.Combos.PvE
                         && OriginalHook(MasterfulBlitz) != MasterfulBlitz && !(OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix))
                     {
                         return OriginalHook(MasterfulBlitz);
-                    }
-
-                    // Meditation Uptime
-                    if (IsEnabled(CustomComboPreset.MNK_AoE_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
-                    {
-                        return Meditation;
                     }
 
                         // Perfect Balance
