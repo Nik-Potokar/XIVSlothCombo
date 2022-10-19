@@ -1253,6 +1253,12 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region GUNBREAKER
 
+            if (preset == CustomComboPreset.GNB_ST_SkSSupport && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "< 2.45", "Options are friendly for skill speeds of 2.45 and lower.", 1);
+                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "2.5", "Options are friendly for 2.5 skill speed.", 2);
+            }
+
             if (preset == CustomComboPreset.GNB_ST_RoughDivide && enabled)
                 UserConfig.DrawSliderInt(0, 1, GNB.Config.GNB_RoughDivide_HeldCharges, "How many charges to keep ready? (0 = Use All)");
 
