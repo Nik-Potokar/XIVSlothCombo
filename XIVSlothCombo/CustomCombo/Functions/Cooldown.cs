@@ -54,5 +54,10 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> Number of charges. </returns>
         public static ushort GetMaxCharges(uint actionID) => GetCooldown(actionID).MaxCharges;
+
+        /// <summary> Get if an action is enabled.</summary>
+        /// <param name="actionID"> Action ID to check</param>
+        /// <returns> If the action is currently enabled.</returns>
+        public static bool IsEnabled(uint actionID) => GetCooldown(actionID).IsEnabled;
     }
 }

@@ -17,7 +17,7 @@ namespace XIVSlothCombo.Data
         private readonly float cooldownElapsed;
 
         [FieldOffset(0xC)]
-        private readonly float cooldownTotal;
+        private float cooldownTotal;
 
         /// <summary> Gets a value indicating whether the action is on cooldown. </summary>
         public bool IsCooldown
@@ -69,6 +69,10 @@ namespace XIVSlothCombo.Data
                     ? 0
                     : total;
             }
+            set
+            {
+                cooldownTotal = value;
+            }
         }
 
         /// <summary> Gets the cooldown time remaining. </summary>
@@ -107,5 +111,8 @@ namespace XIVSlothCombo.Data
                 return CooldownRemaining % (CooldownTotal / cur);
             }
         }
+
+        /// <summary>If an ability is available for a player to use, will return true. </summary>
+        public bool IsEnabled => CooldownTotal != -1;
     }
 }
