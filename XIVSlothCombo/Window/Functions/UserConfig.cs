@@ -439,7 +439,12 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.SameLine();
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
 
-            if (values.Length == 0) Array.Resize(ref values, totalChoices);
+            if (values.Length == 0 || values.Length != totalChoices)
+            {
+                Array.Resize(ref values, totalChoices);
+                PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
 
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
             if (ImGui.Checkbox($"{checkBoxName}###{config}{choice}", ref values[choice]))
