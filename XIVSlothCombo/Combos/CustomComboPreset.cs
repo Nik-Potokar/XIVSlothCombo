@@ -3022,6 +3022,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
         [CustomComboInfo("Burst Delay Option", "Only follows Burst Delay settings for the opener burst.\nThis Option is for high SPS builds.", SMN.JobID, 2, "", "")]
         SMN_Advanced_Burst_Delay_Option = 17043,
+        
+        [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
+        [CustomComboInfo("Any Searing Burst Option", "Checks for any Searing light for bursting rather than just your own.\nUse this option if partied with multiple SMN and are worried about your Searing being overwritten.", SMN.JobID, 1, "", "")]
+        SMN_Advanced_Burst_Any_Option = 17044,
         #endregion
 
         #region WARRIOR
