@@ -147,6 +147,7 @@ namespace XIVSlothCombo.Combos.PvE
                 Advanced_DotonTimer = "Advanced_DotonTimer",
                 Advanced_DotonHP = "Advanced_DotonHP",
                 Advanced_TCJEnderAoE = "Advanced_TCJEnderAoe",
+                Advanced_ChargePool = "Advanced_ChargePool",
                 SecondWindThresholdST = "SecondWindThresholdST",
                 ShadeShiftThresholdST = "ShadeShiftThresholdST",
                 BloodbathThresholdST = "BloodbathThresholdST",
@@ -186,6 +187,7 @@ namespace XIVSlothCombo.Combos.PvE
                     int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThresholdST);
                     int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThresholdST);
                     double playerHP = PlayerHealthPercentageHp();
+                    bool poolCharges = GetOptionBool(Config.Advanced_ChargePool) ? (GetRemainingCharges(Ten) == 1 && GetCooldownChargeRemainingTime(Ten) < 2) || TargetHasEffect(Debuffs.TrickAttack) : true;
 
 
                     if ((IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) && IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Raiton_Uptime)) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
@@ -219,23 +221,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush) &&
-                        !HasEffect(Buffs.RaijuReady) &&
-                        lastComboMove == GustSlash &&
-                        (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) && IsOnCooldown(TrickAttack) ||
-                        IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)) &&
-                        ((gauge.HutonTimer <= hutonArmorCrushTimer) || doubleArmorCrush && timesLastEnderWasArmorCrush == 1) &&
-                        gauge.HutonTimer > 0 && ArmorCrush.LevelChecked() &&
-                        comboTime > 1f)
-                    {
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) &&
-                            GetRemainingCharges(All.TrueNorth) > 0 &&
-                            All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) &&
-                            canWeave)
-                            return OriginalHook(All.TrueNorth);
-
-                        return OriginalHook(ArmorCrush);
-                    }
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime) && HasTarget() && !InMeleeRange() && !HasEffect(Buffs.RaijuReady) && InCombat())
                     {
@@ -379,6 +364,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton) &&
                                 !inTrickBurstSaveWindow &&
                                 chargeCheck &&
+                                poolCharges &&
                                 mudraState.CastRaiton(ref actionID))
                                 return actionID;
 
@@ -388,6 +374,25 @@ namespace XIVSlothCombo.Combos.PvE
                                 mudraState.CastFumaShuriken(ref actionID))
                                 return actionID;
                         }
+                    }
+
+
+                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush) &&
+                        !HasEffect(Buffs.RaijuReady) &&
+                        lastComboMove == GustSlash &&
+                        (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) && IsOnCooldown(TrickAttack) ||
+                        IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)) &&
+                        ((gauge.HutonTimer <= hutonArmorCrushTimer) || doubleArmorCrush && timesLastEnderWasArmorCrush == 1) &&
+                        gauge.HutonTimer > 0 && ArmorCrush.LevelChecked() &&
+                        comboTime > 1f)
+                    {
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) &&
+                            GetRemainingCharges(All.TrueNorth) > 0 &&
+                            All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) &&
+                            canWeave)
+                            return OriginalHook(All.TrueNorth);
+
+                        return OriginalHook(ArmorCrush);
                     }
 
                     if (comboTime > 1f)
