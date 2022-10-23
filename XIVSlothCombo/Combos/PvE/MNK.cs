@@ -100,9 +100,9 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class MNK_ST_BasicCombo : CustomCombo
         {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_BasicCombo;
-                    protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                    {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_BasicCombo;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
                 if (actionID == Bootshine)
                 {
                     var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
@@ -112,39 +112,39 @@ namespace XIVSlothCombo.Combos.PvE
                     var DemolishApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply);
                     var DisciplinedFistApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply);
 
-                            if (!HasEffect(Buffs.PerfectBalance))
-                            {
+                    if (!HasEffect(Buffs.PerfectBalance))
+                    {
 
-                                if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
-                                {
-                                    return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
-                                    ? Bootshine
-                                    : DragonKick;
-                                }
-                            }
-
-                            if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
-                            {
-                                if (LevelChecked(TrueStrike))
-                                {
-                                    return Bootshine;
-                                }
-                                return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= DisciplinedFistApply)
-                                ? TrueStrike
-                                : TwinSnakes;
-                            }
-
-                            if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
-                            {
-                                return !LevelChecked(SnapPunch)
-                                ? Bootshine
-                                : !LevelChecked(Demolish) || (demolishDuration >= DemolishApply)
-                                    ? SnapPunch
-                                    : Demolish;
-                            }
+                        if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
+                        {
+                            return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
+                            ? Bootshine
+                            : DragonKick;
                         }
-                            return actionID;
                     }
+
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
+                    {
+                        if (LevelChecked(TrueStrike))
+                        {
+                            return Bootshine;
+                        }
+                        return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= DisciplinedFistApply)
+                        ? TrueStrike
+                        : TwinSnakes;
+                    }
+
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
+                    {
+                        return !LevelChecked(SnapPunch)
+                        ? Bootshine
+                        : !LevelChecked(Demolish) || (demolishDuration >= DemolishApply)
+                            ? SnapPunch
+                            : Demolish;
+                    }
+                }
+                return actionID;
+            }
         }
 
         internal class MNK_ST_SimpleMode : CustomCombo
@@ -651,8 +651,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Masterful Blitz ElixirField/RisingPhoenix
                     if (IsEnabled(CustomComboPreset.MNK_ST_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance)
                         && (OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix) && ((!IsMoving && InActionRange(MasterfulBlitz))))
-                    { 
-                    return OriginalHook(MasterfulBlitz);
+                    {
+                        return OriginalHook(MasterfulBlitz);
                     }
                     // Meditation Uptime
                     if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
@@ -714,37 +714,36 @@ namespace XIVSlothCombo.Combos.PvE
                         return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
                     }
 
-                            if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
-                            {
-                                return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
-                                    ? Bootshine
-                                    : DragonKick;
-                            }
-                        }
+                    if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
+                    {
+                        return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
+                            ? Bootshine
+                            : DragonKick;
+                    }
 
-                        if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
-                        {
-                            if (LevelChecked(TrueStrike))
-                            {
-                                return Bootshine;
-                            }
-                            return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= DisciplinedFistApply)
-                               ? TrueStrike
-                               : TwinSnakes;
-                        }
-
-                        if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
-                        {
-                            return !LevelChecked(SnapPunch)
-                                ? Bootshine
-                                : !LevelChecked(Demolish) || ((demolishDuration >= DemolishApply) && (enemyHP < DemolishTreshold))
-                                    ? SnapPunch
-                                    : Demolish;
-                        }
+                if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
+                {
+                    if (LevelChecked(TrueStrike))
+                    {
+                        return Bootshine;
+                    }
+                    return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= DisciplinedFistApply)
+                       ? TrueStrike
+                       : TwinSnakes;
                 }
-                    return actionID;
+
+                if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
+                {
+                    return !LevelChecked(SnapPunch)
+                        ? Bootshine
+                        : !LevelChecked(Demolish) || ((demolishDuration >= DemolishApply) && (enemyHP < DemolishTreshold))
+                            ? SnapPunch
+                            : Demolish;
                 }
             }
+                    return actionID;
+                }
+    }
         internal class MNK_DragonKick_Bootshine : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_DragonKick_Bootshine;
