@@ -103,6 +103,7 @@ namespace XIVSlothCombo.Combos.PvE
                 protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_BasicCombo;
                     protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                     {
+<<<<<<< HEAD
                 if (actionID == Bootshine)
                 {
                     var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
@@ -111,6 +112,16 @@ namespace XIVSlothCombo.Combos.PvE
                     var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
                     var DemolishApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply);
                     var DisciplinedFistApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply);
+=======
+                        if (actionID == Bootshine)
+                        {
+                        var DemolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
+                        var EnemyHP = GetTargetHPPercent();
+                        var twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
+                        var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
+                        var DemolishApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply);
+                        var DisciplinedFistApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply);
+>>>>>>> parent of 31c8ee92 (add in Aki's fix of PR #1052 for real)
 
                             if (!HasEffect(Buffs.PerfectBalance))
                             {
@@ -402,6 +413,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
                     }
 
+<<<<<<< HEAD
                     if (LevelChecked(TrueStrike) && HasEffect(Buffs.RaptorForm))
                     {
                         if (LevelChecked(TwinSnakes) && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= 6))
@@ -422,6 +434,19 @@ namespace XIVSlothCombo.Combos.PvE
                            : TwinSnakes;
                     }
 
+=======
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
+                    {
+                        if (LevelChecked(TrueStrike))
+                        {
+                            return Bootshine;
+                        }
+                        return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= 6)
+                           ? TrueStrike
+                           : TwinSnakes;
+                    }
+
+>>>>>>> parent of 31c8ee92 (add in Aki's fix of PR #1052 for real)
                     if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
                     {
                         return !LevelChecked(SnapPunch)
@@ -720,6 +745,29 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Bootshine
                                     : DragonKick;
                             }
+<<<<<<< HEAD
+=======
+                        }
+
+                        if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
+                        {
+                            if (LevelChecked(TrueStrike))
+                            {
+                                return Bootshine;
+                            }
+                            return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= DisciplinedFistApply)
+                               ? TrueStrike
+                               : TwinSnakes;
+                        }
+
+                        if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
+                        {
+                            return !LevelChecked(SnapPunch)
+                                ? Bootshine
+                                : !LevelChecked(Demolish) || ((demolishDuration >= DemolishApply) && (enemyHP < DemolishTreshold))
+                                    ? SnapPunch
+                                    : Demolish;
+>>>>>>> parent of 31c8ee92 (add in Aki's fix of PR #1052 for real)
                         }
 
                         if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
