@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Core;
 
@@ -95,6 +96,10 @@ namespace XIVSlothCombo.Combos.PvE
                 bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany);
                 var diveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_ST_DiveOptions);
                 var openerOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_OpenerOptions);
+
+                Status? ChaosDoTDebuff;
+                if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
+                else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
 
                 if (actionID is FullThrust)
                 {
@@ -196,7 +201,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!inOpener)
                         {
                             if (CanWeave(actionID))
-                            {                                
+                            {
                                 if (HasEffect(Buffs.PowerSurge))
                                 {
                                     //Wyrmwind Thrust Feature
@@ -241,7 +246,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         //Dives Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                         {
-                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && LevelChecked(Stardiver) && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.3) && IsOnCooldown(DragonfireDive))
+                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive))
                                                 return Stardiver;
 
                                             if (diveOptions is 0 or 1 || //Dives on cooldown
@@ -275,10 +280,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return WheelingThrust;
                         if (comboTime > 0)
                         {
-                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel) && GetBuffRemainingTime(Buffs.PowerSurge) < 10)
-                                return Disembowel;
-                            if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
-                                return OriginalHook(ChaosThrust);
+                            if (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6 || GetBuffRemainingTime(Buffs.PowerSurge) < 10)
+                            {
+                                if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
+                                    return Disembowel;
+                                if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
+                                    return OriginalHook(ChaosThrust);
+                            }
+
                             if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                                 return VorpalThrust;
                             if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
