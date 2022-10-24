@@ -1043,7 +1043,7 @@ namespace XIVSlothCombo.Combos
         DRG_STCombo = 6100,
 
             [ParentCombo(DRG_STCombo)]
-            [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany and Lance Charge are off cooldown and when True North is used outside of combat. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
+            [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany and Lance Charge are off cooldown and when True North is used outside of combat or if Elusive Jump is used at the beginning of battle. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
             DRG_ST_Opener = 6101,
 
             [ParentCombo(DRG_STCombo)]
