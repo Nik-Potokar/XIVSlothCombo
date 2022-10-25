@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Core;
+using Dalamud.Game.ClientState.JobGauge.Enums;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -95,8 +96,11 @@ namespace XIVSlothCombo.Combos.PvE
                 bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany);
                 var diveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_ST_DiveOptions);
                 var openerOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_OpenerOptions);
+                var powerSurgeDuration = GetBuffRemainingTime(Buffs.PowerSurge);
+                var chaosThrustDuration = GetDebuffRemainingTime(Debuffs.ChaosThrust);
+                var chaoticSpringDuration = GetDebuffRemainingTime(Debuffs.ChaoticSpring);
 
-                if (actionID is FullThrust)
+                if (actionID is TrueThrust)
                 {
                     // Lvl88+ Opener
                     if (!InCombat() && IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88)
@@ -273,23 +277,34 @@ namespace XIVSlothCombo.Combos.PvE
                             return FangAndClaw;
                         if (HasEffect(Buffs.EnhancedWheelingThrust))
                             return WheelingThrust;
+
                         if (comboTime > 0)
                         {
-                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel) && GetBuffRemainingTime(Buffs.PowerSurge) < 10)
-                                return Disembowel;
-                            if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
-                                return OriginalHook(ChaosThrust);
-                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
+                            if ((lastComboMove == TrueThrust || lastComboMove == RaidenThrust) && LevelChecked(Disembowel))
+                            {
+                                if (!TargetHasEffect(Debuffs.ChaosThrust) || (chaosThrustDuration <= 8) )
+                                {
+                                    if (!TargetHasEffect(Debuffs.ChaoticSpring) || (chaoticSpringDuration <= 8))
+                                    {
+                                        return Disembowel;
+                                    }
+                                    return VorpalThrust;
+                                }
                                 return VorpalThrust;
-                            if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
-                                return OriginalHook(FullThrust);
+                            }   
+                            if (lastComboMove == Disembowel && LevelChecked(ChaosThrust))
+                            {
+                                return OriginalHook(ChaosThrust);
+                            }
+                            if (lastComboMove == VorpalThrust && LevelChecked(FullThrust))
+                            { 
+                            return OriginalHook(FullThrust);
+                            }
                         }
 
                     }
-
                     return OriginalHook(TrueThrust);
                 }
-
                 return actionID;
             }
         }
