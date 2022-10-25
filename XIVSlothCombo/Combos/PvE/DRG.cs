@@ -1,7 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Core;
-using Dalamud.Game.ClientState.JobGauge.Enums;
 
 namespace XIVSlothCombo.Combos.PvE
 {
