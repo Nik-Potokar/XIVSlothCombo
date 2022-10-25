@@ -72,7 +72,8 @@ namespace XIVSlothCombo.Combos.PvE
                 BRD_RagingJawsRenewTime = "ragingJawsRenewTime",
                 BRD_NoWasteHPPercentage = "noWasteHpPercentage",
                 BRD_STSecondWindThreshold = "BRD_STSecondWindThreshold",
-                BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold";
+                BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold",
+                BRD_VariantCure = "BRD_VariantCure";
         }
 
         #region Song status
@@ -322,6 +323,15 @@ namespace XIVSlothCombo.Combos.PvE
                     BRDGauge? gauge = GetJobGauge<BRDGauge>();
                     bool canWeave = CanWeave(actionID);
 
+                    if (IsEnabled(CustomComboPreset.BRD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BRD_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BRD_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
+
                     if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
                     {
                         int songTimerInSeconds = gauge.SongTimer / 1000;
@@ -489,6 +499,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && canInterrupt)
                         return All.HeadGraze;
+
+                    if (IsEnabled(CustomComboPreset.BRD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BRD_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BRD_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Song) && isEnemyHealthHigh)
                     {

@@ -113,6 +113,9 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";      // Second Wind      player HP% threshold
             #endregion
+
+            public const string
+                DNCVariantCurePercent = "DNCVariantCurePercent";                            // Variant Cure     player HP% threshold
         }
 
         internal class DNC_DanceComboReplacer : CustomCombo
@@ -425,6 +428,15 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) && interruptable)
                         return All.HeadGraze;
 
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
+
                     // Simple ST Standard (activates dance with no target, or when target is over HP% threshold)
                     if ((!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold) &&
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && standardStepReady &&
@@ -547,6 +559,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Interrupt) && interruptable)
                         return All.HeadGraze;
+
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     // Simple AoE Standard (activates dance with no target, or when target is over HP% threshold)
                     if ((!HasTarget() || GetTargetHPPercent() > standardStepBurstThreshold) &&

@@ -323,6 +323,12 @@ namespace XIVSlothCombo.Combos.PvE
                         openerState = OpenerState.InOpener;
                     }
 
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) && 
+                        IsEnabled(Variant.VariantRampart) && 
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
                     // Dissipation
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) &&
                         ActionReady(Dissipation) && HasPetPresent() && !Gauge.HasAetherflow() &&
@@ -370,7 +376,14 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
                             float refreshtimer = Config.SCH_ST_DPS_Bio_Adv ? Config.SCH_ST_DPS_Bio_Threshold : 3;
+
+                            if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_SpiritDart) && 
+                                IsEnabled(Variant.VariantSpiritDart) && 
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                                CanSpellWeave(actionID))
+                                return Variant.VariantSpiritDart;
 
                             if ((dotDebuff is null || dotDebuff?.RemainingTime <= refreshtimer) &&
                                 GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)
@@ -403,6 +416,20 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is ArtOfWar or ArtOfWarII)
                 {
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) && 
+                        IsEnabled(Variant.VariantRampart) && 
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
+                    Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_SpiritDart) && 
+                        IsEnabled(Variant.VariantSpiritDart) && 
+                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) && 
+                        HasBattleTarget() &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantSpiritDart;
+
                     // Aetherflow
                     if (IsEnabled(CustomComboPreset.SCH_AoE_Aetherflow) &&
                         ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&

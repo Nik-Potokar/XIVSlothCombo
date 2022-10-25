@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -85,7 +86,8 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public const string
-                GNB_RoughDivide_HeldCharges = "GnbKeepRoughDivideCharges";
+                GNB_RoughDivide_HeldCharges = "GnbKeepRoughDivideCharges",
+                GNB_VariantCure = "GNB_VariantCure";
         }
 
 
@@ -100,6 +102,9 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var roughDivideChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.GNB_RoughDivide_HeldCharges);
                     var quarterWeave = GetCooldownRemainingTime(actionID) < 1 && GetCooldownRemainingTime(actionID) > 0.6;
+
+                    if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_VariantCure))
+                        return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.GNB_RangedUptime) && !InMeleeRange() && LevelChecked(LightningShot) && HasBattleTarget())
                         return LightningShot;
@@ -123,6 +128,15 @@ namespace XIVSlothCombo.Combos.PvE
                         //oGCDs
                         if (CanWeave(actionID))
                         {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.GNB_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.GNB_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
                             if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup))
                             {
                                 if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && HasEffect(Buffs.NoMercy) && gauge.Ammo == 0 && IsOffCooldown(Bloodfest) && LevelChecked(Bloodfest) && IsOnCooldown(GnashingFang))
@@ -367,10 +381,22 @@ namespace XIVSlothCombo.Combos.PvE
                 var gauge = GetJobGauge<GNBGauge>();
                 if (actionID == DemonSlaughter)
                 {
+                    if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_VariantCure))
+                        return Variant.VariantCure;
+
                     if (InCombat())
                     {
                         if (CanWeave(actionID))
                         {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.GNB_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.GNB_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
                             if (IsEnabled(CustomComboPreset.GNB_AoE_NoMercy) && IsOffCooldown(NoMercy) && level >= Levels.NoMercy)
                                 return NoMercy;
                             if (IsEnabled(CustomComboPreset.GNB_AoE_BowShock) && level >= Levels.BowShock && IsOffCooldown(BowShock))

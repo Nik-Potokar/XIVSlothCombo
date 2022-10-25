@@ -287,6 +287,20 @@ namespace XIVSlothCombo.Combos.PvE
                     InCombat())
                 {
 
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
+                    Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                    if (IsEnabled(CustomComboPreset.AST_Variant_SpiritDart) &&
+                        IsEnabled(Variant.VariantSpiritDart) &&
+                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                        CanSpellWeave(actionID) &&
+                        IsEnabled(CustomComboPreset.AST_AoE_DPS) && GravityList.Contains(actionID))
+                        return Variant.VariantSpiritDart;
+
                     if (IsEnabled(CustomComboPreset.AST_DPS_LightSpeed) &&
                         ActionReady(Lightspeed) &&
                         GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_LightSpeedOption) &&
@@ -339,6 +353,13 @@ namespace XIVSlothCombo.Combos.PvE
                             uint dot = OriginalHook(Combust);
                             Status? dotDebuff = FindTargetEffect(CombustList[dot]);
                             float refreshtimer = Config.AST_ST_DPS_CombustUptime_Adv ? Config.AST_ST_DPS_CombustUptime_Threshold : 3;
+                            
+                            if (IsEnabled(CustomComboPreset.AST_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                                CanSpellWeave(actionID))
+                                return Variant.VariantSpiritDart;
+
 
                             if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
                                 GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption))

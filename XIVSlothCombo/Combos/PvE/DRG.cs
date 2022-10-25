@@ -73,7 +73,8 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_STSecondWindThreshold = "DRG_STSecondWindThreshold",
                 DRG_STBloodbathThreshold = "DRG_STBloodbathThreshold",
                 DRG_AoESecondWindThreshold = "DRG_AoESecondWindThreshold",
-                DRG_AoEBloodbathThreshold = "DRG_AoEBloodbathThreshold";
+                DRG_AoEBloodbathThreshold = "DRG_AoEBloodbathThreshold",
+                DRG_VariantCure = "DRG_VariantCure";
         }
 
         internal class DRG_JumpFeature : CustomCombo
@@ -115,6 +116,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
+                        if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_VariantCure))
+                            return Variant.VariantCure;
+
                         if (inOpener)
                         {
                             if (IsOnCooldown(BattleLitany) && !HasEffect(Buffs.LanceCharge))
@@ -196,7 +200,13 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!inOpener)
                         {
                             if (CanWeave(actionID))
-                            {                                
+                            {
+                                if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
+                                    IsEnabled(Variant.VariantRampart) &&
+                                    IsOffCooldown(Variant.VariantRampart) &&
+                                    CanWeave(actionID))
+                                    return Variant.VariantRampart;
+
                                 if (HasEffect(Buffs.PowerSurge))
                                 {
                                     //Wyrmwind Thrust Feature
@@ -305,12 +315,21 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<DRGGauge>();
                     var DiveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_AOE_DiveOptions);
 
+                    if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_VariantCure))
+                        return Variant.VariantCure;
+
                     // Piercing Talon Uptime Option
                     if (IsEnabled(CustomComboPreset.DRG_AoE_RangedUptime) && LevelChecked(PiercingTalon) && GetTargetDistance() > 10 && HasBattleTarget())
                         return PiercingTalon;
 
                     if (CanWeave(actionID))
                     {
+                        if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            CanWeave(actionID))
+                            return Variant.VariantRampart;
+
                         if (HasEffect(Buffs.PowerSurge))
                         {
                             //Buffs AoE Feature

@@ -1114,6 +1114,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.BLM_Simple_CastMovement)
                 UserConfig.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BLM_MovementTime, "Seconds of movement before using the movement feature.");
 
+            if (preset == CustomComboPreset.BLM_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region BLUE MAGE
@@ -1133,6 +1136,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.BRD_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, BRD.Config.BRD_AoESecondWindThreshold, "HP percent threshold to use Second Wind below.", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.BRD_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, BRD.Config.BRD_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================
@@ -1162,6 +1168,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNCVariantCurePercent, "HP% to be at or under", 200);
 
             #region Simple ST Sliders
 
@@ -1215,6 +1224,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DRK_Plunge && enabled)
                 UserConfig.DrawSliderInt(0, 1, DRK.Config.DRK_KeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
 
+            if (preset == CustomComboPreset.DRK_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, DRK.Config.DRK_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region DRAGOON
@@ -1249,12 +1261,19 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
+
+            if (preset == CustomComboPreset.DRG_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, DRG.Config.DRG_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region GUNBREAKER
 
             if (preset == CustomComboPreset.GNB_ST_RoughDivide && enabled)
                 UserConfig.DrawSliderInt(0, 1, GNB.Config.GNB_RoughDivide_HeldCharges, "How many charges to keep ready? (0 = Use All)");
+
+            if (preset == CustomComboPreset.GNB_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================
@@ -1265,6 +1284,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region MONK
@@ -1286,6 +1309,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
+
+            if (preset == CustomComboPreset.MNK_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, MNK.Config.MNK_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================
@@ -1356,6 +1382,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(NIN.Config.Advanced_TCJEnderAoE, $"Ten Chi Jin Ender 2", "Ends Ten Chi Jin with Doton.\nIf you have Doton enabled, Ten Chi Jin will be delayed according to the settings in that feature.", 1);
             }
 
+            if (preset == CustomComboPreset.NIN_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, NIN.Config.NIN_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region PALADIN
@@ -1365,6 +1394,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.PLD_ST_RoyalAuth_Intervene && enabled)
                 UserConfig.DrawSliderInt(0, 1, PLD.Config.PLD_Intervene_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.PLD_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, PLD.Config.PLD_VariantCure, "HP% to be at or under", 200);
 
             //if (preset == CustomComboPreset.SkillCooldownRemaining)
             //{

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Runtime.InteropServices;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
@@ -111,8 +112,5 @@ namespace XIVSlothCombo.Data
                 return CooldownRemaining % (CooldownTotal / cur);
             }
         }
-
-        /// <summary>If an ability is available for a player to use, will return true. </summary>
-        public bool IsEnabled => CooldownTotal != -1;
     }
 }

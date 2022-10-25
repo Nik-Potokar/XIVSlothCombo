@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -52,7 +53,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 DRK_KeepPlungeCharges = "DrkKeepPlungeCharges",
-                DRK_MPManagement = "DrkMPManagement";
+                DRK_MPManagement = "DrkMPManagement",
+                DRK_VariantCure = "DRKVariantCure";
         }
 
 
@@ -68,6 +70,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var plungeChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_KeepPlungeCharges);
                     var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_MPManagement);
 
+                    if (IsEnabled(CustomComboPreset.DRK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_VariantCure))
+                        return Variant.VariantCure;
+
                     if (IsEnabled(CustomComboPreset.DRK_RangedUptime) && LevelChecked(Unmend) && !InMeleeRange() && HasBattleTarget())
                         return Unmend;
 
@@ -76,6 +81,15 @@ namespace XIVSlothCombo.Combos.PvE
                         // oGCDs
                         if (CanWeave(actionID))
                         {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.DRK_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
                             //Mana Features
                             if (IsEnabled(CustomComboPreset.DRK_ManaOvercap))
                             {
@@ -184,8 +198,21 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<DRKGauge>();
 
+                    if (IsEnabled(CustomComboPreset.DRK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_VariantCure))
+                        return Variant.VariantCure;
+
+
                     if (CanWeave(actionID))
                     {
+                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                        if (IsEnabled(CustomComboPreset.DRK_Variant_SpiritDart) &&
+                            IsEnabled(Variant.VariantSpiritDart) &&
+                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                            return Variant.VariantSpiritDart;
+
+                        if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            return Variant.VariantUltimatum;
+
                         if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap) && LevelChecked(FloodOfDarkness) && (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000)))
                             return OriginalHook(FloodOfDarkness);
                         if (gauge.DarksideTimeRemaining > 1)

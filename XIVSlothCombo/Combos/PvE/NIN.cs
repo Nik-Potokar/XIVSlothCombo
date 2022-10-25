@@ -152,7 +152,8 @@ namespace XIVSlothCombo.Combos.PvE
                 BloodbathThresholdST = "BloodbathThresholdST",
                 SecondWindThresholdAoE = "SecondWindThresholdAoE",
                 ShadeShiftThresholdAoE = "ShadeShiftThresholdAoE",
-                BloodbathThresholdAoE = "BloodbathThresholdAoE";
+                BloodbathThresholdAoE = "BloodbathThresholdAoE",
+                NIN_VariantCure = "NIN_VariantCure";
         }
 
         internal class NIN_ST_AdvancedMode : CustomCombo
@@ -219,6 +220,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                        return Variant.VariantCure;
+
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush) &&
                         !HasEffect(Buffs.RaijuReady) &&
                         lastComboMove == GustSlash &&
@@ -251,6 +255,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave && !inMudraState)
                     {
+                        if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug_AlignBefore) &&
                             HasEffect(Buffs.Suiton) &&
                             GetCooldownRemainingTime(TrickAttack) <= 3 &&
@@ -470,8 +479,16 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                        return Variant.VariantCure;
+
                     if (canWeave && !inMudraState)
                     {
+                        if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Bunshin) && Bunshin.LevelChecked() && IsOffCooldown(Bunshin) && gauge.Ninki >= bunshingPool)
                             return OriginalHook(Bunshin);
 
@@ -615,6 +632,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                        return Variant.VariantCure;
 
                     if (!Huraijin.LevelChecked() && gauge.HutonTimer <= 15000 && mudraState.CastHuton(ref actionID))
                         return actionID;
@@ -637,6 +656,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave && !inMudraState)
                     {
+                        if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (Bunshin.LevelChecked() && IsOffCooldown(Bunshin) && gauge.Ninki >= 50)
                             return OriginalHook(Bunshin);
 
@@ -733,6 +757,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                        return Variant.VariantCure;
+
                     if (!Huraijin.LevelChecked() && gauge.HutonTimer <= 15000 && mudraState.CastHuton(ref actionID))
                         return actionID;
 
@@ -767,6 +794,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave)
                     {
+                        if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (IsOffCooldown(Bunshin) && gauge.Ninki >= 50 && Bunshin.LevelChecked())
                             return OriginalHook(Bunshin);
 

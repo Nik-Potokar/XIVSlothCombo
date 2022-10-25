@@ -99,6 +99,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_PolyglotsStored = "BlmPolyglotsStored   ";
             internal const string BLM_AstralFireRefresh = "BlmAstralFireRefresh   ";
             internal const string BLM_MovementTime = "BlmMovementTime";
+            internal const string BLM_VariantCure = "BlmVariantCure";
         }
 
 
@@ -155,6 +156,15 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var currentMP = LocalPlayer.CurrentMp;
                     var polyToStore = PluginConfiguration.GetCustomIntValue(Config.BLM_PolyglotsStored);
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
 
                     // Polyglot usage
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Manafont) && LevelChecked(Foul))
@@ -279,6 +289,16 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
                     };
+
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
 
                     // Opener for BLM
                     // Credit to damolitionn for providing code to be used as a base for this opener
@@ -1090,6 +1110,22 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         return Blizzard3;
                     }
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class BLM_Variant_Raise : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Variant_Raise;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is All.Swiftcast)
+                {
+                    if (HasEffect(All.Buffs.Swiftcast) && IsEnabled(Variant.VariantRaise))
+                        return Variant.VariantRaise;
                 }
 
                 return actionID;
