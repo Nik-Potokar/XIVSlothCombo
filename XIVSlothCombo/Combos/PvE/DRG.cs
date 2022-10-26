@@ -102,7 +102,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
                 else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
 
-                if (actionID is FullThrust)
+                if (actionID is TrueThrust)
                 {
                     // Lvl88+ Opener
                     if (!InCombat() && IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88)

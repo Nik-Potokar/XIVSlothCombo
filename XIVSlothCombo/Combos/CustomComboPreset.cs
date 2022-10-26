@@ -1038,8 +1038,8 @@ namespace XIVSlothCombo.Combos
         DRG_Jump = 6000,
 
         #region Advanced Dragoon
-        [ReplaceSkill(DRG.FullThrust)]
-        [CustomComboInfo("Advanced Dragoon", "Replaces Full Thrust with the entire ST combo chain.", DRG.JobID, 1, "", "")]
+        [ReplaceSkill(DRG.TrueThrust)]
+        [CustomComboInfo("Advanced Dragoon", "Replaces True Thrust with the entire ST combo chain.", DRG.JobID, 1, "", "")]
         DRG_STCombo = 6100,
 
             [ParentCombo(DRG_STCombo)]
