@@ -1105,8 +1105,8 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Advanced Dragoon AoE
-        [ReplaceSkill(DRG.CoerthanTorment)]
-        [CustomComboInfo("Advanced Dragoon AoE", "Replaces Coerthan Torment with its combo chain", DRG.JobID, 26, "", "")]
+        [ReplaceSkill(DRG.DoomSpike)]
+        [CustomComboInfo("Advanced Dragoon AoE", "Replaces Doom Spike with its combo chain", DRG.JobID, 26, "", "")]
         DRG_AoECombo = 6200,
 
             [ParentCombo(DRG_AoECombo)]

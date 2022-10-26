@@ -316,7 +316,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is CoerthanTorment)
+                if (actionID is DoomSpike)
                 {
                     var gauge = GetJobGauge<DRGGauge>();
                     var DiveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_AOE_DiveOptions);
