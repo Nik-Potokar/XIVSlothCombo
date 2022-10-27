@@ -415,7 +415,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         
                         // ED/ES
-                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && IsOffCooldown(EnergyDrain) && (!inOpener || DemiAttackCount >= burstDelay))
+                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && IsOffCooldown(EnergyDrain) && (!LevelChecked(DreadwyrmTrance) || (!inOpener || DemiAttackCount >= burstDelay)))
                         {
                             if ((STCombo || (AoECombo && !LevelChecked(EnergySiphon))) && LevelChecked(EnergyDrain))
                                 return EnergyDrain;
