@@ -42,7 +42,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
     internal class UserBoolArray : UserData
     {
         public UserBoolArray(string v) : base(v) { }
-        public int Length => PluginConfiguration.GetCustomBoolArrayValue(this.pName).Length;
+        public int Count => PluginConfiguration.GetCustomBoolArrayValue(this.pName).Length;
         public bool this[int index] => PluginConfiguration.GetCustomBoolArrayValue(this.pName)[index];
         public static implicit operator bool[](UserBoolArray o) => PluginConfiguration.GetCustomBoolArrayValue(o.pName);
     }

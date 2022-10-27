@@ -1478,13 +1478,13 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv, "Advanced Action Options", "Change how Dosis actions are handled", isConditionalChoice: true);
 
-                if (PluginConfiguration.GetCustomBoolValue(SGE.Config.SGE_ST_DPS_Adv))
+                if (SGE.Config.SGE_ST_DPS_Adv)
                 {
                     ImGui.Indent();
                     UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_D2, "Apply all selected options to Dosis II", "Dosis I & III will behave normally.");
                     UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants, "Instant Actions on Toxikon", "Adds instant GCDs and oGCDs to Toxikon.\nDefaults to Eukrasia.", isConditionalChoice: true);
 
-                    if (PluginConfiguration.GetCustomBoolValue(SGE.Config.SGE_ST_DPS_Adv_GroupInstants))
+                    if (SGE.Config.SGE_ST_DPS_Adv_GroupInstants)
                     {
                         ImGui.Indent();
                         ImGui.Spacing();//Not sure why I need this, indenting did not work without it
@@ -1501,7 +1501,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_DPS_EDosisHPPer, "Stop using at Enemy HP %. Set to Zero to disable this check");
 
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_EDosis_Adv, "Advanced Options", "", isConditionalChoice: true);
-                if (PluginConfiguration.GetCustomBoolValue(SGE.Config.SGE_ST_DPS_EDosis_Adv))
+                if (SGE.Config.SGE_ST_DPS_EDosis_Adv)
                 {
                     ImGui.Indent();
                     UserConfig.DrawRoundedSliderFloat(0, 4, SGE.Config.SGE_ST_DPS_EDosisThreshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);

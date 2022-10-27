@@ -301,7 +301,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Movement Options
                         if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Movement) && InCombat() && IsMoving)
                         {
-                            if (Config.SGE_ST_DPS_Movement.Length == 3)
+                            if (Config.SGE_ST_DPS_Movement.Count == 3)
                             {
                                 // Toxikon
                                 if (Config.SGE_ST_DPS_Movement[0] && LevelChecked(Toxikon) && Gauge.HasAddersting()) return OriginalHook(Toxikon);
@@ -318,7 +318,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (HasEffect(Buffs.Eukrasia)) return OriginalHook(Dosis);
                         
-                        if (Config.SGE_ST_DPS_Adv_GroupInstants_Addl.Length == 2)
+                        if (Config.SGE_ST_DPS_Adv_GroupInstants_Addl.Count == 2)
                         {
                             // Toxikon
                             if (Config.SGE_ST_DPS_Adv_GroupInstants_Addl[0] && LevelChecked(Toxikon) && Gauge.HasAddersting()) return OriginalHook(Toxikon);
