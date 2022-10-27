@@ -190,19 +190,17 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Painflare)
+                var gauge = GetJobGauge<SMNGauge>();
+                if (actionID == Painflare && !gauge.HasAetherflowStacks)
                 {
-                    var gauge = GetJobGauge<SMNGauge>();
-
-                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
+                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
                         return Ruin4;
 
-                    if (LevelChecked(EnergyDrain) && !LevelChecked(EnergySiphon) && !gauge.HasAetherflowStacks)
-                        return EnergyDrain;
-                    
-                    if (LevelChecked(EnergySiphon) && !gauge.HasAetherflowStacks)
+                    if (LevelChecked(EnergySiphon))
                         return EnergySiphon;
-
+                    
+                    if (LevelChecked(EnergyDrain))
+                        return EnergyDrain;
                 }
 
                 return actionID;
