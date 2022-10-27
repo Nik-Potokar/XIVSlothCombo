@@ -197,6 +197,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
                         return Ruin4;
 
+                    if (!LevelChecked(EnergySiphon) && !gauge.HasAetherflowStacks)
+                        return EnergyDrain;
+                    
                     if (LevelChecked(EnergySiphon) && !gauge.HasAetherflowStacks)
                         return EnergySiphon;
 
@@ -223,12 +226,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsOffCooldown(SearingLight) && LevelChecked(SearingLight) && OriginalHook(Ruin) == AstralImpulse)
                             return SearingLight;
 
-                        if (!gauge.HasAetherflowStacks)
+                        if (!gauge.HasAetherflowStacks && IsOffCooldown(EnergyDrain))
                         {
-                            if (STCombo && LevelChecked(EnergyDrain) && IsOffCooldown(EnergyDrain))
+                            if ((STCombo && LevelChecked(EnergyDrain)) || (AoECombo && !LevelChecked(EnergySiphon)))
                                 return EnergyDrain;
 
-                            if (AoECombo && LevelChecked(EnergySiphon) && IsOffCooldown(EnergySiphon))
+                            if (AoECombo && LevelChecked(EnergySiphon))
                                 return EnergySiphon;
                         }
                         
@@ -414,12 +417,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         
                         // ED/ES
-                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && (!inOpener || DemiAttackCount >= burstDelay))
+                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && IsOffCooldown(EnergyDrain) && (!inOpener || DemiAttackCount >= burstDelay))
                         {
-                            if (STCombo && LevelChecked(EnergyDrain) && IsOffCooldown(EnergyDrain))
+                            if ((STCombo && LevelChecked(EnergyDrain)) || (AoECombo && !LevelChecked(EnergySiphon)))
                                 return EnergyDrain;
 
-                            if (AoECombo && LevelChecked(EnergySiphon) && IsOffCooldown(EnergySiphon))
+                            if (AoECombo && LevelChecked(EnergySiphon))
                                 return EnergySiphon;
                         }
                         
