@@ -2396,7 +2396,11 @@ namespace XIVSlothCombo.Combos
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 304, "", "")]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 301, "", "")]
+            SGE_ST_Heal_Esuna = 14301,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 305, "", "")]
             SGE_ST_Heal_Kardia = 14310,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2404,7 +2408,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Diagnosis = 14320,
                 
                 [ParentCombo(SGE_ST_Heal_Diagnosis)]
-                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID, 313, "", "")]
+                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID)]
                 SGE_ST_Heal_Diagnosis_IgnoreShield = 14321,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2420,7 +2424,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Pepsis = 14350,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 302, "", "")]
+            [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 303, "", "")]
             SGE_ST_Heal_Taurochole = 14360,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2428,7 +2432,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Haima = 14370,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 303, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 304, "", "")]
             SGE_ST_Heal_Rhizomata = 14380,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2436,7 +2440,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Krasis = 14390,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 301, "", "")]
+            [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 302, "", "")]
             SGE_ST_Heal_Druochole = 14400,
             #endregion
 
@@ -2844,19 +2848,23 @@ namespace XIVSlothCombo.Combos
         SCH_ST_Heal = 16260,
 
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 1)]
             SCH_ST_Heal_Lucid = 16261,
 
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
             SCH_ST_Heal_Aetherflow = 16262,
-            
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
+            SCH_ST_Heal_Esuna = 16265,
+
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID, 4)]
             SCH_ST_Heal_Adloquium = 16263,
             
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID, 5)]
             SCH_ST_Heal_Lustrate = 16264,
             
 

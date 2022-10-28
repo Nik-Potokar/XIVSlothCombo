@@ -1529,6 +1529,10 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_AoE_DPS_Rhizo)
                 UserConfig.DrawSliderInt(0, 1, SGE.Config.SGE_AoE_DPS_Rhizo, "Addersgall Threshold", 150, SliderIncrements.Ones);
 
+            if (preset is CustomComboPreset.SGE_ST_Heal)
+                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_Heal_UIMouseOver, "Party UI Mouseover Checking", 
+                                                    "Check party member's HP by using mouseover on the party list.\nDoes not target the party member.");
+
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Use Soteria when Target HP is at or below set percentage");
 
@@ -1654,7 +1658,11 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
-                        
+
+            if (preset is CustomComboPreset.SCH_ST_Heal)
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_Heal_UIMouseOver, "Party UI Mouseover Checking",
+                                                    "Check party member's HP by using mouseover on the party list.\nDoes not target the party member.");
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
             
