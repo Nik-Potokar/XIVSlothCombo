@@ -114,7 +114,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return false;
         }
 
-        /// <summary> Grabs healable target. Checks Soft Target then Hard Target. If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
+        /// <summary> Grabs healable target. Checks Soft Target then Hard Target. 
+        /// If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
         /// <returns> GameObject of a player target. </returns>
         public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false)
         {

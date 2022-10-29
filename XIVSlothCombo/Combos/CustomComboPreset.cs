@@ -2855,7 +2855,7 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
             SCH_ST_Heal_Aetherflow = 16262,
 
-            [ParentCombo(SGE_ST_Heal)]
+            [ParentCombo(SCH_ST_Heal)]
             [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
             SCH_ST_Heal_Esuna = 16265,
 
