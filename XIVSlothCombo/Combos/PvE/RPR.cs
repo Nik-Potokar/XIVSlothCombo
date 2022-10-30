@@ -276,7 +276,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GluttonyBloodStalk) && CanWeave(actionID) && !soulReaver && !enshrouded && LevelChecked(BloodStalk) && gauge.Soul >= 50)
                         {
-                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 40 && IsOffCooldown(Gluttony))
+                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 40 && ActionReady(Gluttony))
                             {
                                 if (openerChoice is 0 or 1 && gauge.Soul is 50)
                                     return Gluttony;
@@ -284,7 +284,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Gluttony;
                             }
 
-                            if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds >= 10) || IsNotEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener))
+                            if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds >= 10) || IsNotEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) || !LevelChecked(Communio))
                             {
                                 if (IsOffCooldown(Gluttony) && LevelChecked(Gluttony))
                                     return Gluttony;
