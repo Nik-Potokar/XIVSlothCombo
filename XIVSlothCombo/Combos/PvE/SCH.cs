@@ -1,8 +1,12 @@
-using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using System;
+using System.Collections.Generic;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -10,8 +14,6 @@ namespace XIVSlothCombo.Combos.PvE
     {
         public const byte ClassID = 26;
         public const byte JobID = 28;
-
-        private static SCHGauge Gauge => CustomComboNS.Functions.CustomComboFunctions.GetJobGauge<SCHGauge>();
 
         internal const uint
 
@@ -36,8 +38,9 @@ namespace XIVSlothCombo.Combos.PvE
             Broil2 = 7435,
             Broil3 = 16541,
             Broil4 = 25865,
-            Scourge = 16539,
             EnergyDrain = 167,
+            ArtOfWar = 16539,
+            ArtOfWarII = 25866,
 
             // Faerie
             SummonSeraph = 16545,
@@ -85,21 +88,57 @@ namespace XIVSlothCombo.Combos.PvE
                 { Biolysis, Debuffs.Biolysis }
             };
 
-        internal static class Config
+        // Class Gauge
+        private static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
+        private static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
+
+        internal enum OpenerState
         {
-            internal const string
-                SCH_ST_DPS_AltMode = "SCH_ST_DPS_AltMode",
-                SCH_ST_DPS_LucidOption = "SCH_ST_DPS_LucidOption",
-                SCH_ST_DPS_BioOption = "SCH_ST_DPS_BioOption",
-                SCH_ST_DPS_ChainStratagemOption = "SCH_ST_DPS_ChainStratagemOption",
-                SCH_Aetherflow_Display = "SCH_Aetherflow_Display",
-                SCH_Aetherflow_Recite_Excog = "SCH_Aetherflow_Recite_Excog",
-                SCH_Aetherflow_Recite_Indom = "SCH_Aetherflow_Recite_Indom",
-                SCH_FairyFeature = "SCH_FairyFeature";
+            PreOpener,
+            InOpener,
+            PostOpener,
         }
 
+        internal static class Config
+        {
+            #region DPS
+            //Temporary BoolConvert until GUI refactor post 3.0.17.4 release
+            internal static bool SCH_ST_DPS_AltMode => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_AltMode)));
+            internal static int SCH_ST_DPS_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_LucidOption));
+            
+            internal static int SCH_ST_DPS_BioOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_BioOption));
+            internal static bool SCH_ST_DPS_Bio_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_Bio_Adv));
+            internal static float SCH_ST_DPS_Bio_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_Bio_Threshold));
 
-        // Even though Summon Seraph becomes Consolation, this Feature puts the temporary Fairy AoE heal+barrier ontop of the existing fairy AoE skill, Fey Blessing
+            internal static int SCH_ST_DPS_ChainStratagemOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_ChainStratagemOption));
+            internal static bool SCH_ST_DPS_EnergyDrain_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_EnergyDrain_Adv));
+            internal static float SCH_ST_DPS_EnergyDrain => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_EnergyDrain));
+            #endregion
+
+            #region Healing
+            internal static int SCH_AoE_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_AoE_LucidOption));
+            internal static int SCH_AoE_Heal_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_AoE_Heal_LucidOption));
+            internal static int SCH_ST_Heal_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_Heal_LucidOption));
+            internal static int SCH_ST_Heal_AdloquiumOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_Heal_AdloquiumOption));
+            internal static int SCH_ST_Heal_LustrateOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_Heal_LustrateOption));
+            #endregion
+
+            #region Utility
+            //Temporary BoolConvert until GUI refactor post 3.0.17.4
+            internal static bool SCH_Aetherflow_Display => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Display)));
+            internal static bool SCH_Aetherflow_Recite_Excog => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Excog)));
+            internal static bool SCH_Aetherflow_Recite_Indom => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Indom)));
+            internal static bool SCH_FairyFeature => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_FairyFeature)));
+            internal static int SCH_Recitation_Mode => PluginConfiguration.GetCustomIntValue(nameof(SCH_Recitation_Mode));
+            #endregion
+
+        }
+
+        /*
+         * SCH_Consolation
+         * Even though Summon Seraph becomes Consolation, 
+         * This Feature also places Seraph's AoE heal+barrier ontop of the existing fairy AoE skill, Fey Blessing
+         */
         internal class SCH_Consolation : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Consolation;
@@ -107,8 +146,49 @@ namespace XIVSlothCombo.Combos.PvE
                 => actionID is FeyBlessing && LevelChecked(SummonSeraph) && Gauge.SeraphTimer > 0 ? Consolation : actionID;
         }
 
-        // Replaces all Energy Drain actions with Aetherflow when depleted
-        // Revised to a similar flow as SGE Rhizomata, but with Dissipation / Recitation as a backup
+        /*
+         * SCH_Lustrate
+         * Replaces Lustrate with Excogitation when Excogitation is ready.
+        */
+        internal class SCH_Lustrate : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Lustrate;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                => actionID is Lustrate && LevelChecked(Excogitation) && IsOffCooldown(Excogitation) ? Excogitation : actionID;
+        }
+
+        /*
+         * SCH_Recitation
+         * Replaces Recitation with selected one of its combo skills.
+        */
+        internal class SCH_Recitation : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Recitation;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Recitation && HasEffect(Buffs.Recitation))
+                {
+                    switch (Config.SCH_Recitation_Mode)
+                    {
+                        case 0: return OriginalHook(Adloquium);
+                        case 1: return OriginalHook(Succor);
+                        case 2: return OriginalHook(Indomitability);
+                        case 3: return OriginalHook(Excogitation);
+                        default: break;
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+
+        /*
+         * SCH_Aetherflow
+         * Replaces all Energy Drain actions with Aetherflow when depleted, or just Energy Drain
+         * Dissipation option to show if Aetherflow is on Cooldown
+         * Recitation also an option
+        */
         internal class SCH_Aetherflow : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Aetherflow;
@@ -116,13 +196,13 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (AetherflowList.Contains(actionID) && LevelChecked(Aetherflow))
                 {
-                    bool HasAetherFlows = System.Convert.ToBoolean(Gauge.Aetherflow); //False if Zero stacks
+                    bool HasAetherFlows = Gauge.HasAetherflow(); //False if Zero stacks
                     if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite) &&
                         LevelChecked(Recitation) &&
                         (IsOffCooldown(Recitation) || HasEffect(Buffs.Recitation)))
                     {
                         //Recitation Indominability and Excogitation, with optional check against AF zero stack count
-                        bool AlwaysShowReciteExcog = GetIntOptionAsBool(Config.SCH_Aetherflow_Recite_Excog);
+                        bool AlwaysShowReciteExcog = Config.SCH_Aetherflow_Recite_Excog;
                         if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite_Excog) &&
                             (AlwaysShowReciteExcog || (!AlwaysShowReciteExcog && !HasAetherFlows)) &&
                             actionID is Excogitation)
@@ -130,7 +210,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return HasEffect(Buffs.Recitation) && IsOffCooldown(Excogitation) ? Excogitation : Recitation;
                         }
 
-                        bool AlwaysShowReciteIndom = GetIntOptionAsBool(Config.SCH_Aetherflow_Recite_Indom);
+                        bool AlwaysShowReciteIndom = Config.SCH_Aetherflow_Recite_Indom;
                         if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Recite_Indom) &&
                             (AlwaysShowReciteIndom || (!AlwaysShowReciteIndom && !HasAetherFlows)) &&
                             actionID is Indomitability)
@@ -140,7 +220,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     if (!HasAetherFlows)
                     {
-                        bool ShowAetherflowOnAll = GetIntOptionAsBool(Config.SCH_Aetherflow_Display);
+                        bool ShowAetherflowOnAll = Config.SCH_Aetherflow_Display;
                         if ((actionID is EnergyDrain && !ShowAetherflowOnAll) || ShowAetherflowOnAll)
                         {
                             if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation) &&
@@ -157,7 +237,10 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        // Swiftcast changes to Raise when activated / on cooldown
+        /*
+         * SCH_Raise (Swiftcast Raise combo)
+         * Swiftcast changes to Raise when swiftcast is on cooldown
+         */
         internal class SCH_Raise : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Raise;
@@ -171,124 +254,306 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_FairyReminder;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 => FairyList.Contains(actionID) && !HasPetPresent() && Gauge.SeraphTimer == 0
-                    ? GetIntOptionAsBool(Config.SCH_FairyFeature) ? SummonSelene : SummonEos
+                    ? Config.SCH_FairyFeature ? SummonSelene : SummonEos
                     : actionID;
         }
 
         /*
-         * Combos Deployment Tactics with Adloquium by showing Adloquim instead,
-         * while leaving the real Adloquim alone.
-         * Will work on Party/Trust/Chocobo hard/soft targets
+         * SCH_DeploymentTactics
+         * Combos Deployment Tactics with Adloquium by showing Adloquim when Deployment Tactics is ready,
          * Recitation is optional, if one wishes to Crit the shield first
+         * Supports soft targetting and self as a fallback.
          */
         internal class SCH_DeploymentTactics : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DeploymentTactics;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is DeploymentTactics)
+                if (actionID is DeploymentTactics && ActionReady(DeploymentTactics))
                 {
-                    if (ActionReady(DeploymentTactics)) //Allows Adlo to work at sync, do not nest with above
+                    //Grab our target (Soft->Hard->Self)
+                    GameObject? healTarget = null;
+                    GameObject? softTarget = Service.TargetManager.SoftTarget;
+                    if (HasFriendlyTarget(softTarget)) healTarget = softTarget;
+                    if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
+                    if (healTarget is null) healTarget = LocalPlayer;
+
+                    //Check for the Galvanize shield buff. Start applying if it doesn't exist
+                    if (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null)
                     {
-                        bool found = false;
-                        //If we have a soft target, use that, else CurrentTarget.
-                        GameObject? target = Services.Service.TargetManager.SoftTarget is not null ? Services.Service.TargetManager.SoftTarget : CurrentTarget;
+                        if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
+                            return Recitation;
 
-                        if (target is not null)
-                        {
-                            if (IsInParty())
-                            {
-                                //Search the party
-                                for (int i = 1; i <= 8; i++)
-                                {
-                                    GameObject? member = GetPartySlot(i);
-                                    if (member == null) continue; //Skip nulls/disconnected people
-
-                                    found = (member == target);
-                                    if (found) break;
-                                }
-                            }
-                            //Check if it's our chocobo?
-                            if (found is false) found = HasCompanionPresent() && target == Services.Service.BuddyList.CompanionBuddy.GameObject;
-                        }
-
-                        //Fall back to self, skills won't work with anyone else.
-                        if (target is null || found is false)
-                        {
-                            target = LocalPlayer;
-                            found = true;
-                        }
-
-                        if (found)
-                        {
-                            if (FindEffect(Buffs.Galvanize, target, LocalPlayer.ObjectId) is not null) return DeploymentTactics;
-                            //Recitation is down here as not to waste it on bad targets.
-                            if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
-                                return Recitation;
-                        }
+                        return Adloquium;
                     }
-                    return Adloquium;
                 }
                 return actionID;
             }
         }
 
         /*
-        Overrides main DPS ability family, The Broils (and Ruin 1)
-        Implements Ruin 2 as the movement option
-        Chain Stratagem has overlap protection
+         * SCH_DPS
+         * Overrides main DPS ability family, The Broils (and Ruin 1)
+         * Implements Ruin 2 as the movement option
+         * Chain Stratagem has overlap protection
         */
         internal class SCH_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DPS;
+
+            internal OpenerState openerState = OpenerState.PreOpener;
+
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                bool AlternateMode = GetIntOptionAsBool(Config.SCH_ST_DPS_AltMode); //(0 or 1 radio values)
+                bool AlternateMode = Config.SCH_ST_DPS_AltMode; //(0 or 1 radio values)
                 if (((!AlternateMode && BroilList.Contains(actionID)) ||
-                     (AlternateMode && BioList.ContainsKey(actionID))) &&
-                    InCombat())
+                     (AlternateMode && BioList.ContainsKey(actionID))))
                 {
-                    //Lucid Dreaming
+                    var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    if (!incombat)
+                    {
+                        openerState = OpenerState.PreOpener;
+                    }
+                    else if (Gauge.HasAetherflow())
+                    {
+                        openerState = OpenerState.PostOpener;
+                    }
+                    else if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) && (openerState != OpenerState.PostOpener))
+                    {
+                        openerState = OpenerState.InOpener;
+                    }
+
+                    // Dissipation
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Dissipation_Opener) &&
+                        ActionReady(Dissipation) && HasPetPresent() && !Gauge.HasAetherflow() &&
+                        (openerState == OpenerState.InOpener) && InCombat() && CanSpellWeave(actionID))
+                        return Dissipation;
+
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
+
+                    // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
                         ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= GetOptionValue(Config.SCH_ST_DPS_LucidOption) &&
-                        CanSpellWeave(actionID)) return All.LucidDreaming;
-
-                    //Aetherflow
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
-                        ActionReady(Aetherflow) &&
-                        Gauge.Aetherflow is 0 &&
-                        CanSpellWeave(actionID)) return Aetherflow;
+                        LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
 
                     //Target based options
                     if (HasBattleTarget())
                     {
-                        //Chain Stratagem
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
-                            ActionReady(ChainStratagem) &&
-                            !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
-                            GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_ChainStratagemOption) &&
-                            CanSpellWeave(actionID)) return ChainStratagem;
+                        // Energy Drain
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain))
+                        {
+                            float edTime = Config.SCH_ST_DPS_EnergyDrain_Adv ? Config.SCH_ST_DPS_EnergyDrain : 10f;
+                            if (LevelChecked(EnergyDrain) && InCombat() &&
+                                Gauge.HasAetherflow() &&
+                                GetCooldownRemainingTime(Aetherflow) <= edTime &&
+                                (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
+                                CanSpellWeave(actionID))
+                                return EnergyDrain;
+                        }
 
-                        //Ruin 2 Movement 
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
-                            LevelChecked(Ruin2) &&
-                            IsOffCooldown(actionID) && //Check against actionID to stop seizure during cooldown 
-                            IsMoving) return OriginalHook(Ruin2); //Who knows in the future
+                        // Chain Stratagem
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
+                            ActionReady(ChainStratagem) && InCombat() &&
+                            !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
+                            GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption &&
+                            CanSpellWeave(actionID))
+                            return ChainStratagem;
 
                         //Bio/Biolysis
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio))
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio) && InCombat())
                         {
                             uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
                             Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                            float refreshtimer = Config.SCH_ST_DPS_Bio_Adv ? Config.SCH_ST_DPS_Bio_Threshold : 3;
 
-                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
-                                (GetTargetHPPercent() > GetOptionValue(Config.SCH_ST_DPS_BioOption)))
+                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= refreshtimer) &&
+                                GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)
                                 return dot; //Use appropriate DoT Action
-
-                            //AlterateMode idles as Ruin/Broil
-                            if (AlternateMode) return OriginalHook(Ruin);
                         }
+
+                        //Ruin 2 Movement 
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
+                            LevelChecked(Ruin2) && InCombat() &&
+                            IsMoving) return OriginalHook(Ruin2); //Who knows in the future
+
+                        //AlterateMode idles as Ruin/Broil
+                        if (AlternateMode && InCombat())
+                            return OriginalHook(Ruin);
+                    }
+                }
+                return actionID;
+            }
+        }
+
+        /*
+        * SCH_AoE
+        * Overrides main AoE DPS ability, Art of War
+        * Lucid Dreaming and Aetherflow weave options
+       */
+        internal class SCH_AoE : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_AoE;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is ArtOfWar or ArtOfWarII)
+                {
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_AoE_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
+                }
+                return actionID;
+            }
+        }
+
+        /*
+        * SCH_Ruin2
+        * Replaces Ruin II with Bio I/II for DoT Uptime
+       */
+        internal class SCH_Ruin2 : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Ruin2;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Ruin2 && LevelChecked(Bio))
+                {
+                    uint dot = OriginalHook(Bio); // Grab the appropriate DoT Action
+                    Status? dotDebuff = FindTargetEffect(BioList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+
+                    if ((dotDebuff is null || dotDebuff?.RemainingTime <= 3) &&
+                        (GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption))
+                        return dot; // Use appropriate DoT Action
+                }
+                return actionID;
+            }
+        }
+        
+        /*
+        * SCH_AoE_Heal
+        * Overrides main AoE Healing abiility, Succor
+        * Lucid Dreaming and Atherflow weave options
+        */
+        internal class SCH_AoE_Heal : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_AoE_Heal;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Succor)
+                {
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        !(IsEnabled(CustomComboPreset.SCH_AoE_Heal_Aetherflow_Indomitability) && GetCooldownRemainingTime(Indomitability) <= 0.6f) &&
+                            InCombat())
+                        return Aetherflow;
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp < 1000)
+                        return All.LucidDreaming;
+
+                    // Indomitability
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Indomitability) &&
+                        ActionReady(Indomitability) &&
+                        Gauge.HasAetherflow())
+                        return Indomitability;
+                }
+                return actionID;
+            }
+        }
+        
+        /*
+        * SCH_Fairy_Combo
+        * Overrides Whispering Dawn
+        */
+        internal class SCH_Fairy_Combo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Fairy_Combo;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is WhisperingDawn)
+                {
+
+                    // FeyIllumination
+                    if (ActionReady(FeyIllumination))
+                        return OriginalHook(FeyIllumination);
+
+                    // FeyBlessing
+                    if (ActionReady(FeyBlessing) && !(Gauge.SeraphTimer > 0))
+                        return OriginalHook(FeyBlessing);
+
+                    if (IsEnabled(CustomComboPreset.SCH_Fairy_Combo_Consolation) && ActionReady(WhisperingDawn))
+                        return OriginalHook(actionID);
+
+                    if (IsEnabled(CustomComboPreset.SCH_Fairy_Combo_Consolation) && Gauge.SeraphTimer > 0 && GetRemainingCharges(Consolation) > 0)
+                    return OriginalHook(Consolation);
+                }
+                return actionID;
+            }
+        }
+        
+        /*
+        * SCH_AoE_Heal
+        * Overrides main AoE Healing abiility, Succor
+        * Lucid Dreaming and Atherflow weave options
+        */
+        internal class SCH_ST_Heal : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_ST_Heal;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Physick)
+                {
+                    // Aetherflow
+                    if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Aetherflow) &&
+                        ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
+                        InCombat() && CanSpellWeave(actionID))
+                        return Aetherflow;
+
+                    // Lucid Dreaming
+                    if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Lucid) &&
+                        ActionReady(All.LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.SCH_ST_Heal_LucidOption &&
+                        CanSpellWeave(actionID))
+                        return All.LucidDreaming;
+
+                    //Grab our target (Soft->Hard->Self)
+                    GameObject? healTarget = null;
+                    GameObject? softTarget = Service.TargetManager.SoftTarget;
+                    if (HasFriendlyTarget(softTarget)) healTarget = softTarget;
+                    if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
+                    if (healTarget is null) healTarget = LocalPlayer;
+
+                    //Check for the Galvanize shield buff. Start applying if it doesn't exist or Target HP is below %
+                    if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Adloquium) &&
+                        ActionReady(Adloquium) &&
+                        (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer?.ObjectId) is null || GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_AdloquiumOption))
+                    {
+                        return Adloquium;
+                    }
+                    
+                    //Cast Lustrate if you have Aetherflow and Target HP is below %
+                    if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Lustrate) &&
+                        ActionReady(Lustrate) && 
+                        Gauge.HasAetherflow() &&
+                        GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_LustrateOption)
+                    {
+                        return Lustrate;
                     }
                 }
                 return actionID;

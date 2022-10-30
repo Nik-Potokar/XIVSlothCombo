@@ -97,7 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && level >= Levels.Tomahawk && !InMeleeRange() && HasBattleTarget())
                         return Tomahawk;
 
-                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 40 && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 40 && CanWeave(actionID))
                         return Infuriate;
 
                     //Sub Storm's Eye level check
@@ -115,14 +115,14 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught) && level >= Levels.Onslaught && GetRemainingCharges(Onslaught) > onslaughtChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught_MeleeSpender) ||
-                                    (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught_MeleeSpender) && GetTargetDistance() <= 1 && (GetCooldownRemainingTime(InnerRelease) > 40 || level < Levels.InnerRelease)))
+                                    (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught_MeleeSpender) && !IsMoving && GetTargetDistance() <= 1 && (GetCooldownRemainingTime(InnerRelease) > 40 || level < Levels.InnerRelease)))
                                     return Onslaught;
                             }
                         }
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && level >= Levels.PrimalRend)
                         {
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
+                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && !IsMoving && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
                                 return PrimalRend;
                             if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
                                 return PrimalRend;
@@ -198,7 +198,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
 
-                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && InCombat() && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
                         return Infuriate;
 
                     //Sub Mythril Tempest level check

@@ -13,7 +13,9 @@ namespace XIVSlothCombo.Combos.PvE
             FeatherRain = 11426,
             JKick = 18325,
             Eruption = 11427,
+            SharpenedKnife = 11400,
             GlassDance = 11430,
+            SonicBoom = 18308,
             Surpanakha = 18323,
             Nightbloom = 23290,
             MoonFlute = 11415,
@@ -24,6 +26,7 @@ namespace XIVSlothCombo.Combos.PvE
             FinalSting = 11407,
             Bristle = 11393,
             PhantomFlurry = 23288,
+            PerpetualRay = 18314,
             AngelWhisper = 18317,
             SongOfTorment = 11386,
             RamsVoice = 11419,
@@ -58,6 +61,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 Slow = 9,
                 Bind = 13,
+                Stun = 142,
                 SongOfTorment = 273,
                 DeepFreeze = 1731,
                 Offguard = 1717,
@@ -90,7 +94,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is MoonFlute or Whistle)
+                if (actionID is MoonFlute)
                 {
                     //If Triple Trident is saved for Crit/Det builds
                     if (GetCooldownRemainingTime(TripleTrident) <= 3 && IsSpellActive(TripleTrident))
@@ -126,6 +130,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return RoseOfDestruction;
                     if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
                         return FeatherRain;
+                    if (IsOffCooldown(Eruption) && IsSpellActive(Eruption))
+                        return Eruption;
                     if (!HasEffect(Buffs.Bristle) && IsOffCooldown(All.Swiftcast) && IsSpellActive(Bristle))
                         return Bristle;
                     if (IsOffCooldown(All.Swiftcast) && LevelChecked(All.Swiftcast))
@@ -156,6 +162,10 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsEnabled(CustomComboPreset.BLU_SoloMode) && HasCondition(ConditionFlag.BoundByDuty) && !HasEffect(Buffs.BasicInstinct) && GetPartyMembers().Length == 0 && IsSpellActive(BasicInstinct))
                         return BasicInstinct;
+                    if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle) && !WasLastAction(Whistle))
+                        return Whistle;
+                    if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle) && !WasLastSpell(Tingle))
+                        return Tingle;
                     if (!HasEffect(Buffs.MoonFlute) && !WasLastSpell(MoonFlute) && IsSpellActive(MoonFlute))
                         return MoonFlute;
                     if (IsEnabled(CustomComboPreset.BLU_Primals))
@@ -164,18 +174,16 @@ namespace XIVSlothCombo.Combos.PvE
                             return RoseOfDestruction;
                         if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
                             return FeatherRain;
+                        if (IsOffCooldown(Eruption) && IsSpellActive(Eruption))
+                            return Eruption;
+                        if (IsOffCooldown(MatraMagic) && IsSpellActive(MatraMagic))
+                            return MatraMagic;
                         if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
                             return GlassDance;
-                        if (IsOffCooldown(JKick) && IsSpellActive(JKick))
-                            return JKick;
+                        if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
+                            return ShockStrike;
                     }
 
-                    if (!HasEffect(Buffs.Tingle) && IsSpellActive(Tingle) && !WasLastSpell(Tingle))
-                        return Tingle;
-                    if (IsOffCooldown(ShockStrike) && IsEnabled(CustomComboPreset.BLU_Primals) && IsSpellActive(ShockStrike))
-                        return ShockStrike;
-                    if (!HasEffect(Buffs.Whistle) && IsSpellActive(Whistle) && !WasLastAction(Whistle))
-                        return Whistle;
                     if (IsOffCooldown(All.Swiftcast) && LevelChecked(All.Swiftcast))
                         return All.Swiftcast;
                     if (IsSpellActive(FinalSting))
@@ -226,7 +234,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return BadBreath;
                     if (IsOffCooldown(Devour) && HasEffect(Buffs.TankMimicry) && IsSpellActive(Devour))
                         return Devour;
-                    if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 9000 & LevelChecked(All.LucidDreaming))
+                    if (IsOffCooldown(All.LucidDreaming) && LocalPlayer.CurrentMp <= 9000 && LevelChecked(All.LucidDreaming))
                         return All.LucidDreaming;
                 }
 
@@ -240,34 +248,56 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is MagicHammer)
-                {
-                    if (IsOnCooldown(MagicHammer) && IsOffCooldown(All.Addle) && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(Debuffs.Conked))
-                        return All.Addle;
-                }
-
-                return actionID;
+                return (actionID is MagicHammer && IsOnCooldown(MagicHammer) && IsOffCooldown(All.Addle) && !TargetHasEffect(All.Debuffs.Addle) && !TargetHasEffect(Debuffs.Conked)) ? All.Addle : actionID;
             }
         }
 
         internal class BLU_PrimalCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_PrimalCombo;
+            internal static bool surpanakhaReady = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is FeatherRain)
+                if (actionID is FeatherRain or Eruption)
                 {
-                    if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain))
-                        return FeatherRain;
-                    if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
-                        return ShockStrike;
-                    if (IsOffCooldown(RoseOfDestruction) && IsSpellActive(RoseOfDestruction))
-                        return RoseOfDestruction;
-                    if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
-                        return GlassDance;
-                    if (IsOffCooldown(JKick) && IsSpellActive(JKick))
-                        return JKick;
+                    if (HasEffect(Buffs.PhantomFlurry))
+                        return OriginalHook(PhantomFlurry);
+
+                    if (!HasEffect(Buffs.PhantomFlurry))
+                    {
+                        if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain) &&
+                            (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 30 || IsOffCooldown(Nightbloom)))))
+                            return FeatherRain;
+                        if (IsOffCooldown(Eruption) && IsSpellActive(Eruption) &&
+                            (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 30 || IsOffCooldown(Nightbloom)))))
+                            return Eruption;
+                        if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike) &&
+                            (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 60 || IsOffCooldown(Nightbloom)))))
+                            return ShockStrike;
+                        if (IsOffCooldown(RoseOfDestruction) && IsSpellActive(RoseOfDestruction) &&
+                            (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 30 || IsOffCooldown(Nightbloom)))))
+                            return RoseOfDestruction;
+                        if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance) &&
+                            (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 90 || IsOffCooldown(Nightbloom)))))
+                            return GlassDance;
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_JKick) && IsOffCooldown(JKick) && IsSpellActive(JKick) &&
+                            (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 60 || IsOffCooldown(Nightbloom)))))
+                            return JKick;
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Nightbloom) && IsOffCooldown(Nightbloom) && IsSpellActive(Nightbloom))
+                            return Nightbloom;
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Matra) && IsOffCooldown(MatraMagic) && IsSpellActive(MatraMagic))
+                            return MatraMagic;
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Suparnakha) && IsSpellActive(Surpanakha))
+                        {
+                            if (GetRemainingCharges(Surpanakha) == 4) surpanakhaReady = true;
+                            if (surpanakhaReady && GetRemainingCharges(Surpanakha) > 0) return Surpanakha;
+                            if (GetRemainingCharges(Surpanakha) == 0) surpanakhaReady = false;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_PhantomFlurry) && IsOffCooldown(PhantomFlurry) && IsSpellActive(PhantomFlurry))
+                            return PhantomFlurry;
+                    }
                 }
 
                 return actionID;
@@ -307,6 +337,26 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 return actionID;
+            }
+        }
+
+        internal class BLU_PerpetualRayStunCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_PerpetualRayStunCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                return (actionID is PerpetualRay && (TargetHasEffectAny(Debuffs.Stun) || WasLastAction(PerpetualRay)) && IsSpellActive(SharpenedKnife) && InMeleeRange()) ? SharpenedKnife : actionID;
+            }
+        }
+
+        internal class BLU_MeleeCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_MeleeCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                return (actionID is SonicBoom && GetTargetDistance() <= 3 && IsSpellActive(SharpenedKnife)) ? SharpenedKnife : actionID;
             }
         }
     }

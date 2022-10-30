@@ -1,4 +1,5 @@
 ﻿using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -34,7 +35,10 @@ namespace XIVSlothCombo.Combos.PvE
             Interject = 7538,
             Peloton = 7557,
             LegSweep = 7863,
-            Repose = 16560;
+            Repose = 16560,
+            Sprint = 3;
+        private const uint
+            IsleSprint = 31314;
 
         public static class Buffs
         {
@@ -60,33 +64,16 @@ namespace XIVSlothCombo.Combos.PvE
                 Feint = 1195;
         }
 
-        public static class Levels
+        internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
-            public const byte
-                LegGraze = 6,
-                Repose = 8,
-                SecondWind = 8,
-                Rampart = 8,
-                Addle = 8,
-                Sleep = 10,
-                Esuna = 10,
-                FootGraze = 10,
-                LegSweep = 10,
-                LowBlow = 12,
-                Bloodbath = 12,
-                Raise = 12,
-                LucidDreaming = 14,
-                Provoke = 15,
-                Interject = 18,
-                Swiftcast = 18,
-                Peloton = 20,
-                Feint = 22,
-                HeadGraze = 24,
-                Rescue = 48,
-                Shirk = 48,
-                TrueNorth = 50;
-        }
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_IslandSanctuary_Sprint;
 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Sprint && Service.ClientState.TerritoryType is 1055) return IsleSprint;
+                else return actionID;
+            }
+        }
 
         //Tank Features
         internal class ALL_Tank_Interrupt : CustomCombo
@@ -97,9 +84,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is LowBlow or PLD.ShieldBash)
                 {
-                    if (CanInterruptEnemy() && IsOffCooldown(Interject) && level >= Levels.Interject)
+                    if (CanInterruptEnemy() && ActionReady(Interject))
                         return Interject;
-                    if (IsOffCooldown(LowBlow) && level >= Levels.LowBlow)
+                    if (ActionReady(LowBlow))
                         return LowBlow;
                     if (actionID == PLD.ShieldBash && IsOnCooldown(LowBlow))
                         return actionID;
@@ -135,10 +122,10 @@ namespace XIVSlothCombo.Combos.PvE
                 if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro) 
                     || (actionID is SCH.Resurrection && LocalPlayer.ClassJob.Id is SCH.JobID))
                 {
-                    if (IsOffCooldown(Swiftcast))
+                    if (ActionReady(Swiftcast))
                         return Swiftcast;
 
-                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && GetRemainingCharges(WHM.ThinAir) > 0 && !HasEffect(WHM.Buffs.ThinAir) && LevelChecked(WHM.ThinAir))
+                    if (actionID == WHM.Raise && IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
                         return WHM.ThinAir;
 
                     return actionID;
@@ -234,31 +221,15 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-
-        /*
-        internal class DoMSwiftcastFeature : CustomCombo
+        internal class ALL_Ranged_Interrupt : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DoMSwiftcastFeature;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Ranged_Interrupt;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.DoMSwiftcastFeature))
-                {
-                    if (actionID == WHM.Raise || actionID == SMN.Resurrection || actionID == SGE.Egeiro || actionID == AST.Ascend || actionID == RDM.Verraise)
-                    {
-                        var swiftCD = GetCooldown(All.Swiftcast);
-                        if ((swiftCD.CooldownRemaining == 0 && !HasEffect(RDM.Buffs.Dualcast))
-                            || level <= All.Levels.Raise
-                            || (level <= RDM.Levels.Verraise && actionID == RDM.Verraise))
-                            return All.Swiftcast;
-                    }
-                }
-
-                return actionID;
+                return (actionID is FootGraze && CanInterruptEnemy() && ActionReady(HeadGraze) ) ? HeadGraze : actionID;
             }
         }
-
-        */
     }
 }
 

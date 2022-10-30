@@ -70,14 +70,15 @@ namespace XIVSlothCombo
             }
 
             Service.Configuration.Save();
-            
 
         }
 
         private void ResetFeatures()
         {
-            //Enumerable.Range is a start and count, not a start and end.
-            Service.Configuration.ResetFeatures("NINRework", Enumerable.Range(10000, 100).ToArray());
+            // Enumerable.Range is a start and count, not a start and end.
+            // Enumerable.Range(Start, Count)
+            Service.Configuration.ResetFeatures("v3.0.17.0_NINRework", Enumerable.Range(10000, 100).ToArray());
+            Service.Configuration.ResetFeatures("v3.0.17.0_DRGCleanup", Enumerable.Range(6100, 400).ToArray());
         }
 
         private void DrawUI() => configWindow.Draw();
@@ -307,6 +308,8 @@ namespace XIVSlothCombo
                             file.WriteLine("");
                             file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}");                          // Plugin version
                             file.WriteLine("");
+                            file.WriteLine($"Installation Repo: {RepoCheckFunctions.FetchCurrentRepo()?.InstalledFromUrl}");    // Installation Repo
+                            file.WriteLine("");
                             file.WriteLine($"Current Job: " +                                                                   // Current Job
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +                                // - Client Name
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
@@ -365,7 +368,7 @@ namespace XIVSlothCombo
                                 file.WriteLine($"START STATUS EFFECTS");
                                 foreach (Status? status in Service.ClientState.LocalPlayer.StatusList)
                                 {
-                                    file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceID}");
+                                    file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceId}");
                                 }
 
                                 file.WriteLine($"END STATUS EFFECTS");

@@ -726,8 +726,7 @@ namespace XIVSlothCombo.Combos.PvE
                         && GetCooldown(Acceleration).ChargeCooldownRemaining < 54.5)
                         return Acceleration;
                     if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero_Accel_Swiftcast) 
-                        && level >= All.Levels.Swiftcast 
-                        && IsOffCooldown(All.Swiftcast) 
+                        && ActionReady(All.Swiftcast) 
                         && GetCooldown(Acceleration).RemainingCharges == 0)
                         return All.Swiftcast;
                 }
@@ -752,8 +751,7 @@ namespace XIVSlothCombo.Combos.PvE
                         && GetCooldown(Acceleration).ChargeCooldownRemaining < 54.5)
                         return Acceleration;
                     if (IsEnabled(CustomComboPreset.RDM_AoE_Accel_Swiftcast) 
-                        && level >= All.Levels.Swiftcast 
-                        && IsOffCooldown(All.Swiftcast) 
+                        && ActionReady(All.Swiftcast) 
                         && GetCooldown(Acceleration).RemainingCharges == 0
                         && GetCooldown(Acceleration).ChargeCooldownRemaining < 54.5)
                         return All.Swiftcast;
@@ -808,7 +806,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.RDM_Lucid_Threshold);
 
-                    if (level >= All.Levels.LucidDreaming && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
+                    if (LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold) // Check to show Lucid Dreaming
                     {
                         showLucid = true;
                     }
@@ -895,9 +893,8 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is MagickBarrier
-                    && level >= All.Levels.Addle
                     && (IsOnCooldown(MagickBarrier) || level < Levels.MagickBarrier)
-                    && IsOffCooldown(All.Addle)
+                    && ActionReady(All.Addle)
                     && !TargetHasEffectAny(All.Debuffs.Addle))
                     return All.Addle;
 

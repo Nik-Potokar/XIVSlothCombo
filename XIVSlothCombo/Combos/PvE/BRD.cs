@@ -70,7 +70,9 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 BRD_RagingJawsRenewTime = "ragingJawsRenewTime",
-                BRD_NoWasteHPPercentage = "noWasteHpPercentage";
+                BRD_NoWasteHPPercentage = "noWasteHpPercentage",
+                BRD_STSecondWindThreshold = "BRD_STSecondWindThreshold",
+                BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold";
         }
 
         #region Song status
@@ -357,6 +359,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return RainOfDeath;
                         if (sidewinderReady)
                             return Sidewinder;
+
+                        // healing - please move if not appropriate priority
+                        if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_AoESecondWindThreshold) && ActionReady(All.SecondWind))
+                                return All.SecondWind;
+                        }
                     }
 
                     bool shadowbiteReady = LevelChecked(Shadowbite) && HasEffect(Buffs.ShadowbiteReady);
@@ -597,15 +606,15 @@ namespace XIVSlothCombo.Combos.PvE
                         float ragingCD = GetCooldownRemainingTime(RagingStrikes);
                         float radiantCD = GetCooldownRemainingTime(RadiantFinale);
 
-                        if (empyrealReady && (!openerFinished || (openerFinished && battleVoiceCD >= 3.5)))
+                        if (empyrealReady && ((!openerFinished && IsOnCooldown(RagingStrikes)) || (openerFinished && battleVoiceCD >= 3.5)))
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
                             (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)) &&
-                            (!openerFinished || (openerFinished && battleVoiceCD >= 3.5)))
+                            ((!openerFinished && IsOnCooldown(RagingStrikes)) || (openerFinished && battleVoiceCD >= 3.5)))
                             return OriginalHook(WanderersMinuet);
 
-                        if (sidewinderReady && (!openerFinished || (openerFinished && battleVoiceCD >= 3.5)))
+                        if (sidewinderReady && ((!openerFinished && IsOnCooldown(RagingStrikes)) || (openerFinished && battleVoiceCD >= 3.5)))
                         {
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling))
                             {
@@ -622,7 +631,7 @@ namespace XIVSlothCombo.Combos.PvE
                             else return Sidewinder;
                         }
 
-                        if (LevelChecked(Bloodletter))
+                        if (LevelChecked(Bloodletter) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
                             ushort bloodletterCharges = GetRemainingCharges(Bloodletter);
 
@@ -646,9 +655,15 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (songNone && bloodletterCharges == 3)
                                     return Bloodletter;
                             }
-
                             else if (bloodletterCharges > 0)
                                 return Bloodletter;
+                        }
+
+                        // healing - please move if not appropriate priority
+                        if (IsEnabled(CustomComboPreset.BRD_ST_SecondWind))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_STSecondWindThreshold) && ActionReady(All.SecondWind))
+                                return All.SecondWind;
                         }
                     }
 

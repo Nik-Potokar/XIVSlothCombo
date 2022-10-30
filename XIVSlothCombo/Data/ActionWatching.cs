@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Services;
+using Lumina.Excel.GeneratedSheets;
 
 namespace XIVSlothCombo.Data
 {
@@ -15,6 +16,13 @@ namespace XIVSlothCombo.Data
             .ToDictionary(i => i.RowId, i => i);
 
         internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
+            .ToDictionary(i => i.RowId, i => i);
+
+        internal static Dictionary<uint, Trait> TraitSheet = Service.DataManager.GetExcelSheet<Trait>()!
+            .Where(i => i.ClassJobCategory is not null) //All player traits are assigned to a category. Chocobo and other garbage lacks this, thus excluded.
+            .ToDictionary(i => i.RowId, i => i);
+
+        internal static Dictionary<uint, BNpcBase> BNpcSheet = Service.DataManager.GetExcelSheet<BNpcBase>()!
             .ToDictionary(i => i.RowId, i => i);
 
         private static readonly Dictionary<string, List<uint>> statusCache = new();
@@ -46,15 +54,15 @@ namespace XIVSlothCombo.Data
                 ActionSheet.TryGetValue(header.ActionId, out var sheet);
                 if (sheet != null)
                 {
-                    switch (sheet.ActionCategory.Value.Name)
+                    switch (sheet.ActionCategory.Value.RowId)
                     {
-                        case "Spell":
+                        case 2: //Spell
                             LastSpell = header.ActionId;
                             break;
-                        case "Weaponskill":
+                        case 3: //Weaponskill
                             LastWeaponskill = header.ActionId;
                             break;
-                        case "Ability":
+                        case 4: //Ability
                             LastAbility = header.ActionId;
                             break;
                     }
@@ -77,7 +85,7 @@ namespace XIVSlothCombo.Data
                 TimeLastActionUsed = DateTime.Now;
                 ActionType = actionType;
 
-                Dalamud.Logging.PluginLog.Debug($"{actionId} {sequence} {a5} {a6} {a7} {a8} {a9}");
+                //Dalamud.Logging.PluginLog.Debug($"{actionId} {sequence} {a5} {a6} {a7} {a8} {a9}");
             }
             catch (Exception ex)
             {
@@ -161,7 +169,9 @@ namespace XIVSlothCombo.Data
             SendActionHook?.Disable();
         }
 
-        public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.ClassJobLevel : 0;
+        public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;
+        public static int GetActionRange(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.Range : -2; // 0 & -1 are valid numbers. -2 is our failure code for InActionRange
+        public static int GetTraitLevel(uint id) => TraitSheet.TryGetValue(id, out var trait) ? trait.Level : 255;
         public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
         public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 

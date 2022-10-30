@@ -12,7 +12,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         internal Timer? combatTimer;
 
         /// <summary> Called by the timer in the constructor to keep track of combat duration. </summary>
-        internal void UpdateCombatTimer(object sender, EventArgs e)
+        internal void UpdateCombatTimer(object? sender, EventArgs e)
         {
             if (InCombat())
             {
