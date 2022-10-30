@@ -118,6 +118,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             #region Healing
             internal static UserBool
+                SGE_ST_Heal_Adv = new("SGE_ST_Heal_Adv"),
                 SGE_ST_Heal_UIMouseOver = new("SGE_ST_Heal_UIMouseOver");
             internal static UserInt
                 SGE_ST_Heal_Zoe = new("SGE_ST_Heal_Zoe"),
@@ -357,7 +358,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Eukrasia && HasEffect(Buffs.Eukrasia))
                 {
-                    switch (PluginConfiguration.GetCustomIntValue(Config.SGE_Eukrasia_Mode))
+                    switch ((int)Config.SGE_Eukrasia_Mode)
                     {
                         case 0: return OriginalHook(Dosis);
                         case 1: return OriginalHook(Diagnosis);
@@ -385,7 +386,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.Eukrasia))
                         return EukrasianDiagnosis;
 
-                    GameObject? healTarget = GetHealTarget(Config.SGE_ST_Heal_UIMouseOver);
+                    GameObject? healTarget = GetHealTarget(Config.SGE_ST_Heal_Adv && Config.SGE_ST_Heal_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
                         HasCleansableDebuff(healTarget))

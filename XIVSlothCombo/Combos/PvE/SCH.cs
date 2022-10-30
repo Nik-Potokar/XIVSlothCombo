@@ -123,6 +123,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SCH_ST_Heal_AdloquiumOption = new("SCH_ST_Heal_AdloquiumOption"),
                 SCH_ST_Heal_LustrateOption = new("SCH_ST_Heal_LustrateOption");
             internal static UserBool
+                SCH_ST_Heal_Adv = new("SCH_ST_Heal_Adv"),
                 SCH_ST_Heal_UIMouseOver = new("SCH_ST_Heal_UIMouseOver");
             #endregion
 
@@ -511,7 +512,7 @@ namespace XIVSlothCombo.Combos.PvE
         }
         
         /*
-        * SCH_AoE_Heal
+        * SCH_ST_Heal
         * Overrides main AoE Healing abiility, Succor
         * Lucid Dreaming and Atherflow weave options
         */
@@ -536,7 +537,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.LucidDreaming;
 
                     //Grab our target (Soft->Hard->Self)
-                    GameObject? healTarget = GetHealTarget(Config.SCH_ST_Heal_UIMouseOver);
+                    GameObject? healTarget = GetHealTarget(Config.SCH_ST_Heal_Adv && Config.SCH_ST_Heal_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
                         HasCleansableDebuff(healTarget))
