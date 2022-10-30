@@ -2306,6 +2306,16 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(RPR.Gibbet,RPR.Gallows)]
         [CustomComboInfo("True North Feature (Dynamic)", "Adds True North to Slice when Gibbet/Gallows proc based on position to target, essentially only use True North if needed in the moment.", RPR.JobID, 0, "", "")]
         RPR_TrueNorthDynamic = 12063,
+
+        [Variant]
+        [VariantParent(RPR_ST_SliceCombo, RPR_AoE_ScytheCombo)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", RPR.JobID)]
+        RPR_Variant_Cure = 12064,
+
+        [Variant]
+        [VariantParent(RPR_ST_SliceCombo, RPR_AoE_ScytheCombo)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", RPR.JobID)]
+        RPR_Variant_Rampart = 12065,
         #endregion
 
         #endregion
@@ -2453,6 +2463,22 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(RDM.MagickBarrier)]
         [CustomComboInfo("Magick Barrier to Addle Feature", "Changes Magick Barrier to Addle when on cooldown.", RDM.JobID, 820, "", "")]
         RDM_MagickBarrierAddle = 13821,
+
+
+        //TODO Revisit once RDM is in a better place. 
+        //[Variant]
+        //[VariantParent(RdmAny)]
+        //[CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", RDM.JobID)]
+        //RDM_Variant_Rampart = 13830,
+
+        //[Variant]
+        //[CustomComboInfo("Raise Option", "Turn Swiftcast into Variant Raise whenever you have the Swiftcast buff.", RDM.JobID)]
+        //RDM_Variant_Raise = 13831,
+
+        //[Variant]
+        //[VariantParent(RdmAny)]
+        //[CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", RDM.JobID)]
+        //RDM_Variant_Cure = 13832,
         #endregion
 
         #endregion
@@ -2637,6 +2663,16 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SGE.Eukrasia)]
         [CustomComboInfo("Eukrasia Feature", "Eukrasia turns into the selected Eukrasian-type action when active.", SGE.JobID, 1000, "", "")]
         SGE_Eukrasia = 14910,
+
+        [Variant]
+        [VariantParent(SGE_ST_Dosis_EDosis, SGE_AoE_Phlegma)]
+        [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", SGE.JobID)]
+        SGE_DPS_Variant_SpiritDart = 14920,
+
+        [Variant]
+        [VariantParent(SGE_ST_Dosis, SGE_AoE_Phlegma)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SGE.JobID)]
+        SGE_DPS_Variant_Rampart = 14930,
         #endregion
 
         #endregion
@@ -2859,6 +2895,16 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SAM_AoE_MangetsuCombo)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
         SAM_AoE_ComboHeals = 15045,
+
+        [Variant]
+        [VariantParent(SAM_ST_GekkoCombo, SAM_AoE_MangetsuCombo)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SAM.JobID)]
+        SAM_Variant_Cure = 15047,
+
+        [Variant]
+        [VariantParent(SAM_ST_GekkoCombo, SAM_AoE_MangetsuCombo)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
+        SAM_Variant_Rampart = 15048,
         #endregion
 
         #endregion
@@ -3168,11 +3214,26 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
         [CustomComboInfo("Burst Delay Option", "Only follows Burst Delay settings for the opener burst.\nThis Option is for high SPS builds.", SMN.JobID, 2, "", "")]
         SMN_Advanced_Burst_Delay_Option = 17043,
+
+        [Variant]
+        [VariantParent(SMN_Simple_Combo, SMN_Advanced_Combo)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SMN.JobID)]
+        SMN_Variant_Rampart = 17044,
+
+        [Variant]
+        [VariantParent(SMN_Raise)]
+        [CustomComboInfo("Raise Option", "Turn Swiftcast into Variant Raise whenever you have the Swiftcast buff.", SMN.JobID)]
+        SMN_Variant_Raise = 17045,
+
+        [Variant]
+        [VariantParent(SMN_Simple_Combo, SMN_Advanced_Combo)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SMN.JobID)]
+        SMN_Variant_Cure = 17046,
         #endregion
 
         #region WARRIOR
 
-        [ReplaceSkill(WAR.StormsEye)]
+        [ReplaceSkill(WAR.StormsPath)]
         [CustomComboInfo("Storms Path Combo", "All in one main combo feature adds Storm's Eye/Path. \nIf all sub options and Fell Cleave/Decimate Options are toggled will turn into a full one button rotation (Advanced Warrior)", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath = 18000,
 
@@ -3251,6 +3312,21 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(WAR_ST_StormsPath_Onslaught)]
         [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm) and when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Onslaught_MeleeSpender = 18024,
+
+        [Variant]
+        [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
+        [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", WAR.JobID)]
+        WAR_Variant_SpiritDart = 18025,
+
+        [Variant]
+        [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", WAR.JobID)]
+        WAR_Variant_Cure = 18026,
+
+        [Variant]
+        [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
+        [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", WAR.JobID)]
+        WAR_Variant_Ultimatum = 18027,
 
         #endregion
 
@@ -3404,6 +3480,16 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(WHM.Raise)]
         [CustomComboInfo("Thin Air Raise Feature", "Adds Thin Air to the Global Raise Feature/Alternative Raise Feature.", WHM.JobID, 90, "", "")]
         WHM_ThinAirRaise = 19014,
+
+        [Variant]
+        [VariantParent(WHM_ST_MainCombo_DoT, WHM_AoE_DPS)]
+        [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", WHM.JobID)]
+        WHM_DPS_Variant_SpiritDart = 19025,
+
+        [Variant]
+        [VariantParent(WHM_ST_MainCombo, WHM_AoE_DPS)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", WHM.JobID)]
+        WHM_DPS_Variant_Rampart = 19026,
 
         #endregion
 

@@ -1455,6 +1455,10 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Enshroud Opener", "Uses Early Enshroud Opener. Will Clip CD if not at 2.48-2.49.", 2);
             }
 
+
+            if (preset == CustomComboPreset.RPR_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, RPR.Config.RPR_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region RED MAGE
@@ -1614,6 +1618,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to use Shinten below", 150, SliderIncrements.Ones);
             }
 
+            if (preset == CustomComboPreset.SAM_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, SAM.Config.SAM_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region SCHOLAR
@@ -1729,6 +1736,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, SMN.Config.SMN_Lucid, "Set value for your MP to be at or under for this feature to take effect.", 150, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.SMN_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, SMN.Config.SMN_VariantCure, "HP% to be at or under", 200);
             #endregion
 
             #region PvP
@@ -1753,6 +1763,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.WAR_ST_StormsPath_Onslaught && enabled)
                 UserConfig.DrawSliderInt(0, 2, WAR.Config.WAR_KeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
+
+            if (preset == CustomComboPreset.WAR_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, WAR.Config.WAR_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================

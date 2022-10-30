@@ -287,7 +287,7 @@ namespace XIVSlothCombo.Combos.PvE
                     InCombat())
                 {
 
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) &&
+                    if (IsEnabled(CustomComboPreset.AST_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
                         CanSpellWeave(actionID))

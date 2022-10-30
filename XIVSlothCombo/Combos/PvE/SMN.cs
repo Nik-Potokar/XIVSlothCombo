@@ -129,7 +129,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SMN_BurstPhase = "SMN_BurstPhase",
                 SMN_PrimalChoice = "SMN_PrimalChoice",
                 SMN_SwiftcastPhase = "SMN_SwiftcastPhase",
-                SMN_Burst_Delay = "SMN_Burst_Delay";
+                SMN_Burst_Delay = "SMN_Burst_Delay",
+                SMN_VariantCure = "SMN_VariantCure";
         }
 
         internal class SMN_Raise : CustomCombo
@@ -140,6 +141,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == All.Swiftcast)
                 {
+                    if (HasEffect(All.Buffs.Swiftcast) && IsEnabled(CustomComboPreset.SMN_Variant_Raise) && IsEnabled(Variant.VariantRaise))
+                        return Variant.VariantRaise;
+
                     if (IsOnCooldown(All.Swiftcast))
                         return Resurrection;
                 }
@@ -218,6 +222,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
+                    if (IsEnabled(CustomComboPreset.SMN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SMN_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.SMN_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
                     if (CanSpellWeave(actionID))
                     {
                         if (IsOffCooldown(SearingLight) && LevelChecked(SearingLight) && OriginalHook(Ruin) == AstralImpulse)
@@ -373,6 +386,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
+                    if (IsEnabled(CustomComboPreset.SMN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SMN_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.SMN_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
                     if (CanSpellWeave(actionID))
                     {
                         // Searing Light

@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -78,7 +79,8 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 WAR_InfuriateRange = "WarInfuriateRange",
                 WAR_SurgingRefreshRange = "WarSurgingRefreshRange",
-                WAR_KeepOnslaughtCharges = "WarKeepOnslaughtCharges";
+                WAR_KeepOnslaughtCharges = "WarKeepOnslaughtCharges",
+                WAR_VariantCure = "WAR_VariantCure";
         }
 
         // Replace Storm's Path with Storm's Path combo and overcap feature on main combo to fellcleave
@@ -94,6 +96,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var surgingThreshold = PluginConfiguration.GetCustomIntValue(Config.WAR_SurgingRefreshRange);
                     var onslaughtChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepOnslaughtCharges);
 
+                    if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
+                        return Variant.VariantCure;
+
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && level >= Levels.Tomahawk && !InMeleeRange() && HasBattleTarget())
                         return Tomahawk;
 
@@ -108,6 +113,16 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (CanWeave(actionID))
                         {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.WAR_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.WAR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
+
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level >= Levels.Berserk)
                                 return OriginalHook(Berserk);
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Upheaval) && IsOffCooldown(Upheaval) && level >= Levels.Upheaval)
@@ -198,6 +213,9 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
 
+                    if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
+                        return Variant.VariantCure;
+
                     if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && InCombat() && level >= Levels.Infuriate && GetRemainingCharges(Infuriate) >= 1 && !HasEffect(Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
                         return Infuriate;
 
@@ -209,6 +227,15 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (CanWeave(actionID))
                         {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.WAR_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.WAR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
                             if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && level >= Levels.Berserk)
                                 return OriginalHook(Berserk);
                             if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Orogeny) && IsOffCooldown(Orogeny) && level >= Levels.Orogeny && HasEffect(Buffs.SurgingTempest))
