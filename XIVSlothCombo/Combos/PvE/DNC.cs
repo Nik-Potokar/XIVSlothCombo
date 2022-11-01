@@ -490,10 +490,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime is < 2 and > 0)
                         return Fountain;
 
-                    if (HasEffect(Buffs.FlourishingFinish))
-                        return Tillana;
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
+                    if (HasEffect(Buffs.FlourishingFinish))
+                        return Tillana;
 
                     if (LevelChecked(Fountainfall) && flow)
                         return Fountainfall;
@@ -609,10 +609,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime is < 2 and > 0)
                         return Bladeshower;
 
-                    if (HasEffect(Buffs.FlourishingFinish))
-                        return Tillana;
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
+                    if (HasEffect(Buffs.FlourishingFinish))
+                        return Tillana;
 
                     if (LevelChecked(Bloodshower) && flow)
                         return Bloodshower;
