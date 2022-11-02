@@ -568,12 +568,6 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
                         return Flourish;
 
-                    // AoE Saber Dance
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
-                        (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) ||
-                        (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
-                        return SaberDance;
-
                     if (CanWeave(actionID))
                     {
                         // AoE Feathers & Fans
@@ -606,6 +600,12 @@ namespace XIVSlothCombo.Combos.PvE
                             ActionReady(Improvisation))
                             return Improvisation;
                     }
+
+                    // AoE Saber Dance
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
+                        (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) ||
+                        (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
+                        return SaberDance;
 
                     // AoE combos and burst attacks
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime is < 2 and > 0)
