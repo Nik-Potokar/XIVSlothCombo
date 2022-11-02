@@ -428,7 +428,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Standard Step
                     if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep) &&
-                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish) && GetCooldownRemainingTime(TechnicalStep) > 10) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
+                        ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 10) &&
+                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
                         return StandardStep;
 
                     // ST Technical Step
@@ -550,7 +551,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Standard Step
                     if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep) &&
-                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish) && GetCooldownRemainingTime(TechnicalStep) > 10) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
+                        ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 10) &&
+                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
                         return StandardStep;
 
                     // AoE Technical Step
