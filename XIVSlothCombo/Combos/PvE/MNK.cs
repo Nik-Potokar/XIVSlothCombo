@@ -964,7 +964,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (inCombat && canWeave)
                     {
-                        if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire))
+                        if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire) && InMeleeRange())
                         {
                             return RiddleOfFire;
                         }
@@ -1104,7 +1104,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.MNK_AoE_ADV_CDs))
                         {
-                            if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire))
+                            if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire) && InMeleeRange())
                             {
                                 return RiddleOfFire;
                             }
