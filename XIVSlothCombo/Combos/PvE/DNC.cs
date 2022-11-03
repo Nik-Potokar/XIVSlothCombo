@@ -483,7 +483,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
-                        (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
+                        ((gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) && GetCooldownRemainingTime(TechnicalStep) > 2.5) ||
                         (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
                         return SaberDance;
 
@@ -603,7 +603,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
-                        (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) ||
+                        ((gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) && GetCooldownRemainingTime(TechnicalStep) > 2.5) ||
                         (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit > 50)))
                         return SaberDance;
 
