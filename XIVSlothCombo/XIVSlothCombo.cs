@@ -140,10 +140,7 @@ namespace XIVSlothCombo
             Service.ClientState.Login -= PrintLoginMessage;
         }
 
-        private void OnOpenConfigUi()
-        {
-            OnCommand("scombo", "blm");
-        }
+        private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 
         private async void OnCommand(string command, string arguments)
         {
@@ -395,7 +392,6 @@ namespace XIVSlothCombo
                     configWindow.Visible = !configWindow.Visible;
                     var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).First().Key;
                     var header = $"{jobname} - {argumentsParts[0].ToUpper()}";
-                    Dalamud.Logging.PluginLog.Debug(header);
                     PvEFeatures.HeaderToOpen = header;
                     break;
             }
