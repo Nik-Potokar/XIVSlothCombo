@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Dalamud.Interface;
 using ImGuiNET;
 using XIVSlothCombo.Core;
@@ -32,11 +35,23 @@ namespace XIVSlothCombo.Window.Tabs
 
             foreach (string? jobName in groupedPresets.Keys)
             {
-                if (ImGui.CollapsingHeader(jobName))
+                string abbreviation = groupedPresets[jobName].First().Info.JobShorthand;
+                string header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
+                if (ImGui.CollapsingHeader($"{header}"))
                 {
+                    if (!Positions.ContainsKey(header))
+                    {
+                        Positions.TryAdd(header, ImGui.GetCursorPos());
+                    }
+                    else
+                    {
+                        Positions[header] = ImGui.GetCursorPos();
+                    }
                     foreach (var otherJob in groupedPresets.Keys.Where(x => x != jobName))
                     {
-                        ImGui.GetStateStorage().SetInt(ImGui.GetID(otherJob), 0);
+                        string otherAbbreviation = groupedPresets[otherJob].First().Info.JobShorthand;
+                        string otherHeader = string.IsNullOrEmpty(otherAbbreviation) ? otherJob : $"{otherJob} - {otherAbbreviation}";
+                        ImGui.GetStateStorage().SetInt(ImGui.GetID(otherHeader), 0);
                     }
 
                     DrawHeadingContents(jobName, i);
@@ -49,6 +64,19 @@ namespace XIVSlothCombo.Window.Tabs
                         i += Presets.AllChildren(presetChildren[preset.Preset]);
                     }
                 }
+            }
+            if (!string.IsNullOrEmpty(HeaderToOpen))
+            {
+                foreach (string? jobName in groupedPresets.Keys)
+                {
+                    string abbreviation = groupedPresets[jobName].First().Info.JobShorthand;
+                    string header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
+                    ImGui.GetStateStorage().SetInt(ImGui.GetID(header), 0);
+                }
+                ImGui.GetStateStorage().SetInt(ImGui.GetID(HeaderToOpen), 1);
+                ImGui.SetScrollY(Positions[HeaderToOpen].Y - 30);
+
+                HeaderToOpen = null;
             }
 
             ImGui.PopStyleVar();
@@ -96,5 +124,9 @@ namespace XIVSlothCombo.Window.Tabs
                 }
             }
         }
+
+        internal static string HeaderToOpen;
+
+        internal static Dictionary<string, Vector2> Positions = new();
     }
 }

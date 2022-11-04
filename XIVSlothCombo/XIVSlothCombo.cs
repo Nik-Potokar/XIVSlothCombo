@@ -1,20 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window;
+using XIVSlothCombo.Window.Tabs;
 
 namespace XIVSlothCombo
 {
@@ -139,9 +140,12 @@ namespace XIVSlothCombo
             Service.ClientState.Login -= PrintLoginMessage;
         }
 
-        private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
+        private void OnOpenConfigUi()
+        {
+            OnCommand("scombo", "blm");
+        }
 
-        private void OnCommand(string command, string arguments)
+        private async void OnCommand(string command, string arguments)
         {
             string[]? argumentsParts = arguments.Split();
 
@@ -389,6 +393,10 @@ namespace XIVSlothCombo
                     }
                 default:
                     configWindow.Visible = !configWindow.Visible;
+                    var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).First().Key;
+                    var header = $"{jobname} - {argumentsParts[0].ToUpper()}";
+                    Dalamud.Logging.PluginLog.Debug(header);
+                    PvEFeatures.HeaderToOpen = header;
                     break;
             }
 
