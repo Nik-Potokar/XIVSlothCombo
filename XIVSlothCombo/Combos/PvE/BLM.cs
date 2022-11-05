@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ImGuiNET;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -51,7 +52,8 @@ namespace XIVSlothCombo.Combos.PvE
                 LeyLines = 737,
                 Firestarter = 165,
                 Sharpcast = 867,
-                Triplecast = 1211;
+                Triplecast = 1211,
+                EnhancedFlare = 2960;
         }
 
         internal static class Debuffs
@@ -195,32 +197,27 @@ namespace XIVSlothCombo.Combos.PvE
                     if (Gauge.InAstralFire)
                     {
                         //Grab Fire 2 / High Fire 2 action ID
-                        uint fireAoEID = OriginalHook(Fire2);
-                        if (currentMP >= 7000)
+
+                        if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
                         {
-                            if (Gauge.UmbralHearts == 1)
+                            return Flare;
+                        }
+                        if (currentMP >= MP.Despair)
+                        {
+                            if (currentMP >= MP.FireAoE)
+                            {
+                                return OriginalHook(Fire2);
+                            }
+                            else if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
                             {
                                 return Flare;
                             }
-                            return fireAoEID;
-                        }
-                        else if (currentMP >= MP.Despair)
-                        {
-                            if (LevelChecked(Flare))
+                            else if (!TraitLevelChecked(Traits.AspectMasteryIII))
                             {
-                                return Flare;
+                                return Transpose;
                             }
-                            else if (currentMP >= MP.FireAoE)
-                            {
-                                return fireAoEID;
-                            }
-                        }
-                        else if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                        {
-                            return Transpose;
                         }
                     }
-
                     // Umbral Hearts
                     if (Gauge.InUmbralIce)
                     {
@@ -273,7 +270,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
                     };
 
-                    if (IsEnabled(CustomComboPreset.BLM_SimpleUmbralSoul) && !inOpener && CurrentTarget is null && Gauge.IsEnochianActive)
+                    if (IsEnabled(CustomComboPreset.BLM_SimpleUmbralSoul) && !inOpener && CurrentTarget is null)
                     {
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                         {
@@ -308,8 +305,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (InCombat() && inOpener && !openerFinished)
                         {
-                            // Exit out of opener if Enochian is lost
-                            if (!Gauge.IsEnochianActive)
+                            // Exit out of opener if u died
+                            if (HasEffect(All.Buffs.Weakness))
                             {
                                 openerFinished = true;
                                 return Blizzard3;
@@ -368,14 +365,12 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Second Triplecast / Sharpcast
-                                    if (!IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
-                                        lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
+                                    if (!IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) && lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
                                     {
                                         return Triplecast;
                                     }
 
-                                    if ((IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate)) && !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) &&
-                                        lastComboMove == Fire4)
+                                    if (IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate) && !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) && lastComboMove == Fire4)
                                     {
                                         return Sharpcast;
                                     }
@@ -591,9 +586,9 @@ namespace XIVSlothCombo.Combos.PvE
                     // 20220906 Cleanup Note, could use OriginalHook
 
                     // Handle initial cast
-                    if ((LevelChecked(Blizzard4) && !Gauge.IsEnochianActive) || Gauge.ElementTimeRemaining <= 0)
+                    if  (Gauge.ElementTimeRemaining <= 0)
                     {
-                        if (LevelChecked(Fire3))
+                        if (LevelChecked(Fire3)) 
                         {
                             return (currentMP >= MP.Fire3) ? Fire3 : Blizzard3;
                         }
@@ -793,8 +788,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat() && inOpener && !openerFinished)
                     {
-                        // Exit out of opener if Enochian is lost
-                        if (!Gauge.IsEnochianActive)
+                        // Exit out of opener if u died
+                        if (HasEffect(All.Buffs.Weakness))
                         {
                             openerFinished = true;
                             return Blizzard3;
@@ -918,7 +913,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (Gauge.ElementTimeRemaining == 0 || !Gauge.IsEnochianActive)
+                    if (Gauge.ElementTimeRemaining == 0)
                     {
                         if (currentMP >= MP.Fire3)
                         {
@@ -1162,8 +1157,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (InCombat() && inOpener && !openerFinished)
                         {
-                            // Exit out of opener if Enochian is lost
-                            if (!Gauge.IsEnochianActive)
+                            // Exit out of opener if u died
+                            if (HasEffect(All.Buffs.Weakness))
                             {
                                 openerFinished = true;
                                 return Blizzard3;
@@ -1272,7 +1267,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (Gauge.ElementTimeRemaining == 0 || !Gauge.IsEnochianActive)
+                    if (Gauge.ElementTimeRemaining == 0)
                     {
                         if (currentMP >= MP.Fire3)
                         {
