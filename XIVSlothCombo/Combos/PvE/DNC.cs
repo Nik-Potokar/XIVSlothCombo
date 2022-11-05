@@ -457,9 +457,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
-                            if (gauge.Feathers > minFeathers ||
-                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0) ||
+
+                            // Basic FD1
+                            if ((IsOffCooldown(TechnicalStep) && gauge.Feathers > 3) ||
                                 (GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0))
+                                return FanDance1;
+
+                            // Burst FD1
+                            if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0))
                                 return FanDance1;
                         }
 
@@ -483,10 +488,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
-                        ((gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) &&
-                        (GetCooldownRemainingTime(TechnicalStep) > 2.5)) || IsOffCooldown(TechnicalStep) ||
-                        (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50)))
-                        return SaberDance;
+                        (GetCooldownRemainingTime(TechnicalStep) > 2.5 || IsOffCooldown(TechnicalStep)))
+                    {
+                        if (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
+                            (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
+                            return SaberDance;
+                    }
 
                     // ST combos and burst attacks
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime is < 2 and > 0)
@@ -604,10 +611,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
-                        ((gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) &&
-                        (GetCooldownRemainingTime(TechnicalStep) > 2.5)) || IsOffCooldown(TechnicalStep) ||
-                        (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50)))
-                        return SaberDance;
+                        (GetCooldownRemainingTime(TechnicalStep) > 2.5 || IsOffCooldown(TechnicalStep)))
+                    {
+                        if (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
+                            (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
+                            return SaberDance;
+                    }
 
                     // AoE combos and burst attacks
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime is < 2 and > 0)
