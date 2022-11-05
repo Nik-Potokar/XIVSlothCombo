@@ -316,12 +316,10 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Starfall_Devilment;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                return actionID is Devilment && HasEffect(Buffs.FlourishingStarfall)
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is Devilment && HasEffect(Buffs.FlourishingStarfall)
                     ? StarfallDance
                     : actionID;
-            }
         }
 
         internal class DNC_CombinedDances : CustomCombo
