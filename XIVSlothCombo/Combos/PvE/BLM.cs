@@ -79,7 +79,6 @@ namespace XIVSlothCombo.Combos.PvE
             internal static int Fire => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire));
             internal static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire2));
             internal static int Fire3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire3));
-            //internal static int Blizzard3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Blizzard3));
         }
 
         // Debuff Pairs of Actions and Debuff
@@ -108,9 +107,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Blizzard && LevelChecked(Freeze) && !Gauge.InUmbralIce) 
+                if (actionID is Blizzard && LevelChecked(Freeze) && !Gauge.InUmbralIce)
                     return Blizzard3;
-                if (actionID is Freeze && !LevelChecked(Freeze)) 
+                if (actionID is Freeze && !LevelChecked(Freeze))
                     return Blizzard2;
                 return actionID;
             }
@@ -133,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_LeyLines;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) => 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
                 actionID is LeyLines && HasEffect(Buffs.LeyLines) && LevelChecked(BetweenTheLines) ? BetweenTheLines : actionID;
         }
 
@@ -141,7 +140,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Mana;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) => 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
                 actionID is Transpose && Gauge.InUmbralIce && LevelChecked(UmbralSoul) ? UmbralSoul : actionID;
         }
 
@@ -212,7 +211,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Flare;
                             }
                             else if (currentMP >= MP.FireAoE)
-                            {                                
+                            {
                                 return fireAoEID;
                             }
                         }
@@ -266,19 +265,25 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
                     var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
 
-                    //var thunder = TargetHasEffect(Debuffs.Thunder);
                     var thunder3 = TargetHasEffect(Debuffs.Thunder3);
-                    //var thunderDuration = FindTargetEffect(Debuffs.Thunder);
                     var thunder3Duration = FindTargetEffect(Debuffs.Thunder3);
 
-                    //DotRecast thunderRecast = delegate (int duration)
-                    //{
-                    //    return !thunder || (thunder && thunderDuration.RemainingTime < duration);
-                    //};
                     DotRecast thunder3Recast = delegate (int duration)
                     {
                         return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
                     };
+
+                    if (IsEnabled(CustomComboPreset.BLM_SimpleUmbralSoul) && !inOpener && CurrentTarget is null && Gauge.IsEnochianActive)
+                    {
+                        if (Gauge.InAstralFire && LevelChecked(Transpose))
+                        {
+                            return Transpose;
+                        }
+                        if (Gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                        {
+                            return UmbralSoul;
+                        }
+                    }
 
                     // Opener for BLM
                     // Credit to damolitionn for providing code to be used as a base for this opener
@@ -312,27 +317,25 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (Gauge.InAstralFire)
                             {
-                                // First Triplecast
-                                if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast))
+
+                                //thunder3
+                                if (lastComboMove != Thunder3 && !TargetHasEffect(Debuffs.Thunder3))
                                 {
-                                    var triplecastMP = 7600;
-                                    if (IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate))
-                                    {
-                                        triplecastMP = 6000;
-                                    }
-                                    if (currentMP <= triplecastMP)
-                                    {
-                                        return Triplecast;
-                                    }
+                                    return Thunder3;
+                                }
+                                // First Triplecast
+                                if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast) && (lastComboMove == OriginalHook(Thunder)))
+                                {
+                                    return Triplecast;
                                 }
 
                                 // Weave other oGCDs
                                 if (canWeave)
                                 {
                                     // Weave Amplifier and Ley Lines
-                                    if (currentMP <= 4400)
+                                    if (lastComboMove == Fire4 && (GetRemainingCharges(Triplecast) == 1))
                                     {
-                                        if (ActionReady(Amplifier))
+                                        if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
                                         {
                                             return Amplifier;
                                         }
@@ -365,19 +368,16 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Second Triplecast / Sharpcast
-                                    if (!IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate))
+                                    if (!IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
+                                        lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
                                     {
-                                        if (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
-                                            lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
-                                        {
-                                            return Triplecast;
-                                        }
+                                        return Triplecast;
+                                    }
 
-                                        if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) &&
-                                            lastComboMove == Fire4)
-                                        {
-                                            return Sharpcast;
-                                        }
+                                    if ((IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate)) && !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) &&
+                                        lastComboMove == Fire4)
+                                    {
+                                        return Sharpcast;
                                     }
                                 }
 
@@ -469,7 +469,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                         Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4) 
+                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
                                             return dot; //Use appropriate DoT Action
                                     }
                                 }
@@ -499,7 +499,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Thunder uptime
                         if (IsEnabled(CustomComboPreset.BLM_Thunder) && Gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
-                            if (!ThunderList.ContainsKey(lastComboMove) && 
+                            if (!ThunderList.ContainsKey(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
                             {
                                 if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && currentMP >= MP.Thunder))
@@ -741,15 +741,17 @@ namespace XIVSlothCombo.Combos.PvE
                         // Fire3 when at max umbral hearts
                         return (Gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.Thunder) ? Fire3 : Blizzard4;
                     }
+
+
                 }
 
                 return actionID;
             }
         }
 
-        internal class BLM_Simple_Transpose : CustomCombo
+        internal class BLM_Advanced : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Simple_Transpose;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Advanced;
 
             internal static bool inOpener = false;
             internal static bool openerFinished = false;
@@ -908,12 +910,12 @@ namespace XIVSlothCombo.Combos.PvE
                     if (Gauge.ElementTimeRemaining > 0)
                     {
                         // Thunder
-                        if (IsEnabled(CustomComboPreset.BLM_Thunder) && Gauge.ElementTimeRemaining >= astralFireRefresh)
+                        if (IsEnabled(CustomComboPreset.BLM_AdvancedThunder) && Gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
                             if (!ThunderList.ContainsKey(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4) && thunder3Recast(4))
                             {
-                                if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_ThunderUptime) && currentMP >= MP.Thunder))
+                                if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_AdvancedThunderUptime) && currentMP >= MP.Thunder))
                                 {
                                     return Thunder3;
                                 }
@@ -927,7 +929,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!HasEffect(Buffs.Triplecast) && HasCharges(Triplecast) &&
                                 (Gauge.InAstralFire || Gauge.UmbralHearts >= 1) && currentMP >= MP.Fire * 2)
                             {
-                                if (!IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Pooling) || GetRemainingCharges(Triplecast) > 1)
+                                if (!IsEnabled(CustomComboPreset.BLM_Advanced_Pooling) || GetRemainingCharges(Triplecast) > 1)
                                 {
                                     return Triplecast;
                                 }
@@ -938,7 +940,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Amplifier;
                             }
 
-                            if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_LeyLines) && IsOffCooldown(LeyLines))
+                            if (IsEnabled(CustomComboPreset.BLM_Advanced_LeyLines) && IsOffCooldown(LeyLines))
                             {
                                 return LeyLines;
                             }
@@ -1403,5 +1405,21 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
+        internal class BLM_ScatheXeno : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ScatheXeno;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Scathe)
+                {
+                    if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)
+                        return Xenoglossy;
+                }
+                return actionID;
+            }
+        }
     }
 }
+

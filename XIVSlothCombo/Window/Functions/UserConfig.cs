@@ -400,7 +400,7 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.PopStyleColor();
                 ImGui.SameLine();
                 ImGui.Dummy(new Vector2(3));
-                ImGui.SameLine(); 
+                ImGui.SameLine();
                 if (isConditionalChoice) ImGui.Indent(); //Align checkbox after the + symbol
             }
             if (ImGui.Checkbox($"{checkBoxName}###{config}", ref output))
@@ -1086,7 +1086,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_DPS_CombustUptime)
             {
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_CombustOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
-                
+
                 UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_ST_DPS_CombustUptime_Adv), "Advanced Options", "", isConditionalChoice: true);
                 if (PluginConfiguration.GetCustomBoolValue(nameof(AST.Config.AST_ST_DPS_CombustUptime_Adv)))
                 {
@@ -1113,7 +1113,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.BLM_AoE_Simple_Foul)
                 UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_PolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
 
-            if (preset is CustomComboPreset.BLM_SimpleMode or CustomComboPreset.BLM_Simple_Transpose)
+            if (preset is CustomComboPreset.BLM_SimpleMode or CustomComboPreset.BLM_Advanced)
                 UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
 
             if (preset == CustomComboPreset.BLM_Simple_CastMovement)
@@ -1571,7 +1571,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nUses double Yukikaze loop.", 3);
             }
-            
+
             if (preset == CustomComboPreset.SAM_ST_GekkoCombo_CDs_Iaijutsu)
             {
                 UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_Higanbana_Threshold, "Stop using Higanbana on targets below this HP % (0% = always use).", 150, SliderIncrements.Ones);
@@ -1624,7 +1624,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
             {
-                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv), "Advanced Options","", isConditionalChoice: true);
+                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv), "Advanced Options", "", isConditionalChoice: true);
                 if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)))
                 {
                     ImGui.Indent();
@@ -1635,13 +1635,13 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
-                        
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
-            
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Adloquium)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_AdloquiumOption), "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
-            
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
                 UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_LustrateOption), "Start using when below HP %. Set to 100 to disable this check");
 
@@ -1752,10 +1752,10 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.Unindent();
                 }
             }
-            
+
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
-            
+
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% to use Tetragrammaton on target at:");
 
