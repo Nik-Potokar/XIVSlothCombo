@@ -802,98 +802,118 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (Gauge.InAstralFire)
                         {
-                            // First Triplecast
-                            if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast))
+
+                            //thunder3
+                            if (lastComboMove != Thunder3 && !TargetHasEffect(Debuffs.Thunder3))
                             {
-                                if (currentMP <= 6000)
-                                {
-                                    return Triplecast;
-                                }
+                                return Thunder3;
+                            }
+                            // First Triplecast
+                            if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast) && (lastComboMove == OriginalHook(Thunder)))
+                            {
+                                return Triplecast;
                             }
 
                             // Weave other oGCDs
                             if (canWeave)
                             {
-                                // Manafont
-                                if (IsOffCooldown(Manafont) && lastComboMove == Despair)
-                                {
-                                    if (currentMP < MP.Despair)
-                                    {
-                                        return Manafont;
-                                    }
-                                }
-
                                 // Weave Amplifier and Ley Lines
-                                if (currentMP <= 2800)
+                                if (lastComboMove == Fire4 && (GetRemainingCharges(Triplecast) == 1))
                                 {
-                                    if (IsOffCooldown(Amplifier))
+                                    if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
                                     {
                                         return Amplifier;
                                     }
-                                    if (IsOffCooldown(LeyLines))
+                                    if (ActionReady(LeyLines))
                                     {
                                         return LeyLines;
                                     }
                                 }
 
-                                if (IsOnCooldown(LeyLines))
+                                // Swiftcast
+                                if (IsOffCooldown(All.Swiftcast) && IsOnCooldown(LeyLines))
                                 {
-                                    // Swiftcast
-                                    if (IsOffCooldown(All.Swiftcast))
-                                    {
-                                        return All.Swiftcast;
-                                    }
+                                    return All.Swiftcast;
+                                }
 
-                                    // Sharpcast
-                                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(LeyLines))
+                                // Manafont
+                                if (IsOffCooldown(Manafont) && (lastComboMove == Despair || lastComboMove == Fire))
+                                {
+                                    if (LevelChecked(Despair))
                                     {
-                                        return Sharpcast;
+                                        if (currentMP < MP.Despair)
+                                        {
+                                            return Manafont;
+                                        }
+                                    }
+                                    else if (currentMP < MP.Fire)
+                                    {
+                                        return Manafont;
                                     }
                                 }
 
-                                // Second Triplecast
-                                if (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
-                                    lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < 6000)
+                                // Second Triplecast / Sharpcast
+                                if (!IsEnabled(CustomComboPreset.BLM_Advanced_Pooling) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
+                                    lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
                                 {
                                     return Triplecast;
                                 }
 
-                                // Lucid Dreaming
-                                if (!HasCharges(Triplecast) && IsOffCooldown(All.LucidDreaming))
+                                if ((IsEnabled(CustomComboPreset.BLM_Advanced_Pooling)) && !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) &&
+                                    lastComboMove == Fire4)
                                 {
-                                    return All.LucidDreaming;
+                                    return Sharpcast;
                                 }
                             }
 
                             // Cast Despair
-                            if (currentMP < MP.Fire && currentMP >= MP.Despair)
+                            if (LevelChecked(Despair) && (currentMP < MP.Fire || Gauge.ElementTimeRemaining <= 4000) && currentMP >= MP.Despair)
                             {
                                 return Despair;
                             }
 
-                            // Cast Fire 4 after Manafont
-                            if (IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) >= 119)
+                            // Cast Fire
+                            if (!LevelChecked(Despair) && Gauge.ElementTimeRemaining <= 6000 && currentMP >= MP.Fire)
                             {
-                                return Fire4;
+                                return Fire;
                             }
 
-                            return currentMP >= MP.Fire ? Fire4 : Transpose;
+                            // Cast Fire 4 after Manafont
+                            if (IsOnCooldown(Manafont))
+                            {
+                                if ((!TraitLevelChecked(Traits.EnhancedManafont) && GetCooldownRemainingTime(Manafont) >= 179) ||
+                                    (TraitLevelChecked(Traits.EnhancedManafont) && GetCooldownRemainingTime(Manafont) >= 119))
+                                {
+                                    return Fire4;
+                                }
+                            }
+
+                            // Fire4 / Umbral Ice
+                            return currentMP >= MP.Fire ? Fire4 : Blizzard3;
                         }
 
                         if (Gauge.InUmbralIce)
                         {
-                            if (Gauge.IsParadoxActive)
+                            // Dump Polyglot Stacks
+                            if (Gauge.HasPolyglotStacks() && Gauge.ElementTimeRemaining >= 6000)
+                            {
+                                return LevelChecked(Xenoglossy) ? Xenoglossy : Foul;
+                            }
+                            if (Gauge.IsParadoxActive && LevelChecked(Paradox))
                             {
                                 return Paradox;
                             }
-                            if (Gauge.HasPolyglotStacks() && lastComboMove != Xenoglossy)
+                            if (Gauge.UmbralHearts < 3 && lastComboMove != Blizzard4)
                             {
-                                return Xenoglossy;
+                                return Blizzard4;
                             }
+
+                            // Refresh Thunder3
                             if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3)
                             {
                                 return Thunder3;
                             }
+
                             openerFinished = true;
                         }
                     }
@@ -929,7 +949,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!HasEffect(Buffs.Triplecast) && HasCharges(Triplecast) &&
                                 (Gauge.InAstralFire || Gauge.UmbralHearts >= 1) && currentMP >= MP.Fire * 2)
                             {
-                                if (!IsEnabled(CustomComboPreset.BLM_Advanced_Pooling) || GetRemainingCharges(Triplecast) > 1)
+                                if (GetRemainingCharges(Triplecast) > 1)
                                 {
                                     return Triplecast;
                                 }
@@ -940,7 +960,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Amplifier;
                             }
 
-                            if (IsEnabled(CustomComboPreset.BLM_Advanced_LeyLines) && IsOffCooldown(LeyLines))
+                            if (IsOffCooldown(LeyLines))
                             {
                                 return LeyLines;
                             }
