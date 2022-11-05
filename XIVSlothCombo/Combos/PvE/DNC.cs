@@ -426,11 +426,13 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.HeadGraze;
 
                     // ST Standard Step
-                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
-                        IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep) &&
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep))
+                    {
+                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
                         ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 10) &&
-                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
+                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5)) || InCombat())
                         return StandardStep;
+                    }
 
                     // ST Technical Step
                     if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
@@ -557,11 +559,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.HeadGraze;
 
                     // AoE Standard Step
-                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
-                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep))
+                    {
+                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
                         ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 10) &&
-                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
+                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5)) ||
+                        (InCombat() && ActionReady(StandardStep)))
                         return StandardStep;
+                    }
 
                     // AoE Technical Step
                     if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent)) &&
