@@ -2171,6 +2171,10 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(RPR.Gibbet,RPR.Gallows)]
         [CustomComboInfo("True North Feature (Dynamic)", "Adds True North to Slice when Gibbet/Gallows proc based on position to target, essentially only use True North if needed in the moment.", RPR.JobID, 0, "", "")]
         RPR_TrueNorthDynamic = 12063,
+
+        [ParentCombo(RPR_TrueNorthDynamic)]
+        [CustomComboInfo("Hold one True North charge for Gluttony", "Will not use the last charge of True North, even when out of position, for use with Gluttony.", RPR.JobID, 0, "", "")]
+        RPR_TrueNorthDynamic_HoldCharge = 12064,
         #endregion
 
         #endregion
