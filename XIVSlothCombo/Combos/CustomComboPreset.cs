@@ -2191,8 +2191,12 @@ namespace XIVSlothCombo.Combos
         RPR_Soulsow_Combat = 12062,
 
         [ReplaceSkill(RPR.Gibbet,RPR.Gallows)]
-        [CustomComboInfo("True North Feature (Dynamic)", "Adds True North to Slice when Gibbet/Gallows proc based on position to target, essentially only use True North if needed in the moment.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Dynamic True North Feature", "Adds True North to Slice before Gibbet/Gallows when you are not in the correct position for the enhanced potency bonus.", RPR.JobID, 0, "", "")]
         RPR_TrueNorthDynamic = 12063,
+
+        [ParentCombo(RPR_TrueNorthDynamic)]
+        [CustomComboInfo("Hold True North for Gluttony Option", "Will hold the last charge of True North for use with Gluttony, even when out of position for Gibbet/Gallows potency bonuses.", RPR.JobID, 0, "", "")]
+        RPR_TrueNorthDynamic_HoldCharge = 12064,
         #endregion
 
         #endregion
