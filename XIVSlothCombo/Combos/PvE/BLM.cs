@@ -837,19 +837,14 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Second Triplecast / Sharpcast
-                                    if (!IsEnabled(CustomComboPreset.BLM_Adv_OpenerAlternate))
+                                    if (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) && lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
                                     {
-                                        if (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) &&
-                                            lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
-                                        {
-                                            return Triplecast;
-                                        }
+                                        return Triplecast;
+                                    }
 
-                                        if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) &&
-                                            lastComboMove == Fire4)
-                                        {
-                                            return Sharpcast;
-                                        }
+                                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) && lastComboMove == Fire4)
+                                    {
+                                        return Sharpcast;
                                     }
                                 }
 
@@ -1183,7 +1178,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // only when we're not using Transpose Lines
                         if (!IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) && lastComboMove != Xenoglossy && Gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy) && Gauge.ElementTimeRemaining >= astralFireRefresh)
                         {
-                            var pooledPolyglotStacks = IsEnabled(CustomComboPreset.BLM_Simple_XenoPooling) ? 1 : 0;
+                            var pooledPolyglotStacks = IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Xeno) ? 1 : 0;
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs) && ActionReady(Amplifier))
                             {
                                 return Xenoglossy;
