@@ -309,26 +309,18 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // First Triplecast
-                                if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast))
+                                if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast) && (lastComboMove == OriginalHook(Thunder)))
                                 {
-                                    var triplecastMP = 7600;
-                                    if (IsEnabled(CustomComboPreset.BLM_Simple_OpenerAlternate))
-                                    {
-                                        triplecastMP = 6000;
-                                    }
-                                    if (currentMP <= triplecastMP)
-                                    {
-                                        return Triplecast;
-                                    }
+                                    return Triplecast;
                                 }
 
-                                // Weave other oGCDs
-                                if (canWeave)
-                                {
-                                    // Weave Amplifier and Ley Lines
-                                    if (currentMP <= 4400)
+                                    // Weave other oGCDs
+                                    if (canWeave)
                                     {
-                                        if (Gauge.PolyglotStacks < 2 && ActionReady(Amplifier))
+                                    // Weave Amplifier and Ley Lines
+                                    if (lastComboMove == Fire4 && (GetRemainingCharges(Triplecast) == 1))
+                                    {
+                                        if ( ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
                                         {
                                             return Amplifier;
                                         }
