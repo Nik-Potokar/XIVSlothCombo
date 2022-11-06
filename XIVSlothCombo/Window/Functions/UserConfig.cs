@@ -1254,6 +1254,20 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
+
+            #region Dragoon PvP
+
+            if (preset is CustomComboPreset.DRGPvP_Nastrond)
+                UserConfig.DrawSliderInt(0, 100, DRGPVP.Config.DRGPVP_LOTD_HPValue, "Safety HP percentage to be above before ending Life of the Dragon buff", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.DRGPvP_Nastrond)
+                UserConfig.DrawSliderInt(2, 8, DRGPVP.Config.DRGPVP_LOTD_Duration, "Seconds remaining of Life oF the Dragon buff before using Nastrond if you are above the Safety HP% Option", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.DRGPvP_ChaoticSpringSustain)
+                UserConfig.DrawSliderInt(0, 100, DRGPVP.Config.DRGPVP_CS_HP_Threshold, "Chaos Spring HP percentage threshold", 150, SliderIncrements.Ones);
+
+            #endregion
+
             #endregion
             // ====================================================================================
             #region GUNBREAKER

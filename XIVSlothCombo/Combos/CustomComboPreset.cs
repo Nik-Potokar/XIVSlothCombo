@@ -3606,7 +3606,7 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Wheeling Thrust Combo into all-in-one damage button.", DRG.JobID)]
+        [CustomComboInfo("Burst Mode", "Using Elusive Jump turns Wheeling Thrust Combo into all-in-one burst damage button.", DRG.JobID)]
         DRGPvP_Burst = 80200,
 
         [ParentCombo(DRGPvP_Burst)]
@@ -3621,27 +3621,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Horrid Roar Feature", "Adds Horrid Roar.", DRG.JobID)]
         DRGPvP_HorridRoar = 80203,
 
-        [ConflictingCombos(DRGPvP_ChaoticSpringBurst)]
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Sustain Chaos Spring", "Sustain  option that will only use Chaotic Spring while its heal can be fully utilized.", DRG.JobID)]
+        [CustomComboInfo("Sustain Chaos Spring", "Adds Sustain CS.", DRG.JobID)]
         DRGPvP_ChaoticSpringSustain = 80204,
 
-        [ConflictingCombos(DRGPvP_ChaoticSpringSustain)]
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Burst Chaos Spring", "Burst option that will use Chaotic Spring on burst.", DRG.JobID)]
-        DRGPvP_ChaoticSpringBurst = 80205,
-
-        [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Wyrmwind Thrust Feature", "Adds Wyrmwind Thrust onto main combo while you are not in melee range to maximize damage.", DRG.JobID)]
+        [CustomComboInfo("Wyrmwind Thrust Feature", "Adds Wyrmwind Thrust to the burst feature.", DRG.JobID)]
         DRGPvP_WyrmwindThrust = 80206,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("High Jump Weave Feature", "Weaves High Jump on main combo while you are in melee range.", DRG.JobID)]
+        [CustomComboInfo("High Jump Weave Feature", "Adds High Jump to the burst feature.", DRG.JobID)]
         DRGPvP_HighJump = 80207,
-
-        [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("High Jump Wyrmwind Thrust Feature", "Adds High Jump after succesful use of Wyrmwind Thrust.", DRG.JobID)]
-        DRGPvP_HighJump_WyrmwindThrust = 80208,
         #endregion
 
         #region GUNBREAKER
