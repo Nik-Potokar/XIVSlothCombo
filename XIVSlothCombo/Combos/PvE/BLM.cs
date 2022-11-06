@@ -810,12 +810,15 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
                         }
 
-                        // Transpose lines will use 2 xenoglossy stacks and then transpose
-                        if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0)
-                            return Xenoglossy;
+                        if (IsEnabled(CustomComboPreset.BLM_Transpose_Lines))
+                        {
+                            // Transpose lines will use 2 xenoglossy stacks and then transpose
+                            if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0)
+                                return Xenoglossy;
 
-                        if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy)
-                            return Transpose;
+                            if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy)
+                                return Transpose;
+                        }
 
                         // Fire3 when at max umbral hearts
                         return (Gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.Thunder) ? Fire3 : Blizzard4;
