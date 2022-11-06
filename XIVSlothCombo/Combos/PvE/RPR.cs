@@ -507,13 +507,14 @@ namespace XIVSlothCombo.Combos.PvE
                 var soulSowOptions = PluginConfiguration.GetCustomBoolArrayValue(Config.RPR_SoulsowOptions);
                 bool soulsowReady = LevelChecked(Soulsow) && !HasEffect(Buffs.Soulsow);
 
-                return (((actionID is Harpe && soulSowOptions[0] || 
+                return ((soulSowOptions.Length > 0) && ((actionID is Harpe && soulSowOptions[0] || 
                     (actionID is  Slice && soulSowOptions[1]) || 
                     (actionID is SpinningScythe && soulSowOptions[2]) ||
                     (actionID is ShadowOfDeath && soulSowOptions[3]) ||
                     (actionID is BloodStalk && soulSowOptions[4])) && soulsowReady && !InCombat()) ||
                     (IsEnabled(CustomComboPreset.RPR_Soulsow_Combat) && actionID is Harpe && !HasBattleTarget())) ?
                     Soulsow: actionID;
+
             }
         }
 
