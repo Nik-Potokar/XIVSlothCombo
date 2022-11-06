@@ -439,7 +439,12 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.SameLine();
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
 
-            if (values.Length == 0) Array.Resize(ref values, totalChoices);
+            if (values.Length == 0 || values.Length != totalChoices)
+            {
+                Array.Resize(ref values, totalChoices);
+                PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                Service.Configuration.Save();
+            }
 
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
             if (ImGui.Checkbox($"{checkBoxName}###{config}{choice}", ref values[choice]))
@@ -1253,6 +1258,12 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region GUNBREAKER
 
+            if (preset == CustomComboPreset.GNB_ST_SkSSupport && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "< 2.45", "Options are friendly for skill speeds of 2.45 and lower.", 1);
+                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "2.5", "Options are friendly for 2.5 skill speed.", 2);
+            }
+
             if (preset == CustomComboPreset.GNB_ST_RoughDivide && enabled)
                 UserConfig.DrawSliderInt(0, 1, GNB.Config.GNB_RoughDivide_HeldCharges, "How many charges to keep ready? (0 = Use All)");
 
@@ -1490,6 +1501,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
 
+            if (preset is CustomComboPreset.SGE_ST_Dosis_Rhizo)
+                UserConfig.DrawSliderInt(0, 1, nameof(SGE.Config.SGE_ST_Dosis_Rhizo), "Addersgall Threshold", 150, SliderIncrements.Ones);
+
             if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
             {
                 UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_Toxikon), "Show when moving only", "", 0);
@@ -1498,6 +1512,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_AoE_Phlegma_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_AoE_Phlegma_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
+
+            if (preset is CustomComboPreset.SGE_AoE_Phlegma_Rhizo)
+                UserConfig.DrawSliderInt(0, 1, nameof(SGE.Config.SGE_AoE_Phlegma_Rhizo), "Addersgall Threshold", 150, SliderIncrements.Ones);
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
                 UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Soteria), "Use Soteria when Target HP is at or below set percentage");

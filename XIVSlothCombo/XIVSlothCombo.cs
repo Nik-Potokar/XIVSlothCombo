@@ -79,6 +79,7 @@ namespace XIVSlothCombo
             // Enumerable.Range(Start, Count)
             Service.Configuration.ResetFeatures("v3.0.17.0_NINRework", Enumerable.Range(10000, 100).ToArray());
             Service.Configuration.ResetFeatures("v3.0.17.0_DRGCleanup", Enumerable.Range(6100, 400).ToArray());
+            Service.Configuration.ResetFeatures("v3.0.18.0_GNBCleanup", Enumerable.Range(7000, 700).ToArray());
         }
 
         private void DrawUI() => configWindow.Draw();
