@@ -1206,7 +1206,7 @@ namespace XIVSlothCombo.Window.Functions
             #region PvP Sliders
 
             if (preset == CustomComboPreset.DNCPvP_BurstMode_CuringWaltz)
-                UserConfig.DrawSliderInt(0, 90, DNCPvP.Config.DNCPvP_WaltzThreshold, "Caps at 90 to prevent waste.###DNCPvP", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 90, DNCPvP.Config.DNCPvP_WaltzThreshold, "Set the HP percentage below which Curing Waltz will be used. Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
             #endregion
 
