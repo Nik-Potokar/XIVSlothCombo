@@ -426,6 +426,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Transpose Opener", "Adds the transpose opener to Advanced Blm.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2040,
 
+        [ParentCombo(BLM_Adv_Opener)]
+        [CustomComboInfo("Transpose Opener - Alternative", "Modifies the opener to only use 1 triplecast.", BLM.JobID, 0, "", "")]
+        BLM_Adv_OpenerAlternate = 2041,
+
+        [ParentCombo(BLM_Adv_Buffs)]
+        [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -8, "", "")]
+        BLM_Adv_Transpose_Lines = 2042,
+
         #endregion
 
         #region BLUE MAGE
