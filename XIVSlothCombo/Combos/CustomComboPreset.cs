@@ -423,7 +423,7 @@ namespace XIVSlothCombo.Combos
         BLM_AdvancedThunderUptime = 2030,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Transpose/Umbral Soul", "Change ST button to transpose/umbral soul when no target selected", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Transpose/Umbral Soul", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 0, "", "")]
         BLM_SimpleUmbralSoul = 2031,
 
         [ParentCombo(BLM_SimpleMode)]
