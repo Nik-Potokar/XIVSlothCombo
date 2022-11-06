@@ -1176,140 +1176,162 @@ namespace XIVSlothCombo.Combos
 
         #region GUNBREAKER
 
-        [ReplaceSkill(GNB.SolidBarrel)]
-        [CustomComboInfo("Solid Barrel Combo", "Replace Solid Barrel with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Advanced Gunbreaker)", GNB.JobID, 0, "", "")]
-        GNB_ST_MainCombo = 7000,
+        [CustomComboInfo("Skill Speed Support", "Allows for features to support various skill speed rotations.", GNB.JobID, 0)]
+        GNB_ST_SkSSupport = 7000,
 
+        #region ST
+        [ReplaceSkill(GNB.KeenEdge)]
+        [CustomComboInfo("Advanced Gunbreaker", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap.", GNB.JobID, 0, "", "")]
+        GNB_ST_MainCombo = 7001,
+
+        #region Gnashing Fang
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Gnashing Fang and Continuation on Main Combo", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.\n Useful for when Gnashing Fang needs to be help due to downtime.", GNB.JobID, 0, "", "")]
-        GNB_ST_Gnashing = 7001,
+        GNB_ST_Gnashing = 7002,
 
+        [ParentCombo(GNB_ST_Gnashing)]
+        [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang to the main combo.", GNB.JobID, 0, "", "")]
+        GNB_ST_GnashingFang_Starter = 7003,
+        #endregion
+
+        #region Cooldowns
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Cooldowns on Main Combo", "Adds various cooldowns to the main combo when under No Mercy or when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
-        GNB_ST_MainCombo_CooldownsGroup = 7002,
+        GNB_ST_MainCombo_CooldownsGroup = 7004,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Double Down on Main Combo", "Adds Double Down to the main combo when under No Mercy buff", GNB.JobID, 0, "", "")]
-        GNB_ST_DoubleDown = 7003,
-
-        [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide to the main combo whenever it's available.", GNB.JobID, 0, "", "")]
-        GNB_ST_RoughDivide = 7004,
+        GNB_ST_DoubleDown = 7005,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo", "Adds Danger Zone/Blasting Zone to the main combo", GNB.JobID, 0, "", "")]
-        GNB_ST_BlastingZone = 7005,
-
-        [ReplaceSkill(GNB.DemonSlaughter)]
-        [CustomComboInfo("Demon Slaughter Combo", "Replace Demon Slaughter with its combo chain.", GNB.JobID, 0, "", "")]
-        GNB_AoE_MainCombo = 7006,
-
-        [ReplaceSkill(GNB.SolidBarrel, GNB.DemonSlaughter)]
-        [CustomComboInfo("Ammo Overcap Feature", "Uses Burst Strike/Fated Circle on the respective ST/AoE combos when ammo is about to overcap.", GNB.JobID, 0, "", "")]
-        GNB_AmmoOvercap = 7007,
-
-        [ReplaceSkill(GNB.GnashingFang)]
-        [CustomComboInfo("Gnashing Fang Continuation Combo", "Adds Continuation to Gnashing Fang.", GNB.JobID, 0, "", "")]
-        GNB_ST_GnashingFangContinuation = 7008,
-
-        [ParentCombo(GNB_ST_GnashingFangContinuation)]
-        [CustomComboInfo("No Mercy on Gnashing Fang", "Adds No Mercy to Gnashing Fang when it's ready.", GNB.JobID, 0, "", "")]
-        GNB_ST_GnashingFang_NoMercy = 7009,
-
-        [ParentCombo(GNB_ST_GnashingFangContinuation)]
-        [CustomComboInfo("Double Down on Gnashing Fang", "Adds Double Down to Gnashing Fang when No Mercy buff is up.", GNB.JobID, 0, "", "")]
-        GNB_ST_GnashingFang_DoubleDown = 7010,
-
-        [ParentCombo(GNB_ST_GnashingFangContinuation)]
-        [CustomComboInfo("CDs on Gnashing Fang", "Adds Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike and Hypervelocity added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "", "")]
-        GNB_ST_GnashingFang_Cooldowns = 7011,
-
-        [ReplaceSkill(GNB.BurstStrike)]
-        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike.", GNB.JobID, 0, "", "")]
-        GNB_ST_BurstStrikeContinuation = 7012,
-
-        [ReplaceSkill(GNB.BurstStrike)]
-        [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "", "")]
-        GNB_ST_Bloodfest_Overcap = 7013,
+        GNB_ST_BlastingZone = 7006,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Bloodfest on Main Combo", "Adds Bloodfest to the main combo when ammo is 0.", GNB.JobID, 0, "", "")]
-        GNB_ST_Bloodfest = 7014,
-
-        [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Lightning Shot Uptime", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID, 0, "", "")]
-        GNB_RangedUptime = 7015,
-
-        [ConflictingCombos(GNB_NoMercy_Cooldowns)]
-        [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("No Mercy AoE Option", "Adds No Mercy to AoE combo when it's available.", GNB.JobID, 0, "", "")]
-        GNB_AoE_NoMercy = 7016,
-
-        [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
-        GNB_AoE_BowShock = 7017,
+        GNB_ST_Bloodfest = 7007,
 
         [ConflictingCombos(GNB_NoMercy_Cooldowns)]
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("No Mercy on Main Combo", "Adds No Mercy to the main combo when at full ammo.", GNB.JobID, 0, "", "")]
-        GNB_ST_NoMercy = 7018,
-
-        [ParentCombo(GNB_ST_Gnashing)]
-        [CustomComboInfo("Gnashing Fang Starter", "Begins Gnashing Fang to the main combo.", GNB.JobID, 0, "", "")]
-        GNB_ST_GnashingFang_Starter = 7019,
+        GNB_ST_NoMercy = 7008,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Bow Shock on Main Combo", "Adds Bow Shock to the main combo.", GNB.JobID, 0, "", "")]
-        GNB_ST_BowShock = 7020,
+        GNB_ST_BowShock = 7009,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Sonic Break on Main Combo", "Adds Sonic Break to the main combo.", GNB.JobID, 0, "", "")]
-        GNB_ST_SonicBreak = 7021,
-
-        [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy)]
-        [ReplaceSkill(GNB.NoMercy)]
-        [CustomComboInfo("Cooldowns on No Mercy", "Adds Cooldowns to No Mercy when No Mercy is on cooldown.", GNB.JobID, 0, "", "")]
-        GNB_NoMercy_Cooldowns = 7022,
+        GNB_ST_SonicBreak = 7010,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo", "Adds Burst Strike and Hypervelocity (when available) to the main combo when under No Mercy and Gnashing Fang is over.", GNB.JobID, 0, "", "")]
-        GNB_NoMercy_BurstStrike = 7023,
+        GNB_ST_BurstStrike = 7011,
+        #endregion
 
-        [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("Bloodfest AoE Option", "Adds Bloodfest to AoE combo when it's available. Will dump Ammo through Fated Circle to prepare for Bloodfest.", GNB.JobID, 0, "", "")]
-        GNB_AoE_Bloodfest = 7024,
-
-        [ParentCombo(GNB_AoE_MainCombo)]
-        [CustomComboInfo("Double Down AoE Option", "Adds Double Down to AoE combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "", "")]
-        GNB_AoE_DoubleDown = 7025,
-
-        [ReplaceSkill(GNB.BurstStrike)]
-        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "", "")]
-        GNB_BurstStrike_DoubleDown = 7026,
+        #region Rough Divide
+        [ParentCombo(GNB_ST_MainCombo)]
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide to the main combo whenever it's available.", GNB.JobID, 0, "", "")]
+        GNB_ST_RoughDivide = 7012,
 
         [ParentCombo(GNB_ST_RoughDivide)]
         [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst cooldowns when available, not moving, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID, 0, "", "")]
-        GNB_ST_MeleeRoughDivide = 7027,
+        GNB_ST_MeleeRoughDivide = 7013,
+        #endregion
 
-        [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
-        GNB_AuroraProtection = 7028,
+        [ParentCombo(GNB_ST_MainCombo)]
+        [CustomComboInfo("Lightning Shot Uptime", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID, 0, "", "")]
+        GNB_ST_RangedUptime = 7014,
+        #endregion
+
+        #region Gnashing Fang
+        [ReplaceSkill(GNB.GnashingFang)]
+        [CustomComboInfo("Gnashing Fang Continuation Combo", "Adds Continuation to Gnashing Fang.", GNB.JobID, 0, "", "")]
+        GNB_GF_Continuation = 7200,
+
+        [ParentCombo(GNB_GF_Continuation)]
+        [CustomComboInfo("No Mercy on Gnashing Fang", "Adds No Mercy to Gnashing Fang when it's ready.", GNB.JobID, 0, "", "")]
+        GNB_GF_NoMercy = 7201,
+
+        [ParentCombo(GNB_GF_Continuation)]
+        [CustomComboInfo("Double Down on Gnashing Fang", "Adds Double Down to Gnashing Fang when No Mercy buff is up.", GNB.JobID, 0, "", "")]
+        GNB_GF_DoubleDown = 7202,
+
+        [ParentCombo(GNB_GF_Continuation)]
+        [CustomComboInfo("CDs on Gnashing Fang", "Adds Bloodfest/Sonic Break/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff. \nBurst Strike and Hypervelocity added if there's charges while No Mercy buff is up.", GNB.JobID, 0, "", "")]
+        GNB_GF_Cooldowns = 7203,
+        #endregion
+
+        #region AOE
+        [ReplaceSkill(GNB.DemonSlice)]
+        [CustomComboInfo("AoE Combo", "Replace Demon Slice with its combo chain.", GNB.JobID, 0, "", "")]
+        GNB_AoE_MainCombo = 7300,
+
+        [ConflictingCombos(GNB_NoMercy_Cooldowns)]
+        [ParentCombo(GNB_AoE_MainCombo)]
+        [CustomComboInfo("No Mercy AoE Option", "Adds No Mercy to AoE combo when it's available.", GNB.JobID, 0, "", "")]
+        GNB_AoE_NoMercy = 7301,
+
+        [ParentCombo(GNB_AoE_MainCombo)]
+        [CustomComboInfo("Bow Shock on AoE Feature", "Adds Bow Shock onto the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
+        GNB_AoE_BowShock = 7302,
+
+        [ParentCombo(GNB_AoE_MainCombo)]
+        [CustomComboInfo("Bloodfest AoE Option", "Adds Bloodfest to AoE combo when it's available. Will dump Ammo through Fated Circle to prepare for Bloodfest.", GNB.JobID, 0, "", "")]
+        GNB_AoE_Bloodfest = 7303,
+
+        [ParentCombo(GNB_AoE_MainCombo)]
+        [CustomComboInfo("Double Down AoE Option", "Adds Double Down to AoE combo when it's available and there is 2 or more ammo.", GNB.JobID, 0, "", "")]
+        GNB_AoE_DoubleDown = 7304,
 
         [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("Danger Zone on AoE Feature", "Adds Danger Zone to the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
-        GNB_AOE_DangerZone = 7029,
+        GNB_AOE_DangerZone = 7305,
 
         [ParentCombo(GNB_AoE_MainCombo)]
         [CustomComboInfo("Sonic Break on AoE Feature", "Adds Sonic Break to the AoE combo when it's off cooldown.", GNB.JobID, 0, "", "")]
-        GNB_AOE_SonicBreak = 7030,
+        GNB_AOE_SonicBreak = 7306,
+
+        [ParentCombo(GNB_AoE_MainCombo)]
+        [CustomComboInfo("Ammo Overcap Feature", "Adds Fated Circle to the AoE combo when about to overcap.", GNB.JobID, 0, "", "")]
+        GNB_AOE_Overcap = 7307,
+        #endregion
+
+        #region Burst Strike
+        [ReplaceSkill(GNB.BurstStrike)]
+        [CustomComboInfo("Burst Strike Features", "Collection of Burst Strike related features.", GNB.JobID, 0, "", "")]
+        GNB_BS = 7400,
+        
+        [ParentCombo(GNB_BS)]
+        [CustomComboInfo("Burst Strike Continuation", "Adds Hypervelocity on Burst Strike.", GNB.JobID, 0, "", "")]
+        GNB_BS_Continuation = 7401,
+
+        [ParentCombo(GNB_BS)]
+        [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID, 0, "", "")]
+        GNB_BS_Bloodfest = 7402,
+
+        [ParentCombo(GNB_BS)]
+        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID, 0, "", "")]
+        GNB_BS_DoubleDown = 7403,
+        #endregion
+
+        #region No Mercy
+        [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy)]
+        [ReplaceSkill(GNB.NoMercy)]
+        [CustomComboInfo("Cooldowns on No Mercy", "Adds Cooldowns to No Mercy when No Mercy is on cooldown.", GNB.JobID, 0, "", "")]
+        GNB_NoMercy_Cooldowns = 7500,
 
         [ParentCombo(GNB_NoMercy_Cooldowns)]
         [CustomComboInfo("Double Down Option", "Adds Double Down to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
-        GNB_NoMercy_Cooldowns_DD = 7031,
+        GNB_NoMercy_Cooldowns_DD = 7501,
 
         [ParentCombo(GNB_NoMercy_Cooldowns)]
         [CustomComboInfo("Sonic Break/Bow Shock Option", "Adds Sonic Break and Bow Shock to No Mercy when No Mercy is on cooldown", GNB.JobID, 0, "", "")]
-        GNB_NoMercy_Cooldowns_SonicBreakBowShock = 7032,
+        GNB_NoMercy_Cooldowns_SonicBreakBowShock = 7502,
+        #endregion
 
+        [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
+        GNB_AuroraProtection = 7600,
         #endregion
 
         #region MACHINIST
@@ -2340,26 +2362,29 @@ namespace XIVSlothCombo.Combos
         SGE_ST_Dosis = 14100,
                 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Dosis when MP drops below slider value.", SGE.JobID, 110, "", "")]
+            [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
             SGE_ST_Dosis_Lucid = 14110,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 120, "", "")]
+            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 110, "", "")]
             SGE_ST_Dosis_EDosis = 14120,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 130, "", "")]
+            [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 112, "", "")]
             SGE_ST_Dosis_Toxikon = 14130,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 129, "", "")]
+            [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 111, "", "")]
             SGE_ST_Dosis_Phlegma = 14140,
 
             [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 109, "", "")]
+            [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 122, "", "")]
             SGE_ST_Dosis_Kardia = 14150,
-            
-            #endregion
+
+            [ParentCombo(SGE_ST_Dosis)]
+            [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
+            SGE_ST_Dosis_Rhizo = 14160,
+        #endregion
 
         #region AoE DPS Feature
         [ReplaceSkill(SGE.Phlegma, SGE.Phlegma2, SGE.Phlegma3)]
@@ -2367,11 +2392,11 @@ namespace XIVSlothCombo.Combos
         SGE_AoE_Phlegma = 14200,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Toxikon - No Phlegma Charges Option", "Use Toxikon when out of Phlegma charges\nTakes priority over Dyskrasia.", SGE.JobID, 210, "", "")]
+            [CustomComboInfo("Toxikon - No Phlegma Charges Option", "Use Toxikon when out of Phlegma charges.\nTakes priority over Dyskrasia.", SGE.JobID, 210, "", "")]
             SGE_AoE_Phlegma_NoPhlegmaToxikon = 14210,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Toxikon - Out of Phlegma Range Option", "Use Toxikon when out of Phlemga's Range\nTakes priority over Dyskrasia.", SGE.JobID, 220, "", "")]
+            [CustomComboInfo("Toxikon - Out of Phlegma Range Option", "Use Toxikon when out of Phlemga's Range.\nTakes priority over Dyskrasia.", SGE.JobID, 220, "", "")]
             SGE_AoE_Phlegma_OutOfRangeToxikon = 14220,
 
             [ParentCombo(SGE_AoE_Phlegma)]
@@ -2383,13 +2408,17 @@ namespace XIVSlothCombo.Combos
             SGE_AoE_Phlegma_NoTargetDyskrasia = 14240,
 
             [ParentCombo(SGE_AoE_Phlegma)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming to Phlegma when MP drops below slider value.", SGE.JobID, 250, "", "")]
+            [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 250, "", "")]
             SGE_AoE_Phlegma_Lucid = 14250,
-            #endregion
+
+            [ParentCombo(SGE_AoE_Phlegma)]
+            [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
+            SGE_AoE_Phlegma_Rhizo = 14260,
+        #endregion
 
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
-        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order", SGE.JobID, 300, "", "")]
+        [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order.", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -3030,80 +3059,80 @@ namespace XIVSlothCombo.Combos
 
         #region WARRIOR
 
-        [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storms Path Combo", "All in one main combo feature adds Storm's Eye/Path. \nIf all sub options and Fell Cleave/Decimate Options are toggled will turn into a full one button rotation (Advanced Warrior)", WAR.JobID, 0, "", "")]
+        [ReplaceSkill(WAR.StormsPath)]
+        [CustomComboInfo("Storm's Path Combo Feature", "All in one main combo feature, adds Storm's Eye/Path.\nIf all sub-options and Fell Cleave/Decimate Options are toggled, will turn into a full one button rotation (Advanced Warrior).", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath = 18000,
 
         [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storms Eye Combo", "Replace Storms Eye with its combo chain", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 0, "", "")]
         War_ST_StormsEye = 18001,
 
         [ReplaceSkill(WAR.Overpower)]
-        [CustomComboInfo("Overpower Combo", "Add combos to Overpower", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Overpower Combo Feature", "Add combos to Overpower.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower = 18002,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Warrior Gauge Overcap Feature", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate beast gauge", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Warrior Gauge Overcap Option", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate Beast gauge.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_OvercapProtection = 18003,
 
         [ReplaceSkill(WAR.NascentFlash)]
-        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76.", WAR.JobID, 0, "", "")]
         WAR_NascentFlash = 18005,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Upheaval Feature", "Adds Upheaval into maincombo if you have Surging Tempest", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Upheaval Option", "Adds Upheaval into maincombo if you have Surging Tempest.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Upheaval = 18007,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Rend Feature", "Replace Inner Beast and Steel Cyclone with Primal Rend when available (Also added onto Main AoE combo)", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Primal Rend Option", "Replaces Inner Beast and Steel Cyclone with Primal Rend when available (also added onto main AoE combo).", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_PrimalRend = 18008,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Orogeny Feature", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Orogeny Option", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_Orogeny = 18009,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo .\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used and Fell Cleave/Steel Cyclone during Inner Release.\nWill begin pooling resources when Inner Release is under 30s", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo.\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used and Fell Cleave/Steel Cyclone during Inner Release.\nWill begin pooling resources when Inner Release is under 30s.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Spender = 18011,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Onslaught Feature", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Onslaught = 18012,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Infuriate AoE Feature", "Adds Infuriate to AoE combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Infuriate AoE Option", "Adds Infuriate to AoE combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_Infuriate = 18013,
 
         [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Inner Release AoE Feature", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Inner Release AoE Option", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
         WAR_AoE_Overpower_InnerRelease = 18014,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Tomahawk Uptime Feature", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Tomahawk Uptime Option", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_RangedUptime = 18016,
 
         [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
-        [CustomComboInfo("Infuriate on Fell Cleave / Decimate", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Infuriate on Fell Cleave / Decimate Feature", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value.", WAR.JobID, 0, "", "")]
         WAR_InfuriateFellCleave = 18018,
 
         [ReplaceSkill(WAR.InnerRelease)]
-        [CustomComboInfo("Primal Rend Option", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Primal Rend Feature", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 0, "", "")]
         WAR_PrimalRend_InnerRelease = 18019,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Inner Release on Storm's Path", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Inner Release on Storm's Path Option", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_InnerRelease = 18020,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Infuriate on Storm's Path", "Adds Infuriate to Storm's Path combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Infuriate on Storm's Path Option", "Adds Infuriate to Storm's Path combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_Infuriate = 18021,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
-        [CustomComboInfo("Use Inner Release Stacks First", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "", "")]
         WAR_InfuriateFellCleave_IRFirst = 18022,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Feature", "Uses Primal Rend when in the target's target ring (1 yalm) and when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Primal Rend Melee Option", "Uses Primal Rend when in the target's target ring (1 yalm) and when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
         [ParentCombo(WAR_ST_StormsPath_Onslaught)]
