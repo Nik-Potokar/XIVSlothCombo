@@ -2195,7 +2195,7 @@ namespace XIVSlothCombo.Combos
         RPR_TrueNorthDynamic = 12063,
 
         [ParentCombo(RPR_TrueNorthDynamic)]
-        [CustomComboInfo("Hold one True North charge for Gluttony", "Will not use the last charge of True North, even when out of position, for use with Gluttony.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Hold True North for Gluttony", "Will hold the last charge of True North for use with Gluttony, even when out of position.", RPR.JobID, 0, "", "")]
         RPR_TrueNorthDynamic_HoldCharge = 12064,
         #endregion
 
