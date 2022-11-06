@@ -1281,14 +1281,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
                         }
 
-                        // Transpose lines will use 2 xenoglossy stacks and then transpose
-                        if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0)
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                         {
-                            return Xenoglossy;
-                        }
-                        if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy)
-                        {
-                            return Transpose;
+                            // Transpose lines will use 2 xenoglossy stacks and then transpose
+                            if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0)
+                                return Xenoglossy;
+
+                            if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy)
+                                return Transpose;
                         }
 
                         // Fire3 when at max umbral hearts
