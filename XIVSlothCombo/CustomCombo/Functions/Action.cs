@@ -42,13 +42,31 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static bool InActionRange(uint id)
         {
             int range = ActionWatching.GetActionRange(id);
-            return range switch
+            switch (range)
             {
-                -2 => false,//Doesn't exist in ActionWatching
-                -1 => InMeleeRange(),//In the Sheet, all Melee skills appear to be -1
-                0 => true,//In the Sheet, all self use abilities appear to be 0 (ie no range restriction)
-                _ => GetTargetDistance() <= range,
-            };
+                case -2:
+                    return false; //Error catch, Doesn't exist in ActionWatching
+                case -1:
+                    return InMeleeRange();//In the Sheet, all Melee skills appear to be -1
+                case 0: //Self Use Skills (Second Wind) or attacks (Art of War, Dyskrasia)
+                    {
+                        //NOTES: HOUSING DUMMIES ARE FUCKING CURSED BASTARDS THAT DON'T REGISTER ATTACKS CORRECTLY WITH SELF RADIUS ATTACKS
+                        //Use Explorer Mode dungeon, field map dummies, or let Thancred tank.
+
+                        //Check if there is a radius
+                        float radius = ActionWatching.GetActionEffectRange(id);
+                        //Player has a 0.5y radius inside hitbox.
+                        //GetTargetDistance measures hitbox to hitbox (correct usage for ranged abilities so far)
+                        //But attacks from player must include personal space (0.5y).
+                        if (radius > 0)
+                        {   //Do not nest with above
+                            if (HasTarget()) return GetTargetDistance() <= (radius - 0.5f); else return false;
+                        }
+                        else return true; //Self use targets (Second Wind) have no radius
+                    }
+                default:
+                    return GetTargetDistance() <= range;
+            }
         } 
 
         /// <summary> Returns the level of a trait. </summary>
