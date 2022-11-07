@@ -423,7 +423,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Buffs = 2039,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Transpose Opener", "Adds the transpose opener to Advanced Blm. Note : Will only use 2 triplecasts if pooling is turned off.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Transpose Opener", "Adds the transpose opener to Advanced Blm.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2040,
 
         [ParentCombo(BLM_AdvancedMode)]

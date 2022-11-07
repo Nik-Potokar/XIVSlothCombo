@@ -793,7 +793,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // First Triplecast
-                                if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast) && (lastComboMove == OriginalHook(Thunder)))
+                                if (lastComboMove != Triplecast && !HasEffect(Buffs.Triplecast) && HasCharges(Triplecast) && (lastComboMove == Fire4))
                                 {
                                     return Triplecast;
                                 }
@@ -814,11 +814,22 @@ namespace XIVSlothCombo.Combos.PvE
                                         }
                                     }
 
-                                    // Lucid Dreaming
-                                    if (IsOffCooldown(All.LucidDreaming) && lastComboMove == Fire4 && currentMP < MP.Fire)
+                                    // Second Triplecast / Sharpcast
+                                    if ((GetBuffStacks(Buffs.Triplecast) == 0) && (GetRemainingCharges(Triplecast) == 1) && lastComboMove == Manafont)
                                     {
-                                        return All.LucidDreaming;
+                                        return Triplecast;
                                     }
+                                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) && lastComboMove == Fire4)
+                                    {
+                                        return Sharpcast;
+                                    }
+                                }
+
+                                // Lucid Dreaming
+                                if (IsOffCooldown(All.LucidDreaming) && lastComboMove == Fire4 && currentMP < MP.Fire)
+                                {
+                                        return All.LucidDreaming;
+                                }
 
                                     // Manafont
                                     if (IsOffCooldown(Manafont) && (lastComboMove == Despair || lastComboMove == Fire))
@@ -836,17 +847,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         }
                                     }
 
-                                    // Second Triplecast / Sharpcast
-                                    if (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && IsOnCooldown(All.Swiftcast) && lastComboMove != All.Swiftcast && HasCharges(Triplecast) && currentMP < MP.Fire)
-                                    {
-                                        return Triplecast;
-                                    }
-
-                                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) && lastComboMove == Fire4)
-                                    {
-                                        return Sharpcast;
-                                    }
-                                }
+                                    
 
                                 // Cast Despair
                                 if (LevelChecked(Despair) && (currentMP < MP.Fire || Gauge.ElementTimeRemaining <= 4000) && currentMP >= MP.Despair)
@@ -1212,7 +1213,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-
                         // Xenoglossy for Manafont weave
                         if (Gauge.HasPolyglotStacks() && IsOffCooldown(Manafont) && currentMP < MP.Despair)
                         {
@@ -1256,8 +1256,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                         }
-
-
 
                         // Blizzard3/Despair when below Fire 4 + Despair MP
                         if (currentMP < (MP.Fire + MP.Despair))
