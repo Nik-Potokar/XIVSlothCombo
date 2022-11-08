@@ -1011,7 +1011,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Buffs
+                        // Weave Buffs
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Casts))
@@ -1027,7 +1027,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            // Transpose Lines
+                            // Transpose Lines Ice phase
                             if (Gauge.InUmbralIce && Gauge.PolyglotStacks > 0 && ActionReady(All.Swiftcast) && IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                             {
                                 if (Gauge.UmbralIceStacks < 3 && ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
