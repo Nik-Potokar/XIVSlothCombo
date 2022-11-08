@@ -464,7 +464,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                         Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
+                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
                                             return dot; //Use appropriate DoT Action
                                     }
                                 }
@@ -562,10 +562,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                             if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
                             {
-                                // Try to only sharpcast Thunder 3
-                                if (thunder3Recast(7) || GetRemainingCharges(Sharpcast) == 2 ||
-                                   (thunder3Recast(15) && (Gauge.InUmbralIce || (Gauge.InAstralFire && !Gauge.IsParadoxActive))))
-                                {
+                                { 
                                     return Sharpcast;
                                 }
                             }
@@ -683,7 +680,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Xenoglossy;
                                 }
                                 if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
-                                    thunder3Recast(15) && lastComboMove != Thunder3 && Gauge.InAstralFire && !Gauge.IsParadoxActive)
+                                    lastComboMove != Thunder3)
                                 {
                                     return Xenoglossy;
                                 }
@@ -802,7 +799,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (Gauge.InAstralFire)
                             {
                                 // Thunder3
-                                if (lastComboMove != Thunder3 && !TargetHasEffect(Debuffs.Thunder3))
+                                if (lastComboMove == Fire3 && !TargetHasEffect(Debuffs.Thunder3))
                                 {
                                     return Thunder3;
                                 }
@@ -926,7 +923,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return LevelChecked(Xenoglossy) ? Xenoglossy : Foul;
                                 }
                                 // Refresh Thunder3
-                                if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3)
+                                if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3 && HasEffect(Buffs.Sharpcast))
                                 {
                                     return Thunder3;
                                 }
@@ -963,7 +960,7 @@ namespace XIVSlothCombo.Combos.PvE
                                      uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                      Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                     if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
+                                     if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
                                          return dot; //Use appropriate DoT Action
                                  }
                              }
@@ -995,12 +992,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!ThunderList.ContainsKey(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
                             {
-                                if (HasEffect(Buffs.Thundercloud) || (IsEnabled(CustomComboPreset.BLM_AdvThunderUptime) && currentMP >= MP.Thunder))
+                                if (IsEnabled(CustomComboPreset.BLM_AdvThunderUptime) && HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) && (currentMP >= MP.Thunder))
                                 {
                                     uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                     Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 3)
+                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
                                         return dot; //Use appropriate DoT Action
                                 }
                             }
@@ -1015,9 +1012,35 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
                                     (Gauge.InAstralFire || Gauge.UmbralHearts == 3) && currentMP >= MP.Fire * 2)
                                 {
-                                    if (!IsEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) || GetRemainingCharges(Triplecast) > 1)
+                                    if (!IsEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) || GetRemainingCharges(Triplecast) == 2)
                                     {
                                         return Triplecast;
+                                    }
+                                }
+                            }
+
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs))
+                            {
+                                if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) && lastComboMove != Thunder3)
+                                {
+                                return Sharpcast;
+                                }
+
+                                if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
+                                {
+                                    return Amplifier;
+                                }
+
+                                if (IsOffCooldown(Manafont) && Gauge.InAstralFire && (currentMP < MP.Despair || currentMP < MP.Fire))
+                                {
+                                    return Manafont;
+                                }
+
+                                if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs_LeyLines))
+                                {
+                                    if (ActionReady(LeyLines))
+                                    {
+                                        return LeyLines;
                                     }
                                 }
                             }
@@ -1036,39 +1059,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs))
-                            {
-                                if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
-                                {
-                                    return Amplifier;
-                                }
-                            }
-
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs_LeyLines))
-                            {
-                                if (ActionReady(LeyLines))
-                                {
-                                    return LeyLines;
-                                }
-                            }
-
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs))
-                            {
-                                if (IsOffCooldown(Manafont) && Gauge.InAstralFire && (currentMP < MP.Despair || currentMP < MP.Fire))
-                                {
-                                    return Manafont;
-                                }
-                                if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
-                                {
-                                    // Try to only sharpcast Thunder 3
-                                    if (thunder3Recast(7) || GetRemainingCharges(Sharpcast) == 2 ||
-                                       (thunder3Recast(15) && (Gauge.InUmbralIce || (Gauge.InAstralFire && !Gauge.IsParadoxActive))))
-                                    {
-                                        return Sharpcast;
-                                    }
-                                }
-                            }
-                        }
+                        } 
                     }
 
                     // Handle initial cast
@@ -1191,8 +1182,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         return Xenoglossy;
                                     }
-                                    if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
-                                        thunder3Recast(15) && lastComboMove != Thunder3 && Gauge.InAstralFire && !Gauge.IsParadoxActive)
+                                    if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))
                                     {
                                         return Xenoglossy;
                                     }
@@ -1230,7 +1220,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                     if (lastComboMove == Despair)
                                     {
-                                        if (HasEffect(Buffs.Thundercloud))
+                                        if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast))
                                         {
                                             return Thunder3;
                                         }
@@ -1450,9 +1440,9 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // Thunder
                         if (lastComboMove != Thunder3 && currentMP >= MP.Thunder &&
-                            thunder3Recast(4) && !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
+                            thunder3Recast(4) && !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3))
                         {
-                            return Thunder3;
+                            return OriginalHook(Thunder);
                         }
 
                         // Buffs
