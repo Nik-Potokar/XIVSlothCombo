@@ -271,7 +271,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool slowSkS = SkSChoice is 2 && IsEnabled(CustomComboPreset.GNB_ST_SkSSupport);
                     bool regularSkS = SkSChoice is 0 or 1 || IsNotEnabled(CustomComboPreset.GNB_ST_SkSSupport);
 
-                    if (IsOffCooldown(NoMercy) && CanDelayedWeave(SolidBarrel) && IsOffCooldown(GnashingFang) && IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_NoMercy))
+                    if (IsOffCooldown(NoMercy) && CanDelayedWeave(SolidBarrel) && IsOffCooldown(GnashingFang) && IsEnabled(CustomComboPreset.GNB_GF_NoMercy))
                         return NoMercy;
 
                     if (CanWeave(actionID))
