@@ -1180,6 +1180,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DNC_ST_Simple_FeatherPooling)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNCSimpleFeatherBurstPercent, "Target HP percentage to dump all pooled feathers below", 75, SliderIncrements.Ones);
 
+            if (preset == CustomComboPreset.DNC_ST_Simple_SaberDance)
+                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCSimpleSaberThreshold, "Esprit", 150, SliderIncrements.Ones);
+
             if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
 
@@ -1195,6 +1198,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DNC_AoE_Simple_TS)
                 UserConfig.DrawSliderInt(0, 10, DNC.Config.DNCSimpleTSAoEBurstPercent, "Target HP percentage to stop using Technical Step below", 75, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.DNC_AoE_Simple_SaberDance)
+                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCSimpleAoESaberThreshold, "Esprit", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWaltzPercent, "Curing Waltz HP percent", 200, SliderIncrements.Ones);
@@ -1258,6 +1264,12 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region GUNBREAKER
+
+            if (preset == CustomComboPreset.GNB_ST_SkSSupport && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "< 2.45", "Options are friendly for skill speeds of 2.45 and lower.", 1);
+                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "2.5", "Options are friendly for 2.5 skill speed.", 2);
+            }
 
             if (preset == CustomComboPreset.GNB_ST_RoughDivide && enabled)
                 UserConfig.DrawSliderInt(0, 1, GNB.Config.GNB_RoughDivide_HeldCharges, "How many charges to keep ready? (0 = Use All)");
@@ -1777,6 +1789,9 @@ namespace XIVSlothCombo.Window.Functions
             
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% to use Tetragrammaton on target at:");
+
+            if (preset == CustomComboPreset.WHM_Medica_ThinAir)
+                UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_Medica_ThinAir, "How many charges to keep ready? (0 = Use all)");
 
             #endregion
             // ====================================================================================
