@@ -117,6 +117,9 @@ namespace XIVSlothCombo.Combos.PvE
             #endregion
 
             #region Healing
+            internal static UserBool
+                SGE_ST_Heal_Adv = new("SGE_ST_Heal_Adv"),
+                SGE_ST_Heal_UIMouseOver = new("SGE_ST_Heal_UIMouseOver");
             internal static UserInt
                 SGE_ST_Heal_Zoe = new("SGE_ST_Heal_Zoe"),
                 SGE_ST_Heal_Haima = new("SGE_ST_Heal_Haima"),
@@ -355,7 +358,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Eukrasia && HasEffect(Buffs.Eukrasia))
                 {
-                    switch (PluginConfiguration.GetCustomIntValue(Config.SGE_Eukrasia_Mode))
+                    switch ((int)Config.SGE_Eukrasia_Mode)
                     {
                         case 0: return OriginalHook(Dosis);
                         case 1: return OriginalHook(Diagnosis);
@@ -383,12 +386,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.Eukrasia))
                         return EukrasianDiagnosis;
 
-                    // Set Target. Soft -> Hard -> Self priority, matching normal in-game behavior
-                    GameObject? healTarget = null;
-                    GameObject? softTarget = Service.TargetManager.SoftTarget;
-                    if (HasFriendlyTarget(softTarget)) healTarget = softTarget;
-                    if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
-                    if (healTarget is null) healTarget = LocalPlayer;
+                    GameObject? healTarget = GetHealTarget(Config.SGE_ST_Heal_Adv && Config.SGE_ST_Heal_UIMouseOver);
+
+                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
+                        HasCleansableDebuff(healTarget))
+                        return All.Esuna;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && ActionReady(Druochole) &&
                         Gauge.HasAddersgall() &&
