@@ -780,7 +780,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Transpose if F3 is available, or Thundercloud + Xenoglossy is available
+                        // Double Transpose Line during normal rotation every min Swiftcast is up!
                         if (IsEnabled(CustomComboPreset.BLM_Transpose_Lines) && currentMP < MP.Fire && lastComboMove != Manafont && IsOnCooldown(Manafont))
                         {
                             if (IsOffCooldown(All.Swiftcast) && (Gauge.PolyglotStacks > 0))
@@ -803,34 +803,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 }
                             }
-                        }
-
-                        // Double Transpose Line during normal rotation every min Swiftcast is up!
-                        if (2 > 23 & IsEnabled(CustomComboPreset.BLM_Transpose_Lines))
-                        {
-                            if (currentMP < MP.Fire && lastComboMove != Manafont && IsOnCooldown(Manafont))
-                            {
-                                if ((IsOffCooldown(All.Swiftcast) && ((Gauge.PolyglotStacks > 0))))
-                                {
-                                    if (lastComboMove != Despair && lastComboMove != Fire4 && Gauge.PolyglotStacks == 2)
-                                    {
-                                        return Transpose;
-                                    }
-                                    if (lastComboMove == Despair)
-                                    {
-                                        if (HasEffect(Buffs.Thundercloud))
-                                        {
-                                            return Thunder3;
-                                        }
-                                        if (Gauge.HasPolyglotStacks())
-                                        {
-                                            return Xenoglossy;
-                                        }
-
-                                    }
-                                }
-                            }
-
                         }
 
                         // Blizzard3/Despair when below Fire 4 + Despair MP
