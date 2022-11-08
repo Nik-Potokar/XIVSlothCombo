@@ -156,6 +156,12 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
                     var polyToStore = PluginConfiguration.GetCustomIntValue(Config.BLM_PolyglotsStored);
 
+                    // Only enable sharpcast if it's available
+                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && lastComboMove != Thunder3)
+                    {
+                        return Sharpcast;
+                    }
+
                     // Polyglot usage
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) && LevelChecked(Manafont))
                     {
