@@ -972,11 +972,11 @@ namespace XIVSlothCombo.Combos.PvE
                                          return dot; //Use appropriate DoT Action
                                  }
                              }
-                             if (IsOffCooldown(All.Swiftcast))
+                             if (!IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) && IsOffCooldown(All.Swiftcast))
                              {
                                  return All.Swiftcast;
                              }
-                             if (ActionReady(Triplecast))
+                             if (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
                              {
                                  return Triplecast;
                              }
@@ -1075,8 +1075,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                     }
-
-                    // 20220906 Cleanup Note, could use OriginalHook
 
                     // Handle initial cast
                     if ((LevelChecked(Blizzard3) && !Gauge.IsEnochianActive) || Gauge.ElementTimeRemaining <= 0)
