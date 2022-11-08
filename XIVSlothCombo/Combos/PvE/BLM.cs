@@ -98,7 +98,6 @@ namespace XIVSlothCombo.Combos.PvE
         {
             internal const string BLM_PolyglotsStored = "BlmPolyglotsStored   ";
             internal const string BLM_AstralFireRefresh = "BlmAstralFireRefresh   ";
-            internal const string BLM_MovementTime = "BlmMovementTime";
         }
 
 
@@ -266,7 +265,6 @@ namespace XIVSlothCombo.Combos.PvE
 
             internal static bool inOpener = false;
             internal static bool openerFinished = false;
-            internal static double movementTime = 0.0f;
 
             internal delegate bool DotRecast(int value);
 
@@ -737,9 +735,6 @@ namespace XIVSlothCombo.Combos.PvE
 
             internal static bool inOpener = false;
             internal static bool openerFinished = false;
-            internal static double movementTime = 0.0f;
-            internal static DateTime previousTime;
-
             internal delegate bool DotRecast(int value);
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
