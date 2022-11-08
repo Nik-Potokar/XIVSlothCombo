@@ -88,7 +88,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static bool HasSilence()
         {
-            foreach (uint status in ActionWatching.GetStatusesByName("Silence"))
+            foreach (uint status in ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(7)))
             {
                 if (HasEffectAny((ushort)status)) return true;
             }
@@ -100,7 +100,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static bool HasPacification()
         {
-            foreach (uint status in ActionWatching.GetStatusesByName("Pacification"))
+            foreach (uint status in ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(6)))
             {
                 if (HasEffectAny((ushort)status)) return true;
             }
@@ -112,7 +112,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static bool HasAmnesia()
         {
-            foreach (uint status in ActionWatching.GetStatusesByName("Amnesia"))
+            foreach (uint status in ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(5)))
             {
                 if (HasEffectAny((ushort)status)) return true;
             }
