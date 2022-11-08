@@ -776,7 +776,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
         [ConflictingCombos(DNC_CombinedDances, DNC_DanceComboReplacer)]
-        [CustomComboInfo("Dance Step Combo Feature", "Change Standard Step and Technical Step into each dance step while dancing." +
+        [CustomComboInfo("Dance Step Combo Feature", "Change Standard Step and Technical Step into each dance step, while dancing." +
         "\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
         DNC_DanceStepCombo = 4039,
 
@@ -815,8 +815,13 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Tech Devilment Option", "Includes Devilment in the rotation." +
-            "\nWill activate only during Technical Finish if you are Lv70 or above.", DNC.JobID, 2, "", "")]
+            "\nWill activate only during Technical Finish if you're Lv70 or above." +
+            "\nWill be used on cooldown below Lv70.", DNC.JobID, 2, "", "")]
             DNC_ST_Simple_Devilment = 4055,
+
+            [ParentCombo(DNC_ST_SimpleMode)]
+            [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 3, "", "")]
+            DNC_ST_Simple_SaberDance = 4063,
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 3, "", "")]
@@ -881,8 +886,13 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Tech Devilment Option", "Includes Devilment in the AoE rotation." +
-            "\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 5, "", "")]
+            "\nWill activate only during Technical Finish if you're Lv70 or above." +
+            "\nWill be used on cooldown below Lv70.", DNC.JobID, 5, "", "")]
             DNC_AoE_Simple_Devilment = 4075,
+
+            [ParentCombo(DNC_AoE_SimpleMode)]
+            [CustomComboInfo("Simple AoE Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 6, "", "")]
+            DNC_AoE_Simple_SaberDance = 4082,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 6, "", "")]
