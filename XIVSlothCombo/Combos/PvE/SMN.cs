@@ -190,16 +190,18 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Painflare)
+                var gauge = GetJobGauge<SMNGauge>();
+                
+                if (actionID == Painflare && LevelChecked(Painflare) && !gauge.HasAetherflowStacks)
                 {
-                    var gauge = GetJobGauge<SMNGauge>();
-
-                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
+                    if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
                         return Ruin4;
 
-                    if (LevelChecked(EnergySiphon) && !gauge.HasAetherflowStacks)
+                    if (LevelChecked(EnergySiphon))
                         return EnergySiphon;
-
+                    
+                    if (LevelChecked(EnergyDrain))
+                        return EnergyDrain;
                 }
 
                 return actionID;
@@ -223,12 +225,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsOffCooldown(SearingLight) && LevelChecked(SearingLight) && OriginalHook(Ruin) == AstralImpulse)
                             return SearingLight;
 
-                        if (!gauge.HasAetherflowStacks)
+                        if (!gauge.HasAetherflowStacks && IsOffCooldown(EnergyDrain))
                         {
-                            if (STCombo && LevelChecked(EnergyDrain) && IsOffCooldown(EnergyDrain))
+                            if ((STCombo || (AoECombo && !LevelChecked(EnergySiphon))) && LevelChecked(EnergyDrain))
                                 return EnergyDrain;
 
-                            if (AoECombo && LevelChecked(EnergySiphon) && IsOffCooldown(EnergySiphon))
+                            if (AoECombo && LevelChecked(EnergySiphon))
                                 return EnergySiphon;
                         }
                         
@@ -414,12 +416,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         
                         // ED/ES
-                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && (!inOpener || DemiAttackCount >= burstDelay))
+                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester) && !gauge.HasAetherflowStacks && IsOffCooldown(EnergyDrain) && (!LevelChecked(DreadwyrmTrance) || (!inOpener || DemiAttackCount >= burstDelay)))
                         {
-                            if (STCombo && LevelChecked(EnergyDrain) && IsOffCooldown(EnergyDrain))
+                            if ((STCombo || (AoECombo && !LevelChecked(EnergySiphon))) && LevelChecked(EnergyDrain))
                                 return EnergyDrain;
 
-                            if (AoECombo && LevelChecked(EnergySiphon) && IsOffCooldown(EnergySiphon))
+                            if (AoECombo && LevelChecked(EnergySiphon))
                                 return EnergySiphon;
                         }
                         
