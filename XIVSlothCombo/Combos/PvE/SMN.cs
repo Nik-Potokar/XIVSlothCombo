@@ -430,7 +430,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (GetCooldown(EnergyDrain).CooldownRemaining <= 3.2)
                             {
-                                if (HasEffect(Buffs.SearingLight) &&
+                                if ((HasEffect(Buffs.SearingLight) && IsNotEnabled(CustomComboPreset.SMN_Advanced_Burst_Any_Option) || HasEffectAny(Buffs.SearingLight)) &&
                                     (SummonerBurstPhase is not 4) ||
                                     (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                 {
@@ -488,7 +488,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Painflare;
                                     }
 
-                                    if (HasEffect(Buffs.SearingLight) &&
+                                    if ((HasEffect(Buffs.SearingLight) && IsNotEnabled(CustomComboPreset.SMN_Advanced_Burst_Any_Option) || HasEffectAny(Buffs.SearingLight)) &&
                                         (SummonerBurstPhase is 0 or 1 or 2 or 3 && DemiAttackCount >= burstDelay) ||
                                         (SummonerBurstPhase == 4 && !HasEffect(Buffs.TitansFavor)))
                                     {
