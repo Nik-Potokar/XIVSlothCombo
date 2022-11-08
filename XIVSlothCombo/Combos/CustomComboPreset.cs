@@ -423,6 +423,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Advanced BLM.", BLM.JobID, 0, "", "")]
         BLM_TransposeThunderUptime = 2030,
 
+        [ReplaceSkill(BLM.AetherialManipulation)]
+        [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
+        BLM_AetherialManipulation = 2031,
+
         #endregion
 
         #region BLUE MAGE
@@ -777,7 +781,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
         [ConflictingCombos(DNC_CombinedDances, DNC_DanceComboReplacer)]
-        [CustomComboInfo("Dance Step Combo Feature", "Change Standard Step and Technical Step into each dance step while dancing." +
+        [CustomComboInfo("Dance Step Combo Feature", "Change Standard Step and Technical Step into each dance step, while dancing." +
         "\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID, 0, "", "")]
         DNC_DanceStepCombo = 4039,
 
@@ -816,8 +820,13 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Tech Devilment Option", "Includes Devilment in the rotation." +
-            "\nWill activate only during Technical Finish if you are Lv70 or above.", DNC.JobID, 2, "", "")]
+            "\nWill activate only during Technical Finish if you're Lv70 or above." +
+            "\nWill be used on cooldown below Lv70.", DNC.JobID, 2, "", "")]
             DNC_ST_Simple_Devilment = 4055,
+
+            [ParentCombo(DNC_ST_SimpleMode)]
+            [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 3, "", "")]
+            DNC_ST_Simple_SaberDance = 4063,
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 3, "", "")]
@@ -882,8 +891,13 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Tech Devilment Option", "Includes Devilment in the AoE rotation." +
-            "\nWill activate only during Technical Finish if you Lv70 or above.", DNC.JobID, 5, "", "")]
+            "\nWill activate only during Technical Finish if you're Lv70 or above." +
+            "\nWill be used on cooldown below Lv70.", DNC.JobID, 5, "", "")]
             DNC_AoE_Simple_Devilment = 4075,
+
+            [ParentCombo(DNC_AoE_SimpleMode)]
+            [CustomComboInfo("Simple AoE Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 6, "", "")]
+            DNC_AoE_Simple_SaberDance = 4082,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 6, "", "")]
@@ -2382,62 +2396,62 @@ namespace XIVSlothCombo.Combos
 
         #region Single Target DPS Feature
         [ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
-        [CustomComboInfo("Single Target DPS Feature", "", SGE.JobID, 100, "", "")]
-        SGE_ST_Dosis = 14100,
+        [CustomComboInfo("Single Target DPS Feature", "Adds various options to Dosis I/II/III.", SGE.JobID, 100, "", "")]
+        SGE_ST_DPS = 14100,
                 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
-            SGE_ST_Dosis_Lucid = 14110,
+            SGE_ST_DPS_Lucid = 14110,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 110, "", "")]
-            SGE_ST_Dosis_EDosis = 14120,
+            SGE_ST_DPS_EDosis = 14120,
 
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 112, "", "")]
-            SGE_ST_Dosis_Toxikon = 14130,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Movement Options", "Use selected instant cast actions while moving.", SGE.JobID, 112, "", "")]
+            SGE_ST_DPS_Movement = 14130,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 111, "", "")]
-            SGE_ST_Dosis_Phlegma = 14140,
+            SGE_ST_DPS_Phlegma = 14140,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 122, "", "")]
-            SGE_ST_Dosis_Kardia = 14150,
+            SGE_ST_DPS_Kardia = 14150,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
-            SGE_ST_Dosis_Rhizo = 14160,
+            SGE_ST_DPS_Rhizo = 14160,
         #endregion
 
         #region AoE DPS Feature
         [ReplaceSkill(SGE.Phlegma, SGE.Phlegma2, SGE.Phlegma3)]
         [CustomComboInfo("AoE DPS Feature", "", SGE.JobID, 200, "", "")]
-        SGE_AoE_Phlegma = 14200,
+        SGE_AoE_DPS = 14200,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Toxikon - No Phlegma Charges Option", "Use Toxikon when out of Phlegma charges.\nTakes priority over Dyskrasia.", SGE.JobID, 210, "", "")]
-            SGE_AoE_Phlegma_NoPhlegmaToxikon = 14210,
+            SGE_AoE_DPS_NoPhlegmaToxikon = 14210,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Toxikon - Out of Phlegma Range Option", "Use Toxikon when out of Phlemga's Range.\nTakes priority over Dyskrasia.", SGE.JobID, 220, "", "")]
-            SGE_AoE_Phlegma_OutOfRangeToxikon = 14220,
+            SGE_AoE_DPS_OutOfRangeToxikon = 14220,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Dyskrasia - No Phlegma Charges Option", "Use Dyskrasia when out of Phlegma charges.", SGE.JobID, 230, "", "")]
-            SGE_AoE_Phlegma_NoPhlegmaDyskrasia = 14230,
+            SGE_AoE_DPS_NoPhlegmaDyskrasia = 14230,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Dyskrasia - No-Target Option", "Use Dyskrasia when no target is selected.", SGE.JobID, 240, "", "")]
-            SGE_AoE_Phlegma_NoTargetDyskrasia = 14240,
+            SGE_AoE_DPS_NoTargetDyskrasia = 14240,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 250, "", "")]
-            SGE_AoE_Phlegma_Lucid = 14250,
+            SGE_AoE_DPS_Lucid = 14250,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
-            SGE_AoE_Phlegma_Rhizo = 14260,
+            SGE_AoE_DPS_Rhizo = 14260,
         #endregion
 
         #region Diagnosis Simple Single Target Heal
@@ -2446,7 +2460,11 @@ namespace XIVSlothCombo.Combos
         SGE_ST_Heal = 14300,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 304, "", "")]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 301, "", "")]
+            SGE_ST_Heal_Esuna = 14301,
+
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 305, "", "")]
             SGE_ST_Heal_Kardia = 14310,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2454,7 +2472,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Diagnosis = 14320,
                 
                 [ParentCombo(SGE_ST_Heal_Diagnosis)]
-                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID, 313, "", "")]
+                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID)]
                 SGE_ST_Heal_Diagnosis_IgnoreShield = 14321,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2470,7 +2488,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Pepsis = 14350,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 302, "", "")]
+            [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 303, "", "")]
             SGE_ST_Heal_Taurochole = 14360,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2478,7 +2496,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Haima = 14370,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 303, "", "")]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 304, "", "")]
             SGE_ST_Heal_Rhizomata = 14380,
 
             [ParentCombo(SGE_ST_Heal)]
@@ -2486,7 +2504,7 @@ namespace XIVSlothCombo.Combos
             SGE_ST_Heal_Krasis = 14390,
 
             [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 301, "", "")]
+            [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 302, "", "")]
             SGE_ST_Heal_Druochole = 14400,
             #endregion
 
@@ -2894,19 +2912,23 @@ namespace XIVSlothCombo.Combos
         SCH_ST_Heal = 16260,
 
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 1)]
             SCH_ST_Heal_Lucid = 16261,
 
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
             SCH_ST_Heal_Aetherflow = 16262,
-            
+
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
+            SCH_ST_Heal_Esuna = 16265,
+
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID, 4)]
             SCH_ST_Heal_Adloquium = 16263,
             
             [ParentCombo(SCH_ST_Heal)]
-            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID, 5)]
             SCH_ST_Heal_Lustrate = 16264,
             
 
@@ -3079,6 +3101,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
         [CustomComboInfo("Burst Delay Option", "Only follows Burst Delay settings for the opener burst.\nThis Option is for high SPS builds.", SMN.JobID, 2, "", "")]
         SMN_Advanced_Burst_Delay_Option = 17043,
+        
+        [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
+        [CustomComboInfo("Any Searing Burst Option", "Checks for any Searing light for bursting rather than just your own.\nUse this option if partied with multiple SMN and are worried about your Searing being overwritten.", SMN.JobID, 1, "", "")]
+        SMN_Advanced_Burst_Any_Option = 17044,
         #endregion
 
         #region WARRIOR
@@ -3610,6 +3636,19 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region DARK KNIGHT
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Souleater Combo into an all-in-one damage button.", DRK.JobID)]
+        DRKPvP_Burst = 80110,
+
+        [SecretCustomCombo]
+        [ParentCombo(CustomComboPreset.DRKPvP_Burst)]
+        [CustomComboInfo("Plunge Feature", "Adds Plunge to Burst Mode", DRK.JobID)]
+        DRKPvP_Plunge = 80111,
+
+        [SecretCustomCombo]
+        [ParentCombo(CustomComboPreset.DRKPvP_Plunge)]
+        [CustomComboInfo("Use in Melee", "Uses Plunge whilst in melee aswell as to gap close.", DRK.JobID)]
+        DRKPvP_PlungeMelee = 80112,
 
         #endregion
 
