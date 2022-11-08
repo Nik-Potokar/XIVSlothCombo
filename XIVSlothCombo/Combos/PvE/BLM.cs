@@ -339,7 +339,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     // Weave Amplifier and Ley Lines
                                     if (currentMP <= 4400)
                                     {
-                                        if (Gauge.PolyglotStacks < 2 && ActionReady(Amplifier))
+                                        if (Gauge.PolyglotStacks < 2 && ActionReady(Amplifier) && IsOnCooldown(Manafont))
                                         {
                                             return Amplifier;
                                         }
@@ -534,7 +534,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // Handle thunder uptime and buffs
+                    // Handle thunder uptime and weave buffs
                     if (Gauge.ElementTimeRemaining > 0)
                     {
                         // Thunder uptime
@@ -554,7 +554,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Buffs
+                        // Weave Buffs
                         if (canWeave)
                         {
                             if (IsEnabled(CustomComboPreset.BLM_Simple_Casts))
@@ -578,6 +578,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     return All.LucidDreaming;
                                 }
 
+
+
                                 if (HasEffect(All.Buffs.LucidDreaming) && ActionReady(All.Swiftcast))
                                 {
                                     return All.Swiftcast;
@@ -586,7 +588,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.BLM_Simple_Buffs))
                             {
-                                if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
+                                if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2 && IsOnCooldown(Manafont) && Gauge.InUmbralIce)
                                 {
                                     return Amplifier;
                                 }
@@ -755,6 +757,19 @@ namespace XIVSlothCombo.Combos.PvE
                             return Xenoglossy;
                         }
 
+
+                        if (Gauge.HasPolyglotStacks() && IsOnCooldown(All.Swiftcast) && GetCooldownRemainingTime(All.Swiftcast) > 30)
+                        {
+                            return Xenoglossy;
+                        }
+
+
+                        // Early Despair
+                        if (currentMP < (MP.Fire + MP.Despair) && currentMP >= MP.Despair)
+                        {
+                            return Despair;
+                        }
+
                         // Cast Fire 4 after Manafont
                         if (IsOnCooldown(Manafont))
                         {
@@ -765,12 +780,37 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Double Transpose Line during normal rotation every min Swiftcast is up!
-                        if (IsEnabled(CustomComboPreset.BLM_Transpose_Lines))
+                        // Transpose if F3 is available, or Thundercloud + Xenoglossy is available
+                        if (IsEnabled(CustomComboPreset.BLM_Transpose_Lines) && currentMP < MP.Fire && lastComboMove != Manafont && IsOnCooldown(Manafont))
                         {
-                            if (currentMP < MP.Fire && lastComboMove != Manafont && IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) <= 118)
+                            if (IsOffCooldown(All.Swiftcast) && (Gauge.PolyglotStacks > 0))
                             {
-                                if ((IsOffCooldown(All.Swiftcast) && ((Gauge.PolyglotStacks == 2))))
+                                if (lastComboMove != Despair && lastComboMove != Fire4)
+                                {
+                                    return Transpose;
+                                }
+                                if (lastComboMove == Despair)
+                                {
+
+                                    if (HasEffect(Buffs.Thundercloud))
+                                    {
+                                        return Thunder3;
+                                    }
+                                    if (Gauge.HasPolyglotStacks())
+                                    {
+                                        return Xenoglossy;
+                                    }
+
+                                }
+                            }
+                        }
+
+                        // Double Transpose Line during normal rotation every min Swiftcast is up!
+                        if (2 > 23 & IsEnabled(CustomComboPreset.BLM_Transpose_Lines))
+                        {
+                            if (currentMP < MP.Fire && lastComboMove != Manafont && IsOnCooldown(Manafont))
+                            {
+                                if ((IsOffCooldown(All.Swiftcast) && ((Gauge.PolyglotStacks > 0))))
                                 {
                                     if (lastComboMove != Despair && lastComboMove != Fire4 && Gauge.PolyglotStacks == 2)
                                     {
@@ -810,15 +850,17 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BLM_Transpose_Lines))
+                        if (Gauge.HasPolyglotStacks() && IsOnCooldown(All.Swiftcast) && GetCooldownRemainingTime(All.Swiftcast) > 30)
                         {
-                            // Transpose lines will use 2 xenoglossy stacks and then transpose
-                            if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0)
-                                return Xenoglossy;
-
-                            if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy)
-                                return Transpose;
+                            return Xenoglossy;
                         }
+
+                        // Transpose lines will use 2 xenoglossy stacks and then transpose
+                        if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0)
+                            return Xenoglossy;
+
+                        if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy)
+                            return Transpose;
 
                         // Fire3 when at max umbral hearts
                         return (Gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.Thunder) ? Fire3 : Blizzard4;
@@ -906,7 +948,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 // Weave Amplifier and Ley Lines
                                 if (currentMP <= 2800)
                                 {
-                                    if (IsOffCooldown(Amplifier))
+                                    if (IsOffCooldown(Amplifier) && Gauge.PolyglotStacks < 2)
                                     {
                                         return Amplifier;
                                     }
