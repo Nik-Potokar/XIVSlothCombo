@@ -2368,62 +2368,62 @@ namespace XIVSlothCombo.Combos
 
         #region Single Target DPS Feature
         [ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
-        [CustomComboInfo("Single Target DPS Feature", "", SGE.JobID, 100, "", "")]
-        SGE_ST_Dosis = 14100,
+        [CustomComboInfo("Single Target DPS Feature", "Adds various options to Dosis I/II/III.", SGE.JobID, 100, "", "")]
+        SGE_ST_DPS = 14100,
                 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
-            SGE_ST_Dosis_Lucid = 14110,
+            SGE_ST_DPS_Lucid = 14110,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 110, "", "")]
-            SGE_ST_Dosis_EDosis = 14120,
+            SGE_ST_DPS_EDosis = 14120,
 
-            [ParentCombo(SGE_ST_Dosis)]
-            [CustomComboInfo("Toxikon Option", "Use Toxikon when you have Addersting charges.", SGE.JobID, 112, "", "")]
-            SGE_ST_Dosis_Toxikon = 14130,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Movement Options", "Use selected instant cast actions while moving.", SGE.JobID, 112, "", "")]
+            SGE_ST_DPS_Movement = 14130,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 111, "", "")]
-            SGE_ST_Dosis_Phlegma = 14140,
+            SGE_ST_DPS_Phlegma = 14140,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 122, "", "")]
-            SGE_ST_Dosis_Kardia = 14150,
+            SGE_ST_DPS_Kardia = 14150,
 
-            [ParentCombo(SGE_ST_Dosis)]
+            [ParentCombo(SGE_ST_DPS)]
             [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
-            SGE_ST_Dosis_Rhizo = 14160,
+            SGE_ST_DPS_Rhizo = 14160,
         #endregion
 
         #region AoE DPS Feature
         [ReplaceSkill(SGE.Phlegma, SGE.Phlegma2, SGE.Phlegma3)]
         [CustomComboInfo("AoE DPS Feature", "", SGE.JobID, 200, "", "")]
-        SGE_AoE_Phlegma = 14200,
+        SGE_AoE_DPS = 14200,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Toxikon - No Phlegma Charges Option", "Use Toxikon when out of Phlegma charges.\nTakes priority over Dyskrasia.", SGE.JobID, 210, "", "")]
-            SGE_AoE_Phlegma_NoPhlegmaToxikon = 14210,
+            SGE_AoE_DPS_NoPhlegmaToxikon = 14210,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Toxikon - Out of Phlegma Range Option", "Use Toxikon when out of Phlemga's Range.\nTakes priority over Dyskrasia.", SGE.JobID, 220, "", "")]
-            SGE_AoE_Phlegma_OutOfRangeToxikon = 14220,
+            SGE_AoE_DPS_OutOfRangeToxikon = 14220,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Dyskrasia - No Phlegma Charges Option", "Use Dyskrasia when out of Phlegma charges.", SGE.JobID, 230, "", "")]
-            SGE_AoE_Phlegma_NoPhlegmaDyskrasia = 14230,
+            SGE_AoE_DPS_NoPhlegmaDyskrasia = 14230,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Dyskrasia - No-Target Option", "Use Dyskrasia when no target is selected.", SGE.JobID, 240, "", "")]
-            SGE_AoE_Phlegma_NoTargetDyskrasia = 14240,
+            SGE_AoE_DPS_NoTargetDyskrasia = 14240,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 250, "", "")]
-            SGE_AoE_Phlegma_Lucid = 14250,
+            SGE_AoE_DPS_Lucid = 14250,
 
-            [ParentCombo(SGE_AoE_Phlegma)]
+            [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
-            SGE_AoE_Phlegma_Rhizo = 14260,
+            SGE_AoE_DPS_Rhizo = 14260,
         #endregion
 
         #region Diagnosis Simple Single Target Heal

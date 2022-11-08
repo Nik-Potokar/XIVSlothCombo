@@ -439,6 +439,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.SameLine();
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
 
+            //If new saved options or amount of choices changed, resize and save
             if (values.Length == 0 || values.Length != totalChoices)
             {
                 Array.Resize(ref values, totalChoices);
@@ -1485,72 +1486,90 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SAGE
 
-            if (preset is CustomComboPreset.SGE_ST_Dosis)
+            if (preset is CustomComboPreset.SGE_ST_DPS)
             {
-                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_AltMode), "On All Dosis Actions", "", 0);
-                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_AltMode), "On Dosis II", "Alternative DPS Mode. Leaves Dosis & Dosis III alone for normal DPS", 1);
-            }
+                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv, "Advanced Action Options", "Change how Dosis actions are handled", isConditionalChoice: true);
 
-            if (preset is CustomComboPreset.SGE_ST_Dosis_EDosis)
-            {
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Dosis_EDosisHPPer), "Stop using at Enemy HP %. Set to Zero to disable this check");
-
-                UserConfig.DrawAdditionalBoolChoice(nameof(SGE.Config.SGE_ST_Dosis_EDosis_Adv), "Advanced Options", "", isConditionalChoice: true);
-                if (PluginConfiguration.GetCustomBoolValue(nameof(SGE.Config.SGE_ST_Dosis_EDosis_Adv)))
+                if (SGE.Config.SGE_ST_DPS_Adv)
                 {
                     ImGui.Indent();
-                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SGE.Config.SGE_ST_Dosis_EDosisThreshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_D2, "Apply all selected options to Dosis II", "Dosis I & III will behave normally.");
+                    UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants, "Instant Actions on Toxikon", "Adds instant GCDs and oGCDs to Toxikon.\nDefaults to Eukrasia.", isConditionalChoice: true);
+
+                    if (SGE.Config.SGE_ST_DPS_Adv_GroupInstants)
+                    {
+                        ImGui.Indent();
+                        ImGui.Spacing();//Not sure why I need this, indenting did not work without it
+                        UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants_Addl, "Add Toxikon", "Use Toxikon when Addersting is available.", 2, 0);
+                        UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants_Addl, "Add Dyskrasia", "Use Dyskrasia when in range of a selected enemy target.", 2, 1);
+                        ImGui.Unindent();
+                    }
                     ImGui.Unindent();
                 }
             }
 
-            if (preset is CustomComboPreset.SGE_ST_Dosis_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_ST_Dosis_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
-
-            if (preset is CustomComboPreset.SGE_ST_Dosis_Rhizo)
-                UserConfig.DrawSliderInt(0, 1, nameof(SGE.Config.SGE_ST_Dosis_Rhizo), "Addersgall Threshold", 150, SliderIncrements.Ones);
-
-            if (preset is CustomComboPreset.SGE_ST_Dosis_Toxikon)
+            if (preset is CustomComboPreset.SGE_ST_DPS_EDosis)
             {
-                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_Toxikon), "Show when moving only", "", 0);
-                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_ST_Dosis_Toxikon), "Show at all times", "", 1);
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_DPS_EDosisHPPer, "Stop using at Enemy HP %. Set to Zero to disable this check");
+
+                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_EDosis_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (SGE.Config.SGE_ST_DPS_EDosis_Adv)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawRoundedSliderFloat(0, 4, SGE.Config.SGE_ST_DPS_EDosisThreshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset is CustomComboPreset.SGE_AoE_Phlegma_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SGE.Config.SGE_AoE_Phlegma_Lucid), "MP Threshold", 150, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.SGE_ST_DPS_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
-            if (preset is CustomComboPreset.SGE_AoE_Phlegma_Rhizo)
-                UserConfig.DrawSliderInt(0, 1, nameof(SGE.Config.SGE_AoE_Phlegma_Rhizo), "Addersgall Threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.SGE_ST_DPS_Rhizo)
+                UserConfig.DrawSliderInt(0, 1, SGE.Config.SGE_ST_DPS_Rhizo, "Addersgall Threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.SGE_ST_DPS_Movement)
+            {
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Toxikon", "Use Toxikon when Addersting is available.", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Dyskrasia", "Use Dyskrasia when in range of a selected enemy target.", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Eukrasia", "Use Eukrasia.", 3, 2);
+            }
+
+            if (preset is CustomComboPreset.SGE_AoE_DPS_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_AoE_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+
+            if (preset is CustomComboPreset.SGE_AoE_DPS_Rhizo)
+                UserConfig.DrawSliderInt(0, 1, SGE.Config.SGE_AoE_DPS_Rhizo, "Addersgall Threshold", 150, SliderIncrements.Ones);
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Soteria), "Use Soteria when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Use Soteria when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Zoe), "Use Zoe when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Use Zoe when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Pepsis), "Use Pepsis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Use Pepsis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Taurochole), "Use Taurochole when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Use Taurochole when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Haima), "Use Haima when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Use Haima when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Krasis), "Use Krasis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Use Krasis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Druochole), "Use Druochole when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Use Druochole when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Diagnosis)
-                UserConfig.DrawSliderInt(0, 100, nameof(SGE.Config.SGE_ST_Heal_Diagnosis), "Use Diagnosis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Use Diagnosis when Target HP is at or below set percentage");
 
             if (preset is CustomComboPreset.SGE_Eukrasia)
             {
-                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_Eukrasia_Mode), "Eukrasian Dosis", "", 0);
-                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_Eukrasia_Mode), "Eukrasian Diagnosis", "", 1);
-                UserConfig.DrawRadioButton(nameof(SGE.Config.SGE_Eukrasia_Mode), "Eukrasian Prognosis", "", 2);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Dosis", "", 0);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Diagnosis", "", 1);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Prognosis", "", 2);
             }
 
             #endregion
