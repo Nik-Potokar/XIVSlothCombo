@@ -1203,6 +1203,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
                             }
+
                         }
 
                         // Xenoglossy for Manafont weave
@@ -1242,11 +1243,13 @@ namespace XIVSlothCombo.Combos.PvE
                                         {
                                             return Xenoglossy;
                                         }
-
                                     }
                                 }
                             }
-
+                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 6000))
+                            {
+                                return Xenoglossy;
+                            }
                         }
 
                         // Blizzard3/Despair when below Fire 4 + Despair MP
