@@ -353,8 +353,12 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_OpenerAlternate = 2019,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Foul / Manafont Flare Option", "Adds Foul when available during Astral Fire. Weaves Manafont after Foul for additional Flare", BLM.JobID, 0, "", "")]
-        BLM_AoE_Simple_Foul = 2020,
+        [CustomComboInfo("Manafont Option", "Weaves Manafont after Flare for additional Flare", BLM.JobID, 0, "", "")]
+        BLM_AoE_Simple_Manafont = 2020,
+
+        [ParentCombo(BLM_AoE_SimpleMode)]
+        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]
+        BLM_AoE_Simple_Foul = 2043,
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
@@ -395,7 +399,7 @@ namespace XIVSlothCombo.Combos
         BLM_AdvUmbralSoul = 2032,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Moving Options", "Use Swiftcast/Triplecast when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
         BLM_Adv_CastMovement = 2033,
 
         [ParentCombo(BLM_Adv_CastMovement)]
@@ -411,7 +415,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Casts = 2036,
 
         [ParentCombo(BLM_Adv_Casts)]
-        [CustomComboInfo("Pool Triplecast / Swiftcast Option", "Keep one triplecast usage and swiftcast for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
         BLM_Adv_Casts_Pooling = 2037,
 
         [ParentCombo(BLM_Adv_Buffs)]

@@ -1110,15 +1110,8 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region BLACK MAGE
 
-            if (preset == CustomComboPreset.BLM_AoE_Simple_Foul)
-                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_PolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
-
-            if (preset is CustomComboPreset.BLM_SimpleMode or CustomComboPreset.BLM_AdvancedMode)
-                UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
-
-            if (preset == CustomComboPreset.BLM_SimpleMode || preset == CustomComboPreset.BLM_AdvancedMode)
-                UserConfig.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BLM_MovementTime, "Seconds of movement before using the movement feature.");
-
+            if (preset is CustomComboPreset.BLM_SimpleMode or CustomComboPreset.BLM_AdvancedMode or CustomComboPreset.BLM_AoE_SimpleMode)
+               UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
 
             #endregion
             // ====================================================================================
