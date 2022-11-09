@@ -403,6 +403,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_CastMovement = 2033,
 
         [ParentCombo(BLM_Adv_CastMovement)]
+        [ConflictingCombos(BLM_Adv_Transpose_Lines)]
         [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
         BLM_Adv_CastMovement_Xeno = 2034,
 

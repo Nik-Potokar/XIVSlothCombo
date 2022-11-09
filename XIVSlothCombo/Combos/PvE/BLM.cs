@@ -829,7 +829,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (canWeave)
                                 {
                                     // Weave Amplifier and Ley Lines
-                                    if (lastComboMove == Fire4 && (GetBuffStacks(Buffs.Triplecast) == 1))
+                                    if (lastComboMove == Fire4 && (GetBuffStacks(Buffs.Triplecast) == 2))
                                     {
                                         if (ActionReady(Amplifier) && LevelChecked(Amplifier) && Gauge.PolyglotStacks < 2)
                                         {
@@ -864,7 +864,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Second Triplecast / Sharpcast
-                                    if ((GetBuffStacks(Buffs.Triplecast) == 0) && (GetRemainingCharges(Triplecast) == 1) && lastComboMove == Manafont && LevelChecked(Triplecast))
+                                    if ((GetBuffStacks(Buffs.Triplecast) == 0) && (GetRemainingCharges(Triplecast) == 1) && lastComboMove == Fire4 && LevelChecked(Triplecast))
                                     {
                                         return Triplecast;
                                     }
@@ -957,7 +957,7 @@ namespace XIVSlothCombo.Combos.PvE
                              {
                                  return Paradox;
                              }
-                             if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Xeno) && LevelChecked(Xenoglossy) && Gauge.HasPolyglotStacks())
+                             if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Xeno) && !IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) && LevelChecked(Xenoglossy) && Gauge.HasPolyglotStacks())
                              {
                                  return Xenoglossy;
                              }
@@ -1238,7 +1238,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
                             }
-                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 6000) && LevelChecked(Xenoglossy))
+                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 4000) && LevelChecked(Xenoglossy))
                             {
                                 return Xenoglossy;
                             }
