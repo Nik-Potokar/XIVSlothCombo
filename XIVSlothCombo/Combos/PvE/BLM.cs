@@ -814,7 +814,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (Gauge.InAstralFire)
                             {
                                 // Thunder3
-                                if (lastComboMove == Fire3 && !TargetHasEffect(Debuffs.Thunder3))
+                                if (lastComboMove != Thunder3 && !TargetHasEffect(Debuffs.Thunder3))
                                 {
                                     return Thunder3;
                                 }
@@ -903,7 +903,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Fire3;
                                 }
 
-                                if (currentMP >= MP.Fire)
+                                if (currentMP >= MP.Fire && TargetHasEffect(Debuffs.Thunder3))
                                     return Fire4;
 
                                 // Use Transpose lines opener F3 - Single Transpose variation, double weave version
@@ -1007,7 +1007,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!ThunderList.ContainsKey(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
                             {
-                                if (IsEnabled(CustomComboPreset.BLM_AdvThunderUptime) && HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) && (currentMP >= MP.Thunder))
+                                if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) || (IsEnabled(CustomComboPreset.BLM_AdvThunderUptime) && currentMP >= MP.Thunder))
                                 {
                                     uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                     Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
