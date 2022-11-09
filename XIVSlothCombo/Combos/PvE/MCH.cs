@@ -9,50 +9,62 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte JobID = 31;
 
         public const uint
-            CleanShot = 2873,
-            HeatedCleanShot = 7413,
+            RookAutoturret = 2864,
             SplitShot = 2866,
-            HeatedSplitShot = 7411,
             SlugShot = 2868,
+            SpreadShot = 2870,
+            HotShot = 2872,
+            CleanShot = 2873,
             GaussRound = 2874,
+            Reassemble = 2876,
+            Wildfire = 2878,
             Ricochet = 2890,
             HeatedSlugshot = 7412,
-            Drill = 16498,
-            HotShot = 2872,
-            Reassemble = 2876,
-            AirAnchor = 16500,
-            Hypercharge = 17209,
             HeatBlast = 7410,
-            SpreadShot = 2870,
-            Scattergun = 25786,
-            AutoCrossbow = 16497,
-            RookAutoturret = 2864,
+            HeatedSplitShot = 7411,
+            HeatedCleanShot = 7413,
+            BarrelStabilizer = 7414,
             RookOverdrive = 7415,
+            Peloton = 7557,
+            AutoCrossbow = 16497,
+            Drill = 16498,
+            BioBlaster = 16499,
+            AirAnchor = 16500,
             AutomatonQueen = 16501,
             QueenOverdrive = 16502,
+		      Detonator = 16766,
             Tactician = 16889,
-            ChainSaw = 25788,
-            BioBlaster = 16499,
-            BarrelStabilizer = 7414,
-            Wildfire = 2878;
+            Hypercharge = 17209,
+            Scattergun = 25786,
+            ChainSaw = 25788;
 
         public static class Buffs
         {
             public const ushort
                 Reassembled = 851,
+                Peloton = 1199,
                 Tactician = 1951,
                 Wildfire = 1946;
         }
 
         public static class Debuffs
         {
-            // public const short placeholder = 0;
+            public const ushort
+				   Wildfire = 861;
+               // public const short placeholder = 0;
         }
         public static class Config
         {
             public const string
                 MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
-                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold";
+                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
+
+				    MCH_ST_Simple_Battery_spender_percent = "Percent HP, use 'Automaton Queen'",
+				    MCH_ST_Simple_QueenOverdrive_percent = "Percent HP, use 'Queen Overdrive'",
+
+				    MCH_AoE_Simple_Battery_Threshold = "MCH_AoE_Simple_Battery_Threshold",
+				    MCH_AoE_Simple_Bioblaster_threshold = "MCH_AoE_Simple_Bioblaster_threshold",
+				    MCH_AoE_Simple_Hypercharge_threshold = "MCH_AoE_Simple_Hypercharge_threshold";
         }
 
         public static class Levels
@@ -61,11 +73,13 @@ namespace XIVSlothCombo.Combos.PvE
                 SlugShot = 2,
                 Hotshot = 4,
                 GaussRound = 15,
+                Peloton = 20,
                 CleanShot = 26,
                 Hypercharge = 30,
                 HeatBlast = 35,
                 RookOverdrive = 40,
                 Wildfire = 45,
+                Detonator = 45,
                 Ricochet = 50,
                 Drill = 58,
                 AirAnchor = 76,
@@ -82,6 +96,7 @@ namespace XIVSlothCombo.Combos.PvE
                 ChainSaw = 90;
         }
 
+        #region MCH_ST_MainCombo
         internal class MCH_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_MainCombo;
@@ -188,7 +203,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             }
         }
+        #endregion MCH_ST_MainCombo
 
+        #region MCH_HeatblastGaussRicochet
         internal class MCH_HeatblastGaussRicochet : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HeatblastGaussRicochet;
@@ -234,7 +251,9 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+        #endregion MCH_HeatblastGaussRicochet
 
+        #region MCH_GaussRoundRicochet
         internal class MCH_GaussRoundRicochet : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_GaussRoundRicochet;
@@ -262,7 +281,9 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+        #endregion MCH_GaussRoundRicochet
 
+        #region MCH_AoE_SimpleMode
         internal class MCH_AoE_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
@@ -319,7 +340,9 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+        #endregion MCH_AoE_SimpleMode
 
+        #region MCH_Overdrive
         internal class MCH_Overdrive : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_Overdrive;
@@ -360,7 +383,9 @@ namespace XIVSlothCombo.Combos.PvE
                 }
             }
         }
+        #endregion MCH_Overdrive
 
+        #region MCH_AutoCrossbowGaussRicochet
         internal class MCH_AutoCrossbowGaussRicochet : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AutoCrossbowGaussRicochet;
@@ -397,7 +422,9 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+        #endregion MCH_AutoCrossbowGaussRicochet
 
+        #region MCH_ST_SimpleMode
         internal class MCH_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
@@ -625,6 +652,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return false;
             }
         }
+        #endregion MCH_ST_SimpleMode
 
     }
 }
