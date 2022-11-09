@@ -103,7 +103,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MNKGauge>();
-                    var canWeave = CanSpellWeave(actionID);
+                    var canWeave = CanWeave(actionID, 0.6);
                     var canWeaveChakra = CanWeave(actionID);
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
