@@ -96,334 +96,6 @@ namespace XIVSlothCombo.Combos.PvE
                 ChainSaw = 90;
         }
 
-        #region MCH_ST_MainCombo
-        internal class MCH_ST_MainCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_MainCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == CleanShot || actionID == HeatedCleanShot || actionID == SplitShot || actionID == HeatedSplitShot)
-                {
-                    var gauge = GetJobGauge<MCHGauge>();
-                    var drillCD = GetCooldown(Drill);
-                    var airAnchorCD = GetCooldown(AirAnchor);
-                    var hotshotCD = GetCooldown(HotShot);
-                    
-                    var gaussCD = GetCooldown(GaussRound);
-                    var ricochetCD = GetCooldown(Ricochet);
-                    var chainsawCD = GetCooldown(ChainSaw);
-                    
-                    var battery = GetJobGauge<MCHGauge>().Battery;
-                    var heat = GetJobGauge<MCHGauge>().Heat;
-                    var canWeave = CanWeave(actionID);
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_BarrelStabilizer_DriftProtection))
-                    {
-                        if (level >= Levels.BarrelStabilizer && heat < 20 && canWeave && IsOffCooldown(BarrelStabilizer))
-                            return BarrelStabilizer;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_HeatBlast) && gauge.IsOverheated)
-                    {
-                        if (CanWeave(actionID, 0.6))
-                        {
-                            if (level <= Levels.Ricochet && HasCharges(GaussRound))
-                                return GaussRound;
-                            
-                            if (HasCharges(GaussRound) && gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
-                                return GaussRound;
-                            else if (level >= Levels.Ricochet && HasCharges(Ricochet))
-                                return Ricochet;
-                        }
-
-                        if (level >= Levels.HeatBlast) // prioritize heatblast
-                            return HeatBlast;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_Cooldowns))
-                    {
-                        if (HasEffect(Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
-                            return AirAnchor;
-                        if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= Levels.Drill)
-                            return Drill;
-                        if (HasEffect(Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= Levels.ChainSaw)
-                            return ChainSaw;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGaussCharges) && CanWeave(actionID, 0.6)) //0.6 instead of 0.7 to more easily fit opener. a
-                    {
-                        if (level >= Levels.Ricochet && HasCharges(Ricochet)) 
-                            return Ricochet;
-                        if (level >= Levels.GaussRound && HasCharges(GaussRound))
-                            return GaussRound;
-
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGauss) && CanWeave(actionID, 0.6)) //0.6 instead of 0.7 to more easily fit opener. a
-                    {
-                        if (level >= Levels.Ricochet && GetRemainingCharges(Ricochet) > 1) 
-                            return Ricochet;
-                        if (level >= Levels.GaussRound && GetRemainingCharges(GaussRound) > 1)
-                            return GaussRound;
-
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainComboAlternate))
-                    {
-                        if (level >= Levels.AirAnchor && !airAnchorCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
-                            return AirAnchor;
-                        if (level >= Levels.ChainSaw && !chainsawCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)) )
-                            return ChainSaw;
-                        if (level >= Levels.Drill && !drillCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
-                            return Drill;
-                        if (level < Levels.AirAnchor && !hotshotCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)) )
-                            return HotShot;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_OverCharge) && canWeave)
-                    {
-                        if (battery == 100 && level is >= 40 and <= 79)
-                            return RookAutoturret;
-                        if (battery == 100 && level >= 80)
-                            return AutomatonQueen;
-                    }
-
-                if (comboTime > 0)
-                    {
-                        if (lastComboMove == SplitShot && level >= Levels.SlugShot)
-                            return OriginalHook(SlugShot);
-
-                        if (lastComboMove == SlugShot && level >= Levels.CleanShot)
-                            return OriginalHook(CleanShot);
-                    }
-                    return OriginalHook(SplitShot);
-                }
-                return actionID;
-
-            }
-        }
-        #endregion MCH_ST_MainCombo
-
-        #region MCH_HeatblastGaussRicochet
-        internal class MCH_HeatblastGaussRicochet : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HeatblastGaussRicochet;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == HeatBlast)
-                {
-                    var heatBlastCD = GetCooldown(HeatBlast);
-                    var gaussCD = GetCooldown(GaussRound);
-                    var ricochetCD = GetCooldown(Ricochet);
-
-                    var gauge = GetJobGauge<MCHGauge>();
-                    var heat = GetJobGauge<MCHGauge>().Heat;
-                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel) 
-                        && level >= Levels.BarrelStabilizer 
-                        && heat < 50 
-                        && IsOffCooldown(BarrelStabilizer) 
-                        && !gauge.IsOverheated)
-                        return BarrelStabilizer;
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire)
-                        && IsOffCooldown(Hypercharge)
-                        && IsOffCooldown(Wildfire) 
-                        && level >= Levels.Wildfire 
-                        && heat >= 50)
-                        return Wildfire;
-
-                    if (!gauge.IsOverheated && level >= Levels.Hypercharge)
-                        return Hypercharge;
-
-                    if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.HeatBlast) // Prioritize Heat Blast
-                        return HeatBlast;
-
-                    if (level <= Levels.Ricochet)
-                        return GaussRound;
-
-                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
-                        return GaussRound;
-                    return Ricochet;
-                }
-
-                return actionID;
-            }
-        }
-        #endregion MCH_HeatblastGaussRicochet
-
-        #region MCH_GaussRoundRicochet
-        internal class MCH_GaussRoundRicochet : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_GaussRoundRicochet;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == GaussRound || actionID == Ricochet)
-                {
-                    var gaussCd = GetCooldown(GaussRound);
-                    var ricochetCd = GetCooldown(Ricochet);
-
-                    // Prioritize the original if both are off cooldown
-                    if (level <= Levels.Ricochet)
-                        return GaussRound;
-
-                    if (!gaussCd.IsCooldown && !ricochetCd.IsCooldown)
-                        return actionID;
-
-                    if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining)
-                        return GaussRound;
-                    else
-                        return Ricochet;
-                }
-
-                return actionID;
-            }
-        }
-        #endregion MCH_GaussRoundRicochet
-
-        #region MCH_AoE_SimpleMode
-        internal class MCH_AoE_SimpleMode : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == SpreadShot || actionID == Scattergun)
-                {
-                    var canWeave = CanWeave(actionID);
-                    var gauge = GetJobGauge<MCHGauge>();
-                    var battery = GetJobGauge<MCHGauge>().Battery;
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave)
-                    {
-                        if (battery == 100 && level >= Levels.QueenOverdrive)
-                            return AutomatonQueen;
-                        if (battery == 100 && level >= Levels.RookOverdrive)
-                            return RookAutoturret;
-                    }
-                    
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
-                    {
-                        var gaussCharges = GetRemainingCharges(GaussRound);
-                        var ricochetCharges = GetRemainingCharges(Ricochet);
-
-                        if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) &&
-                            level >= Levels.GaussRound)
-                            return GaussRound;
-                        else if (ricochetCharges > 0 && level >= Levels.Ricochet)
-                            return Ricochet;
-
-                    }
-
-                    if (IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
-                        return BioBlaster;
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave)
-                    {
-                        if (gauge.Heat >= 50 && level >= Levels.AutoCrossbow && !gauge.IsOverheated)
-                            return Hypercharge;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_SecondWind) && CanWeave(actionID, 0.6))
-                    {
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_SecondWindThreshold) && (LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind)))
-                            return All.SecondWind;
-                    }
-
-                    if (gauge.IsOverheated && level >= Levels.AutoCrossbow)
-                        return AutoCrossbow;
-
-                }
-
-                return actionID;
-            }
-        }
-        #endregion MCH_AoE_SimpleMode
-
-        #region MCH_Overdrive
-        internal class MCH_Overdrive : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_Overdrive;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == RookAutoturret || actionID == AutomatonQueen)
-                {
-                    var gauge = GetJobGauge<MCHGauge>();
-                    if (gauge.IsRobotActive)
-                        return OriginalHook(QueenOverdrive);
-                }
-
-                return actionID;
-            }
-
-            internal class MCH_HotShotDrillChainSaw : CustomCombo
-            {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HotShotDrillChainSaw;
-
-                protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                {
-                    if (actionID == Drill || actionID == HotShot || actionID == AirAnchor)
-                    {
-                        if (level >= Levels.ChainSaw)
-                            return CalcBestAction(actionID, ChainSaw, AirAnchor, Drill);
-
-                        if (level >= Levels.AirAnchor)
-                            return CalcBestAction(actionID, AirAnchor, Drill);
-
-                        if (level >= Levels.Drill)
-                            return CalcBestAction(actionID, Drill, HotShot);
-
-                        return HotShot;
-                    }
-
-                    return actionID;
-                }
-            }
-        }
-        #endregion MCH_Overdrive
-
-        #region MCH_AutoCrossbowGaussRicochet
-        internal class MCH_AutoCrossbowGaussRicochet : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AutoCrossbowGaussRicochet;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == AutoCrossbow)
-                {
-                    var heatBlastCD = GetCooldown(HeatBlast);
-                    var gaussCD = GetCooldown(GaussRound);
-                    var ricochetCD = GetCooldown(Ricochet);
-                    var heat = GetJobGauge<MCHGauge>().Heat;
-
-                    var gauge = GetJobGauge<MCHGauge>();
-                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel)
-                        && level >= Levels.BarrelStabilizer
-                        && heat < 50
-                        && IsOffCooldown(BarrelStabilizer)
-                        && !gauge.IsOverheated
-                       ) return BarrelStabilizer;
-
-                    if (!gauge.IsOverheated && level >= Levels.Hypercharge)
-                        return Hypercharge;
-                    if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.AutoCrossbow) // prioritize autocrossbow
-                        return AutoCrossbow;
-                    if (level <= Levels.Ricochet)
-                        return GaussRound;
-                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
-                        return GaussRound;
-                    else
-                        return Ricochet;
-                }
-
-                return actionID;
-            }
-        }
-        #endregion MCH_AutoCrossbowGaussRicochet
-
         #region MCH_ST_SimpleMode
         internal class MCH_ST_SimpleMode : CustomCombo
         {
@@ -653,6 +325,334 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
         #endregion MCH_ST_SimpleMode
+
+        #region MCH_AoE_SimpleMode
+        internal class MCH_AoE_SimpleMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == SpreadShot || actionID == Scattergun)
+                {
+                    var canWeave = CanWeave(actionID);
+                    var gauge = GetJobGauge<MCHGauge>();
+                    var battery = GetJobGauge<MCHGauge>().Battery;
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave)
+                    {
+                        if (battery == 100 && level >= Levels.QueenOverdrive)
+                            return AutomatonQueen;
+                        if (battery == 100 && level >= Levels.RookOverdrive)
+                            return RookAutoturret;
+                    }
+                    
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
+                    {
+                        var gaussCharges = GetRemainingCharges(GaussRound);
+                        var ricochetCharges = GetRemainingCharges(Ricochet);
+
+                        if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) &&
+                            level >= Levels.GaussRound)
+                            return GaussRound;
+                        else if (ricochetCharges > 0 && level >= Levels.Ricochet)
+                            return Ricochet;
+
+                    }
+
+                    if (IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
+                        return BioBlaster;
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave)
+                    {
+                        if (gauge.Heat >= 50 && level >= Levels.AutoCrossbow && !gauge.IsOverheated)
+                            return Hypercharge;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_SecondWind) && CanWeave(actionID, 0.6))
+                    {
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_SecondWindThreshold) && (LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind)))
+                            return All.SecondWind;
+                    }
+
+                    if (gauge.IsOverheated && level >= Levels.AutoCrossbow)
+                        return AutoCrossbow;
+
+                }
+
+                return actionID;
+            }
+        }
+        #endregion MCH_AoE_SimpleMode
+
+        #region MCH_HeatblastGaussRicochet
+        internal class MCH_HeatblastGaussRicochet : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HeatblastGaussRicochet;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == HeatBlast)
+                {
+                    var heatBlastCD = GetCooldown(HeatBlast);
+                    var gaussCD = GetCooldown(GaussRound);
+                    var ricochetCD = GetCooldown(Ricochet);
+
+                    var gauge = GetJobGauge<MCHGauge>();
+                    var heat = GetJobGauge<MCHGauge>().Heat;
+                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel) 
+                        && level >= Levels.BarrelStabilizer 
+                        && heat < 50 
+                        && IsOffCooldown(BarrelStabilizer) 
+                        && !gauge.IsOverheated)
+                        return BarrelStabilizer;
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire)
+                        && IsOffCooldown(Hypercharge)
+                        && IsOffCooldown(Wildfire) 
+                        && level >= Levels.Wildfire 
+                        && heat >= 50)
+                        return Wildfire;
+
+                    if (!gauge.IsOverheated && level >= Levels.Hypercharge)
+                        return Hypercharge;
+
+                    if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.HeatBlast) // Prioritize Heat Blast
+                        return HeatBlast;
+
+                    if (level <= Levels.Ricochet)
+                        return GaussRound;
+
+                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                        return GaussRound;
+                    return Ricochet;
+                }
+
+                return actionID;
+            }
+        }
+        #endregion MCH_HeatblastGaussRicochet
+
+        #region MCH_GaussRoundRicochet
+        internal class MCH_GaussRoundRicochet : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_GaussRoundRicochet;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == GaussRound || actionID == Ricochet)
+                {
+                    var gaussCd = GetCooldown(GaussRound);
+                    var ricochetCd = GetCooldown(Ricochet);
+
+                    // Prioritize the original if both are off cooldown
+                    if (level <= Levels.Ricochet)
+                        return GaussRound;
+
+                    if (!gaussCd.IsCooldown && !ricochetCd.IsCooldown)
+                        return actionID;
+
+                    if (gaussCd.CooldownRemaining < ricochetCd.CooldownRemaining)
+                        return GaussRound;
+                    else
+                        return Ricochet;
+                }
+
+                return actionID;
+            }
+        }
+        #endregion MCH_GaussRoundRicochet
+
+        #region MCH_Overdrive
+        internal class MCH_Overdrive : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_Overdrive;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == RookAutoturret || actionID == AutomatonQueen)
+                {
+                    var gauge = GetJobGauge<MCHGauge>();
+                    if (gauge.IsRobotActive)
+                        return OriginalHook(QueenOverdrive);
+                }
+
+                return actionID;
+            }
+
+            internal class MCH_HotShotDrillChainSaw : CustomCombo
+            {
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HotShotDrillChainSaw;
+
+                protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                {
+                    if (actionID == Drill || actionID == HotShot || actionID == AirAnchor)
+                    {
+                        if (level >= Levels.ChainSaw)
+                            return CalcBestAction(actionID, ChainSaw, AirAnchor, Drill);
+
+                        if (level >= Levels.AirAnchor)
+                            return CalcBestAction(actionID, AirAnchor, Drill);
+
+                        if (level >= Levels.Drill)
+                            return CalcBestAction(actionID, Drill, HotShot);
+
+                        return HotShot;
+                    }
+
+                    return actionID;
+                }
+            }
+        }
+        #endregion MCH_Overdrive
+
+        #region MCH_AutoCrossbowGaussRicochet
+        internal class MCH_AutoCrossbowGaussRicochet : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AutoCrossbowGaussRicochet;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == AutoCrossbow)
+                {
+                    var heatBlastCD = GetCooldown(HeatBlast);
+                    var gaussCD = GetCooldown(GaussRound);
+                    var ricochetCD = GetCooldown(Ricochet);
+                    var heat = GetJobGauge<MCHGauge>().Heat;
+
+                    var gauge = GetJobGauge<MCHGauge>();
+                    if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel)
+                        && level >= Levels.BarrelStabilizer
+                        && heat < 50
+                        && IsOffCooldown(BarrelStabilizer)
+                        && !gauge.IsOverheated
+                       ) return BarrelStabilizer;
+
+                    if (!gauge.IsOverheated && level >= Levels.Hypercharge)
+                        return Hypercharge;
+                    if (heatBlastCD.CooldownRemaining < 0.7 && level >= Levels.AutoCrossbow) // prioritize autocrossbow
+                        return AutoCrossbow;
+                    if (level <= Levels.Ricochet)
+                        return GaussRound;
+                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                        return GaussRound;
+                    else
+                        return Ricochet;
+                }
+
+                return actionID;
+            }
+        }
+        #endregion MCH_AutoCrossbowGaussRicochet
+
+        #region MCH_ST_MainCombo
+        internal class MCH_ST_MainCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_MainCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == CleanShot || actionID == HeatedCleanShot || actionID == SplitShot || actionID == HeatedSplitShot)
+                {
+                    var gauge = GetJobGauge<MCHGauge>();
+                    var drillCD = GetCooldown(Drill);
+                    var airAnchorCD = GetCooldown(AirAnchor);
+                    var hotshotCD = GetCooldown(HotShot);
+                    
+                    var gaussCD = GetCooldown(GaussRound);
+                    var ricochetCD = GetCooldown(Ricochet);
+                    var chainsawCD = GetCooldown(ChainSaw);
+                    
+                    var battery = GetJobGauge<MCHGauge>().Battery;
+                    var heat = GetJobGauge<MCHGauge>().Heat;
+                    var canWeave = CanWeave(actionID);
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_BarrelStabilizer_DriftProtection))
+                    {
+                        if (level >= Levels.BarrelStabilizer && heat < 20 && canWeave && IsOffCooldown(BarrelStabilizer))
+                            return BarrelStabilizer;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_HeatBlast) && gauge.IsOverheated)
+                    {
+                        if (CanWeave(actionID, 0.6))
+                        {
+                            if (level <= Levels.Ricochet && HasCharges(GaussRound))
+                                return GaussRound;
+                            
+                            if (HasCharges(GaussRound) && gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                                return GaussRound;
+                            else if (level >= Levels.Ricochet && HasCharges(Ricochet))
+                                return Ricochet;
+                        }
+
+                        if (level >= Levels.HeatBlast) // prioritize heatblast
+                            return HeatBlast;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_Cooldowns))
+                    {
+                        if (HasEffect(Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
+                            return AirAnchor;
+                        if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= Levels.Drill)
+                            return Drill;
+                        if (HasEffect(Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= Levels.ChainSaw)
+                            return ChainSaw;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGaussCharges) && CanWeave(actionID, 0.6)) //0.6 instead of 0.7 to more easily fit opener. a
+                    {
+                        if (level >= Levels.Ricochet && HasCharges(Ricochet)) 
+                            return Ricochet;
+                        if (level >= Levels.GaussRound && HasCharges(GaussRound))
+                            return GaussRound;
+
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_RicochetGauss) && CanWeave(actionID, 0.6)) //0.6 instead of 0.7 to more easily fit opener. a
+                    {
+                        if (level >= Levels.Ricochet && GetRemainingCharges(Ricochet) > 1) 
+                            return Ricochet;
+                        if (level >= Levels.GaussRound && GetRemainingCharges(GaussRound) > 1)
+                            return GaussRound;
+
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainComboAlternate))
+                    {
+                        if (level >= Levels.AirAnchor && !airAnchorCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
+                            return AirAnchor;
+                        if (level >= Levels.ChainSaw && !chainsawCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)) )
+                            return ChainSaw;
+                        if (level >= Levels.Drill && !drillCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
+                            return Drill;
+                        if (level < Levels.AirAnchor && !hotshotCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)) )
+                            return HotShot;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_OverCharge) && canWeave)
+                    {
+                        if (battery == 100 && level is >= 40 and <= 79)
+                            return RookAutoturret;
+                        if (battery == 100 && level >= 80)
+                            return AutomatonQueen;
+                    }
+
+                if (comboTime > 0)
+                    {
+                        if (lastComboMove == SplitShot && level >= Levels.SlugShot)
+                            return OriginalHook(SlugShot);
+
+                        if (lastComboMove == SlugShot && level >= Levels.CleanShot)
+                            return OriginalHook(CleanShot);
+                    }
+                    return OriginalHook(SplitShot);
+                }
+                return actionID;
+
+            }
+        }
+        #endregion MCH_ST_MainCombo
 
     }
 }
