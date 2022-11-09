@@ -354,8 +354,12 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_OpenerAlternate = 2019,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Foul / Manafont Flare Option", "Adds Foul when available during Astral Fire. Weaves Manafont after Foul for additional Flare", BLM.JobID, 0, "", "")]
-        BLM_AoE_Simple_Foul = 2020,
+        [CustomComboInfo("Manafont Option", "Weaves Manafont after Flare for additional Flare", BLM.JobID, 0, "", "")]
+        BLM_AoE_Simple_Manafont = 2020,
+
+        [ParentCombo(BLM_AoE_SimpleMode)]
+        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]
+        BLM_AoE_Simple_Foul = 2043,
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
@@ -396,10 +400,11 @@ namespace XIVSlothCombo.Combos
         BLM_AdvUmbralSoul = 2032,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Moving Options", "Use Swiftcast/Triplecast when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
         BLM_Adv_CastMovement = 2033,
 
         [ParentCombo(BLM_Adv_CastMovement)]
+        [ConflictingCombos(BLM_Adv_Transpose_Lines)]
         [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
         BLM_Adv_CastMovement_Xeno = 2034,
 
@@ -408,11 +413,11 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_CastMovement_Scathe = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Advanced BLM feature.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Advanced BLM feature.", BLM.JobID, -8, "", "")]
         BLM_Adv_Casts = 2036,
 
         [ParentCombo(BLM_Adv_Casts)]
-        [CustomComboInfo("Pool Triplecast / Swiftcast Option", "Keep one triplecast usage and swiftcast for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
         BLM_Adv_Casts_Pooling = 2037,
 
         [ParentCombo(BLM_Adv_Buffs)]
@@ -426,6 +431,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Transpose Opener", "Adds the transpose opener to Advanced Blm.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2040,
+
+        [ParentCombo(BLM_AdvancedMode)]
+        [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
+        BLM_Adv_Transpose_Lines = 2042,
+
+        [ReplaceSkill(BLM.AetherialManipulation)]
+        [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
+        BLM_AetherialManipulation = 2044,
 
         #endregion
 
