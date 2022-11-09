@@ -498,7 +498,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return RiddleOfFire;
                                 }
 
-                                if (IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm) && !TargetNeedsPositionals())
+                                if (IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm) && TargetNeedsPositionals())
                                 {
                                     if (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
                                     {
