@@ -1286,6 +1286,21 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+            
+            if (preset == CustomComboPreset.MCH_ST_Simple_Battery_spender_percent)
+                UserConfig.DrawSliderInt(1, 75, MCH.Config.MCH_ST_Simple_Battery_spender_percent, "Percent HP, use 'Automaton Queen'", 100, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_ST_Simple_QueenOverdrive_percent)
+                UserConfig.DrawSliderInt(1, 75, MCH.Config.MCH_ST_Simple_QueenOverdrive_percent, "Percent HP, use 'Queen Overdrive'", 100, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_AoE_Simple_Battery_Threshold)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_Simple_Battery_Threshold, "Percent HP", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_AoE_Simple_Bioblaster_threshold)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_Simple_Bioblaster_threshold, "Percent HP", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_AoE_Simple_Hypercharge_threshold)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_Simple_Hypercharge_threshold, "Percent HP", 150, SliderIncrements.Ones);
             #endregion
             // ====================================================================================
             #region MONK

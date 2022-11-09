@@ -1346,164 +1346,247 @@ namespace XIVSlothCombo.Combos
 
         #region MACHINIST
 
-        [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_SimpleMode)]
-        [CustomComboInfo("(Heated) Shot Combo Feature", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "", "")]
-        MCH_ST_MainCombo = 8000,
+        #region [OBR] Simple Machinist Feature
+        [CustomComboInfo("[OBR] ST Feature", "Contains the feature 'Simple Machinist' and its options.", MCH.JobID, 0, "", "")]
+        OBR_ST_Menu= 8199,
 
+        [ParentCombo(OBR_ST_Menu)]
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
+        [CustomComboInfo("[OBR] Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
+        MCH_ST_SimpleMode = 8100,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Interrupt = 8101,
+
+        #region Simple Gadget Option
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Gadget Option", "Adds Automaton Queen or Rook Autoturret uses to the feature, based on your current level.\nAttempts to use Automaton Queen at optimal intervals between :55 to :05 windows.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Gadget = 8102,
+
+        [ParentCombo(MCH_ST_Simple_Gadget)]
+        [CustomComboInfo("Last Minute Queen ", "If target has less then.....", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Battery_spender_percent = 8103,
+
+        [ParentCombo(MCH_ST_Simple_Battery_spender_percent)]
+        [CustomComboInfo("Bye Queen", "If target has less then......", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_QueenOverdrive_percent = 8104,
+        #endregion Simple Gadget Option
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_GaussRicochet = 8105,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Wildcharge Option", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chain Saw.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_WildCharge = 8106,
+
+        #region Simple Stabilizer Option
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Stabilizer = 8107,
+        
+        [ParentCombo(MCH_ST_Simple_Stabilizer)]
+        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Stabilizer_Wildfire_Only = 8108,
+        #endregion Simple Stabilizer Option
+
+        #region Simple Assembling Option
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Assembling Option", "Pairs reassemble uses with the following skills.\nBefore acquiring Drill it will be used with Clean Shot.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Assembling = 8109,
+
+        [ParentCombo(MCH_ST_Simple_Assembling)]
+        [CustomComboInfo("Drill Option", "Use Reassemble with Drill when available.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Assembling_Drill = 8110,
+        
+        [ParentCombo(MCH_ST_Simple_Assembling_Drill)]
+        [CustomComboInfo("Only use Drill Option", "Only use Drill when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Assembling_Drill_MaxCharges = 8111,
+
+        [ParentCombo(MCH_ST_Simple_Assembling)]
+        [CustomComboInfo("Air Anchor Option", "Use Reassemble with Air Anchor when available.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Assembling_AirAnchor = 8112,
+        
+        [ParentCombo(MCH_ST_Simple_Assembling_AirAnchor)]
+        [CustomComboInfo("Only use Air Anchor Option", "Only use Air Anchor when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Assembling_AirAnchor_MaxCharges = 8113,
+
+        [ParentCombo(MCH_ST_Simple_Assembling)]
+        [CustomComboInfo("Chain Saw Option", "Use Reassemble with Chain Saw when available.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Assembling_ChainSaw = 8114,
+
+        [ParentCombo(MCH_ST_Simple_Assembling_ChainSaw)]
+        [CustomComboInfo("Only use Chain Saw Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8115,
+        #endregion Simple Assembling Option
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("High Ping Mode Option", "A high-ping-friendly mode.\nIt limits the uses of Gauss Round/Ricochet inside Hypercharge windows to prevent drift.\nExpect a small DPS loss when using this feature.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_High_Latency_Mode = 8116,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_ST_SecondWind = 8117,
+        #endregion [OBR] Simple Machinist Feature
+
+        #region [OBR] Simple Machinist AoE Feature
+        [CustomComboInfo("[OBR] AoE Feature", "Contains the feature 'Simple Machinist AoE' and its options.", MCH.JobID, 0, "", "")]
+        OBR_AoE_Menu= 8299,
+
+        [ParentCombo(OBR_AoE_Menu)]
+        [ReplaceSkill(MCH.SpreadShot)]
+        [CustomComboInfo("Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, 0, "", "")]
+        MCH_AoE_SimpleMode = 8200,
+        
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Battery Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, 0, "", "")]
+        MCH_AoE_OverCharge = 8201,
+        
+        [ParentCombo(MCH_AoE_OverCharge)]
+        [CustomComboInfo("Battery Overcap Threshold Option", "Won't use Automaton Queen if target has less then.....", MCH.JobID, 0, "", "")]
+        MCH_AoE_Simple_Battery_Threshold = 8202,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Gauss Round Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID, 0, "", "")]
+        MCH_AoE_GaussRicochet = 8203,
+
+        [ParentCombo(MCH_AoE_GaussRicochet)]
+        [CustomComboInfo("Always Gauss Round/Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, 0, "", "")]
+        MCH_AoE_Gauss = 8204,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 0, "", "")]
+        MCH_AoE_Simple_Bioblaster = 8205,
+
+        [ParentCombo(MCH_AoE_Simple_Bioblaster)]
+        [CustomComboInfo("Bioblaster Threshold Option", "Won't use Bioblaster if target has less then.....", MCH.JobID, 0, "", "")]
+        MCH_AoE_Simple_Bioblaster_threshold = 8206,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the AoE.", MCH.JobID, 0, "", "")]
+        MCH_AoE_Simple_Hypercharge = 8207,
+
+        [ParentCombo(MCH_AoE_Simple_Hypercharge)]
+        [CustomComboInfo("Hypercharge Threshold Option", "Won't use Hypercharge if target has less then.....", MCH.JobID, 0, "", "")]
+        MCH_AoE_Simple_Hypercharge_threshold = 8208,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_AoE_SecondWind = 8209,
+        #endregion [OBR] Simple Machinist AoE Feature
+
+        #region Other Machinist Features
+        [CustomComboInfo("Other Machinist Features", "Contains Stand Alone features that can be used alongside either of the [OBR] features unless specified otherwise.", MCH.JobID, 0, "","")]
+        Other_Machinist_Features_Menu = 8300,
+
+        #region Stand Alone Features
+        [ParentCombo(Other_Machinist_Features_Menu)]
+        [CustomComboInfo("Stand Alone Features", "", MCH.JobID, 0, "","")]
+        Stand_Alone_features = 8400,
+
+        #region Overdrive Feature
+        [ParentCombo(Stand_Alone_features)]
         [ReplaceSkill(MCH.RookAutoturret, MCH.AutomatonQueen)]
         [CustomComboInfo("Overdrive Feature", "Replace Rook Autoturret and Automaton Queen with Overdrive while active.", MCH.JobID, 0, "", "")]
-        MCH_Overdrive = 8002,
-
+        MCH_Overdrive = 8401,
+        #endregion Overdrive Feature
+        
+        #region Gauss Round/Ricochet Feature
+        [ParentCombo(Stand_Alone_features)]
         [ReplaceSkill(MCH.GaussRound, MCH.Ricochet)]
         [CustomComboInfo("Gauss Round/Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID, 0, "", "")]
-        MCH_GaussRoundRicochet = 8003,
+        MCH_GaussRoundRicochet = 8402,
+        #endregion Gauss Round/Ricochet Feature
 
+        #region Drill/Air Anchor (Hot Shot) Feature
+        [ParentCombo(Stand_Alone_features)]
         [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
         [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID, 0, "", "")]
-        MCH_HotShotDrillChainSaw = 8004,
+        MCH_HotShotDrillChainSaw = 8403,
+        #endregion Drill/Air Anchor (Hot Shot) Feature
+        #endregion Stand Alone Features
+
+        #region Heat Blast & Auto Crossbow Features
+        [ParentCombo(Other_Machinist_Features_Menu)]
+        [CustomComboInfo("Heat Blast & Auto Crossbow Features", "", MCH.JobID, 0, "","")]
+        HeatBlast_AutoCrossbow_Features_Menu= 8500,
+
+        #region Single Button Heat Blast Feature
+        [ParentCombo(HeatBlast_AutoCrossbow_Features_Menu)]
+        [ReplaceSkill(MCH.HeatBlast)]
+        [ConflictingCombos(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Single Button Heat Blast Features", "", MCH.JobID, 0, "", "")]
+        MCH_HeatblastGaussRicochet = 8501,
+        
+        [ParentCombo(MCH_HeatblastGaussRicochet)]
+        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
+        MCH_ST_AutoBarrel = 8502,
+
+        [ParentCombo(MCH_HeatblastGaussRicochet)]
+        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the Single Button Heat Blast Feature if Wildfire is off cooldown and you have enough Heat Gauge for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, 0, "", "")]
+        MCH_ST_Wildfire = 8503,
+        #endregion Single Button Heat Blast Feature
+
+        #region Single Button Auto Crossbow Feature
+        [ParentCombo(HeatBlast_AutoCrossbow_Features_Menu)]
+        [ReplaceSkill(MCH.AutoCrossbow)]
+        [CustomComboInfo("Single Button Auto Crossbow Features", "", MCH.JobID, 0, "", "")]
+        MCH_AutoCrossbowGaussRicochet = 8600,
+        
+        [ParentCombo(MCH_AutoCrossbowGaussRicochet)]
+        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
+        MCH_AoE_AutoBarrel = 8601,
+        #endregion Single Button Auto Crossbow Feature
+        #endregion
+
+        #region Basic Combo Features
+        [ParentCombo(Other_Machinist_Features_Menu)]
+        [CustomComboInfo("Basic Combo Features", "", MCH.JobID, 0, "","")]
+        Basic_Combo_Features_Menu = 8700,
+
+        [ParentCombo(Basic_Combo_Features_Menu)]
+        [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Basic Combo\n(This feature has multiple options)", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "", "")]
+        MCH_ST_MainCombo = 8701,
 
         [ParentCombo(MCH_ST_MainCombo)]
         [ConflictingCombos(MCH_ST_MainComboAlternate)]
         [CustomComboInfo("Drill/Air/Chain Saw on Main Combo Option", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf Air Anchor is on cooldown and you use Reassemble, Chain Saw will be added to main combo instead.", MCH.JobID, 0, "", "")]
-        MCH_ST_MainCombo_Cooldowns = 8005,
-
-        [ReplaceSkill(MCH.HeatBlast)]
-        [ConflictingCombos(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Single Button Heat Blast Feature", "Switches Heat Blast to Hypercharge.", MCH.JobID, 0, "", "")]
-        MCH_HeatblastGaussRicochet = 8006,
-
-        [ReplaceSkill(MCH.AutoCrossbow)]
-        [CustomComboInfo("Single Button Auto Crossbow Feature", "Switches Auto Crossbow to Hypercharge and weaves Gauss Round/Ricochet.", MCH.JobID, 0, "", "")]
-        MCH_AutoCrossbowGaussRicochet = 8018,
+        MCH_ST_MainCombo_Cooldowns = 8702,
 
         [ParentCombo(MCH_ST_MainCombo)]
         [ConflictingCombos(MCH_ST_MainCombo_Cooldowns)]
         [CustomComboInfo("Alternate Drill/Air Feature on Main Combo Option", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff\nOr Reasemble is on CD (will do nothing if Reassemble is OFF CD)", MCH.JobID, 0, "", "")]
-        MCH_ST_MainComboAlternate = 8007,
+        MCH_ST_MainComboAlternate = 8703,
 
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Single Button Heat Blast on Main Combo Option", "Adds Single Button Heat Blast onto the main combo when the option is enabled.", MCH.JobID, 0, "", "")]
-        MCH_ST_MainCombo_HeatBlast = 8008,
+        MCH_ST_MainCombo_HeatBlast = 8704,
 
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge Rook Autoturret/Automaton Queen will be added to your (Heated) Shot Combo.", MCH.JobID, 0, "", "")]
-        MCH_ST_MainCombo_OverCharge = 8009,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Battery Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, 0, "", "")]
-        MCH_AoE_OverCharge = 8010,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Gauss Round Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID, 0, "", "")]
-        MCH_AoE_GaussRicochet = 8011,
-
-        [ParentCombo(MCH_AoE_GaussRicochet)]
-        [CustomComboInfo("Always Gauss Round/Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, 0, "", "")]
-        MCH_AoE_Gauss = 8012,
+        MCH_ST_MainCombo_OverCharge = 8705,
 
         [ConflictingCombos(MCH_ST_MainCombo_RicochetGauss)]
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Ricochet & Gauss Round Option", "Adds Ricochet and Gauss Round to main combo.\nWill use all charges.", MCH.JobID, 0, "", "")]
-        MCH_ST_MainCombo_RicochetGaussCharges = 8017,
+        MCH_ST_MainCombo_RicochetGaussCharges = 8706,
 
         [ConflictingCombos(MCH_ST_MainCombo_RicochetGaussCharges)]
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Ricochet & Gauss Round Overcap Protection Option", "Adds Ricochet and Gauss Round to main combo.\nWill leave 1 charge of each.", MCH.JobID, 0, "", "")]
-        MCH_ST_MainCombo_RicochetGauss = 8013,
+        MCH_ST_MainCombo_RicochetGauss = 8707,
 
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Barrel Stabilizer Drift Protection Option", "Adds Barrel Stabilizer onto the main combo if Heat Gauge is between 5-20.", MCH.JobID, 0, "", "")]
-        MCH_ST_BarrelStabilizer_DriftProtection = 8014,
+        MCH_ST_BarrelStabilizer_DriftProtection = 8708,
+        #endregion Basic Combo Features
+        #endregion Other Machinist Features
 
-        [ParentCombo(MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the Single Button Heat Blast Feature if Wildfire is off cooldown and you have enough Heat Gauge for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, 0, "", "")]
-        MCH_ST_Wildfire = 8015,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 0, "", "")]
-        MCH_AoE_Simple_Bioblaster = 8016,
-
-        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
-        MCH_ST_AutoBarrel = 8019,
-
-        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("[OBR] Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
-        MCH_ST_SimpleMode = 8020,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Interrupt = 8021,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Gadget Option", "Adds Automaton Queen or Rook Autoturret uses to the feature, based on your current level.\nAttempts to use Automaton Queen at optimal intervals between :55 to :05 windows.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Gadget = 8022,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Assembling Option", "Pairs reassemble uses with the following skills.\nBefore acquiring Drill it will be used with Clean Shot.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling = 8023,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_GaussRicochet = 8024,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Wildcharge Option", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chain Saw.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_WildCharge = 8025,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Stabilizer = 8026,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the AoE.", MCH.JobID, 0, "", "")]
-        MCH_AoE_Simple_Hypercharge = 8027,
-
-        [ReplaceSkill(MCH.SpreadShot)]
-        [CustomComboInfo("[OBR] Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, 0, "", "")]
-        MCH_AoE_SimpleMode = 8028,
-
-        [ParentCombo(MCH_ST_Simple_Assembling)]
-        [CustomComboInfo("Drill Option", "Use Reassemble with Drill when available.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_Drill = 8029,
-
-        [ParentCombo(MCH_ST_Simple_Assembling)]
-        [CustomComboInfo("Air Anchor Option", "Use Reassemble with Air Anchor when available.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_AirAnchor = 8030,
-
-        [ParentCombo(MCH_ST_Simple_Assembling)]
-        [CustomComboInfo("Chain Saw Option", "Use Reassemble with Chain Saw when available.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_ChainSaw = 8031,
-
-        [ParentCombo(MCH_ST_Simple_Assembling_Drill)]
-        [CustomComboInfo("Only use Drill Option", "Only use Drill when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_Drill_MaxCharges = 8032,
-
-        [ParentCombo(MCH_ST_Simple_Assembling_AirAnchor)]
-        [CustomComboInfo("Only use Air Anchor Option", "Only use Air Anchor when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_AirAnchor_MaxCharges = 8033,
-
-        [ParentCombo(MCH_ST_Simple_Assembling_ChainSaw)]
-        [CustomComboInfo("Only use Chain Saw Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8034,
-
-        [ParentCombo(MCH_ST_Simple_Stabilizer)]
-        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("High Ping Mode Option", "A high-ping-friendly mode.\nIt limits the uses of Gauss Round/Ricochet inside Hypercharge windows to prevent drift.\nExpect a small DPS loss when using this feature.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_High_Latency_Mode = 8036,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
-        MCH_ST_SecondWind = 8037,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
-        MCH_AoE_SecondWind = 8038,
-        #endregion
+        #endregion MACHINIST
 
         #region MONK
 
