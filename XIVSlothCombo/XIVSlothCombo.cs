@@ -162,8 +162,8 @@ namespace XIVSlothCombo
 
                 case "set": // set a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
-                        {
+                        //if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        //{
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
                             {
@@ -175,20 +175,20 @@ namespace XIVSlothCombo
                             }
 
                             Service.Configuration.Save();
-                        }
+                        //}
 
-                        else
-                        {
-                            Service.ChatGui.PrintError("Features cannot be set in combat.");
-                        }
+                        //else
+                        //{
+                            //Service.ChatGui.PrintError("Features cannot be set in combat.");
+                        //}
 
                         break;
                     }
 
                 case "toggle": // toggle a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
-                        {
+                        //if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        //{
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
                             {
@@ -209,20 +209,20 @@ namespace XIVSlothCombo
                             }
 
                             Service.Configuration.Save();
-                        }
+                        //}
 
-                        else
-                        {
-                            Service.ChatGui.PrintError("Features cannot be toggled in combat.");
-                        }
+                        //else
+                        //{
+                            //Service.ChatGui.PrintError("Features cannot be toggled in combat.");
+                        //}
 
                         break;
                     }
 
                 case "unset": // unset a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
-                        {
+                        //if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        //{
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
                             {
@@ -234,12 +234,12 @@ namespace XIVSlothCombo
                             }
 
                             Service.Configuration.Save();
-                        }
+                        //}
 
-                        else
-                        {
-                            Service.ChatGui.PrintError("Features cannot be unset in combat.");
-                        }
+                        //else
+                        //{
+                            //Service.ChatGui.PrintError("Features cannot be unset in combat.");
+                        //}
 
                         break;
                     }
