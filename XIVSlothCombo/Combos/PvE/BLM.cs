@@ -868,7 +868,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         return Triplecast;
                                     }
-                                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) && lastComboMove == Fire4 && LevelChecked(Sharpcast))
+                                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) && lastComboMove == Fire4 && LevelChecked(Sharpcast) && !Gauge.IsParadoxActive)
                                     {
                                         return Sharpcast;
                                     }
@@ -1011,6 +1011,11 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
+                        if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 4000) && LevelChecked(Xenoglossy))
+                        {
+                            return Xenoglossy;
+                        }
+
                         // Weave Buffs
                         if (canWeave)
                         {
@@ -1028,7 +1033,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs))
                             {
-                                if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) && lastComboMove != Thunder3 && LevelChecked(Sharpcast))
+                                if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) && lastComboMove != Thunder3 && LevelChecked(Sharpcast) && !Gauge.IsParadoxActive)
                                 {
                                 return Sharpcast;
                                 }
@@ -1065,7 +1070,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return All.Swiftcast;
                                 }
                             }
-
                         } 
                     }
 
@@ -1189,7 +1193,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         return Xenoglossy;
                                     }
-                                    if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))
+                                    if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) && !Gauge.IsParadoxActive)
                                     {
                                         return Xenoglossy;
                                     }
@@ -1237,11 +1241,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         }
                                     }
                                 }
-                            }
-                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 4000) && LevelChecked(Xenoglossy))
-                            {
-                                return Xenoglossy;
-                            }
+                            }   
                         }
 
                         // Blizzard3/Despair when below Fire 4 + Despair MP
@@ -1265,10 +1265,13 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             // Transpose lines will use 2 xenoglossy stacks and then transpose
                             if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0 && LevelChecked(Xenoglossy))
+                            {
                                 return Xenoglossy;
-
+                            }
                             if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy)
+                            { 
                                 return Transpose;
+                            }
                         }
 
                         // Fire3 when at max umbral hearts
