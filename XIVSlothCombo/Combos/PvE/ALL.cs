@@ -64,6 +64,27 @@ namespace XIVSlothCombo.Combos.PvE
                 Feint = 1195;
         }
 
+        public static class RaidBuffs
+        {
+            public const ushort
+			      Arcanecircle = 2599,
+			      Battlelitany = 786,
+			      DRGeye = 1910,
+      			Brotherhood = 1185,
+		      	BattleVoice = 141,
+      			RadiantFinale = 2964,
+		      	Embolden = 1239,
+      			SearingLight = 2703,
+		      	Divination = 1878;
+        }
+
+        public static class RaidDebuffs
+        {
+            public const ushort
+				   Mug = 638,
+				   ChainStratagem = 1221;
+        }
+
         internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_IslandSanctuary_Sprint;
