@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Core;
 
@@ -12,6 +13,7 @@ namespace XIVSlothCombo.Combos.PvE
         public const uint
             TrueNorth = 7546,
             PiercingTalon = 90,
+            ElusiveJump = 94,
             LanceCharge = 85,
             DragonSight = 7398,
             BattleLitany = 3557,
@@ -96,7 +98,11 @@ namespace XIVSlothCombo.Combos.PvE
                 var diveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_ST_DiveOptions);
                 var openerOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_OpenerOptions);
 
-                if (actionID is FullThrust)
+                Status? ChaosDoTDebuff;
+                if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
+                else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
+
+                if (actionID is TrueThrust)
                 {
                     // Lvl88+ Opener
                     if (!InCombat() && IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88)
@@ -115,6 +121,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
+                        if (CombatEngageDuration().TotalSeconds < 3 && IsOnCooldown(ElusiveJump) && openerReady)
+                            inOpener = true;
+
                         if (inOpener)
                         {
                             if (IsOnCooldown(BattleLitany) && !HasEffect(Buffs.LanceCharge))
@@ -125,27 +134,25 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (WasLastWeaponskill(Disembowel) && openerOptions is 0 or 1 or 2)
                                 {
-                                    if (IsOffCooldown(LanceCharge))
+                                    if (ActionReady(LanceCharge))
                                         return LanceCharge;
-                                    if (IsOffCooldown(DragonSight))
+                                    if (ActionReady(DragonSight))
                                         return DragonSight;
                                 }
 
                                 if (WasLastWeaponskill(ChaoticSpring))
                                 {
-                                    if (openerOptions is 0 or 1 or 2 && IsOffCooldown(BattleLitany))
+                                    if (openerOptions is 0 or 1 or 2 && ActionReady(BattleLitany))
                                         return BattleLitany;
-                                    if (openerOptions is 2 && IsOffCooldown(Geirskogul))
-                                        return OriginalHook(Geirskogul);
+                                    if (openerOptions is 2 && GetRemainingCharges(SpineshatterDive) > 1)
+                                        return OriginalHook(SpineshatterDive);
                                 }
-                                    
-                                if (WasLastWeaponskill(WheelingThrust))
+
+                                if (WasLastWeaponskill(WheelingThrust) && openerOptions is 0 or 1 or 2)
                                 {
-                                    if (openerOptions is 0 or 1 && IsOffCooldown(Geirskogul))
+                                    if (ActionReady(Geirskogul))
                                         return Geirskogul;
-                                    if (openerOptions is 2 && IsOffCooldown(OriginalHook(Jump)))
-                                        return OriginalHook(Jump);
-                                    if (openerOptions is 0 or 1 or 2 && GetRemainingCharges(LifeSurge) > 0 && !HasEffect(Buffs.LifeSurge))
+                                    if (GetRemainingCharges(LifeSurge) > 0 && !HasEffect(Buffs.LifeSurge))
                                         return LifeSurge;
                                 }
 
@@ -153,50 +160,55 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (openerOptions is 0 or 1)
                                     {
-                                        if (IsOffCooldown(OriginalHook(Jump)) && !HasEffect(Buffs.DiveReady))
-                                            return OriginalHook(Jump);
-                                        if (GetRemainingCharges(SpineshatterDive) > 0 && !HasEffect(Buffs.DiveReady))
+                                        if (GetRemainingCharges(SpineshatterDive) < 2 && !WasLastAction(SpineshatterDive))
                                             return SpineshatterDive;
+                                        if (ActionReady(OriginalHook(Jump)) && !HasEffect(Buffs.DiveReady))
+                                            return OriginalHook(Jump);
                                     }
 
-                                    if (openerOptions is 2 && IsOffCooldown(DragonfireDive))
-                                        return DragonfireDive;
+                                    if (openerOptions is 2)
+                                    {
+                                        if (ActionReady(OriginalHook(Jump)))
+                                            return OriginalHook(Jump);
+                                        if (HasEffect(Buffs.DiveReady))
+                                            return MirageDive;
+                                    }
                                 }
 
                                 if (WasLastWeaponskill(RaidenThrust))
                                 {
-                                    if (openerOptions is 0 or 1 && IsOffCooldown(DragonfireDive))
+                                    if (openerOptions is 0 or 1 or 2 && ActionReady(DragonfireDive))
                                         return DragonfireDive;
-                                    if (openerOptions is 2 && GetRemainingCharges(SpineshatterDive) > 0 && !WasLastAction(SpineshatterDive))
-                                        return SpineshatterDive;
-                                }
-                                    
-                                if (WasLastWeaponskill(VorpalThrust) && openerOptions is 0 or 1 or 2)
-                                {
-                                    if (GetRemainingCharges(LifeSurge) > 0 && !HasEffect(Buffs.LifeSurge))
-                                        return LifeSurge;
-                                    if (HasEffect(Buffs.DiveReady))
-                                        return MirageDive;
                                 }
 
-                                if (WasLastWeaponskill(HeavensThrust) && GetRemainingCharges(SpineshatterDive) > 0 && !WasLastAction(SpineshatterDive) && openerOptions is 0 or 1 or 2)
+                                if (WasLastWeaponskill(VorpalThrust))
+                                {
+                                    if (openerOptions is 0 or 1)
+                                    {
+                                        if (GetRemainingCharges(LifeSurge) > 0 && !HasEffect(Buffs.LifeSurge))
+                                            return LifeSurge;
+                                        if (HasEffect(Buffs.DiveReady))
+                                            return MirageDive;
+                                    }
+
+                                    if (openerOptions is 2)
+                                    {
+                                        if (ActionReady(SpineshatterDive))
+                                            return SpineshatterDive;
+                                        if (GetRemainingCharges(LifeSurge) > 0 && !HasEffect(Buffs.LifeSurge))
+                                            return LifeSurge;
+                                    }
+                                }
+
+                                if (WasLastWeaponskill(HeavensThrust) && GetRemainingCharges(SpineshatterDive) > 0 && !WasLastAction(SpineshatterDive) && openerOptions is 0 or 1)
                                     return SpineshatterDive;
-
-                                // healing - please move if not appropriate priority
-                                if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
-                                {
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                        return All.SecondWind;
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                        return All.Bloodbath;
-                                }
                             }
                         }
 
                         if (!inOpener)
                         {
                             if (CanWeave(actionID))
-                            {                                
+                            {
                                 if (HasEffect(Buffs.PowerSurge))
                                 {
                                     //Wyrmwind Thrust Feature
@@ -241,7 +253,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         //Dives Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                         {
-                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && LevelChecked(Stardiver) && IsOffCooldown(Stardiver) && CanWeave(actionID, 1.3) && IsOnCooldown(DragonfireDive))
+                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive))
                                                 return Stardiver;
 
                                             if (diveOptions is 0 or 1 || //Dives on cooldown
@@ -275,10 +287,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return WheelingThrust;
                         if (comboTime > 0)
                         {
-                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel) && GetBuffRemainingTime(Buffs.PowerSurge) < 10)
-                                return Disembowel;
-                            if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
-                                return OriginalHook(ChaosThrust);
+                            if (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6 || GetBuffRemainingTime(Buffs.PowerSurge) < 10)
+                            {
+                                if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
+                                    return Disembowel;
+                                if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
+                                    return OriginalHook(ChaosThrust);
+                            }
+
                             if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                                 return VorpalThrust;
                             if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
@@ -300,7 +316,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is CoerthanTorment)
+                if (actionID is DoomSpike)
                 {
                     var gauge = GetJobGauge<DRGGauge>();
                     var DiveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_AOE_DiveOptions);
