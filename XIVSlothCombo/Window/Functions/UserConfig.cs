@@ -1290,10 +1290,10 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MONK
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_DisciplinedFist_Apply, "Seconds remaining before refreshing Disciplined Fist.");
 
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
@@ -1306,6 +1306,11 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode) || (preset == CustomComboPreset.MNK_ST_SimpleMode))
+            {
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_DemolishTreshhold, "Stop using Demolish on targets below this HP % (0% = normal use).", 150, SliderIncrements.Ones);
             }
 
             #endregion
