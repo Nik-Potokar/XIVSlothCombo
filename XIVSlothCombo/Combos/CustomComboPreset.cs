@@ -432,6 +432,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Opener = 2040,
 
         [ParentCombo(BLM_AdvancedMode)]
+        [ConflictingCombos(BLM_Adv_CastMovement_Xeno)]
         [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
         BLM_Adv_Transpose_Lines = 2042,
 
