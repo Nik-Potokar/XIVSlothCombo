@@ -1766,7 +1766,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(NIN_ST_AdvancedMode_TrueNorth_ArmorCrush)]
         [CustomComboInfo("Dynamic True North", "Only triggers if not in flanking position 0.7 seconds before Armour Crush.", NIN.JobID)]
-        NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic = 10031,
+        NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic = 10067,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
         [CustomComboInfo("Second Wind Option", "Adds Second Wind to Advanced Mode.", NIN.JobID)]
