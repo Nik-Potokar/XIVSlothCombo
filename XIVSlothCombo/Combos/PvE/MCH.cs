@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using static XIVSlothCombo.Combos.PvE.All;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -108,8 +109,15 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var inCombat = InCombat();
                     var gauge = GetJobGauge<MCHGauge>();
-                    
-                    var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
+						  var LastMinuteQueen = PluginConfiguration.GetCustomIntValue(Config.MCH_ST_Simple_Battery_spender_percent);
+						  var ByeQueen = PluginConfiguration.GetCustomIntValue(Config.MCH_ST_Simple_QueenOverdrive_percent);
+						  var enemyHP = GetTargetHPPercent();
+						  var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
+                    var raidbuffs = HasEffect(RaidBuffs.Arcanecircle) ||  HasEffect(RaidBuffs.Battlelitany) ||  HasEffect(RaidBuffs.Brotherhood) ||  HasEffect(RaidBuffs.BattleVoice) || HasEffect(RaidBuffs.RadiantFinale) || HasEffect(RaidBuffs.Embolden) || HasEffect(RaidBuffs.SearingLight) || HasEffect(RaidBuffs.Divination);
+                    var targethasraiddebuff = TargetHasEffect(RaidDebuffs.Mug) || TargetHasEffect(RaidDebuffs.ChainStratagem);
+                    var burstwindow = CombatEngageDuration().Minutes % 2 == 0 && CombatEngageDuration().Seconds > 5 && CombatEngageDuration().Seconds < 18;
+                    var chargesGauss = GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet);
+                    var chargesRico = GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound);
 
                     if (!inCombat)
                     {
