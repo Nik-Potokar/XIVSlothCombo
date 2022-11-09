@@ -1644,7 +1644,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Thunderclap = 9033,
 
-        [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Dynamic True North Option", "Adds True North to the main combo right before positionals if you aren't in the correct position for their bonuses.", MNK.JobID, 0, "", "")]
         MNK_TrueNorthDynamic = 9029,
 
