@@ -145,7 +145,54 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+        
+        internal class MNK_DragonKick_Bootshine : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_DragonKick_Bootshine;
 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == DragonKick)
+                {
+                    if (IsEnabled(CustomComboPreset.MNK_BootshineBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                        return OriginalHook(MasterfulBlitz);
+
+                    if (HasEffect(Buffs.LeadenFist) &&
+                        (HasEffect(Buffs.FormlessFist) ||
+                        HasEffect(Buffs.PerfectBalance) ||
+                        HasEffect(Buffs.OpoOpoForm)))
+                        return Bootshine;
+
+                    if (level < Levels.DragonKick)
+                        return Bootshine;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class MNK_TwinSnakes : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_TwinSnakes;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID == TrueStrike)
+                {
+                    var disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
+                    var disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
+
+                    if (level >= Levels.TrueStrike)
+                    {
+                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes))
+                            return TwinSnakes;
+                        return TrueStrike;
+                    }
+                }
+                return actionID;
+            }
+        }
+        
         internal class MNK_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_SimpleMode;
@@ -305,6 +352,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     return RiddleOfFire;
                                 }
+
+                                if (IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm) && TargetNeedsPositionals())
+                                {
+                                    if (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                                    {
+                                        if (!OnTargetsRear())
+                                            return All.TrueNorth;
+                                    }
+                                    else if (!OnTargetsFlank())
+                                        return All.TrueNorth;
+                                }
                             }
 
                             if (canWeave)
@@ -429,6 +487,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+        
         internal class MNK_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_AdvancedMode;
