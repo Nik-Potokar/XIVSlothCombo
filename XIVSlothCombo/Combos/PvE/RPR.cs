@@ -263,12 +263,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Lemure) && gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice))
                                 return OriginalHook(BloodStalk);
-                            if (HasEffect(Buffs.EnhancedVoidReaping))
+                            if (HasEffect(Buffs.EnhancedVoidReaping) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_VoidCross))
                                 return OriginalHook(Gibbet);
-                            if (HasEffect(Buffs.EnhancedCrossReaping))
+                            if (HasEffect(Buffs.EnhancedCrossReaping) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_VoidCross))
                                 return OriginalHook(Gallows);
 
-                            if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
+                            if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_VoidCross))
                             {
                                 if (positionalChoice is 0 or 1 or 3)
                                     return OriginalHook(Gallows);
@@ -368,7 +368,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Communio;
                         if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Lemure) && gauge.VoidShroud >= 2 && LevelChecked(LemuresScythe))
                             return OriginalHook(GrimSwathe);
-                        if (gauge.LemureShroud > 0)
+                        if (gauge.LemureShroud > 0 && IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Guillotine_GrimReaping))
                             return OriginalHook(Guillotine);
                     }
 
