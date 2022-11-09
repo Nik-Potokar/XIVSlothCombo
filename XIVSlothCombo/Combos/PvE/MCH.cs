@@ -124,17 +124,18 @@ namespace XIVSlothCombo.Combos.PvE
                         openerFinished = false;
 
                     }
-
+                    #region Simple Stabilizer feature
                     if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 55 &&
                             IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer && !WasLastWeaponskill(ChainSaw) &&
                             (wildfireCDTime <= 2 || (wildfireCDTime >= 80 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only)))) // && gauge.IsOverheated)) )
                         return BarrelStabilizer;
-
+                    #endregion Simple Stabilizer feature
+                    #region Simple interupt feature
                     if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                     {
                         return All.HeadGraze;
                     }
-
+                    #endregion Simple interupt feature
                     if (openerFinished && (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 && level >= Levels.Wildfire && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) &&
                         (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) && !WasLastWeaponskill(HeatBlast))) ) //these try to ensure the correct loops
                     {
