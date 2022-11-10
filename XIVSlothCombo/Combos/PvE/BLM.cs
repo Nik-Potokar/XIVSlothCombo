@@ -908,11 +908,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Paradox;
                                 }
 
-                                if (IsOffCooldown(All.Swiftcast) && lastComboMove == Paradox)
-                                {
-                                    return All.Swiftcast;
-                                }
-
                                 // Dump Polyglot Stacks
                                 if (Gauge.HasPolyglotStacks() && Gauge.ElementTimeRemaining >= 6000)
                                 {
@@ -926,6 +921,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 if (lastComboMove == Thunder3)
+                                {
+                                    return currentMP == MP.MaxMP ? All.Swiftcast : Blizzard4;
+                                }
+
+                                if (IsOnCooldown(All.Swiftcast) && lastComboMove == Blizzard4)
                                 {
                                     return Transpose;
                                 }
