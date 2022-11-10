@@ -114,12 +114,22 @@ namespace XIVSlothCombo.Combos.PvE
 						  var ByeQueen = PluginConfiguration.GetCustomIntValue(Config.MCH_ST_Simple_QueenOverdrive_percent);
 						  var enemyHP = GetTargetHPPercent();
 						  var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
-                    var raidbuffs = HasEffect(RaidBuffs.Arcanecircle) ||  HasEffect(RaidBuffs.Battlelitany) ||  HasEffect(RaidBuffs.Brotherhood) ||  HasEffect(RaidBuffs.BattleVoice) || HasEffect(RaidBuffs.RadiantFinale) || HasEffect(RaidBuffs.Embolden) || HasEffect(RaidBuffs.SearingLight) || HasEffect(RaidBuffs.Divination);
-                    var potionBuff = HasEffect(All.Buffs.Medicated);
+                    var raidbuffs = (HasEffect(RaidBuffs.Arcanecircle) && GetBuffRemainingTime(RaidBuffs.Arcanecircle) > 10)
+                                 || (HasEffect(RaidBuffs.Battlelitany) && GetBuffRemainingTime(RaidBuffs.Battlelitany) > 10)
+                                 || (HasEffect(RaidBuffs.Brotherhood) && GetBuffRemainingTime(RaidBuffs.Brotherhood) > 10)
+                                 || (HasEffect(RaidBuffs.BattleVoice) && GetBuffRemainingTime(RaidBuffs.BattleVoice) > 10)
+                                 || (HasEffect(RaidBuffs.RadiantFinale) && GetBuffRemainingTime(RaidBuffs.RadiantFinale) > 10)
+                                 || (HasEffect(RaidBuffs.Embolden) && GetBuffRemainingTime(RaidBuffs.Embolden) > 10)
+                                 || (HasEffect(RaidBuffs.SearingLight) && GetBuffRemainingTime(RaidBuffs.SearingLight) > 10)
+                                 || (HasEffect(RaidBuffs.Divination) && GetBuffRemainingTime(RaidBuffs.Divination) > 10);
+                    var potionBuff = HasEffect(All.Buffs.Medicated) && GetBuffRemainingTime(All.Buffs.Medicated) > 14;
+                    var targethasBOTHraiddebuff = TargetHasEffect(RaidDebuffs.Mug) && TargetHasEffect(RaidDebuffs.ChainStratagem);
                     var targethasraiddebuff = TargetHasEffect(RaidDebuffs.Mug) || TargetHasEffect(RaidDebuffs.ChainStratagem);
-                    var burstwindow = CombatEngageDuration().Minutes % 2 == 0 && CombatEngageDuration().Seconds > 5 && CombatEngageDuration().Seconds < 18;
+                    var burstwindow = CombatEngageDuration().Minutes % 2 == 0 && CombatEngageDuration().Seconds > 6 && CombatEngageDuration().Seconds < 16;
                     var chargesGauss = GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet);
                     var chargesRico = GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound);
+                    var MaxGaussCharge =  GetMaxCharges(GaussRound) >= 2;
+                    var MaxRicoCharge = GetMaxCharges(Ricochet) >= 2;
 
                     if (!inCombat)
                     {
@@ -189,31 +199,41 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion MCH_ST_Simple_Gadget (sloth)
 
                     #region MCH_ST_Simple_Gadget
-                    if (CanWeave(actionID) && openerFinished && gauge.Battery >= 50 && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && level >= Levels.RookOverdrive && CanWeave(actionID) && gauge.Battery >= 50 && (openerFinished = true && !gauge.IsRobotActive))
 					     {
-						   if (level >= Levels.RookOverdrive && CombatEngageDuration().Minutes == 0 && WasLastAction(ChainSaw))
+						   if ( CombatEngageDuration().Minutes == 0 && WasLastAction(ChainSaw))
 						   {
 							   return OriginalHook(RookAutoturret);
 						   }
-
-						   else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && burstwindow && targethasraiddebuff || raidbuffs || potionBuff)
+						   else if (gauge.Battery == 100 && (!WasLastAction(HeatedCleanShot) || !WasLastAction(CleanShot)) 
+                           && (IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 3) && (IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 3) )
 						   {
 							   return OriginalHook(RookAutoturret);
 						   }
-						   else if (level >= Levels.RookOverdrive && gauge.Battery == 100 && !WasLastAction(HeatedCleanShot) || !WasLastAction(CleanShot) )
+						   else if (burstwindow && potionBuff && (targethasBOTHraiddebuff || (targethasraiddebuff && raidbuffs)) || (targethasraiddebuff || raidbuffs))
 						   {
 							   return OriginalHook(RookAutoturret);
 						   }
-						   else if (level >= Levels.RookOverdrive && CombatEngageDuration().Seconds > 06 && CombatEngageDuration().Seconds <= 15 && CombatEngageDuration().Minutes % 2 == 0)
+						   else if (burstwindow)
 						   {                                                                                                                                                                                                                                                                                                                                                                                               //Queen is used to allign with raidbuffs
 							   return OriginalHook(RookAutoturret);
 						   }
-						   else if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Battery_spender_percent) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && enemyHP <= LastMinuteQueen && IsOffCooldown(AutomatonQueen))
+						   else if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Battery_spender_percent) && enemyHP <= LastMinuteQueen && IsOffCooldown(AutomatonQueen))
 						   {
 							   return OriginalHook(RookAutoturret);
 						   }
                     }
                     #endregion MCH_ST_Simple_Gadget
+
+                    #region Gauss/Rico behaivor outside hypercharge window
+						  if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanDelayedWeave(actionID, 2.0f, 0.8f) && !gauge.IsOverheated)
+						  {
+						      if (HasCharges(GaussRound) && (level >= Levels.Ricochet && chargesGauss))
+								   return GaussRound;
+							   else if (HasCharges(Ricochet) && level >= Levels.Ricochet && chargesRico)
+								   return Ricochet;
+						  }
+						  #endregion Gauss/Rico behaivor outside hypercharge window
 
                     #region MCH_ST_Simple_GaussRicochet & = IsOverheated
                     if (gauge.IsOverheated && level >= Levels.HeatBlast)
@@ -236,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && reasmCharges >= 1 && GetCooldownRemainingTime(Drill) <= 2)
                                 ))
                                 return Reassemble;
-                            else if ( (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)) || chargesGauss ) 
+                            else if ( (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)) || chargesGauss || gaussMaxCharges) 
                                        ||
                                        (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && gaussCharges >= gaussMaxCharges - 1 ) )
                             {
@@ -369,6 +389,11 @@ namespace XIVSlothCombo.Combos.PvE
             #region UseHypercharge
             private bool UseHypercharge(MCHGauge gauge, float wildfireCDTime)
             {
+                var burstwindow = CombatEngageDuration().Minutes % 2 == 0 && CombatEngageDuration().Seconds > 6 && CombatEngageDuration().Seconds < 16;
+                var raidbuffs = HasEffect(RaidBuffs.Arcanecircle) ||  HasEffect(RaidBuffs.Battlelitany) ||  HasEffect(RaidBuffs.Brotherhood) ||  HasEffect(RaidBuffs.BattleVoice) || HasEffect(RaidBuffs.RadiantFinale) || HasEffect(RaidBuffs.Embolden) || HasEffect(RaidBuffs.SearingLight) || HasEffect(RaidBuffs.Divination);
+                var potionBuff = HasEffect(All.Buffs.Medicated) && GetBuffRemainingTime(All.Buffs.Medicated) > 14;
+                var targethasraiddebuff = TargetHasEffect(RaidDebuffs.Mug) || TargetHasEffect(RaidDebuffs.ChainStratagem);
+               
                 uint wfTimer = 5; //default timer
                 if (LocalPlayer.Level < Levels.BarrelStabilizer) wfTimer = 12; // just a little space to breathe and not delay the WF too much while you don't have access to the Barrel Stabilizer
 
@@ -385,7 +410,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
                     }
 
-                    if (CombatEngageDuration().Minutes % 2 == 0)
+                    if (gauge.Battery >= 50 && burstwindow && (targethasraiddebuff || raidbuffs) || potionBuff)
                     {
                         return true;
                     }
