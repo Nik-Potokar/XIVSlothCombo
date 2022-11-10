@@ -71,7 +71,7 @@ namespace XIVSlothCombo.Window.Functions
 
             UserConfigItems.Draw(preset, enabled);
 
-            if (preset == CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener || preset == CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener)
+            if (preset == CustomComboPreset.NIN_ST_SimpleMode || preset == CustomComboPreset.NIN_ST_AdvancedMode)
             {
                 ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
                 if (ImGui.Button($"Image of rotation###ninrtn{i}"))
@@ -79,6 +79,168 @@ namespace XIVSlothCombo.Window.Functions
                     Util.OpenLink("https://i.imgur.com/q3lXeSZ.png");
                 }
             }
+
+				if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###mnkrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/C5lQhpe.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.AST_ST_DPS)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###astrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/kc55j4l.jpg");
+				}
+			}
+
+				if (preset == CustomComboPreset.BRD_ST_SimpleMode)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###brdrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/9DByoqX.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.BLM_SimpleMode || preset == CustomComboPreset.BLM_Simple_Opener || preset == CustomComboPreset.BLM_Simple_Transpose)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###blmrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/SUCx9g9.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.DNC_ST_SimpleMode)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###dncrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/UmEGDGR.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.DRK_SouleaterCombo)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###drkrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/QdBsQzA.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.DRG_ST_Opener)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###drgrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/hVm8Rwl.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.GNB_ST_MainCombo)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###gnbrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/EEU0YWy.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.MCH_ST_SimpleMode)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###mchrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/1DsgLAQ.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.PLD_ST_RoyalAuth)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###pldrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/Yf34qdj.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.RPR_ST_SliceCombo)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###rprrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/jyqYKSy.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.RDM_Balance_Opener)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###rdmrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/CBVDi07.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.SGE_ST_DPS)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###sgertn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/0uHdVeF.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.SAM_ST_GekkoCombo)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###samrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/wngT2Ar.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.SCH_DPS)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###schrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/JzYRqjO.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.SMN_Simple_Combo)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###smnrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/mboSORP.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.WAR_ST_StormsPath)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###warrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/2fehGXL.png");
+				}
+			}
+
+				if (preset == CustomComboPreset.WHM_ST_MainCombo)
+			{
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
+				if (ImGui.Button($"Image of rotation###whmrtn{i}"))
+				{
+					Util.OpenLink("https://i.imgur.com/VtQBAzP.png");
+				}
+			}
 
             if (conflicts.Length > 0)
             {
