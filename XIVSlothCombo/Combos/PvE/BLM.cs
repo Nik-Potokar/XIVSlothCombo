@@ -1167,11 +1167,11 @@ namespace XIVSlothCombo.Combos.PvE
                                         return Thunder3;
                                     }
 
-                                    if (Gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
+                                   /* if (Gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                     {
                                         return Xenoglossy;
 
-                                    }
+                                    }*/
                                 }
                             }
                         }
