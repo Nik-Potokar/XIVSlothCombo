@@ -11,62 +11,89 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte JobID = 31;
 
         public const uint
-            RookAutoturret = 2864,
+            // Single Target
             SplitShot = 2866,
-            SlugShot = 2868,
-            SpreadShot = 2870,
-            HotShot = 2872,
-            CleanShot = 2873,
-            GaussRound = 2874,
-            Reassemble = 2876,
-            Wildfire = 2878,
-            Ricochet = 2890,
             HeatedSlugshot = 7412,
+            SlugShot = 2868,
+            CleanShot = 2873,
+            HotShot = 2872,
             HeatBlast = 7410,
             HeatedSplitShot = 7411,
             HeatedCleanShot = 7413,
-            BarrelStabilizer = 7414,
-            RookOverdrive = 7415,
-            Peloton = 7557,
-            AutoCrossbow = 16497,
             Drill = 16498,
-            BioBlaster = 16499,
             AirAnchor = 16500,
+            Detonator = 16766,
+            Hypercharge = 17209,
+            // AoE
+            SpreadShot = 2870,
+            RookAutoturret = 2864,
+            AutoCrossbow = 16497,
+            Scattergun = 25786,
+            ChainSaw = 25788,
+            // oGCD
+            GaussRound = 2874,
+            Ricochet = 2890,
+            // Summons
+            RookOverdrive = 7415,
             AutomatonQueen = 16501,
             QueenOverdrive = 16502,
-		      Detonator = 16766,
+            // Buffs
+            Reassemble = 2876,
+            BarrelStabilizer = 7414,
+            Peloton = 7557,
             Tactician = 16889,
-            Hypercharge = 17209,
-            Scattergun = 25786,
-            ChainSaw = 25788;
+            // Debuffs
+            Wildfire = 2878,
+            BioBlaster = 16499;
+
+            
 
         public static class Buffs
         {
             public const ushort
+                // Buff
                 Reassembled = 851,
+                // Debuff
+                Wildfire = 1946,
+                // Other
                 Peloton = 1199,
-                Tactician = 1951,
-                Wildfire = 1946;
+                Tactician = 1951;
         }
 
         public static class Debuffs
         {
             public const ushort
 				   Wildfire = 861;
-               // public const short placeholder = 0;
         }
+
+         /*
+        public static class Debuffs
+        {
+            public const short placeholder = 0;
+        }
+         */
+
         public static class Config
         {
+            #region Simple ST Sliders
             public const string
-                MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
-                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
+                MCH_ST_SecondWindThreshold            = "MCH_ST_SecondWindThreshold";                    //Second Wind Threshold [ST]
+            public const string
+				    MCH_ST_Simple_Battery_spender_percent = "Percent HP, use 'Automaton Queen'";             // Force Summon Queen at enemy HP Treshold [ST]
+            public const string
+				    MCH_ST_Simple_QueenOverdrive_percent  = "Percent HP, use 'Queen Overdrive'";             // Queen Overdrive threshold [ST]
+            #endregion Simple ST Sliders
 
-				    MCH_ST_Simple_Battery_spender_percent = "Percent HP, use 'Automaton Queen'",
-				    MCH_ST_Simple_QueenOverdrive_percent = "Percent HP, use 'Queen Overdrive'",
-
-				    MCH_AoE_Simple_Battery_Threshold = "MCH_AoE_Simple_Battery_Threshold",
-				    MCH_AoE_Simple_Bioblaster_threshold = "MCH_AoE_Simple_Bioblaster_threshold",
-				    MCH_AoE_Simple_Hypercharge_threshold = "MCH_AoE_Simple_Hypercharge_threshold";
+            #region Simple AoE Sliders
+            public const string
+                MCH_AoE_SecondWindThreshold           = "MCH_AoE_SecondWindThreshold";                   //Second Wind Threshold [AoE]
+            public const string
+				    MCH_AoE_Simple_Hypercharge_threshold  = "MCH_AoE_Simple_Hypercharge_threshold";          // AoE Hypercharge threshold [Aoe]
+            public const string
+				    MCH_AoE_Simple_Battery_Threshold      = "MCH_AoE_Simple_Battery_Threshold";              // Battery gauge threshold. [AoE]
+            public const string
+				    MCH_AoE_Simple_Bioblaster_threshold   = "MCH_AoE_Simple_Bioblaster_threshold";           // BioBlaster threshold [AoE]
+            #endregion Simple AoE Sliders
         }
 
         public static class Levels
