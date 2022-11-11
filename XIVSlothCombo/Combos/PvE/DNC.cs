@@ -504,14 +504,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    // ST combos and burst attacks
-                    if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime is < 2 and > 0)
-                        return Fountain;
-
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
+
+                    // ST combos and burst attacks
+                    if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime is < 2 and > 0)
+                        return Fountain;
 
                     // ST Standard Step (inside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
@@ -646,14 +646,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    // AoE combos and burst attacks
-                    if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime is < 2 and > 0)
-                        return Bladeshower;
-
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
+
+                    // AoE combos and burst attacks
+                    if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime is < 2 and > 0)
+                        return Bladeshower;
 
                     // AoE Standard Step (inside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
