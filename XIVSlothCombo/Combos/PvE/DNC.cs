@@ -391,7 +391,6 @@ namespace XIVSlothCombo.Combos.PvE
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    bool interruptable = CanInterruptEnemy() && ActionReady(All.HeadGraze);
                     #endregion
 
                     #region Pre-pull
@@ -420,7 +419,8 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Weaves
                     // ST Devilment
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) &&
-                        CanWeave(actionID) && ActionReady(Devilment) && (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                        CanWeave(actionID) && ActionReady(Devilment) &&
+                        (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // ST Flourish
@@ -432,7 +432,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
-                        interruptable && !HasEffect(Buffs.TechnicalFinish))
+                        CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
+                        !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
                     if (CanWeave(actionID))
@@ -545,7 +546,6 @@ namespace XIVSlothCombo.Combos.PvE
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    bool interruptable = CanInterruptEnemy() && ActionReady(All.HeadGraze);
                     #endregion
 
                     #region Dance Fills
@@ -567,7 +567,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Weaves
                     // AoE Devilment
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
-                        CanWeave(actionID) && ActionReady(Devilment) && 
+                        CanWeave(actionID) && ActionReady(Devilment) &&
                         (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
@@ -580,7 +580,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Interrupt) &&
-                        interruptable && !HasEffect(Buffs.TechnicalFinish))
+                        CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
+                        !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
                     if (CanWeave(actionID))
