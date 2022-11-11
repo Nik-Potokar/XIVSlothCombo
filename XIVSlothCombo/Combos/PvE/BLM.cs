@@ -778,7 +778,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.BLM_Adv_Opener) && LevelChecked(Xenoglossy))
                     {
                         // Only enable sharpcast if it's available
-                        if (!inOpener && !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && lastComboMove != Thunder3 && LevelChecked(Sharpcast))
+                        if (!inOpener && !HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast) && lastComboMove != Thunder3)
                         {
                             return Sharpcast;
                         }
@@ -823,37 +823,37 @@ namespace XIVSlothCombo.Combos.PvE
                                     // Weave Amplifier and Ley Lines
                                     if (lastComboMove == Fire4 && (GetBuffStacks(Buffs.Triplecast) == 1))
                                     {
-                                        if (ActionReady(Amplifier) && LevelChecked(Amplifier) && Gauge.PolyglotStacks < 2)
+                                        if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
                                         {
                                             return Amplifier;
                                         }
-                                        if (ActionReady(LeyLines) && LevelChecked(LeyLines))
+                                        if (ActionReady(LeyLines))
                                         {
                                             return LeyLines;
                                         }
                                     }
+                                }
+                                   
+                                // Manafont  
+                                if (ActionReady(Manafont) && (lastComboMove == Despair))
+                                { 
+                                    return Manafont;
+                                }
 
-                                    // Lucid Dreaming     
-                                    if (IsOffCooldown(All.LucidDreaming) && lastComboMove == Triplecast && currentMP < MP.Fire && LevelChecked(All.LucidDreaming))
-                                    {
-                                        return All.LucidDreaming;
-                                    }
+                                // Second Triplecast
+                                if ((GetBuffStacks(Buffs.Triplecast) == 0) && ActionReady(Triplecast) && lastComboMove == Fire4)
+                                {
+                                    return Triplecast;
+                                }
 
-                                    // Manafont
-                                    if (IsOffCooldown(Manafont) && (lastComboMove == Despair) && LevelChecked(Manafont))
-                                    {
-                                        return Manafont;
-                                    }
-
-                                    // Second Triplecast
-                                    if ((GetBuffStacks(Buffs.Triplecast) == 0) && HasCharges(Triplecast) && lastComboMove == Fire4 && LevelChecked(Triplecast))
-                                    {
-                                        return Triplecast;
-                                    }
+                                // Lucid Dreaming
+                                if (ActionReady(All.LucidDreaming) && lastComboMove == Fire4 && currentMP < MP.Fire)
+                                {
+                                    return All.LucidDreaming;
                                 }
 
                                 //Sharpcast
-                                if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && IsOnCooldown(Manafont) && lastComboMove == Fire4 && LevelChecked(Sharpcast))
+                                if (!HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast) && !ActionReady(Manafont) && lastComboMove == Fire4)
                                 {
                                     return Sharpcast;
                                 }
@@ -871,7 +871,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Cast Fire 4 after Manafont
-                                if (IsOnCooldown(Manafont) && (GetCooldownRemainingTime(Manafont) >= 179) || (GetCooldownRemainingTime(Manafont) >= 119))
+                                if (!ActionReady(Manafont) && (GetCooldownRemainingTime(Manafont) >= 179) || (GetCooldownRemainingTime(Manafont) >= 119))
                                 {
                                     return Fire4;
                                 }
@@ -883,9 +883,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Use Transpose lines opener F3 - Single Transpose variation, double weave version
-                                if (currentMP < MP.Fire && lastComboMove != Fire4 && IsOnCooldown(Manafont) && GetCooldownRemainingTime(Manafont) <= 118)
+                                if (currentMP < MP.Fire && lastComboMove != Fire4 && !ActionReady(Manafont) && GetCooldownRemainingTime(Manafont) <= 118)
                                 {
-                                    if (IsOffCooldown(All.Swiftcast))
+                                    if (ActionReady(All.Swiftcast))
                                     {
                                         return Transpose;
                                     }
@@ -908,6 +908,11 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Paradox;
                                 }
 
+                                if (ActionReady(All.Swiftcast) && lastComboMove == Paradox)
+                                {
+                                    return All.Swiftcast;
+                                }
+
                                 // Dump Polyglot Stacks
                                 if (Gauge.HasPolyglotStacks() && Gauge.ElementTimeRemaining >= 6000)
                                 {
@@ -915,17 +920,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Refresh Thunder3
-                                if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3 && HasEffect(Buffs.Sharpcast))
+                                if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3)
                                 {
                                     return Thunder3;
                                 }
 
-                                if (lastComboMove == Thunder3)
-                                {
-                                    return currentMP == MP.MaxMP ? All.Swiftcast : Blizzard4;
-                                }
-
-                                if (IsOnCooldown(All.Swiftcast) && lastComboMove == Blizzard4)
+                                if (lastComboMove == Thunder3 && currentMP == MP.MaxMP)
                                 {
                                     return Transpose;
                                 }
