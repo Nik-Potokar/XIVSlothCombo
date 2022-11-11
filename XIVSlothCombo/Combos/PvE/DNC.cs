@@ -394,11 +394,14 @@ namespace XIVSlothCombo.Combos.PvE
                     bool interruptable = CanInterruptEnemy() && ActionReady(All.HeadGraze);
                     #endregion
 
+                    #region Pre-pull
                     // ST Peloton
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Peloton) &&
                         !InCombat() && !HasEffectAny(Buffs.Peloton) && GetBuffRemainingTime(Buffs.StandardStep) > 5)
                         return Peloton;
+                    #endregion
 
+                    #region Dance Fills
                     // ST Standard (Dance) Steps & Fill
                     if (HasEffect(Buffs.StandardStep) &&
                         (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)))
@@ -412,7 +415,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
                             : TechnicalFinish4;
+                    #endregion
 
+                    #region Weaves
                     // ST Devilment
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) &&
                         CanWeave(actionID) && ActionReady(Devilment) && (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
@@ -471,7 +476,9 @@ namespace XIVSlothCombo.Combos.PvE
                             ActionReady(Improvisation))
                             return Improvisation;
                     }
+                    #endregion
 
+                    #region GCD
                     // ST Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
@@ -519,6 +526,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return ReverseCascade;
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime > 0)
                         return Fountain;
+                    #endregion
                 }
 
                 return actionID;
@@ -540,6 +548,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool interruptable = CanInterruptEnemy() && ActionReady(All.HeadGraze);
                     #endregion
 
+                    #region Dance Fills
                     // AoE Standard (Dance) Steps & Fill
                     if (HasEffect(Buffs.StandardStep) &&
                         (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)))
@@ -553,7 +562,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
                             : TechnicalFinish4;
+                    #endregion
 
+                    #region Weaves
                     // AoE Devilment
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
                         CanWeave(actionID) && ActionReady(Devilment) && 
@@ -607,7 +618,9 @@ namespace XIVSlothCombo.Combos.PvE
                             ActionReady(Improvisation))
                             return Improvisation;
                     }
+                    #endregion
 
+                    #region GCD
                     // AoE Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
@@ -655,6 +668,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return RisingWindmill;
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime > 0)
                         return Bladeshower;
+                    #endregion
                 }
 
                 return actionID;
