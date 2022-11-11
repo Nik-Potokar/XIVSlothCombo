@@ -449,7 +449,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return FanDance1;
 
                             // Burst FD1
-                            if (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0))
+                            if ((gauge.Feathers > minFeathers) ||
+                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0))
                                 return FanDance1;
                         }
 
@@ -582,7 +583,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
-                            if (LevelChecked(FanDance2) && (gauge.Feathers > minFeathers || (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)))
+
+                            if ((gauge.Feathers > minFeathers ||
+                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)) &&
+                                LevelChecked(FanDance2))
                                 return FanDance2;
                         }
 
