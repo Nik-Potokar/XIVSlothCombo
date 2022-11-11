@@ -418,6 +418,13 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID) && ActionReady(Devilment) && (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
+                    // ST Flourish
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) &&
+                        CanWeave(actionID, 0.5) && ActionReady(Flourish) &&
+                        !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) &&
+                        !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
+                        return Flourish;
+
                     // ST Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
                         interruptable && !HasEffect(Buffs.TechnicalFinish))
@@ -431,13 +438,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanWeave(actionID))
                     {
-                        // ST Flourish
-                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) &&
-                            ActionReady(Flourish) &&
-                            !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) &&
-                            !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
-                            return Flourish;
-
                         // ST Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Feathers) && LevelChecked(FanDance1))
                         {
@@ -559,6 +559,13 @@ namespace XIVSlothCombo.Combos.PvE
                         (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
+                    // AoE Flourish
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) &&
+                        CanWeave(actionID, 0.5) && ActionReady(Flourish)
+                        && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) &&
+                        !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
+                        return Flourish;
+
                     // AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Interrupt) &&
                         interruptable && !HasEffect(Buffs.TechnicalFinish))
@@ -569,13 +576,6 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && ActionReady(TechnicalStep) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
-
-                    // AoE Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) &&
-                        CanWeave(actionID) && ActionReady(Flourish)
-                        && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) &&
-                        !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
-                        return Flourish;
 
                     if (CanWeave(actionID))
                     {
