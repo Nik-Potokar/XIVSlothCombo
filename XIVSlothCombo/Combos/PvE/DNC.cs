@@ -430,12 +430,6 @@ namespace XIVSlothCombo.Combos.PvE
                         interruptable && !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // ST Technical Step
-                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
-                        IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) &&
-                        ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep))
-                        return TechnicalStep;
-
                     if (CanWeave(actionID))
                     {
                         // ST Feathers & Fans
@@ -485,6 +479,12 @@ namespace XIVSlothCombo.Combos.PvE
                             (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
                             return StandardStep;
                     }
+
+                    // ST Technical Step
+                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
+                        IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) &&
+                        ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep))
+                        return TechnicalStep;
 
                     // ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
@@ -571,12 +571,6 @@ namespace XIVSlothCombo.Combos.PvE
                         interruptable && !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // AoE Technical Step
-                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent)) &&
-                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && ActionReady(TechnicalStep) &&
-                        !HasEffect(Buffs.StandardStep))
-                        return TechnicalStep;
-
                     if (CanWeave(actionID))
                     {
                         // AoE Feathers & Fans
@@ -618,6 +612,12 @@ namespace XIVSlothCombo.Combos.PvE
                             (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
                             return StandardStep;
                     }
+
+                    // AoE Technical Step
+                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent)) &&
+                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && ActionReady(TechnicalStep) &&
+                        !HasEffect(Buffs.StandardStep))
+                        return TechnicalStep;
 
                     // AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
