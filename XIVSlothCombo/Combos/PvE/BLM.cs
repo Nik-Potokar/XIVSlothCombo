@@ -169,7 +169,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Flare)
                 {
                     var currentMP = LocalPlayer.CurrentMp;
-                    var polyToStore = PluginConfiguration.GetCustomIntValue(Config.BLM_PolyglotsStored);
 
                     // Only enable sharpcast if it's available
                     if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && lastComboMove != Thunder3)
@@ -1232,7 +1231,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (Gauge.InUmbralIce)
                     {
                         //Xenoglossy overcap protection
-                        if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy) && Gauge.InUmbralIce)
+                        if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
                         {
                             return Xenoglossy;
                         }
