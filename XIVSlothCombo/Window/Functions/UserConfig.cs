@@ -11,11 +11,128 @@ using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using Dalamud.Interface;
+using Lumina.Data.Parsing;
+using Dalamud.Interface.Components;
 
 namespace XIVSlothCombo.Window.Functions
 {
     public static class UserConfig
     {
+        /// <summary>
+        /// Round (i) Image with a tooltip
+        /// </summary>
+        /// <param name="desc">What gets shown on hover</param>
+        public static void HelpMarker(string desc)
+        {
+            if (desc.Length == 0)
+                return;
+
+            ImGuiComponents.HelpMarker(desc);
+        }
+
+      /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
+      /// <param name="minValue"> The absolute minimum value you'll let the user pick. </param>
+      /// <param name="maxValue"> The absolute maximum value you'll let the user pick. </param>
+      /// <param name="config"> The config ID. </param>
+      /// <param name="optionName"> Name of the Option</param>
+      /// <param name="sliderDescription"> Shows Description of the slider when hovering over the Round (i) Image. </param>
+      /// <param name="itemWidth"> How long the slider should be. </param>
+      /// <param name="sliderIncrement"> How much you want the user to increment the slider by. Uses SliderIncrements as a preset. </param>
+      /// <param name="hasAdditionalChoice">True if this config can trigger additional configs depending on value.</param>
+      /// <param name="additonalChoiceCondition">What the condition is to convey to the user what triggers it.</param>
+      public static void DrawNEWSliderInt(int minValue, int maxValue, string config, string optionName, string sliderDescription, float itemWidth = 100, uint sliderIncrement = SliderIncrements.Ones, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
+        {
+            int output = PluginConfiguration.GetCustomIntValue(config, minValue);
+            if (output < minValue)
+            {
+                output = minValue;
+                PluginConfiguration.SetCustomIntValue(config, output);
+                Service.Configuration.Save();
+            }
+
+            //sliderDescription = sliderDescription.Replace("%", "%%");
+            float contentRegionMin = ImGui.GetItemRectMax().Y - ImGui.GetItemRectMin().Y;
+            float wrapPos = ImGui.GetContentRegionMax().X - 35f;
+
+            InfoBox box = new()
+            {
+                Color = Colors.White,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                {
+                    bool inputChanged = false;
+                    Vector2 currentPos = ImGui.GetCursorPos();
+                    ImGui.SetCursorPosX(currentPos.X + itemWidth);
+                    ImGui.PushTextWrapPos(wrapPos);
+                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
+                    ImGui.Spacing();
+                    Vector2 height = ImGui.GetItemRectSize();
+                    float lines = (height.Y / ImGui.GetFontSize());
+                    string newLines = "";
+                    for (int i = 1; i < lines; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            newLines += "\n";
+                        }
+                        else
+                        {
+                            newLines += "\n\n";
+                        }
+
+                    }
+
+                    if (hasAdditionalChoice)
+                    {
+                        ImGui.SameLine();
+                        ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                        ImGui.PushFont(UiBuilder.IconFont);
+                        ImGui.Dummy(new Vector2(5, 0));
+                        ImGui.SameLine();
+                        ImGui.TextWrapped($"{FontAwesomeIcon.Search.ToIconString()}");
+                        ImGui.PopFont();
+                        ImGui.PopStyleColor();
+
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.BeginTooltip();
+                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            ImGui.EndTooltip();
+                        }
+                    }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopTextWrapPos();
+                    ImGui.SameLine();
+                    ImGui.SetCursorPosX(currentPos.X);
+                    ImGui.PushItemWidth(itemWidth);
+                    inputChanged |= ImGui.SliderInt($"{newLines}###{config}", ref output, minValue, maxValue);
+
+                    if (inputChanged)
+                    {
+                        if (output % sliderIncrement != 0)
+                        {
+                            output = output.RoundOff(sliderIncrement);
+                            if (output < minValue) output = minValue;
+                            if (output > maxValue) output = maxValue;
+                        }
+
+                        PluginConfiguration.SetCustomIntValue(config, output);
+                        Service.Configuration.Save();
+                    }
+                }
+            };
+
+            ImGui.Indent(10);
+            ImGui.TextColored(ImGuiColors.ParsedPink, $"{optionName}"); ImGui.SameLine(); HelpMarker($"{sliderDescription}");
+            box.Draw();
+            ImGui.Spacing();
+            ImGui.Unindent(10);
+        }
         /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
         /// <param name="minValue"> The absolute minimum value you'll let the user pick. </param>
         /// <param name="maxValue"> The absolute maximum value you'll let the user pick. </param>
@@ -112,7 +229,6 @@ namespace XIVSlothCombo.Window.Functions
                     }
                 }
             };
-
             box.Draw();
             ImGui.Spacing();
         }
@@ -1286,6 +1402,16 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+            
+            if (preset is CustomComboPreset.MCH_ST_Simple_Gadget && enabled)
+                UserConfig.DrawNEWSliderInt(0, 15, MCH.Config.MCH_ST_Simple_GadgetThreshold, "Automaton Threshold " ,"Stops using Automaton Queen if EnemyHP is ...%", 120, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.MCH_ST_Simple_WildCharge && enabled)
+            { 
+                UserConfig.DrawNEWSliderInt(0, 15, MCH.Config.MCH_ST_Simple_WildFireThreshold, "Wildfire Threshold ", "Stops using Wildfire if EnemyHP is ...%", 120, SliderIncrements.Ones); 
+                UserConfig.DrawNEWSliderInt(0, 15, MCH.Config.MCH_ST_Simple_HyperChargeThreshold, "Hypercharge Threshold ", "Stops using Hypercharge if EnemyHP is ...%", 120, SliderIncrements.Ones);
+            }
+
             #endregion
             // ====================================================================================
             #region MONK
