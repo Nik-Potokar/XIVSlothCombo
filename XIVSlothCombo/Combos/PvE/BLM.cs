@@ -925,7 +925,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Thunder3;
                                 }
 
-                                if (lastComboMove == Thunder3 && currentMP == MP.MaxMP)
+                                if (lastComboMove == Thunder3)
                                 {
                                     return Transpose;
                                 }
@@ -1238,7 +1238,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //sharpcast
-                        if (HasCharges(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
+                        if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
                         {
                             return Sharpcast;
                         }
