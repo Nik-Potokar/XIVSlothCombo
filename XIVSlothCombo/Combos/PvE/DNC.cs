@@ -466,9 +466,12 @@ namespace XIVSlothCombo.Combos.PvE
                         // ST Panic Heals
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_PanicHeals))
                         {
-                            if (ActionReady(CuringWaltz) && PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent))
+                            if (ActionReady(CuringWaltz) &&
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent))
                                 return CuringWaltz;
-                            if (ActionReady(All.SecondWind) && PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent))
+
+                            if (ActionReady(All.SecondWind) &&
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent))
                                 return All.SecondWind;
                         }
 
@@ -608,9 +611,12 @@ namespace XIVSlothCombo.Combos.PvE
                         // AoE Panic Heals
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_PanicHeals))
                         {
-                            if (ActionReady(CuringWaltz) && PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWaltzPercent))
+                            if (ActionReady(CuringWaltz) &&
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWaltzPercent))
                                 return CuringWaltz;
-                            if (ActionReady(All.SecondWind) && PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent))
+
+                            if (ActionReady(All.SecondWind) &&
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent))
                                 return All.SecondWind;
                         }
 
