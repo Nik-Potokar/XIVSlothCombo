@@ -423,15 +423,6 @@ namespace XIVSlothCombo.Combos.PvE
                         interruptable && !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // ST Standard Step
-                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep))
-                    {
-                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
-                        ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 10) &&
-                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5)) || InCombat())
-                        return StandardStep;
-                    }
-
                     // ST Technical Step
                     if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) &&
@@ -486,6 +477,15 @@ namespace XIVSlothCombo.Combos.PvE
                             return Improvisation;
                     }
 
+                    // ST Standard Step (outside of burst)
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    {
+                        if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
+                            ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            return StandardStep;
+                    }
+
                     // ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
@@ -503,6 +503,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return StarfallDance;
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
+
+                    // ST Standard Step (inside of burst)
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
+                    {
+                        if (GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent) &&
+                            (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
+                            return StandardStep;
+                    }
 
                     if (LevelChecked(Fountainfall) && flow)
                         return Fountainfall;
@@ -556,16 +564,6 @@ namespace XIVSlothCombo.Combos.PvE
                         interruptable && !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // AoE Standard Step
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep))
-                    {
-                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
-                        ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 10) &&
-                        ((!HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.TechnicalFinish)) || GetBuffRemainingTime(Buffs.TechnicalFinish) > 5)) ||
-                        (InCombat() && ActionReady(StandardStep)))
-                        return StandardStep;
-                    }
-
                     // AoE Technical Step
                     if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent)) &&
                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && ActionReady(TechnicalStep) &&
@@ -612,6 +610,15 @@ namespace XIVSlothCombo.Combos.PvE
                             return Improvisation;
                     }
 
+                    // AoE Standard Step (outside of burst)
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    {
+                        if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
+                            ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            return StandardStep;
+                    }
+
                     // AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
@@ -629,6 +636,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return StarfallDance;
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
+
+                    // AoE Standard Step (inside of burst)
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
+                    {
+                        if (GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent) &&
+                            (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
+                            return StandardStep;
+                    }
 
                     if (LevelChecked(Bloodshower) && flow)
                         return Bloodshower;
