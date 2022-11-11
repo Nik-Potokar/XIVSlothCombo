@@ -52,7 +52,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
-                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold";
+                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
+                MCH_ST_QueenThreshold = "MCH_ST_QueenThreshold";
         }
 
         public static class Levels
@@ -444,14 +445,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     }
 
-                    if (CanWeave(actionID) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire))
+                    if (CanWeave(actionID, 0.6) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && (wildfireCDTime >= 2 &&
+                        !WasLastAbility(Wildfire) || level < Levels.Wildfire))
                     {
-                        //overflow protection
-                        if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Seconds < 55)
+                        //queen slider for accurate-ish punches under buff windows
+                        if (IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && LevelChecked(AutomatonQueen) && (CombatEngageDuration().Seconds ==
+                            PluginConfiguration.GetCustomIntValue(Config.MCH_ST_QueenThreshold) && gauge.Battery >= 50))
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Seconds >= 59 || CombatEngageDuration().Seconds <= 05 || (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))) ))
+                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))))
                         {
                             return OriginalHook(RookAutoturret);
                         }

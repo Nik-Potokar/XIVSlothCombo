@@ -1437,8 +1437,8 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Simple_Interrupt = 8021,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Gadget Option", "Adds Automaton Queen or Rook Autoturret uses to the feature, based on your current level.\nAttempts to use Automaton Queen at optimal intervals between :55 to :05 windows.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Gadget = 8022,
+        [CustomComboInfo("Simple Automaton Queen Option", "Includes Automaton Queen in the rotation at x:00 - x:10 intervals outside of opener and 1min Queen", MCH.JobID, 0, "", "")]
+        MCH_ST_QueenThreshold = 8022,
 
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Simple Assembling Option", "Pairs reassemble uses with the following skills.\nBefore acquiring Drill it will be used with Clean Shot.", MCH.JobID, 0, "", "")]

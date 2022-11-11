@@ -1286,6 +1286,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_ST_QueenThreshold)
+                UserConfig.DrawSliderInt(01, 10, MCH.Config.MCH_ST_QueenThreshold, "0:xx Seconds", 150, SliderIncrements.Ones);
             #endregion
             // ====================================================================================
             #region MONK
