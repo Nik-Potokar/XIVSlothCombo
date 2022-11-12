@@ -56,7 +56,14 @@ namespace XIVSlothCombo.Window
         public bool Visible
         {
             get => visible;
-            set => visible = value;
+            set
+            {
+                if (!value)
+                {
+                    PvEFeatures.HasToOpenJob = true;
+                }
+                visible = value;
+            }
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
@@ -117,6 +124,9 @@ namespace XIVSlothCombo.Window
 #endif
                     ImGui.EndTabBar();
                 }
+
+                Dalamud.Logging.PluginLog.Debug($"{ImGui.GetStateStorage().GetInt(ImGui.GetID("PvE Features"))}");
+                Dalamud.Logging.PluginLog.Debug($"{ImGui.GetStateStorage().GetBool(ImGui.GetID("PvE Features"))}");
             }
         }
 

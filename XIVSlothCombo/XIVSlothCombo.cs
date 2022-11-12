@@ -1,3 +1,4 @@
+using Dalamud.Game;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text;
@@ -27,6 +28,21 @@ namespace XIVSlothCombo
         private readonly ConfigWindow configWindow;
 
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
+        private static uint? jobID;
+
+        public static uint? JobID
+        {
+            get => jobID; 
+            set
+            {
+                if (jobID != value)
+                {
+                    Dalamud.Logging.PluginLog.Debug($"Switched to job {value}");
+                    PvEFeatures.HasToOpenJob = true;
+                }
+                jobID = value;
+            }
+        }
 
         /// <summary> Initializes a new instance of the <see cref="XIVSlothCombo"/> class. </summary>
         /// <param name="pluginInterface"> Dalamud plugin interface. </param>
@@ -59,9 +75,15 @@ namespace XIVSlothCombo
             Service.ClientState.Login += PrintLoginMessage;
             if (Service.ClientState.IsLoggedIn) ResetFeatures();
 
+            Service.Framework.Update += CheckCurrentJob;
+
             KillRedundantIDs();
         }
 
+        private static void CheckCurrentJob(Framework framework)
+        {
+            JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+        }
         private static void KillRedundantIDs()
         {
             List<int> redundantIDs = Service.Configuration.EnabledActions.Where(x => int.TryParse(x.ToString(), out _)).OrderBy(x => x).Cast<int>().ToList();
@@ -390,7 +412,7 @@ namespace XIVSlothCombo
                     }
                 default:
                     configWindow.Visible = !configWindow.Visible;
-                    var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).First().Key;
+                    var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
                     var header = $"{jobname} - {argumentsParts[0].ToUpper()}";
                     PvEFeatures.HeaderToOpen = header;
                     break;

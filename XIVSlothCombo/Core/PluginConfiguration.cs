@@ -271,6 +271,11 @@ namespace XIVSlothCombo.Core
 
         #endregion
 
+        #region UI Settings
+        public bool AutomaticallyOpenToCurrentJob { get; set; } = false;
+
+        #endregion
+
         #region Other (SpecialEvent, MotD, Save)
 
         /// <summary> Handles 'special event' feature naming. </summary>
@@ -278,6 +283,8 @@ namespace XIVSlothCombo.Core
 
         /// <summary> Hides the message of the day. </summary>
         public bool HideMessageOfTheDay { get; set; } = false;
+
+        public bool RecommendedSettingsViewed { get; set; } = false;
 
         /// <summary> Save the configuration to disk. </summary>
         public void Save() => Service.Interface.SavePluginConfig(this);
