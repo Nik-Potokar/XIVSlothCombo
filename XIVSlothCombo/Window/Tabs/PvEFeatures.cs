@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using XIVSlothCombo.Attributes;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
@@ -137,6 +138,27 @@ namespace XIVSlothCombo.Window.Tabs
             if (Service.Configuration.AutomaticallyOpenToCurrentJob && HasToOpenJob)
             {
                 var id = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+                id = id switch
+                {
+                    ADV.ClassID => ADV.JobID,
+                    BLM.ClassID => BLM.JobID,
+                    BRD.ClassID => BRD.JobID,
+                    DRG.ClassID => DRG.JobID,
+                    MNK.ClassID => MNK.JobID,
+                    NIN.ClassID => NIN.JobID,
+                    PLD.ClassID => PLD.JobID,
+                    SMN.ClassID => SMN.JobID,
+                    WAR.ClassID => WAR.JobID,
+                    WHM.ClassID => WHM.JobID,
+                    _ => id,
+                };
+
+                if (id is >= 8 and <= 15)
+                    id = DOH.JobID;
+
+                if (id is >= 16 and <= 18)
+                    id = DOL.JobID;
+
                 if (id is not null)
                 {
                     var currentJob = CustomComboInfoAttribute.JobIDToName((byte)id);

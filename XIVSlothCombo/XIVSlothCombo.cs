@@ -412,9 +412,14 @@ namespace XIVSlothCombo
                     }
                 default:
                     configWindow.Visible = !configWindow.Visible;
-                    var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
-                    var header = $"{jobname} - {argumentsParts[0].ToUpper()}";
-                    PvEFeatures.HeaderToOpen = header;
+                    PvEFeatures.HasToOpenJob = true;
+                    if (argumentsParts[0].Length > 0)
+                    {
+                        var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
+                        var header = $"{jobname} - {argumentsParts[0].ToUpper()}";
+                        Dalamud.Logging.PluginLog.Debug($"{jobname}");
+                        PvEFeatures.HeaderToOpen = header;
+                    }
                     break;
             }
 
