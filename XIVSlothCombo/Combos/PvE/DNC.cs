@@ -593,15 +593,15 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(FanDance1) && IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers))
                         {
                             int minFeathers = IsEnabled(CustomComboPreset.DNC_AoE_Simple_FeatherPooling) && LevelChecked(TechnicalStep)
-                                ? (GetCooldownRemainingTime(TechnicalStep) < 2.5f ? 4 : 3)
+                                ? 3
                                 : 0;
 
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
 
-                            if ((gauge.Feathers > minFeathers ||
-                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)) &&
-                                LevelChecked(FanDance2))
+                            if (LevelChecked(FanDance2) &&
+                                (gauge.Feathers > minFeathers ||
+                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)))
                                 return FanDance2;
                         }
 
