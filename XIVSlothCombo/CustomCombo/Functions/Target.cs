@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using XIVSlothCombo.Data;
@@ -101,16 +102,41 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             {
                 //Fallback to CurrentTarget
                 OurTarget = CurrentTarget;
-                if (OurTarget is null) 
+                if (OurTarget is null)
                     return false;
             }
 
             //Humans
-            if (OurTarget.ObjectKind is ObjectKind.Player) 
+            if (OurTarget.ObjectKind is ObjectKind.Player)
                 return true;
             //AI
             if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy;
             return false;
+        }
+
+        /// <summary> Grabs healable target. Checks Soft Target then Hard Target. 
+        /// If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
+        /// <returns> GameObject of a player target. </returns>
+        public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false)
+        {
+            GameObject? healTarget = null;
+            TargetManager tm = Service.TargetManager;
+            
+            if (HasFriendlyTarget(tm.SoftTarget)) healTarget = tm.SoftTarget;
+            if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
+            //if (checkMO && HasFriendlyTarget(tm.MouseOverTarget)) healTarget = tm.MouseOverTarget;
+            if (checkMOPartyUI)
+            {
+                StructsObject.GameObject* t = PartyTargetingService.UITarget;
+                if (t != null)
+                {
+                    long o = PartyTargetingService.GetObjectID(t);
+                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.ObjectId == o).First();
+                    if (HasFriendlyTarget(uiTarget)) healTarget = uiTarget;
+                }
+            }
+            healTarget ??= LocalPlayer;
+            return healTarget;
         }
 
         /// <summary> Determines if the enemy can be interrupted if they are currently casting. </summary>
