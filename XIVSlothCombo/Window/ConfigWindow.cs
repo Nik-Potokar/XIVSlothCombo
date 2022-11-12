@@ -124,9 +124,6 @@ namespace XIVSlothCombo.Window
 #endif
                     ImGui.EndTabBar();
                 }
-
-                Dalamud.Logging.PluginLog.Debug($"{ImGui.GetStateStorage().GetInt(ImGui.GetID("PvE Features"))}");
-                Dalamud.Logging.PluginLog.Debug($"{ImGui.GetStateStorage().GetBool(ImGui.GetID("PvE Features"))}");
             }
         }
 
