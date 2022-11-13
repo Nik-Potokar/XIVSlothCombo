@@ -76,13 +76,6 @@ namespace XIVSlothCombo.Combos.PvE
                 ShieldSamba = 1826;
         }
 
-        /*
-        public static class Debuffs
-        {
-            public const short placeholder = 0;
-        }
-        */
-
         public static class Config
         {
             public const string
@@ -152,18 +145,22 @@ namespace XIVSlothCombo.Combos.PvE
                 // FD 1 --> 3, FD 1 --> 4
                 if (actionID is FanDance1)
                 {
-                    if (HasEffect(Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo) &&
+                        HasEffect(Buffs.ThreeFoldFanDance))
                         return FanDance3;
-                    if (HasEffect(Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo) &&
+                        HasEffect(Buffs.FourFoldFanDance))
                         return FanDance4;
                 }
 
                 // FD 2 --> 3, FD 2 --> 4
                 if (actionID is FanDance2)
                 {
-                    if (HasEffect(Buffs.ThreeFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo) &&
+                        HasEffect(Buffs.ThreeFoldFanDance))
                         return FanDance3;
-                    if (HasEffect(Buffs.FourFoldFanDance) && IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo))
+                    if (IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo) &&
+                        HasEffect(Buffs.FourFoldFanDance))
                         return FanDance4;
                 }
 
@@ -201,7 +198,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                // Fan Dance 3 & 4 on Flourish when relevant
+                // Fan Dance 3 & 4 on Flourish
                 if (actionID is Flourish && CanWeave(actionID))
                 {
                     if (HasEffect(Buffs.ThreeFoldFanDance))
@@ -342,7 +339,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) && InCombat() && !gauge.IsDancing &&
+                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) &&
+                        InCombat() && !gauge.IsDancing &&
                         ActionReady(Flourish) &&
                         IsOnCooldown(StandardStep))
                         return Flourish;
@@ -353,7 +351,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Tillana;
 
                     // Tech Step
-                    if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) && !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
+                    if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) &&
+                        !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
                     // Dance steps
@@ -402,15 +401,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // ST Standard (Dance) Steps & Fill
-                    if (HasEffect(Buffs.StandardStep) &&
-                        (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)))
+                    if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)) &&
+                        HasEffect(Buffs.StandardStep))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
                             : StandardFinish2;
 
                     // ST Technical (Dance) Steps & Fill
-                    if (HasEffect(Buffs.TechnicalStep) &&
-                        (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_TechFill)))
+                    if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_TechFill)) &&
+                        HasEffect(Buffs.TechnicalStep))
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
                             : TechnicalFinish4;
@@ -493,9 +492,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // ST Technical Step
-                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
-                        IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) &&
-                        ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep))
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && ActionReady(TechnicalStep) &&
+                        (!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
+                        !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
                     // ST Saber Dance
@@ -553,15 +552,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // AoE Standard (Dance) Steps & Fill
-                    if (HasEffect(Buffs.StandardStep) &&
-                        (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)))
+                    if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)) &&
+                        HasEffect(Buffs.StandardStep))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
                             : StandardFinish2;
 
                     // AoE Technical (Dance) Steps & Fill
-                    if (HasEffect(Buffs.TechnicalStep) &&
-                        (IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_TechFill)))
+                    if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_TechFill)) &&
+                        HasEffect(Buffs.TechnicalStep))
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
                             : TechnicalFinish4;
@@ -590,7 +589,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (CanWeave(actionID))
                     {
                         // AoE Feathers & Fans
-                        if (LevelChecked(FanDance1) && IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers))
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers) && LevelChecked(FanDance1))
                         {
                             int minFeathers = IsEnabled(CustomComboPreset.DNC_AoE_Simple_FeatherPooling) && LevelChecked(TechnicalStep)
                                 ? 3
@@ -638,8 +637,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // AoE Technical Step
-                    if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent)) &&
-                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && ActionReady(TechnicalStep) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && ActionReady(TechnicalStep) &&
+                        (!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent)) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
