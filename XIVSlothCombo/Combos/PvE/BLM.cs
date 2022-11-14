@@ -754,7 +754,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Scathe)
                 {
-                    var canWeave = CanSpellWeave(actionID);
                     var currentMP = LocalPlayer.CurrentMp;
                     var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
 
@@ -817,7 +816,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Weave other oGCDs
-                                if (canWeave)
+                                if (CanWeave(actionID))
                                 {
                                     // Weave Amplifier and Ley Lines
                                     if (lastComboMove == Fire4 && (GetBuffStacks(Buffs.Triplecast) == 1))
@@ -919,7 +918,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Refresh Thunder3
-                                if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3)
+                                if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3 && HasEffect(Buffs.Sharpcast))
                                 {
                                     return Thunder3;
                                 }
@@ -946,7 +945,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return Xenoglossy;
                             }
-                            if (HasEffect(Buffs.Thundercloud))
+                            if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast))
                             {
                                 if (!ThunderList.ContainsKey(lastComboMove) && //Is not 1 2 3 or 4
                                     !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
@@ -987,7 +986,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove))
                             {
-                                if (IsEnabled(CustomComboPreset.BLM_AdvThunderUptime) && HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) || (IsEnabled(CustomComboPreset.BLM_AdvThunderUptime) && currentMP >= MP.Thunder))
+                                if (IsEnabled(CustomComboPreset.BLM_AdvThunderUptime) && ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder))
                                 {
                                     uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                     Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
@@ -998,7 +997,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                         // Weave Buffs
-                        if (canWeave)
+                        if (CanWeave(actionID))
                         {
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Casts))
                             {
@@ -1116,12 +1115,14 @@ namespace XIVSlothCombo.Combos.PvE
                     //Normal Fire Phase
                     if (Gauge.InAstralFire)
                     {
-                        //xenoglossy overcap protection
-                         if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 2000) && LevelChecked(Xenoglossy))
-                         {
-                             return Xenoglossy;
-                         }
-
+                        if (CanWeave(actionID))
+                        {
+                            //xenoglossy overcap protection
+                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 3000) && LevelChecked(Xenoglossy))
+                            {
+                                return Xenoglossy;
+                            }
+                        }
                         // F3 proc or swiftcast F3 during transpose lines(< 3 astral fire stacks)
                         if (Gauge.AstralFireStacks < 3 || (Gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter)))
                         {
@@ -1204,12 +1205,12 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
                             }
-                        }
 
-                        // Xenoglossy for Manafont weave
-                        if (Gauge.HasPolyglotStacks() && ActionReady(Manafont) && currentMP < MP.AllMPSpells && !IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) && LevelChecked(Xenoglossy)) 
-                        {
-                            return Xenoglossy;
+                            // Xenoglossy for Manafont weave
+                            if (Gauge.HasPolyglotStacks() && ActionReady(Manafont) && currentMP < MP.AllMPSpells && LevelChecked(Xenoglossy))
+                            {
+                                return Xenoglossy;
+                            }
                         }
 
                         // Blizzard3/Despair when below Fire 4 + Despair MP
@@ -1224,10 +1225,13 @@ namespace XIVSlothCombo.Combos.PvE
                     //Normal Ice Phase
                     if (Gauge.InUmbralIce)
                     {
-                        //Xenoglossy overcap protection
-                        if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
+                        if(CanWeave(actionID))
                         {
-                            return Xenoglossy;
+                            //Xenoglossy overcap protection
+                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
+                            {
+                                return Xenoglossy;
+                            }
                         }
 
                         //sharpcast
@@ -1410,7 +1414,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Refresh Thunder3
-                                if (HasEffect(Buffs.Thundercloud) && lastComboMove != Thunder3)
+                                if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) && lastComboMove != Thunder3)
                                 {
                                     return Thunder3;
                                 }
