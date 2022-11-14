@@ -1088,26 +1088,29 @@ namespace XIVSlothCombo.Combos.PvE
                     // only when we're not using Transpose lines
                     if (!IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                     {
-                        if (Gauge.HasPolyglotStacks() && Gauge.ElementTimeRemaining >= astralFireRefresh && (Gauge.InUmbralIce || (Gauge.InAstralFire && Gauge.UmbralHearts == 0)))
+                        if (CanWeave(actionID))
                         {
-                            if (LevelChecked(Xenoglossy))
+                            if (Gauge.HasPolyglotStacks() && Gauge.ElementTimeRemaining >= astralFireRefresh && (Gauge.InUmbralIce || (Gauge.InAstralFire && Gauge.UmbralHearts == 0)))
                             {
-                                // Check leylines and triplecast cooldown
-                                if (Gauge.PolyglotStacks == 2 && GetCooldown(LeyLines).CooldownRemaining >= 20 && GetCooldown(Triplecast).ChargeCooldownRemaining >= 20)
+                                if (LevelChecked(Xenoglossy))
                                 {
-                                    if (!IsEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling))
+                                    // Check leylines and triplecast cooldown
+                                    if (Gauge.PolyglotStacks == 2 && GetCooldown(LeyLines).CooldownRemaining >= 20 && GetCooldown(Triplecast).ChargeCooldownRemaining >= 20)
                                     {
-                                        return Xenoglossy;
-                                    }
-                                    if (IsEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) && !HasCharges(Triplecast))
-                                    {
-                                        return Xenoglossy;
+                                        if (!IsEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling))
+                                        {
+                                            return Xenoglossy;
+                                        }
+                                        if (IsEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) && !HasCharges(Triplecast))
+                                        {
+                                            return Xenoglossy;
+                                        }
                                     }
                                 }
-                            }
-                            else if (LevelChecked(Foul))
-                            {
-                                return Foul;
+                                else if (LevelChecked(Foul))
+                                {
+                                    return Foul;
+                                }
                             }
                         }
                     }
@@ -1232,18 +1235,18 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return Xenoglossy;
                             }
-                        }
 
-                        //sharpcast
-                        if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
-                        {
-                            return Sharpcast;
-                        }
+                            //sharpcast
+                            if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
+                            {
+                                return Sharpcast;
+                            }
 
-                        // Use Paradox when available
-                        if (LevelChecked(Paradox) && Gauge.IsParadoxActive)
-                        {
-                            return Paradox;
+                            // Use Paradox when available
+                            if (LevelChecked(Paradox) && Gauge.IsParadoxActive)
+                            {
+                                return Paradox;
+                            }
                         }
 
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
