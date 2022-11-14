@@ -776,7 +776,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.BLM_Adv_Opener) && LevelChecked(Xenoglossy))
                     {
                         // Only enable sharpcast if it's available
-                        if (!inOpener && !HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast) && lastComboMove != Thunder3)
+                        if (!inOpener && !HasEffect(Buffs.Sharpcast))
                         {
                             return Sharpcast;
                         }
