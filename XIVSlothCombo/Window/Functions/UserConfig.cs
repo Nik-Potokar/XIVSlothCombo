@@ -1286,6 +1286,17 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.MCH_ST_Simple_Gadget)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_GadgetThreshold, "Prevent the use of Automaton Queen if Enemy HP percentage falls below threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.MCH_ST_Simple_WildCharge)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_WildFireThreshold, "Prevent the use of Wildfire if Enemy HP percentage falls below threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.MCH_ST_Simple_WildCharge)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_HyperChargeThreshold, "Prevent the use of HyperCharge if Enemy HP percentage falls below threshold", 150, SliderIncrements.Ones);
+
+
             #endregion
             // ====================================================================================
             #region MONK
