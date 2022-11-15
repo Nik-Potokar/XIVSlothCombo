@@ -172,19 +172,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!InCombat())
                     {
-                        return Flare;
+                        return OriginalHook(Blizzard2);
                     }
 
-                    // Fire 2 / Flare
+                    // Fire phase
                     if (Gauge.InAstralFire)
                     {
-                        // Polyglot usage
-                        if (CanWeave(actionID))
-                        {
-                            if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Foul) && lastComboMove == Flare && Gauge.HasPolyglotStacks())
-                            {
-                                return Foul;
-                            }
+                        // Polyglot usage 
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Foul) && lastComboMove == Flare && Gauge.HasPolyglotStacks())
+                        {  
+                            return Foul; 
                         }
 
                         // Manafont usage
@@ -200,12 +197,10 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Grab Fire 2 / High Fire 2 action ID
-                        /* if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                         if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
                          {
                              return Flare;
-                         }*/
-
-
+                         }
 
                         if (currentMP >= MP.AllMPSpells)
                         {
@@ -217,22 +212,35 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return Flare;
                             }
-                            else if (!TraitLevelChecked(Traits.AspectMasteryIII) || currentMP < MP.AllMPSpells)
+                            else if (!TraitLevelChecked(Traits.AspectMasteryIII))
                             {
                                 return Transpose;
                             }
                         }
+
+                        if (currentMP < MP.AllMPSpells)
+                        {
+                            return Transpose;
+                        }
                     }
 
-                    // Umbral Hearts
+                    // Ice phase
                     if (Gauge.InUmbralIce)
                     {
-                        if (lastComboMove == Transpose)
+                        if (Gauge.UmbralHearts < 3)
+                        {
+                            return Freeze;
+                        }
+
+                        if (lastComboMove == Freeze)
                         {
                             return OriginalHook(Thunder2);
                         }
 
-                        return (Gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.Thunder) ? OriginalHook(Fire2) : Freeze;
+                        if (Gauge.UmbralHearts == 3 && lastComboMove == OriginalHook(Thunder2))
+                        {
+                            return Transpose;
+                        }
                     }
                 }
 
@@ -728,6 +736,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Opener for BLM
                     // Credit to damolitionn for providing code to be used as a base for this opener
+                    // F3 OPENER DOUBLE TRANSPOSE VARIATION 
                     if (IsEnabled(CustomComboPreset.BLM_Adv_Opener) && LevelChecked(Xenoglossy))
                     {
                         // Only enable sharpcast if it's available
@@ -835,7 +844,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Fire3;
                                 }
 
-                                // Use Transpose lines opener F3 - Single Transpose variation, double weave version
+                                // Use Transpose lines
                                 if (currentMP < MP.Fire && lastComboMove != Fire4 && !ActionReady(Manafont) && GetCooldownRemainingTime(Manafont) <= 118)
                                 {
                                     if (ActionReady(All.Swiftcast))
@@ -1227,8 +1236,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
             
-     
-
         internal class BLM_Paradox : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Paradox;
