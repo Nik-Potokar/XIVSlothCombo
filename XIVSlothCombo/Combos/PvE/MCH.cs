@@ -457,7 +457,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Minutes > 0 && CombatEngageDuration().Seconds < 15 && CombatEngageDuration().Seconds > 10)
                         {
                             return OriginalHook(RookAutoturret);
-                        }                        
+                        }
                         else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0)
                         {
                             return OriginalHook(RookAutoturret);
@@ -478,7 +478,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     }
 
-                    
+
                     if (gauge.IsOverheated && level >= Levels.HeatBlast)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.75) && (wildfireCDTime > 2 || level < Levels.Wildfire) ) //gauss and ricochet weave

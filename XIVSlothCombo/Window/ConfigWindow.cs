@@ -60,7 +60,7 @@ namespace XIVSlothCombo.Window
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
-        public ConfigWindow() : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
+        public ConfigWindow() : base("XIVSlothCombo Private Configuration", ImGuiWindowFlags.AlwaysAutoResize)
         {
             RespectCloseHotkey = true;
 
@@ -80,7 +80,7 @@ namespace XIVSlothCombo.Window
                 return;
             }
 
-            if (ImGui.Begin("XIVSlothCombo Configuration", ref visible))
+            if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
             {
                 if (ImGui.BeginTabBar("Config Tabs"))
                 {
