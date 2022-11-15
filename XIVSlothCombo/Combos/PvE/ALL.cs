@@ -100,7 +100,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 ChainStratagem = 7436,
                 TrickAttack = 3254,
-                Mug = 638;
+                VulnerabilityUp = 638; // This is Mug done by NIN
         }
 
         internal class ALL_IslandSanctuary_Sprint : CustomCombo

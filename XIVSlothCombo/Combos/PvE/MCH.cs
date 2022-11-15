@@ -514,16 +514,16 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return OriginalHook(RookAutoturret);
                         }*/
-                        if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds <= 30)
+                        if (CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds <= 30)
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 80 && CombatEngageDuration().Seconds >= 10 && CombatEngageDuration().Seconds <= 45 && CombatEngageDuration().Minutes % 2 == 1)
+                        else if (CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 80 && CombatEngageDuration().Seconds >= 10 && CombatEngageDuration().Seconds <= 45 && CombatEngageDuration().Minutes % 2 == 1)
                         {
                             return OriginalHook(RookAutoturret);
                         }
 
-                        else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 10 && CombatEngageDuration().Minutes % 2 == 0 && WasLastWeaponskill(OriginalHook(CleanShot)) )
+                        else if (CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 10 && CombatEngageDuration().Minutes % 2 == 0 && WasLastWeaponskill(OriginalHook(CleanShot)) )
                         {
                             return OriginalHook(RookAutoturret);
                         }
