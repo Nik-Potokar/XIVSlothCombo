@@ -1464,6 +1464,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -1, "", "")]
         MCH_AoE_SimpleMode = 8028,
 
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 0, "", "")]
+        MCH_AoE_Simple_Stabilizer = 8039,
+
         [ParentCombo(MCH_ST_Simple_Assembling)]
         [CustomComboInfo("Drill Option", "Use Reassemble with Drill when available.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_Drill = 8029,

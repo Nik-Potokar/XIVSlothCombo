@@ -36,28 +36,6 @@ namespace XIVSlothCombo.Combos.PvE
             BarrelStabilizer = 7414,
             Wildfire = 2878;
 
-        public static class Buffs
-        {
-            public const ushort
-                Reassembled = 851,
-                Tactician = 1951,
-                Wildfire = 1946;
-        }
-
-        public static class Debuffs
-        {
-            // public const short placeholder = 0;
-        }
-        public static class Config
-        {
-            public const string
-                MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
-                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
-                MCH_ST_GadgetThreshold = "MCH_ST_GadgetThreshold",
-                MCH_ST_WildFireThreshold = "MCH_ST_WildFireThreshold",
-                MCH_ST_HyperChargeThreshold = "MCH_ST_HyperChargeThreshold";
-        }
-
         public static class Levels
         {
             public const byte
@@ -83,6 +61,35 @@ namespace XIVSlothCombo.Combos.PvE
                 Scattergun = 82,
                 BarrelStabilizer = 66,
                 ChainSaw = 90;
+        }
+
+        public static class Buffs
+        {
+            public const ushort
+                Reassembled = 851,
+                Tactician = 1951,
+                Wildfire = 1946;
+        }
+
+        public static class Debuffs
+        {
+            public const ushort
+                Wildfire = 861,
+                BioBlaster = 1866;
+        }
+        public static class Config
+        {
+            public const string
+                MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
+                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
+
+                MCH_ST_GadgetThreshold = "MCH_ST_GadgetThreshold",
+                MCH_ST_WildFireThreshold = "MCH_ST_WildFireThreshold",
+                MCH_ST_HyperChargeThreshold = "MCH_ST_HyperChargeThreshold",
+
+                MCH_AoE_GadgetThreshold = "MCH_AoE_GadgetThreshold",
+                MCH_AoE_BioBlasterThreshold = "MCH_AoE_BioBlasterThreshold",
+                MCH_AoE_HyperChargeThreshold = "MCH_AoE_HyperChargeThreshold";
         }
 
         internal class MCH_ST_MainCombo : CustomCombo
@@ -276,9 +283,15 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var canWeave = CanWeave(actionID);
                     var gauge = GetJobGauge<MCHGauge>();
-                    var battery = GetJobGauge<MCHGauge>().Battery;
+                    var battery = GetJobGauge<MCHGauge>().Battery; 
+                    var AoEenemyHP = GetTargetHPPercent();
+                    var GadgetThreshold = AoEenemyHP > PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_GadgetThreshold);
+                    var BioBlasterThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_BioBlasterThreshold);
+                    var HyperChargeThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_HyperChargeThreshold);
 
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave)
+
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave && GadgetThreshold)
                     {
                         if (battery == 100 && level >= Levels.QueenOverdrive)
                             return AutomatonQueen;
@@ -286,23 +299,30 @@ namespace XIVSlothCombo.Combos.PvE
                             return RookAutoturret;
                     }
                     
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
+                    if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Stabilizer) && gauge.Heat <= 50 && IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer && InCombat() )
+                    { 
+                        if (GetCooldownRemainingTime(BarrelStabilizer) < 10)
+                            return BarrelStabilizer;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) && (HasCharges(Ricochet) || HasCharges(GaussRound))))
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);
                         var ricochetCharges = GetRemainingCharges(Ricochet);
-
-                        if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) &&
-                            level >= Levels.GaussRound)
-                            return GaussRound;
-                        else if (ricochetCharges > 0 && level >= Levels.Ricochet)
-                            return Ricochet;
-
+                        if (!gauge.IsOverheated || gauge.IsOverheated)
+                        {
+                            if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) &&
+                                level >= Levels.GaussRound)
+                                return GaussRound;
+                            else if (ricochetCharges >= gaussCharges && level >= Levels.Ricochet)
+                                return Ricochet;
+                        }
                     }
 
-                    if (IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
+                    if (BioBlasterThreshold && InActionRange(BioBlaster) && IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
                         return BioBlaster;
 
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave)
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave && HyperChargeThreshold)
                     {
                         if (gauge.Heat >= 50 && level >= Levels.AutoCrossbow && !gauge.IsOverheated)
                             return Hypercharge;

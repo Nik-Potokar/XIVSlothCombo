@@ -1295,7 +1295,15 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.MCH_ST_Simple_WildCharge)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_HyperChargeThreshold, "Prevent the use of HyperCharge if Enemy HP percentage falls below threshold", 150, SliderIncrements.Ones);
+            
+            if (preset is CustomComboPreset.MCH_AoE_OverCharge)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_GadgetThreshold, "Prevent the use of Automaton Queen if Enemy HP percentage falls below threshold", 150, SliderIncrements.Ones);
 
+            if (preset is CustomComboPreset.MCH_AoE_Simple_Bioblaster)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_BioBlasterThreshold, "Prevent the use of Wildfire if Enemy HP percentage falls below threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.MCH_AoE_Simple_Hypercharge)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_HyperChargeThreshold, "Prevent the use of HyperCharge if Enemy HP percentage falls below threshold", 150, SliderIncrements.Ones);
 
             #endregion
             // ====================================================================================
