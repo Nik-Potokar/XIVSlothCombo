@@ -499,20 +499,20 @@ namespace XIVSlothCombo.Combos.PvE
                     if (GadgetThreshold && CanWeave(actionID) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire))
                     {
                         //overflow protection
-                        if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Minutes > 0 && CombatEngageDuration().Seconds < 15 && CombatEngageDuration().Seconds > 10)
+                        /*if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Minutes > 0 && CombatEngageDuration().Seconds < 15 && CombatEngageDuration().Seconds > 10)
+                        {
+                            return OriginalHook(RookAutoturret);
+                        }*/
+                        if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds <= 30)
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0)
-                        {
-                            return OriginalHook(RookAutoturret);
-                        }
-                        else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Seconds >= 1 && CombatEngageDuration().Seconds <= 5 && CombatEngageDuration().Minutes % 2 == 1)
+                        else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 80 && CombatEngageDuration().Seconds >= 10 && CombatEngageDuration().Seconds <= 15 && CombatEngageDuration().Minutes % 2 == 1)
                         {
                             return OriginalHook(RookAutoturret);
                         }
 
-                        else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Seconds >= 8 && CombatEngageDuration().Seconds <= 11.9 && CombatEngageDuration().Minutes % 2 == 0 /*&& !WasLastWeaponskill(OriginalHook(CleanShot))*/ )
+                        else if (GadgetThreshold && CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 10 && CombatEngageDuration().Minutes % 2 == 0 && WasLastWeaponskill(OriginalHook(CleanShot)) )
                         {
                             return OriginalHook(RookAutoturret);
                         }
@@ -526,7 +526,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (gauge.IsOverheated && level >= Levels.HeatBlast)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.75) && (wildfireCDTime > 2 || level < Levels.Wildfire) ) //gauss and ricochet weave
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.65) && (wildfireCDTime > 2 || level < Levels.Wildfire) ) //gauss and ricochet weave
                         {
                             var gaussCharges = GetRemainingCharges(GaussRound);
                             var gaussMaxCharges = GetMaxCharges(GaussRound);
@@ -541,15 +541,14 @@ namespace XIVSlothCombo.Combos.PvE
                                     ||
                                     (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && reasmCharges >= 1 && GetCooldownRemainingTime(AirAnchor) <= 2)
                                     ||
-                                    (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && reasmCharges >= 1 && GetCooldownRemainingTime(Drill) <= 2)
+                                    (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && HasTincture && reasmCharges >= 1 && GetCooldownRemainingTime(Drill) <= 2)
                                 ))
                                 return Reassemble;
-                            else if ( (CanWeave(actionID, 0.75) && !IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) <= GetCooldownRemainingTime(Ricochet))  ) ||
-                                       (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && gaussCharges >= gaussMaxCharges - 1 ) )
+                            else if (CanWeave(actionID, 0.60) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) <= GetCooldownRemainingTime(Ricochet)) )
                             {
                                 return GaussRound;
                             }
-                            else if (level >= Levels.Ricochet && HasCharges(Ricochet) && !IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && !WasLastAbility(BarrelStabilizer) && !WasLastAbility(Wildfire))
+                            else if (level >= Levels.Ricochet && HasCharges(Ricochet) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && !WasLastAbility(BarrelStabilizer) && !WasLastAbility(Wildfire))
                             {
                                return Ricochet;
                             }
@@ -595,38 +594,46 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.SecondWind;
                     }
 
-                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
+                    // Air Anchor
+                 /* if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && CanWeave(actionID)&& !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
                             GetRemainingCharges(Reassemble) > 0)
                         {
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges)) return Reassemble;
-
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && CanWeave(actionID) ) 
+                                return Reassemble;
                         }
                         return AirAnchor;
                     }
                     else if ((IsOffCooldown(HotShot) || GetCooldownRemainingTime(HotShot) < 1) && level is >= Levels.Hotshot and < Levels.AirAnchor)
-                        return HotShot;
+                        return HotShot; */
 
+                    // Air Anchor
+                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
+                    {
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
+                        {
+                            return Reassemble;
+                        }
+                        return ChainSaw;
+                    }
+
+                    // Drill
                     if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1) && level >= Levels.Drill)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && CombatEngageDuration().Minutes >= 1 && CanWeave(actionID) && HasTincture &&
-                            !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 && CombatEngageDuration().Minutes >= 1 && CanWeave(actionID) && HasTincture) 
                         {
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges)) return Reassemble;
+                            return Reassemble;
                         }
                         return Drill;
                     }
 
+                    //Chainsaw
                     if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1) && level >= Levels.ChainSaw && openerFinished)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) &&
-                            GetRemainingCharges(Reassemble) > 0)
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges)) return Reassemble;
+                            return Reassemble;
                         }
                         return ChainSaw;
                     }

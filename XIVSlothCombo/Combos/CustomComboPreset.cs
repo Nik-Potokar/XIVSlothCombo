@@ -1447,7 +1447,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_ST_Simple_Assembling)]
         [CustomComboInfo("Drill Option", "Use Reassemble with Drill when available.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_Drill = 8029,
+        MCH_ST_Simple_Assembling_Drill = 8029, 
 
         [ParentCombo(MCH_ST_Simple_Assembling)]
         [CustomComboInfo("Air Anchor Option", "Use Reassemble with Air Anchor when available.", MCH.JobID, 0, "", "")]
@@ -1457,25 +1457,25 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Chain Saw Option", "Use Reassemble with Chain Saw when available.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_ChainSaw = 8031,
 
-        [ParentCombo(MCH_ST_Simple_Assembling_Drill)]
+     /* [ParentCombo(MCH_ST_Simple_Assembling_Drill)]
         [CustomComboInfo("Only use Drill Option", "Only use Drill when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_Drill_MaxCharges = 8032,
+        MCH_ST_Simple_Assembling_Drill_MaxCharges = 8032, */
 
-        [ParentCombo(MCH_ST_Simple_Assembling_AirAnchor)]
+     /* [ParentCombo(MCH_ST_Simple_Assembling_AirAnchor)]
         [CustomComboInfo("Only use Air Anchor Option", "Only use Air Anchor when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_AirAnchor_MaxCharges = 8033,
+        MCH_ST_Simple_Assembling_AirAnchor_MaxCharges = 8033, */
 
-        [ParentCombo(MCH_ST_Simple_Assembling_ChainSaw)]
+     /* [ParentCombo(MCH_ST_Simple_Assembling_ChainSaw)]
         [CustomComboInfo("Only use Chain Saw Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8034,
+        MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8034, */
 
         [ParentCombo(MCH_ST_Simple_Stabilizer)]
         [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
 
-        [ParentCombo(MCH_ST_SimpleMode)]
+    /*  [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("High Ping Mode Option", "A high-ping-friendly mode.\nIt limits the uses of Gauss Round/Ricochet inside Hypercharge windows to prevent drift.\nExpect a small DPS loss when using this feature.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_High_Latency_Mode = 8036,
+        MCH_ST_Simple_High_Latency_Mode = 8036, */
 
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
@@ -1485,6 +1485,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -1, "", "")]
         MCH_AoE_SimpleMode = 8028,
 
+        #region AoE
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the AoE.", MCH.JobID, 2, "", "")]
         MCH_AoE_Simple_Hypercharge = 8027,
@@ -1516,6 +1517,8 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 5, "", "")]
         MCH_AoE_Simple_Bioblaster = 8016,
+        #endregion
+
         #endregion
 
         #region MONK
