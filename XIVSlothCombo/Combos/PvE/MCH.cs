@@ -88,7 +88,9 @@ namespace XIVSlothCombo.Combos.PvE
                 MCH_ST_HyperChargeThreshold = "MCH_ST_HyperChargeThreshold",
 
                 MCH_AoE_GadgetThreshold = "MCH_AoE_GadgetThreshold",
-                MCH_AoE_BioBlasterThreshold = "MCH_AoE_BioBlasterThreshold",
+                MCH_AoE_BioBlasterThreshold = "MCH_AoE_BioBlasterThreshold",		
+		        MCH_AoE_AirAnchorThreshold = "MCH_AoE_AirAnchorThreshold",
+        		MCH_AoE_ChainsawThreshold = "MCH_AoE_ChainsawThreshold",
                 MCH_AoE_HyperChargeThreshold = "MCH_AoE_HyperChargeThreshold";
         }
 
@@ -279,7 +281,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == SpreadShot || actionID == Scattergun)
+                var HasAoETarget = HasBattleTarget();
+
+                if ((actionID is SpreadShot or Scattergun) && HasAoETarget)
                 {
                     var canWeave = CanWeave(actionID);
                     var gauge = GetJobGauge<MCHGauge>();
@@ -288,8 +292,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var GadgetThreshold = AoEenemyHP > PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_GadgetThreshold);
                     var BioBlasterThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_BioBlasterThreshold);
                     var HyperChargeThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_HyperChargeThreshold);
-
-
+                    var AirAnchorThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_AirAnchorThreshold);
+                    var ChainsawThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_ChainsawThreshold);
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave && GadgetThreshold)
                     {
@@ -319,8 +323,26 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (BioBlasterThreshold && InActionRange(BioBlaster) && IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
+                    if ((IsOffCooldown(BioBlaster) || GetCooldownRemainingTime(BioBlaster) < 2) && BioBlasterThreshold && InActionRange(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
                         return BioBlaster;
+
+                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 2) && AirAnchorThreshold && battery < 100 && level >= Levels.AirAnchor && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_AirAnchor))
+                    {
+						     if (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) >= 1)
+						     {
+							     return Reassemble;
+						     }
+						     return AirAnchor;
+					}
+                    
+                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 2) && ChainsawThreshold && battery < 100 && level >= Levels.ChainSaw && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Chainsaw))
+                    {
+						     if (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) >= 1)
+						     {
+							     return Reassemble;
+						     }
+						     return ChainSaw;
+					}
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave && HyperChargeThreshold)
                     {
@@ -428,7 +450,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is SplitShot or HeatedSplitShot)
+                var HasEnemyTarget = HasBattleTarget();
+
+                if ((actionID is SplitShot or HeatedSplitShot) && HasEnemyTarget)
                 {
                     var inCombat = InCombat();
                     var gauge = GetJobGauge<MCHGauge>();

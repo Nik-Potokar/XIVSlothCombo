@@ -1390,14 +1390,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Battery Overcap Option", "Overcharge protection for your Battery, If you are at 100 battery charge Rook Autoturret/Automaton Queen will be added to your (Heated) Shot Combo.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo_OverCharge = 8009,
 
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Battery Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, 0, "", "")]
-        MCH_AoE_OverCharge = 8010,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Gauss Round Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID, 0, "", "")]
-        MCH_AoE_GaussRicochet = 8011,
-
         [ParentCombo(MCH_AoE_GaussRicochet)]
         [CustomComboInfo("Always Gauss Round/Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, 0, "", "")]
         MCH_AoE_Gauss = 8012,
@@ -1419,10 +1411,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_HeatblastGaussRicochet)]
         [CustomComboInfo("Wildfire Option", "Adds Wildfire to the Single Button Heat Blast Feature if Wildfire is off cooldown and you have enough Heat Gauge for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID, 0, "", "")]
         MCH_ST_Wildfire = 8015,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 0, "", "")]
-        MCH_AoE_Simple_Bioblaster = 8016,
 
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
         MCH_ST_AutoBarrel = 8019,
@@ -1455,18 +1443,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Stabilizer = 8026,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the AoE.", MCH.JobID, 0, "", "")]
-        MCH_AoE_Simple_Hypercharge = 8027,
-
-        [ReplaceSkill(MCH.SpreadShot)]
-        [CustomComboInfo("Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -1, "", "")]
-        MCH_AoE_SimpleMode = 8028,
-
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 0, "", "")]
-        MCH_AoE_Simple_Stabilizer = 8039,
 
         [ParentCombo(MCH_ST_Simple_Assembling)]
         [CustomComboInfo("Drill Option", "Use Reassemble with Drill when available.", MCH.JobID, 0, "", "")]
@@ -1504,9 +1480,41 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
         MCH_ST_SecondWind = 8037,
 
+        [ReplaceSkill(MCH.SpreadShot)]
+        [CustomComboInfo("Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -1, "", "")]
+        MCH_AoE_SimpleMode = 8028,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the AoE.", MCH.JobID, 2, "", "")]
+        MCH_AoE_Simple_Hypercharge = 8027,
+
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
         MCH_AoE_SecondWind = 8038,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("AirAnchor Option", "Adds AirAnchor to the Spreadshot feature", MCH.JobID, 6, "", "")]
+        MCH_AoE_Simple_AirAnchor = 8040,
+		
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Chainsaw Option", "Adds Chainsaw to the Spreadshot feature", MCH.JobID, 7, "", "")]
+        MCH_AoE_Simple_Chainsaw = 8041,
+        
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 4, "", "")]
+        MCH_AoE_Simple_Stabilizer = 8039,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Battery Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, 1, "", "")]
+        MCH_AoE_OverCharge = 8010,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Gauss Round Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID, 3, "", "")]
+        MCH_AoE_GaussRicochet = 8011,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 5, "", "")]
+        MCH_AoE_Simple_Bioblaster = 8016,
         #endregion
 
         #region MONK
