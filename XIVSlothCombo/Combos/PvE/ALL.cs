@@ -94,6 +94,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 Divination = 16552;
         }
+
         public static class RaidDebuffs
         {
             public const ushort

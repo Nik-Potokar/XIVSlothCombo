@@ -461,6 +461,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var WildFireThreshold = enemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_ST_WildFireThreshold);
                     var HyperChargeThreshold = enemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_ST_HyperChargeThreshold);
                     var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
+                    var HasTincture = HasEffect(All.Buffs.Medicated);
 
                     if (!inCombat)
                     {
@@ -596,7 +597,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && CanWeave(actionID)&& !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
                             GetRemainingCharges(Reassemble) > 0)
                         {
                             if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
@@ -610,7 +611,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1) && level >= Levels.Drill)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && CombatEngageDuration().Minutes >= 1 && CanWeave(actionID) && HasTincture &&
                             !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
                             if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
@@ -621,7 +622,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1) && level >= Levels.ChainSaw && openerFinished)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && !HasEffect(Buffs.Reassembled) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) &&
                             GetRemainingCharges(Reassemble) > 0)
                         {
                             if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
