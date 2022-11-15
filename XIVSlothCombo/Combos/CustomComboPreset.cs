@@ -1345,7 +1345,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region MACHINIST
-
+        
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
         [CustomComboInfo("(Heated) Shot Combo Feature", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "", "")]
@@ -1415,6 +1415,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
         MCH_ST_AutoBarrel = 8019,
 
+        //[Potion("TESTPOTION", PotionType.Dexterity)]
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
         [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
