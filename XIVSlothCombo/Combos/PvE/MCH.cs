@@ -462,6 +462,11 @@ namespace XIVSlothCombo.Combos.PvE
                     var HyperChargeThreshold = enemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_ST_HyperChargeThreshold);
                     var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
                     var HasTincture = HasEffect(All.Buffs.Medicated);
+                    var HasMeleeRaidBuffs = HasEffect(All.MeleeRaidBuffs.RightEye) || HasEffect(All.MeleeRaidBuffs.BattleLitany) || HasEffect(All.MeleeRaidBuffs.ArcaneCircle) || HasEffect(All.MeleeRaidBuffs.Brotherhood);
+                    var HasRangeRaidBuffs = HasEffect(All.RangeRaidBuffs.TechnicalFinish) || HasEffect(All.RangeRaidBuffs.BattleVoice) || HasEffect(All.RangeRaidBuffs.RadiantFinale);
+                    var HasCasterRaidBuffs = HasEffect(All.CasterRaidBuffs.Embolden) || HasEffect(All.CasterRaidBuffs.SearingLight);
+                    var HasHealerRaidBuffs = HasEffect(All.HealerRaidBuffs.Divination);
+                    var HasRaidDebuffs = TargetHasEffectAny(All.RaidDebuffs.ChainStratagem) || TargetHasEffectAny(All.RaidDebuffs.Mug) ;
                     // var BuffWindow = CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 12 && CombatEngageDuration().Minutes % 2 == 0 ;
 
                     if (!inCombat)
