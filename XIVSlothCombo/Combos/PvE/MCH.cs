@@ -469,27 +469,32 @@ namespace XIVSlothCombo.Combos.PvE
 
                     }
 
+                    // Barrel Stabiilizer
                     if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 55 &&
                             IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer && !WasLastWeaponskill(ChainSaw) &&
                             (wildfireCDTime <= 3 || (wildfireCDTime >= 110 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && gauge.IsOverheated))
                        )
                         return BarrelStabilizer;
 
+                    // Headgraze
                     if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                     {
                         return All.HeadGraze;
                     }
 
+                    // Wildfire
                     if (WildFireThreshold && openerFinished && (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 && level >= Levels.Wildfire && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) &&
                         (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) && !WasLastWeaponskill(HeatBlast))) ) //these try to ensure the correct loops
                     {
                         if (CanDelayedWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
                         {
                             return Wildfire;
-                        } else if (CanDelayedWeave(actionID,1.1) && !gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
+                        }
+                        else if (CanDelayedWeave(actionID,1.1) && !gauge.IsOverheated && WasLastWeaponskill(ChainSaw) && (WasLastAbility(RookAutoturret) || WasLastAbility(AutomatonQueen)))
                         {
                             return Wildfire;
-                        } else if (CanWeave(actionID, 0.6) && gauge.IsOverheated )
+                        } 
+                        else if (CanWeave(actionID, 0.6) && gauge.IsOverheated )
                         {
                             return Wildfire;
                         }
@@ -609,17 +614,17 @@ namespace XIVSlothCombo.Combos.PvE
                         return HotShot; */
 
                     // Air Anchor
-                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
+                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor && GetCooldownRemainingTime(actionID) > 1.5 )
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
                             return Reassemble;
                         }
-                        return ChainSaw;
+                        return AirAnchor;
                     }
 
                     // Drill
-                    if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1) && level >= Levels.Drill)
+                    if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 0.7) && level >= Levels.Drill)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 && CombatEngageDuration().Minutes >= 1 && CanWeave(actionID) && HasTincture) 
                         {
@@ -629,7 +634,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Chainsaw
-                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1) && level >= Levels.ChainSaw && openerFinished)
+                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 0.7) && level >= Levels.ChainSaw && openerFinished)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
