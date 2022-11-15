@@ -170,13 +170,9 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var currentMP = LocalPlayer.CurrentMp;
 
-                    // Only enable sharpcast if it's available
-                    if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && lastComboMove != Thunder3)
-                    {
-                        return Sharpcast;
-                    }
+                    //2xHF2 Transpose with Freeze [A7]
 
-                    // Polyglot usage
+                    // Manafont usage
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) && LevelChecked(Manafont))
                     {
                         if (Gauge.InAstralFire && currentMP <= MP.AllMPSpells && ActionReady(Manafont))
@@ -185,16 +181,17 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Foul))
+                    // Polyglot usage
+                    if (CanWeave(actionID))
                     {
-                        if ((Gauge.InAstralFire && currentMP <= MP.FireAoE && Gauge.HasPolyglotStacks()))
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Foul) && Gauge.InAstralFire && lastComboMove == Flare && Gauge.HasPolyglotStacks())
                         {
                             return Foul;
                         }
                     }
 
                     // Thunder uptime
-                    if (currentMP >= MP.ThunderAoE && lastComboMove != Manafont)
+                    if (currentMP >= MP.ThunderAoE && lastComboMove == Transpose)
                     {
                         uint thunderAOE = OriginalHook(Thunder2); //Grab whichever Thunder AoE player can use
                         if (ThunderList.TryGetValue(thunderAOE, out ushort dotDebuffID))
@@ -214,17 +211,18 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (!InCombat())
+                    {
+                        return Flare;
+                    }
+
                     // Fire 2 / Flare
                     if (Gauge.InAstralFire)
                     {
                         //use Flare after manafont
                         if (!ActionReady(Manafont))
                         {
-                            if ((!TraitLevelChecked(Traits.EnhancedManafont) && GetCooldownRemainingTime(Manafont) >= 179) ||
-                                (TraitLevelChecked(Traits.EnhancedManafont) && GetCooldownRemainingTime(Manafont) >= 119))
-                            {
-                                return OriginalHook(Flare);
-                            }
+                            return Flare;
                         }
 
                         //Grab Fire 2 / High Fire 2 action ID
@@ -242,7 +240,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return Flare;
                             }
-                            else if (!TraitLevelChecked(Traits.AspectMasteryIII))
+                            else if (!TraitLevelChecked(Traits.AspectMasteryIII) || currentMP < MP.AllMPSpells)
                             {
                                 return Transpose;
                             }
@@ -252,22 +250,12 @@ namespace XIVSlothCombo.Combos.PvE
                     // Umbral Hearts
                     if (Gauge.InUmbralIce)
                     {
-                        if (TraitLevelChecked(Traits.EnhancedFreeze) && Gauge.UmbralHearts <= 2)
+                        if (lastComboMove == Transpose)
                         {
-                            return Freeze;
+                            return OriginalHook(Thunder2);
                         }
-                        else if (LevelChecked(Freeze) && currentMP < (MP.MaxMP - MP.ThunderAoE))
-                        {
-                            return Freeze;
-                        }
-                        if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                        {
-                            return (currentMP >= (MP.MaxMP - MP.ThunderAoE)) ? Transpose : Blizzard2;
-                        }
-                        if (LevelChecked(Fire2)) return OriginalHook(Fire2);
+                        return (Gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.Thunder) ? OriginalHook(Fire2) : Freeze;
                     }
-
-                    if (LevelChecked(Blizzard2)) return OriginalHook(Blizzard2);
                 }
 
                 return actionID;
@@ -776,7 +764,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.BLM_Adv_Opener) && LevelChecked(Xenoglossy))
                     {
                         // Only enable sharpcast if it's available
-                        if (!inOpener && !HasEffect(Buffs.Sharpcast))
+                        if (!inOpener && !InCombat() && !HasEffect(Buffs.Sharpcast))
                         {
                             return Sharpcast;
                         }
@@ -1228,18 +1216,19 @@ namespace XIVSlothCombo.Combos.PvE
                     //Normal Ice Phase
                     if (Gauge.InUmbralIce)
                     {
-                        if(CanWeave(actionID))
+
+                        //sharpcast
+                        if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
+                        {
+                            return Sharpcast;
+                        }
+
+                        if (CanWeave(actionID))
                         {
                             //Xenoglossy overcap protection
                             if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
                             {
                                 return Xenoglossy;
-                            }
-
-                            //sharpcast
-                            if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
-                            {
-                                return Sharpcast;
                             }
 
                             // Use Paradox when available
