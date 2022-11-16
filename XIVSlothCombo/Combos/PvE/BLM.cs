@@ -1025,6 +1025,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return (currentMP < MP.Fire) ? Transpose : Fire;
                         }
+
                         if (Gauge.InUmbralIce)
                         {
                             return (currentMP >= MP.MaxMP - MP.Thunder) ? Transpose : Blizzard;
@@ -1204,18 +1205,18 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return Xenoglossy;
                             }
-
-                            // Use Paradox when available
-                            if (LevelChecked(Paradox) && Gauge.IsParadoxActive)
-                            {
-                                return Paradox;
-                            }
                         }
 
                         //sharpcast
                         if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
                         {
                             return Sharpcast;
+                        }
+
+                        // Use Paradox when available
+                        if (LevelChecked(Paradox) && Gauge.IsParadoxActive)
+                        {
+                            return Paradox;
                         }
 
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
