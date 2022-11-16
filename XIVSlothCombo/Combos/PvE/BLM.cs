@@ -816,7 +816,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 //Sharpcast
-                                if (!HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast) && !ActionReady(Manafont) && lastComboMove == Fire4 && inOpener == true)
+                                if (!HasEffect(Buffs.Sharpcast) && GetRemainingCharges(Sharpcast) > 1 && !ActionReady(Manafont) && lastComboMove == Fire4 && inOpener == true)
                                 {
                                     return Sharpcast;
                                 }
@@ -892,10 +892,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (lastComboMove == Thunder3)
                                 {
                                     return Transpose;
-                                    openerFinished = true;
-                                    inOpener = false;
                                 }
-                                
+                                openerFinished = true;
+                                inOpener = false;
                             }
                            
                         }
