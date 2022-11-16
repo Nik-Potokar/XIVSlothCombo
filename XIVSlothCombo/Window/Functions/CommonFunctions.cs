@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Numerics;
 using Dalamud.Interface.Components;
 using ImGuiNET;
+using ImGuiScene;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using System.Linq;
@@ -12,6 +13,7 @@ using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
+using Lumina.Data.Files;
 
 namespace XIVSlothCombo.Window.Functions
 {

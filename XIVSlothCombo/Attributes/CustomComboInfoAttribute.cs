@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Resolvers;
 using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;

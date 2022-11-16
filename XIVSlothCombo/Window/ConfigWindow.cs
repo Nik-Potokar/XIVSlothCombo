@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Resolvers;
 using Dalamud.Utility;
 using ImGuiNET;
+using Lumina.Excel.GeneratedSheets;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
@@ -85,7 +87,7 @@ namespace XIVSlothCombo.Window
                 {
                     if (ImGui.BeginTabItem("Main Menu"))
                     {
-                        MainWindow.DrawMenuWindow();
+                        CharacterWindow.Draw();
                         ImGui.EndTabItem();
                     }
 
