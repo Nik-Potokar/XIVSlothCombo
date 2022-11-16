@@ -54,12 +54,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Window\Resources\banner.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="..\res\akified.png" Link="images\akified.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<Optimize>True</Optimize>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Window\Resources\banner.png" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
