@@ -462,12 +462,11 @@ namespace XIVSlothCombo.Combos.PvE
                     var HyperChargeThreshold = enemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_ST_HyperChargeThreshold);
                     var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
                     var HasTincture = HasEffect(All.Buffs.Medicated);
-                    var HasMeleeRaidBuffs = HasEffect(All.MeleeRaidBuffs.RightEye) || HasEffect(All.MeleeRaidBuffs.BattleLitany) || HasEffect(All.MeleeRaidBuffs.ArcaneCircle) || HasEffect(All.MeleeRaidBuffs.Brotherhood);
+                    var HasMeleeRaidBuffs = HasEffect(All.MeleeRaidBuffs.BattleLitany) || HasEffect(All.MeleeRaidBuffs.ArcaneCircle) || HasEffect(All.MeleeRaidBuffs.Brotherhood) || TargetHasEffectAny(All.RaidDebuffs.VulnerabilityUp);
                     var HasRangeRaidBuffs = HasEffect(All.RangeRaidBuffs.TechnicalFinish) || HasEffect(All.RangeRaidBuffs.BattleVoice) || HasEffect(All.RangeRaidBuffs.RadiantFinale);
                     var HasCasterRaidBuffs = HasEffect(All.CasterRaidBuffs.Embolden) || HasEffect(All.CasterRaidBuffs.SearingLight);
-                    var HasHealerRaidBuffs = HasEffect(All.HealerRaidBuffs.Divination);
-                    var HasRaidDebuffs = TargetHasEffectAny(All.RaidDebuffs.ChainStratagem) || TargetHasEffectAny(All.RaidDebuffs.Mug) ;
-                    // var BuffWindow = CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 12 && CombatEngageDuration().Minutes % 2 == 0 ;
+                    var HasHealerRaidBuffs = HasEffect(All.HealerRaidBuffs.Divination)  || TargetHasEffectAny(All.RaidDebuffs.ChainStratagem);
+                    // var BuffWindow = CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 15 && CombatEngageDuration().Minutes % 2 == 0 ;
 
                     if (!inCombat)
                     {
@@ -507,6 +506,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     }
 
+                    // Queen
                     if (GadgetThreshold && CanWeave(actionID) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire))
                     {
                         //overflow protection
@@ -514,23 +514,23 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return OriginalHook(RookAutoturret);
                         }*/
-                        if (CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds <= 30)
+                        if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds <= 30)
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 80 && CombatEngageDuration().Seconds >= 10 && CombatEngageDuration().Seconds <= 45 && CombatEngageDuration().Minutes % 2 == 1)
+                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 80 && CombatEngageDuration().Minutes % 2 == 1 && CombatEngageDuration().Seconds >= 10 && CombatEngageDuration().Seconds <= 45 )
+                        {
+                            return OriginalHook(RookAutoturret);
+                        }
+                        else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Minutes % 2 == 0 && HasMeleeRaidBuffs))
+                        {
+                            return OriginalHook(RookAutoturret); 
+                        }
+                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Minutes % 2 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
                         {
                             return OriginalHook(RookAutoturret);
                         }
 
-                        else if (CanWeave(actionID) && level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 10 && CombatEngageDuration().Minutes % 2 == 0 && WasLastWeaponskill(OriginalHook(CleanShot)) )
-                        {
-                            return OriginalHook(RookAutoturret);
-                        }
-                        //else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 58 || CombatEngageDuration().Seconds <= 05))
-                        //{
-                        //    return OriginalHook(RookAutoturret);
-                        //}
 
                     }
 

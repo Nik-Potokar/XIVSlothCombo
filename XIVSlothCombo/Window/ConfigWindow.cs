@@ -79,11 +79,17 @@ namespace XIVSlothCombo.Window
             {
                 return;
             }
-
+            //
             if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
             {
                 if (ImGui.BeginTabBar("Config Tabs"))
                 {
+                    if (ImGui.BeginTabItem("MainMenu"))
+                    {
+                        MainMenu.Draw();
+                        ImGui.EndTabItem();
+                    }
+
                     if (ImGui.BeginTabItem("PvE Features"))
                     {
                         PvEFeatures.Draw();
@@ -96,25 +102,23 @@ namespace XIVSlothCombo.Window
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem("Settings"))
+                    if (ImGui.BeginTabItem("Plugin Settings"))
                     {
                         Settings.Draw();
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
+                    if (ImGui.BeginTabItem("About XIVSlothCombo"))
                     {
                         AboutUs.Draw();
                         ImGui.EndTabItem();
                     }
 
-#if DEBUG
                     if (ImGui.BeginTabItem("Debug Mode"))
                     {
                         Debug.Draw();
                         ImGui.EndTabItem();
                     }
-#endif
                     ImGui.EndTabBar();
                 }
             }

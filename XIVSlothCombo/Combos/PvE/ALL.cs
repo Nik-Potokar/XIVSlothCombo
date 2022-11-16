@@ -67,7 +67,6 @@ namespace XIVSlothCombo.Combos.PvE
         public static class MeleeRaidBuffs
         {
             public const ushort
-                RightEye = 1910,
                 BattleLitany = 786,
                 ArcaneCircle = 2599,
                 Brotherhood = 1185;
@@ -76,7 +75,6 @@ namespace XIVSlothCombo.Combos.PvE
         public static class RangeRaidBuffs
         {
             public const ushort
-                StandardFinish = 1821,
                 TechnicalFinish = 1822,
                 BattleVoice = 141,
                 RadiantFinale = 2722;
@@ -99,7 +97,6 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const ushort
                 ChainStratagem = 7436,
-                TrickAttack = 3254,
                 VulnerabilityUp = 638; // This is Mug done by NIN
         }
 
