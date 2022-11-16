@@ -240,9 +240,9 @@ namespace XIVSlothCombo.Window.Tabs
                     ImGui.ColorButton("Parsed Orange", ImGuiColors.ParsedOrange);
                     ImGui.SameLine();
                     ImGui.ColorButton("Parsed Purple", ImGuiColors.ParsedPurple);
-                    
+
                 }
-                
+
             }
 
             else
