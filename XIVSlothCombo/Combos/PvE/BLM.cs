@@ -762,6 +762,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(All.Buffs.Weakness))
                             {
                                 openerFinished = true;
+                                inOpener = false;
                                 return Blizzard3;
                             }
 
@@ -815,7 +816,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 //Sharpcast
-                                if (!HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast) && !ActionReady(Manafont) && lastComboMove == Fire4)
+                                if (!HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast) && !ActionReady(Manafont) && lastComboMove == Fire4 && inOpener == true)
                                 {
                                     return Sharpcast;
                                 }
@@ -854,6 +855,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     else
                                     {
                                         openerFinished = true;
+                                        inOpener = false;
                                     }
                                 }
 
@@ -890,9 +892,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (lastComboMove == Thunder3)
                                 {
                                     return Transpose;
+                                    openerFinished = true;
+                                    inOpener = false;
                                 }
-                                openerFinished = true;
+                                
                             }
+                           
                         }
                     }
 
@@ -1174,7 +1179,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Xenoglossy for Manafont weave
-                            if (Gauge.HasPolyglotStacks() && ActionReady(Manafont) && currentMP < MP.AllMPSpells && LevelChecked(Xenoglossy))
+                            if (Gauge.HasPolyglotStacks() && ActionReady(Manafont) && currentMP < MP.AllMPSpells && LevelChecked(Xenoglossy) && !IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                             {
                                 return Xenoglossy;
                             }
