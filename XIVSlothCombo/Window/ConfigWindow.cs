@@ -79,14 +79,13 @@ namespace XIVSlothCombo.Window
             {
                 return;
             }
-            //
             if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
             {
                 if (ImGui.BeginTabBar("Config Tabs"))
                 {
-                    if (ImGui.BeginTabItem("MainMenu"))
+                    if (ImGui.BeginTabItem("Main Menu"))
                     {
-                        MainMenu.Draw();
+                        MainWindow.DrawMenuWindow();
                         ImGui.EndTabItem();
                     }
 

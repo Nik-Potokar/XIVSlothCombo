@@ -77,7 +77,7 @@ namespace XIVSlothCombo.Window.Functions
                 if (potionAttr.Potions.Count > 0)
                 {
                     ImGui.PushItemWidth(300);
-                    potionAttr.Potions.TryGetValue((uint)PluginConfiguration.GetCustomIntValue(potionAttr.Config), out string preview);
+                    potionAttr.Potions.TryGetValue((uint)PluginConfiguration.GetCustomIntValue(potionAttr.Config), out var preview);
                     if (preview is null) preview = "";
 
                     if (ImGui.BeginCombo("Select Potion", preview))
