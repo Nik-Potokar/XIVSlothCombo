@@ -230,9 +230,12 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Spacing();
 
                 //if (ImGui.Button($"PLD rotation"))
+                bool p_opened = true;
                 if (ImGui.Button("button1"))
                 { 
-                    ImGui.BeginPopupModal("popup1");
+                    
+                    ImGui.SetNextWindowSize(new Vector2(500,400));
+                    ImGui.Begin("popup1#123", ref p_opened);
                     ImGui.ColorButton("Parsed Gold", ImGuiColors.ParsedGold);
                     ImGui.SameLine();
                     ImGui.ColorButton("Parsed Pink", ImGuiColors.ParsedPink);
@@ -240,8 +243,9 @@ namespace XIVSlothCombo.Window.Tabs
                     ImGui.ColorButton("Parsed Orange", ImGuiColors.ParsedOrange);
                     ImGui.SameLine();
                     ImGui.ColorButton("Parsed Purple", ImGuiColors.ParsedPurple);
-
+                    
                 }
+                ImGui.End();
 
             }
 
