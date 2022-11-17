@@ -46,15 +46,13 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Indent(5);
                 ImGui.TextColored(ImGuiColors.DalamudOrange, $"Welcome: {LocalPlayer.Name}! [{LocalPlayer.CompanyTag}]");
                 ImGui.TextColored(ImGuiColors.DalamudWhite2, $"You're current Job is:"); ImGui.SameLine(); ImGui.TextColored(ImGuiColors.DalamudWhite, $"{LocalPlayer.ClassJob.GameData.Abbreviation}");
-                CommonFunctions.HelpMarker("view the main window");
+                //CommonFunctions.HelpMarker("view the main window");
                 ImGui.Unindent(5);
                 ImGui.Separator();
-
+                // ============================================================================================================================================================================================
                 ImGui.Indent(6); ImGui.TextColored(ImGuiColors.DPSRed, $"{LocalPlayer.CurrentHp} / {LocalPlayer.MaxHp} HP");
                 ImGui.TextColored(ImGuiColors.ParsedPink, $"{LocalPlayer.CurrentMp} / {LocalPlayer.MaxMp} MP");
                 ImGui.Unindent(6);
-                //ImGui.TextColored(ImGuiColors.DalamudViolet, $"{LocalPlayer.CurrentCp}/{LocalPlayer.MaxCp} CP");
-                //ImGui.TextColored(ImGuiColors.ParsedBlue, $"{LocalPlayer.CurrentGp}/{LocalPlayer.MaxGp} GP");
                 ImGui.EndChild();
 
                 ImGui.NewLine();
