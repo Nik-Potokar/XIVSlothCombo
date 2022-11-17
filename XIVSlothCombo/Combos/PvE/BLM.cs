@@ -959,7 +959,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                     Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 3)
+                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 7)
                                         return dot; //Use appropriate DoT Action
                                 }
                             }
@@ -1100,7 +1100,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Use Paradox instead of hardcasting Fire3 if we can
-                        if (Gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.Fire)
+                        if (Gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && !HasEffect(Buffs.Sharpcast) && currentMP >= MP.Fire)
                         {
                             if (LevelChecked(Paradox))
                             {
