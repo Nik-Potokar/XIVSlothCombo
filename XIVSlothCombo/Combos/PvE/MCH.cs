@@ -522,15 +522,14 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Minutes % 2 == 0 && HasMeleeRaidBuffs))
-                        {
-                            return OriginalHook(RookAutoturret); 
-                        }
                         else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Minutes % 2 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
                         {
                             return OriginalHook(RookAutoturret);
                         }
-
+                        else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Minutes % 2 == 0 && HasMeleeRaidBuffs))
+                        {
+                            return OriginalHook(RookAutoturret); 
+                        }
 
                     }
 
@@ -612,8 +611,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.SecondWind;
                     }
 
-                    // Air Anchor
-                 /* if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
+                    #region original air Anchor
+                 /* 
+                  if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
                             GetRemainingCharges(Reassemble) > 0)
@@ -624,10 +624,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return AirAnchor;
                     }
                     else if ((IsOffCooldown(HotShot) || GetCooldownRemainingTime(HotShot) < 1) && level is >= Levels.Hotshot and < Levels.AirAnchor)
-                        return HotShot; */
-
+                        return HotShot; 
+                 */
+                 #endregion                    
                     // Air Anchor && GetCooldownRemainingTime(actionID) > 1.5 
-                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
+                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1.5 && CanWeave(actionID, 1.5)) && level >= Levels.AirAnchor)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
@@ -637,7 +638,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Drill
-                    if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 0.7) && level >= Levels.Drill)
+                    if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1.5) && level >= Levels.Drill)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 && CombatEngageDuration().Minutes >= 1 && CanWeave(actionID) && HasTincture) 
                         {
@@ -647,7 +648,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Chainsaw
-                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 0.7) && level >= Levels.ChainSaw && openerFinished)
+                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1.5 && CanWeave(actionID, 1.5)) && level >= Levels.ChainSaw && openerFinished)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {

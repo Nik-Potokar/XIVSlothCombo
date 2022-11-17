@@ -103,13 +103,6 @@ namespace XIVSlothCombo.Window
                 {
                     if (ImGui.BeginTabBar("##tabar"))
                     {
-                    
-                        if (ImGui.BeginTabItem("Main Menu"))
-                        {
-                            MainMenuWindow.Draw();
-                            ImGui.EndTabItem();
-                        }
-
                         if (ImGui.BeginTabItem("PvE Features"))
                         {
                             PvEFeatures.Draw();
