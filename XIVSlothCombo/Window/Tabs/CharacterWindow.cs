@@ -38,7 +38,7 @@ namespace XIVSlothCombo.Window.Tabs
                 return;
             }
             
-            ImGui.SetTooltip("This tab allows you to see a quick overview along with some other usefull tools.");
+
             var JobName = Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish;
             var ShortJobName = Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation;
 
@@ -46,6 +46,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Indent(5);
                 ImGui.TextColored(ImGuiColors.DalamudOrange, $"Welcome: {LocalPlayer.Name}! [{LocalPlayer.CompanyTag}]");
                 ImGui.TextColored(ImGuiColors.DalamudWhite2, $"You're current Job is:"); ImGui.SameLine(); ImGui.TextColored(ImGuiColors.DalamudWhite, $"{LocalPlayer.ClassJob.GameData.Abbreviation}");
+                CommonFunctions.HelpMarker("view the main window");
                 ImGui.Unindent(5);
                 ImGui.Separator();
 

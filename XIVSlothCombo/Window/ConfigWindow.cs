@@ -88,54 +88,68 @@ namespace XIVSlothCombo.Window
         
         public void DrawConfig()
         {
-            if (!Visible)
-            {
-                  return;
-            }
-            if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
-            {
-                if (ImGui.BeginTabBar("Config Tabs"))
+            if (!Visible) return;
+            try
+            { 
+                var fontScale = ImGui.GetIO().FontGlobalScale;
+                var size = new Vector2(450 * fontScale, 300 * fontScale);
+
+                ImGui.SetNextWindowSize(size * 2, ImGuiCond.FirstUseEver);
+                ImGui.SetNextWindowSizeConstraints(size, size * 20);
+
+                if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
                 {
-                    CommonFunctions.ToolTip("view the main window");
-                    if (ImGui.BeginTabItem("Character"))
+                    if (ImGui.BeginTabBar("##tabar"))
                     {
-                        CharacterWindow.Draw();
-                        ImGui.EndTabItem();
-                    }
+                    
+                        if (ImGui.BeginTabItem("Character"))
+                        {
+                            CharacterWindow.Draw();
+                            ImGui.EndTabItem();
+                        }
 
-                    if (ImGui.BeginTabItem("PvE Features"))
-                    {
-                        PvEFeatures.Draw();
-                        ImGui.EndTabItem();
-                    }
+                        if (ImGui.BeginTabItem("PvE Features"))
+                        {
+                            PvEFeatures.Draw();
+                            ImGui.EndTabItem();
+                        }
 
-                    if (ImGui.BeginTabItem("PvP Features"))
-                    {
-                        PvPFeatures.Draw();
-                        ImGui.EndTabItem();
-                    }
+                        if (ImGui.BeginTabItem("PvP Features"))
+                        {
+                            PvPFeatures.Draw();
+                            ImGui.EndTabItem();
+                        }
 
-                    if (ImGui.BeginTabItem("Plugin Settings"))
-                    {
-                        Settings.Draw();
-                        ImGui.EndTabItem();
-                    }
+                        if (ImGui.BeginTabItem("Plugin Settings"))
+                        {
+                            Settings.Draw();
+                            ImGui.EndTabItem();
+                        }
 
-                    if (ImGui.BeginTabItem("About XIVSlothCombo"))
-                    {
-                        AboutUs.Draw();
-                        ImGui.EndTabItem();
-                    }
+                        if (ImGui.BeginTabItem("About XIVSlothCombo"))
+                        {
+                            AboutUs.Draw();
+                            ImGui.EndTabItem();
+                        }
 
-                    if (ImGui.BeginTabItem("Debug Mode"))
-                    {
-                        Debug.Draw();
-                        ImGui.EndTabItem();
+                        if (ImGui.BeginTabItem("Debug Mode"))
+                        {
+                            Debug.Draw();
+                            ImGui.EndTabItem();
+                        }                
+                        //if (ImGui.TabItemButton(Plugin.GuiMain?.Visible ?? false ? "Hide Neko window" : "Show Neko window"))
+                            //Plugin.ToggleMainGui();
+                        
                     }
                     ImGui.EndTabBar();
                 }
             }
+            finally
+            {
+            ImGui.End();
+            }
         }
+
 
         public void DrawImageConfig()
         {
