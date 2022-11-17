@@ -88,23 +88,25 @@ namespace XIVSlothCombo.Window
         
         public void DrawConfig()
         {
-            if (!Visible) return;
+            if (!Visible) 
+                return;
             try
             { 
                 var fontScale = ImGui.GetIO().FontGlobalScale;
-                var size = new Vector2(450 * fontScale, 300 * fontScale);
+                var sizepluginwindow = new Vector2(450 * fontScale, 386 * fontScale);
+              //var size = new Vector2(450 * fontScale, 300 * fontScale);
 
-                ImGui.SetNextWindowSize(size * 2, ImGuiCond.FirstUseEver);
-                ImGui.SetNextWindowSizeConstraints(size, size * 20);
+                ImGui.SetNextWindowSize(sizepluginwindow * 2, ImGuiCond.FirstUseEver);
+                ImGui.SetNextWindowSizeConstraints(sizepluginwindow, sizepluginwindow * 20);
 
                 if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
                 {
                     if (ImGui.BeginTabBar("##tabar"))
                     {
                     
-                        if (ImGui.BeginTabItem("Character"))
+                        if (ImGui.BeginTabItem("Main Menu"))
                         {
-                            CharacterWindow.Draw();
+                            MainMenuWindow.Draw();
                             ImGui.EndTabItem();
                         }
 
@@ -149,7 +151,6 @@ namespace XIVSlothCombo.Window
             ImGui.End();
             }
         }
-
 
         public void DrawImageConfig()
         {

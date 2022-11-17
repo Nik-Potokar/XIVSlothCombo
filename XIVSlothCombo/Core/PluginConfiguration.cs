@@ -75,6 +75,25 @@ namespace XIVSlothCombo.Core
 
         #endregion
 
+        #region Tab Options 
+
+        /// <summary> Enables Debug Tab </summary>
+        public bool TogglePvEFeatures { get; set; } = false;
+
+        /// <summary> Enables Debug Tab </summary>
+        public bool TogglePvPFeatures { get; set; } = false;
+
+        /// <summary> Enables Debug Tab </summary>
+        public bool ToggleSettings { get; set; } = false;
+        
+        /// <summary> Enables Debug Tab </summary>
+        public bool ToggleAboutSloth { get; set; } = false;
+        
+        /// <summary> Enables Debug Tab </summary>
+        public bool ToggleDebug { get; set; } = false;
+
+        #endregion
+
         #region Combo Preset Checks
 
         /// <summary> Gets a value indicating whether a preset is enabled. </summary>

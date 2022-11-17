@@ -16,37 +16,35 @@ using XIVSlothCombo.Window.MessagesNS;
 
 namespace XIVSlothCombo.Window.Tabs
 {
-    internal class CharacterWindow : ConfigWindow
+    internal class MainMenuWindow : ConfigWindow
     {
         //internal static Dictionary<string, bool> showHeader = new Dictionary<string, bool>();
+        // ImGui.SetNextWindowSize(size * 2, ImGuiCond.FirstUseEver);
+        // ImGui.SetNextWindowSizeConstraints(size, size * 20);
+        // var JobName = Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish;
+        // var ShortJobName = Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation;
 
         internal static new void Draw()
         {
+            var fontScale = ImGui.GetIO().FontGlobalScale;
+            var size = new Vector2(550 * fontScale, 150 * fontScale);
+
             PlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
+
             if (LocalPlayer != null)
             {
-                if (Service.ClientState.LocalPlayer.TargetObject is BattleChara chara)
+                if (Service.ClassLocked)
                 {
-                    foreach (Status? status in chara.StatusList)
-                    {
-                        ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
-                    }
+                    ImGui.Text("Please log in to use this feature.");
+                    return;
                 }
-            if (Service.ClassLocked)
-            {
-                ImGui.Text("Please log in to use this feature.");
-                return;
-            }
-            
 
-            var JobName = Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish;
-            var ShortJobName = Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation;
-
-                ImGui.BeginChild("menu", new Vector2(200, 100f), true, ImGuiWindowFlags.NoBackground);
+                ImGui.SetNextWindowSize(size * 2, ImGuiCond.FirstUseEver);
+                ImGui.SetNextWindowSizeConstraints(size, size * 20);
+                ImGui.BeginChild("menu", size, true);
                 ImGui.Indent(5);
                 ImGui.TextColored(ImGuiColors.DalamudOrange, $"Welcome: {LocalPlayer.Name}! [{LocalPlayer.CompanyTag}]");
                 ImGui.TextColored(ImGuiColors.DalamudWhite2, $"You're current Job is:"); ImGui.SameLine(); ImGui.TextColored(ImGuiColors.DalamudWhite, $"{LocalPlayer.ClassJob.GameData.Abbreviation}");
-                //CommonFunctions.HelpMarker("view the main window");
                 ImGui.Unindent(5);
                 ImGui.Separator();
                 // ============================================================================================================================================================================================
@@ -54,9 +52,9 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextColored(ImGuiColors.ParsedPink, $"{LocalPlayer.CurrentMp} / {LocalPlayer.MaxMp} MP");
                 ImGui.Unindent(6);
                 ImGui.EndChild();
-
+                // ============================================================================================================================================================================================
                 ImGui.NewLine();
-
+                // ============================================================================================================================================================================================
                 if (ImGui.CollapsingHeader("Opener/Rotation Image buttons"))
                 {
                     ImGui.BeginTable("Job images", 5, ImGuiTableFlags.Borders, new Vector2(0.0f, 0.0f), 0.0f);
@@ -179,29 +177,29 @@ namespace XIVSlothCombo.Window.Tabs
                     }
                     ImGui.EndTable();
                 }
-
+                // ============================================================================================================================================================================================
                 ImGui.NewLine();
-
+                // ============================================================================================================================================================================================
                 ImGui.BeginTable("Color Previews", 2, ImGuiTableFlags.Resizable, new Vector2(0.0f, 0.0f), 0.0f);
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
                 if (ImGui.CollapsingHeader("Color Preview/Examples"))
                 {
                     ImGui.BeginTable("Color Previews", 2, ImGuiTableFlags.Borders, new Vector2(0.0f, 0.0f), 0.0f);
-                    ImGui.TableNextRow();
-                    ImGui.TableNextColumn();
-
-                    ImGui.TableNextRow(0.0f);
-                    ImGui.TableSetColumnIndex(0);
-                    ImGui.Text("Color Preview: Button");
-                    ImGui.TableSetColumnIndex(1);
-                    ImGui.Text("Color Preview: Text");
+                 // ImGui.TableNextRow();
+                 // ImGui.TableNextColumn();
 
                     ImGui.TableNextRow();
                     ImGui.TableSetColumnIndex(0);
                     ImGui.ColorButton("TankBlue", ImGuiColors.TankBlue);
                     ImGui.TableSetColumnIndex(1);
                     ImGui.TextColored(ImGuiColors.TankBlue, "Tank Blue");
+
+                 // ImGui.TableNextRow();
+                 // ImGui.TableSetColumnIndex(0);
+                 // ImGui.ColorButton("TankBlue", ImGuiColors.TankBlue);
+                 // ImGui.TableSetColumnIndex(1);
+                 // ImGui.TextColored(ImGuiColors.TankBlue, "Tank Blue");
 
                     ImGui.TableNextRow();
                     ImGui.TableSetColumnIndex(0);
@@ -229,7 +227,9 @@ namespace XIVSlothCombo.Window.Tabs
                     ImGui.EndTable();
                 }
                 ImGui.EndTable();
-
+                
+                // ============================================================================================================================================================================================
+                
             }
         }
     }

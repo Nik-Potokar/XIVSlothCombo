@@ -90,7 +90,6 @@ namespace XIVSlothCombo
         }
 
         private void DrawUI() => configWindow.Draw();
-        private void DrawOpenerImage() => configWindow.DrawImageConfig();
 
         private void PrintLoginMessage(object? sender, EventArgs e)
         {
