@@ -15,6 +15,7 @@ using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window;
+using XIVSlothCombo.Window.Tabs;
 
 namespace XIVSlothCombo
 {
@@ -46,6 +47,7 @@ namespace XIVSlothCombo
 
             configWindow = new();
 
+            Service.Interface.UiBuilder.Draw += DrawImage;
             Service.Interface.UiBuilder.Draw += DrawUI;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
 
@@ -59,6 +61,11 @@ namespace XIVSlothCombo
             if (Service.ClientState.IsLoggedIn) ResetFeatures();
 
             KillRedundantIDs();
+        }
+
+        private void DrawImage()
+        {
+            throw new NotImplementedException();
         }
 
         private static void KillRedundantIDs()
@@ -83,6 +90,7 @@ namespace XIVSlothCombo
         }
 
         private void DrawUI() => configWindow.Draw();
+        private void DrawOpenerImage() => configWindow.DrawImageConfig();
 
         private void PrintLoginMessage(object? sender, EventArgs e)
         {

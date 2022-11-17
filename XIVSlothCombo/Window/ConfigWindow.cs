@@ -2,14 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Resolvers;
+using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Services;
+using XIVSlothCombo.Window.Functions;
 using XIVSlothCombo.Window.Tabs;
+using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.Window
 {
@@ -74,18 +81,23 @@ namespace XIVSlothCombo.Window
         {
             DrawConfig();
         }
-
+        public void DrawOpenerImage()
+        {
+            DrawImageConfig();
+        }
+        
         public void DrawConfig()
         {
             if (!Visible)
             {
-                return;
+                  return;
             }
             if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
             {
                 if (ImGui.BeginTabBar("Config Tabs"))
                 {
-                    if (ImGui.BeginTabItem("Main Menu"))
+                    CommonFunctions.ToolTip("view the main window");
+                    if (ImGui.BeginTabItem("Character"))
                     {
                         CharacterWindow.Draw();
                         ImGui.EndTabItem();
@@ -125,9 +137,30 @@ namespace XIVSlothCombo.Window
             }
         }
 
+        public void DrawImageConfig()
+        {
+            if (!Visible)
+            {
+                  return;
+            }
+            if (ImGui.Begin("Image Window Configuration", ref visible))
+            {
+                ImGui.SetNextWindowSize(new Vector2(500, 400));
+                ImGui.Begin("popup1#123");
+                ImGui.ColorButton("Parsed Gold", ImGuiColors.ParsedGold);
+                ImGui.SameLine();
+                ImGui.ColorButton("Parsed Pink", ImGuiColors.ParsedPink);
+                ImGui.SameLine();
+                ImGui.ColorButton("Parsed Orange", ImGuiColors.ParsedOrange);
+                ImGui.SameLine();
+                ImGui.ColorButton("Parsed Purple", ImGuiColors.ParsedPurple);
+            }
+        }
+
         public void Dispose()
         {
             
         }
+
     }
 }

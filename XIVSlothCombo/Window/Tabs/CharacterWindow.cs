@@ -1,32 +1,30 @@
-﻿using System;
+﻿using System.Linq;
 using System.Numerics;
-using Dalamud.DrunkenToad;
-using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Resolvers;
 using Dalamud.Game.ClientState.Statuses;
+using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ImGuiNET;
-using Lumina.Excel.GeneratedSheets;
-using Newtonsoft.Json.Linq;
-using XIVSlothCombo.Attributes;
+using Lumina.Data.Parsing;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
-using static XIVSlothCombo.Window.Tabs.Debug;
-using Status = Dalamud.Game.ClientState.Statuses.Status;
+using XIVSlothCombo.Window.Functions;
+using XIVSlothCombo.Window.MessagesNS;
 
 namespace XIVSlothCombo.Window.Tabs
 {
-    internal class CharacterWindow : ConfigWindow, IDisposable
+    internal class CharacterWindow : ConfigWindow
     {
+        //internal static Dictionary<string, bool> showHeader = new Dictionary<string, bool>();
+
         internal static new void Draw()
         {
             PlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
-            
             if (LocalPlayer != null)
-            { 
+            {
                 if (Service.ClientState.LocalPlayer.TargetObject is BattleChara chara)
                 {
                     foreach (Status? status in chara.StatusList)
@@ -34,26 +32,32 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId}");
                     }
                 }
-                
-                var JobName = Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish;
-                var ShortJobName = Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation;
+            if (Service.ClassLocked)
+            {
+                ImGui.Text("Please log in to use this feature.");
+                return;
+            }
+            
+            ImGui.SetTooltip("This tab allows you to see a quick overview along with some other usefull tools.");
+            var JobName = Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish;
+            var ShortJobName = Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation;
 
-                ImGui.BeginChild("menu", new Vector2(200,100f), true, ImGuiWindowFlags.NoBackground);
+                ImGui.BeginChild("menu", new Vector2(200, 100f), true, ImGuiWindowFlags.NoBackground);
                 ImGui.Indent(5);
                 ImGui.TextColored(ImGuiColors.DalamudOrange, $"Welcome: {LocalPlayer.Name}! [{LocalPlayer.CompanyTag}]");
-                ImGui.TextColored(ImGuiColors.DalamudWhite2, $"You're current Job is:"); ImGui.SameLine(); ImGui.TextColored(ImGuiColors.DalamudWhite,$"{LocalPlayer.ClassJob.GameData.Abbreviation}");
+                ImGui.TextColored(ImGuiColors.DalamudWhite2, $"You're current Job is:"); ImGui.SameLine(); ImGui.TextColored(ImGuiColors.DalamudWhite, $"{LocalPlayer.ClassJob.GameData.Abbreviation}");
                 ImGui.Unindent(5);
                 ImGui.Separator();
-               
+
                 ImGui.Indent(6); ImGui.TextColored(ImGuiColors.DPSRed, $"{LocalPlayer.CurrentHp} / {LocalPlayer.MaxHp} HP");
                 ImGui.TextColored(ImGuiColors.ParsedPink, $"{LocalPlayer.CurrentMp} / {LocalPlayer.MaxMp} MP");
                 ImGui.Unindent(6);
-              //ImGui.TextColored(ImGuiColors.DalamudViolet, $"{LocalPlayer.CurrentCp}/{LocalPlayer.MaxCp} CP");
-              //ImGui.TextColored(ImGuiColors.ParsedBlue, $"{LocalPlayer.CurrentGp}/{LocalPlayer.MaxGp} GP");
+                //ImGui.TextColored(ImGuiColors.DalamudViolet, $"{LocalPlayer.CurrentCp}/{LocalPlayer.MaxCp} CP");
+                //ImGui.TextColored(ImGuiColors.ParsedBlue, $"{LocalPlayer.CurrentGp}/{LocalPlayer.MaxGp} GP");
                 ImGui.EndChild();
 
                 ImGui.NewLine();
-                
+
                 if (ImGui.CollapsingHeader("Opener/Rotation Image buttons"))
                 {
                     ImGui.BeginTable("Job images", 5, ImGuiTableFlags.Borders, new Vector2(0.0f, 0.0f), 0.0f);
@@ -227,31 +231,6 @@ namespace XIVSlothCombo.Window.Tabs
                 }
                 ImGui.EndTable();
 
-                ImGui.Spacing();
-
-                //if (ImGui.Button($"PLD rotation"))
-                bool p_opened = true;
-                if (ImGui.Button("button1"))
-                { 
-                    
-                    ImGui.SetNextWindowSize(new Vector2(500,400));
-                    ImGui.Begin("popup1#123", ref p_opened);
-                    ImGui.ColorButton("Parsed Gold", ImGuiColors.ParsedGold);
-                    ImGui.SameLine();
-                    ImGui.ColorButton("Parsed Pink", ImGuiColors.ParsedPink);
-                    ImGui.SameLine();
-                    ImGui.ColorButton("Parsed Orange", ImGuiColors.ParsedOrange);
-                    ImGui.SameLine();
-                    ImGui.ColorButton("Parsed Purple", ImGuiColors.ParsedPurple);
-                    
-                }
-                ImGui.End();
-
-            }
-
-            else
-            {
-                ImGui.TextUnformatted("Please log in to use this Plugin.");
             }
         }
     }
