@@ -959,7 +959,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                     Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
+                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 3)
                                         return dot; //Use appropriate DoT Action
                                 }
                             }
@@ -1087,14 +1087,12 @@ namespace XIVSlothCombo.Combos.PvE
                     //Normal Fire Phase
                     if (Gauge.InAstralFire)
                     {
-                        if (CanWeave(actionID))
+                        //xenoglossy overcap protection
+                        if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 3000) && LevelChecked(Xenoglossy))
                         {
-                            //xenoglossy overcap protection
-                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 3000) && LevelChecked(Xenoglossy))
-                            {
-                                return Xenoglossy;
-                            }
+                            return Xenoglossy;
                         }
+
                         // F3 proc or swiftcast F3 during transpose lines(< 3 astral fire stacks)
                         if (Gauge.AstralFireStacks < 3 || (Gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter)))
                         {
@@ -1197,14 +1195,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //Normal Ice Phase
                     if (Gauge.InUmbralIce)
                     {
-
-                        if (CanWeave(actionID))
+                        //Xenoglossy overcap protection
+                        if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
                         {
-                            //Xenoglossy overcap protection
-                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
-                            {
-                                return Xenoglossy;
-                            }
+                            return Xenoglossy;
                         }
 
                         //sharpcast
