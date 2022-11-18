@@ -440,23 +440,30 @@ namespace XIVSlothCombo.Combos.PvE
                         // ST Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Feathers) && LevelChecked(FanDance1))
                         {
-                            int featherBurstThreshold = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent);
-                            int minFeathers = IsEnabled(CustomComboPreset.DNC_ST_Simple_FeatherPooling) && LevelChecked(TechnicalStep)
-                                ? (GetCooldownRemainingTime(TechnicalStep) < 2.5f ? 4 : 3)
-                                : 0;
-
+                            // FD3
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
 
-                            // Basic FD1
-                            if ((IsOffCooldown(TechnicalStep) && gauge.Feathers > 3) ||
-                                (GetTargetHPPercent() < featherBurstThreshold && gauge.Feathers > 0))
+                            // FD1 HP% Dump
+                            if (GetTargetHPPercent() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent) && gauge.Feathers > 0)
                                 return FanDance1;
 
-                            // Burst FD1
-                            if ((gauge.Feathers > minFeathers) ||
-                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0))
+                            if (LevelChecked(TechnicalStep))
+                            {
+                                // Burst FD1
+                                if (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)
+                                    return FanDance1;
+
+                                // FD1 Pooling
+                                if (gauge.Feathers > 3 &&
+                                    (GetCooldownRemainingTime(TechnicalStep) > 2.5f || IsOffCooldown(TechnicalStep)))
+                                    return FanDance1;
+                            }
+
+                            // FD1 Non-pooling & under burst level
+                            if (!LevelChecked(TechnicalStep) && gauge.Feathers > 0)
                                 return FanDance1;
+
                         }
 
                         if (HasEffect(Buffs.FourFoldFanDance))
@@ -485,9 +492,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
-                        if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
+                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
+                            IsOffCooldown(StandardStep))
                             return StandardStep;
                     }
 
@@ -588,20 +596,53 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanWeave(actionID))
                     {
+                        /*
                         // AoE Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers) && LevelChecked(FanDance1))
                         {
                             int minFeathers = IsEnabled(CustomComboPreset.DNC_AoE_Simple_FeatherPooling) && LevelChecked(TechnicalStep)
-                                ? 3
+                                ? (GetCooldownRemainingTime(TechnicalStep) < 2.5f ? 4 : 3)
                                 : 0;
 
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
 
-                            if (LevelChecked(FanDance2) &&
-                                (gauge.Feathers > minFeathers ||
-                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)))
+                            if ((gauge.Feathers > minFeathers ||
+                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)) &&
+                                LevelChecked(FanDance2))
                                 return FanDance2;
+                        }
+                        */
+
+                        // AoE Feathers & Fans
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers) && LevelChecked(FanDance1))
+                        {
+                            // FD3
+                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                                return FanDance3;
+
+                            if (LevelChecked(FanDance2))
+                            {
+                                if (LevelChecked(TechnicalStep))
+                                {
+                                    // Burst FD2
+                                    if (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)
+                                        return FanDance2;
+
+                                    // FD2 Pooling
+                                    if (gauge.Feathers > 3 &&
+                                        (GetCooldownRemainingTime(TechnicalStep) > 2.5f || IsOffCooldown(TechnicalStep)))
+                                        return FanDance2;
+                                }
+
+                                // FD2 Non-pooling & under burst level
+                                if (!LevelChecked(TechnicalStep) && gauge.Feathers > 0)
+                                    return FanDance2;
+                            }
+
+                            // FD1 Replacement for Lv.30-49
+                            if (!LevelChecked(FanDance2) && gauge.Feathers > 0)
+                                return FanDance1;
                         }
 
                         if (HasEffect(Buffs.FourFoldFanDance))
@@ -630,9 +671,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
-                        if ((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
+                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
+                            IsOffCooldown(StandardStep))
                             return StandardStep;
                     }
 
