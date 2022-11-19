@@ -77,6 +77,7 @@ namespace XIVSlothCombo.Combos.PvP
 
 
                 if (HasEffect(3180)) return false; //DRG LB buff
+                if (HasEffect(DRKPVP.Buffs.UndeadRedemption)) return false;
                 if (LocalPlayer.CurrentMp < 2500) return false;
                 if (remainingPercentage * 100 > threshold) return false;
 
@@ -113,6 +114,7 @@ namespace XIVSlothCombo.Combos.PvP
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
                 if (HasEffect(3180)) return false; //DRG LB buff
+                if (HasEffect(DRKPVP.Buffs.UndeadRedemption)) return false;
                 if (HasEffectAny(Debuffs.Unguarded) || HasEffect(WARPVP.Buffs.InnerRelease)) return false;
                 if (GetCooldown(Guard).IsCooldown) return false;
                 if (remainingPercentage * 100 > threshold) return false;

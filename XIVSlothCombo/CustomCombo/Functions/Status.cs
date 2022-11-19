@@ -119,5 +119,19 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return false;
         }
+
+        public static bool HasCleansableDebuff(GameObject? OurTarget = null)
+        {
+            OurTarget ??= CurrentTarget;
+            if (HasFriendlyTarget(OurTarget) && (OurTarget is BattleChara chara))
+            {
+                foreach (Status status in chara.StatusList)
+                {
+                    if (ActionWatching.StatusSheet.TryGetValue(status.StatusId, out var statusItem) && statusItem.CanDispel)
+                        return true;
+                }
+            }
+            return false;
+        }
     }
 }
