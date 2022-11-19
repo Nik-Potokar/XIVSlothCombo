@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Dalamud.Hooking;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
+using Lumina.Excel.GeneratedSheets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Dalamud.Hooking;
-using FFXIVClientStructs.FFXIV.Client.Game;
+using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
-using Lumina.Excel.GeneratedSheets;
 
 namespace XIVSlothCombo.Data
 {
@@ -81,6 +84,7 @@ namespace XIVSlothCombo.Data
         {
             try
             {
+                CheckForChangedTarget(actionId, ref targetObjectId);
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
                 TimeLastActionUsed = DateTime.Now;
                 ActionType = actionType;
@@ -92,6 +96,21 @@ namespace XIVSlothCombo.Data
                 Dalamud.Logging.PluginLog.Error(ex, "SendActionDetour");
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
             }
+        }
+
+        private unsafe static void CheckForChangedTarget(uint actionId, ref long targetObjectId)
+        {
+            if (actionId is AST.Balance or AST.Bole or AST.Ewer or AST.Arrow or AST.Spire or AST.Spear && 
+                AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
+                !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)AST.AST_QuickTargetCards.SelectedRandomMember.Address))
+            {
+                targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+            }
+        }
+
+        private static unsafe bool OutOfRange(uint actionId, GameObject* source, GameObject* target)
+        {
+            return ActionManager.GetActionInRangeOrLoS(actionId, source, target) is 566;
         }
 
         public static uint WhichOfTheseActionsWasLast(params uint[] actions)
@@ -151,7 +170,7 @@ namespace XIVSlothCombo.Data
             SendActionHook?.Dispose();
         }
 
-        static ActionWatching()
+        static unsafe ActionWatching()
         {
             ReceiveActionEffectHook ??= Hook<ReceiveActionEffectDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00"), ReceiveActionEffectDetour);
             SendActionHook ??= Hook<SendActionDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
@@ -207,20 +226,6 @@ namespace XIVSlothCombo.Data
             Weaponskill,
             Unknown
         }
-    }
-
-    internal unsafe static class ActionManagerHelper
-    {
-        private static readonly IntPtr actionMgrPtr;
-        internal static IntPtr FpUseAction => (IntPtr)ActionManager.fpUseAction;
-        internal static IntPtr FpUseActionLocation => (IntPtr)ActionManager.fpUseActionLocation;
-        internal static IntPtr CheckActionResources => (IntPtr)ActionManager.fpCheckActionResources;
-        public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;
-        public static ushort LastRecievedSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x112) : (ushort)0;
-        public static bool IsCasting => actionMgrPtr != IntPtr.Zero && Marshal.ReadByte(actionMgrPtr + 0x28) != 0;
-        public static uint CastingActionId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x24) : 0u;
-        public static uint CastTargetObjectId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x38) : 0u;
-        static ActionManagerHelper() => actionMgrPtr = (IntPtr)ActionManager.Instance();
     }
 
     [StructLayout(LayoutKind.Explicit)]

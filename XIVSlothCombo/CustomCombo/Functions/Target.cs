@@ -165,7 +165,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (IsInRange(target)) SetTarget(target);
         }
 
-        protected unsafe static StructsObject.GameObject* GetTarget(TargetType target)
+        public unsafe static StructsObject.GameObject* GetTarget(TargetType target)
         {
             GameObject? o = null;
 

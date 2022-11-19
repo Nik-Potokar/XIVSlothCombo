@@ -8,6 +8,7 @@ using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -30,12 +31,12 @@ namespace XIVSlothCombo.Combos.PvE
             Play = 17055,
             Redraw = 3593,
             //Obsolete? Left just incase it's needed
-            //Balance = 4401,
-            //Bole = 4404,
-            //Arrow = 4402,
-            //Spear = 4403,
-            //Ewer = 4405,
-            //Spire = 4406,
+            Balance = 4401,
+            Bole = 4404,
+            Arrow = 4402,
+            Spear = 4403,
+            Ewer = 4405,
+            Spire = 4406,
             MinorArcana = 7443,
             //LordOfCrowns = 7444,
             //LadyOfCrown = 7445,
@@ -115,6 +116,21 @@ namespace XIVSlothCombo.Combos.PvE
 
         private static ASTGauge Gauge => CustomComboFunctions.GetJobGauge<ASTGauge>();
 
+        private static CardType drawnCard;
+        private static CardType DrawnCard
+        {
+            get
+            {
+                if (drawnCard != Gauge.DrawnCard)
+                {
+                    drawnCard = Gauge.DrawnCard;
+                    Dalamud.Logging.PluginLog.Debug("Changing Target");
+                    AST_QuickTargetCards.SelectedRandomMember = null;
+                }
+                return drawnCard;
+            }
+        }
+
         internal static class Config
         {
             internal const string
@@ -131,13 +147,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class AST_Cards_DrawOnPlay : CustomCombo
         {
-            private new bool GetTarget = true;
 
-            private new GameObject? CurrentTarget;
-
-            private readonly List<GameObject> PartyTargets = new();
-
-            private GameObject? SelectedRandomMember;
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_DrawOnPlay;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -160,29 +170,40 @@ namespace XIVSlothCombo.Combos.PvE
                                 (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL)))
                                 return Redraw;
                         }
-                        if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_AutoCardTarget))
-                        {
-                            if (GetTarget || IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_TargetLock))
-                                SetTarget();
-                        }
 
                         return OriginalHook(Play);
                     }
 
-                    if (!GetTarget && (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReFocusTarget) || IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReTargetPrev)))
-                    {
-                        if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReTargetPrev))
-                        {
-                            TargetObject(CurrentTarget);
-                        }
-
-                        if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_ReFocusTarget))
-                            TargetObject(TargetType.FocusTarget);
-                    }
-
-                    GetTarget = true;
-                    SelectedRandomMember = null;
                     return OriginalHook(Draw);
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class AST_QuickTargetCards : CustomCombo
+        {
+           
+            private new GameObject? CurrentTarget;
+
+            internal static List<GameObject> PartyTargets = new();
+
+            internal static GameObject? SelectedRandomMember;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_QuickTargetCards;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (GetPartySlot(2) is not null && DrawnCard is not CardType.NONE)
+                {
+                    if (SelectedRandomMember is null || SelectedRandomMember.IsDead)
+                    {
+                        SetTarget();
+                        return actionID;
+                    }
+                }
+                else
+                {
+                    SelectedRandomMember = null;
                 }
 
                 return actionID;
@@ -192,13 +213,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (Gauge.DrawnCard.Equals(CardType.NONE)) return false;
                 CardType cardDrawn = Gauge.DrawnCard;
-                if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
-
+                PartyTargets.Clear();
                 for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
                 {
                     if (GetPartySlot(i) is not BattleChara member) continue;
-                    //GameObject? member = GetPartySlot(i);
                     if (member is null) continue; //Skip nulls/disconnected people
+                    if (member.IsDead) continue;
 
                     if (FindEffectOnMember(Buffs.BalanceDamage, member) is not null) continue;
                     if (FindEffectOnMember(Buffs.ArrowDamage, member) is not null) continue;
@@ -215,11 +235,11 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (PartyTargets.Any(x => x.ObjectId == SelectedRandomMember.ObjectId))
                     {
-                        TargetObject(SelectedRandomMember);
-                        GetTarget = false;
+                        //TargetObject(SelectedRandomMember);
                         return true;
                     }
                 }
+
 
                 if (PartyTargets.Count > 0)
                 {
@@ -231,14 +251,13 @@ namespace XIVSlothCombo.Combos.PvE
                         if (((cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR) && JobIDs.Melee.Contains(job)) ||
                             ((cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE) && JobIDs.Ranged.Contains(job)))
                         {
-                            TargetObject(PartyTargets[i]);
+                            //TargetObject(PartyTargets[i]);
                             SelectedRandomMember = PartyTargets[i];
-                            GetTarget = false;
                             return true;
                         }
                     }
                     //Give cards to healers/tanks if backup is turned on
-                    if (IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay_TargetExtra))
+                    if (IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards_TargetExtra))
                     {
                         for (int i = 0; i <= PartyTargets.Count - 1; i++)
                         {
@@ -246,9 +265,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if ((cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR && JobIDs.Tank.Contains(job)) ||
                                 (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE && JobIDs.Healer.Contains(job)))
                             {
-                                TargetObject(PartyTargets[i]);
+                                //TargetObject(PartyTargets[i]);
                                 SelectedRandomMember = PartyTargets[i];
-                                GetTarget = false;
                                 return true;
                             }
                         }
@@ -257,7 +275,6 @@ namespace XIVSlothCombo.Combos.PvE
                 return false;
             }
         }
-
         internal class AST_Benefic : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Benefic;
@@ -320,6 +337,24 @@ namespace XIVSlothCombo.Combos.PvE
                         Gauge.DrawnCard is CardType.NONE &&
                         CanSpellWeave(actionID))
                         return Draw;
+
+                    //Redraw Card
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay_Redraw) && HasEffect(Buffs.ClarifyingDraw) && ActionReady(Redraw))
+                    {
+                        var cardDrawn = Gauge.DrawnCard;
+                        if ((cardDrawn is CardType.BALANCE or CardType.BOLE && Gauge.Seals.Contains(SealType.SUN)) ||
+                            (cardDrawn is CardType.ARROW or CardType.EWER && Gauge.Seals.Contains(SealType.MOON)) ||
+                            (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL)))
+                            return Redraw;
+                    }
+
+                    //Play Card
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay) &&
+                        ActionReady(Play) &&
+                        Gauge.DrawnCard is not CardType.NONE &&
+                        CanSpellWeave(actionID))
+                        return OriginalHook(Play);
+
 
                     //Minor Arcana / Lord of Crowns
                     if (ActionReady(OriginalHook(MinorArcana)) &&

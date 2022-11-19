@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.Attributes;
+﻿using Dalamud.Utility;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 
@@ -199,10 +200,17 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "", "")]
             AST_DPS_Divination = 1016,
 
-            [ConflictingCombos(AST_Cards_DrawOnPlay_AutoCardTarget)]
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
             AST_DPS_AutoDraw = 1011,
+
+                [ParentCombo(AST_DPS_AutoDraw)]
+                [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID)]
+                AST_DPS_AutoPlay = 1035,
+
+                    [ParentCombo(AST_DPS_AutoPlay)]
+                    [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
+                    AST_DPS_AutoPlay_Redraw = 1036,
 
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "", "")]
@@ -271,41 +279,26 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "", "")]
         AST_Cards_DrawOnPlay = 1000,
 
-            [ConflictingCombos(AST_DPS_AutoDraw)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
-            AST_Cards_DrawOnPlay_AutoCardTarget = 1029,
-
-                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
-                [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
-                AST_Cards_DrawOnPlay_TargetLock = 1030,
-
-                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
-                [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
-                AST_Cards_DrawOnPlay_TargetExtra = 1031,
-
             [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
             AST_Cards_Redraw = 1032,
 
-            [ConflictingCombos(AST_Cards_DrawOnPlay_ReFocusTarget)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
-            AST_Cards_DrawOnPlay_ReTargetPrev = 1033,
-
-            [ConflictingCombos(AST_Cards_DrawOnPlay_ReTargetPrev)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
-            AST_Cards_DrawOnPlay_ReFocusTarget = 1034,
 
         [ReplaceSkill(AST.Play)]
         //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
         //Do not do ConflictingCombos with AST_Cards_DrawOnPlay
         [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "", "")]
         AST_Cards_AstrodyneOnPlay = 1015,
+
+        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        AST_Cards_QuickTargetCards = 1029,
+
+        [ParentCombo(AST_Cards_QuickTargetCards)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
+        AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        //Last number used is 34
+        //Last number used is 36
 
         #endregion
 

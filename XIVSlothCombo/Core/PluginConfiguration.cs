@@ -9,6 +9,7 @@ using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Extensions;
+using System.Numerics;
 
 namespace XIVSlothCombo.Core
 {
@@ -72,6 +73,8 @@ namespace XIVSlothCombo.Core
 
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
+
+        public Vector4 TargetHighlightColor { get; set; } = new();
 
         #endregion
 
