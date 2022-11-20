@@ -1924,7 +1924,7 @@ namespace XIVSlothCombo.Combos
         NIN_ST_AdvancedMode_Suiton_Uptime = 10067,
 
         [ParentCombo(NIN_ST_AdvancedMode_TrueNorth_ArmorCrush)]
-        [CustomComboInfo("Dynamic True North", "Only triggers if not in flanking position 0.7 seconds before Armour Crush.", NIN.JobID)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North before Armor Crush when you are not in the correct position for the enhanced potency bonus.", NIN.JobID)]
         NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic = 10068,
 
         #endregion
