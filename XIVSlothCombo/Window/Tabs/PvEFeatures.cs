@@ -67,8 +67,8 @@ namespace XIVSlothCombo.Window.Tabs
                         bool open = PluginConfiguration.GetCustomBoolValue("RecommendedSettings");
                         if (open)
                         {
-                            ImGui.OpenPopup("LMFAO YOU CLOWN");
-                            if (ImGui.BeginPopupModal("LMFAO YOU CLOWN", ref open, ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoScrollbar))
+                            ImGui.OpenPopup("Ok, timeout");
+                            if (ImGui.BeginPopupModal("Ok, timeout", ref open, ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoScrollbar))
                             {
                                 ImGui.TextUnformatted("Seriously, did you think there would be recommended settings for a job?\r\nWe don't offer them because there's no such thing as recommended, it's all player preference.\r\nDon't ask on Discord either, you'll get the same answer.");
 
