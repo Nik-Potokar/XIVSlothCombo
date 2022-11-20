@@ -31,7 +31,7 @@ namespace XIVSlothCombo.Data
 
         private static readonly Dictionary<string, List<uint>> statusCache = new();
 
-        private readonly static List<uint> CombatActions = new();
+        internal readonly static List<uint> CombatActions = new();
 
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;

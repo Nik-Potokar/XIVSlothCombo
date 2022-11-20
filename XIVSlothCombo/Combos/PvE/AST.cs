@@ -7,6 +7,7 @@ using System.Linq;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
@@ -95,7 +96,8 @@ namespace XIVSlothCombo.Combos.PvE
                 ArrowDamage = 1884,
                 SpearDamage = 1885,
                 EwerDamage = 1886,
-                SpireDamage = 1887;
+                SpireDamage = 1887,
+                Lightspeed = 841;
         }
 
         internal static class Debuffs
@@ -325,6 +327,12 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                int spellsSinceDraw = ActionWatching.HowManyTimesUsedAfterAnotherAction(OriginalHook(Malefic), Draw) + ActionWatching.HowManyTimesUsedAfterAnotherAction(OriginalHook(Combust), Draw);
+                if (spellsSinceDraw == 0 && DrawnCard != CardType.NONE)
+                {
+                    spellsSinceDraw = 1;
+                }
+                //Dalamud.Logging.PluginLog.Debug($"{spellsSinceDraw}");
                 bool AlternateMode = GetIntOptionAsBool(Config.AST_DPS_AltMode); //(0 or 1 radio values)
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
                      (AlternateMode && CombustList.ContainsKey(actionID)) ||
@@ -370,9 +378,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay_Redraw) && HasEffect(Buffs.ClarifyingDraw) && ActionReady(Redraw))
                     {
                         var cardDrawn = Gauge.DrawnCard;
-                        if ((cardDrawn is CardType.BALANCE or CardType.BOLE && Gauge.Seals.Contains(SealType.SUN)) ||
+                        if (((cardDrawn is CardType.BALANCE or CardType.BOLE && Gauge.Seals.Contains(SealType.SUN)) ||
                             (cardDrawn is CardType.ARROW or CardType.EWER && Gauge.Seals.Contains(SealType.MOON)) ||
-                            (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL)))
+                            (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL))) &&
+                            CanDelayedWeave(actionID) &&
+                            spellsSinceDraw >= 2)
                             return Redraw;
                     }
 
@@ -380,7 +390,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay) &&
                         ActionReady(Play) &&
                         Gauge.DrawnCard is not CardType.NONE &&
-                        CanSpellWeave(actionID))
+                        CanDelayedWeave(actionID) &&
+                        spellsSinceDraw >= 2)
                         return OriginalHook(Play);
 
 
