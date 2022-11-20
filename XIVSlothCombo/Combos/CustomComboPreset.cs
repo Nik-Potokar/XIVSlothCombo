@@ -1052,12 +1052,12 @@ namespace XIVSlothCombo.Combos
         DRG_Jump = 6000,
 
         #region Advanced Dragoon
-        [ReplaceSkill(DRG.FullThrust)]
-        [CustomComboInfo("Advanced Dragoon", "Replaces Full Thrust with the entire ST combo chain.", DRG.JobID, 1, "", "")]
+        [ReplaceSkill(DRG.TrueThrust)]
+        [CustomComboInfo("Advanced Dragoon", "Replaces True Thrust with the entire ST combo chain.", DRG.JobID, 1, "", "")]
         DRG_STCombo = 6100,
 
             [ParentCombo(DRG_STCombo)]
-            [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany and Lance Charge are off cooldown and when True North is used outside of combat. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
+            [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany and Lance Charge are off cooldown and when True North is used outside of combat or if Elusive Jump is used at the beginning of battle. OPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
             DRG_ST_Opener = 6101,
 
             [ParentCombo(DRG_STCombo)]
@@ -1119,8 +1119,8 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Advanced Dragoon AoE
-        [ReplaceSkill(DRG.CoerthanTorment)]
-        [CustomComboInfo("Advanced Dragoon AoE", "Replaces Coerthan Torment with its combo chain", DRG.JobID, 26, "", "")]
+        [ReplaceSkill(DRG.DoomSpike)]
+        [CustomComboInfo("Advanced Dragoon AoE", "Replaces Doom Spike with its combo chain", DRG.JobID, 26, "", "")]
         DRG_AoECombo = 6200,
 
             [ParentCombo(DRG_AoECombo)]
@@ -1621,6 +1621,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 0, "", "")]
         MNK_ST_Meditation_Uptime = 9028,
 
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North to the main combo right before positionals if you aren't in the correct position for their bonuses.", MNK.JobID, 0, "", "")]
+        MNK_TrueNorthDynamic = 9029,
+
         #endregion
 
         #region NINJA
@@ -1898,13 +1902,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Huraijin / Armor Crush Combo Feature", "Replace Huraijin with Armor Crush after using Gust Slash.", NIN.JobID)]
         NIN_HuraijinArmorCrush = 10064,
 
-        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus_Raiton)]
         [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature.", NIN.JobID)]
         NIN_ST_AdvancedMode_Raiton_Uptime = 10065,
 
-        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [ParentCombo(NIN_ST_AdvancedMode_Bunshin_Phantom)]
         [CustomComboInfo("Phantom Kamaitachi Uptime Option", "Adds Phantom Kamaitachi as an uptime feature.", NIN.JobID)]
         NIN_ST_AdvancedMode_Phantom_Uptime = 10066,
+
+        [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus_Suiton)]
+        [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Suiton_Uptime = 10067,
 
 
         #endregion
