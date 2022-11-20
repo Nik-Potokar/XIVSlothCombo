@@ -120,6 +120,31 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return false;
         }
 
+        public static bool TargetHasDamageDown(GameObject? target)
+        {
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(62)))
+            {
+                if (TargetHasEffectAny((ushort)status)) return true;
+            }
+
+            return false;
+        }
+
+        public static bool TargetHasRezWeakness(GameObject? target)
+        {
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(43)))
+            {
+                if (TargetHasEffectAny((ushort)status)) return true;
+            }
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(44)))
+            {
+                if (TargetHasEffectAny((ushort)status)) return true;
+            }
+
+            return false;
+        }
+
+
         public static bool HasCleansableDebuff(GameObject? OurTarget = null)
         {
             OurTarget ??= CurrentTarget;

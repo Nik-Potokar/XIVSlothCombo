@@ -152,6 +152,7 @@ namespace XIVSlothCombo.Window
                             6 => plist.PartyMember.PartyMember5.TargetGlow,
                             7 => plist.PartyMember.PartyMember6.TargetGlow,
                             8 => plist.PartyMember.PartyMember7.TargetGlow,
+                            _ => plist.PartyMember.PartyMember0.TargetGlow,
                         };
 
                         DrawOutline(member->AtkResNode.PrevSiblingNode);

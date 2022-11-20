@@ -148,6 +148,9 @@ namespace XIVSlothCombo.Combos.PvE
             internal static float AST_ST_DPS_CombustUptime_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(AST_ST_DPS_CombustUptime_Threshold));
 
             internal static int AST_QuickTarget_Override => PluginConfiguration.GetCustomIntValue(nameof(AST_QuickTarget_Override));
+
+            internal static bool AST_QuickTarget_SkipDamageDown => PluginConfiguration.GetCustomBoolValue(nameof(AST_QuickTarget_SkipDamageDown));
+            internal static bool AST_QuickTarget_SkipRezWeakness => PluginConfiguration.GetCustomBoolValue(nameof(AST_QuickTarget_SkipRezWeakness));
         }
 
         internal class AST_Cards_DrawOnPlay : CustomCombo
@@ -189,8 +192,6 @@ namespace XIVSlothCombo.Combos.PvE
         internal class AST_QuickTargetCards : CustomCombo
         {
            
-            private new GameObject? CurrentTarget;
-
             internal static List<GameObject> PartyTargets = new();
 
             internal static GameObject? SelectedRandomMember;
@@ -214,7 +215,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
 
-            private bool SetTarget()
+            private static bool SetTarget()
             {
                 if (Gauge.DrawnCard.Equals(CardType.NONE)) return false;
                 CardType cardDrawn = Gauge.DrawnCard;
@@ -232,8 +233,30 @@ namespace XIVSlothCombo.Combos.PvE
                     if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
                     if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
 
+                    if (Config.AST_QuickTarget_SkipDamageDown && TargetHasDamageDown(member)) continue;
+                    if (Config.AST_QuickTarget_SkipRezWeakness && TargetHasRezWeakness(member)) continue;
 
                     PartyTargets.Add(member);
+                }
+
+                //The inevitable "0 targets found" because of debuffs
+                if (PartyTargets.Count == 0)
+                {
+                    for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
+                    {
+                        if (GetPartySlot(i) is not BattleChara member) continue;
+                        if (member is null) continue; //Skip nulls/disconnected people
+                        if (member.IsDead) continue;
+
+                        if (FindEffectOnMember(Buffs.BalanceDamage, member) is not null) continue;
+                        if (FindEffectOnMember(Buffs.ArrowDamage, member) is not null) continue;
+                        if (FindEffectOnMember(Buffs.BoleDamage, member) is not null) continue;
+                        if (FindEffectOnMember(Buffs.EwerDamage, member) is not null) continue;
+                        if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
+                        if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
+
+                        PartyTargets.Add(member);
+                    }
                 }
 
                 if (SelectedRandomMember is not null)

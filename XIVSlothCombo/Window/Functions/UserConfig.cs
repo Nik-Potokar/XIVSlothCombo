@@ -1127,6 +1127,10 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "No Override", "", 0);
                 UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "Hard Target Override", "Overrides selection with hard target if you have one", 1);
                 UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "UI Mousover Override", "Overrides selection with UI mouseover target if you have one", 2);
+
+                ImGui.Spacing();
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipDamageDown), "Skip targets with a Damage Down Debuff", "");
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipRezWeakness), "Skip targets with a Rez Weakness Debuff", "");
             }
 
             #endregion
