@@ -52,7 +52,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
-                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold";
+                MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
+                MCH_VariantCure = "MCH_VariantCure";
         }
 
         public static class Levels
@@ -102,6 +103,15 @@ namespace XIVSlothCombo.Combos.PvE
                     var battery = GetJobGauge<MCHGauge>().Battery;
                     var heat = GetJobGauge<MCHGauge>().Heat;
                     var canWeave = CanWeave(actionID);
+
+                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_BarrelStabilizer_DriftProtection))
                     {
@@ -274,6 +284,15 @@ namespace XIVSlothCombo.Combos.PvE
                     var canWeave = CanWeave(actionID);
                     var gauge = GetJobGauge<MCHGauge>();
                     var battery = GetJobGauge<MCHGauge>().Battery;
+
+                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave)
                     {

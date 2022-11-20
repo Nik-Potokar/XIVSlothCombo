@@ -24,7 +24,8 @@ namespace XIVSlothCombo.Window
             .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
             .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
             .Where(tpl => tpl.Info != null && PluginConfiguration.GetParent(tpl.Preset) == null)
-            .OrderBy(tpl => tpl.Info.JobName)
+            .OrderByDescending(tpl => tpl.Info.JobID == 0)
+            .ThenBy(tpl => tpl.Info.JobName)
             .ThenBy(tpl => tpl.Info.Order)
             .GroupBy(tpl => tpl.Info.JobName)
             .ToDictionary(
