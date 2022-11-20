@@ -22,6 +22,8 @@ namespace XIVSlothCombo
     /// <summary> Main plugin implementation. </summary>
     public sealed partial class XIVSlothCombo : IDalamudPlugin
     {
+        public static PluginConfiguration Config { get; private set; } = null!;
+
         private const string Command = "/sprivate";
 
         private readonly ConfigWindow configWindow;
@@ -47,7 +49,7 @@ namespace XIVSlothCombo
 
             configWindow = new();
 
-            Service.Interface.UiBuilder.Draw += DrawImage;
+          //Service.Interface.UiBuilder.Draw += DrawImage;
             Service.Interface.UiBuilder.Draw += DrawUI;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
 
@@ -61,11 +63,6 @@ namespace XIVSlothCombo
             if (Service.ClientState.IsLoggedIn) ResetFeatures();
 
             KillRedundantIDs();
-        }
-
-        private void DrawImage()
-        {
-            throw new NotImplementedException();
         }
 
         private static void KillRedundantIDs()

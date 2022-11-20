@@ -81,10 +81,6 @@ namespace XIVSlothCombo.Window
         {
             DrawConfig();
         }
-        public void DrawOpenerImage()
-        {
-            DrawImageConfig();
-        }
         
         public void DrawConfig()
         {
@@ -108,33 +104,27 @@ namespace XIVSlothCombo.Window
                             PvEFeatures.Draw();
                             ImGui.EndTabItem();
                         }
-
                         if (ImGui.BeginTabItem("PvP Features"))
                         {
                             PvPFeatures.Draw();
                             ImGui.EndTabItem();
                         }
-
                         if (ImGui.BeginTabItem("Plugin Settings"))
                         {
                             Settings.Draw();
                             ImGui.EndTabItem();
                         }
-
                         if (ImGui.BeginTabItem("About XIVSlothCombo"))
                         {
+                            ImGui.BeginTabItem("ToggleAboutSloth");
                             AboutUs.Draw();
                             ImGui.EndTabItem();
-                        }
-
+                        } 
                         if (ImGui.BeginTabItem("Debug Mode"))
                         {
                             Debug.Draw();
                             ImGui.EndTabItem();
-                        }                
-                        //if (ImGui.TabItemButton(Plugin.GuiMain?.Visible ?? false ? "Hide Neko window" : "Show Neko window"))
-                            //Plugin.ToggleMainGui();
-                        
+                        }
                     }
                     ImGui.EndTabBar();
                 }
@@ -142,26 +132,6 @@ namespace XIVSlothCombo.Window
             finally
             {
             ImGui.End();
-            }
-        }
-
-        public void DrawImageConfig()
-        {
-            if (!Visible)
-            {
-                  return;
-            }
-            if (ImGui.Begin("Image Window Configuration", ref visible))
-            {
-                ImGui.SetNextWindowSize(new Vector2(500, 400));
-                ImGui.Begin("popup1#123");
-                ImGui.ColorButton("Parsed Gold", ImGuiColors.ParsedGold);
-                ImGui.SameLine();
-                ImGui.ColorButton("Parsed Pink", ImGuiColors.ParsedPink);
-                ImGui.SameLine();
-                ImGui.ColorButton("Parsed Orange", ImGuiColors.ParsedOrange);
-                ImGui.SameLine();
-                ImGui.ColorButton("Parsed Purple", ImGuiColors.ParsedPurple);
             }
         }
 

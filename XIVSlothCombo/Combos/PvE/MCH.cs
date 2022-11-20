@@ -477,7 +477,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Barrel Stabiilizer
                     if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 45 &&
                             IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer && !WasLastWeaponskill(ChainSaw) &&
-                            (wildfireCDTime <= 3 || (wildfireCDTime >= 110 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && gauge.IsOverheated))
+                            (wildfireCDTime <= 3 || (wildfireCDTime >= 10 && gauge.IsOverheated))
                        )
                         return BarrelStabilizer;
 
@@ -507,30 +507,41 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Queen
-                    if (GadgetThreshold && CanWeave(actionID) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire))
+                    if (GadgetThreshold && CanWeave(actionID) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && level >= Levels.RookOverdrive/* (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire)*/)
                     {
                         //overflow protection
                         /*if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Minutes > 0 && CombatEngageDuration().Seconds < 15 && CombatEngageDuration().Seconds > 10)
                         {
                             return OriginalHook(RookAutoturret);
                         }*/
-                        if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds <= 30)
+                        if (/*level >= Levels.RookOverdrive &&*/ gauge.Battery >= 50 && WasLastWeaponskill(ChainSaw) && CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds <= 30)
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 80 && CombatEngageDuration().Minutes % 2 == 1 && CombatEngageDuration().Seconds >= 10 && CombatEngageDuration().Seconds <= 45 )
+                        if (/*level >= Levels.RookOverdrive &&*/ gauge.Battery >= 80 && CombatEngageDuration().Minutes % 2 == 1 && CombatEngageDuration().Seconds >= 10 && CombatEngageDuration().Seconds <= 45 )
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && CombatEngageDuration().Minutes % 2 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
+                        if (/*level >= Levels.RookOverdrive &&*/ gauge.Battery >= 50 && CombatEngageDuration().Minutes % 2 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Minutes % 2 == 0 && HasMeleeRaidBuffs))
+                        if (/*level >= Levels.RookOverdrive &&*/ gauge.Battery >= 50 && CombatEngageDuration().Minutes % 4 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
                         {
-                            return OriginalHook(RookAutoturret); 
+                            return OriginalHook(RookAutoturret);
                         }
-
+                        if (/*level >= Levels.RookOverdrive &&*/ gauge.Battery >= 50 && CombatEngageDuration().Minutes % 6 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
+                        {
+                            return OriginalHook(RookAutoturret);
+                        }
+                        if (/*level >= Levels.RookOverdrive &&*/ gauge.Battery >= 50 && CombatEngageDuration().Minutes % 8 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
+                        {
+                            return OriginalHook(RookAutoturret);
+                        }
+                        if (/*level >= Levels.RookOverdrive &&*/ gauge.Battery >= 50 && CombatEngageDuration().Minutes % 10 == 0  && CombatEngageDuration().Seconds >= 7 && CombatEngageDuration().Seconds <= 30 && WasLastWeaponskill(OriginalHook(CleanShot)) )
+                        {
+                            return OriginalHook(RookAutoturret);
+                        }
                     }
 
 
@@ -628,7 +639,7 @@ namespace XIVSlothCombo.Combos.PvE
                  */
                  #endregion                    
                     // Air Anchor && GetCooldownRemainingTime(actionID) > 1.5 
-                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1.5 && CanWeave(actionID, 1.5)) && level >= Levels.AirAnchor)
+                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 2.5 && CanWeave(actionID, 0.7)) && level >= Levels.AirAnchor)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
@@ -638,7 +649,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Drill
-                    if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1.5) && level >= Levels.Drill)
+                    if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 2.5 && CanWeave(actionID, 0.7)) && level >= Levels.Drill)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 && CombatEngageDuration().Minutes >= 1 && CanWeave(actionID) && HasTincture) 
                         {
@@ -648,7 +659,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Chainsaw
-                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1.5 && CanWeave(actionID, 1.5)) && level >= Levels.ChainSaw && openerFinished)
+                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 2.5 && CanWeave(actionID, 0.7)) && level >= Levels.ChainSaw && openerFinished)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                         {
