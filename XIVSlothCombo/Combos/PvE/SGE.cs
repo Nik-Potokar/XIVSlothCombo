@@ -150,7 +150,7 @@ namespace XIVSlothCombo.Combos.PvE
         /*
          * SGE_Rhizo
          * Replaces all Addersgal using Abilities (Taurochole/Druochole/Ixochole/Kerachole) with Rhizomata if out of Addersgall stacks
-         * (SGEolar speak: Replaces all Aetherflow abilities with Aetherflow when out)
+         * (Scholar speak: Replaces all Aetherflow abilities with Aetherflow when out)
          */
         internal class SGE_Rhizo : CustomCombo
         {
