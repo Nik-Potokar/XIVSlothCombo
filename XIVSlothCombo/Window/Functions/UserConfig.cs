@@ -1289,11 +1289,17 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_ST_QueenThreshold)
                 UserConfig.DrawSliderInt(01, 10, MCH.Config.MCH_ST_QueenThreshold, "0:xx Seconds", 150, SliderIncrements.Ones);
-            #endregion
-            // ====================================================================================
-            #region MONK
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+            if (preset == CustomComboPreset.MCH_ST_Opener && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_OpenerSelection, "General Purpose Opener", "Uses General Purpose Opener from 6.2. ", 1);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_OpenerSelection, "Delayed Tools Opener", "Uses Delayed Tools Opener starting from Heated Split Shot. ", 2);
+            }
+                #endregion
+                // ====================================================================================
+                #region MONK
+
+                if (preset == CustomComboPreset.MNK_ST_SimpleMode)
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
 
             if (preset == CustomComboPreset.MNK_ST_SimpleMode)

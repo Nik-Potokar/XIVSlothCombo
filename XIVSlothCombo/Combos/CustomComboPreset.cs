@@ -1503,6 +1503,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
         MCH_AoE_SecondWind = 8038,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -1, "", "")]
+        MCH_ST_Opener = 8039,
         #endregion
 
         #region MONK
