@@ -140,6 +140,9 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_DPS_DivinationOption = "AST_DPS_DivinationOption",
                 AST_DPS_LightSpeedOption = "AST_DPS_LightSpeedOption",
                 AST_DPS_CombustOption = "AST_DPS_CombustOption";
+            internal static UserBool
+                AST_ST_SimpleHeals_Adv = new("AST_ST_SimpleHeals_Adv"),
+                AST_ST_SimpleHeals_UIMouseOver = new("AST_ST_SimpleHeals_UIMouseOver");
 
             internal static bool AST_ST_DPS_CombustUptime_Adv => PluginConfiguration.GetCustomBoolValue(nameof(AST_ST_DPS_CombustUptime_Adv));
             internal static float AST_ST_DPS_CombustUptime_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(AST_ST_DPS_CombustUptime_Threshold));
@@ -453,11 +456,14 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Benefic2)
                 {
+                    //Grab our target (Soft->Hard->Self)
+                    GameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
+
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_AspectedBenefic) && LevelChecked(AspectedBenefic))
                     {
-                        Status? aspectedBeneficHoT = FindTargetEffect(Buffs.AspectedBenefic);
-                        Status? NeutralSectShield = FindTargetEffect(Buffs.NeutralSectShield);
-                        Status? NeutralSectBuff = FindTargetEffect(Buffs.NeutralSect);
+                        Status? aspectedBeneficHoT = FindEffect(Buffs.AspectedBenefic, healTarget, LocalPlayer?.ObjectId);
+                        Status? NeutralSectShield = FindEffect(Buffs.NeutralSectShield, healTarget, LocalPlayer?.ObjectId);
+                        Status? NeutralSectBuff = FindEffect(Buffs.NeutralSect, healTarget, LocalPlayer?.ObjectId);
                         if ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)
                             || ((NeutralSectShield is null) && (NeutralSectBuff is not null)))
                             return AspectedBenefic;
@@ -465,7 +471,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
                         ActionReady(EssentialDignity) &&
-                        GetTargetHPPercent() <= GetOptionValue(Config.AST_EssentialDignity))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.AST_EssentialDignity))
                         return EssentialDignity;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Exaltation) &&
