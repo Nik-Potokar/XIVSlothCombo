@@ -1923,6 +1923,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature.", NIN.JobID)]
         NIN_ST_AdvancedMode_Suiton_Uptime = 10067,
 
+        [ParentCombo(NIN_ST_AdvancedMode_TrueNorth_ArmorCrush)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North before Armor Crush when you are not in the correct position for the enhanced potency bonus.", NIN.JobID)]
+        NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic = 10068,
 
         #endregion
 
