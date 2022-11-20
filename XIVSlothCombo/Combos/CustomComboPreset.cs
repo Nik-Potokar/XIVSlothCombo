@@ -846,14 +846,19 @@ namespace XIVSlothCombo.Combos
             DNC_ST_Simple_Flourish = 4056,
 
             [ParentCombo(DNC_ST_SimpleMode)]
-            [CustomComboInfo("Simple Feathers Option", "Includes Feather usage in the rotation.", DNC.JobID, 4, "", "")]
+            [CustomComboInfo("Simple Feathers Option", "Expends a feather in the next available weave window when capped." +
+            "\nWeaves feathers where possible during Technical Finish." +
+            "\nWeaves feathers outside of burst when target is below set HP percentage (Set to 0 to disable)." +
+            "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 4, "", "")]
             DNC_ST_Simple_Feathers = 4057,
 
+            /*
             [ParentCombo(DNC_ST_Simple_Feathers)]
             [CustomComboInfo("Simple Feather Pooling Option", "Expends a feather in the next available weave window when capped." +
             "\nWeaves feathers where possible during Technical Finish." +
             "\nWeaves feathers outside of burst when target is below set HP percentage.", DNC.JobID, 4, "", "")]
             DNC_ST_Simple_FeatherPooling = 4058,
+            */
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
@@ -917,12 +922,16 @@ namespace XIVSlothCombo.Combos
             DNC_AoE_Simple_Flourish = 4076,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
-            [CustomComboInfo("Simple AoE Feathers Option", "Includes feather usage in the AoE rotation.", DNC.JobID, 7, "", "")]
+            [CustomComboInfo("Simple AoE Feathers Option", "Expends a feather in the next available weave window when capped." +
+            "\nWeaves feathers where possible during Technical Finish." +
+            "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 7, "", "")]
             DNC_AoE_Simple_Feathers = 4077,
 
+            /*
             [ParentCombo(DNC_AoE_Simple_Feathers)]
             [CustomComboInfo("Simple AoE Feather Pooling Option", "Expends a feather in the next available weave window when capped.", DNC.JobID, 8, "", "")]
             DNC_AoE_Simple_FeatherPooling = 4078,
+            */
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Panic Heals Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 9, "", "")]
