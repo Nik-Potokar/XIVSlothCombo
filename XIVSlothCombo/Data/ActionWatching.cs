@@ -1,4 +1,5 @@
-﻿using Dalamud.Hooking;
+﻿using Dalamud.Game.ClientState.Objects;
+using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.GeneratedSheets;
@@ -80,7 +81,7 @@ namespace XIVSlothCombo.Data
 
         private delegate void SendActionDelegate(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9);
         private static readonly Hook<SendActionDelegate>? SendActionHook;
-        private static void SendActionDetour(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
+        private unsafe static void SendActionDetour(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
         {
             try
             {
@@ -100,11 +101,31 @@ namespace XIVSlothCombo.Data
 
         private unsafe static void CheckForChangedTarget(uint actionId, ref long targetObjectId)
         {
-            if (actionId is AST.Balance or AST.Bole or AST.Ewer or AST.Arrow or AST.Spire or AST.Spear && 
+            if (actionId is AST.Balance or AST.Bole or AST.Ewer or AST.Arrow or AST.Spire or AST.Spear &&
                 AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
                 !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)AST.AST_QuickTargetCards.SelectedRandomMember.Address))
             {
-                targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                var targetOptions = AST.Config.AST_QuickTarget_Override;
+
+                switch (targetOptions)
+                {
+                    case 0:
+                        targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        break;
+                    case 1:
+                        if (Service.ClientState.LocalPlayer.TargetObject is not null)
+                            targetObjectId = Service.ClientState.LocalPlayer.TargetObject.ObjectId;
+                        else
+                            targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        break;
+                    case 2:
+                        if (CustomComboFunctions.GetHealTarget(true, true) is not null)
+                            targetObjectId = CustomComboFunctions.GetHealTarget(true, true).ObjectId;
+                        else
+                            targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        break;
+                }
+
             }
         }
 

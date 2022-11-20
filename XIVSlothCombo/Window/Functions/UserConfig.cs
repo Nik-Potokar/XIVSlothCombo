@@ -1107,6 +1107,13 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
 
+            if (preset is CustomComboPreset.AST_Cards_QuickTargetCards)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "No Override", "", 0);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "Hard Target Override", "Overrides selection with hard target if you have one", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "UI Mousover Override", "Overrides selection with UI mouseover target if you have one", 2);
+            }
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE

@@ -143,6 +143,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             internal static bool AST_ST_DPS_CombustUptime_Adv => PluginConfiguration.GetCustomBoolValue(nameof(AST_ST_DPS_CombustUptime_Adv));
             internal static float AST_ST_DPS_CombustUptime_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(AST_ST_DPS_CombustUptime_Threshold));
+
+            internal static int AST_QuickTarget_Override => PluginConfiguration.GetCustomIntValue(nameof(AST_QuickTarget_Override));
         }
 
         internal class AST_Cards_DrawOnPlay : CustomCombo
