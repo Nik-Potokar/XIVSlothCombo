@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.CustomComboNS;
+﻿using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -89,7 +90,8 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public const string
-                PLD_Intervene_HoldCharges = "PLDKeepInterveneCharges";
+                PLD_Intervene_HoldCharges = "PLDKeepInterveneCharges",
+                PLD_VariantCure = "PLD_VariantCure";
         }
 
         internal class PLD_GoringBladeCombo : CustomCombo
@@ -127,6 +129,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is RageOfHalone or RoyalAuthority)
                 {
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                        return Variant.VariantCure;
 
                     if (!InCombat())
                     {
@@ -165,6 +169,15 @@ namespace XIVSlothCombo.Combos.PvE
                     // oGCD features
                     if (CanWeave(actionID))
                     {
+                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                        if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
+                            IsEnabled(Variant.VariantSpiritDart) &&
+                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                            return Variant.VariantSpiritDart;
+
+                        if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            return Variant.VariantUltimatum;
+
                         if (inOpener)
                         {
                             if (lastComboMove is Confiteor || (!HasEffect(Buffs.Requiescat) && IsOnCooldown(Requiescat) && GetCooldownRemainingTime(Requiescat) <= 59))
@@ -307,8 +320,20 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Prominence)
                 {
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                        return Variant.VariantCure;
+
                     if (CanWeave(actionID))
                     {
+                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                        if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
+                            IsEnabled(Variant.VariantSpiritDart) &&
+                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                            return Variant.VariantSpiritDart;
+
+                        if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            return Variant.VariantUltimatum;
+
                         if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Requiescat) && LevelChecked(Requiescat) && IsOffCooldown(Requiescat))
                             return Requiescat;
 

@@ -95,6 +95,9 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
                 MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold",
                 MNK_DemolishTreshhold = "MNK_ST_DemolishThreshold";
+
+                MNK_VariantCure = "MNK_VariantCure";
+
         }
 
 
@@ -115,6 +118,61 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!HasEffect(Buffs.PerfectBalance))
                     {
                         if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Buffs
+                    if (inCombat && canWeave)
+                    {
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs))
+                        {
+                            if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
+                            {
+                                return RiddleOfFire;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_PerfectBalance) && level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
+                            {
+                                // Use Perfect Balance if:
+                                // 1. It's after Bootshine/Dragon Kick.
+                                // 2. At max stacks / before overcap.
+                                // 3. During Brotherhood.
+                                // 4. During Riddle of Fire.
+                                // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
+                                if ((GetRemainingCharges(PerfectBalance) == 2) ||
+                                    (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
+                                {
+                                    return PerfectBalance;
+                                }
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_Brotherhood) && level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood))
+                            {
+                                return Brotherhood;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_RiddleOfWind) && level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
+                            {
+                                return RiddleOfWind;
+                            }
+                        }
+
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
+                            level < Levels.TwinSnakes) && canWeaveChakra)
+                        {
+                            return level >= Levels.Enlightenment ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
+                        }
+
+                        // healing - please move if not appropriate this high priority
+                        if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                         {
                             return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
                                 ? MNK.Bootshine
@@ -216,6 +274,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var enemyHP = GetTargetHPPercent();
                     var demolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
 
+
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
 
                     // Opener for MNK
                     // Re-enter opener when Brotherhood is used
@@ -325,6 +386,19 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (!HasEffect(Buffs.FormlessFist) &&
                                     LevelChecked(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) && HasEffect(Buffs.DisciplinedFist) &&
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            canWeave)
+                            return Variant.VariantRampart;
+
+                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs))
+                        {
+                            if (canWeave)
+                            {
+
+                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_PerfectBalance) && !HasEffect(Buffs.FormlessFist) &&
+                                    level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasEffect(Buffs.DisciplinedFist) &&
                                     OriginalHook(MasterfulBlitz) == MasterfulBlitz)
                                 {
                                     // Use Perfect Balance if:

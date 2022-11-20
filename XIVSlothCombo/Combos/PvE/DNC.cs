@@ -110,6 +110,9 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";      // Second Wind      player HP% threshold
             #endregion
+
+            public const string
+                DNCVariantCurePercent = "DNCVariantCurePercent";                            // Variant Cure     player HP% threshold
         }
 
         internal class DNC_DanceComboReplacer : CustomCombo
@@ -275,7 +278,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // AoE Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) && 
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
                         gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
                         return SaberDance;
 
@@ -435,6 +438,15 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
+
                     if (CanWeave(actionID))
                     {
                         // ST Feathers & Fans
@@ -583,7 +595,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Flourish
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) &&
-                        CanDelayedWeave(actionID, 1.25, 0.5)  && ActionReady(Flourish)
+                        CanDelayedWeave(actionID, 1.25, 0.5) && ActionReady(Flourish)
                         && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) &&
                         !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
                         return Flourish;
@@ -593,6 +605,15 @@ namespace XIVSlothCombo.Combos.PvE
                         CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
+
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
 
                     if (CanWeave(actionID))
                     {
