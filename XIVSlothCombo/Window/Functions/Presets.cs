@@ -3,6 +3,8 @@ using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Linq;
+using System.Numerics;
+using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
@@ -24,7 +26,7 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.PushItemWidth(200);
 
-            if (ImGui.Checkbox($"{info.FancyName}###{i}", ref enabled))
+            if (ImGui.Checkbox($"{info.FancyName}###{info.FancyName}{i}", ref enabled))
             {
                 if (enabled)
                 {
@@ -49,11 +51,17 @@ namespace XIVSlothCombo.Window.Functions
 
             DrawOpenerButtons(preset);
 
-            ImGui.Text($"#{i}: ");
-            var length = ImGui.CalcTextSize($"#{i}: ");
-            ImGui.SameLine();
-            ImGui.PushItemWidth(length.Length());
-            ImGui.TextWrapped($"{info.Description}");
+            Vector2 length = new();
+
+            if (i != -1)
+            {
+                ImGui.Text($"#{i}: ");
+                length = ImGui.CalcTextSize($"#{i}: ");
+                ImGui.SameLine();
+                ImGui.PushItemWidth(length.Length());
+            }
+
+                ImGui.TextWrapped($"{info.Description}");
 
             if (preset.GetHoverAttribute() != null)
             {
@@ -113,6 +121,78 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.Text($"All required spells active!");
                     ImGui.PopStyleColor();
                 }
+            }
+
+            VariantParentAttribute? varientparents = preset.GetAttribute<VariantParentAttribute>();
+            if (varientparents is not null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
+                StringBuilder builder = new StringBuilder();
+                foreach (var par in varientparents.ParentPresets)
+                {
+                    builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
+                    var par2 = par;
+                    while (PluginConfiguration.GetParent(par2) != null)
+                    {
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0,$"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar.Value;
+
+                    }
+                    
+                    ImGui.TextWrapped($"- {builder}");
+                    builder.Clear();
+                }
+                ImGui.PopStyleColor();
+            }
+
+            BozjaParentAttribute? bozjaparents = preset.GetAttribute<BozjaParentAttribute>();
+            if (bozjaparents is not null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
+                StringBuilder builder = new StringBuilder();
+                foreach (var par in bozjaparents.ParentPresets)
+                {
+                    builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
+                    var par2 = par;
+                    while (PluginConfiguration.GetParent(par2) != null)
+                    {
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar.Value;
+
+                    }
+
+                    ImGui.TextWrapped($"- {builder}");
+                    builder.Clear();
+                }
+                ImGui.PopStyleColor();
+            }
+
+            EurekaParentAttribute? eurekaparents = preset.GetAttribute<EurekaParentAttribute>();
+            if (eurekaparents is not null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
+                StringBuilder builder = new StringBuilder();
+                foreach (var par in eurekaparents.ParentPresets)
+                {
+                    builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
+                    var par2 = par;
+                    while (PluginConfiguration.GetParent(par2) != null)
+                    {
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar.Value;
+
+                    }
+
+                    ImGui.TextWrapped($"- {builder}");
+                    builder.Clear();
+                }
+                ImGui.PopStyleColor();
             }
 
             i++;
@@ -195,6 +275,8 @@ namespace XIVSlothCombo.Window.Functions
 
             return output;
         }
+
+
 
         /// <summary> Iterates up a preset's parent tree, enabling each of them. </summary>
         /// <param name="preset"> Combo preset to enabled. </param>
