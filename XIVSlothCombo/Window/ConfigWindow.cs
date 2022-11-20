@@ -61,7 +61,7 @@ namespace XIVSlothCombo.Window
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
-        public ConfigWindow() : base("Sloth Combo Setup", ImGuiWindowFlags.AlwaysAutoResize)
+        public ConfigWindow() : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
         {
             RespectCloseHotkey = true;
 
@@ -81,9 +81,9 @@ namespace XIVSlothCombo.Window
                 return;
             }
 
-            if (ImGui.Begin("Sloth Combo Setup", ref visible))
+            if (ImGui.Begin("XIVSlothCombo Configuration", ref visible))
             {
-                if (ImGui.BeginTabBar("SlothBar"))
+                if (ImGui.BeginTabBar("Config Tabs"))
                 {
                     if (ImGui.BeginTabItem("PvE Features"))
                     {

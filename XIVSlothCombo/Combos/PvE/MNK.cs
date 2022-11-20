@@ -256,9 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.LeadenFist) &&
                         (HasEffect(Buffs.FormlessFist) ||
                         HasEffect(Buffs.PerfectBalance) ||
-                        HasEffect(Buffs.OpoOpoForm) ||
-                        HasEffect(Buffs.RaptorForm) ||
-                        HasEffect(Buffs.CoerlForm)))
+                        HasEffect(Buffs.OpoOpoForm)))
                         return Bootshine;
 
                     if (level < Levels.DragonKick)
@@ -518,6 +516,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     return RiddleOfFire;
                                 }
+
+                                if (TargetNeedsPositionals() && IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && LevelChecked(All.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
+                                {
+                                    if (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                                    {
+                                        if (!OnTargetsRear())
+                                            return All.TrueNorth;
+                                    }
+                                    else if (!OnTargetsFlank())
+                                        return All.TrueNorth;
+                                }
                             }
 
                             if (canWeave)
@@ -610,27 +619,34 @@ namespace XIVSlothCombo.Combos.PvE
                         return Meditation;
                     }
 
-                    if ((level >= Levels.DragonKick && HasEffect(Buffs.OpoOpoForm)) || HasEffect(Buffs.FormlessFist))
+                    if (!HasEffect(Buffs.PerfectBalance))
                     {
-                        return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
+                        if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
+                        {
+                            return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
+                                ? MNK.Bootshine
+                                : MNK.DragonKick;
+                        }
                     }
 
-                    if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply)))
+                        if (!LevelChecked(TrueStrike)) 
                         {
-                            return TwinSnakes;
+                            return Bootshine;
                         }
-                        return TrueStrike;
-                    }
 
-                    if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
+                        return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
+                            ? TrueStrike
+                            : TwinSnakes;
+                    }
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply)))
-                        {
-                            return Demolish;
-                        }
-                        return SnapPunch;
+                        return !LevelChecked(SnapPunch)
+                            ? Bootshine
+                            : !LevelChecked(Demolish) || (demolishDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                                ? SnapPunch
+                                : Demolish;
                     }
                 }
                 return actionID;

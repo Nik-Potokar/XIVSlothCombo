@@ -205,11 +205,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (twoSeal && gauge.MeditationStacks == 0 && GetCooldownRemainingTime(Ikishoten) < 110 && IsOnCooldown(Ikishoten))
                                 {
-                                    if (gauge.Kenki >= 10 && IsOffCooldown(Gyoten))
-                                        return Gyoten;
-
                                     if (gauge.Kenki >= 25)
                                         return Shinten;
+
+                                    if (gauge.Kenki >= 10 && IsOffCooldown(Gyoten))
+                                        return Gyoten;
                                 }
 
                                 if (twoSeal && IsOffCooldown(Ikishoten))

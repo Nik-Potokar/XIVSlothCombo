@@ -93,14 +93,17 @@ namespace XIVSlothCombo.Combos.PvE
                             //Mana Features
                             if (IsEnabled(CustomComboPreset.DRK_ManaOvercap))
                             {
-                                if (IsEnabled(CustomComboPreset.DRK_EoSPooling) && GetCooldownRemainingTime(Delirium) >= 50 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && LevelChecked(EdgeOfDarkness) && CanDelayedWeave(actionID))
-                                    return OriginalHook(EdgeOfDarkness);
-                                if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000))
+                                if ((CombatEngageDuration().TotalSeconds < 7 && gauge.DarksideTimeRemaining == 0) || CombatEngageDuration().TotalSeconds >= 6)
                                 {
-                                    if (LevelChecked(EdgeOfDarkness))
+                                    if (IsEnabled(CustomComboPreset.DRK_EoSPooling) && GetCooldownRemainingTime(Delirium) >= 40 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && LevelChecked(EdgeOfDarkness) && CanDelayedWeave(actionID))
                                         return OriginalHook(EdgeOfDarkness);
-                                    if (LevelChecked(FloodOfDarkness) && !LevelChecked(EdgeOfDarkness))
-                                        return FloodOfDarkness;
+                                    if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10000 && LocalPlayer.CurrentMp >= 3000))
+                                    {
+                                        if (LevelChecked(EdgeOfDarkness))
+                                            return OriginalHook(EdgeOfDarkness);
+                                        if (LevelChecked(FloodOfDarkness) && !LevelChecked(EdgeOfDarkness))
+                                            return FloodOfDarkness;
+                                    }
                                 }
                             }
 
@@ -153,12 +156,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(Delirium) && IsEnabled(CustomComboPreset.DRK_Bloodspiller) && IsEnabled(CustomComboPreset.DRK_MainComboCDs_Group))
                         {
                             //Regular Delirium
-                            if (GetBuffStacks(Buffs.Delirium) > 0 && (!LevelChecked(LivingShadow) || IsNotEnabled(CustomComboPreset.DRK_DelayedBloodspiller)))
+                            if (GetBuffStacks(Buffs.Delirium) > 0 && IsNotEnabled(CustomComboPreset.DRK_DelayedBloodspiller))
                                 return Bloodspiller;
 
                             //Delayed Delirium
-                            if (IsEnabled(CustomComboPreset.DRK_DelayedBloodspiller) && GetBuffStacks(Buffs.Delirium) > 0 &&
-                                ((GetBuffStacks(Buffs.BloodWeapon) <= 2 && CombatEngageDuration().TotalSeconds < 30) || CombatEngageDuration().TotalSeconds >= 30))
+                            if (IsEnabled(CustomComboPreset.DRK_DelayedBloodspiller) && GetBuffStacks(Buffs.Delirium) > 0 && IsOnCooldown(BloodWeapon) && GetBuffStacks(Buffs.BloodWeapon) < 2)
                                 return Bloodspiller;
 
                             //Blood management before Delirium

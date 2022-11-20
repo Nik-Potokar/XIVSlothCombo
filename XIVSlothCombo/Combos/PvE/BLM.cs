@@ -28,6 +28,7 @@ namespace XIVSlothCombo.Combos.PvE
             Scathe = 156,
             Freeze = 159,
             Flare = 162,
+            AetherialManipulation = 155,
             LeyLines = 3573,
             Blizzard4 = 3576,
             Fire4 = 3577,
@@ -49,6 +50,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const ushort
                 Thundercloud = 164,
                 LeyLines = 737,
+                CircleOfPower = 738,
                 Firestarter = 165,
                 Sharpcast = 867,
                 Triplecast = 1211;
@@ -136,6 +138,19 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) => 
                 actionID is LeyLines && HasEffect(Buffs.LeyLines) && LevelChecked(BetweenTheLines) ? BetweenTheLines : actionID;
+        }
+
+        internal class BLM_AetherialManipulation : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AetherialManipulation;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is AetherialManipulation &&
+                ActionReady(BetweenTheLines) &&
+                HasEffect(Buffs.LeyLines) && 
+                !HasEffect(Buffs.CircleOfPower) &&
+                !IsMoving
+                ? BetweenTheLines : actionID;
         }
 
         internal class BLM_Mana : CustomCombo
