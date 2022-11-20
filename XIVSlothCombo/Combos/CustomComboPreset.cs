@@ -967,12 +967,12 @@ namespace XIVSlothCombo.Combos
         [Variant]
         [VariantParent(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", DNC.JobID)]
-        DNC_Variant_Rampart = 4082,
+        DNC_Variant_Rampart = 4083,
 
         [Variant]
         [VariantParent(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", DNC.JobID)]
-        DNC_Variant_Cure = 4083,
+        DNC_Variant_Cure = 4084,
 
 
         #endregion
@@ -2380,12 +2380,12 @@ namespace XIVSlothCombo.Combos
         [Variant]
         [VariantParent(RPR_ST_SliceCombo, RPR_AoE_ScytheCombo)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", RPR.JobID)]
-        RPR_Variant_Cure = 12065,
+        RPR_Variant_Cure = 12067,
 
         [Variant]
         [VariantParent(RPR_ST_SliceCombo, RPR_AoE_ScytheCombo)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", RPR.JobID)]
-        RPR_Variant_Rampart = 12066,
+        RPR_Variant_Rampart = 12068,
         #endregion
 
         #endregion
@@ -2746,12 +2746,12 @@ namespace XIVSlothCombo.Combos
         SGE_Eukrasia = 14910,
 
         [Variant]
-        [VariantParent(SGE_ST_Dosis_EDosis, SGE_AoE_Phlegma)]
+        [VariantParent(SGE_ST_DPS_EDosis, SGE_AoE_DPS)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", SGE.JobID)]
         SGE_DPS_Variant_SpiritDart = 14920,
 
         [Variant]
-        [VariantParent(SGE_ST_Dosis, SGE_AoE_Phlegma)]
+        [VariantParent(SGE_ST_DPS, SGE_AoE_DPS)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SGE.JobID)]
         SGE_DPS_Variant_Rampart = 14930,
         #endregion

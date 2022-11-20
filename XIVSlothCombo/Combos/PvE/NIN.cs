@@ -228,18 +228,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    if (InCombat() && !InMeleeRange())
                     if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush) &&
-                        !HasEffect(Buffs.RaijuReady) &&
-                        lastComboMove == GustSlash &&
-                        (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) && IsOnCooldown(TrickAttack) ||
-                        IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)) &&
-                        ((gauge.HutonTimer <= hutonArmorCrushTimer) || doubleArmorCrush && timesLastEnderWasArmorCrush == 1) &&
-                        gauge.HutonTimer > 0 && ArmorCrush.LevelChecked() &&
-                        comboTime > 1f)
+                    if (InCombat() && !InMeleeRange())
                     {
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshin_Phantom) &&
                             HasEffect(Buffs.PhantomReady) &&
