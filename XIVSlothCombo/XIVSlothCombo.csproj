@@ -54,11 +54,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="resources\banner.png" />
 	  <None Remove="Window\Resources\banner.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="..\res\akified.png" Link="images\akified.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+		<Content Include="resources\banner.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
