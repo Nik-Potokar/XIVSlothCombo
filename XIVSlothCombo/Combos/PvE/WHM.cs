@@ -78,7 +78,6 @@ namespace XIVSlothCombo.Combos.PvE
 
             internal static bool WHM_ST_MainCombo_DoT_Adv => PluginConfiguration.GetCustomBoolValue(nameof(WHM_ST_MainCombo_DoT_Adv));
             internal static float WHM_ST_MainCombo_DoT_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(WHM_ST_MainCombo_DoT_Threshold));
-
         }
 
         internal class WHM_SolaceMisery : CustomCombo
