@@ -229,13 +229,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat() && !InMeleeRange())
                     {
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) &&
-                            GetRemainingCharges(All.TrueNorth) > 0 &&
-                            All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) &&
-                            !(IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic) && TargetNeedsPositionals() && OnTargetsFlank()) &&
-                            canDelayedWeave)
-                            return OriginalHook(All.TrueNorth);
-
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshin_Phantom) &&
                             HasEffect(Buffs.PhantomReady) &&
                             ((GetCooldownRemainingTime(TrickAttack) > GetBuffRemainingTime(Buffs.PhantomReady) && GetBuffRemainingTime(Buffs.PhantomReady) < 5) || TargetHasEffect(Debuffs.TrickAttack) || (HasEffect(Buffs.Bunshin) && TargetHasEffect(Debuffs.Mug))) &&
@@ -419,7 +412,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) &&
                             GetRemainingCharges(All.TrueNorth) > 0 &&
                             All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) &&
-                            canWeave)
+                            !(IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic) && TargetNeedsPositionals() && OnTargetsFlank()) &&
+                            canDelayedWeave)
                             return OriginalHook(All.TrueNorth);
 
                         return OriginalHook(ArmorCrush);
