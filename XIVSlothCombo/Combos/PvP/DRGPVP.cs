@@ -40,7 +40,8 @@ namespace XIVSlothCombo.Combos.PvP
             internal const string
                 DRGPVP_LOTD_Duration = "DRGPVP_LOTD_Duration",
                 DRGPVP_LOTD_HPValue = "DRGPVP_LOTD_HPValue",
-                DRGPVP_CS_HP_Threshold = "DRGPVP_CS_HP_Threshold";
+                DRGPVP_CS_HP_Threshold = "DRGPVP_CS_HP_Threshold",
+                DRGPVP_Distance_Threshold = "DRGPVP_Distance_Threshold";
         }
 
         internal class DRGPvP_Burst : CustomCombo
@@ -59,6 +60,7 @@ namespace XIVSlothCombo.Combos.PvP
                         {
                             if (IsEnabled(CustomComboPreset.DRGPvP_HighJump) && IsOffCooldown(HighJump) && HasEffect(Buffs.LifeOfTheDragon))
                                 return HighJump;
+
                             if (IsEnabled(CustomComboPreset.DRGPvP_Nastrond) && InMeleeRange())
                             {
                                 if (HasEffect(Buffs.LifeOfTheDragon) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPVP_LOTD_HPValue)
@@ -68,12 +70,32 @@ namespace XIVSlothCombo.Combos.PvP
                             if (IsEnabled(CustomComboPreset.DRGPvP_HorridRoar) && IsOffCooldown(HorridRoar) && InMeleeRange())
                                 return HorridRoar;
                         }
-                        if (IsOffCooldown(ChaoticSpring) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPVP_CS_HP_Threshold))
-                            return ChaoticSpring;
+                        if (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpringSustain) && IsOffCooldown(ChaoticSpring) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPVP_CS_HP_Threshold))
+                        {
+                            if (!HasEffect(Buffs.FirstmindsFocus) && !HasEffect(Buffs.LifeOfTheDragon) && IsOnCooldown(Geirskogul) && IsOnCooldown(ElusiveJump)
+                             || !HasEffect(Buffs.FirstmindsFocus) && HasEffect(Buffs.LifeOfTheDragon) && IsOnCooldown(Geirskogul) && IsOnCooldown(ElusiveJump) && WasLastWeaponskill(HeavensThrust))
+                                return ChaoticSpring;
+                        }
                         if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && IsOffCooldown(Geirskogul) && WasLastAbility(ElusiveJump) && HasEffect(Buffs.FirstmindsFocus))
                             return Geirskogul;
-                        if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus))
+                        if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus) && GetTargetDistance() >= GetOptionValue(Config.DRGPVP_Distance_Threshold))
                             return WyrmwindThrust;
+                    }
+                }
+                return actionID;
+            }
+        }
+        internal class DRGPvP_BurstProtection : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRGPvP_BurstProtection;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is ElusiveJump)
+                {
+                    if (HasEffect(Buffs.FirstmindsFocus) || IsOnCooldown(Geirskogul))
+                    {
+                        return 26;
                     }
                 }
                 return actionID;

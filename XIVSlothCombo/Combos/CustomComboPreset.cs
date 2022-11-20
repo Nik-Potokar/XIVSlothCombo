@@ -3653,7 +3653,7 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Using Elusive Jump turns Wheeling Thrust Combo into an all-in-one burst damage button.\nRequires manual activation of Elusive Jump to execute.", DRG.JobID)]
+        [CustomComboInfo("Burst Mode", "Using Elusive Jump turns Wheeling Thrust Combo into all-in-one burst damage button.", DRG.JobID)]
         DRGPvP_Burst = 80200,
 
         [ParentCombo(DRGPvP_Burst)]
@@ -3679,6 +3679,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("High Jump Weave Option", "Adds High Jump to Burst Mode.", DRG.JobID)]
         DRGPvP_HighJump = 80207,
+
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("Elusive Jump Burst Protection", "Disables Elusive Jump if Burst is not ready.", DRG.JobID)]
+        DRGPvP_BurstProtection = 80208,
+
         #endregion
 
         #region GUNBREAKER
@@ -3699,6 +3704,29 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Draw And Junction Feature", "Adds Draw And Junction to Burst Mode.", GNB.JobID)]
         GNBPVP_DrawAndJunction = 80253,
 
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Gnashing Fang Feature", "Adds Gnashing Fang the the Solid Barrel Combo while under No Mercy Buff.", GNB.JobID)]
+        GNBPVP_ST_GnashingFang = 80254,
+
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Continuation", "Adds Continuation the the Solid Barrel Combo.", GNB.JobID)]
+        GNBPVP_ST_Continuation = 80255,
+
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Rough Divide Feature", "Weaves Rough Divide when No Mercy Buff is about to expire.", GNB.JobID)]
+        GNBPVP_RoughDivide = 80256,
+
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Junction DPS Feature", "Adds appropriate Junction cast", GNB.JobID)]
+        GNBPVP_JunctionDPS = 80257,
+
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Junction Healer Feature", "Adds appropriate Junction cast.", GNB.JobID)]
+        GNBPVP_JunctionHealer = 80258,
+
+        [ParentCombo(GNBPVP_Burst)]
+        [CustomComboInfo("Junction Tank Feature", "Adds appropriate Junction cast.", GNB.JobID)]
+        GNBPVP_JunctionTank = 80259,
 
         #endregion
 

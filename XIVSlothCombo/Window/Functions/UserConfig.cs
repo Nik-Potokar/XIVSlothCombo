@@ -1274,7 +1274,10 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(2, 8, DRGPVP.Config.DRGPVP_LOTD_Duration, "Seconds remaining of Life of the Dragon buff before using Nastrond if you are still above the set HP percentage.", 150, SliderIncrements.Ones);
 
             if (preset is CustomComboPreset.DRGPvP_ChaoticSpringSustain)
-                UserConfig.DrawSliderInt(0, 100, DRGPVP.Config.DRGPVP_CS_HP_Threshold, "Chaos Spring HP percentage threshold", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 101, DRGPVP.Config.DRGPVP_CS_HP_Threshold, "Chaos Spring HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.DRGPvP_WyrmwindThrust)
+                UserConfig.DrawSliderInt(0, 20, DRGPVP.Config.DRGPVP_Distance_Threshold, "Distance Treshold for Wyrmwind Thrust", 150, SliderIncrements.Ones);
 
             #endregion
 
