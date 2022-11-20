@@ -1104,6 +1104,21 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_DPS_LightSpeed)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
+
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals)
+            {
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (AST.Config.AST_ST_SimpleHeals_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_UIMouseOver,
+                        "Party UI Mouseover Checking",
+                        "Check party member's HP & Debuffs by using mouseover on the party list.\n" +
+                        "To be used in conjunction with Redirect/Reaction/etc");
+                    ImGui.Unindent();
+                }
+            }
+
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
 
