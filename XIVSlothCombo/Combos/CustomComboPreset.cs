@@ -832,14 +832,19 @@ namespace XIVSlothCombo.Combos
             DNC_ST_Simple_Flourish = 4056,
 
             [ParentCombo(DNC_ST_SimpleMode)]
-            [CustomComboInfo("Simple Feathers Option", "Includes Feather usage in the rotation.", DNC.JobID, 4, "", "")]
+            [CustomComboInfo("Simple Feathers Option", "Expends a feather in the next available weave window when capped." +
+            "\nWeaves feathers where possible during Technical Finish." +
+            "\nWeaves feathers outside of burst when target is below set HP percentage (Set to 0 to disable)." +
+            "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 4, "", "")]
             DNC_ST_Simple_Feathers = 4057,
 
+            /*
             [ParentCombo(DNC_ST_Simple_Feathers)]
             [CustomComboInfo("Simple Feather Pooling Option", "Expends a feather in the next available weave window when capped." +
             "\nWeaves feathers where possible during Technical Finish." +
             "\nWeaves feathers outside of burst when target is below set HP percentage.", DNC.JobID, 4, "", "")]
             DNC_ST_Simple_FeatherPooling = 4058,
+            */
 
             [ParentCombo(DNC_ST_SimpleMode)]
             [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
@@ -903,12 +908,16 @@ namespace XIVSlothCombo.Combos
             DNC_AoE_Simple_Flourish = 4076,
 
             [ParentCombo(DNC_AoE_SimpleMode)]
-            [CustomComboInfo("Simple AoE Feathers Option", "Includes feather usage in the AoE rotation.", DNC.JobID, 7, "", "")]
+            [CustomComboInfo("Simple AoE Feathers Option", "Expends a feather in the next available weave window when capped." +
+            "\nWeaves feathers where possible during Technical Finish." +
+            "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 7, "", "")]
             DNC_AoE_Simple_Feathers = 4077,
 
+            /*
             [ParentCombo(DNC_AoE_Simple_Feathers)]
             [CustomComboInfo("Simple AoE Feather Pooling Option", "Expends a feather in the next available weave window when capped.", DNC.JobID, 8, "", "")]
             DNC_AoE_Simple_FeatherPooling = 4078,
+            */
 
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Panic Heals Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 9, "", "")]
@@ -1918,13 +1927,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Huraijin / Armor Crush Combo Feature", "Replace Huraijin with Armor Crush after using Gust Slash.", NIN.JobID)]
         NIN_HuraijinArmorCrush = 10064,
 
-        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus_Raiton)]
         [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature.", NIN.JobID)]
         NIN_ST_AdvancedMode_Raiton_Uptime = 10065,
 
-        [ParentCombo(CustomComboPreset.NIN_ST_AdvancedMode_RangedUptime)]
+        [ParentCombo(NIN_ST_AdvancedMode_Bunshin_Phantom)]
         [CustomComboInfo("Phantom Kamaitachi Uptime Option", "Adds Phantom Kamaitachi as an uptime feature.", NIN.JobID)]
         NIN_ST_AdvancedMode_Phantom_Uptime = 10066,
+
+        [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus_Suiton)]
+        [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature.", NIN.JobID)]
+        NIN_ST_AdvancedMode_Suiton_Uptime = 10067,
 
 
         #endregion
@@ -2094,8 +2107,12 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_PlentifulHarvest = 12013,
 
         [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the combo when current target is afflicted with Death's Design.\nWill use Void/Cross Reaping during Enshroud.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the combo when current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_GibbetGallows = 12014,
+
+        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
+        [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the to the the combo during Enshroud.", RPR.JobID, 0, "", "")]
+        RPR_ST_SliceCombo_GibbetGallows_VoidCross = 12065,
 
         [ReplaceSkill(RPR.ShadowOfDeath)]
         [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
@@ -2132,6 +2149,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Guillotine Option", "Adds Guillotine to AoE combo when under Soul Reaver and when current target is afflicted with Death's Design.\nWill use Grim Reaping during Enshroud.", RPR.JobID, 0, "", "")]
         RPR_AoE_ScytheCombo_Guillotine = 12023,
 
+        [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
+        [CustomComboInfo("Grim Reaping Option", "Adds Grim Reaping to the to the AoE combo during Enshroud.", RPR.JobID, 0, "", "")]
+        RPR_AoE_ScytheCombo_Guillotine_GrimReaping = 12066,
+
         [ParentCombo(RPR_AoE_ScytheCombo)]
         [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to AoE combo when off cooldown.", RPR.JobID, 0, "", "")]
         RPR_AoE_ScytheCombo_ArcaneCircle = 12024,
@@ -2145,11 +2166,11 @@ namespace XIVSlothCombo.Combos
         RPR_AoE_ScytheCombo_Enshroud = 12026,
 
         [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the AoE combo when there are 2 Void Shrouds.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Lemure's Scythe Option", "Adds Lemure's Scythe to the AoE combo when there are 2 Void Shrouds.", RPR.JobID, 1, "", "")]
         RPR_AoE_ScytheCombo_Lemure = 12027,
 
         [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the AoE combo when there is 1 Lemure Shroud left.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the AoE combo when there is 1 Lemure Shroud left.", RPR.JobID, 2, "", "")]
         RPR_AoE_ScytheCombo_Communio = 12028,
 
         [ParentCombo(RPR_AoE_ScytheCombo)]
