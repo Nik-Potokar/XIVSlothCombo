@@ -407,52 +407,52 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Umbral Soul", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
-        BLM_AdvUmbralSoul = 2032,
+        BLM_AdvUmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
-        BLM_Adv_CastMovement = 2033,
+        BLM_Adv_CastMovement = 2036,
 
         [ParentCombo(BLM_Adv_CastMovement)]
         [ConflictingCombos(BLM_Adv_Transpose_Lines)]
         [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
-        BLM_Adv_CastMovement_Xeno = 2034,
+        BLM_Adv_CastMovement_Xeno = 2037,
 
         [ParentCombo(BLM_Adv_CastMovement)]
         [CustomComboInfo("Scathe Moving Option", "Also use Scathe when moving.", BLM.JobID, 0, "", "")]
-        BLM_Adv_CastMovement_Scathe = 2035,
+        BLM_Adv_CastMovement_Scathe = 2038,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Advanced BLM feature.", BLM.JobID, -8, "", "")]
-        BLM_Adv_Casts = 2036,
+        BLM_Adv_Casts = 2039,
 
         [ParentCombo(BLM_Adv_Casts)]
         [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Casts_Pooling = 2037,
+        BLM_Adv_Casts_Pooling = 2040,
 
         [ParentCombo(BLM_Adv_Buffs)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced Blm feature.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Buffs_LeyLines = 2038,
+        BLM_Adv_Buffs_LeyLines = 2041,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast, Amplifier onto the Advanced Blm feature.", BLM.JobID, -8, "", "")]
-        BLM_Adv_Buffs = 2039,
+        BLM_Adv_Buffs = 2042,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Transpose Opener", "Adds the transpose opener to Advanced Blm.", BLM.JobID, -10, "", "")]
-        BLM_Adv_Opener = 2040,
+        BLM_Adv_Opener = 2043,
 
         [ParentCombo(BLM_AdvancedMode)]
         [ConflictingCombos(BLM_Adv_CastMovement_Xeno)]
         [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
-        BLM_Adv_Transpose_Lines = 2042,
+        BLM_Adv_Transpose_Lines = 2044,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
-        BLM_AetherialManipulation = 2044,
+        BLM_AetherialManipulation = 2045,
 
         [Variant]
-        [VariantParent(BLM_SimpleMode, BLM_AoE_SimpleMode)]
+        [VariantParent(BLM_SimpleMode, BLM_AdvancedMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", BLM.JobID)]
         BLM_Variant_Rampart = 2032,
 
@@ -461,7 +461,7 @@ namespace XIVSlothCombo.Combos
         BLM_Variant_Raise = 2033,
 
         [Variant]
-        [VariantParent(BLM_SimpleMode, BLM_AoE_SimpleMode)]
+        [VariantParent(BLM_SimpleMode, BLM_AdvancedMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BLM.JobID)]
         BLM_Variant_Cure = 2034,
 

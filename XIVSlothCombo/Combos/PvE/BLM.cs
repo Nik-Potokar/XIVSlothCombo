@@ -104,165 +104,6 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_VariantCure = "BlmVariantCure";
         }
 
-        internal class BLM_Blizzard : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Blizzard;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Blizzard && LevelChecked(Freeze) && !Gauge.InUmbralIce)
-                    return Blizzard3;
-                if (actionID is Freeze && !LevelChecked(Freeze))
-                    return Blizzard2;
-                return actionID;
-            }
-        }
-
-        internal class BLM_Fire_1to3 : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Fire_1to3;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Fire && ((LevelChecked(Fire3) && !Gauge.InAstralFire) || HasEffect(Buffs.Firestarter)))
-                    return Fire3;
-
-                return actionID;
-            }
-        }
-
-        internal class BLM_LeyLines : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_LeyLines;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is LeyLines && HasEffect(Buffs.LeyLines) && LevelChecked(BetweenTheLines) ? BetweenTheLines : actionID;
-        }
-
-        internal class BLM_AetherialManipulation : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AetherialManipulation;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is AetherialManipulation &&
-                ActionReady(BetweenTheLines) &&
-                HasEffect(Buffs.LeyLines) &&
-                !HasEffect(Buffs.CircleOfPower) &&
-                !IsMoving
-                ? BetweenTheLines : actionID;
-        }
-
-        internal class BLM_Mana : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Mana;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is Transpose && Gauge.InUmbralIce && LevelChecked(UmbralSoul) ? UmbralSoul : actionID;
-        }
-
-        internal class BLM_AoE_SimpleMode : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AoE_SimpleMode;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Flare)
-                {
-                    var currentMP = LocalPlayer.CurrentMp;
-
-
-                    //2xHF2 Transpose with Freeze [A7]
-
-                    if (!InCombat())
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
-                        return Variant.VariantCure;
-
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
-                        return Variant.VariantRampart;
-
-                    // Polyglot usage
-                    if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Manafont) && LevelChecked(Foul))
-
-                    {
-                        return OriginalHook(Blizzard2);
-                    }
-
-                    // Fire phase
-                    if (Gauge.InAstralFire)
-                    {
-                        // Polyglot usage 
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Foul) && lastComboMove == Flare && Gauge.HasPolyglotStacks())
-                        {  
-                            return Foul; 
-                        }
-
-                        // Manafont usage
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) && ActionReady(Manafont) && currentMP <= MP.AllMPSpells)
-                        {  
-                            return Manafont;
-                        }
-
-                        //use Flare after manafont
-                        if (!ActionReady(Manafont) && (GetCooldownRemainingTime(Manafont) >= 179) || (GetCooldownRemainingTime(Manafont) >= 119))
-                        {
-                            return Flare;
-                        }
-
-                        //Grab Fire 2 / High Fire 2 action ID
-                         if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
-                         {
-                             return Flare;
-                         }
-
-                        if (currentMP >= MP.AllMPSpells)
-                        {
-                            if (currentMP >= MP.FireAoE || !HasEffect(Buffs.EnhancedFlare))
-                            {
-                                return OriginalHook(Fire2);
-                            }
-                            else if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
-                            {
-                                return Flare;
-                            }
-                            else if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                            {
-                                return Transpose;
-                            }
-                        }
-
-                        if (currentMP < MP.AllMPSpells)
-                        {
-                            return Transpose;
-                        }
-                    }
-
-                    // Ice phase
-                    if (Gauge.InUmbralIce)
-                    {
-                        if (Gauge.UmbralHearts < 3)
-                        {
-                            return Freeze;
-                        }
-
-                        if (lastComboMove == Freeze)
-                        {
-                            return OriginalHook(Thunder2);
-                        }
-
-                        if (Gauge.UmbralHearts == 3 && lastComboMove == OriginalHook(Thunder2))
-                        {
-                            return Transpose;
-                        }
-                    }
-                }
-
-                return actionID;
-            }
-        }
-
         internal class BLM_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_SimpleMode;
@@ -278,17 +119,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
                     var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
 
-                    // Opener for BLM
-                    // Credit to damolitionn for providing code to be used as a base for this opener
-
-                    // Only enable sharpcast if it's available
-                    if (!inOpener && !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && lastComboMove != Thunder3)
-                    {
-                        return Sharpcast;
-                    }
-
-                    if (!InCombat() && (inOpener || openerFinished))
-
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
                         return Variant.VariantCure;
 
@@ -298,9 +128,13 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
 
-                    // Opener for BLM
-                    // Credit to damolitionn for providing code to be used as a base for this opener
-                    if (IsEnabled(CustomComboPreset.BLM_Simple_Opener) && LevelChecked(Foul))
+                    // Only enable sharpcast if it's available
+                    if (!inOpener && !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast) && lastComboMove != Thunder3)
+                    {
+                        return Sharpcast;
+                    }
+
+                    if (!InCombat() && (inOpener || openerFinished))
                     {
                         inOpener = false;
                         openerFinished = false;
@@ -322,7 +156,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (Gauge.InAstralFire)
                         {
-
                             //thunder3
                             if (lastComboMove != Thunder3 && !TargetHasEffect(Debuffs.Thunder3))
                             {
@@ -748,6 +581,15 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
                     var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
 
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AdvUmbralSoul) && CurrentTarget is null && Gauge.IsEnochianActive)
@@ -1263,6 +1105,104 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        internal class BLM_AoE_SimpleMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AoE_SimpleMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Flare)
+                {
+                    var currentMP = LocalPlayer.CurrentMp;
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
+                    //2xHF2 Transpose with Freeze [A7]
+                    if (!InCombat())
+                    {
+                        return OriginalHook(Blizzard2);
+                    }
+
+                    // Fire phase
+                    if (Gauge.InAstralFire)
+                    {
+                        // Polyglot usage 
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Foul) && lastComboMove == Flare && Gauge.HasPolyglotStacks())
+                        {
+                            return Foul;
+                        }
+
+                        // Manafont usage
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) && ActionReady(Manafont) && currentMP <= MP.AllMPSpells)
+                        {
+                            return Manafont;
+                        }
+
+                        //use Flare after manafont
+                        if (!ActionReady(Manafont) && (GetCooldownRemainingTime(Manafont) >= 179) || (GetCooldownRemainingTime(Manafont) >= 119))
+                        {
+                            return Flare;
+                        }
+
+                        //Grab Fire 2 / High Fire 2 action ID
+                        if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                        {
+                            return Flare;
+                        }
+
+                        if (currentMP >= MP.AllMPSpells)
+                        {
+                            if (currentMP >= MP.FireAoE || !HasEffect(Buffs.EnhancedFlare))
+                            {
+                                return OriginalHook(Fire2);
+                            }
+                            else if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                            {
+                                return Flare;
+                            }
+                            else if (!TraitLevelChecked(Traits.AspectMasteryIII))
+                            {
+                                return Transpose;
+                            }
+                        }
+
+                        if (currentMP < MP.AllMPSpells)
+                        {
+                            return Transpose;
+                        }
+                    }
+
+                    // Ice phase
+                    if (Gauge.InUmbralIce)
+                    {
+                        if (Gauge.UmbralHearts < 3)
+                        {
+                            return Freeze;
+                        }
+
+                        if (lastComboMove == Freeze)
+                        {
+                            return OriginalHook(Thunder2);
+                        }
+
+                        if (Gauge.UmbralHearts == 3 && lastComboMove == OriginalHook(Thunder2))
+                        {
+                            return Transpose;
+                        }
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
         internal class BLM_Variant_Raise : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Variant_Raise;
@@ -1601,5 +1541,63 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
+        internal class BLM_Blizzard : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Blizzard;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Blizzard && LevelChecked(Freeze) && !Gauge.InUmbralIce)
+                    return Blizzard3;
+                if (actionID is Freeze && !LevelChecked(Freeze))
+                    return Blizzard2;
+                return actionID;
+            }
+        }
+
+        internal class BLM_Fire_1to3 : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Fire_1to3;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Fire && ((LevelChecked(Fire3) && !Gauge.InAstralFire) || HasEffect(Buffs.Firestarter)))
+                    return Fire3;
+
+                return actionID;
+            }
+        }
+
+        internal class BLM_LeyLines : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_LeyLines;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is LeyLines && HasEffect(Buffs.LeyLines) && LevelChecked(BetweenTheLines) ? BetweenTheLines : actionID;
+        }
+
+        internal class BLM_AetherialManipulation : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AetherialManipulation;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is AetherialManipulation &&
+                ActionReady(BetweenTheLines) &&
+                HasEffect(Buffs.LeyLines) &&
+                !HasEffect(Buffs.CircleOfPower) &&
+                !IsMoving
+                ? BetweenTheLines : actionID;
+        }
+
+        internal class BLM_Mana : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Mana;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is Transpose && Gauge.InUmbralIce && LevelChecked(UmbralSoul) ? UmbralSoul : actionID;
+        }
+
+
     }
 }
