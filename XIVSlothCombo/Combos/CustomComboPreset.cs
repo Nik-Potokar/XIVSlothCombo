@@ -1758,12 +1758,12 @@ namespace XIVSlothCombo.Combos
         MNK_TrueNorthDynamic = 9029,
 
         [Variant]
-        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_AdvancedMode)]
+        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_AdvancedMode, MNK_ST_SimpleMode, MNK_AOE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MNK.JobID)]
         MNK_Variant_Cure = 9030,
 
         [Variant]
-        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_AdvancedMode)]
+        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_AdvancedMode, MNK_ST_SimpleMode, MNK_AOE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9031,
 

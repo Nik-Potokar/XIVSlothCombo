@@ -219,6 +219,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var demolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
 
 
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
                     // Opener for MNK
                     // Re-enter opener when Brotherhood is used
                     if (lastComboMove == Brotherhood)
@@ -322,7 +325,12 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (inCombat && !inOpener)
                     {
-                        {
+
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            canWeave)
+                            return Variant.VariantRampart;
                             if (canWeave)
                             {
                                 if (!HasEffect(Buffs.FormlessFist) &&
@@ -381,7 +389,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return RiddleOfWind;
                                 }
                             }
-                        }
 
                         if (canWeave)
                         {
@@ -518,6 +525,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var disciplinedFistApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply);
 
 
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
                     // Opener for MNK
                     if (IsEnabled(CustomComboPreset.MNK_ST_LunarSolarOpener))
                     {
@@ -632,6 +642,12 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (inCombat && !inOpener)
                     {
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            canWeave)
+                            return Variant.VariantRampart;
+
                         if (IsEnabled(CustomComboPreset.MNK_ST_ADV_CDs))
                         {
                             if (canWeave)
@@ -987,9 +1003,18 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
+
                     // Buffs
                     if (inCombat && canWeave)
                     {
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                           IsEnabled(Variant.VariantRampart) &&
+                           IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (LevelChecked(RiddleOfFire) && !IsOnCooldown(RiddleOfFire) && InMeleeRange())
                         {
                             return RiddleOfFire;
@@ -1125,9 +1150,17 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
                     // Buffs
                     if (inCombat && canWeave)
                     {
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (IsEnabled(CustomComboPreset.MNK_AoE_ADV_CDs))
                         {
                             if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire) && InMeleeRange())
