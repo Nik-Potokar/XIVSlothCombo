@@ -9,10 +9,7 @@ namespace XIVSlothCombo.Combos.PvE
     {
         public const byte JobID = 37;
 
-        public static int MaxCartridges(byte level)
-        {
-            return level >= Levels.CartridgeCharge3 ? 3 : 2;
-        }
+        public static int MaxCartridges(byte level) => level >= 88 ? 3 : 2;
 
         public const uint
             KeenEdge = 16137,
@@ -60,34 +57,11 @@ namespace XIVSlothCombo.Combos.PvE
                 SonicBreak = 1837;
         }
 
-        public static class Levels
-        {
-            public const byte
-                NoMercy = 2,
-                BrutalShell = 4,
-                LightningShot = 15,
-                DangerZone = 18,
-                SolidBarrel = 26,
-                BurstStrike = 30,
-                DemonSlaughter = 40,
-                Aurora = 45,
-                SonicBreak = 54,
-                RoughDivide = 56,
-                GnashingFang = 60,
-                BowShock = 62,
-                Continuation = 70,
-                FatedCircle = 72,
-                Bloodfest = 76,
-                BlastingZone = 80,
-                EnhancedContinuation = 86,
-                CartridgeCharge3 = 88,
-                DoubleDown = 90;
-        }
         public static class Config
         {
             public const string
                 GNB_SkS = "GNB_SkS",
-                GNB_RoughDivide_HeldCharges = "GnbKeepRoughDivideCharges",
+                GNB_RoughDivide_HeldCharges = "GNB_RoughDivide_HeldCharges",
                 GNB_VariantCure = "GNB_VariantCure";
         }
 
