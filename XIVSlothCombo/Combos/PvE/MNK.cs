@@ -94,8 +94,7 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_STBloodbathThreshold = "MNK_STBloodbathThreshold",
                 MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
                 MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold",
-                MNK_DemolishTreshhold = "MNK_ST_DemolishThreshold";
-
+                MNK_DemolishTreshhold = "MNK_ST_DemolishThreshold",
                 MNK_VariantCure = "MNK_VariantCure";
 
         }

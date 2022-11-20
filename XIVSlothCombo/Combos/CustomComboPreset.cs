@@ -1625,7 +1625,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_BasicCombo)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.", MNK.JobID, 2, "", "")]
-        MNK_ST_SimpleMode = 9030,
+        MNK_ST_SimpleMode = 9032,
 
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_ST_BasicCombo, MNK_ST_SimpleMode)]
@@ -1635,12 +1635,12 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_SimpleMode)]
         [CustomComboInfo("Basic Rotation - AoE", "Replace Arms Of The Destroyer with Monk's basic AoE Combo on one button.", MNK.JobID, 30, "", "")]
-        MNK_AOE_BasicCombo = 9032,
+        MNK_AOE_BasicCombo = 9034,
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_BasicCombo)]
         [CustomComboInfo("Simple Mode - AoE", "Replace Arms Of The Destroyer with a one-button full AoE target rotation.", MNK.JobID, 31, "", "")]
-        MNK_AOE_SimpleMode = 9031,
+        MNK_AOE_SimpleMode = 9033,
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_SimpleMode, MNK_AOE_BasicCombo)]
@@ -1748,22 +1748,22 @@ namespace XIVSlothCombo.Combos
         MNK_ST_Meditation_Uptime = 9028,
 
         [CustomComboInfo("Riddle Of Earth Protection", "Prevents the use of Riddle Of Earth when its buff is already active by replacing it with Fire.", MNK.JobID, 67, "", "")]
-        MNK_RiddleOfEarthProtection = 9034,
+        MNK_RiddleOfEarthProtection = 9035,
 
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
-        MNK_ST_Simple_Thunderclap = 9033,
+        MNK_ST_Simple_Thunderclap = 9036,
 
         [CustomComboInfo("Dynamic True North Option", "Adds True North to the main combo right before positionals if you aren't in the correct position for their bonuses.", MNK.JobID, 68, "", "")]
         MNK_TrueNorthDynamic = 9029,
 
         [Variant]
-        [VariantParent(MNK_ST_SimpleMode, MNK_AoE_SimpleMode)]
+        [VariantParent(MNK_ST_SimpleMode, MNK_AOE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MNK.JobID)]
         MNK_Variant_Cure = 9030,
 
         [Variant]
-        [VariantParent(MNK_ST_SimpleMode, MNK_AoE_SimpleMode)]
+        [VariantParent(MNK_ST_SimpleMode, MNK_AOE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9031,
 
