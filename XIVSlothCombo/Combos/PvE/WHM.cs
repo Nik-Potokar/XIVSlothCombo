@@ -353,11 +353,14 @@ namespace XIVSlothCombo.Combos.PvE
                         HasBattleTarget())
                         return Variant.VariantSpiritDart;
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
-                        return PresenceOfMind;
-                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid))
-                        return All.LucidDreaming;
-
+                    if (CanSpellWeave(actionID) || IsMoving)
+                    {
+                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
+                            return PresenceOfMind;
+                        if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) &&
+                            LocalPlayer.CurrentMp <= PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid))
+                            return All.LucidDreaming;
+                    }
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_LilyOvercap) && LevelChecked(AfflatusRapture) &&
                         (liliesFullNoBlood || liliesNearlyFull))
