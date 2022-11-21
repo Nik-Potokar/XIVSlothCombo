@@ -369,7 +369,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]
-        BLM_AoE_Simple_Foul = 2043,
+        BLM_AoE_Simple_Foul = 2044,
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
@@ -445,11 +445,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLM_AdvancedMode)]
         [ConflictingCombos(BLM_Adv_CastMovement_Xeno)]
         [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
-        BLM_Adv_Transpose_Lines = 2044,
+        BLM_Adv_Transpose_Lines = 2045,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
-        BLM_AetherialManipulation = 2045,
+        BLM_AetherialManipulation = 2046,
 
         [Variant]
         [VariantParent(BLM_SimpleMode, BLM_AdvancedMode, BLM_AoE_SimpleMode)]
