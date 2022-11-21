@@ -204,24 +204,24 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
             AST_DPS_AutoDraw = 1011,
 
-                [ParentCombo(AST_DPS_AutoDraw)]
-                [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID)]
-                AST_DPS_AutoPlay = 1037,
-
-                    [ParentCombo(AST_DPS_AutoPlay)]
-                    [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
-                    AST_DPS_AutoPlay_Redraw = 1038,
+            [ParentCombo(AST_ST_DPS)]
+            [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID, 6)]
+            AST_DPS_AutoPlay = 1037,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "", "")]
+            [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID, 7)]
+            AST_DPS_AutoPlay_Redraw = 1038,
+
+            [ParentCombo(AST_ST_DPS)]
+            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 8, "", "")]
             AST_DPS_Astrodyne = 1009,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 7, "", "")]
+            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 9, "", "")]
             AST_DPS_AutoCrownDraw = 1012,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "", "")]
+            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 10, "", "")]
             AST_DPS_LazyLord = 1014,
             #endregion
 

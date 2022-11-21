@@ -387,7 +387,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         ActionReady(Draw) &&
                         Gauge.DrawnCard is CardType.NONE &&
-                        CanSpellWeave(actionID))
+                        CanDelayedWeave(actionID))
                         return Draw;
 
                     //Redraw Card
@@ -398,7 +398,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (cardDrawn is CardType.ARROW or CardType.EWER && Gauge.Seals.Contains(SealType.MOON)) ||
                             (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL))) &&
                             CanDelayedWeave(actionID) &&
-                            spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting + (HasEffect(Buffs.Lightspeed) ? 1 : 0))
+                            spellsSinceDraw >= (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay) ? Config.AST_ST_DPS_Play_SpeedSetting : 1))
                             return Redraw;
                     }
 
@@ -407,7 +407,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Play) &&
                         Gauge.DrawnCard is not CardType.NONE &&
                         CanDelayedWeave(actionID) &&
-                        spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting + (HasEffect(Buffs.Lightspeed) ? 1 : 0))
+                        spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting)
                         return OriginalHook(Play);
 
 

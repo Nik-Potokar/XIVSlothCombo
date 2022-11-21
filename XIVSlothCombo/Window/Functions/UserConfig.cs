@@ -1135,9 +1135,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.AST_DPS_AutoPlay)
             {
-                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Fast (Minimal Delay)", "", 1);
-                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Medium (1 GCD minimum delay)", "", 2);
-                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Slow (2 GCD minimum delay)", "", 3);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Fast (1 DPS GCD minimum delay)", "", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Medium (2 DPS GCD minimum delay)", "", 2);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Slow (3 DPS GCD minimum delay)", "", 3);
 
             }
 
