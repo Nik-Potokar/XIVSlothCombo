@@ -87,8 +87,6 @@ namespace XIVSlothCombo.Core
 
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
-        
-        #endregion
 
         #region Tab Options 
 
@@ -106,6 +104,8 @@ namespace XIVSlothCombo.Core
 
         /// <summary> Enables Debug Tab </summary>
         public bool HideDebug { get; set; } = false;
+
+        #endregion
 
         #endregion
 

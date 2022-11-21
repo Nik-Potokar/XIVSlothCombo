@@ -72,7 +72,8 @@ namespace XIVSlothCombo.Combos.PvE
                 BRD_RagingJawsRenewTime = "ragingJawsRenewTime",
                 BRD_NoWasteHPPercentage = "noWasteHpPercentage",
                 BRD_STSecondWindThreshold = "BRD_STSecondWindThreshold",
-                BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold";
+                BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold",
+                BRD_VariantCure = "BRD_VariantCure";
         }
 
         #region Song status

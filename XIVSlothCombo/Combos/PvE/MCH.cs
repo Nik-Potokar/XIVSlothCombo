@@ -293,7 +293,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 var HasAoETarget = HasBattleTarget();
 
-                if ((actionID == SpreadShot || Scattergun) && HasAoETarget)
+                if ((actionID is SpreadShot or Scattergun) && HasAoETarget)
                 {
                     var canWeave = CanWeave(actionID);
                     var gauge = GetJobGauge<MCHGauge>();
