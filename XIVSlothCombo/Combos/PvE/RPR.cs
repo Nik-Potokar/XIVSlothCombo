@@ -80,7 +80,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RPR_SoDThreshold = "RPRSoDThreshold",
                 RPR_SoDRefreshRange = "RPRSoDRefreshRange",
                 RPR_OpenerChoice = "RPR_OpenerChoice",
-                RPR_SoulsowOptions = "RPRSoulsowOptions";
+                RPR_SoulsowOptions = "RPRSoulsowOptions",
+                RPR_VariantCure = "RPRVariantCure";
         }
 
         internal class RPR_ST_SliceCombo : CustomCombo
@@ -143,6 +144,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
                         return All.TrueNorth;
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
 
                     if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) || opener) && HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
                     {
@@ -263,12 +273,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Lemure) && gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice))
                                 return OriginalHook(BloodStalk);
-                            if (HasEffect(Buffs.EnhancedVoidReaping))
+                            if (HasEffect(Buffs.EnhancedVoidReaping) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_VoidCross))
                                 return OriginalHook(Gibbet);
-                            if (HasEffect(Buffs.EnhancedCrossReaping))
+                            if (HasEffect(Buffs.EnhancedCrossReaping) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_VoidCross))
                                 return OriginalHook(Gallows);
 
-                            if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
+                            if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_VoidCross))
                             {
                                 if (positionalChoice is 0 or 1 or 3)
                                     return OriginalHook(Gallows);
@@ -341,6 +351,17 @@ namespace XIVSlothCombo.Combos.PvE
                     bool soulReaver = HasEffect(Buffs.SoulReaver);
                     double enemyHP = GetTargetHPPercent();
 
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
+
+
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Guillotine) && soulReaver && LevelChecked(Guillotine))
                         return OriginalHook(Guillotine);
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_WoD) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 3 && !soulReaver && enemyHP > 5 && LevelChecked(WhorlOfDeath))
@@ -368,7 +389,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Communio;
                         if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Lemure) && gauge.VoidShroud >= 2 && LevelChecked(LemuresScythe))
                             return OriginalHook(GrimSwathe);
-                        if (gauge.LemureShroud > 0)
+                        if (gauge.LemureShroud > 0 && IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Guillotine_GrimReaping))
                             return OriginalHook(Guillotine);
                     }
 
