@@ -153,6 +153,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             internal static bool AST_QuickTarget_SkipDamageDown => PluginConfiguration.GetCustomBoolValue(nameof(AST_QuickTarget_SkipDamageDown));
             internal static bool AST_QuickTarget_SkipRezWeakness => PluginConfiguration.GetCustomBoolValue(nameof(AST_QuickTarget_SkipRezWeakness));
+
+            internal static int AST_ST_DPS_Play_SpeedSetting => PluginConfiguration.GetCustomIntValue(nameof(AST_ST_DPS_Play_SpeedSetting));
         }
 
         internal class AST_Cards_DrawOnPlay : CustomCombo
@@ -396,7 +398,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (cardDrawn is CardType.ARROW or CardType.EWER && Gauge.Seals.Contains(SealType.MOON)) ||
                             (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL))) &&
                             CanDelayedWeave(actionID) &&
-                            spellsSinceDraw >= 2)
+                            spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting + (HasEffect(Buffs.Lightspeed) ? 1 : 0))
                             return Redraw;
                     }
 
@@ -405,7 +407,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Play) &&
                         Gauge.DrawnCard is not CardType.NONE &&
                         CanDelayedWeave(actionID) &&
-                        spellsSinceDraw >= 2)
+                        spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting + (HasEffect(Buffs.Lightspeed) ? 1 : 0))
                         return OriginalHook(Play);
 
 

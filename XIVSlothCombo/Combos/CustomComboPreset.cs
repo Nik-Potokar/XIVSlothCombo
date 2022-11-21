@@ -206,11 +206,11 @@ namespace XIVSlothCombo.Combos
 
                 [ParentCombo(AST_DPS_AutoDraw)]
                 [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID)]
-                AST_DPS_AutoPlay = 1035,
+                AST_DPS_AutoPlay = 1037,
 
                     [ParentCombo(AST_DPS_AutoPlay)]
                     [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
-                    AST_DPS_AutoPlay_Redraw = 1036,
+                    AST_DPS_AutoPlay_Redraw = 1038,
 
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "", "")]

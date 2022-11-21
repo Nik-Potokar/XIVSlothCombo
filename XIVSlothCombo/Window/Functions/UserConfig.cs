@@ -1133,6 +1133,14 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipRezWeakness), "Skip targets with a Rez Weakness Debuff", "");
             }
 
+            if (preset is CustomComboPreset.AST_DPS_AutoPlay)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Fast (Minimal Delay)", "", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Medium (1 GCD minimum delay)", "", 2);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Slow (2 GCD minimum delay)", "", 3);
+
+            }
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE
