@@ -12,6 +12,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using XIVSlothCombo.Combos;
+using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
@@ -32,7 +34,7 @@ namespace XIVSlothCombo
 
         public static uint? JobID
         {
-            get => jobID; 
+            get => jobID;
             set
             {
                 if (jobID != value)
@@ -338,9 +340,10 @@ namespace XIVSlothCombo
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +                                // - Client Name
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");                           // - Abbreviation
-                            file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.GameData.JobIndex}"); // Job Index
+                            file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.Id}");                // Job Index
+                            file.WriteLine($"Current Job Level: {Service.ClientState.LocalPlayer.Level}");                      // Job Level
                             file.WriteLine("");
-                            file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}");                               // Current zone location
+                            file.WriteLine($"Current Zone: {Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Service.ClientState.TerritoryType).PlaceName.Value.Name}");   // Current zone location
                             file.WriteLine($"Current Party Size: {Service.PartyList.Length}");                                  // Current party size
                             file.WriteLine("");
                             file.WriteLine($"START ENABLED FEATURES");
@@ -369,7 +372,97 @@ namespace XIVSlothCombo
                                 }
                             }
 
+
                             file.WriteLine($"END ENABLED FEATURES");
+                            file.WriteLine("");
+
+                            file.WriteLine("START CONFIG SETTINGS");
+                            if (string.IsNullOrEmpty(specificJob))
+                            {
+                                file.WriteLine("---INT VALUES---");
+                                foreach (var item in PluginConfiguration.CustomIntValues.OrderBy(x => x.Key))
+                                {
+                                    file.WriteLine($"{item.Key.Trim()} - {item.Value}");
+                                }
+                                file.WriteLine("");
+                                file.WriteLine("---FLOAT VALUES---");
+                                foreach (var item in PluginConfiguration.CustomFloatValues.OrderBy(x => x.Key))
+                                {
+                                    file.WriteLine($"{item.Key.Trim()} - {item.Value}");
+                                }
+                                file.WriteLine("");
+                                file.WriteLine("---BOOL VALUES---");
+                                foreach (var item in PluginConfiguration.CustomBoolValues.OrderBy(x => x.Key))
+                                {
+                                    file.WriteLine($"{item.Key.Trim()} - {item.Value}");
+                                }
+                                file.WriteLine("");
+                                file.WriteLine("---BOOL ARRAY VALUES---");
+                                foreach (var item in PluginConfiguration.CustomBoolArrayValues.OrderBy(x => x.Key))
+                                {
+                                    file.WriteLine($"{item.Key.Trim()} - {string.Join(", ", item.Value)}");
+                                }
+                            }
+                            else
+                            {
+                                var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(specificJob.ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
+                                var jobID = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.ClassJob>()?
+                                    .Where(x => x.Name.RawString.Equals(jobname, StringComparison.CurrentCultureIgnoreCase))
+                                    .First()
+                                    .RowId;
+
+                                var whichConfig = jobID switch
+                                {
+                                    1 or 19 => typeof(PLD.Config),
+                                    2 or 20 => typeof(MNK.Config),
+                                    3 or 21 => typeof(WAR.Config),
+                                    4 or 22 => typeof(DRG.Config),
+                                    5 or 23 => typeof(BRD.Config),
+                                    6 or 24 => typeof(WHM.Config),
+                                    7 or 25 => typeof(BLM.Config),
+                                    26 or 27 => typeof(SMN.Config),
+                                    28 => typeof(SCH.Config),
+                                    29 or 30 => typeof(NIN.Config),
+                                    31 => typeof(MCH.Config),
+                                    32 => typeof(DRK.Config),
+                                    33 => typeof(AST.Config),
+                                    34 => typeof(SAM.Config),
+                                    35 => typeof(RDM.Config),
+                                    //36 => typeof(BLU.Config),
+                                    37 => typeof(GNB.Config),
+                                    38 => typeof(DNC.Config),
+                                    39 => typeof(RPR.Config),
+                                    40 => typeof(SGE.Config),
+                                    _ => throw new NotImplementedException(),
+                                };
+
+                                foreach (var config in whichConfig.GetMembers().Where(x => x.MemberType == System.Reflection.MemberTypes.Field || x.MemberType == System.Reflection.MemberTypes.Property))
+                                {
+                                    string key = config.Name!;
+
+                                    if (PluginConfiguration.CustomIntValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomIntValues[key]}"); continue; }
+                                    if (PluginConfiguration.CustomFloatValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomFloatValues[key]}"); continue; }
+                                    if (PluginConfiguration.CustomBoolValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomBoolValues[key]}"); continue; }
+                                    if (PluginConfiguration.CustomBoolArrayValues.ContainsKey(key)) { file.WriteLine($"{key} - {string.Join(", ", PluginConfiguration.CustomBoolArrayValues[key])}"); continue; }
+
+                                    file.WriteLine($"{key} - NOT SET");
+                                }
+
+                                foreach (var config in typeof(PvPCommon.Config).GetMembers().Where(x => x.MemberType == System.Reflection.MemberTypes.Field || x.MemberType == System.Reflection.MemberTypes.Property))
+                                {
+                                    string key = config.Name!;
+
+                                    if (PluginConfiguration.CustomIntValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomIntValues[key]}"); continue; }
+                                    if (PluginConfiguration.CustomFloatValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomFloatValues[key]}"); continue; }
+                                    if (PluginConfiguration.CustomBoolValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomBoolValues[key]}"); continue; }
+                                    if (PluginConfiguration.CustomBoolArrayValues.ContainsKey(key)) { file.WriteLine($"{key} - {string.Join(", ", PluginConfiguration.CustomBoolArrayValues[key])}"); continue; }
+
+                                    file.WriteLine($"{key} - NOT SET");
+                                }
+                            }
+
+
+                            file.WriteLine("END CONFIG SETTINGS");
                             file.WriteLine("");
                             file.WriteLine($"Redundant IDs found: {i}");
 
@@ -392,7 +485,7 @@ namespace XIVSlothCombo
                                 file.WriteLine($"START STATUS EFFECTS");
                                 foreach (Status? status in Service.ClientState.LocalPlayer.StatusList)
                                 {
-                                    file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceId}");
+                                    file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceId} NAME: {ActionWatching.GetStatusName(status.StatusId)}");
                                 }
 
                                 file.WriteLine($"END STATUS EFFECTS");

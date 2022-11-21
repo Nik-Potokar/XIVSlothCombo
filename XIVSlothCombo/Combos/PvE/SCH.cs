@@ -99,41 +99,41 @@ namespace XIVSlothCombo.Combos.PvE
             PostOpener,
         }
 
-        internal static class Config
+        public static class Config
         {
             #region DPS
             //Temporary BoolConvert until GUI refactor post 3.0.17.4 release
-            internal static bool SCH_ST_DPS_AltMode => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_AltMode)));
-            internal static int SCH_ST_DPS_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_LucidOption));
+            public static bool SCH_ST_DPS_AltMode => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_AltMode)));
+            public static int SCH_ST_DPS_LucidOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_LucidOption));
             
-            internal static int SCH_ST_DPS_BioOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_BioOption));
-            internal static bool SCH_ST_DPS_Bio_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_Bio_Adv));
-            internal static float SCH_ST_DPS_Bio_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_Bio_Threshold));
+            public static int SCH_ST_DPS_BioOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_BioOption));
+            public static bool SCH_ST_DPS_Bio_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_Bio_Adv));
+            public static float SCH_ST_DPS_Bio_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_Bio_Threshold));
 
-            internal static int SCH_ST_DPS_ChainStratagemOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_ChainStratagemOption));
-            internal static bool SCH_ST_DPS_EnergyDrain_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_EnergyDrain_Adv));
-            internal static float SCH_ST_DPS_EnergyDrain => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_EnergyDrain));
+            public static int SCH_ST_DPS_ChainStratagemOption => PluginConfiguration.GetCustomIntValue(nameof(SCH_ST_DPS_ChainStratagemOption));
+            public static bool SCH_ST_DPS_EnergyDrain_Adv => PluginConfiguration.GetCustomBoolValue(nameof(SCH_ST_DPS_EnergyDrain_Adv));
+            public static float SCH_ST_DPS_EnergyDrain => PluginConfiguration.GetCustomFloatValue(nameof(SCH_ST_DPS_EnergyDrain));
             #endregion
 
             #region Healing
-            internal static UserInt
+            public static UserInt
                 SCH_AoE_LucidOption = new("SCH_AoE_LucidOption"),
                 SCH_AoE_Heal_LucidOption = new("SCH_AoE_Heal_LucidOption"),
                 SCH_ST_Heal_LucidOption = new("SCH_ST_Heal_LucidOption"),
                 SCH_ST_Heal_AdloquiumOption = new("SCH_ST_Heal_AdloquiumOption"),
                 SCH_ST_Heal_LustrateOption = new("SCH_ST_Heal_LustrateOption");
-            internal static UserBool
+            public static UserBool
                 SCH_ST_Heal_Adv = new("SCH_ST_Heal_Adv"),
                 SCH_ST_Heal_UIMouseOver = new("SCH_ST_Heal_UIMouseOver");
             #endregion
 
             #region Utility
             //Temporary BoolConvert until GUI refactor post 3.0.17.4
-            internal static bool SCH_Aetherflow_Display => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Display)));
-            internal static bool SCH_Aetherflow_Recite_Excog => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Excog)));
-            internal static bool SCH_Aetherflow_Recite_Indom => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Indom)));
-            internal static bool SCH_FairyFeature => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_FairyFeature)));
-            internal static int SCH_Recitation_Mode => PluginConfiguration.GetCustomIntValue(nameof(SCH_Recitation_Mode));
+            public static bool SCH_Aetherflow_Display => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Display)));
+            public static bool SCH_Aetherflow_Recite_Excog => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Excog)));
+            public static bool SCH_Aetherflow_Recite_Indom => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_Aetherflow_Recite_Indom)));
+            public static bool SCH_FairyFeature => Convert.ToBoolean(PluginConfiguration.GetCustomIntValue(nameof(SCH_FairyFeature)));
+            public static int SCH_Recitation_Mode => PluginConfiguration.GetCustomIntValue(nameof(SCH_Recitation_Mode));
             #endregion
 
         }
