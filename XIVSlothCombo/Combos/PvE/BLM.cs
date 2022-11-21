@@ -106,7 +106,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class BLM_SimpleMode : CustomCombo
         {
 
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AdvancedMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_SimpleMode;
 
             internal static bool openerFinished = false;
             internal static bool inOpener = false;
