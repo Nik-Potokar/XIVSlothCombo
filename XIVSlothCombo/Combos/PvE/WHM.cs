@@ -78,7 +78,6 @@ namespace XIVSlothCombo.Combos.PvE
 
             internal static bool WHM_ST_MainCombo_DoT_Adv => PluginConfiguration.GetCustomBoolValue(nameof(WHM_ST_MainCombo_DoT_Adv));
             internal static float WHM_ST_MainCombo_DoT_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(WHM_ST_MainCombo_DoT_Threshold));
-            
         }
 
         internal class WHM_SolaceMisery : CustomCombo
@@ -224,6 +223,13 @@ namespace XIVSlothCombo.Combos.PvE
                         bool assizeEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Assize);
                         bool lucidEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid);
 
+
+                        if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            CanSpellWeave(actionID))
+                            return Variant.VariantRampart;
+
                         if (pomEnabled && pomReady)
                             return PresenceOfMind;
                         if (assizeEnabled && assizeReady)
@@ -235,6 +241,13 @@ namespace XIVSlothCombo.Combos.PvE
                     // DoTs
                     if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat() && LevelChecked(Aero))
                     {
+                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                        if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_SpiritDart) &&
+                            IsEnabled(Variant.VariantSpiritDart) &&
+                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                            CanSpellWeave(actionID))
+                            return Variant.VariantSpiritDart;
+
                         uint dot = OriginalHook(Aero); //Grab the appropriate DoT Action
                         Status? dotDebuff = FindTargetEffect(AeroList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
@@ -326,6 +339,18 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
                         return Assize;
+
+                    if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart))
+                        return Variant.VariantRampart;
+
+                    Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                    if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_SpiritDart) &&
+                        IsEnabled(Variant.VariantSpiritDart) &&
+                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                        HasBattleTarget())
+                        return Variant.VariantSpiritDart;
 
                     if (CanSpellWeave(actionID) || IsMoving)
                     {

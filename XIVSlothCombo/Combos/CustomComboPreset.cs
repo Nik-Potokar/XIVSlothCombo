@@ -274,6 +274,7 @@ namespace XIVSlothCombo.Combos
         [VariantParent(AST_ST_DPS)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", AST.JobID)]
         AST_Variant_Rampart = 1036,
+
         #endregion
 
         #region Cards
@@ -315,7 +316,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_AstrodyneOnPlay = 1015,
         #endregion
 
-        //Last number used is 34
+        //Last number used is 36
 
         #endregion
 
@@ -960,7 +961,21 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Improvisation Option", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 10, "", "")]
             DNC_AoE_Simple_Improvisation = 4080,
-            #endregion
+        #endregion
+
+        #region Variant
+        [Variant]
+        [VariantParent(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", DNC.JobID)]
+        DNC_Variant_Rampart = 4083,
+
+        [Variant]
+        [VariantParent(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", DNC.JobID)]
+        DNC_Variant_Cure = 4084,
+
+
+        #endregion
 
         #endregion
 
@@ -1425,10 +1440,11 @@ namespace XIVSlothCombo.Combos
         [VariantParent(GNB_ST_MainCombo, GNB_AoE_MainCombo)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", GNB.JobID)]
         GNB_Variant_Ultimatum = 7035,
+
         #endregion
 
         #region MACHINIST
-        
+
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
         [CustomComboInfo("(Heated) Shot Combo Feature", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "", "")]
@@ -1734,7 +1750,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Dynamic True North Option", "Adds True North to the main combo right before positionals if you aren't in the correct position for their bonuses.", MNK.JobID, 0, "", "")]
         MNK_TrueNorthDynamic = 9029,
-        
+
         [Variant]
         [VariantParent(MNK_ST_SimpleMode, MNK_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MNK.JobID)]
@@ -2534,6 +2550,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Magick Barrier to Addle Feature", "Changes Magick Barrier to Addle when on cooldown.", RDM.JobID, 820, "", "")]
         RDM_MagickBarrierAddle = 13821,
 
+
         //TODO Revisit once RDM is in a better place. 
         //[Variant]
         //[VariantParent(RdmAny)]
@@ -3168,7 +3185,7 @@ namespace XIVSlothCombo.Combos
         [VariantParent(SCH_DPS, SCH_AoE)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SCH.JobID)]
         SCH_DPS_Variant_Rampart = 16800,
-        
+
         #endregion
 
         #endregion

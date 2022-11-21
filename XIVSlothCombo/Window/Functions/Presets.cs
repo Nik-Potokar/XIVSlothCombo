@@ -3,6 +3,7 @@ using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
@@ -26,7 +27,7 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.PushItemWidth(200);
 
-            if (ImGui.Checkbox($"{info.FancyName}###{i}", ref enabled))
+            if (ImGui.Checkbox($"{info.FancyName}###{info.FancyName}{i}", ref enabled))
             {
                 if (enabled)
                 {
@@ -51,11 +52,17 @@ namespace XIVSlothCombo.Window.Functions
 
             DrawOpenerButtons(preset);
 
-            ImGui.Text($"#{i}: ");
-            var length = ImGui.CalcTextSize($"#{i}: ");
-            ImGui.SameLine();
-            ImGui.PushItemWidth(length.Length());
-            ImGui.TextWrapped($"{info.Description}");
+            Vector2 length = new();
+
+            if (i != -1)
+            {
+                ImGui.Text($"#{i}: ");
+                length = ImGui.CalcTextSize($"#{i}: ");
+                ImGui.SameLine();
+                ImGui.PushItemWidth(length.Length());
+            }
+
+                ImGui.TextWrapped($"{info.Description}");
 
             if (preset.GetHoverAttribute() != null)
             {
@@ -218,9 +225,6 @@ namespace XIVSlothCombo.Window.Functions
 
             i++;
 
-
-
-
             var hideChildren = Service.Configuration.HideChildren;
             var children = presetChildren[preset];
 
@@ -270,7 +274,6 @@ namespace XIVSlothCombo.Window.Functions
 
                 }
             }
-
         }
 
         private static void DrawOpenerButtons(CustomComboPreset preset)
@@ -300,6 +303,8 @@ namespace XIVSlothCombo.Window.Functions
 
             return output;
         }
+
+
 
         /// <summary> Iterates up a preset's parent tree, enabling each of them. </summary>
         /// <param name="preset"> Combo preset to enabled. </param>

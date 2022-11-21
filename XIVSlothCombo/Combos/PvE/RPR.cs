@@ -80,7 +80,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RPR_SoDThreshold = "RPRSoDThreshold",
                 RPR_SoDRefreshRange = "RPRSoDRefreshRange",
                 RPR_OpenerChoice = "RPR_OpenerChoice",
-                RPR_SoulsowOptions = "RPRSoulsowOptions";
+                RPR_SoulsowOptions = "RPRSoulsowOptions",
+                RPR_VariantCure = "RPRVariantCure";
         }
 
         internal class RPR_ST_SliceCombo : CustomCombo
@@ -143,6 +144,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
                         return All.TrueNorth;
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
 
                     if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) || opener) && HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
                     {
@@ -340,6 +350,17 @@ namespace XIVSlothCombo.Combos.PvE
                     bool enshrouded = HasEffect(Buffs.Enshrouded);
                     bool soulReaver = HasEffect(Buffs.SoulReaver);
                     double enemyHP = GetTargetHPPercent();
+
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
+
 
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Guillotine) && soulReaver && LevelChecked(Guillotine))
                         return OriginalHook(Guillotine);
