@@ -9,8 +9,9 @@ namespace XIVSlothCombo.Combos.PvP
             KeenEdge = 29098,
             BrutalShell = 29099,
             SolidBarrel = 29100,
+            GnashingFang = 29102,
             SavageClaw = 29103,
-            WickedTalon = 29014,
+            WickedTalon = 29104,
             DoubleDown = 29105,
             Continuation = 29106,
             JugularRip = 29108,
@@ -18,9 +19,7 @@ namespace XIVSlothCombo.Combos.PvP
             EyeGouge = 29110,
             RoughDivide = 29123,
             DrawAndJunction = 29124,
-            JunctionedCast = 29125,
-            //GnashingStuff
-            GnashingFang = 29102;
+            JunctionedCast = 29125;
 
         internal class Debuffs
         {
@@ -37,9 +36,9 @@ namespace XIVSlothCombo.Combos.PvP
                 ReadyToBlast = 3041,
                 NoMercy = 3042,
                 PowderBarrel = 3043,
+                JunctionTank = 3044,
                 JunctionDPS = 3045,
-                JunctionHealer = 3046,
-                JunctionTank = 3044;
+                JunctionHealer = 3046;
         }
 
         internal class GNBPVP_Burst : CustomCombo
@@ -50,29 +49,36 @@ namespace XIVSlothCombo.Combos.PvP
             {
                 if (actionID is KeenEdge or BrutalShell or SolidBarrel)
                 {
-                    //BuffEffects
+                    // Buff Effects
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.GNBPVP_ST_Continuation) && HasEffect(Buffs.ReadyToBlast) || HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge))
+                        if (IsEnabled(CustomComboPreset.GNBPVP_ST_Continuation) &&
+                            (HasEffect(Buffs.ReadyToBlast) || HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)))
                             return OriginalHook(Continuation);
-                        if (IsEnabled(CustomComboPreset.GNBPVP_JunctionDPS) && HasEffect(Buffs.JunctionDPS) && HasEffect(Buffs.NoMercy) && IsOffCooldown(JunctionedCast) || IsEnabled(CustomComboPreset.GNBPVP_JunctionHealer) && HasEffect(Buffs.JunctionHealer) && IsOffCooldown(JunctionedCast) || IsEnabled(CustomComboPreset.GNBPVP_JunctionTank) && HasEffect(Buffs.JunctionTank) && IsOffCooldown(JunctionedCast))
+
+                        if ((IsEnabled(CustomComboPreset.GNBPVP_JunctionDPS) && HasEffect(Buffs.JunctionDPS) && HasEffect(Buffs.NoMercy) && IsOffCooldown(JunctionedCast)) ||
+                            (IsEnabled(CustomComboPreset.GNBPVP_JunctionHealer) && HasEffect(Buffs.JunctionHealer) && IsOffCooldown(JunctionedCast)) ||
+                            (IsEnabled(CustomComboPreset.GNBPVP_JunctionTank) && HasEffect(Buffs.JunctionTank) && IsOffCooldown(JunctionedCast)))
                             return OriginalHook(JunctionedCast);
+
                         if (IsEnabled(CustomComboPreset.GNBPVP_DrawAndJunction) && IsOffCooldown(DrawAndJunction) && !HasEffect(Buffs.PowderBarrel) && !HasEffect(Buffs.ReadyToBlast))
                             return DrawAndJunction;
-                        if (IsEnabled(CustomComboPreset.GNBPVP_RoughDivide) && HasEffect(Buffs.NoMercy) && GetBuffRemainingTime(Buffs.NoMercy) <= 1.5f && GetBuffRemainingTime(Buffs.NoMercy) > 0 && GetRemainingCharges(RoughDivide) == 1)
+
+                        if (IsEnabled(CustomComboPreset.GNBPVP_RoughDivide) && HasEffect(Buffs.NoMercy) &&
+                            GetBuffRemainingTime(Buffs.NoMercy) <= 1.5f && GetBuffRemainingTime(Buffs.NoMercy) > 0 &&
+                            GetRemainingCharges(RoughDivide) == 1)
                             return RoughDivide;
-
-
                     }
 
-                    //Gnashing Fang
+                    // Gnashing Fang
                     if (IsEnabled(CustomComboPreset.GNBPVP_DoubleDown) && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown))
                         return DoubleDown;
-                    if (IsEnabled(CustomComboPreset.GNBPVP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && HasEffect(Buffs.NoMercy) || WasLastWeaponskill(GnashingFang) || WasLastWeaponskill(JugularRip) || WasLastWeaponskill(SavageClaw) || WasLastWeaponskill(WickedTalon))
+
+                    if ((IsEnabled(CustomComboPreset.GNBPVP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && HasEffect(Buffs.NoMercy)) ||
+                        WasLastWeaponskill(GnashingFang) || WasLastWeaponskill(JugularRip) || WasLastWeaponskill(SavageClaw) || WasLastWeaponskill(WickedTalon))
                         return OriginalHook(GnashingFang);
-
-
                 }
+
                 return actionID;
             }
         }
@@ -80,19 +86,11 @@ namespace XIVSlothCombo.Combos.PvP
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNBPVP_GnashingFang;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is GnashingFang)
-                {
-                    if (CanWeave(actionID))
-                    {
-                        if (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge))
-                            return OriginalHook(Continuation);
-                    }
-
-                }
-                return actionID;
-            }
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is GnashingFang &&
+                    CanWeave(actionID) && (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge))
+                    ? OriginalHook(Continuation)
+                    : actionID;
         }
     }
 }
