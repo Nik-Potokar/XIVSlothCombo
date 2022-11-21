@@ -1505,7 +1505,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("AirAnchor Option", "Adds AirAnchor to the Spreadshot feature", MCH.JobID, 6, "", "")]
-        MCH_AoE_Simple_AirAnchor = 8040,
+        MCH_AoE_Simple_AirAnchor = 8140,
 		
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Chainsaw Option", "Adds Chainsaw to the Spreadshot feature", MCH.JobID, 7, "", "")]
@@ -1513,7 +1513,7 @@ namespace XIVSlothCombo.Combos
         
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 4, "", "")]
-        MCH_AoE_Simple_Stabilizer = 8039,
+        MCH_AoE_Simple_Stabilizer = 8139,
 
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Battery Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, 1, "", "")]
