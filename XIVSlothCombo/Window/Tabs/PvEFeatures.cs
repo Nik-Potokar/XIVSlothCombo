@@ -26,7 +26,7 @@ namespace XIVSlothCombo.Window.Tabs
             }
 
             ImGui.Text("This tab allows you to select which PvE combos and features you wish to enable.");
-            ImGui.BeginChild("scrolling", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true);
+            ImGui.BeginChild("scrolling", new Vector2(ImGui.GetContentRegionAvail().X-50, ImGui.GetContentRegionAvail().Y), true);
 
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 5));
 
