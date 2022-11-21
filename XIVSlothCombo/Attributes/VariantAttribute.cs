@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace XIVSlothCombo.Attributes
 {
-    /// <summary> Attribute designating Bozja combos. </summary>
+    /// <summary> Attribute designating variant combos. </summary>
     [AttributeUsage(AttributeTargets.Field)]
-    internal class BozjaAttribute : Attribute
+    internal class VariantAttribute : Attribute
     {
     }
 }
