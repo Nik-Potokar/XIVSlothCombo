@@ -201,6 +201,19 @@ namespace XIVSlothCombo.Combos.PvE
                     bool NoTargetDyskrasia = IsEnabled(CustomComboPreset.SGE_AoE_DPS_NoTargetDyskrasia);
                     uint phlegma = OriginalHook(Phlegma); //Level appropriate Phlegma
 
+                    if (IsEnabled(CustomComboPreset.SGE_DPS_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
+                    Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                    if (IsEnabled(CustomComboPreset.SGE_DPS_Variant_SpiritDart) &&
+                        IsEnabled(Variant.VariantSpiritDart) &&
+                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantSpiritDart;
+
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Lucid) &&
                         ActionReady(All.LucidDreaming) && CanSpellWeave(Dosis) &&
@@ -267,6 +280,12 @@ namespace XIVSlothCombo.Combos.PvE
                         LocalPlayer.CurrentMp <= Config.SGE_ST_DPS_Lucid)
                         return All.LucidDreaming;
 
+                    if (IsEnabled(CustomComboPreset.SGE_DPS_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
                     // Rhizomata
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Rhizo) && CanSpellWeave(actionID) &&
                         ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_ST_DPS_Rhizo)
@@ -284,6 +303,13 @@ namespace XIVSlothCombo.Combos.PvE
                             // EDosis will show for half a second if the buff is removed manually or some other act of God
                             if (DosisList.TryGetValue(OriginalHook(actionID), out ushort dotDebuffID))
                             {
+                                Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                                if (IsEnabled(CustomComboPreset.SGE_DPS_Variant_SpiritDart) &&
+                                    IsEnabled(Variant.VariantSpiritDart) &&
+                                    (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                                    CanSpellWeave(actionID))
+                                    return Variant.VariantSpiritDart;
+
                                 Status? dotDebuff = FindTargetEffect(dotDebuffID);
                                 float refreshtimer = Config.SGE_ST_DPS_EDosis_Adv ? Config.SGE_ST_DPS_EDosisThreshold : 3;
 

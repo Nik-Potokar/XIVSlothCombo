@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Runtime.InteropServices;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
@@ -17,7 +18,7 @@ namespace XIVSlothCombo.Data
         private readonly float cooldownElapsed;
 
         [FieldOffset(0xC)]
-        private readonly float cooldownTotal;
+        private float cooldownTotal;
 
         /// <summary> Gets a value indicating whether the action is on cooldown. </summary>
         public bool IsCooldown
@@ -68,6 +69,10 @@ namespace XIVSlothCombo.Data
                 return cooldownElapsed > total
                     ? 0
                     : total;
+            }
+            set
+            {
+                cooldownTotal = value;
             }
         }
 
