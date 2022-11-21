@@ -3658,7 +3658,7 @@ namespace XIVSlothCombo.Combos
 
         #region ASTROLOGIAN
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Malefic into all-in-one damage button.", AST.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Malefic into an all-in-one damage button.", AST.JobID)]
         ASTPvP_Burst = 80000,
 
         [ParentCombo(ASTPvP_Burst)]
@@ -3715,7 +3715,7 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(WARPvP_BurstMode)]
-            [CustomComboInfo("Bloodwhetting Option", "Allows usage of Bloodwhetting anytime, not just in-between GCDs.", WARPVP.JobID)]
+            [CustomComboInfo("Bloodwhetting Option", "Allows use of Bloodwhetting any time, not just between GCDs.", WARPVP.JobID)]
             WARPvP_BurstMode_Bloodwhetting = 80041,
 
             [SecretCustomCombo]
@@ -3762,7 +3762,7 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(DNCPvP_BurstMode)]
-            [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (for pack pushing, respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
+            [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
             DNCPvP_BurstMode_HoningDance = 80071,
 
             [SecretCustomCombo]
@@ -3790,7 +3790,7 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(SAMPvP_BurstMode)]
-            [CustomComboInfo("Burst Mode on Kasha Combo", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID, 1)]
+            [CustomComboInfo("Burst Mode on Kasha Combo Option", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID, 1)]
             SAMPvP_BurstMode_MainCombo = 80083,
         #endregion
 
@@ -3801,7 +3801,7 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(SAMPvP_KashaFeatures)]
-            [CustomComboInfo("Soten Gap Closer Option", "Adds Soten when outside melee range to the Kasha Combo.", SAM.JobID)]
+            [CustomComboInfo("Soten Gap Closer Option", "Adds Soten to the Kasha Combo when out of melee range.", SAM.JobID)]
             SAMPvP_KashaFeatures_GapCloser = 80085,
 
             [SecretCustomCombo]
@@ -3845,12 +3845,12 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option", "Pools stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful as soon as it's available.", RPR.JobID)]
+            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option", "Pools stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful Harvest as soon as it's available.", RPR.JobID)]
             RPRPvP_Burst_ImmortalPooling = 80194,
 
             [SecretCustomCombo]
             [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Enshrouded Burst Option", "Puts Lemure's Slice on the main combo during Enshrouded Burst Phase.\nContains burst options.", RPR.JobID)]
+            [CustomComboInfo("Enshrouded Burst Option", "Adds Lemure's Slice to the main combo during the Enshroud burst phase.\nContains burst options.", RPR.JobID)]
             RPRPvP_Burst_Enshrouded = 80195,
 
                 #region RPR Enshrouded Option
@@ -3872,7 +3872,7 @@ namespace XIVSlothCombo.Combos
 
             [SecretCustomCombo]
             [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under a set HP perecentage.", RPR.JobID)]
+            [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under the set HP perecentage.", RPR.JobID)]
             RPRPvP_Burst_ArcaneCircle = 80199,
             #endregion
 
@@ -3898,13 +3898,13 @@ namespace XIVSlothCombo.Combos
         DRKPvP_Burst = 80110,
 
         [SecretCustomCombo]
-        [ParentCombo(CustomComboPreset.DRKPvP_Burst)]
-        [CustomComboInfo("Plunge Feature", "Adds Plunge to Burst Mode", DRK.JobID)]
+        [ParentCombo(DRKPvP_Burst)]
+        [CustomComboInfo("Plunge Option", "Adds Plunge to Burst Mode.", DRK.JobID)]
         DRKPvP_Plunge = 80111,
 
         [SecretCustomCombo]
-        [ParentCombo(CustomComboPreset.DRKPvP_Plunge)]
-        [CustomComboInfo("Use in Melee", "Uses Plunge whilst in melee aswell as to gap close.", DRK.JobID)]
+        [ParentCombo(DRKPvP_Plunge)]
+        [CustomComboInfo("Melee Plunge Option", "Uses Plunge whilst in melee range, and not just as a gap-closer.", DRK.JobID)]
         DRKPvP_PlungeMelee = 80112,
 
         #endregion
@@ -3939,7 +3939,7 @@ namespace XIVSlothCombo.Combos
         DRGPvP_HighJump = 80207,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Elusive Jump Burst Protection", "Disables Elusive Jump if Burst is not ready.", DRG.JobID)]
+        [CustomComboInfo("Elusive Jump Burst Protection Option", "Disables Elusive Jump if Burst is not ready.", DRG.JobID)]
         DRGPvP_BurstProtection = 80208,
 
         #endregion
@@ -3951,7 +3951,7 @@ namespace XIVSlothCombo.Combos
         GNBPVP_Burst = 80250,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Double Down Feature", "Adds Double Down onto to Burst Mode while under No Mercy Buff.", GNB.JobID)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to Burst Mode while under the No Mercy buff.", GNB.JobID)]
         GNBPVP_DoubleDown = 80251,
 
         [SecretCustomCombo]
@@ -3959,31 +3959,31 @@ namespace XIVSlothCombo.Combos
         GNBPVP_GnashingFang = 80252,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Draw And Junction Feature", "Adds Draw And Junction to Burst Mode.", GNB.JobID)]
+        [CustomComboInfo("Draw And Junction Option", "Adds Draw And Junction to Burst Mode.", GNB.JobID)]
         GNBPVP_DrawAndJunction = 80253,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Gnashing Fang Feature", "Adds Gnashing Fang the the Solid Barrel Combo while under No Mercy Buff.", GNB.JobID)]
+        [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang to Burst Mode while under the No Mercy buff.", GNB.JobID)]
         GNBPVP_ST_GnashingFang = 80254,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Continuation", "Adds Continuation the the Solid Barrel Combo.", GNB.JobID)]
+        [CustomComboInfo("Continuation Option", "Adds Continuation to Burst Mode.", GNB.JobID)]
         GNBPVP_ST_Continuation = 80255,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Rough Divide Feature", "Weaves Rough Divide when No Mercy Buff is about to expire.", GNB.JobID)]
+        [CustomComboInfo("Rough Divide Option", "Weaves Rough Divide when No Mercy Buff is about to expire.", GNB.JobID)]
         GNBPVP_RoughDivide = 80256,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Junction DPS Feature", "Adds appropriate Junction cast", GNB.JobID)]
+        [CustomComboInfo("Junction Cast DPS Option", "Adds Junction Cast (DPS) to Burst Mode.", GNB.JobID)]
         GNBPVP_JunctionDPS = 80257,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Junction Healer Feature", "Adds appropriate Junction cast.", GNB.JobID)]
+        [CustomComboInfo("Junction Cast Healer Option", "Adds Junction Cast (Healer) to Burst Mode.", GNB.JobID)]
         GNBPVP_JunctionHealer = 80258,
 
         [ParentCombo(GNBPVP_Burst)]
-        [CustomComboInfo("Junction Tank Feature", "Adds appropriate Junction cast.", GNB.JobID)]
+        [CustomComboInfo("Junction Cast Tank Option", "Adds Junction Cast (Tank) to Burst Mode.", GNB.JobID)]
         GNBPVP_JunctionTank = 80259,
 
         #endregion
@@ -3994,11 +3994,11 @@ namespace XIVSlothCombo.Combos
         PLDPVP_Burst = 80340,
 
         [ParentCombo(PLDPVP_Burst)]
-        [CustomComboInfo("Shiled Bash Feature", "Adds Shield Bash to Burst Mode.", PLD.JobID)]
+        [CustomComboInfo("Shiled Bash Option", "Adds Shield Bash to Burst Mode.", PLD.JobID)]
         PLDPVP_ShieldBash = 80341,
 
         [ParentCombo(PLDPVP_Burst)]
-        [CustomComboInfo("Confiteor Feature", "Adds Confiteor to Burst Mode.", PLD.JobID)]
+        [CustomComboInfo("Confiteor Option", "Adds Confiteor to Burst Mode.", PLD.JobID)]
         PLDPVP_Confiteor = 80342,
 
         #endregion
@@ -4009,7 +4009,7 @@ namespace XIVSlothCombo.Combos
         SCHPVP_Burst = 80350,
 
         [ParentCombo(SCHPVP_Burst)]
-        [CustomComboInfo("Expidient Option", "Adds Expidient to empower Biolysis.", SCH.JobID)]
+        [CustomComboInfo("Expedient Option", "Adds Expedient to empower Biolysis.", SCH.JobID)]
         SCHPVP_Expedient = 80351,
 
         [ParentCombo(SCHPVP_Burst)]
@@ -4030,10 +4030,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMNPvP_BurstMode)]
         [CustomComboInfo("Radiant Aegis Option", "Adds Radiant Aegis to Burst Mode when available, and your HP is at or below the set percentage.", SMNPvP.JobID)]
         SMNPvP_BurstMode_RadiantAegis = 80301,
-
-        #endregion
-
-        #region WARRIOR
 
         #endregion
 
