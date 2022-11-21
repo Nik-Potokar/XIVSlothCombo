@@ -359,10 +359,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Pool Xenoglossy Option", "Keep one xenoglossy usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
         BLM_Simple_XenoPooling = 2017,
 
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Fire 3 Opener - 1 Triplecast", "Modifies the opener to only use 1 triplecast.", BLM.JobID, -10, "", "")]
-        BLM_Simple_OpenerAlternate = 2019,
-
         [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Manafont Option", "Weaves Manafont after Flare for additional Flare", BLM.JobID, 0, "", "")]
         BLM_AoE_Simple_Manafont = 2020,
@@ -386,7 +382,7 @@ namespace XIVSlothCombo.Combos
         BLM_Paradox_LeyLines = 2025,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Moving Options", "Use Swiftcast/Triplecast/Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use Swiftcast/Triplecast when moving.", BLM.JobID, 0, "", "")]
         BLM_Simple_CastMovement = 2026,
 
         [ParentCombo(BLM_Simple_CastMovement)]
@@ -464,6 +460,17 @@ namespace XIVSlothCombo.Combos
         [VariantParent(BLM_SimpleMode, BLM_AdvancedMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BLM.JobID)]
         BLM_Variant_Cure = 2034,
+
+        [ParentCombo(BLM_Simple_CastMovement)]
+        [ConflictingCombos(BLM_Simple_Transpose_Lines)]
+        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        BLM_Simple_CastMovement_Xeno = 2047,
+
+        [ParentCombo(BLM_SimpleMode)]
+        [ConflictingCombos(BLM_Simple_CastMovement_Xeno)]
+        [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
+        BLM_Simple_Transpose_Lines = 2048,
+
 
         #endregion
 
