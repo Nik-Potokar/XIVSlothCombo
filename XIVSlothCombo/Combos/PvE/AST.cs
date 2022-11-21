@@ -288,7 +288,21 @@ namespace XIVSlothCombo.Combos.PvE
                      (AlternateMode && CombustList.ContainsKey(actionID)) ||
                      (IsEnabled(CustomComboPreset.AST_AoE_DPS) && GravityList.Contains(actionID))) &&
                     InCombat())
-                {
+                {   
+                    if (IsEnabled(CustomComboPreset.AST_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
+                    Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                    if (IsEnabled(CustomComboPreset.AST_Variant_SpiritDart) &&
+                        IsEnabled(Variant.VariantSpiritDart) &&
+                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                        CanSpellWeave(actionID) &&
+                        IsEnabled(CustomComboPreset.AST_AoE_DPS) && GravityList.Contains(actionID))
+                        return Variant.VariantSpiritDart;
+
 
                     if (IsEnabled(CustomComboPreset.AST_DPS_LightSpeed) &&
                         ActionReady(Lightspeed) &&
