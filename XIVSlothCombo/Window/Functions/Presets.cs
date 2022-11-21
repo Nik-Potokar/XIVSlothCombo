@@ -3,6 +3,7 @@ using Dalamud.Utility;
 using ImGuiNET;
 using System;
 using System.Linq;
+using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
@@ -143,6 +144,77 @@ namespace XIVSlothCombo.Window.Functions
                 }
             }
 
+            VariantParentAttribute? varientparents = preset.GetAttribute<VariantParentAttribute>();
+            if (varientparents is not null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
+                StringBuilder builder = new StringBuilder();
+                foreach (var par in varientparents.ParentPresets)
+                {
+                    builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
+                    var par2 = par;
+                    while (PluginConfiguration.GetParent(par2) != null)
+                    {
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0,$"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar.Value;
+
+                    }
+                    
+                    ImGui.TextWrapped($"- {builder}");
+                    builder.Clear();
+                }
+                ImGui.PopStyleColor();
+            }
+
+            BozjaParentAttribute? bozjaparents = preset.GetAttribute<BozjaParentAttribute>();
+            if (bozjaparents is not null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
+                StringBuilder builder = new StringBuilder();
+                foreach (var par in bozjaparents.ParentPresets)
+                {
+                    builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
+                    var par2 = par;
+                    while (PluginConfiguration.GetParent(par2) != null)
+                    {
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar.Value;
+
+                    }
+
+                    ImGui.TextWrapped($"- {builder}");
+                    builder.Clear();
+                }
+                ImGui.PopStyleColor();
+            }
+
+            EurekaParentAttribute? eurekaparents = preset.GetAttribute<EurekaParentAttribute>();
+            if (eurekaparents is not null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+                ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
+                StringBuilder builder = new StringBuilder();
+                foreach (var par in eurekaparents.ParentPresets)
+                {
+                    builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
+                    var par2 = par;
+                    while (PluginConfiguration.GetParent(par2) != null)
+                    {
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar.Value;
+
+                    }
+
+                    ImGui.TextWrapped($"- {builder}");
+                    builder.Clear();
+                }
+                ImGui.PopStyleColor();
+            }
 
             i++;
 

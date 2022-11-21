@@ -1427,6 +1427,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.MCH_AoE_Simple_Chainsaw)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_ChainsawThreshold, "Enemy HP Threshold", 80, SliderIncrements.Ones);
 
+            if (preset == CustomComboPreset.MCH_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region MONK
