@@ -568,7 +568,41 @@ namespace XIVSlothCombo.Combos.PvE
                             if (UseHypercharge(gauge, wildfireCDTime)) return Hypercharge; 
                         }
                     }
-
+                    //Gauss & Rico Suave
+                    if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet))
+                    {
+                        Dalamud.Logging.PluginLog.Log("Tier 1 check");
+                        if (openerSelection is 1 && opener && IsEnabled(CustomComboPreset.MCH_ST_Opener) && CombatEngageDuration().TotalSeconds < 3.5 && WasLastWeaponskill(AirAnchor))
+                        {
+                            Dalamud.Logging.PluginLog.Log("Tier 2 check");
+                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                                return GaussRound;
+                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
+                                return Ricochet;
+                        }
+                        if (openerSelection is 2 && opener && JustUsed(HeatedSplitShot))
+                        {
+                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                            {
+                                return GaussRound;
+                            }
+                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
+                            {
+                                return Ricochet;
+                            }
+                        }
+                        else
+                        {
+                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                            {
+                                return GaussRound;
+                            }
+                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
+                            {
+                                return Ricochet;
+                            }
+                        }
+                    }
                     // healing - please move if not appropriate priority
                     if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && CanWeave(actionID, 0.6))
                     {
@@ -634,39 +668,6 @@ namespace XIVSlothCombo.Combos.PvE
                             else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges)) return Reassemble;
                         }
                         return ChainSaw;
-                    }
-                    //Gauss & Rico Suave
-                    if (CanWeave(actionID, 0.5) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet))
-                    {
-                        if (openerSelection is 1 && opener && IsEnabled(CustomComboPreset.MCH_ST_Opener) && CombatEngageDuration().TotalSeconds < 3.5 && WasLastWeaponskill(AirAnchor))
-                        {
-                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
-                                return GaussRound; 
-                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
-                                return Ricochet; 
-                        }
-                        if (openerSelection is 2 && opener && JustUsed(HeatedSplitShot))
-                        {
-                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
-                            { 
-                                return GaussRound; 
-                            }
-                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
-                            { 
-                                return Ricochet; 
-                            }
-                        }
-                        else 
-                        {
-                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
-                            { 
-                                return GaussRound; 
-                            }
-                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
-                            { 
-                                return Ricochet; 
-                            }
-                        }
                     }
 
                     if (openerSelection is 2 && !inCombat && opener && HasBattleTarget()) //this code is kinda all over the place right now. can you tell?
