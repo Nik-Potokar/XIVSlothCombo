@@ -81,16 +81,16 @@ namespace XIVSlothCombo.Window
         {
             DrawConfig();
         }
-        
+
         public void DrawConfig()
         {
-            if (!Visible) 
+            if (!Visible)
                 return;
             try
-            { 
+            {
                 var fontScale = ImGui.GetIO().FontGlobalScale;
                 var sizepluginwindow = new Vector2(450 * fontScale, 386 * fontScale);
-              //var size = new Vector2(450 * fontScale, 300 * fontScale);
+                //var size = new Vector2(450 * fontScale, 300 * fontScale);
 
                 ImGui.SetNextWindowSize(sizepluginwindow * 2, ImGuiCond.FirstUseEver);
                 ImGui.SetNextWindowSizeConstraints(sizepluginwindow, sizepluginwindow * 20);
@@ -119,7 +119,7 @@ namespace XIVSlothCombo.Window
                             ImGui.BeginTabItem("ToggleAboutSloth");
                             AboutUs.Draw();
                             ImGui.EndTabItem();
-                        } 
+                        }
                         if (ImGui.BeginTabItem("Debug Mode"))
                         {
                             Debug.Draw();
@@ -131,13 +131,13 @@ namespace XIVSlothCombo.Window
             }
             finally
             {
-            ImGui.End();
+                ImGui.End();
             }
         }
 
         public void Dispose()
         {
-            
+
         }
 
     }
