@@ -834,7 +834,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (Gauge.InAstralFire)
                         {
-                            if (HasEffect(Buffs.Firestarter))
+                            if (HasEffect(Buffs.Firestarter) && (Gauge.ElementTimeRemaining <= 3000))
                             {
                                 return Fire3;
                             }
