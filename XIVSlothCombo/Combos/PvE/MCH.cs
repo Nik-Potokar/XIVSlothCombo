@@ -471,7 +471,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 var HasEnemyTarget = HasBattleTarget();
 
-                if ((actionID is SplitShot or HeatedSplitShot) && HasEnemyTarget)
+                if ((actionID is SplitShot or HeatedSplitShot or SlugShot ) && HasEnemyTarget)
                 {
                     var inCombat = InCombat();
                     var gauge = GetJobGauge<MCHGauge>();
@@ -665,7 +665,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Reassemble;
                         }
                         return AirAnchor;
-                    }
+                    }          
 
                     // Drill
                     if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 2.5 && CanWeave(actionID, 0.7)) && level >= Levels.Drill)
@@ -702,6 +702,23 @@ namespace XIVSlothCombo.Combos.PvE
                         else if (GetRemainingCharges(Ricochet) == 1)
                             return Ricochet;
                     }
+
+                    // Tactician
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Tactician))
+                    { 
+                        if (CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds >= 0 && CombatEngageDuration().Seconds <= 9 )
+                        {
+                            if ((!HasEffectAny(BRD.Buffs.Troubadour) || !HasEffectAny(MCH.Buffs.Tactician) || !HasEffectAny(DNC.Buffs.ShieldSamba)))
+                            { 
+                                if ((IsOffCooldown(Tactician) || GetCooldownRemainingTime(Tactician) <= 5))
+                                {
+                                    return Tactician;
+                                }
+                            }
+                        }    
+                    }
+
+
                   /*if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID))
                     {
                         if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))

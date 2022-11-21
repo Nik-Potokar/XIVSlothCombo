@@ -75,7 +75,7 @@ namespace XIVSlothCombo.Window
             RespectCloseHotkey = true;
 
             SizeCondition = ImGuiCond.FirstUseEver;
-            Size = new Vector2(740, 490);
+            Size = new Vector2(830, 570);
         }
 
         public override void Draw()
@@ -90,7 +90,7 @@ namespace XIVSlothCombo.Window
                 return;
             }
 
-            if (ImGui.Begin("XIVSlothCombo Private Configuration", ref visible))
+            if (ImGui.Begin("My XIVSlothCombo Configuration", ref visible))
             {
                 if (ImGui.BeginTabBar("Config Tabs"))
                 {

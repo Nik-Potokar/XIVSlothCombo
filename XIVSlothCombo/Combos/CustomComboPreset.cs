@@ -1533,6 +1533,10 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Simple_Assembling = 8023,
 
         [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Tactician Option", "Should use tact in opener.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Tactician = 8923,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_GaussRicochet = 8024,
 
