@@ -246,9 +246,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Paradox;
                             }
                             if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement_Xeno) && !IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Lines) && LevelChecked(Xenoglossy) && Gauge.HasPolyglotStacks())
-                            {
                                 return Xenoglossy;
-                            }
+
                             if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast))
                             {
                                 if (!ThunderList.ContainsKey(lastComboMove) && //Is not 1 2 3 or 4

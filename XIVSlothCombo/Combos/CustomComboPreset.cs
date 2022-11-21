@@ -352,12 +352,8 @@ namespace XIVSlothCombo.Combos
         BLM_SimpleMode = 2012,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Pool Triplecast / Swiftcast Option", "Keep one triplecast usage and swiftcast for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Pool Triplecast option", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
         BLM_Simple_Casts_Pooling = 2016,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Pool Xenoglossy Option", "Keep one xenoglossy usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_XenoPooling = 2017,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Manafont Option", "Weaves Manafont after Flare for additional Flare", BLM.JobID, 0, "", "")]
@@ -382,7 +378,7 @@ namespace XIVSlothCombo.Combos
         BLM_Paradox_LeyLines = 2025,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Moving Options", "Use Swiftcast/Triplecast when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
         BLM_Simple_CastMovement = 2026,
 
         [ParentCombo(BLM_Simple_CastMovement)]
@@ -463,7 +459,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_Simple_CastMovement)]
         [ConflictingCombos(BLM_Simple_Transpose_Lines)]
-        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, -1, "", "")]
         BLM_Simple_CastMovement_Xeno = 2047,
 
         [ParentCombo(BLM_SimpleMode)]
