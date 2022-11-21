@@ -1,9 +1,8 @@
-﻿using Dalamud.Interface;
-using ImGuiNET;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
+using Dalamud.Interface;
+using ImGuiNET;
+using System.Collections.Generic;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
@@ -83,8 +82,41 @@ namespace XIVSlothCombo.Window.Tabs
 
                     }
 
-                    DrawHeadingContents(jobName, i);
+                    if (ImGui.BeginTabBar($"subTab{jobName}", ImGuiTabBarFlags.Reorderable | ImGuiTabBarFlags.AutoSelectNewTabs))
+                    {
+                        if (ImGui.BeginTabItem("Normal"))
+                        {
+                            DrawHeadingContents(jobName, i);
+                            ImGui.EndTabItem();
+                        }
 
+                        if (groupedPresets[jobName].Any(x => PluginConfiguration.IsVariant(x.Preset)))
+                        {
+                            if (ImGui.BeginTabItem("Variant Dungeons"))
+                            {
+                                DrawVariantContents(jobName);
+                                ImGui.EndTabItem();
+                            }
+                        }
+
+                        if (groupedPresets[jobName].Any(x => PluginConfiguration.IsBozja(x.Preset)))
+                        {
+                            if (ImGui.BeginTabItem("Bozja"))
+                            {
+                                ImGui.EndTabItem();
+                            }
+                        }
+
+                        if (groupedPresets[jobName].Any(x => PluginConfiguration.IsEureka(x.Preset)))
+                        {
+                            if (ImGui.BeginTabItem("Eureka"))
+                            {
+                                ImGui.EndTabItem();
+                            }
+                        }
+
+                        ImGui.EndTabBar();
+                    }
                 }
                 else
                 {
@@ -132,6 +164,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             ImGui.EndChild();
         }
+
 
         private static void OpenJobAutomatically()
         {
@@ -203,11 +236,25 @@ namespace XIVSlothCombo.Window.Tabs
             }
         }
 
+        private static void DrawVariantContents(string jobName)
+        {
+            foreach (var (preset, info) in groupedPresets[jobName].Where(x => PluginConfiguration.IsVariant(x.Preset)))
+            {
+                int i = -1;
+                InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
+                presetBox.Draw();
+                ImGuiHelpers.ScaledDummy(12.0f);
+            }
+        }
+
         internal static void DrawHeadingContents(string jobName, int i)
         {
             if (!Messages.PrintBLUMessage(jobName)) return;
 
-            foreach (var (preset, info) in groupedPresets[jobName].Where(x => !PluginConfiguration.IsSecret(x.Preset)))
+            foreach (var (preset, info) in groupedPresets[jobName].Where(x =>   !PluginConfiguration.IsSecret(x.Preset) && 
+                                                                                !PluginConfiguration.IsVariant(x.Preset) &&
+                                                                                !PluginConfiguration.IsBozja(x.Preset) &&
+                                                                                !PluginConfiguration.IsEureka(x.Preset)))
             {
                 InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
 
@@ -245,7 +292,7 @@ namespace XIVSlothCombo.Window.Tabs
             }
         }
 
-        internal static string HeaderToOpen;
+        internal static string? HeaderToOpen;
 
         internal static Dictionary<string, Vector2> Positions = new();
     }

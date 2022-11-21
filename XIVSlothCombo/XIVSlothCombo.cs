@@ -96,7 +96,7 @@ namespace XIVSlothCombo
 
         }
 
-        private void ResetFeatures()
+        private static void ResetFeatures()
         {
             // Enumerable.Range is a start and count, not a start and end.
             // Enumerable.Range(Start, Count)
@@ -165,7 +165,7 @@ namespace XIVSlothCombo
 
         private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 
-        private async void OnCommand(string command, string arguments)
+        private void OnCommand(string command, string arguments)
         {
             string[]? argumentsParts = arguments.Split();
 
