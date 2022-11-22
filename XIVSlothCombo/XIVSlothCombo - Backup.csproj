@@ -4,7 +4,7 @@
 	<PropertyGroup>
 		<Authors>Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal, Genesis-Nova, Tartarga</Authors>
 		<Company>-</Company>
-		<Version>0.0.0.2</Version>
+		<Version>3.0.17.5</Version>
 		<!-- This is the version that will be used when pushing to the repo.-->
 		<Description>XIVCombo for lazy players</Description>
 		<Copyright>Copyleft attick 2021 thanks attick UwU</Copyright>
@@ -54,15 +54,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="resources\banner.png" />
-	  <None Remove="Window\Resources\banner.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Content Include="..\res\akified.png" Link="images\akified.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
-		<Content Include="resources\banner.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -70,20 +62,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Window\Resources\banner.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Dalamud.ContextMenu" Version="1.2.1" />
-		<PackageReference Include="Dalamud.DrunkenToad" Version="1.3.0" />
-		<PackageReference Include="DalamudLinter" Version="1.0.3" />
 		<PackageReference Include="DalamudPackager" Version="2.1.8" />
 		<PackageReference Include="ILRepack" Version="2.0.18" />
-		<PackageReference Include="XivCommon" Version="6.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>

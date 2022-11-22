@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Numerics;
 using ImGuiNET;
+using Lumina.Data.Parsing;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Tabs
@@ -28,7 +30,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted("Hides the sub-options of disabled features.");
                 ImGui.EndTooltip();
             }
-            ImGui.NextColumn();
+            //ImGui.NextColumn();
 
             #endregion
 
@@ -89,6 +91,9 @@ namespace XIVSlothCombo.Window.Tabs
                 Service.Configuration.SpecialEvent = false;
                 Service.Configuration.Save();
             }
+            #endregion
+
+            #region MeleeOffset
 
             float offset = (float)Service.Configuration.MeleeOffset;
             ImGui.PushItemWidth(75);
@@ -128,6 +133,11 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.EndTooltip();
             }
             ImGui.NextColumn();
+
+            #endregion
+
+            #region TabBar Toggle
+
 
             #endregion
 

@@ -75,7 +75,7 @@ namespace XIVSlothCombo.Core
         #endregion
 
         #region Settings Options
-
+        
         /// <summary> Gets or sets a value indicating whether to output combat log to the chatbox. </summary>
         public bool EnabledOutputLog { get; set; } = false;
 
@@ -87,6 +87,25 @@ namespace XIVSlothCombo.Core
 
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
+
+        #region Tab Options 
+
+        /// <summary> Enables PvE Tab </summary>
+        public bool HidePvEFeatures { get; set; } = false;
+
+        /// <summary> Enables PvP Tab </summary>
+        public bool HidePvPFeatures { get; set; } = false;
+
+        /// <summary> Enables Settings Tab </summary>
+        public bool HideSettings { get; set; } = false;
+        
+        /// <summary> Enables About Tab </summary>
+        public bool HideAboutSloth = true;
+
+        /// <summary> Enables Debug Tab </summary>
+        public bool HideDebug { get; set; } = false;
+
+        #endregion
 
         #endregion
 

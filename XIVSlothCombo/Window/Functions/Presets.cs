@@ -23,6 +23,7 @@ namespace XIVSlothCombo.Window.Functions
             var conflicts = Service.Configuration.GetConflicts(preset);
             var parent = PluginConfiguration.GetParent(preset);
             var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
+            var potionAttr = preset.GetAttribute<PotionAttribute>();
 
             ImGui.PushItemWidth(200);
 
@@ -78,6 +79,33 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Spacing();
 
             UserConfigItems.Draw(preset, enabled);
+            if (potionAttr != null)
+            {
+                ImGui.Indent();
+                if (potionAttr.Potions.Count > 0)
+                {
+                    ImGui.PushItemWidth(300);
+                    potionAttr.Potions.TryGetValue((uint)PluginConfiguration.GetCustomIntValue(potionAttr.Config), out var preview);
+                    if (preview is null) preview = "";
+
+                    if (ImGui.BeginCombo("Select Potion", preview))
+                    {
+                        foreach (var pot in potionAttr.Potions.OrderBy(x => x.Key))
+                        {
+                            bool selected = ImGui.Selectable(pot.Value, pot.Key == PluginConfiguration.GetCustomIntValue(potionAttr.Config));
+
+                            if (selected)
+                            {
+                                PluginConfiguration.SetCustomIntValue(potionAttr.Config, (int)pot.Key);
+                                Service.Configuration.Save();
+                            }
+                        }
+
+                        ImGui.EndCombo();
+                    }
+                }
+                ImGui.Unindent();
+            }
 
             if (preset == CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener || preset == CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener)
             {

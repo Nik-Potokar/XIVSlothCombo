@@ -15,13 +15,16 @@ using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window;
+using XIVSlothCombo.Window.Tabs;
 
 namespace XIVSlothCombo
 {
     /// <summary> Main plugin implementation. </summary>
     public sealed partial class XIVSlothCombo : IDalamudPlugin
     {
-        private const string Command = "/scombo";
+        public static PluginConfiguration Config { get; private set; } = null!;
+
+        private const string Command = "/sprivate";
 
         private readonly ConfigWindow configWindow;
 
@@ -46,6 +49,7 @@ namespace XIVSlothCombo
 
             configWindow = new();
 
+          //Service.Interface.UiBuilder.Draw += DrawImage;
             Service.Interface.UiBuilder.Draw += DrawUI;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
 
@@ -162,7 +166,7 @@ namespace XIVSlothCombo
 
                 case "set": // set a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        if (true || !Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
@@ -187,7 +191,7 @@ namespace XIVSlothCombo
 
                 case "toggle": // toggle a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        if (true || !Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
@@ -221,7 +225,7 @@ namespace XIVSlothCombo
 
                 case "unset": // unset a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        if (true || !Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())

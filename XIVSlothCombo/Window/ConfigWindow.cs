@@ -2,12 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Resolvers;
+using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ImGuiNET;
+using Lumina.Excel.GeneratedSheets;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Core;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Services;
+using XIVSlothCombo.Window.Functions;
 using XIVSlothCombo.Window.Tabs;
+using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.Window
 {
@@ -61,12 +70,12 @@ namespace XIVSlothCombo.Window
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
-        public ConfigWindow() : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
+        public ConfigWindow() : base("XIVSlothCombo Private Configuration", ImGuiWindowFlags.AlwaysAutoResize)
         {
             RespectCloseHotkey = true;
 
             SizeCondition = ImGuiCond.FirstUseEver;
-            Size = new Vector2(740, 490);
+            Size = new Vector2(830, 570);
         }
 
         public override void Draw()
@@ -81,7 +90,7 @@ namespace XIVSlothCombo.Window
                 return;
             }
 
-            if (ImGui.Begin("XIVSlothCombo Configuration", ref visible))
+            if (ImGui.Begin("My XIVSlothCombo Configuration", ref visible))
             {
                 if (ImGui.BeginTabBar("Config Tabs"))
                 {
@@ -123,7 +132,7 @@ namespace XIVSlothCombo.Window
 
         public void Dispose()
         {
-            
+
         }
     }
 }

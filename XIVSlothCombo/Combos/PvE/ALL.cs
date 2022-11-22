@@ -64,6 +64,42 @@ namespace XIVSlothCombo.Combos.PvE
                 Feint = 1195;
         }
 
+        public static class MeleeRaidBuffs
+        {
+            public const ushort
+                BattleLitany = 786,
+                ArcaneCircle = 2599,
+                Brotherhood = 1185;
+        }
+
+        public static class RangeRaidBuffs
+        {
+            public const ushort
+                TechnicalFinish = 1822,
+                BattleVoice = 141,
+                RadiantFinale = 2722;
+        }
+
+        public static class CasterRaidBuffs
+        {
+            public const ushort
+                Embolden = 1239,
+                SearingLight = 25801;
+        }
+
+        public static class HealerRaidBuffs
+        {
+            public const ushort
+                Divination = 16552;
+        }
+
+        public static class RaidDebuffs
+        {
+            public const ushort
+                ChainStratagem = 7436,
+                VulnerabilityUp = 638; // This is Mug done by NIN
+        }
+
         internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_IslandSanctuary_Sprint;
