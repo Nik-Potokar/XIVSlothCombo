@@ -625,7 +625,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-
         internal class NIN_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_ST_SimpleMode;
