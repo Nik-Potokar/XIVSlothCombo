@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XIVSlothCombo", "XIVSlothCombo\XIVSlothCombo.csproj", "{619DF476-7225-4783-95A5-D29A8816EE66}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8948C02A-914E-4A51-B1FE-2C608492EBF5}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -17,19 +15,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github Actions", "Github Ac
 		.github\workflows\build.yml = .github\workflows\build.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XIVSlothCombo", "XIVSlothCombo\XIVSlothCombo.csproj", "{1CFC8F6E-9CFB-4DC4-9F51-90666FE01FD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
-		GitBuild|x64 = GitBuild|x64
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{619DF476-7225-4783-95A5-D29A8816EE66}.Debug|x64.ActiveCfg = Debug|x64
-		{619DF476-7225-4783-95A5-D29A8816EE66}.Debug|x64.Build.0 = Debug|x64
-		{619DF476-7225-4783-95A5-D29A8816EE66}.GitBuild|x64.ActiveCfg = GitBuild|x64
-		{619DF476-7225-4783-95A5-D29A8816EE66}.GitBuild|x64.Build.0 = GitBuild|x64
-		{619DF476-7225-4783-95A5-D29A8816EE66}.Release|x64.ActiveCfg = Release|x64
-		{619DF476-7225-4783-95A5-D29A8816EE66}.Release|x64.Build.0 = Release|x64
+		{1CFC8F6E-9CFB-4DC4-9F51-90666FE01FD2}.Debug|x64.ActiveCfg = Debug|x64
+		{1CFC8F6E-9CFB-4DC4-9F51-90666FE01FD2}.Debug|x64.Build.0 = Debug|x64
+		{1CFC8F6E-9CFB-4DC4-9F51-90666FE01FD2}.Release|x64.ActiveCfg = Release|x64
+		{1CFC8F6E-9CFB-4DC4-9F51-90666FE01FD2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
