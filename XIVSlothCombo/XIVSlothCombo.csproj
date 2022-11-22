@@ -13,7 +13,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-        <AssemblyName>XIVSlothCombo_fork_main</AssemblyName>
+        <AssemblyName>XIVSlothCombo_branch_1</AssemblyName>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
         <DalamudPluginPath>$(appdata)\XIVLauncher_devPlugins\Build_Release\XIVSlothCombo\$(AssemblyName)\$(version)</DalamudPluginPath>
         <DalamudDevPlugins>$(appdata)\XIVLauncher_devPlugins\Build_Debug\XIVSlothCombo\$(AssemblyName)\</DalamudDevPlugins>
