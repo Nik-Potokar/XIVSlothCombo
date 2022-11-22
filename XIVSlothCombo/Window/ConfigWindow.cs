@@ -90,7 +90,7 @@ namespace XIVSlothCombo.Window
                 return;
             }
 
-            if (ImGui.Begin("My XIVSlothCombo Configuration", ref visible))
+            if (ImGui.Begin("Branch1 - XIVSlothCombo Configuration", ref visible))
             {
                 if (ImGui.BeginTabBar("Config Tabs"))
                 {

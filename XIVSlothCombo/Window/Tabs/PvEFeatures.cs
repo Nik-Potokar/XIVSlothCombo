@@ -41,7 +41,7 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.GetStateStorage().SetInt(ImGui.GetID(otherJob), 0);
                     }
 
-                    if (ImGui.BeginTabBar($"subTab{jobName}", ImGuiTabBarFlags.Reorderable | ImGuiTabBarFlags.AutoSelectNewTabs))
+                    if (ImGui.BeginTabBar($"subTab{jobName}", ImGuiTabBarFlags.Reorderable | ImGuiTabBarFlags.AutoSelectNewTabs ))
                     {
                         if (ImGui.BeginTabItem("Normal"))
                         {
