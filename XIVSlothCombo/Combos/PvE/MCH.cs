@@ -83,6 +83,7 @@ namespace XIVSlothCombo.Combos.PvE
                 MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
                 MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
                 MCH_VariantCure = "MCH_VariantCure",
+                BalanceOpenerPotion = "BalanceOpenerPotion",
 
                 MCH_ST_GadgetThreshold = "MCH_ST_GadgetThreshold",
                 MCH_ST_WildFireThreshold = "MCH_ST_WildFireThreshold",

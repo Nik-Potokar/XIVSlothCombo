@@ -62,6 +62,8 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
 
+                ImGui.TextUnformatted($"Pots: {CustomComboFunctions.NumberOfNQPotions(12669)} {CustomComboFunctions.NumberOfHQPotions(12669)}");
+
             }
 
             else

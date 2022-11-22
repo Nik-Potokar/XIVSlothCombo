@@ -76,6 +76,13 @@ namespace XIVSlothCombo.Combos.PvE
                 ShieldSamba = 1826;
         }
 
+        /*
+        public static class Debuffs
+        {
+            public const short placeholder = 0;
+        }
+        */
+
         public static class Config
         {
             public const string

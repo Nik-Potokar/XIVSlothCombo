@@ -22,6 +22,7 @@
 		<Product>XIVSlothCombo</Product>
 	</PropertyGroup>
 
+
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
