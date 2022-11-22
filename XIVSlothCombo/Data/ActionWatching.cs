@@ -6,6 +6,7 @@ using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Services;
 using Lumina.Excel.GeneratedSheets;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Data
 {
@@ -94,6 +95,24 @@ namespace XIVSlothCombo.Data
             }
         }
 
+        public unsafe delegate byte UseActionDelegate(ActionManager* actionManager, uint actionType, uint actionID, long targetObjectID, uint param, uint useType, int pvp, bool* isGroundTarget);
+        public static Hook<UseActionDelegate> UseActionHook;
+
+        private static unsafe byte UseActionDetour(ActionManager* actionManager, uint actionType, uint actionID, long targetObjectID, uint param, uint useType, int pvp, bool* isGroundTarget)
+        {
+            var adjustedActionID = actionType == 1 ? actionManager->GetAdjustedActionId(actionID) : actionID;
+            if (actionID <= 7)
+                return UseActionHook!.Original(actionManager, actionType, actionID, targetObjectID, param, useType, pvp, isGroundTarget);
+
+            if (adjustedActionID is 16436)
+            {
+                actionID = CustomComboFunctions.PrimedPotion;
+                actionType = 2;
+                param = 65535;
+            }
+            return UseActionHook!.Original(actionManager, actionType, actionID, targetObjectID, param, useType, pvp, isGroundTarget);
+        }
+
         public static uint WhichOfTheseActionsWasLast(params uint[] actions)
         {
             if (CombatActions.Count == 0) return 0;
@@ -149,24 +168,30 @@ namespace XIVSlothCombo.Data
         {
             ReceiveActionEffectHook?.Dispose();
             SendActionHook?.Dispose();
+            UseActionHook?.Dispose();
         }
 
-        static ActionWatching()
+        static unsafe ActionWatching()
         {
             ReceiveActionEffectHook ??= Hook<ReceiveActionEffectDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00"), ReceiveActionEffectDetour);
             SendActionHook ??= Hook<SendActionDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
+            UseActionHook ??= Hook<UseActionDelegate>.FromAddress((IntPtr)ActionManager.fpUseAction, UseActionDetour);
         }
+
+
 
         public static void Enable()
         {
             ReceiveActionEffectHook?.Enable();
             SendActionHook?.Enable();
+            UseActionHook?.Enable();
         }
 
         public static void Disable()
         {
             ReceiveActionEffectHook.Disable();
             SendActionHook?.Disable();
+            UseActionHook?.Disable();
         }
 
         public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;

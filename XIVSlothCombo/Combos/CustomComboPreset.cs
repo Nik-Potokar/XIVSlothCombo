@@ -1776,6 +1776,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Spinning Edge with a one-button full single target rotation.\nThis is the ideal option for newcomers to the job.", NIN.JobID)]
         NIN_ST_SimpleMode = 10000,
 
+        [Potion(NIN.Config.BalanceOpenerPotion, PotionType.Dexterity)]
         [ParentCombo(NIN_ST_SimpleMode)]
         [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]
         NIN_ST_SimpleMode_BalanceOpener = 10001,
@@ -1893,6 +1894,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Forked Raiju Gap-Closer Option", "Uses Forked Raiju when out of range.", NIN.JobID)]
         NIN_ST_AdvancedMode_Raiju_Forked = 10028,
 
+        [Potion(NIN.Config.BalanceOpenerPotion, PotionType.Dexterity)]
         [ConflictingCombos(NIN_KassatsuChiJin, NIN_KassatsuTrick)]
         [ParentCombo(NIN_ST_AdvancedMode)]
         [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]

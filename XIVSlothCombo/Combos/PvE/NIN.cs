@@ -132,6 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public const string
+                
                 Trick_CooldownRemaining = "Trick_CooldownRemaining",
                 Huton_RemainingHuraijinST = "Huton_RemainingHuraijinST",
                 Huton_RemainingHuraijinAoE = "Huton_RemainingHuraijinAoE",
@@ -154,7 +155,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SecondWindThresholdAoE = "SecondWindThresholdAoE",
                 ShadeShiftThresholdAoE = "ShadeShiftThresholdAoE",
                 BloodbathThresholdAoE = "BloodbathThresholdAoE",
-                NIN_VariantCure = "NIN_VariantCure";
+                NIN_VariantCure = "NIN_VariantCure",
+                BalanceOpenerPotion = "BalanceOpenerPotion";
         }
 
         internal class NIN_ST_AdvancedMode : CustomCombo
