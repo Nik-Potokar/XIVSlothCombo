@@ -164,7 +164,9 @@ namespace XIVSlothCombo.Window.Functions
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
                         var subpar = PluginConfiguration.GetParent(par2);
+                        #pragma warning disable CS8604 // Possible null reference argument.
                         builder.Insert(0,$"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        #pragma warning restore CS8604 // Possible null reference argument.
                         par2 = subpar.Value;
 
                     }
@@ -188,7 +190,10 @@ namespace XIVSlothCombo.Window.Functions
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
                         var subpar = PluginConfiguration.GetParent(par2);
+
+                        #pragma warning disable CS8604 // Possible null reference argument.
                         builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        #pragma warning restore CS8604 // Possible null reference argument.
                         par2 = subpar.Value;
 
                     }
@@ -212,7 +217,9 @@ namespace XIVSlothCombo.Window.Functions
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
                         var subpar = PluginConfiguration.GetParent(par2);
+#pragma warning disable CS8604 // Possible null reference argument.
                         builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+#pragma warning restore CS8604 // Possible null reference argument.
                         par2 = subpar.Value;
 
                     }
