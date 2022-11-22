@@ -426,6 +426,28 @@ namespace XIVSlothCombo.Combos.PvE
                                                 // Wildfire, Queen, Hypercharge, Chainsaw Reassemble
 
                     }
+                    // Clean Shot or Air Anchor to signify the "opener" is done
+                    if (opener)
+                    {
+                        if (openerSelection is 2 && !inCombat && HasBattleTarget()) //this code is kinda all over the place right now. can you tell?
+                        {
+                            return OriginalHook(SplitShot);
+                        }
+                        if (openerSelection is 0 or 1 && opener && lastComboMove == CleanShot)
+                        {
+                            openerFinished = true;
+                        }
+                        if (openerSelection is 2 && opener && WasLastWeaponskill(AirAnchor))
+                        {
+                            openerFinished = true;
+                        }
+                        else if (!opener && lastComboMove == CleanShot)
+                        {
+                            openerFinished = true;
+
+                        }
+                    }
+
                     //Barrel Stabilizer, need to tighten this a bit maybe
                     if (opener && IsOnCooldown(Drill) && IsOffCooldown(BarrelStabilizer)) 
                     {
@@ -438,6 +460,27 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         return BarrelStabilizer;
                     }
+
+                    // Queen
+                    if (CanWeave(actionID, 0.6) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && (wildfireCDTime >= 2 &&
+                        !WasLastAbility(Wildfire) || level < Levels.Wildfire))
+                    {
+                        //queen slider for accurate-ish punches under buff windows
+                        if (IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && LevelChecked(AutomatonQueen) && (CombatEngageDuration().Seconds ==
+                            PluginConfiguration.GetCustomIntValue(Config.MCH_ST_QueenThreshold) && gauge.Battery >= 50))
+                        {
+                            return OriginalHook(RookAutoturret);
+                        }
+                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))))
+                        { //why not use it after clean shot?? weird
+                            return OriginalHook(RookAutoturret);
+                        }
+                        //else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 58 || CombatEngageDuration().Seconds <= 05))
+                        //{
+                        //    return OriginalHook(RookAutoturret);
+                        //}
+                    }
+
                     // Interrupt, works okay
                     if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
                     {
@@ -448,17 +491,20 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (openerSelection is 0 or 1)
                         { 
-                            if (WasLastAction(Reassemble) && IsOffCooldown(ChainSaw) && CanDelayedWeave(actionID, 1.1))
+                            if (//WasLastAction(Reassemble) &&
+                                IsOnCooldown(ChainSaw) && CanDelayedWeave(actionID, 1.1))
                                 return Wildfire;
-                            if (JustUsed(ChainSaw) && CombatEngageDuration().TotalMinutes >= 2)
+                            else if (JustUsed(ChainSaw) && CombatEngageDuration().TotalMinutes >= 2)
                                 return Wildfire;
                         }
 
                         if (openerSelection is 2)
                         {
-                            if (WasLastAction(Reassemble) && IsOffCooldown(ChainSaw) && CanDelayedWeave(actionID, 1.1))
+                            if (//WasLastAction(Reassemble) &&
+                                IsOffCooldown(ChainSaw) && (CanDelayedWeave(actionID, 1.1) || CanWeave(actionID, 0.6)))
                                 return Wildfire;
-                            if (WasLastAction(Reassemble) && IsOffCooldown(ChainSaw) && CanDelayedWeave(actionID, 1.1) && CombatEngageDuration().TotalMinutes >= 2)
+                            else if (//WasLastAction(Reassemble) &&
+                                (IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) <= 1.6) && (CanDelayedWeave(actionID) || CanWeave(actionID)) && CombatEngageDuration().TotalMinutes >= 2)
                                 return Wildfire;
                         }
                         // 6.2 rotation does not use Wildfire within Hypercharge windows anymore due to minor drifting. Chainsaw and WF should be right next to each other always.
@@ -483,31 +529,11 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                     }
-                    // Queen
-                    if (CanWeave(actionID, 0.6) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && (wildfireCDTime >= 2 &&
-                        !WasLastAbility(Wildfire) || level < Levels.Wildfire))
-                    {
-                        //queen slider for accurate-ish punches under buff windows
-                        if (IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && LevelChecked(AutomatonQueen) && (CombatEngageDuration().Seconds ==
-                            PluginConfiguration.GetCustomIntValue(Config.MCH_ST_QueenThreshold) && gauge.Battery >= 50))
-                        {
-                            return OriginalHook(RookAutoturret);
-                        }
-                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))))
-                        { //why not use it after clean shot?? weird
-                            return OriginalHook(RookAutoturret);
-                        }
-                        //else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 58 || CombatEngageDuration().Seconds <= 05))
-                        //{
-                        //    return OriginalHook(RookAutoturret);
-                        //}
-
-                    }
 
                     //Heatblast, Gauss, Rico
                     if (gauge.IsOverheated && level >= Levels.HeatBlast)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.6) && (wildfireCDTime > 2 || level < Levels.Wildfire) ) //gauss and ricochet weave
+                        if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && (wildfireCDTime > 2 || level < Levels.Wildfire) ) //gauss and ricochet weave
                         {
                             var gaussCharges = GetRemainingCharges(GaussRound);
                             var gaussMaxCharges = GetMaxCharges(GaussRound);
@@ -525,6 +551,13 @@ namespace XIVSlothCombo.Combos.PvE
                                     (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && reasmCharges >= 1 && GetCooldownRemainingTime(Drill) <= 2)
                                 ))
                                 return Reassemble;
+
+                            //having issues with 2min queen
+                            else if (IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && LevelChecked(AutomatonQueen) && (CombatEngageDuration().Seconds ==
+                                        PluginConfiguration.GetCustomIntValue(Config.MCH_ST_QueenThreshold) && gauge.Battery >= 50))
+                            { 
+                                return OriginalHook(RookAutoturret);
+                            }
                             else if ( (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)) ) ||
                                        (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && gaussCharges >= gaussMaxCharges - 1 ) )
                             {
@@ -571,10 +604,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //Gauss & Rico Suave
                     if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet))
                     {
-                        Dalamud.Logging.PluginLog.Log("Tier 1 check");
+                        //Dalamud.Logging.PluginLog.Log("Tier 1 check"); this is kinda useful
                         if (openerSelection is 1 && opener && IsEnabled(CustomComboPreset.MCH_ST_Opener) && CombatEngageDuration().TotalSeconds < 3.5 && WasLastWeaponskill(AirAnchor))
                         {
-                            Dalamud.Logging.PluginLog.Log("Tier 2 check");
+                            //Dalamud.Logging.PluginLog.Log("Tier 2 check");
                             if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
                                 return GaussRound;
                             else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
@@ -621,7 +654,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 //idk why someone would have 2 charges of air anchor, but this could be a pseudo-recovery thing if someone was dead super long??
                                 return Reassemble; // General Purpose Opener & protection if players don't enable Max Charges Reassemble. kinda messy code
 
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges ) && !opener) 
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges ) && !opener && GetCooldownRemainingTime(ChainSaw) > 2) 
                                 return Reassemble;
 
                         }
@@ -670,11 +703,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return ChainSaw;
                     }
 
-                    if (openerSelection is 2 && !inCombat && opener && HasBattleTarget()) //this code is kinda all over the place right now. can you tell?
-                    {
-                        return OriginalHook(SplitShot);
-                    }
-
                     if (lastComboMove == SplitShot && level >= Levels.SlugShot)
                         return OriginalHook(SlugShot);
 
@@ -687,20 +715,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         return OriginalHook(CleanShot);
                     }
-                    // Clean Shot or Air Anchor to signify the "opener" is done
-                    if (openerSelection is 0 or 1 && opener && lastComboMove == CleanShot)
-                    { 
-                        openerFinished = true; 
-                    }
 
-                    if (openerSelection is 2 && opener && WasLastWeaponskill(AirAnchor))
-                    {
-                        openerFinished = true;
-                    }
-                    else if (!opener && lastComboMove == CleanShot)
-                    {
-                        openerFinished = true;
-                    }
                 }
 
                 return actionID;
