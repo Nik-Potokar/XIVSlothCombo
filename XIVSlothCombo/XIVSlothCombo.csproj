@@ -16,7 +16,7 @@
 		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
 		<DalamudPluginPath>$(appdata)\XIVLauncher_devPlugins\Build_Release\XIVSlothCombo\$(AssemblyName)\$(version)</DalamudPluginPath>
 		<DalamudDevPlugins>$(appdata)\XIVLauncher_devPlugins\Build_Debug\XIVSlothCombo\XIVSlothCombo_Private\</DalamudDevPlugins>
-		<AssemblyName>XIVSlothCombo_Private</AssemblyName>
+		<AssemblyName>XIVSlothCombo_fork_main</AssemblyName>
 		<RootNamespace>XIVSlothCombo</RootNamespace>
 		<PackageId>XIVSlothCombo</PackageId>
 		<Product>XIVSlothCombo</Product>
