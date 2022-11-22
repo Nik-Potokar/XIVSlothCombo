@@ -1620,17 +1620,18 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 5, "", "")]
         MCH_AoE_Simple_Bioblaster = 8016,
-
+        
+        #beginregion Variant
         [Variant]
         [VariantParent(MCH_ST_SimpleMode, MCH_AoE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MCH.JobID)]
-        MCH_Variant_Rampart = 8039,
-
+        MCH_Variant_Rampart = 8042,
+        
         [Variant]
         [VariantParent(MCH_ST_SimpleMode, MCH_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
-        MCH_Variant_Cure = 8040,
-
+        MCH_Variant_Cure = 8043,
+        
         #endregion
 
         #endregion

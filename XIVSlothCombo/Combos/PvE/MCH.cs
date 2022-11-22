@@ -297,16 +297,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var canWeave = CanWeave(actionID);
                     var gauge = GetJobGauge<MCHGauge>();
-                    var battery = GetJobGauge<MCHGauge>().Battery;
-
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
-                        return Variant.VariantCure;
-
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        canWeave)
-                        return Variant.VariantRampart; 
+                    var battery = GetJobGauge<MCHGauge>().Battery;                        
                     var AoEenemyHP = GetTargetHPPercent();
                     var GadgetThreshold = AoEenemyHP > PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_GadgetThreshold);
                     var BioBlasterThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_BioBlasterThreshold);
@@ -315,6 +306,18 @@ namespace XIVSlothCombo.Combos.PvE
                     var ChainsawThreshold = AoEenemyHP >  PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_ChainsawThreshold);
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave && GadgetThreshold)
+                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+
+                        return Variant.VariantRampart;
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave)
+
                     {
                         if (battery == 100 && level >= Levels.QueenOverdrive)
                             return AutomatonQueen;
