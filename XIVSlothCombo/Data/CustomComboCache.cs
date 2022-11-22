@@ -84,6 +84,14 @@ namespace XIVSlothCombo.Data
             byte cooldownGroup = GetCooldownGroup(actionID);
 
             RecastDetail* cooldownPtr = actionManager->GetRecastGroupDetail(cooldownGroup - 1);
+            if (cooldownPtr is null)
+            {
+                CooldownData data = new();
+                data.CooldownTotal = -1;
+
+                return cooldownCache[actionID] = data;
+            }
+
             cooldownPtr->ActionID = actionID;
 
             return cooldownCache[actionID] = *(CooldownData*)cooldownPtr;
