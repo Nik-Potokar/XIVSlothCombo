@@ -12,15 +12,16 @@
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
 
-    <PropertyGroup>
-        <AssemblyName>XIVSlothCombo_branch_1</AssemblyName>
+	<PropertyGroup>
+        <AssemblyName>XIVSlothCombo_fork_main</AssemblyName>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
         <DalamudPluginPath>$(appdata)\XIVLauncher_devPlugins\Build_Release\XIVSlothCombo\$(AssemblyName)\$(version)</DalamudPluginPath>
         <DalamudDevPlugins>$(appdata)\XIVLauncher_devPlugins\Build_Debug\XIVSlothCombo\$(AssemblyName)\</DalamudDevPlugins>
         <RootNamespace>XIVSlothCombo</RootNamespace>
-        <PackageId>XIVSlothCombo</PackageId>
-        <Product>XIVSlothCombo</Product>
-    </PropertyGroup>
+		<PackageId>XIVSlothCombo</PackageId>
+		<Product>XIVSlothCombo</Product>
+	</PropertyGroup>
+
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<TargetFramework>net6.0-windows</TargetFramework>
