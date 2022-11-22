@@ -1,10 +1,16 @@
+using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
+//using static XIVSlothCombo.Combos.JobHelpers.MCH;
 
 namespace XIVSlothCombo.Combos.PvE
 {
-    internal static class MCH
+    internal class MCH
     {
         public const byte JobID = 31;
 
@@ -76,6 +82,26 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 Wildfire = 861,
                 BioBlaster = 1866;
+        }
+        
+        public static class TraitLevels
+        {
+            public const byte
+                IncreasedActionDamage1 = 20,
+                IncreasedActionDamage2 = 40,
+                SplitShotMastery = 54,
+                SlugShotMastery = 60,
+                CleanShotMastery = 64,
+                ChargedActionMastery = 74,
+                HotShotMastery = 76,
+                EnhancedWildfire = 78,
+                Promotion = 80,
+                SpreadShotMastery = 82,
+                EnhancedReassemble = 84,
+                MarksmanMastery = 84,
+                QueensGambit = 86,
+                EnhancedTactician = 88;
+
         }
         public static class Config
         {

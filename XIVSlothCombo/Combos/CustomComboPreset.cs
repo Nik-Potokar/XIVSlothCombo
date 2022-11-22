@@ -1621,6 +1621,22 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 5, "", "")]
         MCH_AoE_Simple_Bioblaster = 8016,
         #endregion
+
+        #region General Raid Opener
+
+        
+        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
+        [CustomComboInfo("Advanced Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
+        MCH_ST_AdvancedMode = 8800,
+
+        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
+        [ParentCombo(MCH_ST_AdvancedMode)]
+        [CustomComboInfo("Balance Opener Option", "Attempt to create the General opener found on the balance.", MCH.JobID)]
+        MCH_ST_AdvancedMode_Balance_General_Opener = 8801,
+
+        #endregion General Raid Opener
         
         #region Variant
         [Variant]
