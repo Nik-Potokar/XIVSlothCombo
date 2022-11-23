@@ -492,19 +492,19 @@ namespace XIVSlothCombo.Combos.PvE
                         if (openerSelection is 0 or 1)
                         { 
                             if (//WasLastAction(Reassemble) &&
-                                IsOnCooldown(ChainSaw) && CanDelayedWeave(actionID, 1.1))
+                                IsOnCooldown(ChainSaw) && CanDelayedWeave(actionID))
                                 return Wildfire;
-                            else if (JustUsed(ChainSaw) && CombatEngageDuration().TotalMinutes >= 2)
+                            else if (JustUsed(ChainSaw) && CanDelayedWeave(actionID) && CombatEngageDuration().TotalMinutes >= 2)
                                 return Wildfire;
                         }
 
                         if (openerSelection is 2)
                         {
                             if (//WasLastAction(Reassemble) &&
-                                IsOffCooldown(ChainSaw) && (CanDelayedWeave(actionID, 1.1) || CanWeave(actionID, 0.6)))
+                                IsOffCooldown(ChainSaw) && CanDelayedWeave(actionID))
                                 return Wildfire;
                             else if (//WasLastAction(Reassemble) &&
-                                (IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) <= 1.6) && (CanDelayedWeave(actionID) || CanWeave(actionID)) && CombatEngageDuration().TotalMinutes >= 2)
+                                (IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) <= 1.9) && (CanDelayedWeave(actionID)) && CombatEngageDuration().TotalMinutes >= 2)
                                 return Wildfire;
                         }
                         // 6.2 rotation does not use Wildfire within Hypercharge windows anymore due to minor drifting. Chainsaw and WF should be right next to each other always.
@@ -636,12 +636,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                     }
-                    // healing - please move if not appropriate priority
-                    if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && CanWeave(actionID, 0.6))
-                    {
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_ST_SecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                            return All.SecondWind;
-                    }
+
                     // TOOLS & REASSEMBLE
                     if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
                     {
@@ -650,11 +645,12 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (openerSelection is 0 or 1 & opener || 
                                 openerSelection is 2 & opener && WasLastWeaponskill(HeatedCleanShot) || 
-                               !opener && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble))
+                               !opener && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble) && 
+                               GetCooldownRemainingTime(ChainSaw) <= 3)
                                 //idk why someone would have 2 charges of air anchor, but this could be a pseudo-recovery thing if someone was dead super long??
                                 return Reassemble; // General Purpose Opener & protection if players don't enable Max Charges Reassemble. kinda messy code
 
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges ) && !opener && GetCooldownRemainingTime(ChainSaw) > 2) 
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges ) && !opener && GetCooldownRemainingTime(ChainSaw) <= 3) 
                                 return Reassemble;
 
                         }
@@ -697,12 +693,20 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && !HasEffect(Buffs.Reassembled) &&
                             GetRemainingCharges(Reassemble) > 0)
                         {
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges)) return Reassemble;
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) 
+                                return Reassemble;
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && CanWeave(actionID, 0.6)) 
+                                return Reassemble;
                         }
                         return ChainSaw;
                     }
-
+                    // healing - please move if not appropriate priority
+                    // Moved 
+                    if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && CanWeave(actionID, 0.6))
+                    {
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_ST_SecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
+                    }
                     if (lastComboMove == SplitShot && level >= Levels.SlugShot)
                         return OriginalHook(SlugShot);
 
