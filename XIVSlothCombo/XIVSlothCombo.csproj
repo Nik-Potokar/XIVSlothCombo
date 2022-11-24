@@ -56,7 +56,6 @@
 
 	<ItemGroup>
 	  <Compile Remove="Combos\JobHelpers\MCH.cs" />
-	  <Compile Remove="Combos\JobHelpers\RDM.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,7 +81,6 @@
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 		<None Include="Combos\JobHelpers\MCH.cs" />
-		<None Include="Combos\JobHelpers\RDM.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
