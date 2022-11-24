@@ -30,7 +30,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     CustomComboFunctions.GetRemainingCharges(Ricochet) < 3 ||
                     CustomComboFunctions.GetRemainingCharges(Reassemble) < 2 ||
                     CustomComboFunctions.IsOnCooldown(Drill) || 
-                    CustomComboFunctions.IsOnCooldown(AirAnchor) || 
+                    CustomComboFunctions.IsOnCooldown(AirAnchor) ||
                     CustomComboFunctions.IsOnCooldown(ChainSaw) ||
                     CustomComboFunctions.IsOnCooldown(BarrelStabilizer) ||
                     CustomComboFunctions.IsOnCooldown(Wildfire))
