@@ -129,7 +129,7 @@ namespace XIVSlothCombo.Data
             }
         }
 
-        private static unsafe bool OutOfRange(uint actionId, GameObject* source, GameObject* target)
+        public static unsafe bool OutOfRange(uint actionId, GameObject* source, GameObject* target)
         {
             return ActionManager.GetActionInRangeOrLoS(actionId, source, target) is 566;
         }
@@ -169,6 +169,7 @@ namespace XIVSlothCombo.Data
             return count;
         }
 
+        public static int NumberOfGcdsUsed => CombatActions.Count(x => GetAttackType(x) == ActionAttackType.Weaponskill || GetAttackType(x) == ActionAttackType.Spell);
         public static uint LastAction { get; set; } = 0;
         public static int LastActionUseCount { get; set; } = 0;
         public static uint ActionType { get; set; } = 0;
@@ -196,6 +197,7 @@ namespace XIVSlothCombo.Data
             ReceiveActionEffectHook ??= Hook<ReceiveActionEffectDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00"), ReceiveActionEffectDetour);
             SendActionHook ??= Hook<SendActionDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
         }
+
 
         public static void Enable()
         {

@@ -376,6 +376,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 return (float)Math.Atan2(b.X - a.X, b.Z - a.Z);
             }
         }
-    
+
+        internal unsafe static bool OutOfRange(uint actionID, GameObject target) => ActionWatching.OutOfRange(actionID, (StructsObject.GameObject*)Service.ClientState.LocalPlayer.Address, (StructsObject.GameObject*)target.Address);
+
     }
 }
