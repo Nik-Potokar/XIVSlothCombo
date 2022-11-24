@@ -9,6 +9,7 @@ namespace XIVSlothCombo.Window.Tabs
     {
         internal static new void Draw()
         {
+            PvEFeatures.HasToOpenJob = true;
             ImGui.BeginChild("About", new Vector2(0, 0), true);
 
             ImGui.TextColored(ImGuiColors.ParsedGreen, $"v3.0.17.5\n- with love from Team Sloth.");
