@@ -61,28 +61,6 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.GetStateStorage().SetInt(ImGui.GetID(otherHeader), 0);
                     }
 
-                    if (!Service.Configuration.RecommendedSettingsViewed)
-                    {
-                        UserConfig.DrawAdditionalBoolChoice("RecommendedSettings", "Set Recommended Settings", "Sets the most optimised settings ever for this job.");
-                        bool open = PluginConfiguration.GetCustomBoolValue("RecommendedSettings");
-                        if (open)
-                        {
-                            ImGui.OpenPopup("Ok, timeout");
-                            if (ImGui.BeginPopupModal("Ok, timeout", ref open, ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoScrollbar))
-                            {
-                                ImGui.TextUnformatted("Seriously, did you think there would be recommended settings for a job?\r\nWe don't offer them because there's no such thing as recommended, it's all player preference.\r\nDon't ask on Discord either, you'll get the same answer.");
-
-                                if (ImGui.Button("I have read this and understand that there is no such thing as recommended settings and will never ask for them."))
-                                {
-                                    Service.Configuration.RecommendedSettingsViewed = true;
-                                    Service.Configuration.Save();
-                                }
-                                ImGui.EndPopup();
-                            }
-                        }
-
-                    }
-
                     if (ImGui.BeginTabBar($"subTab{jobName}", ImGuiTabBarFlags.Reorderable | ImGuiTabBarFlags.AutoSelectNewTabs))
                     {
                         if (ImGui.BeginTabItem("Normal"))

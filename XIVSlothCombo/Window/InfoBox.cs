@@ -160,5 +160,6 @@ namespace XIVSlothCombo.Window
         public static Vector4 Grey = new(0.4f, 0.4f, 0.4f, 1.0f);
         public static Vector4 Orange = new(1.0f, 165.0f / 255.0f, 0.0f, 1.0f);
         public static Vector4 SoftGreen = new(0.2f, 0.8f, 0.2f, 1.0f);
+        public static Vector4 Yellow = new(1.0f, 0.94f, 0.0f, 1.0f);
     }
 }

@@ -56,6 +56,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return InventoryManager.Instance()->GetInventoryItemCount(potionID, true);
         }
 
+        internal unsafe static int NumberOfItems(uint itemID)
+        {
+            return InventoryManager.Instance()->GetInventoryItemCount(itemID, true);
+        }
+
         internal static unsafe bool UseItem(uint itemID) =>
     ActionManager.Instance() is not null &&
     (GetItemStatus(itemID + 1000000) is 0 && ActionManager.Instance()->UseAction(ActionType.Item, itemID + 1000000)) ||
