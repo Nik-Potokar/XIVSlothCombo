@@ -11,6 +11,7 @@ namespace XIVSlothCombo.Window.Tabs
     {
         internal static new void Draw()
         {
+            PvEFeatures.HasToOpenJob = true;
             ImGui.BeginChild("main", new Vector2(0, 0), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
 
@@ -30,7 +31,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted("Hides the sub-options of disabled features.");
                 ImGui.EndTooltip();
             }
-            //ImGui.NextColumn();
+            ImGui.NextColumn();
 
             #endregion
 
@@ -91,9 +92,6 @@ namespace XIVSlothCombo.Window.Tabs
                 Service.Configuration.SpecialEvent = false;
                 Service.Configuration.Save();
             }
-            #endregion
-
-            #region MeleeOffset
 
             float offset = (float)Service.Configuration.MeleeOffset;
             ImGui.PushItemWidth(75);
@@ -110,7 +108,7 @@ namespace XIVSlothCombo.Window.Tabs
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
+                ImGui.TextUnformatted("Offset of melee check distance for features that use it.\r\nFor those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
                 ImGui.EndTooltip();
             }
 
@@ -136,8 +134,21 @@ namespace XIVSlothCombo.Window.Tabs
 
             #endregion
 
-            #region TabBar Toggle
+            #region UI Settings
 
+            bool openAtJob = Service.Configuration.AutomaticallyOpenToCurrentJob;
+            if (ImGui.Checkbox("Automatically open [PvE Features] to your current job", ref openAtJob))
+            {
+                Service.Configuration.AutomaticallyOpenToCurrentJob = openAtJob;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Whenever you open the PvE features tab, the plugin will automatically open\r\nat the job you're currently playing as.");
+                ImGui.EndTooltip();
+            }
 
             #endregion
 

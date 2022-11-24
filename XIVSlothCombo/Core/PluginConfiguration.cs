@@ -75,7 +75,7 @@ namespace XIVSlothCombo.Core
         #endregion
 
         #region Settings Options
-        
+
         /// <summary> Gets or sets a value indicating whether to output combat log to the chatbox. </summary>
         public bool EnabledOutputLog { get; set; } = false;
 
@@ -161,7 +161,7 @@ namespace XIVSlothCombo.Core
         #region Custom Float Values
 
         [JsonProperty]
-        private static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
+        internal static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
 
         /// <summary> Gets a custom float value. </summary>
         public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
@@ -183,7 +183,7 @@ namespace XIVSlothCombo.Core
         #region Custom Int Values
 
         [JsonProperty]
-        private static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
+        internal static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
 
         /// <summary> Gets a custom integer value. </summary>
         public static int GetCustomIntValue(string config, int defaultMinVal = 0)
@@ -205,7 +205,7 @@ namespace XIVSlothCombo.Core
         #region Custom Bool Values
 
         [JsonProperty]
-        private static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
+        internal static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
         /// <summary> Gets a custom boolean value. </summary>
         public static bool GetCustomBoolValue(string config)
@@ -227,7 +227,7 @@ namespace XIVSlothCombo.Core
         #region Custom Bool Array Values
 
         [JsonProperty]
-        private static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
+        internal static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
 
         /// <summary> Gets a custom boolean array value. </summary>
         public static bool[] GetCustomBoolArrayValue(string config)
@@ -320,6 +320,11 @@ namespace XIVSlothCombo.Core
 
         #endregion
 
+        #region UI Settings
+        public bool AutomaticallyOpenToCurrentJob { get; set; } = false;
+
+        #endregion
+
         #region Other (SpecialEvent, MotD, Save)
 
         /// <summary> Handles 'special event' feature naming. </summary>
@@ -327,6 +332,8 @@ namespace XIVSlothCombo.Core
 
         /// <summary> Hides the message of the day. </summary>
         public bool HideMessageOfTheDay { get; set; } = false;
+
+        public bool RecommendedSettingsViewed { get; set; } = true;
 
         /// <summary> Save the configuration to disk. </summary>
         public void Save() => Service.Interface.SavePluginConfig(this);

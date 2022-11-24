@@ -55,6 +55,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Combos\JobHelpers\MCH.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="resources\banner.png" />
 	  <None Remove="Window\Resources\banner.png" />
 	</ItemGroup>
@@ -76,6 +80,7 @@
 
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
+		<None Include="Combos\JobHelpers\MCH.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

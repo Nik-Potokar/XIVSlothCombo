@@ -66,7 +66,14 @@ namespace XIVSlothCombo.Window
         public bool Visible
         {
             get => visible;
-            set => visible = value;
+            set
+            {
+                if (!value)
+                {
+                    PvEFeatures.HasToOpenJob = true;
+                }
+                visible = value;
+            }
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>

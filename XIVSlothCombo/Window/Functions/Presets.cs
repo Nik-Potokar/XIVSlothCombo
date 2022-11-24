@@ -156,7 +156,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
                 ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
-                StringBuilder builder = new StringBuilder();
+                StringBuilder builder = new();
                 foreach (var par in varientparents.ParentPresets)
                 {
                     builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
@@ -164,10 +164,8 @@ namespace XIVSlothCombo.Window.Functions
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
                         var subpar = PluginConfiguration.GetParent(par2);
-                        #pragma warning disable CS8604 // Possible null reference argument.
-                        builder.Insert(0,$"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
-                        #pragma warning restore CS8604 // Possible null reference argument.
-                        par2 = subpar.Value;
+                        builder.Insert(0,$"{subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar!.Value;
 
                     }
                     
@@ -182,7 +180,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
                 ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
-                StringBuilder builder = new StringBuilder();
+                StringBuilder builder = new();
                 foreach (var par in bozjaparents.ParentPresets)
                 {
                     builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
@@ -190,11 +188,8 @@ namespace XIVSlothCombo.Window.Functions
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
                         var subpar = PluginConfiguration.GetParent(par2);
-
-                        #pragma warning disable CS8604 // Possible null reference argument.
-                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
-                        #pragma warning restore CS8604 // Possible null reference argument.
-                        par2 = subpar.Value;
+                        builder.Insert(0, $"{subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar!.Value;
 
                     }
 
@@ -209,7 +204,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
                 ImGui.TextWrapped($"Part of normal combo{(varientparents.ParentPresets.Length > 1 ? "s" : "")}:");
-                StringBuilder builder = new StringBuilder();
+                StringBuilder builder = new();
                 foreach (var par in eurekaparents.ParentPresets)
                 {
                     builder.Insert(0, $"{par.GetAttribute<CustomComboInfoAttribute>().FancyName}");
@@ -217,10 +212,8 @@ namespace XIVSlothCombo.Window.Functions
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
                         var subpar = PluginConfiguration.GetParent(par2);
-#pragma warning disable CS8604 // Possible null reference argument.
-                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
-#pragma warning restore CS8604 // Possible null reference argument.
-                        par2 = subpar.Value;
+                        builder.Insert(0, $"{subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar!.Value;
 
                     }
 

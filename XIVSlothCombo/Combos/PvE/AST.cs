@@ -115,21 +115,21 @@ namespace XIVSlothCombo.Combos.PvE
 
         private static ASTGauge Gauge => CustomComboFunctions.GetJobGauge<ASTGauge>();
 
-        internal static class Config
+        public static class Config
         {
-            internal const string
+            public const string
                 AST_LucidDreaming = "ASTLucidDreamingFeature",
                 AST_EssentialDignity = "ASTCustomEssentialDignity",
                 AST_DPS_AltMode = "AST_DPS_AltMode",
                 AST_DPS_DivinationOption = "AST_DPS_DivinationOption",
                 AST_DPS_LightSpeedOption = "AST_DPS_LightSpeedOption",
                 AST_DPS_CombustOption = "AST_DPS_CombustOption";
-            internal static UserBool
+            public static UserBool
                 AST_ST_SimpleHeals_Adv = new("AST_ST_SimpleHeals_Adv"),
                 AST_ST_SimpleHeals_UIMouseOver = new("AST_ST_SimpleHeals_UIMouseOver");
 
-            internal static bool AST_ST_DPS_CombustUptime_Adv => PluginConfiguration.GetCustomBoolValue(nameof(AST_ST_DPS_CombustUptime_Adv));
-            internal static float AST_ST_DPS_CombustUptime_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(AST_ST_DPS_CombustUptime_Threshold));
+            public static bool AST_ST_DPS_CombustUptime_Adv => PluginConfiguration.GetCustomBoolValue(nameof(AST_ST_DPS_CombustUptime_Adv));
+            public static float AST_ST_DPS_CombustUptime_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(AST_ST_DPS_CombustUptime_Threshold));
         }
 
         internal class AST_Cards_DrawOnPlay : CustomCombo
