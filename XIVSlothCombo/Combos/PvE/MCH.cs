@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.IO;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -408,6 +409,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
             internal static bool openerFinished = false;
+            internal static bool inOpener = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {               
@@ -421,7 +423,7 @@ namespace XIVSlothCombo.Combos.PvE
                     int queenThreshold = PluginConfiguration.GetCustomIntValue(Config.MCH_ST_QueenThreshold);
                     bool opener = IsEnabled(CustomComboPreset.MCH_ST_Opener) && CombatEngageDuration().TotalSeconds < 15 && LevelChecked(ChainSaw) && IsOffCooldown(ChainSaw); //arbitrary 15sec here idk
 
-                    if (!inCombat)
+                    if (!InCombat() && (inOpener || openerFinished))
                     {
                         openerFinished = false; // otherwise, if in combat, opener is completed? what is considered "openerFinished"?
                                                 // Wildfire, Queen, Hypercharge, Chainsaw Reassemble
@@ -430,7 +432,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Clean Shot or Air Anchor to signify the "opener" is done
                     if (opener)
                     {
-                        if (openerSelection is 2 && !inCombat && HasBattleTarget() &&
+                        if (openerSelection is 2 && (!InCombat() || inOpener) && HasBattleTarget() &&
                             GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble) &&
                             gauge.Heat == 0 && gauge.Battery == 0 &&
                             !HasEffect(All.Buffs.Weakness) &&
@@ -470,29 +472,38 @@ namespace XIVSlothCombo.Combos.PvE
                     if ((CanWeave(actionID) || (CanWeave(actionID, 0.6))) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && (wildfireCDTime >= 2 &&
                         !WasLastAbility(Wildfire) || level < Levels.Wildfire))
                     {                        
-                        //queen slider for accurate-ish punches under buff windows
-                        if (openerSelection is 2 && level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Minutes == 0 && 
-                           !WasLastWeaponskill(OriginalHook(CleanShot))))
-                        { //why not use it after clean shot?? weird                        
-                            return OriginalHook(RookAutoturret);
+                        //queen slider for accurate-ish punches under buff windows 
+                        if (openerSelection is 2 && level >= Levels.RookOverdrive && gauge.Battery >= 50)
+                        {
+                            if (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot)))
+                            { 
+                                return OriginalHook(RookAutoturret); 
+                            }
+
+                            else if (CombatEngageDuration().Minutes % 2 == 0 && (CombatEngageDuration().Seconds >= 01 && CombatEngageDuration().Seconds <= queenThreshold))
+                            { 
+                                return OriginalHook(RookAutoturret); 
+                            }
+
+                            else if (CombatEngageDuration().Minutes % 2 == 1 && (CombatEngageDuration().Seconds >= 55 && CombatEngageDuration().Seconds <= 59))
+                            {
+                                return OriginalHook(RookAutoturret);
+                            }
                         }
+
                         //fix this later for General Purpose Opener 2nd Queen
                         if (openerSelection is 0 or 1 && level >= Levels.RookOverdrive && gauge.Battery >= 70 && 
                            (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))))
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (LevelChecked(AutomatonQueen) && CombatEngageDuration().Seconds >= queenThreshold && 
-                            gauge.Battery >= 80 && CombatEngageDuration().Minutes % 2 == 0 && gauge.Heat >= 100)
-                        {
-                            Dalamud.Logging.PluginLog.Log("Queen only at 2:06 please");
-                            return OriginalHook(RookAutoturret);
-                        }
-                        else if (IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && LevelChecked(AutomatonQueen) && 
-                            gauge.Battery >= 80 && CombatEngageDuration().Minutes % 2 == 1 && CombatEngageDuration().TotalMinutes >= 2)
-                        {
-                            return OriginalHook(RookAutoturret);
-                        }
+                        //else if (LevelChecked(AutomatonQueen) && CombatEngageDuration().Seconds >= queenThreshold && 
+                        //    gauge.Battery >= 80 && CombatEngageDuration().Minutes % 2 == 0 && gauge.Heat >= 100)
+                        //{
+                        //    Dalamud.Logging.PluginLog.Log("Queen only at 2:06 please");
+                        //    return OriginalHook(RookAutoturret);
+                        //}
+
                         //else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 58 || CombatEngageDuration().Seconds <= 05))
                         //{
                         //    return OriginalHook(RookAutoturret);
