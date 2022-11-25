@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -102,13 +103,13 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == ArmOfTheDestroyer || actionID == ShadowOfTheDestroyer)
                 {
-                    var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var gauge = GetJobGauge<MNKGauge>();
-                    var canWeave = CanWeave(actionID, 0.5);
-                    var canWeaveChakra = CanWeave(actionID);
-                    var pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var nadiNONE = gauge.Nadi == Nadi.NONE;
+                    bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
+                    bool canWeave = CanWeave(actionID, 0.5);
+                    bool canWeaveChakra = CanWeave(actionID);
+                    Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
+                    bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                    bool nadiNONE = gauge.Nadi == Nadi.NONE;
 
                     if (!inCombat)
                     {
@@ -275,8 +276,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == TrueStrike)
                 {
-                    var disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
-                    var disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
+                    bool disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
+                    float disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
 
                     if (level >= Levels.TrueStrike)
                     {
@@ -347,15 +348,15 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Bootshine)
                 {
-                    var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var gauge = GetJobGauge<MNKGauge>();
-                    var canWeave = CanWeave(actionID, 0.5);
-                    var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
-                    var twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
-                    var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
-                    var pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var solarNadi = gauge.Nadi == Nadi.SOLAR;
+                    bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
+                    bool canWeave = CanWeave(actionID, 0.5);
+                    bool canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
+                    float twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
+                    float demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
+                    Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
+                    bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                    bool solarNadi = gauge.Nadi == Nadi.SOLAR;
 
                     if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
                         return Variant.VariantCure;
@@ -661,10 +662,10 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == MasterfulBlitz)
                 {
-                    var gauge = GetJobGauge<MNKGauge>();
-                    var pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var nadiNONE = gauge.Nadi == Nadi.NONE;
+                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
+                    Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
+                    bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                    bool nadiNONE = gauge.Nadi == Nadi.NONE;
                     if (!nadiNONE && !lunarNadi)
                     {
                         if (pbStacks?.StackCount == 3)
@@ -726,7 +727,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == HowlingFist || actionID == Enlightenment)
                 {
-                    var gauge = GetJobGauge<MNKGauge>();
+                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
 
                     if (gauge.Chakra < 5)
                     {
