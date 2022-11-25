@@ -466,22 +466,25 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is AspectedHelios)
                 {
                     //Level check to exit if we can't use
-                    if (!ActionReady(AspectedHelios))
+                    if (!LevelChecked(AspectedHelios))
                         return Helios;
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
                         ActionReady(MinorArcana) &&
                         InCombat() &&
-                        Gauge.DrawnCrownCard is CardType.LADY)
+                        Gauge.DrawnCrownCard is CardType.LADY
+                        && CanSpellWeave(actionID))
                         return OriginalHook(MinorArcana);
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_CelestialOpposition) &&
-                        ActionReady(CelestialOpposition))
+                        ActionReady(CelestialOpposition) &&
+                        CanWeave(actionID))
                         return CelestialOpposition;
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Horoscope))
                     {
-                        if (ActionReady(Horoscope))
+                        if (ActionReady(Horoscope) &&
+                            CanSpellWeave(actionID))
                             return Horoscope;
 
                         if ((ActionReady(AspectedHelios) && !HasEffect(Buffs.AspectedHelios))
@@ -489,7 +492,8 @@ namespace XIVSlothCombo.Combos.PvE
                              || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
                             return AspectedHelios;
 
-                        if (HasEffect(Buffs.HoroscopeHelios))
+                        if (HasEffect(Buffs.HoroscopeHelios) &&
+                            CanSpellWeave(actionID))
                             return OriginalHook(Horoscope);
                     }
 
@@ -535,15 +539,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
                         ActionReady(EssentialDignity) &&
-                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.AST_EssentialDignity))
+                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.AST_EssentialDignity) &&
+                        CanSpellWeave(actionID))
                         return EssentialDignity;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Exaltation) &&
-                        ActionReady(Exaltation))
+                        ActionReady(Exaltation) &&
+                        CanSpellWeave(actionID))
                         return Exaltation;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_CelestialIntersection) &&
-                        ActionReady(CelestialIntersection))
+                        ActionReady(CelestialIntersection) && 
+                        CanSpellWeave(actionID) &&
+                        !(healTarget as BattleChara).HasShield())
                         return CelestialIntersection;
                 }
                 return actionID;
