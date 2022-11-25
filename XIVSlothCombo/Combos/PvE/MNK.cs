@@ -508,12 +508,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (canWeave)
                             {
-                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_Brotherhood) && LevelChecked(Brotherhood) &&
-                                    IsOffCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire))
+                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_Brotherhood) &&
+                                    ActionReady(Brotherhood) &&
+                                    IsOnCooldown(RiddleOfFire))
                                     return Brotherhood;
 
-                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_RiddleOfWind) && LevelChecked(RiddleOfWind) &&
-                                    IsOffCooldown(RiddleOfWind) && IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
+                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_RiddleOfWind) &&
+                                    ActionReady(RiddleOfWind) &&
+                                    IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
                                     return RiddleOfWind;
 
                                 // healing - please move if not appropriate this high priority
@@ -544,10 +546,11 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Masterful Blitz
-                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) && LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
-                    {
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) &&
+                        LevelChecked(MasterfulBlitz) &&
+                        !HasEffect(Buffs.PerfectBalance) &&
+                        OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
-                    }
 
                     // Perfect Balance
                     if (HasEffect(Buffs.PerfectBalance))
