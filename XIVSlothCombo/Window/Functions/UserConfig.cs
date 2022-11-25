@@ -11,6 +11,7 @@ using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using Dalamud.Interface;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -1129,8 +1130,8 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "UI Mousover Override", "Overrides selection with UI mouseover target if you have one", 2);
 
                 ImGui.Spacing();
-                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipDamageDown), "Skip targets with a Damage Down Debuff", "");
-                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipRezWeakness), "Skip targets with a Rez Weakness Debuff", "");
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipDamageDown), $"Skip targets with a {ActionWatching.GetStatusName(62)} debuff", "");
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipRezWeakness), $"Skip targets with a {ActionWatching.GetStatusName(43)} or {ActionWatching.GetStatusName(44)} debuff", "");
             }
 
             if (preset is CustomComboPreset.AST_DPS_AutoPlay)

@@ -62,7 +62,6 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.BeginChild("BLUSPELLS", new Vector2(250, 100), false);
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
-                ImGui.TextUnformatted($"{ActionWatching.HowManyTimesUsedAfterAnotherAction(CustomComboFunctions.OriginalHook(AST.Malefic), AST.Draw)}");
 
             }
 

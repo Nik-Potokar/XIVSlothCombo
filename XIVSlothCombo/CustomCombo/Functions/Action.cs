@@ -19,7 +19,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Checks if the player is high enough level to use the passed Action ID. </summary>
         /// <param name="actionid"> ID of the action. </param>
         /// <returns></returns>
-        public static bool LevelChecked(uint actionid) => LocalPlayer.Level >= GetLevel(actionid);
+        public static bool LevelChecked(uint actionid) => LocalPlayer.Level >= GetLevel(actionid) && NoBlockingStatuses(actionid);
 
         /// <summary> Checks if the player is high enough level to use the passed Trait ID. </summary>
         /// <param name="traitid"> ID of the action. </param>
@@ -78,7 +78,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
         //Note: Testing so far shows non charge skills have a max charge of 1, and it's zero during cooldown
-        public static bool ActionReady(uint id) => LevelChecked(id) && HasCharges(id) && NoBlockingStatuses(id);
+        public static bool ActionReady(uint id) => LevelChecked(id) && HasCharges(id);
 
         /// <summary> Checks if the last action performed was the passed ID. </summary>
         /// <param name="id"> ID of the action. </param>
