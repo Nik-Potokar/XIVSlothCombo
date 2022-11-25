@@ -221,7 +221,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == DragonKick)
+                if (actionID is DragonKick)
                 {
                     if (IsEnabled(CustomComboPreset.MNK_BootshineBalance) &&
                         OriginalHook(MasterfulBlitz) != MasterfulBlitz)
@@ -247,7 +247,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == TrueStrike)
+                if (actionID is TrueStrike)
                 {
                     if (LevelChecked(TrueStrike) && LevelChecked(TwinSnakes))
                         return ((!HasEffect(Buffs.DisciplinedFist)) || (GetBuffRemainingTime(Buffs.DisciplinedFist) < 6))
@@ -265,7 +265,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Bootshine)
+                if (actionID is Bootshine)
                 {
                     if (HasEffect(Buffs.RaptorForm) && LevelChecked(TrueStrike))
                         return !HasEffect(Buffs.DisciplinedFist) && LevelChecked(TwinSnakes)
@@ -307,10 +307,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Bootshine)
+                if (actionID is Bootshine)
                 {
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
-                    bool canWeave = CanWeave(actionID, 0.5);
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     bool solarNadi = gauge.Nadi == Nadi.SOLAR;
@@ -611,7 +610,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == MasterfulBlitz)
+                if (actionID is MasterfulBlitz)
                 {
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
