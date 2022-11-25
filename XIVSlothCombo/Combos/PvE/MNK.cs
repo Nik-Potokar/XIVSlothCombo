@@ -80,7 +80,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
                 {
-                    bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     bool canWeave = CanWeave(actionID, 0.5);
                     bool canWeaveChakra = CanWeave(actionID);
@@ -88,7 +87,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     bool nadiNONE = gauge.Nadi == Nadi.NONE;
 
-                    if (!inCombat)
+                    if (!InCombat())
                     {
                         if (gauge.Chakra < 5 && LevelChecked(Meditation))
                             return Meditation;
@@ -108,7 +107,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Buffs
-                    if (inCombat && canWeave)
+                    if (InCombat() && canWeave)
                     {
                         if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
                             IsEnabled(Variant.VariantRampart) &&
@@ -310,7 +309,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Bootshine)
                 {
-                    bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     bool canWeave = CanWeave(actionID, 0.5);
                     bool canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
@@ -335,7 +333,7 @@ namespace XIVSlothCombo.Combos.PvE
                             openerFinished = false;
                         }
 
-                        if (!inCombat)
+                        if (!InCombat())
                         {
                             if (inOpener || openerFinished)
                             {
@@ -352,7 +350,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (inCombat && inOpener && !openerFinished)
+                        if (InCombat() && inOpener && !openerFinished)
                         {
                             if (LevelChecked(RiddleOfFire))
                             {
@@ -410,7 +408,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Out of combat preparation
-                    if (!inCombat)
+                    if (!InCombat())
                     {
                         if (!inOpener && gauge.Chakra < 5 &&
                             LevelChecked(Meditation))
@@ -429,7 +427,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Buffs
-                    if (inCombat && !inOpener)
+                    if (InCombat() && !inOpener)
                     {
                         if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
                             IsEnabled(Variant.VariantRampart) &&
