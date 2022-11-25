@@ -116,14 +116,18 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.Chakra < 5 && level >= Levels.Meditation)
                             return Meditation;
 
-                        if (level >= Levels.FormShift && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                        if (level >= Levels.FormShift &&!HasEffect(Buffs.FormlessFist) && comboTime <= 0)
                             return FormShift;
 
-                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) &&
+                            !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) ||
+                            HasEffect(Buffs.FormlessFist)))
                             return Thunderclap;
                     }
 
-                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
                         return Variant.VariantCure;
 
                     // Buffs
@@ -173,16 +177,19 @@ namespace XIVSlothCombo.Combos.PvE
                         // healing - please move if not appropriate this high priority
                         if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                         {
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) &&
+                                ActionReady(All.SecondWind))
                                 return All.SecondWind;
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoEBloodbathThreshold) &&
+                                ActionReady(All.Bloodbath))
                                 return All.Bloodbath;
                         }
                     }
 
                     // Masterful Blitz
                     if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_MasterfulBlitz) &&
-                        level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                        level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) &&
+                        OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
 
                     // Perfect Balance
@@ -333,7 +340,9 @@ namespace XIVSlothCombo.Combos.PvE
                     bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     bool solarNadi = gauge.Nadi == Nadi.SOLAR;
 
-                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
                         return Variant.VariantCure;
 
                     // Opener for MNK
@@ -375,13 +384,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Delayed weave for Riddle of Fire specifically
-                                if (canDelayedWeave)
-                                {
-                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire))
-                                    {
-                                        return RiddleOfFire;
-                                    }
-                                }
+                                if (canDelayedWeave && (HasEffect(Buffs.CoerlForm) ||
+                                    lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire))
+                                    return RiddleOfFire;
 
                                 if (canWeave)
                                 {
@@ -405,9 +410,11 @@ namespace XIVSlothCombo.Combos.PvE
                                     // healing - please move if not appropriate this high priority
                                     if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                                     {
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) &&
+                                            ActionReady(All.SecondWind))
                                             return All.SecondWind;
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) &&
+                                            ActionReady(All.Bloodbath))
                                             return All.Bloodbath;
                                     }
                                 }
@@ -431,7 +438,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!inOpener && level >= Levels.FormShift && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
                             return FormShift;
 
-                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
+                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 &&
+                            (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                             return Thunderclap;
                     }
 
@@ -475,7 +483,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
                                     return RiddleOfFire;
 
-                                if (TargetNeedsPositionals() && IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && LevelChecked(All.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
+                                if (TargetNeedsPositionals() && IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) &&
+                                    LevelChecked(All.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) &&
+                                    LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
                                 {
                                     if (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
                                     {
@@ -500,9 +510,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 // healing - please move if not appropriate this high priority
                                 if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                                 {
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) &&
+                                        ActionReady(All.SecondWind))
                                         return All.SecondWind;
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) &&
+                                        ActionReady(All.Bloodbath))
                                         return All.Bloodbath;
                                 }
                             }
@@ -510,7 +522,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
+                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) &&
+                                level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
+                                level < Levels.TwinSnakes))
                             {
                                 if (level < Levels.RiddleOfFire ||
                                     !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) ||
@@ -549,7 +563,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     demolishFirst = twinsnakeDuration >= demolishDuration;
                                 }
 
-                                return demolishFirst ? Demolish : TwinSnakes;
+                                return demolishFirst
+                                    ? Demolish
+                                    : TwinSnakes;
                             }
                         }
 
@@ -562,7 +578,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Demolish;
                         }
 
-                        return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
+                        return HasEffect(Buffs.LeadenFist)
+                            ? Bootshine
+                            : DragonKick;
                     }
 
                     // Monk Rotation
