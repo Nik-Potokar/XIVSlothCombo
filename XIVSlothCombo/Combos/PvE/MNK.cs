@@ -311,8 +311,6 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     bool canWeave = CanWeave(actionID, 0.5);
-                    float twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
-                    float demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     bool solarNadi = gauge.Nadi == Nadi.SOLAR;
@@ -470,7 +468,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
                                 {
                                     if (!TargetHasEffect(Debuffs.Demolish)
-                                        || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                                        || GetDebuffRemainingTime(Debuffs.Demolish) <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
                                     {
                                         if (!OnTargetsRear())
                                             return All.TrueNorth;
@@ -546,7 +544,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 bool demolishFirst = !TargetHasEffect(Debuffs.Demolish);
                                 if (!demolishFirst && HasEffect(Buffs.DisciplinedFist))
                                 {
-                                    demolishFirst = twinsnakeDuration >= demolishDuration;
+                                    demolishFirst = GetBuffRemainingTime(Buffs.DisciplinedFist) >= GetDebuffRemainingTime(Debuffs.Demolish);
                                 }
 
                                 return demolishFirst
@@ -557,10 +555,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canSolar && (lunarNadi || !solarNadi))
                         {
-                            if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= 2.5))
+                            if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || GetBuffRemainingTime(Buffs.DisciplinedFist) <= 2.5))
                                 return TwinSnakes;
 
-                            if (!coeurlChakra && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= 2.5))
+                            if (!coeurlChakra && (!TargetHasEffect(Debuffs.Demolish) || GetDebuffRemainingTime(Debuffs.Demolish) <= 2.5))
                                 return Demolish;
                         }
 
@@ -588,7 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!LevelChecked(TrueStrike)) 
                             return Bootshine;
 
-                        return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
+                        return !LevelChecked(TwinSnakes) || (GetBuffRemainingTime(Buffs.DisciplinedFist) >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
                             ? TrueStrike
                             : TwinSnakes;
                     }
@@ -597,7 +595,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         return !LevelChecked(SnapPunch)
                             ? Bootshine
-                            : !LevelChecked(Demolish) || (demolishDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                            : !LevelChecked(Demolish) || (GetDebuffRemainingTime(Debuffs.Demolish) >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
                                 ? SnapPunch
                                 : Demolish;
                     }
