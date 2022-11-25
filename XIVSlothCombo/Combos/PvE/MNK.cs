@@ -673,18 +673,10 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_HowlingFistMeditation;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is HowlingFist or Enlightenment)
-                {
-                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
-
-                    if (gauge.Chakra < 5)
-                        return Meditation;
-                }
-
-                return actionID;
-            }
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is HowlingFist or Enlightenment && GetJobGauge<MNKGauge>().Chakra < 5
+                    ? Meditation
+                    : actionID;
         }
     }
 }
