@@ -145,7 +145,7 @@ namespace XIVSlothCombo.Core
         #region Custom Float Values
 
         [JsonProperty]
-        public static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
+        internal  static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
 
         /// <summary> Gets a custom float value. </summary>
         public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
@@ -167,7 +167,7 @@ namespace XIVSlothCombo.Core
         #region Custom Int Values
 
         [JsonProperty]
-        public static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
+        internal  static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
 
         /// <summary> Gets a custom integer value. </summary>
         public static int GetCustomIntValue(string config, int defaultMinVal = 0)
@@ -182,14 +182,14 @@ namespace XIVSlothCombo.Core
         }
 
         /// <summary> Sets a custom integer value. </summary>
-        public static void SetCustomIntValue(string config, int value) => CustomIntValues[config] = value;
+        internal  static void SetCustomIntValue(string config, int value) => CustomIntValues[config] = value;
 
         #endregion
 
         #region Custom Bool Values
 
         [JsonProperty]
-        public static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
+        internal  static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
         /// <summary> Gets a custom boolean value. </summary>
         public static bool GetCustomBoolValue(string config)
@@ -211,7 +211,7 @@ namespace XIVSlothCombo.Core
         #region Custom Bool Array Values
 
         [JsonProperty]
-        public static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
+        internal  static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
 
         /// <summary> Gets a custom boolean array value. </summary>
         public static bool[] GetCustomBoolArrayValue(string config)
