@@ -114,19 +114,13 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!inCombat)
                     {
                         if (gauge.Chakra < 5 && level >= Levels.Meditation)
-                        {
                             return Meditation;
-                        }
 
                         if (level >= Levels.FormShift && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
-                        {
                             return FormShift;
-                        }
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
-                        {
                             return Thunderclap;
-                        }
                     }
 
                     if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
@@ -143,9 +137,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs))
                         {
                             if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
-                            {
                                 return RiddleOfFire;
-                            }
 
                             if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_PerfectBalance) && level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
                             {
@@ -160,26 +152,22 @@ namespace XIVSlothCombo.Combos.PvE
                                     (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                                     (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
-                                {
                                     return PerfectBalance;
-                                }
                             }
 
                             if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_Brotherhood) && level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood))
-                            {
                                 return Brotherhood;
-                            }
 
                             if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_RiddleOfWind) && level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
-                            {
                                 return RiddleOfWind;
-                            }
                         }
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
                             level < Levels.TwinSnakes) && canWeaveChakra)
                         {
-                            return level >= Levels.Enlightenment ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
+                            return level >= Levels.Enlightenment
+                                ? OriginalHook(Enlightenment)
+                                : OriginalHook(Meditation);
                         }
 
                         // healing - please move if not appropriate this high priority
@@ -195,9 +183,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Masterful Blitz
                     if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_MasterfulBlitz) &&
                         level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
-                    {
                         return OriginalHook(MasterfulBlitz);
-                    }
 
                     // Perfect Balance
                     if (HasEffect(Buffs.PerfectBalance))
@@ -205,9 +191,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (nadiNONE || !lunarNadi)
                         {
                             if (pbStacks?.StackCount > 0)
-                            {
-                                return level >= Levels.ShadowOfTheDestroyer ? ShadowOfTheDestroyer : Rockbreaker;
-                            }
+                                return level >= Levels.ShadowOfTheDestroyer
+                                    ? ShadowOfTheDestroyer
+                                    : Rockbreaker;
                         }
 
                         if (lunarNadi)
@@ -226,19 +212,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Monk Rotation
                     if (HasEffect(Buffs.OpoOpoForm))
-                    {
-                        return OriginalHook(ArmOfTheDestroyer);
-                    }
+                    return OriginalHook(ArmOfTheDestroyer);
 
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.FourPointFury)
-                    {
-                        return FourPointFury;
-                    }
+                    return FourPointFury;
 
                     if (HasEffect(Buffs.CoerlForm) && level >= Levels.Rockbreaker)
-                    {
-                        return Rockbreaker;
-                    }
+                    return Rockbreaker;
                 }
 
                 return actionID;
@@ -282,11 +262,10 @@ namespace XIVSlothCombo.Combos.PvE
                     float disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
 
                     if (level >= Levels.TrueStrike)
-                    {
-                        return (!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes)
+                    return (!disciplinedFistBuff && level >= Levels.TwinSnakes) ||
+                            (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes)
                             ? TwinSnakes
                             : TrueStrike;
-                    }
                 }
 
                 return actionID;
@@ -302,16 +281,14 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID == Bootshine)
                 {
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
-                    {
-                        return !HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes ? TwinSnakes : TrueStrike;
-                    }
+                    return !HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes
+                            ? TwinSnakes
+                            : TrueStrike;
 
                     if (HasEffect(Buffs.CoerlForm) && level >= Levels.SnapPunch)
-                    {
-                        return !TargetHasEffect(Debuffs.Demolish) && level >= Levels.Demolish
+                    return !TargetHasEffect(Debuffs.Demolish) && level >= Levels.Demolish
                             ? Demolish
                             : SnapPunch;
-                    }
 
                     return !HasEffect(Buffs.LeadenFist) && HasEffect(Buffs.OpoOpoForm) && level >= Levels.DragonKick
                         ? DragonKick
@@ -328,11 +305,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == PerfectBalance)
-                {
-                    if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= Levels.MasterfulBlitz)
-                        return OriginalHook(MasterfulBlitz);
-                }
+                if (actionID == PerfectBalance && OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= Levels.MasterfulBlitz)
+                    return OriginalHook(MasterfulBlitz);
 
                 return actionID;
             }
@@ -415,25 +389,17 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         if (level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire) &&
                                            (lastComboMove == Bootshine || lastComboMove == DragonKick))
-                                        {
                                             return Brotherhood;
-                                        }
 
                                         if (GetRemainingCharges(PerfectBalance) > 0 && !HasEffect(Buffs.PerfectBalance) && !HasEffect(Buffs.FormlessFist) &&
                                            (lastComboMove == Bootshine || lastComboMove == DragonKick) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
-                                        {
                                             return PerfectBalance;
-                                        }
 
                                         if (level >= Levels.RiddleOfWind && HasEffect(Buffs.PerfectBalance) && !IsOnCooldown(RiddleOfWind))
-                                        {
                                             return RiddleOfWind;
-                                        }
 
                                         if (gauge.Chakra == 5)
-                                        {
                                             return OriginalHook(Meditation);
-                                        }
                                     }
 
                                     // healing - please move if not appropriate this high priority
@@ -460,19 +426,13 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!inCombat)
                     {
                         if (!inOpener && gauge.Chakra < 5 && level >= Levels.Meditation)
-                        {
                             return Meditation;
-                        }
 
                         if (!inOpener && level >= Levels.FormShift && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
-                        {
                             return FormShift;
-                        }
 
                         if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
-                        {
                             return Thunderclap;
-                        }
                     }
 
                     // Buffs
@@ -506,18 +466,14 @@ namespace XIVSlothCombo.Combos.PvE
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) > 40) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 6) ||
                                         (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) < 10)))
-                                    {
                                         return PerfectBalance;
-                                    }
                                 }
                             }
 
                             if (canDelayedWeave)
                             {
                                 if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
-                                {
                                     return RiddleOfFire;
-                                }
 
                                 if (TargetNeedsPositionals() && IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && LevelChecked(All.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
                                 {
@@ -535,15 +491,11 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_Brotherhood) && level >= Levels.Brotherhood &&
                                    !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire))
-                                {
                                     return Brotherhood;
-                                }
 
                                 if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_RiddleOfWind) && level >= Levels.RiddleOfWind &&
                                    !IsOnCooldown(RiddleOfWind) && IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
-                                {
                                     return RiddleOfWind;
-                                }
 
                                 // healing - please move if not appropriate this high priority
                                 if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
@@ -560,10 +512,10 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
                             {
-                                if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
-                                {
+                                if (level < Levels.RiddleOfFire ||
+                                    !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) ||
+                                    (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                     return OriginalHook(Meditation);
-                                }
                             }
                         }
                     }
@@ -584,14 +536,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (opoopoChakra)
                         {
                             if (coeurlChakra)
-                            {
                                 return TwinSnakes;
-                            }
 
                             if (raptorChakra)
-                            {
                                 return Demolish;
-                            }
 
                             if (lunarNadi && !solarNadi)
                             {
@@ -608,14 +556,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (canSolar && (lunarNadi || !solarNadi))
                         {
                             if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= 2.5))
-                            {
                                 return TwinSnakes;
-                            }
 
                             if (!coeurlChakra && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= 2.5))
-                            {
                                 return Demolish;
-                            }
                         }
 
                         return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
@@ -623,9 +567,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Monk Rotation
                     if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
-                    {
                         return Meditation;
-                    }
 
                     if (!HasEffect(Buffs.PerfectBalance))
                     {
@@ -640,9 +582,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
                     {
                         if (!LevelChecked(TrueStrike)) 
-                        {
                             return Bootshine;
-                        }
 
                         return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
                             ? TrueStrike
@@ -675,6 +615,7 @@ namespace XIVSlothCombo.Combos.PvE
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     bool nadiNONE = gauge.Nadi == Nadi.NONE;
+
                     if (!nadiNONE && !lunarNadi)
                     {
                         if (pbStacks?.StackCount == 3)
@@ -739,9 +680,7 @@ namespace XIVSlothCombo.Combos.PvE
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
 
                     if (gauge.Chakra < 5)
-                    {
                         return Meditation;
-                    }
                 }
 
                 return actionID;
