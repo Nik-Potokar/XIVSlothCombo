@@ -81,8 +81,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
                 {
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
-                    bool canWeave = CanWeave(actionID, 0.5);
-                    bool canWeaveChakra = CanWeave(actionID);
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     bool nadiNONE = gauge.Nadi == Nadi.NONE;
@@ -150,19 +148,20 @@ namespace XIVSlothCombo.Combos.PvE
                             LevelChecked(Meditation) &&
                             gauge.Chakra == 5 &&
                             (HasEffect(Buffs.DisciplinedFist) ||
-                            !LevelChecked(TwinSnakes)) && canWeaveChakra)
+                            !LevelChecked(TwinSnakes)) && CanWeave(actionID))
                         {
                             return LevelChecked(Enlightenment)
                                 ? OriginalHook(Enlightenment)
                                 : OriginalHook(Meditation);
                         }
 
-                        // healing - please move if not appropriate this high priority
+                        // Panic Heals
                         if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                         {
                             if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) &&
                                 ActionReady(All.SecondWind))
                                 return All.SecondWind;
+
                             if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoEBloodbathThreshold) &&
                                 ActionReady(All.Bloodbath))
                                 return All.Bloodbath;
@@ -200,7 +199,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // Monk Rotation
+                    // Base Rotation
                     if (HasEffect(Buffs.OpoOpoForm))
                         return OriginalHook(ArmOfTheDestroyer);
 
@@ -319,7 +318,7 @@ namespace XIVSlothCombo.Combos.PvE
                         PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
                         return Variant.VariantCure;
 
-                    // Opener for MNK
+                    // Opener
                     if (IsEnabled(CustomComboPreset.MNK_ST_Simple_LunarSolarOpener))
                     {
                         // Re-enter opener when Brotherhood is used
@@ -381,7 +380,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return OriginalHook(Meditation);
                                     }
 
-                                    // healing - please move if not appropriate this high priority
+                                    // Panic Heals
                                     if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                                     {
                                         if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) &&
@@ -396,7 +395,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             else
                             {
-                                // Automatically exit opener if we don't have Riddle of Fire
+                                // Automatically exit opener Riddle of Fire is unavailable
                                 inOpener = false;
                                 openerFinished = true;
                             }
@@ -489,7 +488,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
                                     return RiddleOfWind;
 
-                                // healing - please move if not appropriate this high priority
+                                // Panic Heals
                                 if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                                 {
                                     if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) &&
@@ -566,8 +565,11 @@ namespace XIVSlothCombo.Combos.PvE
                             : DragonKick;
                     }
 
-                    // Monk Rotation
-                    if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
+                    // Out of range Meditation re-up
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) &&
+                        !InMeleeRange() &&
+                        gauge.Chakra < 5 &&
+                        LevelChecked(Meditation))
                         return Meditation;
 
                     if (!HasEffect(Buffs.PerfectBalance))
