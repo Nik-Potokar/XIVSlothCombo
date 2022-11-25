@@ -107,7 +107,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Buffs
-                    if (InCombat() && canWeave)
+                    if (InCombat() && CanWeave(actionID, 0.5))
                     {
                         if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
                             IsEnabled(Variant.VariantRampart) &&
@@ -311,7 +311,6 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     bool canWeave = CanWeave(actionID, 0.5);
-                    bool canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
                     float twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
                     float demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
@@ -362,11 +361,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Delayed weave for Riddle of Fire specifically
-                                if (canDelayedWeave && (HasEffect(Buffs.CoerlForm) ||
+                                if (CanDelayedWeave(actionID, 1.25, 0.5) && (HasEffect(Buffs.CoerlForm) ||
                                     lastComboMove == TwinSnakes) && IsOffCooldown(RiddleOfFire))
                                     return RiddleOfFire;
 
-                                if (canWeave)
+                                if (CanWeave(actionID, 0.5))
                                 {
                                     if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 59)
                                     {
@@ -432,12 +431,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
                             IsEnabled(Variant.VariantRampart) &&
                             IsOffCooldown(Variant.VariantRampart) &&
-                            canWeave)
+                            CanWeave(actionID))
                             return Variant.VariantRampart;
 
                         if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs))
                         {
-                            if (canWeave)
+                            if (CanWeave(actionID, 0.5))
                             {
 
                                 if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_PerfectBalance) && !HasEffect(Buffs.FormlessFist) &&
@@ -461,7 +460,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (canDelayedWeave)
+                            if (CanDelayedWeave(actionID, 1.25, 0.5))
                             {
                                 if (LevelChecked(RiddleOfFire) && IsOffCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
                                     return RiddleOfFire;
@@ -481,7 +480,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (canWeave)
+                            if (CanWeave(actionID, 0.5))
                             {
                                 if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_Brotherhood) &&
                                     ActionReady(Brotherhood) &&
@@ -506,7 +505,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (canWeave)
+                        if (CanWeave(actionID, 0.5))
                         {
                             if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) &&
                                 LevelChecked(Meditation) && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
