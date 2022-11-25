@@ -209,6 +209,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return level >= Levels.ShadowOfTheDestroyer ? ShadowOfTheDestroyer : Rockbreaker;
                             }
                         }
+
                         if (lunarNadi)
                         {
                             switch (pbStacks?.StackCount)
@@ -239,6 +240,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Rockbreaker;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -286,6 +288,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return TrueStrike;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -586,10 +589,12 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return TwinSnakes;
                             }
+
                             if (raptorChakra)
                             {
                                 return Demolish;
                             }
+
                             if (lunarNadi && !solarNadi)
                             {
                                 bool demolishFirst = !TargetHasEffect(Debuffs.Demolish);
@@ -597,20 +602,24 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     demolishFirst = twinsnakeDuration >= demolishDuration;
                                 }
+
                                 return demolishFirst ? Demolish : TwinSnakes;
                             }
                         }
+
                         if (canSolar && (lunarNadi || !solarNadi))
                         {
                             if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= 2.5))
                             {
                                 return TwinSnakes;
                             }
+
                             if (!coeurlChakra && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= 2.5))
                             {
                                 return Demolish;
                             }
                         }
+
                         return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
                     }
 
@@ -641,6 +650,7 @@ namespace XIVSlothCombo.Combos.PvE
                             ? TrueStrike
                             : TwinSnakes;
                     }
+
                     if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
                     {
                         return !LevelChecked(SnapPunch)
@@ -650,6 +660,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Demolish;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -701,8 +712,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (pbStacks?.StackCount == 1)
                             return Demolish;
                     }
-
                 }
+
                 return actionID;
             }
         }
@@ -734,6 +745,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Meditation;
                     }
                 }
+
                 return actionID;
             }
         }
