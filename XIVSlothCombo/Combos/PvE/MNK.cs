@@ -247,13 +247,11 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is TrueStrike)
-                {
-                    if (LevelChecked(TrueStrike) && LevelChecked(TwinSnakes))
-                        return ((!HasEffect(Buffs.DisciplinedFist)) || (GetBuffRemainingTime(Buffs.DisciplinedFist) < 6))
-                            ? TwinSnakes
-                            : TrueStrike;
-                }
+                if (actionID is TrueStrike &&
+                    LevelChecked(TrueStrike) && LevelChecked(TwinSnakes))
+                    return ((!HasEffect(Buffs.DisciplinedFist)) || (GetBuffRemainingTime(Buffs.DisciplinedFist) < 6))
+                        ? TwinSnakes
+                        : TrueStrike;
 
                 return actionID;
             }
