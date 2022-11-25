@@ -313,13 +313,12 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_PerfectBalance;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == PerfectBalance && OriginalHook(MasterfulBlitz) != MasterfulBlitz && LevelChecked(MasterfulBlitz))
-                    return OriginalHook(MasterfulBlitz);
-
-                return actionID;
-            }
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID == PerfectBalance &&
+                OriginalHook(MasterfulBlitz) != MasterfulBlitz &&
+                LevelChecked(MasterfulBlitz)
+                    ? OriginalHook(MasterfulBlitz)
+                    : actionID;
         }
 
         internal class MNK_ST_SimpleMode : CustomCombo
