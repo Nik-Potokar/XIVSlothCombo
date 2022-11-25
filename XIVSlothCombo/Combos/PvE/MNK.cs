@@ -101,7 +101,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == ArmOfTheDestroyer || actionID == ShadowOfTheDestroyer)
+                if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
                 {
                     bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
@@ -736,7 +736,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == HowlingFist || actionID == Enlightenment)
+                if (actionID is HowlingFist or Enlightenment)
                 {
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
 
