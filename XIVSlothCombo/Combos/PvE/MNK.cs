@@ -60,29 +60,6 @@ namespace XIVSlothCombo.Combos.PvE
                 Demolish = 246;
         }
 
-        public static class Levels
-        {
-            public const byte
-                TrueStrike = 4,
-                SnapPunch = 6,
-                Meditation = 15,
-                TwinSnakes = 18,
-                ArmOfTheDestroyer = 26,
-                Rockbreaker = 30,
-                Demolish = 30,
-                FourPointFury = 45,
-                HowlingFist = 40,
-                DragonKick = 50,
-                PerfectBalance = 50,
-                FormShift = 52,
-                MasterfulBlitz = 60,
-                RiddleOfFire = 68,
-                Enlightenment = 70,
-                Brotherhood = 70,
-                RiddleOfWind = 72,
-                ShadowOfTheDestroyer = 82;
-        }
-
         public static class Config
         {
             public const string
