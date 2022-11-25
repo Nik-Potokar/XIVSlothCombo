@@ -734,7 +734,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Tactician
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Tactician))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Tactician) && CanWeave(actionID,0.8))
                     { 
                         if (CombatEngageDuration().Minutes == 0 && CombatEngageDuration().Seconds >= 0 && CombatEngageDuration().Seconds <= 9 )
                         {

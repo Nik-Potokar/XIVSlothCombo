@@ -603,33 +603,33 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CurrentState == OpenerState.InOpener)
                 {
                     bool inLateWeaveWindow = CustomComboFunctions.CanDelayedWeave(GustSlash, 1, 0);
-
-                    if (CustomComboFunctions.WasLastAction(Kassatsu) && OpenerStep == 1) OpenerStep++;
-                    else if (OpenerStep == 1) actionID = CustomComboFunctions.OriginalHook(Kassatsu);
-
-                    if (CustomComboFunctions.WasLastAction(SpinningEdge) && OpenerStep == 2) OpenerStep++;
-                    else if (OpenerStep == 2) actionID = CustomComboFunctions.OriginalHook(SpinningEdge);
-
-                    if (CustomComboFunctions.PrimedPotion == 0 && OpenerStep == 3) OpenerStep++;
+                    
+                    if (CustomComboFunctions.PrimedPotion == 0 && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 3) actionID = CustomComboFunctions.ReturnSetPotion(Config.BalanceOpenerPotion, ref actionID);
 
+                    if (CustomComboFunctions.WasLastAction(Kassatsu) && OpenerStep == 2) OpenerStep++;
+                    else if (OpenerStep == 1) actionID = CustomComboFunctions.OriginalHook(SplitShot);
+
+                    if (CustomComboFunctions.WasLastAction(SpinningEdge) && OpenerStep == 3) OpenerStep++;
+                    else if (OpenerStep == 2) actionID = CustomComboFunctions.OriginalHook(GaussRound);
+
                     if (CustomComboFunctions.WasLastAction(GustSlash) && OpenerStep == 4) OpenerStep++;
-                    else if (OpenerStep == 4) actionID = CustomComboFunctions.OriginalHook(GustSlash);
+                    else if (OpenerStep == 4) actionID = CustomComboFunctions.OriginalHook(Ricochet);
 
                     if (CustomComboFunctions.WasLastAction(Mug) && OpenerStep == 5) OpenerStep++;
-                    else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Mug);
+                    else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Drill);
 
                     if (CustomComboFunctions.WasLastAction(Bunshin) && OpenerStep == 6) OpenerStep++;
-                    else if (OpenerStep == 6) actionID = CustomComboFunctions.OriginalHook(Bunshin);
+                    else if (OpenerStep == 6) actionID = CustomComboFunctions.OriginalHook(BarrelStabilizer);
 
                     if (CustomComboFunctions.WasLastAction(PhantomKamaitachi) && OpenerStep == 7) OpenerStep++;
-                    else if (OpenerStep == 7) actionID = CustomComboFunctions.OriginalHook(PhantomKamaitachi);
+                    else if (OpenerStep == 7) actionID = CustomComboFunctions.OriginalHook(SlugShot);
 
                     if (CustomComboFunctions.WasLastAction(TrickAttack) && OpenerStep == 8) OpenerStep++;
-                    else if (OpenerStep == 8 && inLateWeaveWindow) actionID = CustomComboFunctions.OriginalHook(TrickAttack);
+                    else if (OpenerStep == 8 && inLateWeaveWindow) actionID = CustomComboFunctions.OriginalHook(Ricochet);
 
                     if (CustomComboFunctions.WasLastAction(AeolianEdge) && OpenerStep == 9) OpenerStep++;
-                    else if (OpenerStep == 9) actionID = CustomComboFunctions.OriginalHook(AeolianEdge);
+                    else if (OpenerStep == 9) actionID = CustomComboFunctions.OriginalHook(CleanShot);
 
                     if (CustomComboFunctions.WasLastAction(DreamWithinADream) && OpenerStep == 10) OpenerStep++;
                     else if (OpenerStep == 10) actionID = CustomComboFunctions.OriginalHook(DreamWithinADream);
