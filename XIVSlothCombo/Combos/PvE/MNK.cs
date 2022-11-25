@@ -94,8 +94,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return FormShift;
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) &&
-                            !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) ||
-                            HasEffect(Buffs.FormlessFist)))
+                            !InMeleeRange() &&
+                            gauge.Chakra == 5 &&
+                            (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                             return Thunderclap;
                     }
 
@@ -114,7 +115,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs))
                         {
-                            if (LevelChecked(RiddleOfFire) && IsOffCooldown(RiddleOfFire))
+                            if (ActionReady(RiddleOfFire))
                                 return RiddleOfFire;
 
                             if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_PerfectBalance) &&
@@ -365,7 +366,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 59)
                                     {
-                                        if (LevelChecked(Brotherhood) && IsOffCooldown(Brotherhood) &&
+                                        if (ActionReady(Brotherhood) &&
                                            (lastComboMove == Bootshine || lastComboMove == DragonKick))
                                             return Brotherhood;
 
@@ -373,7 +374,7 @@ namespace XIVSlothCombo.Combos.PvE
                                            (lastComboMove == Bootshine || lastComboMove == DragonKick) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
                                             return PerfectBalance;
 
-                                        if (LevelChecked(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) && IsOffCooldown(RiddleOfWind))
+                                        if (ActionReady(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) )
                                             return RiddleOfWind;
 
                                         if (gauge.Chakra == 5)
@@ -458,11 +459,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (CanDelayedWeave(actionID, 1.25, 0.5))
                             {
-                                if (LevelChecked(RiddleOfFire) && IsOffCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
+                                if (ActionReady(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
                                     return RiddleOfFire;
 
                                 if (TargetNeedsPositionals() && IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) &&
-                                    LevelChecked(All.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) &&
+                                    ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) &&
                                     LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
                                 {
                                     if (!TargetHasEffect(Debuffs.Demolish)
@@ -504,8 +505,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CanWeave(actionID, 0.5))
                         {
                             if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) &&
-                                LevelChecked(Meditation) && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
-                                !LevelChecked(TwinSnakes)))
+                                LevelChecked(Meditation) &&
+                                gauge.Chakra == 5 &&
+                                (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
                             {
                                 if (!LevelChecked(RiddleOfFire) ||
                                     !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) ||
@@ -665,7 +667,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_Riddle_Brotherhood;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is RiddleOfFire && LevelChecked(Brotherhood) && IsOnCooldown(RiddleOfFire) && IsOffCooldown(Brotherhood)
+                actionID is RiddleOfFire && ActionReady(Brotherhood) && IsOnCooldown(RiddleOfFire) 
                     ? Brotherhood
                     : actionID;
         }
