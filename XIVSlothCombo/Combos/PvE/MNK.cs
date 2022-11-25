@@ -143,7 +143,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(RiddleOfFire) && IsOffCooldown(RiddleOfFire))
                                 return RiddleOfFire;
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_PerfectBalance) && LevelChecked(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_PerfectBalance) &&
+                                LevelChecked(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) &&
+                                OriginalHook(MasterfulBlitz) == MasterfulBlitz)
                             {
                                 // Use Perfect Balance if:
                                 // 1. It's after Bootshine/Dragon Kick.
@@ -159,10 +161,12 @@ namespace XIVSlothCombo.Combos.PvE
                                     return PerfectBalance;
                             }
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_Brotherhood) && LevelChecked(Brotherhood) && IsOffCooldown(Brotherhood))
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_Brotherhood) &&
+                                ActionReady(Brotherhood))
                                 return Brotherhood;
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_RiddleOfWind) && LevelChecked(RiddleOfWind) && IsOffCooldown(RiddleOfWind))
+                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_RiddleOfWind) &&
+                                ActionReady(RiddleOfWind))
                                 return RiddleOfWind;
                         }
 
@@ -222,7 +226,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Monk Rotation
                     if (HasEffect(Buffs.OpoOpoForm))
-                    return OriginalHook(ArmOfTheDestroyer);
+                        return OriginalHook(ArmOfTheDestroyer);
 
                     if (HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury))
                         return FourPointFury;
@@ -269,11 +273,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == TrueStrike)
                 {
-                    bool disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
-                    float disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
-
                     if (LevelChecked(TrueStrike) && LevelChecked(TwinSnakes))
-                        return ((!disciplinedFistBuff) || (disciplinedFistDuration < 6))
+                        return ((!HasEffect(Buffs.DisciplinedFist)) || (GetBuffRemainingTime(Buffs.DisciplinedFist) < 6))
                             ? TwinSnakes
                             : TrueStrike;
                 }
