@@ -283,9 +283,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (level >= Levels.TrueStrike)
                     {
-                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes))
-                            return TwinSnakes;
-                        return TrueStrike;
+                        return (!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes)
+                            ? TwinSnakes
+                            : TrueStrike;
                     }
                 }
 
@@ -303,21 +303,19 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
                     {
-                        if (!HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes)
-                            return TwinSnakes;
-                        return TrueStrike;
+                        return !HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes ? TwinSnakes : TrueStrike;
                     }
 
                     if (HasEffect(Buffs.CoerlForm) && level >= Levels.SnapPunch)
                     {
-                        if (!TargetHasEffect(Debuffs.Demolish) && level >= Levels.Demolish)
-                            return Demolish;
-                        return SnapPunch;
+                        return !TargetHasEffect(Debuffs.Demolish) && level >= Levels.Demolish
+                            ? Demolish
+                            : SnapPunch;
                     }
 
-                    if (!HasEffect(Buffs.LeadenFist) && HasEffect(Buffs.OpoOpoForm) && level >= Levels.DragonKick)
-                        return DragonKick;
-                    return Bootshine;
+                    return !HasEffect(Buffs.LeadenFist) && HasEffect(Buffs.OpoOpoForm) && level >= Levels.DragonKick
+                        ? DragonKick
+                        : Bootshine;
                 }
 
                 return actionID;
@@ -724,9 +722,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is RiddleOfFire && level >= Levels.Brotherhood && IsOnCooldown(RiddleOfFire) && IsOffCooldown(Brotherhood))
-                    return Brotherhood;
-                else return actionID;
+                return actionID is RiddleOfFire && level >= Levels.Brotherhood && IsOnCooldown(RiddleOfFire) && IsOffCooldown(Brotherhood)
+                    ? Brotherhood
+                    : actionID;
             }
         }
 
