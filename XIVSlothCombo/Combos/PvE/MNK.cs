@@ -174,7 +174,7 @@ namespace XIVSlothCombo.Combos.PvE
                             LevelChecked(Meditation) &&
                             gauge.Chakra == 5 &&
                             (HasEffect(Buffs.DisciplinedFist) ||
-                            level < Levels.TwinSnakes) && canWeaveChakra)
+                            !LevelChecked(TwinSnakes)) && canWeaveChakra)
                         {
                             return LevelChecked(Enlightenment)
                                 ? OriginalHook(Enlightenment)
@@ -257,7 +257,7 @@ namespace XIVSlothCombo.Combos.PvE
                         HasEffect(Buffs.OpoOpoForm)))
                         return Bootshine;
 
-                    if (level < Levels.DragonKick)
+                    if (!LevelChecked(DragonKick))
                         return Bootshine;
                 }
 
@@ -535,9 +535,9 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) &&
                                 LevelChecked(Meditation) && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
-                                level < Levels.TwinSnakes))
+                                !LevelChecked(TwinSnakes)))
                             {
-                                if (level < Levels.RiddleOfFire ||
+                                if (!LevelChecked(RiddleOfFire) ||
                                     !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) ||
                                     (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                     return OriginalHook(Meditation);
