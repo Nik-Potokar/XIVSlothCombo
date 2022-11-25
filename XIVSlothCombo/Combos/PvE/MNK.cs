@@ -574,8 +574,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
                         {
                             return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
-                                ? MNK.Bootshine
-                                : MNK.DragonKick;
+                                ? Bootshine
+                                : DragonKick;
                         }
                     }
 
