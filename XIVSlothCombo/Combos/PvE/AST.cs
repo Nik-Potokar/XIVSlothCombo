@@ -11,7 +11,6 @@ using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -140,28 +139,25 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal static class Config
+        public static class Config
         {
-            internal const string
-                AST_LucidDreaming = "ASTLucidDreamingFeature",
-                AST_EssentialDignity = "ASTCustomEssentialDignity",
-                AST_DPS_AltMode = "AST_DPS_AltMode",
-                AST_DPS_DivinationOption = "AST_DPS_DivinationOption",
-                AST_DPS_LightSpeedOption = "AST_DPS_LightSpeedOption",
-                AST_DPS_CombustOption = "AST_DPS_CombustOption";
+            internal static UserInt
+                AST_LucidDreaming = new("ASTLucidDreamingFeature"),
+                AST_EssentialDignity = new("ASTCustomEssentialDignity"),
+                AST_DPS_AltMode = new("AST_DPS_AltMode"),
+                AST_DPS_DivinationOption = new("AST_DPS_DivinationOption"),
+                AST_DPS_LightSpeedOption = new("AST_DPS_LightSpeedOption"),
+                AST_DPS_CombustOption = new("AST_DPS_CombustOption"),
+                AST_QuickTarget_Override = new("AST_QuickTarget_Override"),
+                AST_ST_DPS_Play_SpeedSetting = new("AST_ST_DPS_Play_SpeedSetting");
             internal static UserBool
+                AST_QuickTarget_SkipDamageDown = new("AST_QuickTarget_SkipDamageDown"),
+                AST_QuickTarget_SkipRezWeakness = new("AST_QuickTarget_SkipRezWeakness"),
                 AST_ST_SimpleHeals_Adv = new("AST_ST_SimpleHeals_Adv"),
-                AST_ST_SimpleHeals_UIMouseOver = new("AST_ST_SimpleHeals_UIMouseOver");
-
-            internal static bool AST_ST_DPS_CombustUptime_Adv => PluginConfiguration.GetCustomBoolValue(nameof(AST_ST_DPS_CombustUptime_Adv));
-            internal static float AST_ST_DPS_CombustUptime_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(AST_ST_DPS_CombustUptime_Threshold));
-
-            internal static int AST_QuickTarget_Override => PluginConfiguration.GetCustomIntValue(nameof(AST_QuickTarget_Override));
-
-            internal static bool AST_QuickTarget_SkipDamageDown => PluginConfiguration.GetCustomBoolValue(nameof(AST_QuickTarget_SkipDamageDown));
-            internal static bool AST_QuickTarget_SkipRezWeakness => PluginConfiguration.GetCustomBoolValue(nameof(AST_QuickTarget_SkipRezWeakness));
-
-            internal static int AST_ST_DPS_Play_SpeedSetting => PluginConfiguration.GetCustomIntValue(nameof(AST_ST_DPS_Play_SpeedSetting));
+                AST_ST_SimpleHeals_UIMouseOver = new("AST_ST_SimpleHeals_UIMouseOver"),
+                AST_ST_DPS_CombustUptime_Adv = new("AST_ST_DPS_CombustUptime_Adv");
+            internal static UserFloat 
+                AST_ST_DPS_CombustUptime_Threshold = new("AST_ST_DPS_CombustUptime_Threshold");
         }
 
         internal class AST_Cards_DrawOnPlay : CustomCombo
@@ -371,13 +367,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.AST_DPS_LightSpeed) &&
                         ActionReady(Lightspeed) &&
-                        GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_LightSpeedOption) &&
+                        GetTargetHPPercent() > Config.AST_DPS_LightSpeedOption &&
                         CanSpellWeave(actionID))
                         return Lightspeed;
 
                     if (IsEnabled(CustomComboPreset.AST_DPS_Lucid) &&
                         ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= GetOptionValue(Config.AST_LucidDreaming) &&
+                        LocalPlayer.CurrentMp <= Config.AST_LucidDreaming &&
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
 
@@ -420,7 +416,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_DPS_Divination) &&
                         ActionReady(Divination) &&
                         !HasEffectAny(Buffs.Divination) && //Overwrite protection
-                        GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_DivinationOption) &&
+                        GetTargetHPPercent() > Config.AST_DPS_DivinationOption &&
                         CanDelayedWeave(actionID) &&
                         ActionWatching.NumberOfGcdsUsed >= 3)
                         return Divination;
@@ -452,7 +448,7 @@ namespace XIVSlothCombo.Combos.PvE
 
 
                             if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
-                                GetTargetHPPercent() > GetOptionValue(Config.AST_DPS_CombustOption))
+                                GetTargetHPPercent() > Config.AST_DPS_CombustOption)
                                 return dot;
 
                             //AlterateMode idles as Malefic
@@ -534,6 +530,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //Grab our target (Soft->Hard->Self)
                     GameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
 
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Esuna) && ActionReady(All.Esuna) &&
+                        HasCleansableDebuff(healTarget))
+                        return All.Esuna;
+
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_AspectedBenefic) && ActionReady(AspectedBenefic))
                     {
                         Status? aspectedBeneficHoT = FindEffect(Buffs.AspectedBenefic, healTarget, LocalPlayer?.ObjectId);
@@ -546,7 +546,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
                         ActionReady(EssentialDignity) &&
-                        GetTargetHPPercent(healTarget) <= GetOptionValue(Config.AST_EssentialDignity) &&
+                        GetTargetHPPercent(healTarget) <= Config.AST_EssentialDignity &&
                         CanSpellWeave(actionID))
                         return EssentialDignity;
 
