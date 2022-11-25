@@ -12,6 +12,7 @@ using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using Dalamud.Interface;
 using Dalamud.Interface.Style;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -1224,6 +1225,25 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
 
+            if (preset is CustomComboPreset.AST_Cards_QuickTargetCards)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "No Override", "", 0);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "Hard Target Override", "Overrides selection with hard target if you have one", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "UI Mousover Override", "Overrides selection with UI mouseover target if you have one", 2);
+
+                ImGui.Spacing();
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipDamageDown), $"Skip targets with a {ActionWatching.GetStatusName(62)} debuff", "");
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipRezWeakness), $"Skip targets with a {ActionWatching.GetStatusName(43)} or {ActionWatching.GetStatusName(44)} debuff", "");
+            }
+
+            if (preset is CustomComboPreset.AST_DPS_AutoPlay)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Fast (1 DPS GCD minimum delay)", "", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Medium (2 DPS GCD minimum delay)", "", 2);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Slow (3 DPS GCD minimum delay)", "", 3);
+
+            }
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE
@@ -1893,7 +1913,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SAM_ST_Execute)
             {
-                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to use Shinten below", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to use Shinten and Ogi Namikiri below", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.SAM_Variant_Cure)

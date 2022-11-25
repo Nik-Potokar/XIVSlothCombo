@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.JobGauge.Enums;
+﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using FFXIVClientStructs.FFXIV.Client.Graphics.Scene;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
-using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
+using XIVSlothCombo.Combos.PvE;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -20,23 +13,23 @@ namespace XIVSlothCombo.Combos.JobHelpers
     {
         internal class DelayedOpener : PvE.MCH
         {
-            ///<summary> Checks if the player is able to use the Special Opener. </summary>
-            private bool CanSpecialOpener()
+            ///<summary> Checks if the player is able to use the Heavy buff allignment Opener. </summary>
+            private bool CanDelayedOpener()
             {
-                var gcd = CustomComboFunctions.GetCooldown(HeatedSplitShot).CooldownTotal;
-                if (gcd == 0.5) return true;
+                if (CustomComboFunctions.GetRemainingCharges(GaussRound) == 3
+                 && CustomComboFunctions.GetRemainingCharges(Ricochet) == 3
+                 && CustomComboFunctions.IsOffCooldown(Drill)
+                 && CustomComboFunctions.IsOffCooldown(BarrelStabilizer)
+                 && CustomComboFunctions.GetRemainingCharges(Reassemble) == 2
+                 && CustomComboFunctions.IsOffCooldown(AirAnchor)
+                 && CustomComboFunctions.IsOffCooldown(Wildfire)
+                 && CustomComboFunctions.IsOffCooldown(ChainSaw) 
+                 && !Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat]
+                    )
+                    return true;
 
-                if (CustomComboFunctions.GetRemainingCharges(GaussRound) < 3 ||
-                    CustomComboFunctions.GetRemainingCharges(Ricochet) < 3 ||
-                    CustomComboFunctions.GetRemainingCharges(Reassemble) < 2 ||
-                    CustomComboFunctions.IsOnCooldown(Drill) || 
-                    CustomComboFunctions.IsOnCooldown(AirAnchor) ||
-                    CustomComboFunctions.IsOnCooldown(ChainSaw) ||
-                    CustomComboFunctions.IsOnCooldown(BarrelStabilizer) ||
-                    CustomComboFunctions.IsOnCooldown(Wildfire))
-                    return false;
-
-                return true;
+                if (Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                return false;
             }
 
             private MCHOpenerState currentMCHOpener = MCHOpenerState.NoneReady;

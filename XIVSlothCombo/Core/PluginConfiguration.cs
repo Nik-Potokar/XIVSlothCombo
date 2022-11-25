@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Dalamud.Configuration;
 using Dalamud.Utility;
 using Newtonsoft.Json;
@@ -88,24 +89,7 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
 
-        #region Tab Options 
-
-        /// <summary> Enables PvE Tab </summary>
-        public bool HidePvEFeatures { get; set; } = false;
-
-        /// <summary> Enables PvP Tab </summary>
-        public bool HidePvPFeatures { get; set; } = false;
-
-        /// <summary> Enables Settings Tab </summary>
-        public bool HideSettings { get; set; } = false;
-        
-        /// <summary> Enables About Tab </summary>
-        public bool HideAboutSloth = true;
-
-        /// <summary> Enables Debug Tab </summary>
-        public bool HideDebug { get; set; } = false;
-
-        #endregion
+        public Vector4 TargetHighlightColor { get; set; } = new() { W = 1, X = 0.5f, Y = 0.5f, Z = 0.5f };
 
         #endregion
 
@@ -161,7 +145,7 @@ namespace XIVSlothCombo.Core
         #region Custom Float Values
 
         [JsonProperty]
-        internal static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
+        public static Dictionary<string, float> CustomFloatValues { get; set; } = new Dictionary<string, float>();
 
         /// <summary> Gets a custom float value. </summary>
         public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
@@ -183,7 +167,7 @@ namespace XIVSlothCombo.Core
         #region Custom Int Values
 
         [JsonProperty]
-        internal static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
+        public static Dictionary<string, int> CustomIntValues { get; set; } = new Dictionary<string, int>();
 
         /// <summary> Gets a custom integer value. </summary>
         public static int GetCustomIntValue(string config, int defaultMinVal = 0)
@@ -205,7 +189,7 @@ namespace XIVSlothCombo.Core
         #region Custom Bool Values
 
         [JsonProperty]
-        internal static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
+        public static Dictionary<string, bool> CustomBoolValues { get; set; } = new Dictionary<string, bool>();
 
         /// <summary> Gets a custom boolean value. </summary>
         public static bool GetCustomBoolValue(string config)
@@ -227,7 +211,7 @@ namespace XIVSlothCombo.Core
         #region Custom Bool Array Values
 
         [JsonProperty]
-        internal static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
+        public static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = new Dictionary<string, bool[]>();
 
         /// <summary> Gets a custom boolean array value. </summary>
         public static bool[] GetCustomBoolArrayValue(string config)
