@@ -1122,6 +1122,25 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
 
+            if (preset is CustomComboPreset.AST_Cards_QuickTargetCards)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "No Override", "", 0);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "Hard Target Override", "Overrides selection with hard target if you have one", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "UI Mousover Override", "Overrides selection with UI mouseover target if you have one", 2);
+
+                ImGui.Spacing();
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipDamageDown), "Skip targets with a Damage Down Debuff", "");
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipRezWeakness), "Skip targets with a Rez Weakness Debuff", "");
+            }
+
+            if (preset is CustomComboPreset.AST_DPS_AutoPlay)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Fast (1 DPS GCD minimum delay)", "", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Medium (2 DPS GCD minimum delay)", "", 2);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Slow (3 DPS GCD minimum delay)", "", 3);
+
+            }
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE
@@ -1328,10 +1347,10 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MONK
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
+            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_DisciplinedFist_Apply, "Seconds remaining before refreshing Disciplined Fist.");
 
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
@@ -1346,6 +1365,11 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
+
+            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode) || (preset == CustomComboPreset.MNK_ST_SimpleMode))
+            {
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_DemolishTreshhold, "Stop using Demolish on targets below this HP % (0% = normal use).", 150, SliderIncrements.Ones);
+            }
             if (preset == CustomComboPreset.MNK_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, MNK.Config.MNK_VariantCure, "HP% to be at or under", 200);
 
@@ -1504,42 +1528,115 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region RED MAGE
 
-            if (preset == CustomComboPreset.RDM_oGCD)
+            if (preset is CustomComboPreset.RDM_ST_oGCD)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Scatter\n-Impact", "Select for one button rotation", 3);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 4);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Riposte\n-Moulinet", "", 5);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche\n-Riposte\n-Moulinet", "", 6);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_OnAction_Adv, "Advanced Action Options.", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_oGCD_OnAction_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Jolts", "", 3, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Fleche", "", 3, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Riposte", "", 3, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
+
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_Fleche, "Fleche", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_ContraSixte, "Contra Sixte", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_Engagement, "Engagement", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_oGCD_Engagement)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_Engagement_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps, "Corp-a-Corps", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_oGCD_CorpACorps)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Melee, "Use only in melee range.", "");
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
+            if (preset is CustomComboPreset.RDM_ST_MeleeCombo)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte\n-Jolt\n-Jolt II", "Select for one button rotation", 3);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_MeleeCombo_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_MeleeCombo_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Jolts", "", 2, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Riposte", "", 2, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo)
+            if (preset is CustomComboPreset.RDM_ST_MeleeFinisher)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet\n-Scatter\n-Impact", "Select for one button rotation", 2);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_MeleeFinisher_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_MeleeFinisher_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeFinisher_OnAction, "Jolts", "", 3, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeFinisher_OnAction, "Riposte", "", 3, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeFinisher_OnAction, "VerAero & VerThunder", "", 3, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
+            if (preset is CustomComboPreset.RDM_ST_Lucid)
+                UserConfig.DrawSliderInt(0, 10000, RDM.Config.RDM_ST_Lucid_Threshold, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
+
+            // AoE
+            if (preset is CustomComboPreset.RDM_AoE_oGCD)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 2);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet\n-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 3);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Veraero 1/2/3\n-Verthunder 1/2/3", "", 4);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_Fleche, "Fleche", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_ContraSixte, "Contra Sixte", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_Engagement, "Engagement", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_oGCD_Engagement)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_Engagement_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_CorpACorps, "Corp-a-Corps", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_oGCD_CorpACorps)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_CorpACorps_Melee, "Use only in melee range.", "");
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_CorpACorps_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_Lucid && enabled)
-                UserConfig.DrawSliderInt(0, 10000, RDM.Config.RDM_Lucid_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.RDM_AoE_MeleeCombo)
+            {
+                UserConfig.DrawSliderInt(3, 8, RDM.Config.RDM_AoE_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", sliderIncrement: SliderIncrements.Ones);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_MeleeCombo_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_MeleeCombo_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "Scatter/Impact", "", 2, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "Moulinet", "", 2, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
+            }
 
-            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
-                UserConfig.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
+            if (preset is CustomComboPreset.RDM_AoE_MeleeFinisher)
+            {
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_MeleeFinisher_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_MeleeFinisher_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeFinisher_OnAction, "Scatter/Impact", "", 3, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeFinisher_OnAction, "Moulinet", "", 3, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeFinisher_OnAction, "VerAero II & VerThunder II", "", 3, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
+            }
+
+            if (preset is CustomComboPreset.RDM_AoE_Lucid)
+                UserConfig.DrawSliderInt(0, 10000, RDM.Config.RDM_AoE_Lucid_Threshold, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================
@@ -1675,7 +1772,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nUses double Yukikaze loop.", 3);
             }
-            
+
             if (preset == CustomComboPreset.SAM_ST_GekkoCombo_CDs_Iaijutsu)
             {
                 UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_Higanbana_Threshold, "Stop using Higanbana on targets below this HP % (0% = always use).", 150, SliderIncrements.Ones);
@@ -1694,7 +1791,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SAM_ST_Execute)
             {
-                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to use Shinten below", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to use Shinten and Ogi Namikiri below", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.SAM_Variant_Cure)
@@ -1706,42 +1803,50 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_DPS)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Ruin I / Broils", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown.", 1);
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_Adv, "Advanced Action Options", "Change how actions are handled", isConditionalChoice: true);
+
+                if (SCH.Config.SCH_ST_DPS_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin/Broils", "Apply options to Ruin and all Broils.", 3, 0);
+                    UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Bio/Bio II/Biolysis", "Apply options to Bio and Biolysis.", 3, 1);
+                    UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin II", "Apply options to Ruin II.", 3, 2);
+                    ImGui.Unindent();
+                }
             }
 
             if (preset is CustomComboPreset.SCH_DPS_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_DPS_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_DPS_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_DPS_Bio)
             {
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_BioOption, "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
-                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv), "Advanced Options", "", isConditionalChoice: true);
-                if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv)))
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_Bio_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (PluginConfiguration.GetCustomBoolValue(SCH.Config.SCH_ST_DPS_Bio_Adv))
                 {
                     ImGui.Indent();
-                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    UserConfig.DrawRoundedSliderFloat(0, 4, SCH.Config.SCH_ST_DPS_Bio_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
                     ImGui.Unindent();
                 }
             }
 
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_ChainStratagemOption, "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
             {
-                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv), "Advanced Options","", isConditionalChoice: true);
-                if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)))
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)
                 {
                     ImGui.Indent();
-                    UserConfig.DrawRoundedSliderFloat(0, 60, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Aetherflow remaining cooldown:", digits: 1);
+                    UserConfig.DrawRoundedSliderFloat(0, 60, SCH.Config.SCH_ST_DPS_EnergyDrain, "Aetherflow remaining cooldown:", digits: 1);
                     ImGui.Unindent();
                 }
             }
 
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_AoE_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_ST_Heal)
             {
@@ -1758,44 +1863,67 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
-            
+                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Heal_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Adloquium)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_AdloquiumOption), "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
-            
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_AdloquiumOption, "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_LustrateOption), "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_LustrateOption, "Start using when below HP %. Set to 100 to disable this check");
+
+            if (preset is CustomComboPreset.SCH_DeploymentTactics)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_DeploymentTactics_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (SCH.Config.SCH_DeploymentTactics_Adv)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_DeploymentTactics_UIMouseOver,
+                        "Party UI Mouseover Checking",
+                        "Check party member's HP & Debuffs by using mouseover on the party list.\n" +
+                        "To be used in conjunction with Redirect/Reaction/etc");
+                    ImGui.Unindent();
+                }
+            }
 
             if (preset is CustomComboPreset.SCH_FairyReminder)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_FairyFeature), "Eos", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_FairyFeature), "Selene", "", 1);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 0);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 1);
             }
 
             if (preset is CustomComboPreset.SCH_Aetherflow)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Display), "Show Aetherflow On Energy Drain Only", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Display), "Show Aetherflow On All Aetherflow Skills", "", 1);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only", "", 0);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 1);
             }
 
-            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Excog)
+            if (preset is CustomComboPreset.SCH_Aetherflow_Recite)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Excog), "Only when out of Aetherflow Stacks", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Excog), "Always when available", "", 1);
-            }
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Excog, "On Excogitation", "", isConditionalChoice: true);
+                if (SCH.Config.SCH_Aetherflow_Recite_Excog)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Only when out of Aetherflow Stacks", "", 0);
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Always when available", "", 1);
+                    ImGui.Unindent();
+                }
 
-            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Indom)
-            {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Indom), "Only when out of Aetherflow Stacks", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Indom), "Always when available", "", 1);
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Indom, "On Indominability", "", isConditionalChoice: true);
+                if (SCH.Config.SCH_Aetherflow_Recite_Indom)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_IndomMode, "Only when out of Aetherflow Stacks", "", 0);
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_IndomMode, "Always when available", "", 1);
+                    ImGui.Unindent();
+                }
             }
 
             if (preset is CustomComboPreset.SCH_Recitation)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Adloquium", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Succor", "", 1);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Indomitability", "", 2);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Excogitation", "", 3);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Adloquium", "", 0);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Succor", "", 1);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Indomitability", "", 2);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Excogitation", "", 3);
             }
 
             #endregion
@@ -1871,18 +1999,32 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
-                UserConfig.DrawAdditionalBoolChoice(nameof(WHM.Config.WHM_ST_MainCombo_DoT_Adv), "Advanced Options", "", isConditionalChoice: true);
-                if (PluginConfiguration.GetCustomBoolValue(nameof(WHM.Config.WHM_ST_MainCombo_DoT_Adv)))
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_MainCombo_DoT_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (PluginConfiguration.GetCustomBoolValue(WHM.Config.WHM_ST_MainCombo_DoT_Adv))
                 {
                     ImGui.Indent();
-                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(WHM.Config.WHM_ST_MainCombo_DoT_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    UserConfig.DrawRoundedSliderFloat(0, 4, WHM.Config.WHM_ST_MainCombo_DoT_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
                     ImGui.Unindent();
                 }
             }
-            
+
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
-            
+
+            if (preset is CustomComboPreset.WHM_Afflatus)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_Afflatus_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (WHM.Config.WHM_Afflatus_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_Afflatus_UIMouseOver,
+                        "Party UI Mouseover Checking",
+                        "Check party member's HP & Debuffs by using mouseover on the party list.\n" +
+                        "To be used in conjunction with Redirect/Reaction/etc");
+                    ImGui.Unindent();
+                }
+            }
+
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% to use Tetragrammaton on target at:");
 

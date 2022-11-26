@@ -1,8 +1,10 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -76,8 +78,12 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_oGCDHeals = "WHMogcdHealsShieldsFeature",
                 WHM_Medica_ThinAir = "WHM_Medica_ThinAir";
 
-            internal static bool WHM_ST_MainCombo_DoT_Adv => PluginConfiguration.GetCustomBoolValue(nameof(WHM_ST_MainCombo_DoT_Adv));
-            internal static float WHM_ST_MainCombo_DoT_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(WHM_ST_MainCombo_DoT_Threshold));
+            internal static UserBool
+                WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
+                WHM_Afflatus_Adv = new("WHM_Afflatus_Adv"),
+                WHM_Afflatus_UIMouseOver = new("WHM_Afflatus_UIMouseOver");
+            internal static UserFloat
+                WHM_ST_MainCombo_DoT_Threshold = new("WHM_ST_MainCombo_DoT_Threshold");
         }
 
         internal class WHM_SolaceMisery : CustomCombo
@@ -132,17 +138,23 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Cure2)
                 {
                     bool benisonPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison);
-                    bool benisonReady = LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
-                    bool benisonJustUsed = GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29;
+                    bool benisonReady = ActionReady(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
+                    bool benisonJustUsed = GetRemainingCharges(DivineBenison) == 2 || GetRemainingCharges(DivineBenison) <= 29;
                     bool tetraPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra);
-                    bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
                     int tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
+
+                    //Grab our target (Soft->Hard->Self)
+                    GameObject? healTarget = GetHealTarget(Config.WHM_Afflatus_Adv && Config.WHM_Afflatus_UIMouseOver);
+
+                    if (IsEnabled(CustomComboPreset.WHM_Cure2_Esuna) && ActionReady(All.Esuna) &&
+                        HasCleansableDebuff(healTarget))
+                        return All.Esuna;
 
                     // Are these first two statements supposed to return 'actionID'?
                     // Seems like a weird condition set to return Cure II. -k
                     if (benisonPrioFeatureEnabled && benisonReady && benisonJustUsed)
                         return actionID;
-                    if (tetraPrioFeatureEnabled && tetraReady && GetTargetHPPercent() <= tetraHP)
+                    if (tetraPrioFeatureEnabled && ActionReady(Tetragrammaton) && GetTargetHPPercent(healTarget) <= tetraHP)
                         return actionID;
                     else if (IsEnabled(CustomComboPreset.WHM_Cure2_Misery) && BloodLilies == 3)
                         return AfflatusMisery;

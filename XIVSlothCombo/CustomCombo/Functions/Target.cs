@@ -94,7 +94,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         public static float PlayerHealthPercentageHp() => (float)LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
 
-        public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
+        public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy or (BattleNpcSubKind)1;
 
         public static bool HasFriendlyTarget(GameObject? OurTarget = null)
         {
@@ -106,24 +106,24 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                     return false;
             }
 
-            //Humans
+            //Humans and Trusts
             if (OurTarget.ObjectKind is ObjectKind.Player)
                 return true;
             //AI
-            if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy;
+            if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
             return false;
         }
 
         /// <summary> Grabs healable target. Checks Soft Target then Hard Target. 
         /// If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
         /// <returns> GameObject of a player target. </returns>
-        public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false)
+        public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
         {
             GameObject? healTarget = null;
             TargetManager tm = Service.TargetManager;
-            
+
             if (HasFriendlyTarget(tm.SoftTarget)) healTarget = tm.SoftTarget;
-            if (healTarget is null && HasFriendlyTarget(CurrentTarget)) healTarget = CurrentTarget;
+            if (healTarget is null && HasFriendlyTarget(CurrentTarget) && !restrictToMouseover) healTarget = CurrentTarget;
             //if (checkMO && HasFriendlyTarget(tm.MouseOverTarget)) healTarget = tm.MouseOverTarget;
             if (checkMOPartyUI)
             {
@@ -131,9 +131,12 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 if (t != null)
                 {
                     long o = PartyTargetingService.GetObjectID(t);
-                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.ObjectId == o).First();
+                    GameObject? uiTarget = Service.ObjectTable.Where(x => x.ObjectId == o).First();
                     if (HasFriendlyTarget(uiTarget)) healTarget = uiTarget;
                 }
+
+                if (restrictToMouseover)
+                    return healTarget;
             }
             healTarget ??= LocalPlayer;
             return healTarget;
@@ -191,7 +194,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (IsInRange(target)) SetTarget(target);
         }
 
-        protected unsafe static StructsObject.GameObject* GetTarget(TargetType target)
+        public unsafe static StructsObject.GameObject* GetTarget(TargetType target)
         {
             GameObject? o = null;
 
@@ -270,7 +273,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public float angleToTarget()
         {
             if (CurrentTarget is null || LocalPlayer is null)
-               return 0;
+                return 0;
 
             if (CurrentTarget is not BattleChara chara || CurrentTarget.ObjectKind != Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
                 return 0;
@@ -279,20 +282,25 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
             var regionDegrees = PositionalMath.Degrees(angle);
-            if(regionDegrees < 0) {
+            if (regionDegrees < 0)
+            {
                 regionDegrees = 360 + regionDegrees;
             }
 
-            if( ( regionDegrees >= 45 ) && ( regionDegrees <= 135 ) ) {
+            if ((regionDegrees >= 45) && (regionDegrees <= 135))
+            {
                 return 1;
             }
-            if( ( regionDegrees >= 135 ) && ( regionDegrees <= 225 ) ) {
+            if ((regionDegrees >= 135) && (regionDegrees <= 225))
+            {
                 return 2;
             }
-            if( ( regionDegrees >= 225 ) && ( regionDegrees <= 315 ) ) {
+            if ((regionDegrees >= 225) && (regionDegrees <= 315))
+            {
                 return 3;
             }
-            if( ( regionDegrees >= 315 ) || ( regionDegrees <= 45 ) ) {
+            if ((regionDegrees >= 315) || (regionDegrees <= 45))
+            {
                 return 4;
             }
             return 0;
@@ -314,13 +322,15 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
             var regionDegrees = PositionalMath.Degrees(angle);
-            if( regionDegrees < 0 ) {
+            if (regionDegrees < 0)
+            {
                 regionDegrees = 360 + regionDegrees;
             }
 
-            if( ( regionDegrees >= 135 ) && ( regionDegrees <= 225 ) ) {
+            if ((regionDegrees >= 135) && (regionDegrees <= 225))
+            {
                 return true;
-            }            
+            }
             return false;
         }
 
@@ -340,16 +350,19 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
             var regionDegrees = PositionalMath.Degrees(angle);
-            if( regionDegrees < 0 ) {
+            if (regionDegrees < 0)
+            {
                 regionDegrees = 360 + regionDegrees;
             }
 
             // left flank
-            if( ( regionDegrees >= 45 ) && ( regionDegrees <= 135 ) ) {
+            if ((regionDegrees >= 45) && (regionDegrees <= 135))
+            {
                 return true;
             }
             // right flank
-            if( ( regionDegrees >= 225 ) && ( regionDegrees <= 315 ) ) {            
+            if ((regionDegrees >= 225) && (regionDegrees <= 315))
+            {
                 return true;
             }
             return false;
@@ -373,6 +386,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 return (float)Math.Atan2(b.X - a.X, b.Z - a.Z);
             }
         }
-    
+
+        internal unsafe static bool OutOfRange(uint actionID, GameObject target) => ActionWatching.OutOfRange(actionID, (StructsObject.GameObject*)Service.ClientState.LocalPlayer.Address, (StructsObject.GameObject*)target.Address);
+
     }
 }

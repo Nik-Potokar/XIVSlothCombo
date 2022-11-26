@@ -150,7 +150,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var enemyHP = GetTargetHPPercent();
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
 
-                    
+
                     if (!InCombat())
                     {
                         hasDied = false;
@@ -537,7 +537,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_OgiNamikiri_Burst))
                                         {
-                                            if (hasDied || nonOpener || (meikyostacks is 1 or 2 && GetDebuffRemainingTime(Debuffs.Higanbana) >= 45 && HasEffect(Buffs.MeikyoShisui)) || GetCooldownRemainingTime(Ikishoten) <= 105)
+                                            if (hasDied || nonOpener || (meikyostacks is 1 or 2 && GetDebuffRemainingTime(Debuffs.Higanbana) >= 45 && HasEffect(Buffs.MeikyoShisui)) || GetCooldownRemainingTime(Ikishoten) <= 105 || enemyHP < executeThreshold)
                                                 return OriginalHook(OgiNamikiri);
                                         }
                                     }
@@ -664,7 +664,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Hagakure) && OriginalHook(Iaijutsu) == Setsugekka && LevelChecked(Hagakure))
                             return Hagakure;
-                      
+
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Guren) && ActionReady(Guren) && gauge.Kenki >= 25)
                             return Guren;
 
@@ -975,4 +975,3 @@ namespace XIVSlothCombo.Combos.PvE
         }
     }
 }
-

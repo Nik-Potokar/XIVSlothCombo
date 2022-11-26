@@ -1,9 +1,10 @@
 ﻿using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
-    internal static class All
+    internal class All
     {
         public const byte JobID = 99;
 
@@ -64,6 +65,18 @@ namespace XIVSlothCombo.Combos.PvE
                 Feint = 1195;
         }
 
+        /// <summary>
+        /// Quick Level, Offcooldown, spellweave, and MP check of Lucid Dreaming
+        /// </summary>
+        /// <param name="actionID">action id to check weave</param>
+        /// <param name="MPThreshold">Player MP less than Threshold check</param>
+        /// <param name="weave">Spell Weave check by default</param>
+        /// <returns></returns>
+        public static bool CanUseLucid(uint actionID, int MPThreshold, bool weave = true) =>
+            CustomComboFunctions.ActionReady(LucidDreaming)
+            && CustomComboFunctions.LocalPlayer.CurrentMp <= MPThreshold
+            && (weave && CustomComboFunctions.CanSpellWeave(actionID));
+
         internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_IslandSanctuary_Sprint;
@@ -119,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro) 
+                if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro)
                     || (actionID is SCH.Resurrection && LocalPlayer.ClassJob.Id is SCH.JobID))
                 {
                     if (ActionReady(Swiftcast))
@@ -158,7 +171,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if ((actionID is BLU.AngelWhisper or RDM.Verraise) 
+                if ((actionID is BLU.AngelWhisper or RDM.Verraise)
                     || (actionID is SMN.Resurrection && LocalPlayer.ClassJob.Id is SMN.JobID))
                 {
                     if (HasEffect(Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
@@ -227,9 +240,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is FootGraze && CanInterruptEnemy() && ActionReady(HeadGraze) ) ? HeadGraze : actionID;
+                return (actionID is FootGraze && CanInterruptEnemy() && ActionReady(HeadGraze)) ? HeadGraze : actionID;
             }
         }
     }
 }
-

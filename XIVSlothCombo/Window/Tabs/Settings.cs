@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using ImGuiNET;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Tabs
@@ -131,6 +132,18 @@ namespace XIVSlothCombo.Window.Tabs
 
             #endregion
 
+            Vector4 colour = Service.Configuration.TargetHighlightColor;
+            if (ImGui.ColorEdit4("Target Highlight Colour", ref colour, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaPreview | ImGuiColorEditFlags.AlphaBar))
+            {
+                Service.Configuration.TargetHighlightColor = colour;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted($"Used for {CustomComboInfoAttribute.JobIDToName(33)} card targeting features.\r\nSet Alpha to 0 to hide the box.");
+            }
             ImGui.EndChild();
         }
     }
