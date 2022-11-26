@@ -79,21 +79,27 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Spacing();
 
             UserConfigItems.Draw(preset, enabled);
-            if (potionAttr != null)
+            if (potionAttr != null && enabled)
             {
                 ImGui.Indent();
                 if (potionAttr.Potions.Count > 0)
                 {
                     ImGui.PushItemWidth(300);
                     potionAttr.Potions.TryGetValue((uint)PluginConfiguration.GetCustomIntValue(potionAttr.Config), out var preview);
-                    if (preview is null) preview = "";
+                    if (preview is null) preview = "None";
 
                     if (ImGui.BeginCombo("Select Potion", preview))
                     {
+                        bool selected = ImGui.Selectable("None", PluginConfiguration.GetCustomIntValue(potionAttr.Config) == 0);
+
+                        if (selected)
+                        {
+                            PluginConfiguration.SetCustomIntValue(potionAttr.Config, 0);
+                            Service.Configuration.Save();
+                        }
                         foreach (var pot in potionAttr.Potions.OrderBy(x => x.Key))
                         {
-                            bool selected = ImGui.Selectable(pot.Value, pot.Key == PluginConfiguration.GetCustomIntValue(potionAttr.Config));
-
+                            selected = ImGui.Selectable(pot.Value, pot.Key == PluginConfiguration.GetCustomIntValue(potionAttr.Config));
                             if (selected)
                             {
                                 PluginConfiguration.SetCustomIntValue(potionAttr.Config, (int)pot.Key);

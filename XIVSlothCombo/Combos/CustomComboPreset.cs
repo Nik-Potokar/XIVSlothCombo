@@ -2873,9 +2873,9 @@ namespace XIVSlothCombo.Combos
                     [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.\nIf you don't activate the opener or die, Senei will instead be used on CD.", SAM.JobID, 0, "", "")]
                     SAM_ST_GekkoCombo_CDs_Senei_Burst = 15017,
 
-        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-        [CustomComboInfo("Execute Feature", "Adds Ogi Namikiri and Shinten to the main combo when your current target is below the HP percentage threshold.", SAM.JobID, 0, "", "")]
-        SAM_ST_Execute = 15046,
+            [ParentCombo(SAM_ST_GekkoCombo_CDs)]
+            [CustomComboInfo("Execute Feature", "Adds Ogi Namikiri and Shinten to the main combo when your current target is below the HP percentage threshold.", SAM.JobID, 0, "", "")]
+            SAM_ST_Execute = 15046,
         #endregion
 
         #endregion

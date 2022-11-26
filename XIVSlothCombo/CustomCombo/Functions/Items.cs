@@ -13,12 +13,17 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             .ToDictionary(i => i.RowId, i => i);
 
         internal static uint PrimedPotion { get; set; }
-        internal static uint ReturnSetPotion(string config, ref uint actionID)
+        internal static bool ReturnSetPotion(string config, ref uint actionID)
         {
             if (SetPrimePotion(config))
-            actionID = 16436;
-
-            return actionID;
+            {
+                actionID = 16436;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         internal static bool SetPrimePotion(string config)
