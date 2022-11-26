@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Dalamud.Game.ClientState.Objects;
+using Dalamud.Hooking;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
+using Lumina.Excel.GeneratedSheets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Dalamud.Hooking;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using XIVSlothCombo.Services;
-using Lumina.Excel.GeneratedSheets;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
 {
@@ -28,7 +31,7 @@ namespace XIVSlothCombo.Data
 
         private static readonly Dictionary<string, List<uint>> statusCache = new();
 
-        internal static List<uint> CombatActions = new();
+        internal readonly static List<uint> CombatActions = new();
 
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
@@ -78,10 +81,11 @@ namespace XIVSlothCombo.Data
 
         private delegate void SendActionDelegate(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9);
         private static readonly Hook<SendActionDelegate>? SendActionHook;
-        private static void SendActionDetour(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
+        private unsafe static void SendActionDetour(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
         {
             try
             {
+                CheckForChangedTarget(actionId, ref targetObjectId);
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
                 TimeLastActionUsed = DateTime.Now;
                 ActionType = actionType;
@@ -95,22 +99,39 @@ namespace XIVSlothCombo.Data
             }
         }
 
-        public unsafe delegate byte UseActionDelegate(ActionManager* actionManager, uint actionType, uint actionID, long targetObjectID, uint param, uint useType, int pvp, bool* isGroundTarget);
-        public static Hook<UseActionDelegate> UseActionHook;
-
-        private static unsafe byte UseActionDetour(ActionManager* actionManager, uint actionType, uint actionID, long targetObjectID, uint param, uint useType, int pvp, bool* isGroundTarget)
+        private unsafe static void CheckForChangedTarget(uint actionId, ref long targetObjectId)
         {
-            var adjustedActionID = actionType == 1 ? actionManager->GetAdjustedActionId(actionID) : actionID;
-            if (actionID <= 7)
-                return UseActionHook!.Original(actionManager, actionType, actionID, targetObjectID, param, useType, pvp, isGroundTarget);
-
-            if (adjustedActionID is 16436)
+            if (actionId is AST.Balance or AST.Bole or AST.Ewer or AST.Arrow or AST.Spire or AST.Spear &&
+                AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
+                !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)AST.AST_QuickTargetCards.SelectedRandomMember.Address))
             {
-                actionID = CustomComboFunctions.PrimedPotion;
-                actionType = 2;
-                param = 65535;
+                var targetOptions = AST.Config.AST_QuickTarget_Override;
+
+                switch (targetOptions)
+                {
+                    case 0:
+                        targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        break;
+                    case 1:
+                        if (Service.ClientState.LocalPlayer.TargetObject is not null)
+                            targetObjectId = Service.ClientState.LocalPlayer.TargetObject.ObjectId;
+                        else
+                            targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        break;
+                    case 2:
+                        if (CustomComboFunctions.GetHealTarget(true, true) is not null)
+                            targetObjectId = CustomComboFunctions.GetHealTarget(true, true).ObjectId;
+                        else
+                            targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        break;
+                }
+
             }
-            return UseActionHook!.Original(actionManager, actionType, actionID, targetObjectID, param, useType, pvp, isGroundTarget);
+        }
+
+        public static unsafe bool OutOfRange(uint actionId, GameObject* source, GameObject* target)
+        {
+            return ActionManager.GetActionInRangeOrLoS(actionId, source, target) is 566;
         }
 
         public static uint WhichOfTheseActionsWasLast(params uint[] actions)
@@ -148,6 +169,7 @@ namespace XIVSlothCombo.Data
             return count;
         }
 
+        public static int NumberOfGcdsUsed => CombatActions.Count(x => GetAttackType(x) == ActionAttackType.Weaponskill || GetAttackType(x) == ActionAttackType.Spell);
         public static uint LastAction { get; set; } = 0;
         public static int LastActionUseCount { get; set; } = 0;
         public static uint ActionType { get; set; } = 0;
@@ -168,30 +190,25 @@ namespace XIVSlothCombo.Data
         {
             ReceiveActionEffectHook?.Dispose();
             SendActionHook?.Dispose();
-            UseActionHook?.Dispose();
         }
 
         static unsafe ActionWatching()
         {
             ReceiveActionEffectHook ??= Hook<ReceiveActionEffectDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00"), ReceiveActionEffectDetour);
             SendActionHook ??= Hook<SendActionDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
-            UseActionHook ??= Hook<UseActionDelegate>.FromAddress((IntPtr)ActionManager.fpUseAction, UseActionDetour);
         }
-
 
 
         public static void Enable()
         {
             ReceiveActionEffectHook?.Enable();
             SendActionHook?.Enable();
-            UseActionHook?.Enable();
         }
 
         public static void Disable()
         {
             ReceiveActionEffectHook.Disable();
             SendActionHook?.Disable();
-            UseActionHook?.Disable();
         }
 
         public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;
@@ -232,20 +249,6 @@ namespace XIVSlothCombo.Data
             Weaponskill,
             Unknown
         }
-    }
-
-    internal unsafe static class ActionManagerHelper
-    {
-        private static readonly IntPtr actionMgrPtr;
-        internal static IntPtr FpUseAction => (IntPtr)ActionManager.fpUseAction;
-        internal static IntPtr FpUseActionLocation => (IntPtr)ActionManager.fpUseActionLocation;
-        internal static IntPtr CheckActionResources => (IntPtr)ActionManager.fpCheckActionResources;
-        public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;
-        public static ushort LastRecievedSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x112) : (ushort)0;
-        public static bool IsCasting => actionMgrPtr != IntPtr.Zero && Marshal.ReadByte(actionMgrPtr + 0x28) != 0;
-        public static uint CastingActionId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x24) : 0u;
-        public static uint CastTargetObjectId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x38) : 0u;
-        static ActionManagerHelper() => actionMgrPtr = (IntPtr)ActionManager.Instance();
     }
 
     [StructLayout(LayoutKind.Explicit)]

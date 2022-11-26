@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.Attributes;
+﻿using Dalamud.Utility;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 
@@ -199,21 +200,28 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "", "")]
             AST_DPS_Divination = 1016,
 
-            [ConflictingCombos(AST_Cards_DrawOnPlay_AutoCardTarget)]
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
             AST_DPS_AutoDraw = 1011,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "", "")]
+            [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID, 6)]
+            AST_DPS_AutoPlay = 1037,
+
+            [ParentCombo(AST_ST_DPS)]
+            [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID, 7)]
+            AST_DPS_AutoPlay_Redraw = 1038,
+
+            [ParentCombo(AST_ST_DPS)]
+            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 8, "", "")]
             AST_DPS_Astrodyne = 1009,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 7, "", "")]
+            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 9, "", "")]
             AST_DPS_AutoCrownDraw = 1012,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "", "")]
+            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 10, "", "")]
             AST_DPS_LazyLord = 1014,
             #endregion
 
@@ -282,38 +290,23 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "", "")]
         AST_Cards_DrawOnPlay = 1000,
 
-            [ConflictingCombos(AST_DPS_AutoDraw)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
-            AST_Cards_DrawOnPlay_AutoCardTarget = 1029,
-
-                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
-                [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
-                AST_Cards_DrawOnPlay_TargetLock = 1030,
-
-                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
-                [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
-                AST_Cards_DrawOnPlay_TargetExtra = 1031,
-
             [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
             AST_Cards_Redraw = 1032,
 
-            [ConflictingCombos(AST_Cards_DrawOnPlay_ReFocusTarget)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
-            AST_Cards_DrawOnPlay_ReTargetPrev = 1033,
-
-            [ConflictingCombos(AST_Cards_DrawOnPlay_ReTargetPrev)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
-            AST_Cards_DrawOnPlay_ReFocusTarget = 1034,
 
         [ReplaceSkill(AST.Play)]
         //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
         //Do not do ConflictingCombos with AST_Cards_DrawOnPlay
         [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "", "")]
         AST_Cards_AstrodyneOnPlay = 1015,
+
+        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        AST_Cards_QuickTargetCards = 1029,
+
+        [ParentCombo(AST_Cards_QuickTargetCards)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
+        AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
         //Last number used is 36
@@ -961,7 +954,7 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(DNC_AoE_SimpleMode)]
             [CustomComboInfo("Simple AoE Improvisation Option", "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 10, "", "")]
             DNC_AoE_Simple_Improvisation = 4080,
-            #endregion
+        #endregion
 
         #region Variant
         [Variant]
@@ -1514,7 +1507,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
         MCH_ST_AutoBarrel = 8019,
 
-        //[Potion("TESTPOTION", PotionType.Dexterity)]
+        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
         [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
@@ -1572,9 +1565,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Only use Chain Saw Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8034, */
 
-        [ParentCombo(MCH_ST_Simple_Stabilizer)]
-        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
+        // [ParentCombo(MCH_ST_Simple_Stabilizer)]
+        // [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
+        // MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
 
     /*  [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("High Ping Mode Option", "A high-ping-friendly mode.\nIt limits the uses of Gauss Round/Ricochet inside Hypercharge windows to prevent drift.\nExpect a small DPS loss when using this feature.", MCH.JobID, 0, "", "")]
@@ -1625,16 +1618,16 @@ namespace XIVSlothCombo.Combos
         #region General Raid Opener
 
         
-        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
-        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Advanced Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
-        MCH_ST_AdvancedMode = 8800,
+        // [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
+        // [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        // [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
+        // [CustomComboInfo("Advanced Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
+        // MCH_ST_AdvancedMode = 8800,
 
-        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
-        [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Balance Opener Option", "Attempt to create the General opener found on the balance.", MCH.JobID)]
-        MCH_ST_AdvancedMode_Balance_General_Opener = 8801,
+        // [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
+        // [ParentCombo(MCH_ST_AdvancedMode)]
+        // [CustomComboInfo("Balance Opener Option", "Attempt to create the General opener found on the balance.", MCH.JobID)]
+        // MCH_ST_AdvancedMode_Balance_General_Opener = 8801,
 
         #endregion General Raid Opener
         
@@ -2880,8 +2873,8 @@ namespace XIVSlothCombo.Combos
                     [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.\nIf you don't activate the opener or die, Senei will instead be used on CD.", SAM.JobID, 0, "", "")]
                     SAM_ST_GekkoCombo_CDs_Senei_Burst = 15017,
 
-        [ParentCombo(SAM_ST_Overcap)]
-        [CustomComboInfo("Execute Feature", "Adds Shinten to the main combo when Kenki > 25 and your current target is below the HP percentage threshold.", SAM.JobID, 0, "", "")]
+        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
+        [CustomComboInfo("Execute Feature", "Adds Ogi Namikiri and Shinten to the main combo when your current target is below the HP percentage threshold.", SAM.JobID, 0, "", "")]
         SAM_ST_Execute = 15046,
         #endregion
 

@@ -104,7 +104,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MNKGauge>();
-                    var canWeave = CanWeave(actionID, 0.5);
+                    var canWeave = CanWeave(actionID, 0.6);
                     var canWeaveChakra = CanWeave(actionID);
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
@@ -191,12 +191,15 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // Masterful Blitz
-                    if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_MasterfulBlitz) &&
-                        level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
-                    {
+                    // Masterful Blitz ElixirField/RisingPhoenix
+                    if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance)
+                        && (OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix) && ((!IsMoving && GetTargetDistance() < 4.5f) || (IsMoving && GetTargetDistance() < 4)))
                         return OriginalHook(MasterfulBlitz);
-                    }
+
+                    // Masterful Blitz
+                    if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance)
+                        && OriginalHook(MasterfulBlitz) != MasterfulBlitz && !(OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix))
+                        return OriginalHook(MasterfulBlitz);
 
                     // Perfect Balance
                     if (HasEffect(Buffs.PerfectBalance))
@@ -349,7 +352,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MNKGauge>();
-                    var canWeave = CanWeave(actionID, 0.5);
+                    var canWeave = CanWeave(actionID,0.6);
                     var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
                     var twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
                     var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
@@ -401,7 +404,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 // Delayed weave for Riddle of Fire specifically
                                 if (canDelayedWeave)
                                 {
-                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire))
+                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire) && InMeleeRange())
                                     {
                                         return RiddleOfFire;
                                     }
@@ -512,7 +515,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (canDelayedWeave)
                             {
-                                if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
+                                if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist) && InMeleeRange())
                                 {
                                     return RiddleOfFire;
                                 }
@@ -556,7 +559,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
+                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
                             {
                                 if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
@@ -567,10 +570,20 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Masterful Blitz
-                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
-                    {
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance)
+                        && (OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix) && ((!IsMoving && GetTargetDistance() < 4.5f) || (IsMoving && GetTargetDistance() < 4)))
                         return OriginalHook(MasterfulBlitz);
+
+                    // Meditation Uptime
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
+                    {
+                        return Meditation;
                     }
+
+                    // Masterful Blitz
+                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance)
+                        && OriginalHook(MasterfulBlitz) != MasterfulBlitz && !(OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix))
+                        return OriginalHook(MasterfulBlitz);
 
                     // Perfect Balance
                     if (HasEffect(Buffs.PerfectBalance))
