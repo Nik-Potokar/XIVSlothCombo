@@ -1507,7 +1507,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
         MCH_ST_AutoBarrel = 8019,
 
-        //[Potion("TESTPOTION", PotionType.Dexterity)]
+        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
         [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
@@ -1565,9 +1565,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Only use Chain Saw Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8034, */
 
-        [ParentCombo(MCH_ST_Simple_Stabilizer)]
-        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
+        // [ParentCombo(MCH_ST_Simple_Stabilizer)]
+        // [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use.", MCH.JobID, 0, "", "")]
+        // MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
 
     /*  [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("High Ping Mode Option", "A high-ping-friendly mode.\nIt limits the uses of Gauss Round/Ricochet inside Hypercharge windows to prevent drift.\nExpect a small DPS loss when using this feature.", MCH.JobID, 0, "", "")]
@@ -1618,16 +1618,16 @@ namespace XIVSlothCombo.Combos
         #region General Raid Opener
 
         
-        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
-        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Advanced Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
-        MCH_ST_AdvancedMode = 8800,
+        // [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
+        // [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        // [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
+        // [CustomComboInfo("Advanced Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
+        // MCH_ST_AdvancedMode = 8800,
 
-        [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
-        [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Balance Opener Option", "Attempt to create the General opener found on the balance.", MCH.JobID)]
-        MCH_ST_AdvancedMode_Balance_General_Opener = 8801,
+        // [Potion(MCH.Config.BalanceOpenerPotion, PotionType.Dexterity)]
+        // [ParentCombo(MCH_ST_AdvancedMode)]
+        // [CustomComboInfo("Balance Opener Option", "Attempt to create the General opener found on the balance.", MCH.JobID)]
+        // MCH_ST_AdvancedMode_Balance_General_Opener = 8801,
 
         #endregion General Raid Opener
         
