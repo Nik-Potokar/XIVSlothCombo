@@ -119,29 +119,6 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
             return false;
         }
-        
-        public static bool HasDamageDown()
-        {
-            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(62)))
-            {
-                if (HasEffectAny((ushort)status)) return true;
-            }
-
-            return false;
-        }
-        public static bool HasRezWeakness()
-        {
-            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(43)))
-            {
-                if (HasEffectAny((ushort)status)) return true;
-            }
-            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(44)))
-            {
-                if (HasEffectAny((ushort)status)) return true;
-            }
-
-            return false;
-        }
 
         public static bool TargetHasDamageDown(GameObject? target)
         {

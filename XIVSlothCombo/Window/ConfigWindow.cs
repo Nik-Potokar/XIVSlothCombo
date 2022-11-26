@@ -24,11 +24,6 @@ using XIVSlothCombo.Window.Functions;
 using XIVSlothCombo.Window.Tabs;
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
-
-
-
-
-
 namespace XIVSlothCombo.Window
 {
     /// <summary> Plugin configuration window. </summary>
