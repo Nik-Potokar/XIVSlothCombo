@@ -59,6 +59,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="desktop.ini" />
 	  <None Remove="resources\banner.png" />
 	  <None Remove="Window\Resources\banner.png" />
 	</ItemGroup>
