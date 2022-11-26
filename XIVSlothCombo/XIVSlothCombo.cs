@@ -67,7 +67,6 @@ namespace XIVSlothCombo
 
             configWindow = new();
 
-            // Service.Interface.UiBuilder.Draw += DrawImage;
             Service.Interface.UiBuilder.Draw += DrawUI;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
 

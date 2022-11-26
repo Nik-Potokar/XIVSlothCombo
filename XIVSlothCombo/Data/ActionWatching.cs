@@ -198,7 +198,6 @@ namespace XIVSlothCombo.Data
             SendActionHook ??= Hook<SendActionDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
         }
 
-
         public static void Enable()
         {
             ReceiveActionEffectHook?.Enable();
@@ -249,6 +248,20 @@ namespace XIVSlothCombo.Data
             Weaponskill,
             Unknown
         }
+    }
+
+    internal unsafe static class ActionManagerHelper
+    {
+        private static readonly IntPtr actionMgrPtr;
+        internal static IntPtr FpUseAction => (IntPtr)ActionManager.fpUseAction;
+        internal static IntPtr FpUseActionLocation => (IntPtr)ActionManager.fpUseActionLocation;
+        internal static IntPtr CheckActionResources => (IntPtr)ActionManager.fpCheckActionResources;
+        public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;
+        public static ushort LastRecievedSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x112) : (ushort)0;
+        public static bool IsCasting => actionMgrPtr != IntPtr.Zero && Marshal.ReadByte(actionMgrPtr + 0x28) != 0;
+        public static uint CastingActionId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x24) : 0u;
+        public static uint CastTargetObjectId => actionMgrPtr != IntPtr.Zero ? (uint)Marshal.ReadInt32(actionMgrPtr + 0x38) : 0u;
+        static ActionManagerHelper() => actionMgrPtr = (IntPtr)ActionManager.Instance();
     }
 
     [StructLayout(LayoutKind.Explicit)]

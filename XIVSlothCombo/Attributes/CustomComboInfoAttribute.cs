@@ -65,7 +65,6 @@ namespace XIVSlothCombo.Attributes
             }
         }
 
-
         private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
 
         public static string JobIDToName(byte key)
@@ -87,7 +86,7 @@ namespace XIVSlothCombo.Attributes
                 };
                 TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;
                 jobname = textInfo.ToTitleCase(jobname);
-                if (key is 0) jobname = " " + jobname; //Adding space to the front of Global moves it to the top. Shit hack but works
+                //if (key is 0) jobname = " " + jobname; //Adding space to the front of Global moves it to the top. Shit hack but works
                 return jobname;
 
             } //Misc or unknown

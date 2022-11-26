@@ -92,17 +92,9 @@ namespace XIVSlothCombo.Window
         {
             RespectCloseHotkey = true;
 
-         // var size = new Vector2(100 * fontScale, 100 * fontScale);
             SizeCondition = ImGuiCond.FirstUseEver;
-            Size = new Vector2(830, 570); 
-
-        /*  SizeConstraints = new WindowSizeConstraints
-            {
-                    MinimumSize = new Vector2(830, 570),
-                    MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
-            }; */
-
-        } 
+            Size = new Vector2(740, 490);
+        }
 
         public override void Draw()
         {
