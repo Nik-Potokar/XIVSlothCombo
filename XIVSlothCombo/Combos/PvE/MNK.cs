@@ -108,7 +108,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Bootshine)
                 {
                     var demolishTreshold = PluginConfiguration.GetCustomIntValue(Config.MNK_DemolishTreshhold);
-                    float enemyHP = GetTargetHPPercent();
                     float twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
                     float demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
                     var demolishApply = PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply);
@@ -139,7 +138,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         return !LevelChecked(SnapPunch)
                             ? Bootshine
-                            : !LevelChecked(Demolish) && ((demolishDuration >= demolishApply) || (enemyHP < demolishTreshold))
+                            : !LevelChecked(Demolish) && ((demolishDuration >= demolishApply) || (GetTargetHPPercent() < demolishTreshold))
                                 ? SnapPunch
                                 : Demolish;
                     }
@@ -154,9 +153,10 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == DragonKick)
+                if (actionID is DragonKick)
                 {
-                    if (IsEnabled(CustomComboPreset.MNK_BootshineBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                    if (IsEnabled(CustomComboPreset.MNK_BootshineBalance) 
+                        && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
 
                     if (HasEffect(Buffs.LeadenFist) &&
@@ -165,7 +165,7 @@ namespace XIVSlothCombo.Combos.PvE
                         HasEffect(Buffs.OpoOpoForm)))
                         return Bootshine;
 
-                    if (level < Levels.DragonKick)
+                    if (!LevelChecked(DragonKick))
                         return Bootshine;
                 }
 
@@ -179,18 +179,11 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is TrueStrike)
-                {
-                    bool disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
-                    float disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
-
-                    if (level >= Levels.TrueStrike)
-                    {
-                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes))
-                            return TwinSnakes;
-                        return TrueStrike;
-                    }
-                }
+                if (actionID is TrueStrike && LevelChecked(TrueStrike) && LevelChecked(TwinSnakes))
+                        return ((!HasEffect(Buffs.DisciplinedFist)) || GetBuffRemainingTime(Buffs.DisciplinedFist) < 6)
+                        ? TwinSnakes
+                        : TrueStrike;
+                
                 return actionID;
             }
         }
@@ -1123,7 +1116,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == ArmOfTheDestroyer || actionID == ShadowOfTheDestroyer)
+                if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
                 {
                     MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
