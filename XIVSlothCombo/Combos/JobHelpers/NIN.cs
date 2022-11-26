@@ -501,7 +501,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             private bool DoOpener(ref uint actionID, MudraCasting mudraState)
             {
                 if (!LevelChecked) return false;
-                CustomComboFunctions.SetPrimePotion(Config.BalanceOpenerPotion);
+                CustomComboFunctions.ReturnSetPotion(Config.BalanceOpenerPotion, ref actionID);
 
                 if (CurrentState == OpenerState.InOpener)
                 {
@@ -514,7 +514,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else if (OpenerStep == 2) actionID = CustomComboFunctions.OriginalHook(SpinningEdge);
 
                     if (CustomComboFunctions.PrimedPotion == 0 && OpenerStep == 3) OpenerStep++;
-                    else if (OpenerStep == 3) actionID = CustomComboFunctions.ReturnSetPotion(Config.BalanceOpenerPotion, ref actionID);
+                    else if (OpenerStep == 3) actionID = actionID;
 
                     if (CustomComboFunctions.WasLastAction(GustSlash) && OpenerStep == 4) OpenerStep++;
                     else if (OpenerStep == 4) actionID = CustomComboFunctions.OriginalHook(GustSlash);
