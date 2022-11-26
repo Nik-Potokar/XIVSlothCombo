@@ -13,7 +13,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-        <AssemblyName>XIVSlothCombo_branch_1</AssemblyName>
+        <AssemblyName>XIVSlothCombo_branch</AssemblyName>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
         <DalamudPluginPath>$(appdata)\XIVLauncher_devPlugins\Build_Release\XIVSlothCombo\$(AssemblyName)\$(version)</DalamudPluginPath>
         <DalamudDevPlugins>$(appdata)\XIVLauncher_devPlugins\Build_Debug\XIVSlothCombo\$(AssemblyName)\</DalamudDevPlugins>
@@ -130,10 +130,6 @@
 			<Private>False</Private>
 		</Reference>
 
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Assets\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

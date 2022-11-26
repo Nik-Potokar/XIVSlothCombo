@@ -92,7 +92,7 @@ namespace XIVSlothCombo.Window
         {
             RespectCloseHotkey = true;
 
-        // var size = new Vector2(100 * fontScale, 100 * fontScale);
+         // var size = new Vector2(100 * fontScale, 100 * fontScale);
             SizeCondition = ImGuiCond.FirstUseEver;
             Size = new Vector2(830, 570); 
 
