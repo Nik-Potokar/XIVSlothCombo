@@ -1117,31 +1117,20 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Variant_Raise;
 
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {
-                if (actionID is All.Swiftcast)
-                {
-                    if (HasEffect(All.Buffs.Swiftcast) && IsEnabled(Variant.VariantRaise))
-                        return Variant.VariantRaise;
-                }
-
-                return actionID;
-            }
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level) =>
+                (actionID is All.Swiftcast && HasEffect(All.Buffs.Swiftcast) && IsEnabled(Variant.VariantRaise))     
+                ? Variant.VariantRaise
+                : actionID;
         }
 
         internal class BLM_ScatheXeno : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ScatheXeno;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Scathe)
-                {
-                    if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)
-                        return Xenoglossy;
-                }
-                return actionID;
-            }
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                (actionID is Scathe && LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)     
+                ? Xenoglossy      
+                : actionID;
         }
 
         internal class BLM_Blizzard : CustomCombo
@@ -1162,13 +1151,10 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Fire_1to3;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Fire && ((LevelChecked(Fire3) && !Gauge.InAstralFire) || HasEffect(Buffs.Firestarter)))
-                    return Fire3;
-
-                return actionID;
-            }
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                (actionID is Fire && ((LevelChecked(Fire3) && !Gauge.InAstralFire) || HasEffect(Buffs.Firestarter)))
+                ? Fire3
+                : actionID;
         }
 
         internal class BLM_LeyLines : CustomCombo
@@ -1176,7 +1162,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_LeyLines;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is LeyLines && HasEffect(Buffs.LeyLines) && LevelChecked(BetweenTheLines) ? BetweenTheLines : actionID;
+                actionID is LeyLines && HasEffect(Buffs.LeyLines) && LevelChecked(BetweenTheLines) 
+                ? BetweenTheLines 
+                : actionID;
         }
 
         internal class BLM_AetherialManipulation : CustomCombo
@@ -1189,7 +1177,8 @@ namespace XIVSlothCombo.Combos.PvE
                 HasEffect(Buffs.LeyLines) &&
                 !HasEffect(Buffs.CircleOfPower) &&
                 !IsMoving
-                ? BetweenTheLines : actionID;
+                ? BetweenTheLines 
+                : actionID;
         }
 
         internal class BLM_Mana : CustomCombo
@@ -1197,7 +1186,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Mana;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is Transpose && Gauge.InUmbralIce && LevelChecked(UmbralSoul) ? UmbralSoul : actionID;
+                actionID is Transpose && Gauge.InUmbralIce && LevelChecked(UmbralSoul) 
+                ? UmbralSoul 
+                : actionID;
         }
 
 
