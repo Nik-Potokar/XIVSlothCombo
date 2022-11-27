@@ -347,7 +347,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Transpose Lines Ice phase
 
-                        if (Gauge.InUmbralIce && Gauge.PolyglotStacks > 0 && ActionReady(All.Swiftcast) &&
+                        if (Gauge.InUmbralIce && Gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) &&
                             IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                         {
                             if (Gauge.UmbralIceStacks < 3 && ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
@@ -538,7 +538,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Lines))
                         {
                             // Transpose lines will use 2 xenoglossy stacks and then transpose
-                            if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0 && LevelChecked(Xenoglossy))
+                            if (HasEffect(All.Buffs.LucidDreaming) && Gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
                             if (HasEffect(All.Buffs.LucidDreaming) && lastComboMove == Xenoglossy && (Gauge.PolyglotStacks == 0))
@@ -809,7 +809,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Transpose Lines Ice phase
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) &&
-                                Gauge.InUmbralIce && Gauge.PolyglotStacks > 0 && ActionReady(All.Swiftcast))
+                                Gauge.InUmbralIce && Gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast))
                             {
                                 if (Gauge.UmbralIceStacks < 3 &&
                                     ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
@@ -998,25 +998,22 @@ namespace XIVSlothCombo.Combos.PvE
                     //Normal Ice Phase
                     if (Gauge.InUmbralIce)
                     {
-                       if (CanSpellWeave(actionID))
-                            {
-                            //Xenoglossy overcap protection
-                            if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
-                                return Xenoglossy;
+                        //Xenoglossy overcap protection
+                        if (Gauge.PolyglotStacks == 2 && (Gauge.EnochianTimer <= 20000) && LevelChecked(Xenoglossy))
+                            return Xenoglossy;
 
-                            //sharpcast
-                            if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
-                                return Sharpcast;
+                        //sharpcast
+                        if (ActionReady(Sharpcast) && lastComboMove != Thunder3 && !HasEffect(Buffs.Sharpcast))
+                            return Sharpcast;
 
-                            // Use Paradox when available
-                            if (LevelChecked(Paradox) && Gauge.IsParadoxActive)
-                                return Paradox;
-                        }
+                        // Use Paradox when available
+                        if (LevelChecked(Paradox) && Gauge.IsParadoxActive)
+                            return Paradox;
 
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                         {
                             // Transpose lines will use 2 xenoglossy stacks and then transpose
-                            if (HasEffect(All.Buffs.LucidDreaming) && Gauge.PolyglotStacks > 0 && LevelChecked(Xenoglossy))
+                            if (HasEffect(All.Buffs.LucidDreaming) && Gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
                             if (HasEffect(All.Buffs.LucidDreaming) && (Gauge.PolyglotStacks == 0) && lastComboMove == Xenoglossy)
@@ -1141,7 +1138,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ScatheXeno;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                (actionID is Scathe && LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)
+                (actionID is Scathe && LevelChecked(Xenoglossy) && Gauge.HasPolyglotStacks())
                 ? Xenoglossy
                 : actionID;
         }
