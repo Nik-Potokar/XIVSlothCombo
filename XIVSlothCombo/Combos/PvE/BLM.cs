@@ -1012,7 +1012,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var currentMP = LocalPlayer.CurrentMp;
 
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
@@ -1023,82 +1024,77 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //2xHF2 Transpose with Freeze [A7]
                     if (!InCombat())
-                    {
                         return OriginalHook(Blizzard2);
-                    }
 
-                    // Fire phase
-                    if (Gauge.InAstralFire)
+                    if (Gauge.ElementTimeRemaining > 0)
                     {
-                        // Polyglot usage 
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Foul) && lastComboMove == Flare && Gauge.HasPolyglotStacks())
+                        // Thunder uptime 
+                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove))
                         {
-                            return Foul;
-                        }
-
-                        // Manafont usage
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) && ActionReady(Manafont) && currentMP <= MP.AllMPSpells)
-                        {
-                            return Manafont;
-                        }
-
-                        //use Flare after manafont
-                        if (!ActionReady(Manafont) && (GetCooldownRemainingTime(Manafont) >= 179) || (GetCooldownRemainingTime(Manafont) >= 119))
-                        {
-                            return Flare;
-                        }
-
-                        //Grab Fire 2 / High Fire 2 action ID
-                        if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
-                        {
-                            return Flare;
-                        }
-
-                        if (currentMP >= MP.AllMPSpells)
-                        {
-                            if (currentMP >= MP.FireAoE || !HasEffect(Buffs.EnhancedFlare))
+                            if (HasEffect(Buffs.Thundercloud) || currentMP >= MP.Thunder)
                             {
-                                return OriginalHook(Fire2);
+                                uint dot = OriginalHook(Thunder2); //Grab the appropriate DoT Action
+                                Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                                if (dotDebuff is null || dotDebuff?.RemainingTime <= 3)
+                                    return dot; //Use appropriate DoT Action
                             }
-                            else if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
-                            {
+                        }
+
+                        // Fire phase
+                        if (Gauge.InAstralFire)
+                        {
+                            // Polyglot usage 
+                            if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
+                                LevelChecked(Foul) && lastComboMove == Flare && Gauge.HasPolyglotStacks())
+                                return Foul;
+
+                            // Manafont usage
+                            if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) &&
+                                ActionReady(Manafont) && currentMP <= MP.AllMPSpells)
+                                return Manafont;
+
+                            //use Flare after manafont                           
+                            if (IsOnCooldown(Manafont) &&
+                                (GetCooldownRemainingTime(Manafont) >= 179) || (GetCooldownRemainingTime(Manafont) >= 119))
                                 return Flare;
-                            }
-                            else if (!TraitLevelChecked(Traits.AspectMasteryIII))
+
+                            //Grab Fire 2 / High Fire 2 action ID
+                            if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                                return Flare;
+
+                            if (currentMP >= MP.AllMPSpells)
                             {
-                                return Transpose;
+                                if (currentMP >= MP.FireAoE || !HasEffect(Buffs.EnhancedFlare))
+                                    return OriginalHook(Fire2);
+
+                                else if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                                    return Flare;
+
+                                else if (!TraitLevelChecked(Traits.AspectMasteryIII))
+                                    return Transpose;
                             }
+                            if (currentMP < MP.AllMPSpells)
+                                return Transpose;
                         }
 
-                        if (currentMP < MP.AllMPSpells)
+                        // Ice phase
+                        if (Gauge.InUmbralIce)
                         {
-                            return Transpose;
-                        }
-                    }
+                            if (Gauge.UmbralHearts < 3)
+                                return Freeze;
 
-                    // Ice phase
-                    if (Gauge.InUmbralIce)
-                    {
-                        if (Gauge.UmbralHearts < 3)
-                        {
-                            return Freeze;
-                        }
+                            if (lastComboMove == Freeze)
+                                return OriginalHook(Thunder2);
 
-                        if (lastComboMove == Freeze)
-                        {
-                            return OriginalHook(Thunder2);
-                        }
-
-                        if (Gauge.UmbralHearts == 3 && lastComboMove == OriginalHook(Thunder2))
-                        {
-                            return Transpose;
+                            if (Gauge.UmbralHearts == 3 && lastComboMove == OriginalHook(Thunder2))
+                                return Transpose;
                         }
                     }
                 }
-
                 return actionID;
             }
         }
+
 
         internal class BLM_Variant_Raise : CustomCombo
         {
