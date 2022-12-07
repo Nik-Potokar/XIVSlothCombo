@@ -3564,8 +3564,8 @@ namespace XIVSlothCombo.Combos
 
         #region Medica Feature
 
-        [ReplaceSkill(WHM.Medica2)]
-        [CustomComboInfo("Medica Feature", "Replaces Medica II with Medica whenever you are under Medica II's regen.", WHM.JobID, 60, "", "")]
+        [ReplaceSkill(WHM.Medica1)]
+        [CustomComboInfo("Medica Feature", "Replaces MedicaII with Medica whenever you are under Medica II's regen.", WHM.JobID, 60, "", "")]
         WHM_Medica = 19007,
 
             [ParentCombo(WHM_Medica)]
