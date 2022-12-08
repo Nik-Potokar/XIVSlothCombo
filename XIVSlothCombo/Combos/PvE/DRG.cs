@@ -218,8 +218,11 @@ namespace XIVSlothCombo.Combos.PvE
                                     IsOffCooldown(Variant.VariantRampart) &&
                                     CanWeave(actionID))
                                     return Variant.VariantRampart;
+                            }
 
-                                if (HasEffect(Buffs.PowerSurge))
+                            if (HasEffect(Buffs.PowerSurge))
+                            {
+                                if (CanWeave(actionID))
                                 {
                                     //Wyrmwind Thrust Feature
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
@@ -246,10 +249,6 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Geirskogul) && ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
                                             return OriginalHook(Geirskogul);
 
-                                        //(High) Jump Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)))
-                                            return OriginalHook(Jump);
-
                                         //Mirage Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
                                             return MirageDive;
@@ -259,41 +258,54 @@ namespace XIVSlothCombo.Combos.PvE
                                             (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is VorpalThrust) ||
                                             (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))
                                             return LifeSurge;
+                                    }
+                                }
 
-                                        //Dives Feature
-                                        if (!IsMoving)
+                                if (CanWeave(actionID, 0.8))
+                                {
+                                    //(High) Jump Feature   
+                                    if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)))
+                                        return OriginalHook(Jump);
+                                }
+
+                                //Dives Feature
+                                if (!IsMoving)
+                                {
+                                    if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
+                                    {
+                                        if (CanWeave(actionID, 1.5))
                                         {
-                                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
-                                            {
-                                                if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) &&
-                                                    (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                                                    return Stardiver;
+                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) &&
+                                                (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                                                return Stardiver;
+                                        }
 
-                                                if (diveOptions is 0 or 1 || //Dives on cooldown
-                                                    (diveOptions is 2 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
-                                                   (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
-                                                {
-                                                    if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive))
-                                                        return DragonfireDive;
-                                                    if (LevelChecked(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0)
-                                                        return SpineshatterDive;
-                                                }
+                                        if (CanWeave(actionID, 0.8))
+                                        {
+                                            if (diveOptions is 0 or 1 || //Dives on cooldown
+                                               (diveOptions is 2 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
+                                               (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
+                                            {
+                                                if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive))
+                                                    return DragonfireDive;
+                                                if (LevelChecked(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0)
+                                                    return SpineshatterDive;
                                             }
                                         }
                                     }
                                 }
-
-                                // healing - please move if not appropriate this high priority
-                                if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
-                                {
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                        return All.SecondWind;
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                        return All.Bloodbath;
-                                }
+                            }
+                                
+                            // healing - please move if not appropriate this high priority 
+                            if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))   
+                            {
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                    return All.SecondWind; 
+                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath)) 
+                                    return All.Bloodbath;
                             }
                         }
-
+                        
                         //1-2-3 Combo
                         if (HasEffect(Buffs.SharperFangAndClaw))
                             return FangAndClaw;
@@ -314,12 +326,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
                                 return OriginalHook(FullThrust);
                         }
-
                     }
-
                     return OriginalHook(TrueThrust);
                 }
-
                 return actionID;
             }
         }
