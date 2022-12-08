@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Core;
+using System.Diagnostics;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -211,16 +212,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!inOpener)
                         {
-                            if (CanWeave(actionID))
+                            if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
+                                IsEnabled(Variant.VariantRampart) &&
+                                IsOffCooldown(Variant.VariantRampart) &&
+                                CanWeave(actionID))
+                                return Variant.VariantRampart;
+
+                            if (HasEffect(Buffs.PowerSurge))
                             {
-
-                                if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
-                                    IsEnabled(Variant.VariantRampart) &&
-                                    IsOffCooldown(Variant.VariantRampart) &&
-                                    CanWeave(actionID))
-                                    return Variant.VariantRampart;
-
-                                if (HasEffect(Buffs.PowerSurge))
+                                if (CanWeave(actionID, 1))
                                 {
                                     //Wyrmwind Thrust Feature
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
@@ -244,11 +244,11 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
                                     {
                                         //Geirskogul and Nastrond Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul))) //&& ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) && !HasEffect(Buffs.LifeSurge)) //&& ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
                                             return OriginalHook(Geirskogul);
 
                                         //(High) Jump Feature   
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) && !IsMoving)
                                             return OriginalHook(Jump);
 
                                         //Mirage Feature
@@ -261,16 +261,22 @@ namespace XIVSlothCombo.Combos.PvE
                                             (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))
                                             return LifeSurge;
                                     }
+                                }
 
-                                    //Dives Feature
-                                    if (!IsMoving)
+                                //Dives Feature
+                                if (!IsMoving)
+                                {
+                                    if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                     {
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
+                                        if (CanWeave(actionID, 1.5))
                                         {
                                             if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) &&
                                                 (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                                 return Stardiver;
+                                        }
 
+                                        if (CanWeave(actionID, 1))
+                                        {
                                             if (diveOptions is 0 or 1 || //Dives on cooldown
                                                (diveOptions is 2 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
                                                (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
@@ -284,35 +290,38 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
                             }
-                                
-                            // healing - please move if not appropriate this high priority 
-                            if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))   
-                            {
-                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                    return All.SecondWind; 
-                                if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath)) 
-                                    return All.Bloodbath;
-                            }
                         }
-                        
+                        // healing - please move if not appropriate this high priority 
+                        if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
+                        {
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && ActionReady(All.SecondWind))
+                                return All.SecondWind;
+                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && ActionReady(All.Bloodbath))
+                                return All.Bloodbath;
+                        }
+
                         //1-2-3 Combo
                         if (HasEffect(Buffs.SharperFangAndClaw))
                             return FangAndClaw;
+
                         if (HasEffect(Buffs.EnhancedWheelingThrust))
                             return WheelingThrust;
+
                         if (comboTime > 0)
                         {
                             if (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6 || GetBuffRemainingTime(Buffs.PowerSurge) < 10)
                             {
                                 if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
                                     return Disembowel;
+
                                 if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
                                     return OriginalHook(ChaosThrust);
                             }
 
-                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
+                            if (lastComboMove is TrueThrust or RaidenThrust)
                                 return VorpalThrust;
-                            if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
+
+                            if (lastComboMove is VorpalThrust)
                                 return OriginalHook(FullThrust);
                         }
                     }
