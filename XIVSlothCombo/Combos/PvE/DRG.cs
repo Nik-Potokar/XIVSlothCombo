@@ -211,18 +211,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!inOpener)
                         {
-                            if (CanWeave(actionID))
-                            {
-                                if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
-                                    IsEnabled(Variant.VariantRampart) &&
-                                    IsOffCooldown(Variant.VariantRampart) &&
-                                    CanWeave(actionID))
-                                    return Variant.VariantRampart;
-                            }
+
+                            if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
+                                IsEnabled(Variant.VariantRampart) &&
+                                IsOffCooldown(Variant.VariantRampart) &&
+                                CanWeave(actionID))
+                                return Variant.VariantRampart;
 
                             if (HasEffect(Buffs.PowerSurge))
                             {
-                                if (CanWeave(actionID))
+                                if (CanWeave(actionID, 1))
                                 {
                                     //Wyrmwind Thrust Feature
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
@@ -231,15 +229,15 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Buffs))
                                     {
                                         //Lance Charge Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Lance) && LevelChecked(LanceCharge) && IsOffCooldown(LanceCharge))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Lance) && ActionReady(LanceCharge))
                                             return LanceCharge;
 
                                         //Dragon Sight Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_DragonSight) && LevelChecked(DragonSight) && IsOffCooldown(DragonSight))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_DragonSight) && ActionReady(DragonSight))
                                             return DragonSight;
 
                                         //Battle Litany Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && LevelChecked(BattleLitany) && IsOffCooldown(BattleLitany) && CanWeave(actionID, 1.3))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && ActionReady(BattleLitany) && CanWeave(actionID, 1.3))
                                             return BattleLitany;
                                     }
 
@@ -261,7 +259,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
 
-                                if (CanWeave(actionID, 0.8))
+                                if (CanWeave(actionID, 1))
                                 {
                                     //(High) Jump Feature   
                                     if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)))
@@ -273,22 +271,22 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                     {
-                                        if (CanWeave(actionID, 1.5))
+                                        if (CanWeave(actionID, 1.7))
                                         {
                                             if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) &&
                                                 (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                                 return Stardiver;
                                         }
 
-                                        if (CanWeave(actionID, 0.8))
+                                        if (CanWeave(actionID, 1))
                                         {
                                             if (diveOptions is 0 or 1 || //Dives on cooldown
                                                (diveOptions is 2 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
                                                (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
                                             {
-                                                if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive))
+                                                if (ActionReady(DragonfireDive))
                                                     return DragonfireDive;
-                                                if (LevelChecked(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0)
+                                                if (ActionReady(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0)
                                                     return SpineshatterDive;
                                             }
                                         }

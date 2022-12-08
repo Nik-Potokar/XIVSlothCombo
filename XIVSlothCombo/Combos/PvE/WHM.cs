@@ -288,21 +288,22 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Medica1)
+                if (actionID is Medica)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > GetOptionValue(Config.WHM_Medica_ThinAir);
 
-                    if (LevelChecked(Medica2))
-                        return Medica2;
+
                     if (IsEnabled(CustomComboPreset.WHM_Medica_Misery) && gauge.BloodLily == 3)
                         return AfflatusMisery;
                     if (IsEnabled(CustomComboPreset.WHM_Medica_Rapture) && LevelChecked(AfflatusRapture) && gauge.Lily > 0)
                         return AfflatusRapture;
                     if (HasEffect(Buffs.Medica2) && GetBuffRemainingTime(Buffs.Medica2) > 2)
-                        return Medica1;
+                        return Medica;
                     if (IsEnabled(CustomComboPreset.WHM_Medica_ThinAir) && thinAirReady)
                         return ThinAir;
+                    if (LevelChecked(Medica2))
+                        return Medica2;
                 }
 
                 return actionID;
