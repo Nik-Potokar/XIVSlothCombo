@@ -147,7 +147,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         return DragonSight;
                                 }
 
-                                if (WasLastWeaponskill(ChaoticSpring))
+                                if (WasLastWeaponskill(OriginalHook(ChaosThrust)))
                                 {
                                     if (openerOptions is 0 or 1 or 2 && ActionReady(BattleLitany))
                                         return BattleLitany;
