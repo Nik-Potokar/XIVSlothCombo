@@ -132,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                             return Transpose;
 
-                        if (LevelChecked(UmbralSoul))
+                        if (Gauge.InUmbralIce && LevelChecked(UmbralSoul))
                             return UmbralSoul;
                     }
 
@@ -586,7 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                             return Transpose;
 
-                        if (LevelChecked(UmbralSoul))
+                        if (Gauge.InUmbralIce && LevelChecked(UmbralSoul))
                             return UmbralSoul;
                     }
 
@@ -1041,7 +1041,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
@@ -1049,6 +1050,17 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOffCooldown(Variant.VariantRampart) &&
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
+
+                    // Spam Umbral Soul/Transpose when there's no target
+                    if (IsEnabled(CustomComboPreset.BLM_AoEUmbralSoul) &&
+                        CurrentTarget is null && Gauge.IsEnochianActive)
+                    {
+                        if (Gauge.InAstralFire && LevelChecked(Transpose))
+                            return Transpose;
+
+                        if (Gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                            return UmbralSoul;
+                    }
 
                     //2xHF2 Transpose with Freeze [A7]
                     if (!InCombat())
@@ -1200,7 +1212,5 @@ namespace XIVSlothCombo.Combos.PvE
                 ? UmbralSoul
                 : actionID;
         }
-
-
     }
 }
