@@ -227,7 +227,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Buffs))
                                     {
                                         //Battle Litany Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && ActionReady(BattleLitany))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && ActionReady(BattleLitany) && CanWeave(actionID,1.3))
                                             return BattleLitany;
 
                                         //Lance Charge Feature
