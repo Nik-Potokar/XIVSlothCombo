@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Core;
 using System.Diagnostics;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -149,7 +150,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (openerOptions is 0 or 1 or 2 && ActionReady(BattleLitany))
                                         return BattleLitany;
-                                    if (openerOptions is 2 && GetRemainingCharges(SpineshatterDive) > 1)
+                                    if (openerOptions is 2 && ActionReady(SpineshatterDive))
                                         return OriginalHook(SpineshatterDive);
                                 }
 
@@ -157,7 +158,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (ActionReady(Geirskogul))
                                         return Geirskogul;
-                                    if (GetRemainingCharges(LifeSurge) > 0 && !HasEffect(Buffs.LifeSurge))
+                                    if (ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge))
                                         return LifeSurge;
                                 }
 
@@ -165,7 +166,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (openerOptions is 0 or 1)
                                     {
-                                        if (GetRemainingCharges(SpineshatterDive) < 2 && !WasLastAction(SpineshatterDive))
+                                        if (GetRemainingCharges(SpineshatterDive) == 1 && !WasLastAction(SpineshatterDive))
                                             return SpineshatterDive;
                                         if (ActionReady(OriginalHook(Jump)) && !HasEffect(Buffs.DiveReady))
                                             return OriginalHook(Jump);
@@ -220,14 +221,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (HasEffect(Buffs.PowerSurge))
                             {
-                                if (CanWeave(actionID, 1))
+                                if (CanWeave(actionID))
                                 {
-                                    //Wyrmwind Thrust Feature
-                                    if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
-                                        return WyrmwindThrust;
-
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Buffs))
                                     {
+                                        //Battle Litany Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && ActionReady(BattleLitany))
+                                            return BattleLitany;
+
                                         //Lance Charge Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Lance) && ActionReady(LanceCharge))
                                             return LanceCharge;
@@ -235,31 +236,31 @@ namespace XIVSlothCombo.Combos.PvE
                                         //Dragon Sight Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_DragonSight) && ActionReady(DragonSight))
                                             return DragonSight;
-
-                                        //Battle Litany Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && ActionReady(BattleLitany) && CanWeave(actionID, 1.3))
-                                            return BattleLitany;
                                     }
 
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
                                     {
-                                        //Geirskogul and Nastrond Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) && !HasEffect(Buffs.LifeSurge)) //&& ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
-                                            return OriginalHook(Geirskogul);
-
-                                        //(High) Jump Feature   
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) && !IsMoving)
-                                            return OriginalHook(Jump);
-
-                                        //Mirage Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
-                                            return MirageDive;
-
                                         //Life Surge Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
                                             (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is VorpalThrust) ||
                                             (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))
                                             return LifeSurge;
+
+                                        //Wyrmwind Thrust Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
+                                            return WyrmwindThrust;
+
+                                        //Geirskogul and Nastrond Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) && !HasEffect(Buffs.LifeSurge) && IsOnCooldown(OriginalHook(Jump)))
+                                            return OriginalHook(Geirskogul);
+
+                                        //(High) Jump Feature   
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) && !IsMoving && CanWeave(actionID, 0.9))
+                                            return OriginalHook(Jump);
+
+                                        //Mirage Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
+                                            return MirageDive;
                                     }
                                 }
 
@@ -268,14 +269,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                     {
-                                        if (CanWeave(actionID, 1.5))
+                                        if (CanDelayedWeave(actionID))
                                         {
-                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) &&
+                                            //if (ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
+                                           // {
+                                                if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) &&
                                                 (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                                                return Stardiver;
+                                                    return Stardiver;
+                                          //  }
                                         }
 
-                                        if (CanWeave(actionID, 1))
+                                        if (CanWeave(actionID, 0.9))
                                         {
                                             if (diveOptions is 0 or 1 || //Dives on cooldown
                                                (diveOptions is 2 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
@@ -283,7 +287,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             {
                                                 if (ActionReady(DragonfireDive))
                                                     return DragonfireDive;
-                                                if (ActionReady(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0)
+                                                if (ActionReady(SpineshatterDive)) //&& GetRemainingCharges(SpineshatterDive) > 0)
                                                     return SpineshatterDive;
                                             }
                                         }
@@ -291,9 +295,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
                         }
+
+                        
                         // healing - please move if not appropriate this high priority 
                         if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
-                        {
+                        { 
                             if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STSecondWindThreshold) && ActionReady(All.SecondWind))
                                 return All.SecondWind;
                             if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.DRG_STBloodbathThreshold) && ActionReady(All.Bloodbath))
