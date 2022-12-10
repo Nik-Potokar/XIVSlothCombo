@@ -132,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                             return Transpose;
 
-                        if (LevelChecked(UmbralSoul))
+                        if (Gauge.InUmbralIce && LevelChecked(UmbralSoul))
                             return UmbralSoul;
                     }
 
@@ -303,7 +303,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire && LevelChecked(Fire3))
                                 return Fire3;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement_Scathe))
+                            if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement_Scathe) && (GetBuffStacks(Buffs.Triplecast) == 0))
                                 return Scathe;
                         }
                     }
@@ -586,7 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                             return Transpose;
 
-                        if (LevelChecked(UmbralSoul))
+                        if (Gauge.InUmbralIce && LevelChecked(UmbralSoul))
                             return UmbralSoul;
                     }
 
@@ -758,7 +758,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire && LevelChecked(Fire3))
                                 return Fire3;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Scathe))
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Scathe) && (GetBuffStacks(Buffs.Triplecast) == 0))
                                 return Scathe;
                         }
                     }
@@ -793,6 +793,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     (Gauge.InAstralFire || Gauge.UmbralHearts == 3) &&
                                     currentMP >= MP.Fire * 2)
                                 {
+
                                     if (IsNotEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) || GetRemainingCharges(Triplecast) == 2)
                                         return Triplecast;
                                 }
@@ -1041,7 +1042,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
@@ -1049,6 +1051,17 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOffCooldown(Variant.VariantRampart) &&
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
+
+                    // Spam Umbral Soul/Transpose when there's no target
+                    if (IsEnabled(CustomComboPreset.BLM_AoEUmbralSoul) &&
+                        CurrentTarget is null && Gauge.IsEnochianActive)
+                    {
+                        if (Gauge.InAstralFire && LevelChecked(Transpose))
+                            return Transpose;
+
+                        if (Gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                            return UmbralSoul;
+                    }
 
                     //2xHF2 Transpose with Freeze [A7]
                     if (!InCombat())
@@ -1200,7 +1213,5 @@ namespace XIVSlothCombo.Combos.PvE
                 ? UmbralSoul
                 : actionID;
         }
-
-
     }
 }
