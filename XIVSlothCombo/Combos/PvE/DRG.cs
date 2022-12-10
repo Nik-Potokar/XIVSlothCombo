@@ -274,12 +274,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         if (CanDelayedWeave(actionID))
                                         {
-                                            //if (ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
-                                            // {
                                             if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) &&
                                             (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                                 return Stardiver;
-                                            //  }
                                         }
 
                                         if (CanWeave(actionID, 0.9))
@@ -298,7 +295,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
                         }
-
 
                         // healing - please move if not appropriate this high priority 
                         if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
