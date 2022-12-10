@@ -124,7 +124,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
-                        if (CombatEngageDuration().TotalSeconds < 5 && IsOnCooldown(ElusiveJump) && openerReady)
+                        if (CombatEngageDuration().TotalSeconds < 5 && IsOnCooldown(ElusiveJump) &&  
+                            IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88 && openerReady)
                             inOpener = true;
 
                         if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_VariantCure))
