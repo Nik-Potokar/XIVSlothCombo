@@ -303,7 +303,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire && LevelChecked(Fire3))
                                 return Fire3;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement_Scathe))
+                            if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement_Scathe) && (GetBuffStacks(Buffs.Triplecast) == 0))
                                 return Scathe;
                         }
                     }
@@ -758,7 +758,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire && LevelChecked(Fire3))
                                 return Fire3;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Scathe))
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Scathe) && (GetBuffStacks(Buffs.Triplecast) == 0))
                                 return Scathe;
                         }
                     }
@@ -793,6 +793,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     (Gauge.InAstralFire || Gauge.UmbralHearts == 3) &&
                                     currentMP >= MP.Fire * 2)
                                 {
+
                                     if (IsNotEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) || GetRemainingCharges(Triplecast) == 2)
                                         return Triplecast;
                                 }
