@@ -1077,7 +1077,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Variant.VariantRampart;
 
                             // Thunder uptime 
-                            if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove))
+                            if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) && 
+                                !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove))
                             {
                                 if (HasEffect(Buffs.Thundercloud) || currentMP >= MP.Thunder)
                                 {
@@ -1092,10 +1093,13 @@ namespace XIVSlothCombo.Combos.PvE
                         // Fire phase
                         if (Gauge.InAstralFire)
                         {
-                            // Polyglot usage 
-                            if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
-                                LevelChecked(Foul) && lastComboMove == Flare && Gauge.HasPolyglotStacks())
-                                return Foul;
+                            if (CanSpellWeave(actionID))
+                            {
+                                // Polyglot usage 
+                                if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
+                                    LevelChecked(Foul) && lastComboMove is Flare && Gauge.HasPolyglotStacks())
+                                    return Foul;
+                            }
 
                             // Manafont usage
                             if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) &&
@@ -1108,7 +1112,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Flare;
 
                             //Grab Fire 2 / High Fire 2 action ID
-                            if (Gauge.UmbralHearts == 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                            if (Gauge.UmbralHearts is 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
                                 return Flare;
 
                             if (currentMP >= MP.AllMPSpells)
@@ -1133,16 +1137,15 @@ namespace XIVSlothCombo.Combos.PvE
                             if (Gauge.UmbralHearts < 3)
                                 return Freeze;
 
-                            if (lastComboMove == Freeze)
+                            if (lastComboMove is Freeze)
                                 return OriginalHook(Thunder2);
 
-                            return (Gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.Thunder)
+                            return (Gauge.UmbralHearts is 3 && currentMP is MP.MaxMP)
                                 ? Transpose
                                 : OriginalHook(Blizzard2);
                         }
                     }
                 }
-
                 return actionID;
             }
         }
