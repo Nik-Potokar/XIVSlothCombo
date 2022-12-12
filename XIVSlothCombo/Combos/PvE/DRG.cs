@@ -256,16 +256,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         //Geirskogul and Nastrond Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) && 
-                                            !HasEffect(Buffs.LifeSurge) && IsOnCooldown(OriginalHook(Jump)))
+                                            IsOnCooldown(OriginalHook(Jump)))
                                             return OriginalHook(Geirskogul);
 
                                         //(High) Jump Feature   
                                         if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) && 
-                                            !IsMoving && CanWeave(actionID, 1) && !HasEffect(Buffs.LifeSurge))
+                                            !IsMoving && CanWeave(actionID, 1))
                                             return OriginalHook(Jump);
 
                                         //Mirage Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady) && !HasEffect(Buffs.LifeSurge))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
                                             return MirageDive;
                                     }
                                 }
