@@ -364,7 +364,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
-        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose.", BLM.JobID, -9, "", "")]
         BLM_AdvancedMode = 2021,
 
         [ReplaceSkill(BLM.Scathe)]
