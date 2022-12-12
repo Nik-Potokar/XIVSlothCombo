@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.Attributes;
+﻿using System.Reflection;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using static FFXIVClientStructs.FFXIV.Client.UI.Misc.ConfigModule;
@@ -319,6 +320,7 @@ namespace XIVSlothCombo.Combos
 
         #region BLACK MAGE
         [ReplaceSkill(BLM.Transpose)]
+        [ConflictingCombos(BLM_AdvUmbralSoul, BLM_SimpleUmbralSoul, BLM_AoEUmbralSoul)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "", "")]
         BLM_Mana = 2001,
 
@@ -391,11 +393,13 @@ namespace XIVSlothCombo.Combos
         BLM_AdvThunderUptime = 2030,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Umbral Soul", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [ConflictingCombos(BLM_Mana)]
+        [CustomComboInfo("Umbral Soul on Simple ST", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_SimpleUmbralSoul = 2031,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [ConflictingCombos(BLM_Mana)]
+        [CustomComboInfo("Umbral Soul on Advanced ST", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AdvUmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
@@ -465,7 +469,8 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_Transpose_Lines = 2048,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Umbral Soul", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [ConflictingCombos(BLM_Mana)]
+        [CustomComboInfo("Umbral Soul on AoE", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AoEUmbralSoul = 2049,
 
 

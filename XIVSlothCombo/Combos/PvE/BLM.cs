@@ -1041,16 +1041,9 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var currentMP = LocalPlayer.CurrentMp;
 
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
-                        return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
-                        return Variant.VariantRampart;
+
+
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AoEUmbralSoul) &&
@@ -1067,17 +1060,32 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InCombat())
                         return OriginalHook(Blizzard2);
 
-                    if (Gauge.ElementTimeRemaining > 0)
+
+                    if (InCombat())
                     {
-                        // Thunder uptime 
-                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove))
+                        if (Gauge.ElementTimeRemaining > 0)
                         {
-                            if (HasEffect(Buffs.Thundercloud) || currentMP >= MP.Thunder)
+                            if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
+                                IsEnabled(Variant.VariantCure) &&
+                                PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                                return Variant.VariantCure;
+
+                            if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                                IsEnabled(Variant.VariantRampart) &&
+                                IsOffCooldown(Variant.VariantRampart) &&
+                                CanSpellWeave(actionID))
+                                return Variant.VariantRampart;
+
+                            // Thunder uptime 
+                            if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove))
                             {
-                                uint dot = OriginalHook(Thunder2); //Grab the appropriate DoT Action
-                                Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-                                if (dotDebuff is null || dotDebuff?.RemainingTime <= 3)
-                                    return dot; //Use appropriate DoT Action
+                                if (HasEffect(Buffs.Thundercloud) || currentMP >= MP.Thunder)
+                                {
+                                    uint dot = OriginalHook(Thunder2); //Grab the appropriate DoT Action
+                                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 3)
+                                        return dot; //Use appropriate DoT Action
+                                }
                             }
                         }
 
@@ -1114,6 +1122,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 else if (!TraitLevelChecked(Traits.AspectMasteryIII))
                                     return Transpose;
                             }
+
                             if (currentMP < MP.AllMPSpells)
                                 return Transpose;
                         }
@@ -1127,11 +1136,13 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboMove == Freeze)
                                 return OriginalHook(Thunder2);
 
-                            if (Gauge.UmbralHearts == 3 && lastComboMove == OriginalHook(Thunder2))
-                                return Transpose;
+                            return (Gauge.UmbralHearts == 3 && currentMP >= MP.MaxMP - MP.Thunder)
+                                ? Transpose
+                                : OriginalHook(Blizzard2);
                         }
                     }
                 }
+
                 return actionID;
             }
         }
