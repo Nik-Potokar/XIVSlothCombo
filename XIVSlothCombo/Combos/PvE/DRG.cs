@@ -261,11 +261,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         //(High) Jump Feature   
                                         if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) && 
-                                            !IsMoving && CanWeave(actionID, 1))
+                                            !IsMoving && CanWeave(actionID, 1) && !HasEffect(Buffs.LifeSurge))
                                             return OriginalHook(Jump);
 
                                         //Mirage Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady) && !HasEffect(Buffs.LifeSurge))
                                             return MirageDive;
                                     }
                                 }
