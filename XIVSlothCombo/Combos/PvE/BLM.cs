@@ -790,28 +790,25 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                         // Weave Buffs
-                        if (CanSpellWeave(actionID))
+
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Casts))
                         {
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Casts))
+                            // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
+
+                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) || GetRemainingCharges(Triplecast) is 2) &&   
+                                ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&  
+                                (Gauge.InAstralFire || Gauge.UmbralHearts is 3) &&
+                                currentMP >= MP.Fire * 2)
+                                return Triplecast;
+
+                            if (CanSpellWeave(actionID))
                             {
-                                // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
-                                if (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
-                                    (Gauge.InAstralFire || Gauge.UmbralHearts is 3) &&
-                                    currentMP >= MP.Fire * 2)
-                                {
-
-                                    if (IsNotEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) || GetRemainingCharges(Triplecast) is 2)
-                                        return Triplecast;
-                                }
-
                                 if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
                                     return Amplifier;
 
-                                if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs_LeyLines))
-                                {
-                                    if (ActionReady(LeyLines))
-                                        return LeyLines;
-                                }
+                                if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs_LeyLines) &&
+                                    ActionReady(LeyLines))
+                                    return LeyLines;
                             }
 
                             // Transpose Lines Ice phase
