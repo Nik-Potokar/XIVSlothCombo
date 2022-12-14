@@ -261,7 +261,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         //(High) Jump Feature   
                                         if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) && 
-                                            !IsMoving && CanWeave(actionID, 1))
+                                            !IsMoving)
                                             return OriginalHook(Jump);
 
                                         //Mirage Feature
@@ -290,7 +290,7 @@ namespace XIVSlothCombo.Combos.PvE
                                                 if (ActionReady(DragonfireDive))
                                                     return DragonfireDive;
 
-                                                if (ActionReady(SpineshatterDive))
+                                                if (ActionReady(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0)
                                                     return SpineshatterDive;
                                             }
                                         }
@@ -429,7 +429,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (ActionReady(DragonfireDive))
                                             return DragonfireDive;
 
-                                        if (ActionReady(SpineshatterDive))
+                                        if (ActionReady(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0)
                                             return SpineshatterDive;
                                     }
                                 }
