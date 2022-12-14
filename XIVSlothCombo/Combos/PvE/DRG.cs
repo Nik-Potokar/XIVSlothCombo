@@ -250,27 +250,27 @@ namespace XIVSlothCombo.Combos.PvE
                                             HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))
                                             return LifeSurge;
 
-                                        //Wyrmwind Thrust Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
-                                            return WyrmwindThrust;
-
                                         //Geirskogul and Nastrond Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) && 
-                                            IsOnCooldown(OriginalHook(Jump)))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) &&
+                                            IsOnCooldown(OriginalHook(Jump)) && !HasEffect(Buffs.DiveReady))
                                             return OriginalHook(Geirskogul);
 
                                         //(High) Jump Feature   
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) && 
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) &&
                                             !IsMoving)
                                             return OriginalHook(Jump);
 
                                         //Mirage Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady) && gauge.EyeCount < 2)
                                             return MirageDive;
+
+                                        //Wyrmwind Thrust Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
+                                            return WyrmwindThrust;
                                     }
                                 }
 
-                                ///Dives Feature
+                                //Dives Feature
                                 if (!IsMoving)
                                 {
                                     if (CanWeave(actionID))
