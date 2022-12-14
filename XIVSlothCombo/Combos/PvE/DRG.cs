@@ -246,14 +246,9 @@ namespace XIVSlothCombo.Combos.PvE
                                         //Life Surge Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
                                             (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is VorpalThrust) ||
-                                            (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || 
+                                            (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) ||
                                             HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))
                                             return LifeSurge;
-
-                                        //Geirskogul and Nastrond Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) &&
-                                            IsOnCooldown(OriginalHook(Jump)) && !HasEffect(Buffs.DiveReady))
-                                            return OriginalHook(Geirskogul);
 
                                         //(High) Jump Feature   
                                         if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(Jump)) &&
@@ -264,22 +259,26 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady) && gauge.EyeCount < 2)
                                             return MirageDive;
 
+                                        //Geirskogul and Nastrond Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) &&
+                                            IsOnCooldown(OriginalHook(Jump)) && !HasEffect(Buffs.DiveReady))
+                                            return OriginalHook(Geirskogul);
+
                                         //Wyrmwind Thrust Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
                                             return WyrmwindThrust;
                                     }
-                                }
 
-                                //Dives Feature
-                                if (!IsMoving)
-                                {
-                                    if (CanWeave(actionID))
+
+                                    //Dives Feature
+                                    if (!IsMoving)
                                     {
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || 
+
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) ||
                                             (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                         {
-                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && 
-                                                IsOnCooldown(DragonfireDive) && 
+                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) &&
+                                                IsOnCooldown(DragonfireDive) &&
                                                 (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                                 return Stardiver;
 
@@ -294,6 +293,7 @@ namespace XIVSlothCombo.Combos.PvE
                                                     return SpineshatterDive;
                                             }
                                         }
+
                                     }
                                 }
                             }
