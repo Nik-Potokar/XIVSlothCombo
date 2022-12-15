@@ -467,6 +467,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
         BLM_Simple_Transpose_Lines = 2048,
 
+        [ParentCombo(BLM_AoE_SimpleMode)]
+        [CustomComboInfo("Umbral Soul", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        BLM_AoEUmbralSoul = 2049,
 
         #endregion
 
