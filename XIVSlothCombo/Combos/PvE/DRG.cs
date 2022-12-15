@@ -269,7 +269,6 @@ namespace XIVSlothCombo.Combos.PvE
                                             return WyrmwindThrust;
                                     }
 
-
                                     //Dives Feature
                                     if (!IsMoving)
                                     {

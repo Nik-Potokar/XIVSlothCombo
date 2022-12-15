@@ -1040,7 +1040,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Flare)
+                if (actionID is Blizzard2)
                 {
                     var currentMP = LocalPlayer.CurrentMp;
 
