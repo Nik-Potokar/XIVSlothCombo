@@ -354,9 +354,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Pool Triplecast option", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
         BLM_Simple_Casts_Pooling = 2016,
 
-        [ParentCombo(BLM_AoE_SimpleMode)]
+    /*    [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Manafont Option", "Weaves Manafont after Flare for additional Flare", BLM.JobID, 0, "", "")]
-        BLM_AoE_Simple_Manafont = 2020,
+        BLM_AoE_Simple_Manafont = 2020,*/
 
         [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]

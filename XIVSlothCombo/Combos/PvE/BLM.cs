@@ -1044,10 +1044,6 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var currentMP = LocalPlayer.CurrentMp;
 
-
-
-
-
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AoEUmbralSoul) &&
                         CurrentTarget is null && Gauge.IsEnochianActive)
@@ -1063,7 +1059,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InCombat())
                         return OriginalHook(Blizzard2);
 
-
                     if (InCombat())
                     {
                         if (Gauge.ElementTimeRemaining > 0)
@@ -1078,45 +1073,20 @@ namespace XIVSlothCombo.Combos.PvE
                                 IsOffCooldown(Variant.VariantRampart) &&
                                 CanSpellWeave(actionID))
                                 return Variant.VariantRampart;
-
-                            // Thunder uptime 
-                            if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) && 
-                                !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove))
-                            {
-                                if (HasEffect(Buffs.Thundercloud) || currentMP >= MP.Thunder)
-                                {
-                                    uint dot = OriginalHook(Thunder2); //Grab the appropriate DoT Action
-                                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 3)
-                                        return dot; //Use appropriate DoT Action
-                                }
-                            }
                         }
 
                         // Fire phase
                         if (Gauge.InAstralFire)
                         {
-                            if (CanSpellWeave(actionID))
-                            {
-                                // Polyglot usage 
-                                if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
-                                    LevelChecked(Foul) && lastComboMove is Flare && Gauge.HasPolyglotStacks())
-                                    return Foul;
-                            }
-
-                            // Manafont usage
-                            if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) &&
-                                ActionReady(Manafont) && currentMP <= MP.AllMPSpells)
-                                return Manafont;
-
-                            //use Flare after manafont                           
-                            if (IsOnCooldown(Manafont) &&
-                                (GetCooldownRemainingTime(Manafont) >= 179) || (GetCooldownRemainingTime(Manafont) >= 119))
-                                return Flare;
-
                             //Grab Fire 2 / High Fire 2 action ID
                             if (Gauge.UmbralHearts is 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
                                 return Flare;
+
+                            // Polyglot usage 
+                            if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
+                                LevelChecked(Foul) && Gauge.HasPolyglotStacks() && lastComboMove is Flare)
+                                return Foul;
+                            
 
                             if (currentMP >= MP.AllMPSpells)
                             {
@@ -1140,11 +1110,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (Gauge.UmbralHearts < 3)
                                 return Freeze;
 
-                            if (lastComboMove is Freeze)
+                            if (lastComboMove is Transpose)
                                 return OriginalHook(Thunder2);
 
                             return (Gauge.UmbralHearts is 3 && currentMP is MP.MaxMP)
-                                ? Transpose
+                                ? OriginalHook(Fire2)
                                 : OriginalHook(Blizzard2);
                         }
                     }
