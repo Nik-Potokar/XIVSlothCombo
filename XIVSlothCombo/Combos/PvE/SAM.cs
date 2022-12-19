@@ -195,6 +195,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
+                        if (CombatEngageDuration().TotalSeconds < 5 && (WasLastAbility(MeikyoShisui) || meikyoBuff) && openerReady &&
+                            IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener))
+                            inOpener = true;
+
                         if (inOpener && IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener) && OgiNamikiri.LevelChecked() && !hasDied && !nonOpener)
                         {
                             //oGCDs
