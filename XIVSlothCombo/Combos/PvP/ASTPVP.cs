@@ -1,9 +1,8 @@
 ﻿using XIVSlothCombo.CustomComboNS;
-using FFXIVClientStructs.FFXIV.Client.Game;
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class ASTPVP
+    internal static class ASTPvP
     {
         internal const byte JobID = 33;
 
@@ -31,7 +30,7 @@ namespace XIVSlothCombo.Combos.PvP
                 Bole = 1339;
         }
 
-        internal class ASTPVP_Burst : CustomCombo
+        internal class ASTPvP_Burst : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ASTPvP_Burst;
 
@@ -67,7 +66,8 @@ namespace XIVSlothCombo.Combos.PvP
                         if (IsOffCooldown(Gravity))
                             return Gravity;
 
-                        if (lastComboMove == Malefic && (GetRemainingCharges(DoubleCast) > 1 || GetCooldownRemainingTime(Gravity) > 7.5f) && CanWeave(actionID))
+                        if (lastComboMove == Malefic && (GetRemainingCharges(DoubleCast) > 1 ||
+                            GetCooldownRemainingTime(Gravity) > 7.5f) && CanWeave(actionID))
                             return DoubleMalefic;
                     }
 
@@ -83,7 +83,8 @@ namespace XIVSlothCombo.Combos.PvP
                         return Draw;
 
                     // Generic Play outside of necessary holding
-                    if (CanWeave(actionID) && GetCooldownRemainingTime(Macrocosmos) > 7.5f && (IsOffCooldown(Draw) || HasEffect(Buffs.BalanceDrawn) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn)))
+                    if (CanWeave(actionID) && GetCooldownRemainingTime(Macrocosmos) > 7.5f && (IsOffCooldown(Draw) ||
+                        HasEffect(Buffs.BalanceDrawn) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn)))
                         return OriginalHook(Draw);
                 }
 

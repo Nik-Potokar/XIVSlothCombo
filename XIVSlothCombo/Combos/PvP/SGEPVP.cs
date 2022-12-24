@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class SGEPVP
+    internal static class SGEPvP
     {
         internal const uint
             Dosis = 29256,

@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class GNBPVP
+    internal static class GNBPvP
     {
 
         public const uint
@@ -41,9 +41,9 @@ namespace XIVSlothCombo.Combos.PvP
                 JunctionHealer = 3046;
         }
 
-        internal class GNBPVP_Burst : CustomCombo
+        internal class GNBPvP_Burst : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNBPVP_Burst;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNBPvP_Burst;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -52,29 +52,29 @@ namespace XIVSlothCombo.Combos.PvP
                     // Buff Effects
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.GNBPVP_ST_Continuation) &&
+                        if (IsEnabled(CustomComboPreset.GNBPvP_ST_Continuation) &&
                             (HasEffect(Buffs.ReadyToBlast) || HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)))
                             return OriginalHook(Continuation);
 
-                        if ((IsEnabled(CustomComboPreset.GNBPVP_JunctionDPS) && HasEffect(Buffs.JunctionDPS) && HasEffect(Buffs.NoMercy) && IsOffCooldown(JunctionedCast)) ||
-                            (IsEnabled(CustomComboPreset.GNBPVP_JunctionHealer) && HasEffect(Buffs.JunctionHealer) && IsOffCooldown(JunctionedCast)) ||
-                            (IsEnabled(CustomComboPreset.GNBPVP_JunctionTank) && HasEffect(Buffs.JunctionTank) && IsOffCooldown(JunctionedCast)))
+                        if ((IsEnabled(CustomComboPreset.GNBPvP_JunctionDPS) && HasEffect(Buffs.JunctionDPS) && HasEffect(Buffs.NoMercy) && IsOffCooldown(JunctionedCast)) ||
+                            (IsEnabled(CustomComboPreset.GNBPvP_JunctionHealer) && HasEffect(Buffs.JunctionHealer) && IsOffCooldown(JunctionedCast)) ||
+                            (IsEnabled(CustomComboPreset.GNBPvP_JunctionTank) && HasEffect(Buffs.JunctionTank) && IsOffCooldown(JunctionedCast)))
                             return OriginalHook(JunctionedCast);
 
-                        if (IsEnabled(CustomComboPreset.GNBPVP_DrawAndJunction) && IsOffCooldown(DrawAndJunction) && !HasEffect(Buffs.PowderBarrel) && !HasEffect(Buffs.ReadyToBlast))
+                        if (IsEnabled(CustomComboPreset.GNBPvP_DrawAndJunction) && IsOffCooldown(DrawAndJunction) && !HasEffect(Buffs.PowderBarrel) && !HasEffect(Buffs.ReadyToBlast))
                             return DrawAndJunction;
 
-                        if (IsEnabled(CustomComboPreset.GNBPVP_RoughDivide) && HasEffect(Buffs.NoMercy) &&
+                        if (IsEnabled(CustomComboPreset.GNBPvP_RoughDivide) && HasEffect(Buffs.NoMercy) &&
                             GetBuffRemainingTime(Buffs.NoMercy) <= 1.5f && GetBuffRemainingTime(Buffs.NoMercy) > 0 &&
                             GetRemainingCharges(RoughDivide) == 1)
                             return RoughDivide;
                     }
 
                     // Gnashing Fang
-                    if (IsEnabled(CustomComboPreset.GNBPVP_DoubleDown) && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown))
+                    if (IsEnabled(CustomComboPreset.GNBPvP_DoubleDown) && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown))
                         return DoubleDown;
 
-                    if ((IsEnabled(CustomComboPreset.GNBPVP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && HasEffect(Buffs.NoMercy)) ||
+                    if ((IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && HasEffect(Buffs.NoMercy)) ||
                         WasLastWeaponskill(GnashingFang) || WasLastWeaponskill(JugularRip) || WasLastWeaponskill(SavageClaw) || WasLastWeaponskill(WickedTalon))
                         return OriginalHook(GnashingFang);
                 }
@@ -82,9 +82,9 @@ namespace XIVSlothCombo.Combos.PvP
                 return actionID;
             }
         }
-        internal class GNBPVP_GnashingFang : CustomCombo
+        internal class GNBPvP_GnashingFang : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNBPVP_GnashingFang;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNBPvP_GnashingFang;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
                 actionID is GnashingFang &&

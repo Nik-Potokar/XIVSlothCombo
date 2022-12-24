@@ -3676,17 +3676,17 @@ namespace XIVSlothCombo.Combos
 
         #region MACHINIST
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPVP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPvP.JobID)]
         MCHPvP_BurstMode = 80010,
 
             [SecretCustomCombo]
             [ParentCombo(MCHPvP_BurstMode)]
-            [CustomComboInfo("Alternate Drill Option", "Saves Drill for use after Wildfire.", MCHPVP.JobID)]
+            [CustomComboInfo("Alternate Drill Option", "Saves Drill for use after Wildfire.", MCHPvP.JobID)]
             MCHPvP_BurstMode_AltDrill = 80011,
 
             [SecretCustomCombo]
             [ParentCombo(MCHPvP_BurstMode)]
-            [CustomComboInfo("Alternate Analysis Option", "Uses Analysis with Air Anchor instead of Chain Saw.", MCHPVP.JobID)]
+            [CustomComboInfo("Alternate Analysis Option", "Uses Analysis with Air Anchor instead of Chain Saw.", MCHPvP.JobID)]
             MCHPvP_BurstMode_AltAnalysis = 80012,
         #endregion
 
@@ -3698,49 +3698,49 @@ namespace XIVSlothCombo.Combos
 
         #region RED MAGE
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPVP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPvP.JobID)]
         RDMPvP_BurstMode = 80030,
         
         [SecretCustomCombo]
         [ParentCombo(RDMPvP_BurstMode)]
-        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle from being used in Burst Mode.", RDMPVP.JobID)]
+        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle from being used in Burst Mode.", RDMPvP.JobID)]
         RDMPvP_FrazzleOption = 80031,
         
         #endregion
 
         #region WARRIOR
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPVP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPvP.JobID)]
         WARPvP_BurstMode = 80040,
 
             [SecretCustomCombo]
             [ParentCombo(WARPvP_BurstMode)]
-            [CustomComboInfo("Bloodwhetting Option", "Allows use of Bloodwhetting any time, not just between GCDs.", WARPVP.JobID)]
+            [CustomComboInfo("Bloodwhetting Option", "Allows use of Bloodwhetting any time, not just between GCDs.", WARPvP.JobID)]
             WARPvP_BurstMode_Bloodwhetting = 80041,
 
             [SecretCustomCombo]
             [ParentCombo(WARPvP_BurstMode)]
-            [CustomComboInfo("Blota Option", "Removes Blota from Burst Mode if Primal Rend has 5 seconds or less on its cooldown.", WARPVP.JobID)]
+            [CustomComboInfo("Blota Option", "Removes Blota from Burst Mode if Primal Rend has 5 seconds or less on its cooldown.", WARPvP.JobID)]
             WARPvP_BurstMode_Blota = 80042,
         #endregion
 
         #region NINJA
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPVP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPvP.JobID)]
         NINPvP_ST_BurstMode = 80050,
 
         [SecretCustomCombo]
-        [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPVP.JobID)]
+        [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPvP.JobID)]
         NINPvP_AoE_BurstMode = 80051,
 
         [ParentCombo(NINPvP_ST_BurstMode)]
         [SecretCustomCombo]
-        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPVP.JobID)]
+        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPvP.JobID)]
         NINPvP_ST_Meisui = 80052,
 
         [ParentCombo(NINPvP_AoE_BurstMode)]
         [SecretCustomCombo]
-        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPVP.JobID)]
+        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPvP.JobID)]
         NINPvP_AoE_Meisui = 80053,
         #endregion
 
@@ -3948,43 +3948,43 @@ namespace XIVSlothCombo.Combos
 
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Solid Barrel Combo into an all-in-one damage button.", GNB.JobID)]
-        GNBPVP_Burst = 80250,
+        GNBPvP_Burst = 80250,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Double Down Option", "Adds Double Down to Burst Mode while under the No Mercy buff.", GNB.JobID)]
-        GNBPVP_DoubleDown = 80251,
+        GNBPvP_DoubleDown = 80251,
 
         [SecretCustomCombo]
         [CustomComboInfo("Gnashing Fang Continuation Feature", "Adds Continuation onto Gnashing Fang.", GNB.JobID)]
-        GNBPVP_GnashingFang = 80252,
+        GNBPvP_GnashingFang = 80252,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Draw And Junction Option", "Adds Draw And Junction to Burst Mode.", GNB.JobID)]
-        GNBPVP_DrawAndJunction = 80253,
+        GNBPvP_DrawAndJunction = 80253,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang to Burst Mode while under the No Mercy buff.", GNB.JobID)]
-        GNBPVP_ST_GnashingFang = 80254,
+        GNBPvP_ST_GnashingFang = 80254,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Continuation Option", "Adds Continuation to Burst Mode.", GNB.JobID)]
-        GNBPVP_ST_Continuation = 80255,
+        GNBPvP_ST_Continuation = 80255,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Rough Divide Option", "Weaves Rough Divide when No Mercy Buff is about to expire.", GNB.JobID)]
-        GNBPVP_RoughDivide = 80256,
+        GNBPvP_RoughDivide = 80256,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Junction Cast DPS Option", "Adds Junction Cast (DPS) to Burst Mode.", GNB.JobID)]
-        GNBPVP_JunctionDPS = 80257,
+        GNBPvP_JunctionDPS = 80257,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Junction Cast Healer Option", "Adds Junction Cast (Healer) to Burst Mode.", GNB.JobID)]
-        GNBPVP_JunctionHealer = 80258,
+        GNBPvP_JunctionHealer = 80258,
 
-        [ParentCombo(GNBPVP_Burst)]
+        [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Junction Cast Tank Option", "Adds Junction Cast (Tank) to Burst Mode.", GNB.JobID)]
-        GNBPVP_JunctionTank = 80259,
+        GNBPvP_JunctionTank = 80259,
 
         #endregion
 
@@ -4006,19 +4006,19 @@ namespace XIVSlothCombo.Combos
         #region SCHOLAR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Broil IV into all-in-one damage button.", SCH.JobID)]
-        SCHPVP_Burst = 80350,
+        SCHPvP_Burst = 80350,
 
-        [ParentCombo(SCHPVP_Burst)]
+        [ParentCombo(SCHPvP_Burst)]
         [CustomComboInfo("Expedient Option", "Adds Expedient to Burst Mode to empower Biolysis.", SCH.JobID)]
-        SCHPVP_Expedient = 80351,
+        SCHPvP_Expedient = 80351,
 
-        [ParentCombo(SCHPVP_Burst)]
+        [ParentCombo(SCHPvP_Burst)]
         [CustomComboInfo("Biolysis Option", "Adds Biolysis use on cooldown to Burst Mode.", SCH.JobID)]
-        SCHPVP_Biolysis = 80352,
+        SCHPvP_Biolysis = 80352,
 
-        [ParentCombo(SCHPVP_Burst)]
+        [ParentCombo(SCHPvP_Burst)]
         [CustomComboInfo("Deployment Tactics Option", "Adds Deployment Tactics to Burst Mode when available.", SCH.JobID)]
-        SCHPVP_DeploymentTactics = 80353,
+        SCHPvP_DeploymentTactics = 80353,
         #endregion
 
         #region SUMMONER

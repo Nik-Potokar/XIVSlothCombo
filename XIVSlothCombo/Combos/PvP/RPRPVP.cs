@@ -4,7 +4,7 @@ using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class RPRPVP
+    internal static class RPRPvP
     {
         public const byte JobID = 39;
 

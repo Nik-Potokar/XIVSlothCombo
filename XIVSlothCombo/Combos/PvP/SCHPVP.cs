@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class SCHPVP
+    internal static class SCHPvP
     {
         public const byte JobID = 28;
 
@@ -25,24 +25,24 @@ namespace XIVSlothCombo.Combos.PvP
                 Biolytic = 3090;
         }
 
-        internal class SCHPVP_Burst : CustomCombo
+        internal class SCHPvP_Burst : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCHPVP_Burst;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCHPvP_Burst;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is Broil && InCombat())
                 {
                     // Uses Expedient when available and target isn't affected with Biolysis
-                    if (IsEnabled(CustomComboPreset.SCHPVP_Expedient) && IsOffCooldown(Expedient) && !TargetHasEffect(Debuffs.Biolysis))
+                    if (IsEnabled(CustomComboPreset.SCHPvP_Expedient) && IsOffCooldown(Expedient) && !TargetHasEffect(Debuffs.Biolysis))
                         return Expedient;
 
                     // Uses Biolysis under Recitation, or on cooldown when option active
-                    if ((IsEnabled(CustomComboPreset.SCHPVP_Biolysis) && IsOffCooldown(Biolysis)) || (HasEffect(Buffs.Recitation) && IsOffCooldown(Biolysis)))
+                    if ((IsEnabled(CustomComboPreset.SCHPvP_Biolysis) && IsOffCooldown(Biolysis)) || (HasEffect(Buffs.Recitation) && IsOffCooldown(Biolysis)))
                         return Biolysis;
 
                     // Uses Deployment Tactics when available
-                    if (IsEnabled(CustomComboPreset.SCHPVP_DeploymentTactics) && GetRemainingCharges(DeploymentTactics) > 1)
+                    if (IsEnabled(CustomComboPreset.SCHPvP_DeploymentTactics) && GetRemainingCharges(DeploymentTactics) > 1)
                         return DeploymentTactics;
                 }
 

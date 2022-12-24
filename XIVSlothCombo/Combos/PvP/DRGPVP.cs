@@ -1,10 +1,8 @@
-﻿using XIVSlothCombo.Core;
-using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.CustomComboNS.Functions;
+﻿using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class DRGPVP
+    internal static class DRGPvP
     {
         public const byte ClassID = 4;
         public const byte JobID = 22;
@@ -38,10 +36,10 @@ namespace XIVSlothCombo.Combos.PvP
         internal static class Config
         {
             internal const string
-                DRGPVP_LOTD_Duration = "DRGPVP_LOTD_Duration",
-                DRGPVP_LOTD_HPValue = "DRGPVP_LOTD_HPValue",
-                DRGPVP_CS_HP_Threshold = "DRGPVP_CS_HP_Threshold",
-                DRGPVP_Distance_Threshold = "DRGPVP_Distance_Threshold";
+                DRGPvP_LOTD_Duration = "DRGPvP_LOTD_Duration",
+                DRGPvP_LOTD_HPValue = "DRGPvP_LOTD_HPValue",
+                DRGPvP_CS_HP_Threshold = "DRGPvP_CS_HP_Threshold",
+                DRGPvP_Distance_Threshold = "DRGPvP_Distance_Threshold";
         }
 
         internal class DRGPvP_Burst : CustomCombo
@@ -63,14 +61,14 @@ namespace XIVSlothCombo.Combos.PvP
 
                             if (IsEnabled(CustomComboPreset.DRGPvP_Nastrond) && InMeleeRange())
                             {
-                                if (HasEffect(Buffs.LifeOfTheDragon) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPVP_LOTD_HPValue)
-                                 || HasEffect(Buffs.LifeOfTheDragon) && GetBuffRemainingTime(Buffs.LifeOfTheDragon) < GetOptionValue(Config.DRGPVP_LOTD_Duration))
+                                if (HasEffect(Buffs.LifeOfTheDragon) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPvP_LOTD_HPValue)
+                                 || HasEffect(Buffs.LifeOfTheDragon) && GetBuffRemainingTime(Buffs.LifeOfTheDragon) < GetOptionValue(Config.DRGPvP_LOTD_Duration))
                                     return Nastrond;
                             }
                             if (IsEnabled(CustomComboPreset.DRGPvP_HorridRoar) && IsOffCooldown(HorridRoar) && InMeleeRange())
                                 return HorridRoar;
                         }
-                        if (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpringSustain) && IsOffCooldown(ChaoticSpring) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPVP_CS_HP_Threshold))
+                        if (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpringSustain) && IsOffCooldown(ChaoticSpring) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPvP_CS_HP_Threshold))
                         {
                             if (!HasEffect(Buffs.FirstmindsFocus) && !HasEffect(Buffs.LifeOfTheDragon) && IsOnCooldown(Geirskogul) && IsOnCooldown(ElusiveJump)
                              || !HasEffect(Buffs.FirstmindsFocus) && HasEffect(Buffs.LifeOfTheDragon) && IsOnCooldown(Geirskogul) && IsOnCooldown(ElusiveJump) && WasLastWeaponskill(HeavensThrust))
@@ -78,7 +76,7 @@ namespace XIVSlothCombo.Combos.PvP
                         }
                         if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && IsOffCooldown(Geirskogul) && WasLastAbility(ElusiveJump) && HasEffect(Buffs.FirstmindsFocus))
                             return Geirskogul;
-                        if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus) && GetTargetDistance() >= GetOptionValue(Config.DRGPVP_Distance_Threshold))
+                        if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus) && GetTargetDistance() >= GetOptionValue(Config.DRGPvP_Distance_Threshold))
                             return WyrmwindThrust;
                     }
                 }

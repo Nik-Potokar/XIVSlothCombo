@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class WHMPVP
+    internal static class WHMPvP
     {
         public const byte JobID = 24;
 
