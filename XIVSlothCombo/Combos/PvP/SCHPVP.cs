@@ -31,15 +31,21 @@ namespace XIVSlothCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Broil)
+                if (actionID is Broil && InCombat())
                 {
-                    if (IsEnabled(CustomComboPreset.SCHPVP_Expedient) && InCombat() && IsOffCooldown(Expedient) && !TargetHasEffect(Debuffs.Biolysis))
+                    // Uses Expedient when available and target isn't affected with Biolysis
+                    if (IsEnabled(CustomComboPreset.SCHPVP_Expedient) && IsOffCooldown(Expedient) && !TargetHasEffect(Debuffs.Biolysis))
                         return Expedient;
-                    if (IsEnabled(CustomComboPreset.SCHPVP_Biolysis) && InCombat() && IsOffCooldown(Biolysis) || HasEffect(Buffs.Recitation) && IsOffCooldown(Biolysis))
+
+                    // Uses Biolysis under Recitation, or on cooldown when option active
+                    if ((IsEnabled(CustomComboPreset.SCHPVP_Biolysis) && IsOffCooldown(Biolysis)) || (HasEffect(Buffs.Recitation) && IsOffCooldown(Biolysis)))
                         return Biolysis;
-                    if (IsEnabled(CustomComboPreset.SCHPVP_DeploymentTactics) && InCombat() && GetRemainingCharges(DeploymentTactics) > 1)
+
+                    // Uses Deployment Tactics when available
+                    if (IsEnabled(CustomComboPreset.SCHPVP_DeploymentTactics) && GetRemainingCharges(DeploymentTactics) > 1)
                         return DeploymentTactics;
                 }
+
                 return actionID;
             }
         }

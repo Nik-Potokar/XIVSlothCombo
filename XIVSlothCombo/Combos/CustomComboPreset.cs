@@ -4009,15 +4009,15 @@ namespace XIVSlothCombo.Combos
         SCHPVP_Burst = 80350,
 
         [ParentCombo(SCHPVP_Burst)]
-        [CustomComboInfo("Expedient Option", "Adds Expedient to empower Biolysis.", SCH.JobID)]
+        [CustomComboInfo("Expedient Option", "Adds Expedient to Burst Mode to empower Biolysis.", SCH.JobID)]
         SCHPVP_Expedient = 80351,
 
         [ParentCombo(SCHPVP_Burst)]
-        [CustomComboInfo("Biolysis Option", "Adds Biolysis to Burst Mode.", SCH.JobID)]
+        [CustomComboInfo("Biolysis Option", "Adds Biolysis use on cooldown to Burst Mode.", SCH.JobID)]
         SCHPVP_Biolysis = 80352,
 
         [ParentCombo(SCHPVP_Burst)]
-        [CustomComboInfo("Deployment Tactics Option", "Adds Deployment Tactics to Burst Mode.", SCH.JobID)]
+        [CustomComboInfo("Deployment Tactics Option", "Adds Deployment Tactics to Burst Mode when available.", SCH.JobID)]
         SCHPVP_DeploymentTactics = 80353,
         #endregion
 
