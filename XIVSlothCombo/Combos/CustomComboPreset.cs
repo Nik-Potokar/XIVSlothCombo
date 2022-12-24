@@ -3994,7 +3994,7 @@ namespace XIVSlothCombo.Combos
         PLDPVP_Burst = 80340,
 
         [ParentCombo(PLDPVP_Burst)]
-        [CustomComboInfo("Shiled Bash Option", "Adds Shield Bash to Burst Mode.", PLD.JobID)]
+        [CustomComboInfo("Shield Bash Option", "Adds Shield Bash to Burst Mode.", PLD.JobID)]
         PLDPVP_ShieldBash = 80341,
 
         [ParentCombo(PLDPVP_Burst)]
