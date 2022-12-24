@@ -1252,7 +1252,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 1, DRK.Config.DRK_KeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.DRKPvP_Burst)
-                UserConfig.DrawSliderInt(1, 100, DRKPVP.Config.ShadowbringerThreshold, "HP% to be at or above to use Shadowbringer");
+                UserConfig.DrawSliderInt(1, 100, DRKPvP.Config.ShadowbringerThreshold, "HP% to be at or above to use Shadowbringer");
 
             if (preset == CustomComboPreset.DRK_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, DRK.Config.DRK_VariantCure, "HP% to be at or under", 200);
@@ -1291,9 +1291,23 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
-
+            
             if (preset == CustomComboPreset.DRG_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, DRG.Config.DRG_VariantCure, "HP% to be at or under", 200);
+
+            #region Dragoon PvP
+            if (preset is CustomComboPreset.DRGPvP_Nastrond)
+                UserConfig.DrawSliderInt(0, 100, DRGPvP.Config.DRGPvP_LOTD_HPValue, "Ends Life of the Dragon if HP falls below the set percentage", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.DRGPvP_Nastrond)
+                UserConfig.DrawSliderInt(2, 8, DRGPvP.Config.DRGPvP_LOTD_Duration, "Seconds remaining of Life of the Dragon buff before using Nastrond if you are still above the set HP percentage.", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.DRGPvP_ChaoticSpringSustain)
+                UserConfig.DrawSliderInt(0, 101, DRGPvP.Config.DRGPvP_CS_HP_Threshold, "Chaos Spring HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset is CustomComboPreset.DRGPvP_WyrmwindThrust)
+                UserConfig.DrawSliderInt(0, 20, DRGPvP.Config.DRGPvP_Distance_Threshold, "Distance Treshold for Wyrmwind Thrust", 150, SliderIncrements.Ones);
+            #endregion
 
             #endregion
             // ====================================================================================
@@ -1462,10 +1476,10 @@ namespace XIVSlothCombo.Window.Functions
             #region REAPER
 
             if (preset == CustomComboPreset.RPRPvP_Burst_ImmortalPooling && enabled)
-                UserConfig.DrawSliderInt(0, 8, RPRPVP.Config.RPRPvP_ImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 8, RPRPvP.Config.RPRPvP_ImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.RPRPvP_Burst_ArcaneCircle && enabled)
-                UserConfig.DrawSliderInt(5, 90, RPRPVP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
             {
@@ -1944,14 +1958,14 @@ namespace XIVSlothCombo.Window.Functions
                     uint maxHP = pc.MaxHp <= 8000 ? 0 : pc.MaxHp - 8000;
                     if (maxHP > 0)
                     {
-                        int setting = PluginConfiguration.GetCustomIntValue(NINPVP.Config.NINPvP_Meisui_ST);
+                        int setting = PluginConfiguration.GetCustomIntValue(NINPvP.Config.NINPvP_Meisui_ST);
                         float hpThreshold = (float)maxHP / 100 * setting;
 
                         description += $"\nHP Value to be at or under: {hpThreshold}";
                     }
                 }
 
-                UserConfig.DrawSliderInt(1, 100, NINPVP.Config.NINPvP_Meisui_ST, description);
+                UserConfig.DrawSliderInt(1, 100, NINPvP.Config.NINPvP_Meisui_ST, description);
             }
 
             if (preset == CustomComboPreset.NINPvP_AoE_Meisui)
@@ -1963,14 +1977,14 @@ namespace XIVSlothCombo.Window.Functions
                     uint maxHP = pc.MaxHp <= 8000 ? 0 : pc.MaxHp - 8000;
                     if (maxHP > 0)
                     {
-                        int setting = PluginConfiguration.GetCustomIntValue(NINPVP.Config.NINPvP_Meisui_AoE);
+                        int setting = PluginConfiguration.GetCustomIntValue(NINPvP.Config.NINPvP_Meisui_AoE);
                         float hpThreshold = (float)maxHP / 100 * setting;
 
                         description += $"\nHP Value to be at or under: {hpThreshold}";
                     }
                 }
 
-                UserConfig.DrawSliderInt(1, 100, NINPVP.Config.NINPvP_Meisui_AoE, description);
+                UserConfig.DrawSliderInt(1, 100, NINPvP.Config.NINPvP_Meisui_AoE, description);
             }
 
 

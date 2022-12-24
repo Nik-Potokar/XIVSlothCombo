@@ -2,7 +2,7 @@ using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class WARPVP
+    internal static class WARPvP
     {
         public const byte ClassID = 3;
         public const byte JobID = 21;
