@@ -4051,8 +4051,12 @@ namespace XIVSlothCombo.Combos
         WHMPvP_Seraph_Strike = 80403,
 
         [SecretCustomCombo]
-        [CustomComboInfo("Protect Feature", "Adds Aquaveil to Cure II.", WHM.JobID)]
-        WHMPvP_Heal = 80404,
+        [CustomComboInfo("Aquaveil Feature", "Adds Aquaveil to Cure II when available.", WHM.JobID)]
+        WHMPvP_Aquaveil = 80404,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Cure III Feature", "Adds Cure III to Cure II when available.", WHM.JobID)]
+        WHMPvP_Cure3 = 80405,
 
         #endregion
 

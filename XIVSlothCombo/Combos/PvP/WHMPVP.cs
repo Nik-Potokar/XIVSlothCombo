@@ -8,7 +8,8 @@ namespace XIVSlothCombo.Combos.PvP
 
         public const uint
             Glare = 29223,
-            Cure = 29224,
+            Cure2 = 29224,
+            Cure3 = 29225,
             AfflatusMisery = 29226,
             Aquaveil = 29227,
             MiracleOfNature = 29228,
@@ -28,9 +29,7 @@ namespace XIVSlothCombo.Combos.PvP
             {
                 if (actionID is Glare)
                 {
-                    bool enemyGuarded = TargetHasEffectAny(PvPCommon.Buffs.Guard);
-
-                    if (!enemyGuarded)
+                    if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
                     {
                         if (IsEnabled(CustomComboPreset.WHMPvP_Afflatus_Misery) && IsOffCooldown(AfflatusMisery))
                             return AfflatusMisery;
@@ -45,20 +44,32 @@ namespace XIVSlothCombo.Combos.PvP
                         }
                     }
                 }
+
                 return actionID;
             }
         }
-        internal class WHMPvP_Heal : CustomCombo
+        internal class WHMPvP_Aquaveil : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMPvP_Heal;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMPvP_Aquaveil;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Cure)
-                {
-                    if (IsOffCooldown(Aquaveil))
-                        return Aquaveil;
-                }
+                if (actionID is Cure2 && IsOffCooldown(Aquaveil))
+                    return Aquaveil;
+
+                return actionID;
+            }
+        }
+
+        internal class WHMPvP_Cure3 : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMPvP_Cure3;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Cure2 && HasEffect(Buffs.Cure3Ready))
+                    return Cure3;
+
                 return actionID;
             }
         }
