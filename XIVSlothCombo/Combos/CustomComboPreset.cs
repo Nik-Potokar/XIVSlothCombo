@@ -3991,15 +3991,15 @@ namespace XIVSlothCombo.Combos
         #region PALADIN
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Royal Authority Combo into an all-in-one damage button.", PLD.JobID)]
-        PLDPVP_Burst = 80340,
+        PLDPvP_Burst = 80340,
 
-        [ParentCombo(PLDPVP_Burst)]
+        [ParentCombo(PLDPvP_Burst)]
         [CustomComboInfo("Shield Bash Option", "Adds Shield Bash to Burst Mode.", PLD.JobID)]
-        PLDPVP_ShieldBash = 80341,
+        PLDPvP_ShieldBash = 80341,
 
-        [ParentCombo(PLDPVP_Burst)]
+        [ParentCombo(PLDPvP_Burst)]
         [CustomComboInfo("Confiteor Option", "Adds Confiteor to Burst Mode.", PLD.JobID)]
-        PLDPVP_Confiteor = 80342,
+        PLDPvP_Confiteor = 80342,
 
         #endregion
 

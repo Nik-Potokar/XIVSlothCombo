@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class PLDPVP
+    internal static class PLDPvP
     {
         public const byte JobID = 19;
 
@@ -19,23 +19,25 @@ namespace XIVSlothCombo.Combos.PvP
                 Stun = 1343;
         }
 
-        internal class PLDPVP_Burst : CustomCombo
+        internal class PLDPvP_Burst : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLDPVP_Burst;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLDPvP_Burst;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is FastBlade or RiotBlade or RoyalAuthority)
                 {
-                    if (IsEnabled(CustomComboPreset.PLDPVP_ShieldBash) && InCombat() && IsOffCooldown(ShieldBash) && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.PLDPvP_ShieldBash) &&
+                        InCombat() && IsOffCooldown(ShieldBash) && CanWeave(actionID))
                         return ShieldBash;
                         
-                    if (IsEnabled(CustomComboPreset.PLDPVP_Confiteor))
+                    if (IsEnabled(CustomComboPreset.PLDPvP_Confiteor))
                     {
-                       if(TargetHasEffect(Debuffs.Stun) && IsOffCooldown(Confiteor) || IsOffCooldown(Confiteor))
+                       if (IsOffCooldown(Confiteor))
                         return Confiteor;
                     }
                 }
+
                 return actionID;
             }
         }
