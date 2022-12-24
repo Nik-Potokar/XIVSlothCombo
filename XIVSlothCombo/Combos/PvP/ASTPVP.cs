@@ -9,7 +9,7 @@ namespace XIVSlothCombo.Combos.PvP
 
         internal const uint
             Malefic = 29242,
-            DiurnalBenefic = 29243,
+            AspectedBenefic = 29243,
             Gravity = 29244,
             DoubleCast = 29245,
             DoubleMalefic = 29246,
@@ -31,8 +31,6 @@ namespace XIVSlothCombo.Combos.PvP
                 Bole = 1339;
         }
 
-        public static unsafe uint GetActionStatus(ActionType actionType, uint id) => ActionManager.Instance() is null ? uint.MaxValue : ActionManager.Instance()->GetActionStatus(ActionType.Spell, id);
-
         internal class ASTPVP_Burst : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ASTPvP_Burst;
@@ -41,14 +39,52 @@ namespace XIVSlothCombo.Combos.PvP
             {
                 if (actionID is Malefic)
                 {
-                    if (GetActionStatus(ActionType.Spell, DoubleGravity) == 0)
-                        return DoubleGravity;
+                    // Out of combat Draw
+                    if (IsOffCooldown(Draw) && !InCombat())
+                        return Draw;
 
-                    if (CanWeave(actionID) && IsOffCooldown(Draw) || HasEffect(Buffs.BalanceDrawn) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn))
+                    // Malefic to initiate combat
+                    if (!InCombat() &&
+                        (IsOffCooldown(Draw) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn)))
+                        return Malefic;
+
+                    // Post-Draw Malefic
+                    if (lastComboMove == Draw && !CanWeave(actionID))
+                        return Malefic;
+
+                    // Play "The Balance" before a Gravity/Double + Macro burst
+                    if (HasCharges(DoubleCast) && IsOffCooldown(Gravity) && IsOffCooldown(Macrocosmos) && HasEffect(Buffs.BalanceDrawn))
                         return OriginalHook(Draw);
 
-                    if (IsOffCooldown(Gravity) && !TargetHasEffectAny(PvPCommon.Buffs.Guard))
-                        return Gravity;
+                    if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
+                    {
+                        if (lastComboMove == DoubleGravity && IsOffCooldown(Macrocosmos))
+                            return Macrocosmos;
+
+                        if (lastComboMove == Gravity && HasCharges(DoubleCast))
+                            return DoubleGravity;
+
+                        if (IsOffCooldown(Gravity))
+                            return Gravity;
+
+                        if (lastComboMove == Malefic && (GetRemainingCharges(DoubleCast) > 1 || GetCooldownRemainingTime(Gravity) > 7.5f) && CanWeave(actionID))
+                            return DoubleMalefic;
+                    }
+
+                    // Card waste prevention
+                    if (((GetBuffRemainingTime(Buffs.BalanceDrawn) < 3) ||
+                        (GetBuffRemainingTime(Buffs.BoleDrawn) < 3) ||
+                        (GetBuffRemainingTime(Buffs.ArrowDrawn) < 3)) &&
+                        CanWeave(actionID))
+                        return OriginalHook(Draw);
+
+                    // Generic Draw
+                    if (IsOffCooldown(Draw) && CanWeave(actionID))
+                        return Draw;
+
+                    // Generic Play outside of necessary holding
+                    if (CanWeave(actionID) && GetCooldownRemainingTime(Macrocosmos) > 7.5f && (IsOffCooldown(Draw) || HasEffect(Buffs.BalanceDrawn) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn)))
+                        return OriginalHook(Draw);
                 }
 
                 return actionID;
@@ -60,14 +96,15 @@ namespace XIVSlothCombo.Combos.PvP
 
                 protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {
-                    if (actionID is DiurnalBenefic)
+                    if (actionID is AspectedBenefic)
                     {
                         if (CanWeave(actionID))
                         {
-                            if (GetActionStatus(ActionType.Spell, NocturnalBenefic) == 0 && HasCharges(DoubleCast))
+                            if (lastComboMove == AspectedBenefic && HasCharges(DoubleCast))
                                 return OriginalHook(DoubleCast);
                         }
                     }
+
                     return actionID;
                 }
             }
