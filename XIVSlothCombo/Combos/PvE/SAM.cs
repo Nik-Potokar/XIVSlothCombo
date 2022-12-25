@@ -195,10 +195,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
-                        if (CombatEngageDuration().TotalSeconds < 5 && (WasLastAbility(MeikyoShisui) || meikyoBuff) && openerReady &&
-                            IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener))
-                            inOpener = true;
-
                         if (inOpener && IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener) && OgiNamikiri.LevelChecked() && !hasDied && !nonOpener)
                         {
                             //oGCDs
@@ -237,9 +233,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 // healing - please move if not appropriate this high priority
                                 if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
                                 {
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STSecondWindThreshold) && ActionReady(All.SecondWind))
                                         return All.SecondWind;
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.SAM_STBloodbathThreshold) && ActionReady(All.Bloodbath))
                                         return All.Bloodbath;
                                 }
                             }
@@ -291,7 +287,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!inOpener)
                         {
-                            if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
+                            if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && 
+                                IsEnabled(Variant.VariantCure) && 
+                                PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
                                 return Variant.VariantCure;
 
                             if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) &&
@@ -301,8 +299,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Variant.VariantRampart;
 
                             //Death desync check
-                            if (HasEffect(All.Buffs.Weakness))
-                                hasDied = true;
+                           /* if (HasEffect(All.Buffs.Weakness))
+                                hasDied = true;*/
 
                             //Filler Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_FillerCombos) && !hasDied && !nonOpener && OgiNamikiri.LevelChecked() && CombatEngageDuration().Minutes > 0)
