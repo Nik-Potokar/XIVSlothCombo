@@ -316,7 +316,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_AstrodyneOnPlay = 1015,
         #endregion
 
-        //Last number used is 36
+        // Last value = 1036
 
         #endregion
 
@@ -451,6 +451,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BLM.JobID)]
         BLM_Variant_Cure = 2034,
 
+        // Last value = 2034
+
         #endregion
 
         #region BLUE MAGE
@@ -552,6 +554,9 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLU_PrimalCombo)]
         [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
         BLU_PrimalCombo_Nightbloom = 70020,
+
+        // Last value = 70020
+
         #endregion
 
         #region BARD
@@ -689,6 +694,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(BRD_ST_SimpleMode, BRD_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BRD.JobID)]
         BRD_Variant_Cure = 3031,
+
+        // Last value = 3031
 
         #endregion
 
@@ -977,6 +984,8 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        // Last value = 4084
+
         #endregion
 
         #region DARK KNIGHT
@@ -1116,6 +1125,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", DRK.JobID)]
         DRK_Variant_Ultimatum = 5033,
 
+        // Last value = 5033
+
         #endregion
 
         #region DRAGOON
@@ -1243,6 +1254,7 @@ namespace XIVSlothCombo.Combos
             DRG_AoE_ComboHeals = 6211,
 
         #endregion
+
         [ReplaceSkill(DRG.Stardiver)]
         [CustomComboInfo("Stardiver Feature", "Turns Stardiver into Nastrond during Life of the Dragon, and Geirskogul outside of Life of the Dragon.", DRG.JobID, 26, "", "")]
         DRG_StardiverFeature = 6300,
@@ -1264,6 +1276,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(DRG_STCombo, DRG_AoECombo)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", DRG.JobID)]
         DRG_Variant_Rampart = 6600,
+
+        // Last value = 6600
 
         #endregion
 
@@ -1441,6 +1455,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", GNB.JobID)]
         GNB_Variant_Ultimatum = 7035,
 
+        // Last value = 7600
+
         #endregion
 
         #region MACHINIST
@@ -1613,6 +1629,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
         MCH_Variant_Cure = 8040,
 
+        // Last value = 8040
+
         #endregion
 
         #region MONK
@@ -1744,6 +1762,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(MNK_ST_SimpleMode, MNK_AoE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9031,
+
+        // Last value = 9031
 
         #endregion
 
@@ -2048,6 +2068,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", NIN.JobID)]
         NIN_Variant_Rampart = 10070,
 
+        // Last value = 10070
 
         #endregion
 
@@ -2169,6 +2190,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(PLD_ST_RoyalAuth, PLD_AoE_Prominence)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
+
+        // Last value = 11032
 
         #endregion
 
@@ -2387,6 +2410,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", RPR.JobID)]
         RPR_Variant_Rampart = 12068,
         #endregion
+
+        // Last value = 12068
 
         #endregion
 
@@ -2756,6 +2781,8 @@ namespace XIVSlothCombo.Combos
         SGE_DPS_Variant_Rampart = 14930,
         #endregion
 
+        // Last value = 14930
+
         #endregion
 
         #region SAMURAI
@@ -2909,7 +2936,7 @@ namespace XIVSlothCombo.Combos
         SAM_AoE_OkaCombo_TwoTarget = 150261,
         #endregion
 
-        #region CD Features
+        #region Cooldown Features
         [ReplaceSkill(SAM.MeikyoShisui)]
         [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu, Shifu, and Yukikaze depending on what is needed.", SAM.JobID, 0, "", "")]
         SAM_JinpuShifu = 15027,
@@ -2987,6 +3014,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
         SAM_Variant_Rampart = 15048,
         #endregion
+
+        // Last value = 15048
 
         #endregion
 
@@ -3172,6 +3201,8 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        // Last value = 16800
+
         #endregion
 
         #region SUMMONER
@@ -3235,7 +3266,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(SMN_SearingLight)]
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Demi phases.\nReflects Demi choice selected under 'Pooled oGCDs Option'.\nNot recommended for SpS Builds.", SMN.JobID, 0, "")]
-        SMN_SearingLight_Burst = 170181,
+        SMN_SearingLight_Burst = 170181, // Genesis, why must you be like this -K
 
         [ParentCombo(SMN_Advanced_Combo)]
         [CustomComboInfo("Demi Summons Combo Option", "Adds Demi summons to the single target and AoE combos.", SMN.JobID, 10, "", "")]
@@ -3318,6 +3349,9 @@ namespace XIVSlothCombo.Combos
         [VariantParent(SMN_Simple_Combo, SMN_Advanced_Combo)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SMN.JobID)]
         SMN_Variant_Cure = 17047,
+
+        // Last value = 17047 (170181)
+
         #endregion
 
         #region WARRIOR
@@ -3416,6 +3450,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", WAR.JobID)]
         WAR_Variant_Ultimatum = 18027,
+
+        // Last value = 18027
 
         #endregion
 
@@ -3580,6 +3616,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", WHM.JobID)]
         WHM_DPS_Variant_Rampart = 19026,
 
+        // Last value = 19026
+
         #endregion
 
         // Non-combat
@@ -3647,6 +3685,8 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(FSH_Swim)]
             [CustomComboInfo("Chum to Baited Breath Option", "Replaces Chum with Baited Breath when diving.", DOL.JobID)]
             FSH_Chum_BaitedBreath = 51011,
+
+        // Last value = 51011
 
         #endregion
 
