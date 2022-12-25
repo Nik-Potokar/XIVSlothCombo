@@ -33,8 +33,12 @@ namespace XIVSlothCombo.Window.Tabs
             foreach (string? jobName in groupedPresets.Keys)
             {
                 if (!groupedPresets[jobName].Any(x => PluginConfiguration.IsSecret(x.Preset))) continue;
-
-                if (ImGui.CollapsingHeader(jobName))
+                string header = jobName;
+                if (jobName == groupedPresets.First().Key)
+                {
+                    header = "All Jobs";
+                }
+                if (ImGui.CollapsingHeader(header))
                 {
                     foreach (var otherJob in groupedPresets.Keys.Where(x => x != jobName))
                     {
