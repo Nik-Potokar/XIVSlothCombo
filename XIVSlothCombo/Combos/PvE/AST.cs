@@ -2,6 +2,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.Core;
@@ -341,6 +342,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     spellsSinceDraw = 1;
                 }
+
                 //Dalamud.Logging.PluginLog.Debug($"{spellsSinceDraw}");
                 bool AlternateMode = GetIntOptionAsBool(Config.AST_DPS_AltMode); //(0 or 1 radio values)
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
@@ -399,7 +401,8 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Play) &&
                         Gauge.DrawnCard is not CardType.NONE &&
                         CanSpellWeave(actionID) &&
-                        spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting)
+                        spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting &&
+                        !WasLastAction(Redraw))
                         return OriginalHook(Play);
 
                     //Card Draw
