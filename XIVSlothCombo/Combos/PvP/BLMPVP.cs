@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class BLMPVP
+    internal static class BLMPvP
     {
         public const uint
             Fire = 29649,
@@ -47,7 +47,8 @@ namespace XIVSlothCombo.Combos.PvP
             {
                 if (actionID is Fire or Fire4 or Flare)
                 {
-                    var canWeave = CanSpellWeave(actionID);
+                    bool canWeave = CanSpellWeave(actionID);
+
                     if (HasEffect(Buffs.Polyglot))
                         return Foul;
 
@@ -80,7 +81,8 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (actionID is Blizzard or Blizzard4 or Freeze)
                 {
-                    var canWeave = CanSpellWeave(actionID);
+                    bool canWeave = CanSpellWeave(actionID);
+
                     if (HasEffect(Buffs.Polyglot))
                         return Foul;
 

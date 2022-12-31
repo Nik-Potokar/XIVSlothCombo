@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class RDMPVP
+    internal static class RDMPvP
     {
         public const byte JobID = 35;
 
