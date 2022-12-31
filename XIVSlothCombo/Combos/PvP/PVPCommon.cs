@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.Core;
+﻿using System.Collections.Generic;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
@@ -41,6 +42,10 @@ namespace XIVSlothCombo.Combos.PvP
                 Guard = 3054;
         }
 
+        // Lists of Excluded skills 
+        internal static readonly List<uint>
+            MovmentSkills = new() { WARPvP.Onslaught, NINPvP.Shukuchi, DNCPvP.EnAvant, MNKPvP.ThunderClap, RDMPvP.CorpsACorps, RDMPvP.Displacement, SGEPvP.Icarus, RPRPvP.HellsIngress, RPRPvP.Regress, BRDPvP.RepellingShot, BLMPvP.AetherialManipulation, DRGPvP.ElusiveJump, GNBPvP.RoughDivide },
+            GlobalSkills = new() { Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint };
 
         internal class GlobalEmergencyHeals : CustomCombo
         {
@@ -56,14 +61,9 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (Execute() &&
                      InPvP() &&
-                     actionID != Guard &&
-                     actionID != Recuperate &&
-                     actionID != Purify &&
-                     actionID != StandardElixir &&
-                     actionID != Sprint &&
-                     actionID != Teleport &&
-                     actionID != Return)
-                     return OriginalHook(Recuperate);
+                    !GlobalSkills.Contains(actionID) &&
+                    !MovmentSkills.Contains(actionID))
+                    return OriginalHook(Recuperate);
 
                 return actionID;
             }
@@ -77,7 +77,7 @@ namespace XIVSlothCombo.Combos.PvP
 
 
                 if (HasEffect(3180)) return false; //DRG LB buff
-                if (HasEffect(DRKPVP.Buffs.UndeadRedemption)) return false;
+                if (HasEffect(DRKPvP.Buffs.UndeadRedemption)) return false;
                 if (LocalPlayer.CurrentMp < 2500) return false;
                 if (remainingPercentage * 100 > threshold) return false;
 
@@ -100,13 +100,8 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (Execute() &&
                     InPvP() &&
-                    actionID != Guard &&
-                    actionID != Recuperate &&
-                    actionID != Purify &&
-                    actionID != StandardElixir &&
-                     actionID != Sprint &&
-                     actionID != Teleport &&
-                     actionID != Return)
+                    !GlobalSkills.Contains(actionID) &&
+                    !MovmentSkills.Contains(actionID))
                     return OriginalHook(Guard);
 
                 return actionID;
@@ -119,8 +114,8 @@ namespace XIVSlothCombo.Combos.PvP
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
                 if (HasEffect(3180)) return false; //DRG LB buff
-                if (HasEffect(DRKPVP.Buffs.UndeadRedemption)) return false;
-                if (HasEffectAny(Debuffs.Unguarded) || HasEffect(WARPVP.Buffs.InnerRelease)) return false;
+                if (HasEffect(DRKPvP.Buffs.UndeadRedemption)) return false;
+                if (HasEffectAny(Debuffs.Unguarded) || HasEffect(WARPvP.Buffs.InnerRelease)) return false;
                 if (GetCooldown(Guard).IsCooldown) return false;
                 if (remainingPercentage * 100 > threshold) return false;
 
@@ -143,13 +138,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                 if (Execute() &&
                     InPvP() &&
-                    actionID != Guard &&
-                    actionID != Recuperate &&
-                    actionID != Purify &&
-                    actionID != StandardElixir &&
-                    actionID != Sprint &&
-                    actionID != Teleport &&
-                    actionID != Return)
+                    !GlobalSkills.Contains(actionID))
                     return OriginalHook(Purify);
 
                 return actionID;
