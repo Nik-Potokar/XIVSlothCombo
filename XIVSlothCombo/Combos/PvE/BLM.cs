@@ -564,8 +564,6 @@ namespace XIVSlothCombo.Combos.PvE
         internal class BLM_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AdvancedMode;
-
-            internal static bool openerFinished = false;
             internal static bool inOpener = false;
 
 
@@ -601,7 +599,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Opener for BLM
                     // Credit to damolitionn for providing code to be used as a base for this opener
                     // F3 OPENER DOUBLE TRANSPOSE VARIATION 
-                    if (!InCombat() && IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90)
+                    if (!InCombat() && IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level is 90)
                     {
                         inOpener = false;
 
@@ -609,7 +607,7 @@ namespace XIVSlothCombo.Combos.PvE
                             inOpener = true;
 
                         if (inOpener)
-                            return OriginalHook(Fire3);
+                            return Fire3;
                     }
 
                     if (InCombat())
@@ -620,12 +618,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 inOpener = false;
 
                             // Exit out of opener if Enochian is lost
-                            if (!Gauge.IsEnochianActive)
+                         /*   if (!Gauge.IsEnochianActive)
                             {
                                 openerFinished = true;
                                 inOpener = false;
                                 return Blizzard3;
-                            }
+                            }*/
 
                             if (Gauge.InAstralFire)
                             {
@@ -645,12 +643,15 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         if (ActionReady(Amplifier) && Gauge.PolyglotStacks < 2)
                                             return Amplifier;
-
+                                    }
+                                    if (lastComboMove is Amplifier && (GetBuffStacks(Buffs.Triplecast) is 1))
+                                    {
                                         if (ActionReady(LeyLines))
                                             return LeyLines;
                                     }
+                                  
                                 }
-
+                               
                                 // Manafont  
                                 if (ActionReady(Manafont) && (lastComboMove is Despair))
                                     return Manafont;
@@ -688,12 +689,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (ActionReady(All.Swiftcast))
                                         return Transpose;
-
                                     else
-                                    {
                                         inOpener = false;
-                                        openerFinished = true;
-                                    }
                                 }
 
                                 //cast Fire4 until only enough mana for despair
@@ -722,10 +719,10 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Thunder3;
 
                                 if (lastComboMove is Thunder3)
+                                {
                                     return Transpose;
-
-                                inOpener = false;
-                                openerFinished = true;
+                                }
+                                    inOpener = false;
                             }
                         }
 
