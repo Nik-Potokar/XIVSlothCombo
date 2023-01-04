@@ -432,7 +432,7 @@ namespace XIVSlothCombo.Combos.PvE
                     float wildfireCDTime = GetCooldownRemainingTime(Wildfire);
 
 
-                    if (!InCombat() && IsEnabled(CustomComboPreset.MCH_ST_Opener) && openerSelection is 0 or 1 && level >= 90)
+                    if (!InCombat() && IsEnabled(CustomComboPreset.MCH_ST_Opener) && /*openerSelection is 0 or 1 && */level >= 90)
                     {
                         inOpener = false;
 
@@ -453,7 +453,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // if (openerSelection is 0 or 1)
                             //  {
                             // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
-                            if ((step == 0 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
+                            if ((step == 0 && IsOnCooldown(AirAnchor) && !HasEffect(Buffs.Reassembled))
                                 || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
 
                             //we do it in steps to be able to control it
@@ -621,7 +621,7 @@ namespace XIVSlothCombo.Combos.PvE
             }
 
                        
-            private bool UseHypercharge(MCHGauge gauge, float wildfireCDTime)
+           private bool UseHypercharge(MCHGauge gauge, float wildfireCDTime)
             {
                 uint wfTimer = 6; //default timer
                 if (LocalPlayer.Level < Levels.BarrelStabilizer) wfTimer = 12; // just a little space to breathe and not delay the WF too much while you don't have access to the Barrel Stabilizer

@@ -1613,6 +1613,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
         MCH_Variant_Cure = 8040,
 
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -1, "", "")]
+        MCH_ST_Opener = 8041,
+
         #endregion
 
         #region MONK
