@@ -574,7 +574,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var currentMP = LocalPlayer.CurrentMp;
                     var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
-                    bool openerReady = IsOffCooldown(Manafont) && IsOffCooldown(Amplifier) && IsOffCooldown(LeyLines);
+                    bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
