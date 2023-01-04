@@ -50,11 +50,14 @@ namespace XIVSlothCombo.Combos.PvE
         }
         public static class Config
         {
+           
             public const string
                 MCH_ST_SecondWindThreshold = "MCH_ST_SecondWindThreshold",
                 MCH_AoE_SecondWindThreshold = "MCH_AoE_SecondWindThreshold",
+                MCH_ST_QueenThreshold = "MCH_ST_QueenThreshold",
+                MCH_OpenerSelection = "MCH_OpenerSelection",
                 MCH_VariantCure = "MCH_VariantCure";
-        }
+    }
 
         public static class Levels
         {
@@ -421,70 +424,160 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
             internal static bool openerFinished = false;
+            internal static bool inOpener = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                //begin
                 if (actionID is SplitShot or HeatedSplitShot)
                 {
                     var inCombat = InCombat();
                     var gauge = GetJobGauge<MCHGauge>();
-                    
                     var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
+                    int openerSelection = PluginConfiguration.GetCustomIntValue(Config.MCH_OpenerSelection);
+                    int queenThreshold = PluginConfiguration.GetCustomIntValue(Config.MCH_ST_QueenThreshold);
+                    bool opener = IsEnabled(CustomComboPreset.MCH_ST_Opener) && CombatEngageDuration().TotalSeconds < 15 && LevelChecked(ChainSaw) && IsOffCooldown(ChainSaw); //arbitrary 15sec here idk
 
-                    if (!inCombat)
+                    if (!InCombat() && (inOpener || openerFinished))
                     {
-                        openerFinished = false;
+                        openerFinished = false; // otherwise, if in combat, opener is completed? what is considered "openerFinished"?
+                                                // Wildfire, Queen, Hypercharge, Chainsaw Reassemble
 
                     }
+                    // Clean Shot or Air Anchor to signify the "opener" is done
+                    if (opener)
+                    {
+                        if (openerSelection is 2 && (!InCombat() || inOpener) && HasBattleTarget() &&
+                            GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble) &&
+                            gauge.Heat == 0 && gauge.Battery == 0 &&
+                            !HasEffect(All.Buffs.Weakness) &&
+                            IsOffCooldown(AirAnchor) && IsOffCooldown(Drill)) //this code is kinda all over the place right now. can you tell?
+                        {
+                            return OriginalHook(SplitShot);
+                        }
+                        if (openerSelection is 0 or 1 && lastComboMove == CleanShot)
+                        {
+                            openerFinished = true;
+                        }
+                        if (openerSelection is 2 && WasLastWeaponskill(AirAnchor))
+                        {
+                            openerFinished = true;
+                        }
+                        if (WasLastWeaponskill(Drill) && !WasLastWeaponskill(OriginalHook(SplitShot)) && IsOffCooldown(BarrelStabilizer))
+                        {
+                            //Barrel Stabilizer, need to tighten this a bit maybe
+                            return BarrelStabilizer;
+                        }
+                        else if (!opener && lastComboMove == CleanShot)
+                        {
+                            openerFinished = true;
 
-                    if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 55 &&
+                        }
+                    }
+
+                    // uhh should be 2nd gcd in theory but idk why. might line up stuff better down the line and solve misaligned issues like why BS & WF feature needed
+                    if (CombatEngageDuration().Minutes >= 2 && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 55 &&
                             IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer && !WasLastWeaponskill(ChainSaw) &&
-                            (wildfireCDTime <= 9 || (wildfireCDTime >= 110 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && gauge.IsOverheated)) )
+                            (wildfireCDTime <= 9 || (wildfireCDTime >= 110 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && gauge.IsOverheated)))
+                    {
                         return BarrelStabilizer;
-
-                    if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
-                    {
-                        return All.HeadGraze;
                     }
 
-                    if (openerFinished && (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 && level >= Levels.Wildfire && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) &&
-                        (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) && !WasLastWeaponskill(HeatBlast))) ) //these try to ensure the correct loops
+                    // Queen
+                    if ((CanWeave(actionID) || (CanWeave(actionID, 0.6))) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && (wildfireCDTime >= 2 &&
+                        !WasLastAbility(Wildfire) || level < Levels.Wildfire))
                     {
-                        if (CanDelayedWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
+                        //queen slider for accurate-ish punches under buff windows 
+                        if (openerSelection is 2 && level >= Levels.RookOverdrive && gauge.Battery >= 50)
                         {
-                            return Wildfire;
-                        } else if (CanDelayedWeave(actionID,1.1) && !gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
-                        {
-                            return Wildfire;
-                        } else if (CanWeave(actionID, 0.6) && gauge.IsOverheated )
-                        {
-                            return Wildfire;
+                            if (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot)))
+                            {
+                                return OriginalHook(RookAutoturret);
+                            }
+
+                            else if (CombatEngageDuration().Minutes % 2 == 0 && (CombatEngageDuration().Seconds >= 01 && CombatEngageDuration().Seconds <= queenThreshold))
+                            {
+                                return OriginalHook(RookAutoturret);
+                            }
+
+                            else if (CombatEngageDuration().Minutes % 2 == 1 && (CombatEngageDuration().Seconds >= 55 && CombatEngageDuration().Seconds <= 59))
+                            {
+                                return OriginalHook(RookAutoturret);
+                            }
                         }
 
-                    }
-
-                    if (CanWeave(actionID) && openerFinished && !gauge.IsRobotActive && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && (wildfireCDTime >= 2 && !WasLastAbility(Wildfire) || level < Levels.Wildfire))
-                    {
-                        //overflow protection
-                        if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Seconds < 55)
+                        //fix this later for General Purpose Opener 2nd Queen
+                        if (openerSelection is 0 or 1 && level >= Levels.RookOverdrive && gauge.Battery >= 70 &&
+                           (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))))
                         {
                             return OriginalHook(RookAutoturret);
                         }
-                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Seconds >= 59 || CombatEngageDuration().Seconds <= 05 || (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot))) ))
-                        {
-                            return OriginalHook(RookAutoturret);
-                        }
+                        //else if (LevelChecked(AutomatonQueen) && CombatEngageDuration().Seconds >= queenThreshold && 
+                        //    gauge.Battery >= 80 && CombatEngageDuration().Minutes % 2 == 0 && gauge.Heat >= 100)
+                        //{
+                        //    Dalamud.Logging.PluginLog.Log("Queen only at 2:06 please");
+                        //    return OriginalHook(RookAutoturret);
+                        //}
+
                         //else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 58 || CombatEngageDuration().Seconds <= 05))
                         //{
                         //    return OriginalHook(RookAutoturret);
                         //}
-
                     }
 
-                    
+                    // Interrupt, works okay
+                    if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) && CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
+                    {
+                        return All.HeadGraze;
+                    }
+                    // Wildfire shenanigans
+                    if (openerFinished && (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 && level >= Levels.Wildfire && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge))
+                    {
+                        if (openerSelection is 0 or 1)
+                        {
+                            if (//WasLastAction(Reassemble) &&
+                                IsOnCooldown(ChainSaw) && CanDelayedWeave(actionID))
+                                return Wildfire;
+                            else if (JustUsed(ChainSaw) && CanDelayedWeave(actionID) && CombatEngageDuration().TotalMinutes >= 2)
+                                return Wildfire;
+                        }
+
+                        if (openerSelection is 2)
+                        {
+                            if (//WasLastAction(Reassemble) &&
+                                IsOffCooldown(ChainSaw) && CanDelayedWeave(actionID))
+                                return Wildfire;
+                            else if (//WasLastAction(Reassemble) &&
+                                (IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) <= 1.9) && (CanDelayedWeave(actionID)) && CombatEngageDuration().TotalMinutes >= 2)
+                                return Wildfire;
+                        }
+                        // 6.2 rotation does not use Wildfire within Hypercharge windows anymore due to minor drifting. Chainsaw and WF should be right next to each other always.
+                        // Old code left here in case something breaks or death? lolol
+                        else if (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) && !WasLastWeaponskill(HeatBlast))) //these try to ensure the correct loops
+                        {
+                            if (CanDelayedWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
+                            {
+                                return Wildfire;
+                            }
+                            if (CanDelayedWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
+                            {
+                                return Wildfire;
+                            }
+                            else if (CanDelayedWeave(actionID, 1.1) && !gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
+                            {
+                                return Wildfire;
+                            }
+                            else if (CanWeave(actionID, 0.6) && gauge.IsOverheated)
+                            {
+                                return Wildfire;
+                            }
+                        }
+                    }
+
+                    //Heatblast, Gauss, Rico
                     if (gauge.IsOverheated && level >= Levels.HeatBlast)
                     {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.6) && (wildfireCDTime > 2 || level < Levels.Wildfire) ) //gauss and ricochet weave
+                        if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && (wildfireCDTime > 2 || level < Levels.Wildfire)) //gauss and ricochet weave
                         {
                             var gaussCharges = GetRemainingCharges(GaussRound);
                             var gaussMaxCharges = GetMaxCharges(GaussRound);
@@ -502,21 +595,28 @@ namespace XIVSlothCombo.Combos.PvE
                                     (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && reasmCharges >= 1 && GetCooldownRemainingTime(Drill) <= 2)
                                 ))
                                 return Reassemble;
-                            else if ( (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)) ) ||
-                                       (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && gaussCharges >= gaussMaxCharges - 1 ) )
+
+                            //having issues with 2min queen
+                            else if (IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && LevelChecked(AutomatonQueen) && (CombatEngageDuration().Seconds ==
+                                        queenThreshold && gauge.Battery >= 50))
+                            {
+                                return OriginalHook(RookAutoturret);
+                            }
+                            else if ((!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet))) ||
+                                       (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && gaussCharges >= gaussMaxCharges - 1))
                             {
                                 return GaussRound;
                             }
                             else if (level >= Levels.Ricochet && HasCharges(Ricochet) && !IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode))
                             {
-                               return Ricochet;
+                                return Ricochet;
                             }
 
                         }
 
                         return HeatBlast;
                     }
-
+                    // Hypercharge!
                     if (CanWeave(actionID) && gauge.Heat >= 50 && openerFinished && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) && level >= Levels.Hypercharge && !gauge.IsOverheated)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
@@ -542,62 +642,123 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         else if (level < Levels.Drill)
                         {
-                            if (UseHypercharge(gauge, wildfireCDTime)) return Hypercharge; 
+                            if (UseHypercharge(gauge, wildfireCDTime)) return Hypercharge;
+                        }
+                    }
+                    //Gauss & Rico Suave
+                    if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet))
+                    {
+                        //Dalamud.Logging.PluginLog.Log("Tier 1 check"); this is kinda useful
+                        if (openerSelection is 1 && opener && IsEnabled(CustomComboPreset.MCH_ST_Opener) && CombatEngageDuration().TotalSeconds < 3.5 && WasLastWeaponskill(AirAnchor))
+                        {
+                            //Dalamud.Logging.PluginLog.Log("Tier 2 check");
+                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                                return GaussRound;
+                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
+                                return Ricochet;
+                        }
+                        if (openerSelection is 2 && opener && JustUsed(HeatedSplitShot))
+                        {
+                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                            {
+                                return GaussRound;
+                            }
+                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
+                            {
+                                return Ricochet;
+                            }
+                        }
+                        else
+                        {
+                            if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                            {
+                                return GaussRound;
+                            }
+                            else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
+                            {
+                                return Ricochet;
+                            }
                         }
                     }
 
+                    // TOOLS & REASSEMBLE
+                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
+                    {
+                        Dalamud.Logging.PluginLog.Log("Air Anchor Reassemble");
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
+                            GetRemainingCharges(Reassemble) > 0)
+                        {
+                            Dalamud.Logging.PluginLog.Log("Air Anchor Reassemble Tier 2");
+                            if (openerSelection is 0 or 1 & opener ||
+                                openerSelection is 2 & opener && WasLastWeaponskill(HeatedCleanShot) && inCombat && CombatEngageDuration().TotalSeconds >= 1 &&
+                                gauge.Heat > 10 ||
+                               !opener && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) &&
+                               GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble))
+                                //idk why someone would have 2 charges of air anchor, but this could be a pseudo-recovery thing if someone was dead super long??
+                                return Reassemble; // General Purpose Opener & protection if players don't enable Max Charges Reassemble. kinda messy code
+
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) && !opener &&
+                                CombatEngageDuration().Minutes % 2 == 1 && CombatEngageDuration().TotalSeconds >= 1)
+                                return Reassemble;
+
+                        }
+                        if (openerSelection is 0 or 1 && opener)
+                        {
+                            return AirAnchor;
+                        }
+                        if (inCombat && openerSelection is 2 && opener && WasLastWeaponskill(HeatedCleanShot) && HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 1)
+                        {
+                            return AirAnchor;
+                        }
+                        else if (!opener && inCombat)
+                        {
+                            return AirAnchor;
+                        }
+                    }
+                    else if ((IsOffCooldown(HotShot) || GetCooldownRemainingTime(HotShot) < 1) && level is >= Levels.Hotshot and < Levels.AirAnchor)
+                        return HotShot;
+
+                    if (inCombat && (IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1) && level >= Levels.Drill)
+                    {
+                        Dalamud.Logging.PluginLog.Log("Drill Reassemble");
+                        if (opener &&
+                           (openerSelection is 0 or 1 && IsOnCooldown(AirAnchor) ||
+                           (openerSelection is 2 && WasLastWeaponskill(HeatedSplitShot))))
+                            return Drill;
+
+                        if (!opener && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) &&
+                            !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
+                        {
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble))
+                                return Reassemble;
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges))
+                                return Reassemble;
+                        }
+                        return Drill;
+                    }
+                    // Chainsaw Reassemble
+                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) <= 2) && level >= Levels.ChainSaw && openerFinished)
+                    {
+                        Dalamud.Logging.PluginLog.Log("ChainSaw Reassemble");
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && !HasEffect(Buffs.Reassembled) &&
+                            GetRemainingCharges(Reassemble) > 0)
+                        {
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble))
+                                return Reassemble;
+
+                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges))
+                                return Reassemble;
+                        }
+                        if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1))
+                            return ChainSaw;
+                    }
                     // healing - please move if not appropriate priority
+                    // Moved 
                     if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && CanWeave(actionID, 0.6))
                     {
                         if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_ST_SecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                             return All.SecondWind;
                     }
-
-                    if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1) && level >= Levels.AirAnchor)
-                    {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) &&
-                            GetRemainingCharges(Reassemble) > 0)
-                        {
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor_MaxCharges)) return Reassemble;
-
-                        }
-                        return AirAnchor;
-                    }
-                    else if ((IsOffCooldown(HotShot) || GetCooldownRemainingTime(HotShot) < 1) && level is >= Levels.Hotshot and < Levels.AirAnchor)
-                        return HotShot;
-
-                    if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1) && level >= Levels.Drill)
-                    {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) &&
-                            !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
-                        {
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill_MaxCharges)) return Reassemble;
-                        }
-                        return Drill;
-                    }
-
-                    if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1) && level >= Levels.ChainSaw && openerFinished)
-                    {
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && !HasEffect(Buffs.Reassembled) &&
-                            GetRemainingCharges(Reassemble) > 0)
-                        {
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble)) return Reassemble;
-                            else if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw_MaxCharges)) return Reassemble;
-                        }
-                        return ChainSaw;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID))
-                    {
-                        if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
-                            return GaussRound;
-                        else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
-                            return Ricochet;
-                    }
-                    
-
                     if (lastComboMove == SplitShot && level >= Levels.SlugShot)
                         return OriginalHook(SlugShot);
 
@@ -611,7 +772,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(CleanShot);
                     }
 
-                    if (lastComboMove == CleanShot) openerFinished = true;
                 }
 
                 return actionID;
@@ -623,11 +783,12 @@ namespace XIVSlothCombo.Combos.PvE
                 if (LocalPlayer.Level < Levels.BarrelStabilizer) wfTimer = 12; // just a little space to breathe and not delay the WF too much while you don't have access to the Barrel Stabilizer
 
                 // i really do not remember why i put > 70 here for heat, and im afraid if i remove it itll break it lol
+                // Did Aug write this? ^ Kinda impossible to have more than 70 heat with the code written currently. 65 heat during opener max
                 if (CombatEngageDuration().Minutes == 0 && (gauge.Heat > 70 || CombatEngageDuration().Seconds <= 30) && !WasLastWeaponskill(OriginalHook(CleanShot)))
                 {
                     return true;
                 }
-
+                //Change ChainSaw code here for Delayed maybe later
                 if (CombatEngageDuration().Minutes > 0 && (wildfireCDTime >= wfTimer || WasLastAbility(Wildfire) || (WasLastWeaponskill(ChainSaw) && (IsOffCooldown(Wildfire) || wildfireCDTime < 1))))
                 {
                     if (CombatEngageDuration().Minutes % 2 == 1 && gauge.Heat >= 90)
