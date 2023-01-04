@@ -420,7 +420,8 @@ namespace XIVSlothCombo.Combos.PvE
         internal class MCH_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
-            internal static bool openerFinished = false;
+            internal static bool inOpener = false;
+            internal static byte step = 0;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
