@@ -316,6 +316,7 @@ namespace XIVSlothCombo
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
                                 $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");                           // - Abbreviation
                             file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.GameData.JobIndex}"); // Job Index
+                            file.WriteLine($"Current Job Level: {Service.ClientState.LocalPlayer.Level}");                      // Job Level
                             file.WriteLine("");
                             file.WriteLine($"Current Zone: {Service.ClientState.TerritoryType}");                               // Current zone location
                             file.WriteLine($"Current Party Size: {Service.PartyList.Length}");                                  // Current party size

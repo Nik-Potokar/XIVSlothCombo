@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.CustomComboNS;
+﻿using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal class DRKPVP
+    internal class DRKPvP
     {
         public const uint
             HardSlash = 29085,
@@ -40,7 +34,7 @@ namespace XIVSlothCombo.Combos.PvP
 
         }
 
-        internal class DRKPVP_BurstMode : CustomCombo
+        internal class DRKPvP_BurstMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRKPvP_Burst;
 
