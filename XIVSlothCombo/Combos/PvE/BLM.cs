@@ -603,7 +603,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         inOpener = false;
 
-                        if (HasEffect(Buffs.Sharpcast) && openerReady)
+                        if (HasEffect(Buffs.Sharpcast) && openerReady && CombatEngageDuration().TotalSeconds < 10)
                             inOpener = true;
 
                         if (inOpener is true)
@@ -749,23 +749,29 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (step == 21)
                             {
+                                if (currentMP == MP.MaxMP) step++;
+                                else return Blizzard3;
+                            }
+
+                            if (step == 22)
+                            {
                                 if (Gauge.InAstralFire && currentMP == MP.MaxMP) step++;
                                 else return Transpose;
                             }
 
-                            if (step == 22)
+                            if (step == 23)
                             {
                                 if (lastComboMove == Fire3) step++;
                                 else return Fire3;
                             }
 
-                            if (step == 23)
+                            if (step == 24)
                             {
                                 if (currentMP <= MP.Fire) step++;
                                 else return Fire4;
                             }
 
-                            if (step == 24)
+                            if (step == 25)
                             {
                                 if (lastComboMove == Despair) step++;
                                 else return Despair;
