@@ -606,7 +606,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.Sharpcast) && openerReady)
                             inOpener = true;
 
-                        if (inOpener is true)
+                        if (inOpener)
                             return Fire3;
 
                         return Sharpcast;
@@ -614,12 +614,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
-                        if (CombatEngageDuration().TotalSeconds < 5 && HasEffect(Buffs.Sharpcast) && openerReady)
+                        if (CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
+                            IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90 && openerReady)
                             inOpener = true;
-
+                      
                         // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
                         if ((step == 0 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
-                            || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+                            || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) 
+                            inOpener = false;
 
                         if (inOpener)
                         {
@@ -710,7 +712,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (step == 14)
                             {
-                                if (GetRemainingCharges(Sharpcast) < 1) step++;
+                                if (HasEffect(Buffs.Sharpcast)) step++;
                                 else return Sharpcast;
                             }
 

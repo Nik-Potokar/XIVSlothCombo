@@ -439,29 +439,30 @@ namespace XIVSlothCombo.Combos.PvE
                     float wildfireCDTime = GetCooldownRemainingTime(Wildfire);
 
 
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Opener)  && level >= 90)
-                    {
-                        if (!InCombat() && openerSelection is 0 or 1)
-                        {
-                            inOpener = false;
 
-                            if (openerReady && HasEffect(Buffs.Reassembled))
-                            {
-                                inOpener = true;
-                                step = 0;
-                                return AirAnchor;
-                            }
-                            return Reassemble;
-                        }
+                    if (!InCombat() && IsEnabled(CustomComboPreset.MCH_ST_Opener) && level >= 90 && openerSelection is 0 or 1)
+                    {
+                        inOpener = false;
+
+                        if (HasEffect(Buffs.Reassembled) && openerReady)
+                            inOpener = true;
+
+                        if (inOpener)
+                            return AirAnchor;
+
+                        return Reassemble;
                     }
 
                     if (InCombat())
-                    {  
-
-                        if (inOpener)
+                    {
+                        if (openerSelection is 0 or 1)
                         {
-                            if (openerSelection is 0 or 1)
-                            { 
+                            if (CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Reassembled) &&
+                                IsEnabled(CustomComboPreset.MCH_ST_Opener) && level >= 90 && openerReady)
+                                inOpener = true;
+
+                            if (inOpener)
+                            {
                                 // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
                                 if ((step is 0 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
                                     || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;

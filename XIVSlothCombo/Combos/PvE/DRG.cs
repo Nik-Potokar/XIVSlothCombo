@@ -117,7 +117,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
-                        if (CombatEngageDuration().TotalSeconds < 5 && IsOnCooldown(ElusiveJump) &&
+                        if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump) &&
                             IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88 && openerReady)
                             inOpener = true;
 
