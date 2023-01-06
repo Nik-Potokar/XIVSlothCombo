@@ -1445,7 +1445,7 @@ namespace XIVSlothCombo.Combos
 
         #region MACHINIST
 
-        [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
+      /*  [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
         [CustomComboInfo("(Heated) Shot Combo Feature", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo = 8000,
@@ -1526,10 +1526,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
         MCH_ST_AutoBarrel = 8019,
 
-        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
+      */  [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+       // [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
         [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
-        MCH_ST_SimpleMode = 8020,
+        MCH_ST_SimpleMode = 8020, /*
 
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 0, "", "")]
@@ -1611,7 +1611,7 @@ namespace XIVSlothCombo.Combos
         [Variant]
         [VariantParent(MCH_ST_SimpleMode, MCH_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
-        MCH_Variant_Cure = 8040,
+        MCH_Variant_Cure = 8040, */
 
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -1, "", "")]

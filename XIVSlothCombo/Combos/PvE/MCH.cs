@@ -83,7 +83,7 @@ namespace XIVSlothCombo.Combos.PvE
                 ChainSaw = 90;
         }
 
-        internal class MCH_ST_MainCombo : CustomCombo
+    /*    internal class MCH_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_MainCombo;
 
@@ -416,7 +416,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-
+    */
         internal class MCH_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
