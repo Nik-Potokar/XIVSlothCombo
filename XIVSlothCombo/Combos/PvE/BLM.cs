@@ -603,7 +603,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         inOpener = false;
 
-                        if (HasEffect(Buffs.Sharpcast) && openerReady && CombatEngageDuration().TotalSeconds < 10)
+                        if (HasEffect(Buffs.Sharpcast) && openerReady)
                             inOpener = true;
 
                         if (inOpener is true)
@@ -614,6 +614,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
+                        if (CombatEngageDuration().TotalSeconds < 5 && HasEffect(Buffs.Sharpcast) && openerReady)
+                            inOpener = true;
+
                         // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
                         if ((step == 0 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
                             || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;

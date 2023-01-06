@@ -86,7 +86,7 @@ namespace XIVSlothCombo.Combos.PvE
                 ChainSaw = 90;
         }
         
-        internal class MCH_ST_MainCombo : CustomCombo
+     /*   internal class MCH_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_MainCombo;
 
@@ -423,7 +423,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-        
+        */
         internal class MCH_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
@@ -439,17 +439,20 @@ namespace XIVSlothCombo.Combos.PvE
                     float wildfireCDTime = GetCooldownRemainingTime(Wildfire);
 
 
-                    if (!InCombat() && IsEnabled(CustomComboPreset.MCH_ST_Opener) && openerSelection is 0 or 1  && level >= 90)
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Opener)  && level >= 90)
                     {
-                        inOpener = false;
+                        if (!InCombat() && openerSelection is 0 or 1)
+                        {
+                            inOpener = false;
 
-                        if (openerReady && HasEffect(Buffs.Reassembled))
-                            inOpener = true;
-
-                        if (inOpener is true)
-                            return AirAnchor;
-
-                        return Reassemble;
+                            if (openerReady && HasEffect(Buffs.Reassembled))
+                            {
+                                inOpener = true;
+                                step = 0;
+                                return AirAnchor;
+                            }
+                            return Reassemble;
+                        }
                     }
 
                     if (InCombat())
@@ -460,11 +463,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (openerSelection is 0 or 1)
                             { 
                                 // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
-                                if ((step == 0 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
+                                if ((step is 0 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
                                     || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
 
                                 //we do it in steps to be able to control it
-                                if (step == 0)
+                                if (step is 0)
                                 {
                                     if (IsOnCooldown(AirAnchor)) step++;
                                     else return AirAnchor;
@@ -623,10 +626,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 inOpener = false;
                             }
                         }
-
+                        /*
                         if (!inOpener)
                         {
-                          /*  if (openerSelection is 2 && (!InCombat() || inOpener) && HasBattleTarget() &&
+                            if (openerSelection is 2 && (!InCombat() || inOpener) && HasBattleTarget() &&
                              GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble) &&
                              Gauge.Heat == 0 && Gauge.Battery == 0 &&
                              !HasEffect(All.Buffs.Weakness) &&
@@ -651,7 +654,7 @@ namespace XIVSlothCombo.Combos.PvE
                          {
                              inOpener = false;
 
-                         }*/
+                         }
 
                             // uhh should be 2nd gcd in theory but idk why. might line up stuff better down the line and solve misaligned issues like why BS & WF feature needed
                             if (CombatEngageDuration().Minutes >= 2 && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && 
@@ -704,7 +707,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 //{
                                 //    return OriginalHook(RookAutoturret);
                                 //}
-                            }*/
+                            }
 
                             // Interrupt, works okay
                             if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) && 
@@ -798,7 +801,7 @@ namespace XIVSlothCombo.Combos.PvE
                                        else if (level >= Levels.Ricochet && HasCharges(Ricochet) && !IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode))
                                        {
                                            return Ricochet;
-                                       }*/
+                                       }
 
                                 }
 
@@ -965,12 +968,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                                 return OriginalHook(CleanShot);
                             }
-                        } 
+                        } */
                     }
                 }
                 return actionID;
             }
-
+            /*
             private bool UseHypercharge(MCHGauge gauge, float wildfireCDTime)
             {
                 uint wfTimer = 6; //default timer
@@ -997,7 +1000,7 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 return false;
-            }
+            }*/
         }
 
     }
