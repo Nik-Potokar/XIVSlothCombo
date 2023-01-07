@@ -447,6 +447,8 @@ namespace XIVSlothCombo.Combos.PvE
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.MCH_OpenerSelection);
                     bool openerReady = ActionReady(ChainSaw) && ActionReady(Wildfire) && ActionReady(BarrelStabilizer) && GetRemainingCharges(Ricochet) == 3 && GetRemainingCharges(GaussRound) == 3;
                     float wildfireCDTime = GetCooldownRemainingTime(Wildfire);
+                    bool oddMinute = CombatEngageDuration().Minutes % 2 == 1;
+                    bool evenMinute = CombatEngageDuration().Minutes % 2 == 0;
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Opener) && level >= 90)
                     {
@@ -831,410 +833,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!inOpener)
                     {
-                        if (openerSelection is 0 or 1)
-                        {
-                            //Filler Features
-                            if (!inOpener && LevelChecked(ChainSaw) && CombatEngageDuration().Minutes > 0)
-                            {
-                                bool oddMinute = CombatEngageDuration().Minutes % 2 == 1;
-                                bool evenMinute = CombatEngageDuration().Minutes % 2 == 0;
 
-                                if (inOddFiller || inEvenFiller)
-                                {
-                                    inOddFiller = false;
-                                    inEvenFiller = false;
-                                    fillerComplete = false;
-                                }
 
-                                if (!inEvenFiller && evenMinute)
-                                    inEvenFiller = true;
-                                evenBurstStep = 0;
-
-                                if (inEvenFiller)
-                                {
-                                    if (fillerComplete)
-                                    {
-                                        inEvenFiller = false;
-                                        fillerComplete = false;
-                                    }
-
-                                    if (evenBurstStep == 0)
-                                    {
-                                        if (WasLastAction(AirAnchor)) evenBurstStep++;
-                                        else return AirAnchor;
-                                    }
-
-                                    if (evenBurstStep == 1)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 2)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 3)
-                                    {
-                                        if (IsOnCooldown(Drill)) evenBurstStep++;
-                                        else return Drill;
-                                    }
-
-                                    if (evenBurstStep == 4)
-                                    {
-                                        if (IsOnCooldown(OriginalHook(RookAutoturret))) evenBurstStep++;
-                                        else return OriginalHook(RookAutoturret);
-                                    }
-
-                                    if (evenBurstStep == 5)
-                                    {
-                                        if (IsOnCooldown(Hypercharge)) evenBurstStep++;
-                                        else return Hypercharge;
-                                    }
-
-                                    if (evenBurstStep == 6)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 7)
-                                    {
-                                        if (IsOnCooldown(BarrelStabilizer)) evenBurstStep++;
-                                        else return BarrelStabilizer;
-                                    }
-
-                                    if (evenBurstStep == 8)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 9)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 10)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 11)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 12)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 13)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 14)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 15)
-                                    {
-                                        if (WasLastAbility(Reassemble)) evenBurstStep++;
-                                        else return Reassemble;
-                                    }
-
-                                    if (evenBurstStep == 16)
-                                    {
-                                        if (IsOnCooldown(ChainSaw)) evenBurstStep++;
-                                        else return ChainSaw;
-                                    }
-
-                                    if (evenBurstStep == 17)
-                                    {
-                                        if (IsOnCooldown(Wildfire)) evenBurstStep++;
-                                        else return Wildfire;
-                                    }
-
-                                    if (evenBurstStep == 18)
-                                    {
-                                        if (WasLastAction(Hypercharge)) evenBurstStep++;
-                                        else return Hypercharge;
-                                    }
-
-                                    if (evenBurstStep == 19)
-                                    {
-                                        if (IsOnCooldown(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 20)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 21)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 22)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 23)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 24)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 25)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 26)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 27)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 28)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 29)
-                                    {
-                                        if (WasLastAction(Drill)) evenBurstStep++;
-                                        else return Drill;
-                                    }
-
-                                    fillerComplete = true;
-                                }
-
-                                if (!inOddFiller && oddMinute)
-                                    inOddFiller = true;
-                                oddBurstStep = 0;
-
-                                if (inOddFiller)
-                                {
-                                    if (evenBurstStep == 0)
-                                    {
-                                        if (WasLastAction(AirAnchor)) evenBurstStep++;
-                                        else return AirAnchor;
-                                    }
-
-                                    if (evenBurstStep == 1)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 2)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 3)
-                                    {
-                                        if (IsOnCooldown(Drill)) evenBurstStep++;
-                                        else return Drill;
-                                    }
-
-                                    if (evenBurstStep == 4)
-                                    {
-                                        if (IsOnCooldown(OriginalHook(RookAutoturret))) evenBurstStep++;
-                                        else return OriginalHook(RookAutoturret);
-                                    }
-
-                                    if (evenBurstStep == 5)
-                                    {
-                                        if (IsOnCooldown(Hypercharge)) evenBurstStep++;
-                                        else return Hypercharge;
-                                    }
-
-                                    if (evenBurstStep == 6)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 7)
-                                    {
-                                        if (IsOnCooldown(BarrelStabilizer)) evenBurstStep++;
-                                        else return BarrelStabilizer;
-                                    }
-
-                                    if (evenBurstStep == 8)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 9)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 10)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 11)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 12)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 13)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 14)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 15)
-                                    {
-                                        if (WasLastAbility(Reassemble)) evenBurstStep++;
-                                        else return Reassemble;
-                                    }
-
-                                    if (evenBurstStep == 16)
-                                    {
-                                        if (IsOnCooldown(ChainSaw)) evenBurstStep++;
-                                        else return ChainSaw;
-                                    }
-
-                                    if (evenBurstStep == 17)
-                                    {
-                                        if (IsOnCooldown(Wildfire)) evenBurstStep++;
-                                        else return Wildfire;
-                                    }
-
-                                    if (evenBurstStep == 18)
-                                    {
-                                        if (WasLastAction(Hypercharge)) evenBurstStep++;
-                                        else return Hypercharge;
-                                    }
-
-                                    if (evenBurstStep == 19)
-                                    {
-                                        if (IsOnCooldown(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 20)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 21)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 22)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 23)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 24)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 25)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 26)
-                                    {
-                                        if (WasLastAction(GaussRound)) evenBurstStep++;
-                                        else return GaussRound;
-                                    }
-
-                                    if (evenBurstStep == 27)
-                                    {
-                                        if (WasLastAction(HeatBlast)) evenBurstStep++;
-                                        else return HeatBlast;
-                                    }
-
-                                    if (evenBurstStep == 28)
-                                    {
-                                        if (WasLastAction(Ricochet)) evenBurstStep++;
-                                        else return Ricochet;
-                                    }
-
-                                    if (evenBurstStep == 29)
-                                    {
-                                        if (WasLastAction(Drill)) evenBurstStep++;
-                                        else return Drill;
-                                    }
-                                    fillerComplete = true;
-                                }
-
-                            }
-                            
-                        }
 
                         // uhh should be 2nd gcd in theory but idk why. might line up stuff better down the line and solve misaligned issues like why BS & WF feature needed
-                        if (CombatEngageDuration().Minutes >= 2 && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) &&
+                        if (evenMinute && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) &&
                                 Gauge.Heat <= 55 &&
                                     IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer && !WasLastWeaponskill(ChainSaw) &&
                                     (wildfireCDTime <= 9 || (wildfireCDTime >= 110 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && Gauge.IsOverheated)))
@@ -1244,55 +847,34 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Interrupt, works okay
                         if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) &&
-                            CanInterruptEnemy() && IsOffCooldown(All.HeadGraze))
+                            CanInterruptEnemy() && ActionReady(All.HeadGraze))
                         {
                             return All.HeadGraze;
                         }
 
                         // Wildfire shenanigans
                         if ((Gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 &&
-                            level >= Levels.Wildfire && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge))
+                            LevelChecked(Wildfire) && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge))
                         {
                             if (openerSelection is 0 or 1)
                             {
-                                if (//WasLastAction(Reassemble) &&
-                                    IsOnCooldown(ChainSaw) && CanDelayedWeave(actionID))
+                                if (IsOnCooldown(ChainSaw) && CanDelayedWeave(actionID))
                                     return Wildfire;
-                                else if (JustUsed(ChainSaw) && CanDelayedWeave(actionID) && CombatEngageDuration().TotalMinutes >= 2)
+
+                                else if (WasLastAction(ChainSaw) && CanDelayedWeave(actionID) && evenMinute)
                                     return Wildfire;
                             }
 
                             if (openerSelection is 2)
                             {
-                                if (//WasLastAction(Reassemble) &&
+                                if (HasEffect(Buffs.Reassembled) &&
                                     IsOffCooldown(ChainSaw) && CanDelayedWeave(actionID))
                                     return Wildfire;
                                 else if (//WasLastAction(Reassemble) &&
-                                    (IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) <= 1.9) && (CanDelayedWeave(actionID)) && CombatEngageDuration().TotalMinutes >= 2)
+                                    (IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) <= 1.9) && (CanDelayedWeave(actionID)) && evenMinute)
                                     return Wildfire;
                             }
-                            // 6.2 rotation does not use Wildfire within Hypercharge windows anymore due to minor drifting. Chainsaw and WF should be right next to each other always.
-                            // Old code left here in case something breaks or death? lolol
-                            else if (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) &&
-                                !WasLastWeaponskill(HeatBlast))) //these try to ensure the correct loops
-                            {
-                                if (CanDelayedWeave(actionID) && !Gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
-                                {
-                                    return Wildfire;
-                                }
-                                if (CanDelayedWeave(actionID) && !Gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
-                                {
-                                    return Wildfire;
-                                }
-                                else if (CanDelayedWeave(actionID, 1.1) && !Gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
-                                {
-                                    return Wildfire;
-                                }
-                                else if (CanWeave(actionID, 0.6) && Gauge.IsOverheated)
-                                {
-                                    return Wildfire;
-                                }
-                            }
+                            
                         }
 
                         //Heatblast, Gauss, Rico
