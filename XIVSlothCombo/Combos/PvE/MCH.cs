@@ -835,7 +835,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (!Gauge.IsOverheated)
                         {
-                            //queen shenanigans
+                            //queen
                             if (openerSelection is 0 or 1 && evenMinute && Gauge.Battery == 100 && WasLastAction(Drill))
                                 return OriginalHook(RookAutoturret);
 
@@ -848,7 +848,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (openerSelection is 2 && evenMinute && Gauge.Battery == 100 && IsOffCooldown(AirAnchor))
                                 return OriginalHook(RookAutoturret);
 
-                            // Wildfire shenanigans
+                            // Wildfire
                             if (Gauge.Heat >= 50 && ActionReady(Wildfire) &&
                                 IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge))
                             {
@@ -859,7 +859,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Wildfire;
                             }
 
-                            // Hypercharge!
+                            // Hypercharge
                             if (CanWeave(actionID) && Gauge.Heat >= 50 &&
                                 IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) && LevelChecked(Hypercharge))
                             {
@@ -925,19 +925,30 @@ namespace XIVSlothCombo.Combos.PvE
                                 IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && Gauge.IsOverheated)))
                             return BarrelStabilizer;
 
+                        //gauss and ricochet overcap protection
+                        if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && (wildfireCDTime > 2 || !ActionReady(Wildfire))) //gauss and ricochet weave
+                        {
+                            if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound)) ||
+                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))))
+                                return GaussRound;
+
+                            if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet)) ||
+                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))))
+                                return Ricochet;
+                        }
+
                         //Heatblast, Gauss, Rico
                         if (Gauge.IsOverheated && ActionReady(HeatBlast))
                         {
-                            if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && (wildfireCDTime > 2 || !ActionReady(Wildfire))) //gauss and ricochet weave
-                            {
-                                if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound)) ||
-                                          (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))))
-                                    return GaussRound;
+                            if ((!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound)) ||
+                                 (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet)))) && WasLastAction(HeatBlast))
+                                return GaussRound;
 
-                                if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet)) ||
-                                          (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))))
-                                    return Ricochet;
-                            }
+                            if ((!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet)) ||
+                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound)))) && WasLastAction(HeatBlast))
+                                return Ricochet;
+
+                            return HeatBlast;
                         }
 
                         //1-2-3 Combo
