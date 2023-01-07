@@ -354,10 +354,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Pool Triplecast option", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
         BLM_Simple_Casts_Pooling = 2016,
 
-    /*    [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Manafont Option", "Weaves Manafont after Flare for additional Flare", BLM.JobID, 0, "", "")]
-        BLM_AoE_Simple_Manafont = 2020,*/
-
         [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]
         BLM_AoE_Simple_Foul = 2044,
@@ -407,8 +403,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_CastMovement = 2036,
 
         [ParentCombo(BLM_Adv_CastMovement)]
-        [ConflictingCombos(BLM_Adv_Transpose_Lines)]
-        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.\nWill not work when using Double Transpose opener", BLM.JobID, 0, "", "")]
         BLM_Adv_CastMovement_Xeno = 2037,
 
         [ParentCombo(BLM_Adv_CastMovement)]
@@ -430,15 +425,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast, Amplifier onto the Advanced Blm feature.", BLM.JobID, -8, "", "")]
         BLM_Adv_Buffs = 2042,
-
-        [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Transpose Opener", "Adds the transpose opener to Advanced Blm.", BLM.JobID, -10, "", "")]
-        BLM_Adv_Opener = 2043,
-
-        [ParentCombo(BLM_AdvancedMode)]
-        [ConflictingCombos(BLM_Adv_CastMovement_Xeno)]
-        [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
-        BLM_Adv_Transpose_Lines = 2045,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
@@ -472,6 +458,10 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(BLM_Mana)]
         [CustomComboInfo("Umbral Soul on AoE", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AoEUmbralSoul = 2049,
+
+        [ParentCombo(BLM_AdvancedMode)]
+        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -10, "", "")]
+        BLM_Adv_Opener = 2050,
 
 
         #endregion
