@@ -1355,9 +1355,6 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.MCH_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.MCH_ST_QueenThreshold)
-                UserConfig.DrawSliderInt(01, 10, MCH.Config.MCH_ST_QueenThreshold, " :xx Seconds ", 150, SliderIncrements.Ones);
-
             if (preset == CustomComboPreset.MCH_ST_Opener && enabled)
             {
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_OpenerSelection, "General Purpose Opener", "Uses General Purpose Opener from 6.2. ", 1);
