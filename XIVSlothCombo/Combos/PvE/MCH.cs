@@ -428,6 +428,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
             internal static bool inOpener = false;
+            internal static bool readyOpener = false;
+            internal static bool openerStarted = false;
             internal static byte step = 0;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -438,35 +440,36 @@ namespace XIVSlothCombo.Combos.PvE
                     bool openerReady = ActionReady(ChainSaw) && ActionReady(Wildfire) && ActionReady(BarrelStabilizer);
                     float wildfireCDTime = GetCooldownRemainingTime(Wildfire);
 
-
-
-                    if (!InCombat() && IsEnabled(CustomComboPreset.MCH_ST_Opener) && level >= 90 && openerSelection is 0 or 1)
-                    {
-                        inOpener = false;
-
-                        if (HasEffect(Buffs.Reassembled) && openerReady)
-                            inOpener = true;
-
-                        if (inOpener)
-                            return AirAnchor;
-
-                        return Reassemble;
-                    }
-
-                    if (InCombat())
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Opener) && level >= 90)
                     {
                         if (openerSelection is 0 or 1)
                         {
-                            if (CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Reassembled) &&
+                            // Check to start opener
+                            if (openerStarted && HasEffect(Buffs.Reassembled)) { inOpener = true; openerStarted = false; readyOpener = false; }
+                            if ((readyOpener || openerStarted) && HasEffect(Buffs.Reassembled) && !inOpener) { openerStarted = true; return AirAnchor; } else { openerStarted = false; }
+
+                            // Reset check for opener
+                            if (openerReady && !InCombat() && !inOpener && !openerStarted)
+                            {
+                                readyOpener = true;
+                                inOpener = false;
+                                step = 0;
+                                return Reassemble;
+                            }
+                            else
+                            { readyOpener = false; }
+
+                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                            if ((step == 1 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
+                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+
+
+                            if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Reassembled) &&
                                 IsEnabled(CustomComboPreset.MCH_ST_Opener) && level >= 90 && openerReady)
                                 inOpener = true;
 
                             if (inOpener)
                             {
-                                // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
-                                if ((step is 0 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
-                                    || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
-
                                 //we do it in steps to be able to control it
                                 if (step is 0)
                                 {
@@ -566,7 +569,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (step == 16)
                                 {
-                                    if (WasLastAbility(Ricochet)) step++;
+                                    if (GetRemainingCharges(Ricochet) < 2) step++;
                                     else return Ricochet;
                                 }
 
@@ -578,7 +581,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (step == 18)
                                 {
-                                    if (WasLastWeaponskill(GaussRound)) step++;
+                                    if (GetRemainingCharges(GaussRound) < 2) step++;
                                     else return GaussRound;
                                 }
 
@@ -590,7 +593,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (step == 20)
                                 {
-                                    if (WasLastAbility(Ricochet)) step++;
+                                    if (GetRemainingCharges(Ricochet) < 2) step++;
                                     else return Ricochet;
                                 }
 
@@ -602,7 +605,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (step == 22)
                                 {
-                                    if (WasLastWeaponskill(GaussRound)) step++;
+                                    if (GetRemainingCharges(GaussRound) < 2) step++;
                                     else return GaussRound;
                                 }
 
@@ -614,7 +617,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (step == 24)
                                 {
-                                    if (WasLastAbility(Ricochet)) step++;
+                                    if (GetRemainingCharges(Ricochet) < 2) step++;
                                     else return Ricochet;
                                 }
 
@@ -627,6 +630,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 inOpener = false;
                             }
                         }
+                    }
                         /*
                         if (!inOpener)
                         {
@@ -762,11 +766,11 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
                                 }
                             }
-
+                        
                             //Heatblast, Gauss, Rico
-                            if (Gauge.IsOverheated && level >= Levels.HeatBlast)
+                            if (Gauge.IsOverheated && LevelChecked(HeatBlast))
                             {
-                                if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && (wildfireCDTime > 2 || level < Levels.Wildfire)) //gauss and ricochet weave
+                                if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && (wildfireCDTime > 2 || !LevelChecked(Wildfire))) //gauss and ricochet weave
                                 {
                                     var gaussCharges = GetRemainingCharges(GaussRound);
                                     var gaussMaxCharges = GetMaxCharges(GaussRound);
@@ -788,7 +792,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         ))
                                         return Reassemble;
 
-                                  /*  //having issues with 2min queen
+                                   //having issues with 2min queen
                                        else if (IsEnabled(CustomComboPreset.MCH_ST_QueenThreshold) && LevelChecked(AutomatonQueen) && (CombatEngageDuration().Seconds ==
                                                    queenThreshold && gauge.Battery >= 50))
                                        {
@@ -970,7 +974,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(CleanShot);
                             }
                         } */
-                    }
+                    
                 }
                 return actionID;
             }

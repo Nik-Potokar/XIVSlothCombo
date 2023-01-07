@@ -565,6 +565,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AdvancedMode;
             internal static bool inOpener = false;
+            internal static bool readyOpener = false;
+            internal static bool openerStarted = false;
             internal static byte step = 0;
 
 
@@ -599,29 +601,31 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Opener for BLM
                     // F3 OPENER DOUBLE TRANSPOSE VARIATION 
-                    if (!InCombat() && IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90)
+                    if (IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90)
                     {
-                        inOpener = false;
+                        // Check to start opener
+                        if (openerStarted && HasEffect(Buffs.Sharpcast)) { inOpener = true; openerStarted = false; readyOpener = false; }
+                        if ((readyOpener || openerStarted) && HasEffect(Buffs.Sharpcast) && !inOpener) { openerStarted = true; return Fire3; } else { openerStarted = false; }
 
-                        if (HasEffect(Buffs.Sharpcast) && openerReady)
-                            inOpener = true;
+                        // Reset check for opener
+                        if (openerReady && !InCombat() && !inOpener && !openerStarted)
+                        {
+                            readyOpener = true;
+                            inOpener = false;
+                            step = 0;
+                            return Sharpcast;
+                        }
+                        else
+                        { readyOpener = false; }
 
-                        if (inOpener)
-                            return Fire3;
+                        // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                        if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
+                            || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
 
-                        return Sharpcast;
-                    }
 
-                    if (InCombat())
-                    {
-                        if (CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
+                        if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
                             IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90 && openerReady)
                             inOpener = true;
-                      
-                        // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
-                        if ((step == 0 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
-                            || (inOpener && step >= 1 && IsOffCooldown(actionID) && !InCombat())) 
-                            inOpener = false;
 
                         if (inOpener)
                         {
@@ -784,14 +788,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                             inOpener = false;
                         }
-
-
-                        if (!inOpener)
-                        {
+                    }
+ 
+                    if (!inOpener)  
+                    {
                             // Handle movement
                             if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement))
                             {
-                                if (IsMoving && InCombat())
+                                if (IsMoving)
                                 {
                                     if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire && LevelChecked(Fire3))
                                         return Fire3;
@@ -1092,7 +1096,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Fire3
                                     : Blizzard4;
                             }
-                        }
+                        
                     }
                 }
                 return actionID;
