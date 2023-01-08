@@ -860,8 +860,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Hypercharge
-                            if (CanWeave(actionID) && Gauge.Heat >= 50 &&
-                                IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) && LevelChecked(Hypercharge))
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) && 
+                                CanWeave(actionID) && Gauge.Heat >= 50 && LevelChecked(Hypercharge))
                             {
                                 //Protection & ensures Hyper charged is double weaved with WF during reopener
                                 if (HasEffect(Buffs.Wildfire) || !LevelChecked(Wildfire))
@@ -896,7 +896,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Chainsaw Reassemble
-                            if ((ActionReady(ChainSaw) || ActionReady(AirAnchor)) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 2)
+                            if ((ActionReady(ChainSaw) || ActionReady(AirAnchor)) && !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble))
                                 return Reassemble;
 
                             if (ActionReady(ChainSaw) && HasEffect(Buffs.Reassembled))
@@ -909,7 +909,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Drill;
 
                             // healing
-                            if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && 
+                            if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) &&
                                 CanWeave(actionID, 0.6) && PlayerHealthPercentageHp() <= hpTreshold && ActionReady(All.SecondWind))
                                 return All.SecondWind;
 
@@ -940,11 +940,11 @@ namespace XIVSlothCombo.Combos.PvE
                         //Heatblast, Gauss, Rico
                         if (Gauge.IsOverheated && ActionReady(HeatBlast))
                         {
-                            if ((!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound)) ||
+                            if ((IsNotEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet)) ||
                                  (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet)))) && WasLastAction(HeatBlast))
                                 return GaussRound;
 
-                            if ((!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet)) ||
+                            if ((IsNotEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound)) ||
                                       (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound)))) && WasLastAction(HeatBlast))
                                 return Ricochet;
 
@@ -952,21 +952,18 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //1-2-3 Combo
-                        if (comboTime > 0)
-                        {
-                            if (WasLastWeaponskill(OriginalHook(SplitShot)) && LevelChecked(OriginalHook(SlugShot)))
-                                return OriginalHook(SlugShot);
+                            if (comboTime > 0)
+                            {
+                                if (lastComboMove == SplitShot && LevelChecked(OriginalHook(SlugShot)))
+                                    return OriginalHook(SlugShot);
 
-                            if (WasLastWeaponskill(OriginalHook(SlugShot)) && LevelChecked(OriginalHook(CleanShot)))
-
-                                if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) &&
-                                    !LevelChecked(Drill) && !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble))
-                                    return Reassemble;
-                                
-                            return OriginalHook(CleanShot);
-                        }
-
-                        return OriginalHook(SplitShot);
+                                if (lastComboMove == SlugShot && LevelChecked(OriginalHook(CleanShot)))
+                                    return (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) &&
+                                        !LevelChecked(Drill) && !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble))
+                                        ? Reassemble
+                                        : OriginalHook(CleanShot);
+                            }
+                            return OriginalHook(SplitShot);
                     }
                 }
                 return actionID;
