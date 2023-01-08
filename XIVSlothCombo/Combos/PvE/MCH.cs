@@ -895,7 +895,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            // Chainsaw Reassemble
+                            // OGCD's
                             if ((ActionReady(ChainSaw) || ActionReady(AirAnchor)) && !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble))
                                 return Reassemble;
 
