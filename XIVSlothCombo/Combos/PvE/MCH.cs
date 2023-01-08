@@ -833,6 +833,41 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     if (!inOpener)
                     {
+
+                        //BS in even burst
+                        if (openerSelection is 0 or 1 && evenMinute && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) &&
+                                Gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && WasLastAction(HeatBlast) && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
+                                IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && Gauge.IsOverheated)))
+                            return BarrelStabilizer;
+
+                        //gauss and ricochet overcap protection
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) &&
+                            CanWeave(actionID, 0.6) && (wildfireCDTime > 2 || !ActionReady(Wildfire)))
+                        {
+                            //Heatblast, Gauss, Rico
+                            if (Gauge.IsOverheated && LevelChecked(HeatBlast) && (WasLastAction(Hypercharge) || WasLastAction(GaussRound) || WasLastAction(Ricochet)))
+                            {
+                                if (WasLastAction(HeatBlast))
+                                    return ((IsNotEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet)) ||
+                                         (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet)))))
+                                        ? GaussRound
+                                        : Ricochet;
+
+                                /*  if ((IsNotEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound)) ||
+                                            (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound)))))
+                                      return Ricochet;*/
+                                return HeatBlast;
+                            }
+
+                            if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound)) ||
+                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))))
+                                return GaussRound;
+
+                            if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet)) ||
+                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))))
+                                return Ricochet;
+                        }
+
                         if (!Gauge.IsOverheated)
                         {
                             //queen
@@ -846,6 +881,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(RookAutoturret);
 
                             if (openerSelection is 2 && evenMinute && Gauge.Battery == 100 && IsOffCooldown(AirAnchor))
+                                return OriginalHook(RookAutoturret);
+
+                            if (openerSelection is 2 && CombatEngageDuration().Minutes == 1 && Gauge.Battery == 50 && ActionReady(ChainSaw))
+                                return OriginalHook(RookAutoturret);
+
+                            if (openerSelection is 2 && oddMinute && Gauge.Battery >= 80 && ActionReady(ChainSaw))
                                 return OriginalHook(RookAutoturret);
 
                             // Wildfire
@@ -902,54 +943,22 @@ namespace XIVSlothCombo.Combos.PvE
                             if (ActionReady(ChainSaw) && HasEffect(Buffs.Reassembled))
                                 return ChainSaw;
 
-                            if (ActionReady(AirAnchor) && HasEffect(Buffs.Reassembled))
+                            if (ActionReady(AirAnchor))
                                 return AirAnchor;
 
                             if (ActionReady(Drill))
                                 return Drill;
-
-                            // healing
-                            if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) &&
-                                CanWeave(actionID, 0.6) && PlayerHealthPercentageHp() <= hpTreshold && ActionReady(All.SecondWind))
-                                return All.SecondWind;
-
-                            // Interrupt, works okay
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) &&
-                                CanWeave(actionID) && CanInterruptEnemy() && ActionReady(All.HeadGraze))
-                                return All.HeadGraze;
                         }
 
-                        //BS in even burst
-                        if (openerSelection is 0 or 1 && evenMinute && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) &&
-                                Gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && WasLastAction(HeatBlast) && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
-                                IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && Gauge.IsOverheated)))
-                            return BarrelStabilizer;
+                        // healing
+                        if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) &&
+                            CanWeave(actionID, 0.6) && PlayerHealthPercentageHp() <= hpTreshold && ActionReady(All.SecondWind))
+                            return All.SecondWind;
 
-                        //gauss and ricochet overcap protection
-                        if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && (wildfireCDTime > 2 || !ActionReady(Wildfire))) //gauss and ricochet weave
-                        {
-                            if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound)) ||
-                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))))
-                                return GaussRound;
-
-                            if (!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet)) ||
-                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))))
-                                return Ricochet;
-                        }
-
-                        //Heatblast, Gauss, Rico
-                        if (Gauge.IsOverheated && ActionReady(HeatBlast))
-                        {
-                            if ((IsNotEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet)) ||
-                                 (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet)))) && WasLastAction(HeatBlast))
-                                return GaussRound;
-
-                            if ((IsNotEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound)) ||
-                                      (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound)))) && WasLastAction(HeatBlast))
-                                return Ricochet;
-
-                            return HeatBlast;
-                        }
+                        // Interrupt, works okay
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Interrupt) &&
+                            CanWeave(actionID) && CanInterruptEnemy() && ActionReady(All.HeadGraze))
+                            return All.HeadGraze;
 
                         //1-2-3 Combo
                             if (comboTime > 0)
