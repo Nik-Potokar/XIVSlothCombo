@@ -320,7 +320,6 @@ namespace XIVSlothCombo.Combos
 
         #region BLACK MAGE
         [ReplaceSkill(BLM.Transpose)]
-        [ConflictingCombos(BLM_AdvUmbralSoul, BLM_SimpleUmbralSoul, BLM_AoEUmbralSoul)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "", "")]
         BLM_Mana = 2001,
 
@@ -355,12 +354,16 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_Casts_Pooling = 2016,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
+        [CustomComboInfo("Manafont Option", "Weaves Manafont after Flare for additional Flare", BLM.JobID, 0, "", "")]
+        BLM_AoE_Simple_Manafont = 2020,
+
+        [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]
         BLM_AoE_Simple_Foul = 2044,
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
-        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -9, "", "")]
         BLM_AdvancedMode = 2021,
 
         [ReplaceSkill(BLM.Scathe)]
@@ -389,13 +392,11 @@ namespace XIVSlothCombo.Combos
         BLM_AdvThunderUptime = 2030,
 
         [ParentCombo(BLM_SimpleMode)]
-        [ConflictingCombos(BLM_Mana)]
-        [CustomComboInfo("Umbral Soul on Simple ST", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [CustomComboInfo("Umbral Soul", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_SimpleUmbralSoul = 2031,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [ConflictingCombos(BLM_Mana)]
-        [CustomComboInfo("Umbral Soul on Advanced ST", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [CustomComboInfo("Umbral Soul", "Change ST button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AdvUmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
@@ -403,7 +404,8 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_CastMovement = 2036,
 
         [ParentCombo(BLM_Adv_CastMovement)]
-        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.\nWill not work when using Double Transpose opener", BLM.JobID, 0, "", "")]
+        [ConflictingCombos(BLM_Adv_Transpose_Lines)]
+        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
         BLM_Adv_CastMovement_Xeno = 2037,
 
         [ParentCombo(BLM_Adv_CastMovement)]
@@ -425,6 +427,15 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast, Amplifier onto the Advanced Blm feature.", BLM.JobID, -8, "", "")]
         BLM_Adv_Buffs = 2042,
+
+        [ParentCombo(BLM_AdvancedMode)]
+        [CustomComboInfo("Transpose Opener", "Adds the lvl 90 opener.\nChoose which one u want to use.", BLM.JobID, -10, "", "")]
+        BLM_Adv_Opener = 2043,
+
+        [ParentCombo(BLM_AdvancedMode)]
+        [ConflictingCombos(BLM_Adv_CastMovement_Xeno)]
+        [CustomComboInfo("Double Transpose instant F3", "Use a double transpose line every 1 min for a 4.2 percent gain in DPS. Note: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
+        BLM_Adv_Transpose_Lines = 2045,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
@@ -455,13 +466,9 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_Transpose_Lines = 2048,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
-        [ConflictingCombos(BLM_Mana)]
-        [CustomComboInfo("Umbral Soul on AoE", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [CustomComboInfo("Umbral Soul", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AoEUmbralSoul = 2049,
 
-        [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -10, "", "")]
-        BLM_Adv_Opener = 2050,
 
 
         #endregion

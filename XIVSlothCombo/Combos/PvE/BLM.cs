@@ -1041,7 +1041,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Transpose Lines Ice phase
-                                    if ((openerSelection is 2) &&
+                                    if ((IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) &&
                                         Gauge.InUmbralIce && Gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast))
                                     {
                                         if (Gauge.UmbralIceStacks < 3 &&
