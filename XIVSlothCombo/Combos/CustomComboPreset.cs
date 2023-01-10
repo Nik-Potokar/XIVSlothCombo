@@ -431,7 +431,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Buffs = 2042,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Transpose Opener", "Adds the transpose opener to Advanced Blm.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Transpose Opener", "Adds the lvl 90 opener.\nChoose which one u want to use.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2043,
 
         [ParentCombo(BLM_AdvancedMode)]
@@ -470,6 +470,8 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Umbral Soul", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AoEUmbralSoul = 2049,
+
+
 
         #endregion
 
