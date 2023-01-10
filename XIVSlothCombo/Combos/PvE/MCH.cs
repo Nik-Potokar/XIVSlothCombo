@@ -46,8 +46,8 @@ namespace XIVSlothCombo.Combos.PvE
             internal const ushort
                 Reassembled = 851,
                 Tactician = 1951,
-                Wildfire = 1946;
-            Overheated = 2688;
+                Wildfire = 1946,
+                Overheated = 2688;
         }
 
         private static MCHGauge Gauge => CustomComboFunctions.GetJobGauge<MCHGauge>();
@@ -126,7 +126,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return BarrelStabilizer;
                     }
 
-                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_HeatBlast) && HasEffect(Buffs.overheated))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_HeatBlast) && HasEffect(Buffs.Overheated))
                     {
                         if (CanWeave(actionID, 0.6))
                         {
@@ -227,7 +227,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MCH_ST_AutoBarrel)
                         && ActionReady(BarrelStabilizer)
                         && heat < 50
-                        && !HasEffect(Buffs.overheated))
+                        && !HasEffect(Buffs.Overheated))
                         return BarrelStabilizer;
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire)
@@ -236,7 +236,7 @@ namespace XIVSlothCombo.Combos.PvE
                         && heat >= 50)
                         return Wildfire;
 
-                    if (!HasEffect(Buffs.overheated) && LevelChecked(Hypercharge))
+                    if (!HasEffect(Buffs.Overheated) && LevelChecked(Hypercharge))
                         return Hypercharge;
 
                     if (heatBlastCD.CooldownRemaining < 0.7 && LevelChecked(HeatBlast)) // Prioritize Heat Blast
@@ -311,7 +311,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave &&
-                     (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || HasEffect(Buffs.overheated)) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
+                     (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || HasEffect(Buffs.Overheated)) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);
                         var ricochetCharges = GetRemainingCharges(Ricochet);
@@ -324,12 +324,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     }
 
-                    if (ActionReady(BioBlaster) && !HasEffect(Buffs.overheated) && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
+                    if (ActionReady(BioBlaster) && !HasEffect(Buffs.Overheated) && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
                         return BioBlaster;
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave)
                     {
-                        if (gauge.Heat >= 50 && LevelChecked(AutoCrossbow) && !HasEffect(Buffs.overheated))
+                        if (gauge.Heat >= 50 && LevelChecked(AutoCrossbow) && !HasEffect(Buffs.Overheated))
                             return Hypercharge;
                     }
 
@@ -339,7 +339,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.SecondWind;
                     }
 
-                    if (HasEffect(Buffs.overheated) && LevelChecked(AutoCrossbow))
+                    if (HasEffect(Buffs.Overheated) && LevelChecked(AutoCrossbow))
                         return AutoCrossbow;
 
                 }
