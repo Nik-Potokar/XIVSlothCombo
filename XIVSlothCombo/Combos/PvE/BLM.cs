@@ -982,11 +982,11 @@ namespace XIVSlothCombo.Combos.PvE
                                         return Paradox;
 
                                     if (IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Xeno) &&
-                                        (openerSelection is 0 or 1) &&
+                                        IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) &&
                                         LevelChecked(Xenoglossy) && Gauge.HasPolyglotStacks())
                                         return Xenoglossy;
 
-                                    if ((openerSelection is 0 or 1) &&
+                                    if (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) &&
                                         ActionReady(All.Swiftcast))
                                         return All.Swiftcast;
 
@@ -1041,7 +1041,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Transpose Lines Ice phase
-                                    if ((IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) &&
+                                    if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) &&
                                         Gauge.InUmbralIce && Gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast))
                                     {
                                         if (Gauge.UmbralIceStacks < 3 &&
@@ -1107,7 +1107,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use polyglot stacks if we don't need it for a future weave
                             // only when we're not using Transpose lines
-                            if (openerSelection is 0 or 1)
+                            if (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                             {
                                 if (CanSpellWeave(actionID))
                                 {
@@ -1181,13 +1181,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
                                 // only when we're not using Transpose Lines 
-                                if ((openerSelection is 0 or 1) &&
+                                if (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines) &&
                                     lastComboMove != Xenoglossy && LevelChecked(Xenoglossy) && Gauge.ElementTimeRemaining >= astralFireRefresh)
                                 {
                                     var pooledPolyglotStacks = IsEnabled(CustomComboPreset.BLM_Adv_CastMovement_Xeno) ? 1 : 0;
-
-                                    //  if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs) && ActionReady(Amplifier))
-                                    //      return Xenoglossy;
 
                                     if (Gauge.PolyglotStacks > pooledPolyglotStacks)
                                     {
@@ -1197,7 +1194,7 @@ namespace XIVSlothCombo.Combos.PvE
                                                 return Xenoglossy;
                                         }
                                         if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs) &&
-                                            (openerSelection is 0 or 1))
+                                            IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                                         {
                                             if (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
                                                 (IsNotEnabled(CustomComboPreset.BLM_Adv_Casts_Pooling) || GetRemainingCharges(Triplecast) > 1))
@@ -1214,7 +1211,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     // Xenoglossy for Manafont weave
                                     if (Gauge.HasPolyglotStacks() && ActionReady(Manafont) &&
                                         currentMP < MP.AllMPSpells && LevelChecked(Xenoglossy) &&
-                                        (openerSelection is 0 or 1))
+                                        IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                                         return Xenoglossy;
                                 }
 
@@ -1243,7 +1240,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (LevelChecked(Paradox) && Gauge.IsParadoxActive)
                                     return Paradox;
 
-                                if (openerSelection is 2)
+                                if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Lines))
                                 {
                                     // Transpose lines will use 2 xenoglossy stacks and then transpose
                                     if (HasEffect(All.Buffs.LucidDreaming) && Gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
