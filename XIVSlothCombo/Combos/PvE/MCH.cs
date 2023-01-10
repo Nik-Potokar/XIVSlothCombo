@@ -47,7 +47,7 @@ namespace XIVSlothCombo.Combos.PvE
                 Reassembled = 851,
                 Tactician = 1951,
                 Wildfire = 1946;
-            Overheated = 99999;
+            Overheated = 2688;
         }
 
         private static MCHGauge Gauge => CustomComboFunctions.GetJobGauge<MCHGauge>();
