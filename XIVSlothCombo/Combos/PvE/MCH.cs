@@ -94,6 +94,20 @@ namespace XIVSlothCombo.Combos.PvE
                 ChainSaw = 90;
         }
 
+        internal class All_PRanged_Dismantle : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_PRanged_Dismantle;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Dismantle)
+                    if (TargetHasEffectAny(Debuffs.Dismantle) && IsOffCooldown(Dismantle))
+                        return BLM.Fire;
+
+                return actionID;
+            }
+        }
+
         internal class MCH_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_MainCombo;
@@ -1005,19 +1019,6 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 return false;
-            }
-        }
-        internal class All_PRanged_Dismantle : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_PRanged_Dismantle;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Dismantle)
-                    if (TargetHasEffectAny(Debuffs.Dismantle) && IsOffCooldown(Dismantle))
-                        return BLM.Fire;
-                
-                return actionID;
             }
         }
     }
