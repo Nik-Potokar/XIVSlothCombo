@@ -6,7 +6,7 @@ namespace XIVSlothCombo.Combos
 {
     /// <summary> Combo presets. </summary>
     public enum CustomComboPreset
-    {
+    { 
         #region PvE Combos
 
         #region Misc
@@ -474,7 +474,6 @@ namespace XIVSlothCombo.Combos
         BLM_AoEUmbralSoul = 2049,
 
 
-=======
         // Last value = 2049
 
         #endregion
@@ -4194,3 +4193,4 @@ namespace XIVSlothCombo.Combos
         #endregion
     }
 }
+
