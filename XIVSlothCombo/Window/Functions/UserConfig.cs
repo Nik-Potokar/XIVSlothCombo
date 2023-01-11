@@ -1134,8 +1134,14 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "General Opener", "Uses General Purpose Opener and rotation from 6.2. ", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "Double Transpose Opener", "Uses Double Transpose instant F3 opener and rotation.\nThis uses Swiftcast and Lucid Dreaming.", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
+            }
+
+            if (preset is CustomComboPreset.BLM_Simple_Opener && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
             }
 
             #endregion
