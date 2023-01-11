@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Core;
@@ -39,7 +37,8 @@ namespace XIVSlothCombo.Combos.PvE
             ChainSaw = 25788,
             BioBlaster = 16499,
             BarrelStabilizer = 7414,
-            Wildfire = 2878;
+            Wildfire = 2878,
+            Dismantle = 9999;
 
         internal static class Buffs
         {
@@ -48,6 +47,12 @@ namespace XIVSlothCombo.Combos.PvE
                 Tactician = 1951,
                 Wildfire = 1946,
                 Overheated = 2688;
+        }
+        
+        internal static class Debuffs
+        {
+            internal const ushort
+            Dismantle = 9999;
         }
 
         private static MCHGauge Gauge => CustomComboFunctions.GetJobGauge<MCHGauge>();
@@ -1000,6 +1005,19 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 return false;
+            }
+        }
+        internal class All_PRanged_Dismantle : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_PRanged_Dismantle;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Dismantle)
+                    if (TargetHasEffectAny(Debuffs.Dismantle) && IsOffCooldown(Dismantle))
+                        return BLM.Fire;
+                
+                return actionID;
             }
         }
     }
