@@ -1454,5 +1454,19 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+        internal class BLM_ScatheXeno : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ScatheXeno;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Scathe)
+                {
+                    if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)
+                        return Xenoglossy;
+                }
+                return actionID;
+            }
+        }
     }
 }
