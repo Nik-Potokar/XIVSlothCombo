@@ -38,7 +38,7 @@ namespace XIVSlothCombo.Combos.PvE
             BioBlaster = 16499,
             BarrelStabilizer = 7414,
             Wildfire = 2878,
-            Dismantle = 9999;
+            Dismantle = 2887;
 
         internal static class Buffs
         {
@@ -52,7 +52,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal static class Debuffs
         {
             internal const ushort
-            Dismantle = 9999;
+            Dismantled = 9999;
         }
 
         private static MCHGauge Gauge => CustomComboFunctions.GetJobGauge<MCHGauge>();

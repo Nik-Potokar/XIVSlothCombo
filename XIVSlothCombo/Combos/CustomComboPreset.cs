@@ -1610,7 +1610,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Opener = 8041,
 
         [ReplaceSkill(MCH.Dismantle)]
-        [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", ADV.JobID)]
+        [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID, 50, "", "")]
         All_PRanged_Dismantle = 8042,
 
         #endregion
