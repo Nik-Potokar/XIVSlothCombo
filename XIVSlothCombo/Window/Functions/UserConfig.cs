@@ -1134,14 +1134,14 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_AdvancedOpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_AdvancedOpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
             }
 
             if (preset is CustomComboPreset.BLM_Simple_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_OpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_SimpleOpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_SimpleOpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
             }
 
             #endregion

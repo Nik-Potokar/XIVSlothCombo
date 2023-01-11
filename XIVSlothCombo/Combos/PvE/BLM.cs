@@ -101,7 +101,9 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_AstralFireRefresh = "BlmAstralFireRefresh";
             internal const string BLM_MovementTime = "BlmMovementTime";
             internal const string BLM_VariantCure = "BlmVariantCure";
-            internal const string BLM_OpenerSelection = "BLM_OpenerSelection";
+            internal const string BLM_SimpleOpenerSelection = "BLM_SimpleOpenerSelection";
+            internal const string BLM_AdvancedOpenerSelection = "BLM_AdvancedOpenerSelection";
+
         }
 
         internal class BLM_SimpleMode : CustomCombo
@@ -119,7 +121,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
                     var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
-                    int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_OpenerSelection);
+                    int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_SimpleOpenerSelection);
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
@@ -812,7 +814,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var currentMP = LocalPlayer.CurrentMp;
                     var astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFireRefresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
-                    int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_OpenerSelection);
+                    int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_AdvancedOpenerSelection);
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
