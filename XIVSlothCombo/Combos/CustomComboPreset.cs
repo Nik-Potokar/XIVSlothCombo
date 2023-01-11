@@ -169,6 +169,8 @@ namespace XIVSlothCombo.Combos
         //[CustomComboInfo("Output Combat Log", "Outputs your performed actions to the chat.", ADV.JobID)]
         //AllOutputCombatLog = 100094,
 
+        // Last value = 100094
+
         #endregion
 
         // Jobs
@@ -314,7 +316,9 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        //Last number used is 39
+
+        // Last value = 1036
+
 
         #endregion
 
@@ -455,6 +459,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BLM.JobID)]
         BLM_Variant_Cure = 2034,
 
+
         [ParentCombo(BLM_Simple_CastMovement)]
         [ConflictingCombos(BLM_Simple_Transpose_Lines)]
         [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, -1, "", "")]
@@ -469,6 +474,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Umbral Soul", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AoEUmbralSoul = 2049,
 
+
+=======
+        // Last value = 2049
 
 
         #endregion
@@ -572,6 +580,9 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLU_PrimalCombo)]
         [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
         BLU_PrimalCombo_Nightbloom = 70020,
+
+        // Last value = 70020
+
         #endregion
 
         #region BARD
@@ -709,6 +720,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(BRD_ST_SimpleMode, BRD_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BRD.JobID)]
         BRD_Variant_Cure = 3031,
+
+        // Last value = 3031
 
         #endregion
 
@@ -997,6 +1010,8 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        // Last value = 4084
+
         #endregion
 
         #region DARK KNIGHT
@@ -1136,6 +1151,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", DRK.JobID)]
         DRK_Variant_Ultimatum = 5033,
 
+        // Last value = 5033
+
         #endregion
 
         #region DRAGOON
@@ -1263,6 +1280,7 @@ namespace XIVSlothCombo.Combos
             DRG_AoE_ComboHeals = 6211,
 
         #endregion
+
         [ReplaceSkill(DRG.Stardiver)]
         [CustomComboInfo("Stardiver Feature", "Turns Stardiver into Nastrond during Life of the Dragon, and Geirskogul outside of Life of the Dragon.", DRG.JobID, 26, "", "")]
         DRG_StardiverFeature = 6300,
@@ -1284,6 +1302,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(DRG_STCombo, DRG_AoECombo)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", DRG.JobID)]
         DRG_Variant_Rampart = 6600,
+
+        // Last value = 6600
 
         #endregion
 
@@ -1461,6 +1481,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", GNB.JobID)]
         GNB_Variant_Ultimatum = 7035,
 
+        // Last value = 7600
+
         #endregion
 
         #region MACHINIST
@@ -1605,6 +1627,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
         MCH_Variant_Cure = 8040,
 
+
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -1, "", "")]
         MCH_ST_Opener = 8041,
@@ -1612,6 +1635,9 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(MCH.Dismantle)]
         [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID, 50, "", "")]
         All_PRanged_Dismantle = 8042,
+=======
+        // Last value = 8042
+
 
         #endregion
 
@@ -1766,6 +1792,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_AdvancedMode, MNK_ST_SimpleMode, MNK_AOE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9031,
+
+        // Last value = 9031
 
         #endregion
 
@@ -2070,6 +2098,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", NIN.JobID)]
         NIN_Variant_Rampart = 10070,
 
+        // Last value = 10070
 
         #endregion
 
@@ -2191,6 +2220,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(PLD_ST_RoyalAuth, PLD_AoE_Prominence)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
+
+        // Last value = 11032
 
         #endregion
 
@@ -2409,6 +2440,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", RPR.JobID)]
         RPR_Variant_Rampart = 12068,
         #endregion
+
+        // Last value = 12068
 
         #endregion
 
@@ -2775,6 +2808,8 @@ namespace XIVSlothCombo.Combos
         SGE_DPS_Variant_Rampart = 14930,
         #endregion
 
+        // Last value = 14930
+
         #endregion
 
         #region SAMURAI
@@ -2928,7 +2963,7 @@ namespace XIVSlothCombo.Combos
         SAM_AoE_OkaCombo_TwoTarget = 150261,
         #endregion
 
-        #region CD Features
+        #region Cooldown Features
         [ReplaceSkill(SAM.MeikyoShisui)]
         [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu, Shifu, and Yukikaze depending on what is needed.", SAM.JobID, 0, "", "")]
         SAM_JinpuShifu = 15027,
@@ -3006,6 +3041,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
         SAM_Variant_Rampart = 15048,
         #endregion
+
+        // Last value = 15048
 
         #endregion
 
@@ -3179,6 +3216,8 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        // Last value = 16800
+
         #endregion
 
         #region SUMMONER
@@ -3242,7 +3281,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(SMN_SearingLight)]
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Demi phases.\nReflects Demi choice selected under 'Pooled oGCDs Option'.\nNot recommended for SpS Builds.", SMN.JobID, 0, "")]
-        SMN_SearingLight_Burst = 170181,
+        SMN_SearingLight_Burst = 170181, // Genesis, why must you be like this -K
 
         [ParentCombo(SMN_Advanced_Combo)]
         [CustomComboInfo("Demi Summons Combo Option", "Adds Demi summons to the single target and AoE combos.", SMN.JobID, 10, "", "")]
@@ -3325,6 +3364,9 @@ namespace XIVSlothCombo.Combos
         [VariantParent(SMN_Simple_Combo, SMN_Advanced_Combo)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SMN.JobID)]
         SMN_Variant_Cure = 17047,
+
+        // Last value = 17047 (170181)
+
         #endregion
 
         #region WARRIOR
@@ -3423,6 +3465,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", WAR.JobID)]
         WAR_Variant_Ultimatum = 18027,
+
+        // Last value = 18027
 
         #endregion
 
@@ -3591,6 +3635,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", WHM.JobID)]
         WHM_DPS_Variant_Rampart = 19026,
 
+        // Last value = 19026
+
         #endregion
 
         // Non-combat
@@ -3659,299 +3705,156 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Chum to Baited Breath Option", "Replaces Chum with Baited Breath when diving.", DOL.JobID)]
             FSH_Chum_BaitedBreath = 51011,
 
+        // Last value = 51011
+
         #endregion
 
         #endregion
 
         #region PvP Combos
 
-        // full re-order pending - K
+        #region PvP GLOBAL FEATURES
+        [SecretCustomCombo]
+        [CustomComboInfo("Emergency Heals Feature", "Uses Recuperate when your HP is under the set threshold and you have sufficient MP.", ADV.JobID, 1)]
+        PvP_EmergencyHeals = 110000,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Emergency Guard Feature", "Uses Guard when your HP is under the set threshold.", ADV.JobID, 2)]
+        PvP_EmergencyGuard = 110001,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Quick Purify Feature", "Uses Purify when afflicted with any selected debuff.", ADV.JobID, 4)]
+        PvP_QuickPurify = 110002,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("Prevent Mash Cancelling Feature", "Stops you cancelling your guard if you're pressing buttons quickly.", ADV.JobID, 3)]
+        PvP_MashCancel = 110003,
+
+        // Last value = 110003
+
+        #endregion
 
         #region ASTROLOGIAN
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Malefic into an all-in-one damage button.", AST.JobID)]
-        ASTPvP_Burst = 80000,
+        ASTPvP_Burst = 111000,
 
         [ParentCombo(ASTPvP_Burst)]
         [CustomComboInfo("Double Cast Option", "Adds Double Cast to Burst Mode.", AST.JobID)]
-        ASTPvP_DoubleCast = 80001,
+        ASTPvP_DoubleCast = 111001,
 
         [ParentCombo(ASTPvP_Burst)]
         [CustomComboInfo("Card Option", "Adds Drawing and Playing Cards to Burst Mode.", AST.JobID)]
-        ASTPvP_Card = 80002,
+        ASTPvP_Card = 111002,
 
         [SecretCustomCombo]
         [CustomComboInfo("Double Cast Heal Feature", "Adds Double Cast to Aspected Benefic.", AST.JobID)]
-        ASTPvP_Heal = 80003,
-        #endregion
+        ASTPvP_Heal = 111003,
 
-        #region MACHINIST
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPvP.JobID)]
-        MCHPvP_BurstMode = 80010,
-
-            [SecretCustomCombo]
-            [ParentCombo(MCHPvP_BurstMode)]
-            [CustomComboInfo("Alternate Drill Option", "Saves Drill for use after Wildfire.", MCHPvP.JobID)]
-            MCHPvP_BurstMode_AltDrill = 80011,
-
-            [SecretCustomCombo]
-            [ParentCombo(MCHPvP_BurstMode)]
-            [CustomComboInfo("Alternate Analysis Option", "Uses Analysis with Air Anchor instead of Chain Saw.", MCHPvP.JobID)]
-            MCHPvP_BurstMode_AltAnalysis = 80012,
-        #endregion
-
-        #region BARD
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
-        BRDPvP_BurstMode = 80020,
-        #endregion
-
-        #region RED MAGE
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPvP.JobID)]
-        RDMPvP_BurstMode = 80030,
-        
-        [SecretCustomCombo]
-        [ParentCombo(RDMPvP_BurstMode)]
-        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle from being used in Burst Mode.", RDMPvP.JobID)]
-        RDMPvP_FrazzleOption = 80031,
-        
-        #endregion
-
-        #region WARRIOR
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPvP.JobID)]
-        WARPvP_BurstMode = 80040,
-
-            [SecretCustomCombo]
-            [ParentCombo(WARPvP_BurstMode)]
-            [CustomComboInfo("Bloodwhetting Option", "Allows use of Bloodwhetting any time, not just between GCDs.", WARPvP.JobID)]
-            WARPvP_BurstMode_Bloodwhetting = 80041,
-
-            [SecretCustomCombo]
-            [ParentCombo(WARPvP_BurstMode)]
-            [CustomComboInfo("Blota Option", "Removes Blota from Burst Mode if Primal Rend has 5 seconds or less on its cooldown.", WARPvP.JobID)]
-            WARPvP_BurstMode_Blota = 80042,
-        #endregion
-
-        #region NINJA
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPvP.JobID)]
-        NINPvP_ST_BurstMode = 80050,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPvP.JobID)]
-        NINPvP_AoE_BurstMode = 80051,
-
-        [ParentCombo(NINPvP_ST_BurstMode)]
-        [SecretCustomCombo]
-        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPvP.JobID)]
-        NINPvP_ST_Meisui = 80052,
-
-        [ParentCombo(NINPvP_AoE_BurstMode)]
-        [SecretCustomCombo]
-        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPvP.JobID)]
-        NINPvP_AoE_Meisui = 80053,
-        #endregion
-
-        #region SAGE
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
-        SGEPvP_BurstMode = 80060,
-
-        [ParentCombo(SGEPvP_BurstMode)]
-        [CustomComboInfo("Pneuma Option", "Adds Pneuma to Burst Mode.", SGE.JobID)]
-        SGEPvP_BurstMode_Pneuma = 80061,
-
-        #endregion
-
-        #region DANCER
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Fountain Combo into an all-in-one damage button.", DNC.JobID)]
-        DNCPvP_BurstMode = 80070,
-
-            [SecretCustomCombo]
-            [ParentCombo(DNCPvP_BurstMode)]
-            [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
-            DNCPvP_BurstMode_HoningDance = 80071,
-
-            [SecretCustomCombo]
-            [ParentCombo(DNCPvP_BurstMode)]
-            [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
-            DNCPvP_BurstMode_CuringWaltz = 80072,
-        #endregion
-
-        #region SAMURAI
-
-        #region Burst Mode
-        [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare: Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.\nWill only cast Midare: Setsugekka and Ogi Namikiri when you're not moving.\nWill not use if target is guarding.", SAM.JobID)]
-        SAMPvP_BurstMode = 80080,
-
-            [SecretCustomCombo]
-            [ParentCombo(SAMPvP_BurstMode)]
-            [CustomComboInfo("Chiten Option", "Adds Chiten to Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
-            SAMPvP_BurstMode_Chiten = 80081,
-
-            [SecretCustomCombo]
-            [ParentCombo(SAMPvP_BurstMode)]
-            [CustomComboInfo("Mineuchi Option", "Adds Mineuchi to Burst Mode.", SAM.JobID)]
-            SAMPvP_BurstMode_Stun = 80082,
-
-            [SecretCustomCombo]
-            [ParentCombo(SAMPvP_BurstMode)]
-            [CustomComboInfo("Burst Mode on Kasha Combo Option", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID, 1)]
-            SAMPvP_BurstMode_MainCombo = 80083,
-        #endregion
-
-        #region Kasha Features
-        [SecretCustomCombo]
-        [CustomComboInfo("Kasha Combo Features", "Collection of Features for Kasha Combo.", SAM.JobID)]
-        SAMPvP_KashaFeatures = 80084,
-
-            [SecretCustomCombo]
-            [ParentCombo(SAMPvP_KashaFeatures)]
-            [CustomComboInfo("Soten Gap Closer Option", "Adds Soten to the Kasha Combo when out of melee range.", SAM.JobID)]
-            SAMPvP_KashaFeatures_GapCloser = 80085,
-
-            [SecretCustomCombo]
-            [ParentCombo(SAMPvP_KashaFeatures)]
-            [CustomComboInfo("AoE Melee Protection Option", "Makes the AoE combos unusable if not in melee range of target.", SAM.JobID)]
-            SAMPvP_KashaFeatures_AoEMeleeProtection = 80086,
-        #endregion
+        // Last value = 111003
 
         #endregion
 
         #region BLACK MAGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Fire and Blizzard into all-in-one damage buttons.", BLM.JobID)]
-        BLMPvP_BurstMode = 80090,
+        BLMPvP_BurstMode = 112000,
 
-            [ParentCombo(BLMPvP_BurstMode)]
-            [SecretCustomCombo]
-            [CustomComboInfo("Night Wing Option", "Adds Night Wing to Burst Mode.", BLM.JobID)]
-            BLMPvP_BurstMode_NightWing = 80091,
+        [ParentCombo(BLMPvP_BurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Night Wing Option", "Adds Night Wing to Burst Mode.", BLM.JobID)]
+        BLMPvP_BurstMode_NightWing = 112001,
 
-            [ParentCombo(BLMPvP_BurstMode)]
-            [SecretCustomCombo]
-            [CustomComboInfo("Aetherial Manipulation Option", "Uses Aetherial Manipulation to gap close if Burst is off cooldown.", BLM.JobID)]
-            BLMPvP_BurstMode_AetherialManip = 80092,
+        [ParentCombo(BLMPvP_BurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Aetherial Manipulation Option", "Uses Aetherial Manipulation to gap close if Burst is off cooldown.", BLM.JobID)]
+        BLMPvP_BurstMode_AetherialManip = 112002,
+
+        // Last value = 112002
+
         #endregion
 
-        #region REAPER
+        #region BARD
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.\nAdds Soul Slice to the main combo.", RPR.JobID)]
-        RPRPvP_Burst = 80190,
+        [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
+        BRDPvP_BurstMode = 113000,
 
-            [SecretCustomCombo]
-            [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Death Warrant Option", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
-            RPRPvP_Burst_DeathWarrant = 80192,
+        // Last value = 113000
 
-            [SecretCustomCombo]
-            [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Plentiful Harvest Opener Option", "Starts combat with Plentiful Harvest to immediately begin Limit Break generation.", RPR.JobID)]
-            RPRPvP_Burst_PlentifulOpener = 80193,
+        #endregion
 
-            [SecretCustomCombo]
-            [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option", "Pools stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful Harvest as soon as it's available.", RPR.JobID)]
-            RPRPvP_Burst_ImmortalPooling = 80194,
-
-            [SecretCustomCombo]
-            [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Enshrouded Burst Option", "Adds Lemure's Slice to the main combo during the Enshroud burst phase.\nContains burst options.", RPR.JobID)]
-            RPRPvP_Burst_Enshrouded = 80195,
-
-                #region RPR Enshrouded Option
-                [SecretCustomCombo]
-                [ParentCombo(RPRPvP_Burst_Enshrouded)]
-                [CustomComboInfo("Enshrouded Death Warrant Option", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
-                RPRPvP_Burst_Enshrouded_DeathWarrant = 80196,
-
-                [SecretCustomCombo]
-                [ParentCombo(RPRPvP_Burst_Enshrouded)]
-                [CustomComboInfo("Communio Finisher Option", "Adds Communio onto the main combo when you have 1 stack of Enshroud remaining.\nWill not trigger if you are moving.", RPR.JobID)]
-                RPRPvP_Burst_Enshrouded_Communio = 80197,
-                #endregion
-
-            [SecretCustomCombo]
-            [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Ranged Harvest Moon Option", "Adds Harvest Moon onto the main combo when you're out of melee range, the GCD is not rolling and it's available for use.", RPR.JobID)]
-            RPRPvP_Burst_RangedHarvest = 80198,
-
-            [SecretCustomCombo]
-            [ParentCombo(RPRPvP_Burst)]
-            [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under the set HP perecentage.", RPR.JobID)]
-            RPRPvP_Burst_ArcaneCircle = 80199,
-            #endregion
-
-        #region MONK
+        #region DANCER
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Phantom Rush Combo into an all-in-one damage button.", MNK.JobID)]
-        MNKPvP_Burst = 80100,
+        [CustomComboInfo("Burst Mode", "Turns Fountain Combo into an all-in-one damage button.", DNC.JobID)]
+        DNCPvP_BurstMode = 114000,
 
-            [ParentCombo(MNKPvP_Burst)]
-            [SecretCustomCombo]
-            [CustomComboInfo("Thunderclap Option", "Adds Thunderclap to Burst Mode when not buffed with Wind Resonance.", MNK.JobID)]
-            MNKPvP_Burst_Thunderclap = 80101,
+        [SecretCustomCombo]
+        [ParentCombo(DNCPvP_BurstMode)]
+        [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
+        DNCPvP_BurstMode_HoningDance = 114001,
 
-            [ParentCombo(MNKPvP_Burst)]
-            [SecretCustomCombo]
-            [CustomComboInfo("Riddle of Earth Option", "Adds Riddle of Earth and Earth's Reply to Burst Mode when in combat.", MNK.JobID)]
-            MNKPvP_Burst_RiddleOfEarth = 80102,
+        [SecretCustomCombo]
+        [ParentCombo(DNCPvP_BurstMode)]
+        [CustomComboInfo("Curing Waltz Option", "Adds Curing Waltz to the combo when available, and your HP is at or below the set percentage.", DNC.JobID)]
+        DNCPvP_BurstMode_CuringWaltz = 114002,
+
+        // Last value = 114002
+
         #endregion
 
         #region DARK KNIGHT
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Souleater Combo into an all-in-one damage button.", DRK.JobID)]
-        DRKPvP_Burst = 80110,
+        DRKPvP_Burst = 115000,
 
         [SecretCustomCombo]
         [ParentCombo(DRKPvP_Burst)]
         [CustomComboInfo("Plunge Option", "Adds Plunge to Burst Mode.", DRK.JobID)]
-        DRKPvP_Plunge = 80111,
+        DRKPvP_Plunge = 115001,
 
         [SecretCustomCombo]
         [ParentCombo(DRKPvP_Plunge)]
         [CustomComboInfo("Melee Plunge Option", "Uses Plunge whilst in melee range, and not just as a gap-closer.", DRK.JobID)]
-        DRKPvP_PlungeMelee = 80112,
+        DRKPvP_PlungeMelee = 115002,
+
+        // Last value = 115002
 
         #endregion
 
         #region DRAGOON
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Using Elusive Jump turns Wheeling Thrust Combo into all-in-one burst damage button.", DRG.JobID)]
-        DRGPvP_Burst = 80200,
+        DRGPvP_Burst = 116000,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("Geirskogul Option", "Adds Geirskogul to Burst Mode.", DRG.JobID)]
-        DRGPvP_Geirskogul = 80201,
+        DRGPvP_Geirskogul = 116001,
 
         [ParentCombo(DRGPvP_Geirskogul)]
         [CustomComboInfo("Nastrond Option", "Adds Nastrond to Burst Mode.", DRG.JobID)]
-        DRGPvP_Nastrond = 80202,
+        DRGPvP_Nastrond = 116002,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("Horrid Roar Option", "Adds Horrid Roar to Burst Mode.", DRG.JobID)]
-        DRGPvP_HorridRoar = 80203,
+        DRGPvP_HorridRoar = 116003,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("Sustain Chaos Spring Option", "Adds Chaos Spring to Burst Mode when below the set HP percentage.", DRG.JobID)]
-        DRGPvP_ChaoticSpringSustain = 80204,
+        DRGPvP_ChaoticSpringSustain = 116004,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("Wyrmwind Thrust Option", "Adds Wyrmwind Thrust to Burst Mode.", DRG.JobID)]
-        DRGPvP_WyrmwindThrust = 80206,
+        DRGPvP_WyrmwindThrust = 116006,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("High Jump Weave Option", "Adds High Jump to Burst Mode.", DRG.JobID)]
-        DRGPvP_HighJump = 80207,
+        DRGPvP_HighJump = 116007,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("Elusive Jump Burst Protection Option", "Disables Elusive Jump if Burst is not ready.", DRG.JobID)]
-        DRGPvP_BurstProtection = 80208,
+        DRGPvP_BurstProtection = 116008,
+
+        // Last value = 116008
 
         #endregion
 
@@ -3959,137 +3862,329 @@ namespace XIVSlothCombo.Combos
 
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Solid Barrel Combo into an all-in-one damage button.", GNB.JobID)]
-        GNBPvP_Burst = 80250,
+        GNBPvP_Burst = 117000,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Double Down Option", "Adds Double Down to Burst Mode while under the No Mercy buff.", GNB.JobID)]
-        GNBPvP_DoubleDown = 80251,
+        GNBPvP_DoubleDown = 117001,
 
         [SecretCustomCombo]
         [CustomComboInfo("Gnashing Fang Continuation Feature", "Adds Continuation onto Gnashing Fang.", GNB.JobID)]
-        GNBPvP_GnashingFang = 80252,
+        GNBPvP_GnashingFang = 117002,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Draw And Junction Option", "Adds Draw And Junction to Burst Mode.", GNB.JobID)]
-        GNBPvP_DrawAndJunction = 80253,
+        GNBPvP_DrawAndJunction = 117003,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang to Burst Mode while under the No Mercy buff.", GNB.JobID)]
-        GNBPvP_ST_GnashingFang = 80254,
+        GNBPvP_ST_GnashingFang = 117004,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Continuation Option", "Adds Continuation to Burst Mode.", GNB.JobID)]
-        GNBPvP_ST_Continuation = 80255,
+        GNBPvP_ST_Continuation = 117005,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Rough Divide Option", "Weaves Rough Divide when No Mercy Buff is about to expire.", GNB.JobID)]
-        GNBPvP_RoughDivide = 80256,
+        GNBPvP_RoughDivide = 117006,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Junction Cast DPS Option", "Adds Junction Cast (DPS) to Burst Mode.", GNB.JobID)]
-        GNBPvP_JunctionDPS = 80257,
+        GNBPvP_JunctionDPS = 117007,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Junction Cast Healer Option", "Adds Junction Cast (Healer) to Burst Mode.", GNB.JobID)]
-        GNBPvP_JunctionHealer = 80258,
+        GNBPvP_JunctionHealer = 117008,
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Junction Cast Tank Option", "Adds Junction Cast (Tank) to Burst Mode.", GNB.JobID)]
-        GNBPvP_JunctionTank = 80259,
+        GNBPvP_JunctionTank = 117009,
+
+        // Last value = 117009
+
+        #endregion
+
+        #region MACHINIST
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPvP.JobID)]
+        MCHPvP_BurstMode = 118000,
+
+            [SecretCustomCombo]
+            [ParentCombo(MCHPvP_BurstMode)]
+            [CustomComboInfo("Alternate Drill Option", "Saves Drill for use after Wildfire.", MCHPvP.JobID)]
+            MCHPvP_BurstMode_AltDrill = 118001,
+
+            [SecretCustomCombo]
+            [ParentCombo(MCHPvP_BurstMode)]
+            [CustomComboInfo("Alternate Analysis Option", "Uses Analysis with Air Anchor instead of Chain Saw.", MCHPvP.JobID)]
+            MCHPvP_BurstMode_AltAnalysis = 118002,
+
+        // Last value = 118002
+
+        #endregion
+
+        #region MONK
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Phantom Rush Combo into an all-in-one damage button.", MNK.JobID)]
+        MNKPvP_Burst = 119000,
+
+        [ParentCombo(MNKPvP_Burst)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Thunderclap Option", "Adds Thunderclap to Burst Mode when not buffed with Wind Resonance.", MNK.JobID)]
+        MNKPvP_Burst_Thunderclap = 119001,
+
+        [ParentCombo(MNKPvP_Burst)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Riddle of Earth Option", "Adds Riddle of Earth and Earth's Reply to Burst Mode when in combat.", MNK.JobID)]
+        MNKPvP_Burst_RiddleOfEarth = 119002,
+
+        // Last value = 119002
+
+        #endregion
+
+        #region NINJA
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Aeolian Edge Combo into an all-in-one damage button.", NINPvP.JobID)]
+        NINPvP_ST_BurstMode = 120000,
+
+        [SecretCustomCombo]
+        [CustomComboInfo("AoE Burst Mode", "Turns Fuma Shuriken into an all-in-one AoE damage button.", NINPvP.JobID)]
+        NINPvP_AoE_BurstMode = 120001,
+
+        [ParentCombo(NINPvP_ST_BurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPvP.JobID)]
+        NINPvP_ST_Meisui = 120002,
+
+        [ParentCombo(NINPvP_AoE_BurstMode)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Meisui Option", "Uses Three Mudra on Meisui when HP is under the set threshold.", NINPvP.JobID)]
+        NINPvP_AoE_Meisui = 120003,
+
+        // Last value = 120003
 
         #endregion
 
         #region PALADIN
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Royal Authority Combo into an all-in-one damage button.", PLD.JobID)]
-        PLDPvP_Burst = 80340,
+        PLDPvP_Burst = 121000,
 
         [ParentCombo(PLDPvP_Burst)]
         [CustomComboInfo("Shield Bash Option", "Adds Shield Bash to Burst Mode.", PLD.JobID)]
-        PLDPvP_ShieldBash = 80341,
+        PLDPvP_ShieldBash = 121001,
 
         [ParentCombo(PLDPvP_Burst)]
         [CustomComboInfo("Confiteor Option", "Adds Confiteor to Burst Mode.", PLD.JobID)]
-        PLDPvP_Confiteor = 80342,
+        PLDPvP_Confiteor = 121002,
+
+        // Last value = 121002
+
+        #endregion
+
+        #region REAPER
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.\nAdds Soul Slice to the main combo.", RPR.JobID)]
+        RPRPvP_Burst = 122000,
+
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst)]
+        [CustomComboInfo("Death Warrant Option", "Adds Death Warrant onto the main combo when Plentiful Harvest is ready to use, or when Plentiful Harvest's cooldown is longer than Death Warrant's.\nRespects Immortal Sacrifice Pooling Option.", RPR.JobID)]
+        RPRPvP_Burst_DeathWarrant = 122001,
+
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst)]
+        [CustomComboInfo("Plentiful Harvest Opener Option", "Starts combat with Plentiful Harvest to immediately begin Limit Break generation.", RPR.JobID)]
+        RPRPvP_Burst_PlentifulOpener = 122002,
+
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst)]
+        [CustomComboInfo("Plentiful Harvest + Immortal Sacrifice Pooling Option", "Pools stacks of Immortal Sacrifice before using Plentiful Harvest.\nAlso holds Plentiful Harvest if Death Warrant is on cooldown.\nSet the value to 3 or below to use Plentiful Harvest as soon as it's available.", RPR.JobID)]
+        RPRPvP_Burst_ImmortalPooling = 122003,
+
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst)]
+        [CustomComboInfo("Enshrouded Burst Option", "Adds Lemure's Slice to the main combo during the Enshroud burst phase.\nContains burst options.", RPR.JobID)]
+        RPRPvP_Burst_Enshrouded = 122004,
+
+        #region RPR Enshrouded Option
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst_Enshrouded)]
+        [CustomComboInfo("Enshrouded Death Warrant Option", "Adds Death Warrant onto the main combo during the Enshroud burst when available.", RPR.JobID)]
+        RPRPvP_Burst_Enshrouded_DeathWarrant = 122005,
+
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst_Enshrouded)]
+        [CustomComboInfo("Communio Finisher Option", "Adds Communio onto the main combo when you have 1 stack of Enshroud remaining.\nWill not trigger if you are moving.", RPR.JobID)]
+        RPRPvP_Burst_Enshrouded_Communio = 122006,
+        #endregion
+
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst)]
+        [CustomComboInfo("Ranged Harvest Moon Option", "Adds Harvest Moon onto the main combo when you're out of melee range, the GCD is not rolling and it's available for use.", RPR.JobID)]
+        RPRPvP_Burst_RangedHarvest = 122007,
+
+        [SecretCustomCombo]
+        [ParentCombo(RPRPvP_Burst)]
+        [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under the set HP perecentage.", RPR.JobID)]
+        RPRPvP_Burst_ArcaneCircle = 122008,
+
+        // Last value = 122008
+
+        #endregion
+
+        #region RED MAGE
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Verstone/Verfire into an all-in-one damage button.", RDMPvP.JobID)]
+        RDMPvP_BurstMode = 123000,
+        
+        [SecretCustomCombo]
+        [ParentCombo(RDMPvP_BurstMode)]
+        [CustomComboInfo("No Frazzle Option", "Prevents Frazzle from being used in Burst Mode.", RDMPvP.JobID)]
+        RDMPvP_FrazzleOption = 123001,
+
+        // Last value = 123001
+
+        #endregion
+
+        #region SAGE
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Dosis III into an all-in-one damage button.", SGE.JobID)]
+        SGEPvP_BurstMode = 124000,
+
+        [ParentCombo(SGEPvP_BurstMode)]
+        [CustomComboInfo("Pneuma Option", "Adds Pneuma to Burst Mode.", SGE.JobID)]
+        SGEPvP_BurstMode_Pneuma = 124001,
+
+        // Last value = 124001
+
+        #endregion
+
+        #region SAMURAI
+
+        #region Burst Mode
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Adds Meikyo Shisui, Midare: Setsugekka, Ogi Namikiri, Kaeshi: Namikiri and Soten to Meikyo Shisui.\nWill only cast Midare: Setsugekka and Ogi Namikiri when you're not moving.\nWill not use if target is guarding.", SAM.JobID)]
+        SAMPvP_BurstMode = 125000,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMPvP_BurstMode)]
+            [CustomComboInfo("Chiten Option", "Adds Chiten to Burst Mode when in combat and HP is below 95%.", SAM.JobID)]
+            SAMPvP_BurstMode_Chiten = 125001,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMPvP_BurstMode)]
+            [CustomComboInfo("Mineuchi Option", "Adds Mineuchi to Burst Mode.", SAM.JobID)]
+            SAMPvP_BurstMode_Stun = 125002,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMPvP_BurstMode)]
+            [CustomComboInfo("Burst Mode on Kasha Combo Option", "Adds Burst Mode to Kasha Combo instead.", SAM.JobID, 1)]
+            SAMPvP_BurstMode_MainCombo = 125003,
+        #endregion
+
+        #region Kasha Features
+        [SecretCustomCombo]
+        [CustomComboInfo("Kasha Combo Features", "Collection of Features for Kasha Combo.", SAM.JobID)]
+        SAMPvP_KashaFeatures = 125004,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMPvP_KashaFeatures)]
+            [CustomComboInfo("Soten Gap Closer Option", "Adds Soten to the Kasha Combo when out of melee range.", SAM.JobID)]
+            SAMPvP_KashaFeatures_GapCloser = 125005,
+
+            [SecretCustomCombo]
+            [ParentCombo(SAMPvP_KashaFeatures)]
+            [CustomComboInfo("AoE Melee Protection Option", "Makes the AoE combos unusable if not in melee range of target.", SAM.JobID)]
+            SAMPvP_KashaFeatures_AoEMeleeProtection = 125006,
+        #endregion
+
+        // Last value = 125006
 
         #endregion
 
         #region SCHOLAR
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Broil IV into all-in-one damage button.", SCH.JobID)]
-        SCHPvP_Burst = 80350,
+        SCHPvP_Burst = 126000,
 
         [ParentCombo(SCHPvP_Burst)]
         [CustomComboInfo("Expedient Option", "Adds Expedient to Burst Mode to empower Biolysis.", SCH.JobID)]
-        SCHPvP_Expedient = 80351,
+        SCHPvP_Expedient = 126001,
 
         [ParentCombo(SCHPvP_Burst)]
         [CustomComboInfo("Biolysis Option", "Adds Biolysis use on cooldown to Burst Mode.", SCH.JobID)]
-        SCHPvP_Biolysis = 80352,
+        SCHPvP_Biolysis = 126002,
 
         [ParentCombo(SCHPvP_Burst)]
         [CustomComboInfo("Deployment Tactics Option", "Adds Deployment Tactics to Burst Mode when available.", SCH.JobID)]
-        SCHPvP_DeploymentTactics = 80353,
+        SCHPvP_DeploymentTactics = 126003,
+
+        // Last value = 126003
+
         #endregion
 
         #region SUMMONER
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Ruin III into an all-in-one damage button.\nOnly uses Crimson Cyclone when in melee range.", SMNPvP.JobID)]
-        SMNPvP_BurstMode = 80300,
+        SMNPvP_BurstMode = 127000,
 
         [SecretCustomCombo]
         [ParentCombo(SMNPvP_BurstMode)]
         [CustomComboInfo("Radiant Aegis Option", "Adds Radiant Aegis to Burst Mode when available, and your HP is at or below the set percentage.", SMNPvP.JobID)]
-        SMNPvP_BurstMode_RadiantAegis = 80301,
+        SMNPvP_BurstMode_RadiantAegis = 127001,
+
+        // Last value = 127001
+
+        #endregion
+
+        #region WARRIOR
+        [SecretCustomCombo]
+        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPvP.JobID)]
+        WARPvP_BurstMode = 128000,
+
+        [SecretCustomCombo]
+        [ParentCombo(WARPvP_BurstMode)]
+        [CustomComboInfo("Bloodwhetting Option", "Allows use of Bloodwhetting any time, not just between GCDs.", WARPvP.JobID)]
+        WARPvP_BurstMode_Bloodwhetting = 128001,
+
+        [SecretCustomCombo]
+        [ParentCombo(WARPvP_BurstMode)]
+        [CustomComboInfo("Blota Option", "Removes Blota from Burst Mode if Primal Rend has 5 seconds or less on its cooldown.", WARPvP.JobID)]
+        WARPvP_BurstMode_Blota = 128002,
+
+        // Last value = 128002
 
         #endregion
 
         #region WHITE MAGE
         [SecretCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Glare into an all-in-one damage button.", WHM.JobID)]
-        WHMPvP_Burst = 80400,
+        WHMPvP_Burst = 129000,
 
         [ParentCombo(WHMPvP_Burst)]
         [CustomComboInfo("Misery Option", "Adds Afflatus Misery to Burst Mode.", WHM.JobID)]
-        WHMPvP_Afflatus_Misery = 80401,
+        WHMPvP_Afflatus_Misery = 129001,
 
         [ParentCombo(WHMPvP_Burst)]
         [CustomComboInfo("Miracle of Nature Option", "Adds Miracle of Nature to Burst Mode.", WHM.JobID)]
-        WHMPvP_Mirace_of_Nature = 80402,
+        WHMPvP_Mirace_of_Nature = 129002,
 
         [ParentCombo(WHMPvP_Burst)]
         [CustomComboInfo("Seraph Strike Option", "Adds Seraph Strike to Burst Mode.", WHM.JobID)]
-        WHMPvP_Seraph_Strike = 80403,
+        WHMPvP_Seraph_Strike = 129003,
 
         [SecretCustomCombo]
         [CustomComboInfo("Aquaveil Feature", "Adds Aquaveil to Cure II when available.", WHM.JobID)]
-        WHMPvP_Aquaveil = 80404,
+        WHMPvP_Aquaveil = 129004,
 
         [SecretCustomCombo]
         [CustomComboInfo("Cure III Feature", "Adds Cure III to Cure II when available.", WHM.JobID)]
-        WHMPvP_Cure3 = 80405,
+        WHMPvP_Cure3 = 129005,
+
+        // Last value = 129005
 
         #endregion
-
-        #endregion
-
-        #region PvPGlobals // Pending insertion into above region
-
-        [SecretCustomCombo]
-        [CustomComboInfo("Emergency Heals Feature", "Uses Recuperate when your HP is under the set threshold and you have sufficient MP.", ADV.JobID, 1)]
-        PvP_EmergencyHeals = 90000,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("Emergency Guard Feature", "Uses Guard when your HP is under the set threshold.", ADV.JobID, 2)]
-        PvP_EmergencyGuard = 90001,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("Quick Purify Feature", "Uses Purify when afflicted with any selected debuff.", ADV.JobID, 4)]
-        PvP_QuickPurify = 90002,
-
-        [SecretCustomCombo]
-        [CustomComboInfo("Prevent Mash Cancelling Feature", "Stops you cancelling your guard if you're pressing buttons quickly.", ADV.JobID, 3)]
-        PvP_MashCancel = 90003,
 
         #endregion
     }
