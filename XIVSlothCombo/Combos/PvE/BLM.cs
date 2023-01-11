@@ -103,7 +103,6 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_VariantCure = "BlmVariantCure";
             internal const string BLM_SimpleOpenerSelection = "BLM_SimpleOpenerSelection";
             internal const string BLM_AdvancedOpenerSelection = "BLM_AdvancedOpenerSelection";
-
         }
 
         internal class BLM_SimpleMode : CustomCombo
@@ -533,7 +532,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0)
                                     return Triplecast;
 
-                                if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement_Scathe) && 
+                                if (IsEnabled(CustomComboPreset.BLM_Simple_CastMovement_Scathe) &&
                                     (GetBuffStacks(Buffs.Triplecast) is 0) && !Gauge.HasPolyglotStacks())
                                     return Scathe;
                             }
@@ -622,7 +621,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (Gauge.InAstralFire)
                             {
-                                if (Gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter))
+                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.Fire)
                                     return Fire3;
 
                                 return (currentMP < MP.Fire)
@@ -1252,7 +1251,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
                             // Weave Buffs
-
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Casts))
                             {
                                 // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
@@ -1318,7 +1316,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (Gauge.InAstralFire)
                             {
-                                if (Gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter))
+                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.Fire)
                                     return Fire3;
 
                                 return (currentMP < MP.Fire)
