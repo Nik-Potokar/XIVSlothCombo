@@ -166,7 +166,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
                             if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
-                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) || (InCombat() && (!Gauge.InAstralFire || !Gauge.InUmbralIce))) inOpener = false;
 
                             if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
                                 IsEnabled(CustomComboPreset.BLM_Simple_Opener) && level >= 90 && openerReady)
@@ -324,7 +324,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
                             if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
-                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) || (InCombat() && (!Gauge.InAstralFire || !Gauge.InUmbralIce))) inOpener = false;
 
                             if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
                                 IsEnabled(CustomComboPreset.BLM_Simple_Opener) && level >= 90 && openerReady)
@@ -859,7 +859,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
                             if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
-                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) || (InCombat() && (!Gauge.InAstralFire || !Gauge.InUmbralIce))) inOpener = false;
 
                             if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
                                 IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90 && openerReady)
@@ -1017,7 +1017,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
                             if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast))
-                                || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+                               || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) || (InCombat() && (!Gauge.InAstralFire || !Gauge.InUmbralIce))) inOpener = false;
 
                             if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
                                 IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90 && openerReady)
@@ -1521,64 +1521,62 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InCombat())
                         return OriginalHook(Blizzard2);
 
-                    if (InCombat())
+                    if (Gauge.ElementTimeRemaining > 0)
                     {
-                        if (Gauge.ElementTimeRemaining > 0)
-                        {
-                            if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                                IsEnabled(Variant.VariantCure) &&
-                                PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
-                                return Variant.VariantCure;
+                        if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
+                            IsEnabled(Variant.VariantCure) &&
+                            PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                            return Variant.VariantCure;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                                IsEnabled(Variant.VariantRampart) &&
-                                IsOffCooldown(Variant.VariantRampart) &&
-                                CanSpellWeave(actionID))
-                                return Variant.VariantRampart;
-                        }
+                        if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            CanSpellWeave(actionID))
+                            return Variant.VariantRampart;
+                    }
 
-                        // Fire phase
-                        if (Gauge.InAstralFire)
+                    // Fire phase
+                    if (Gauge.InAstralFire)
+                    {
+                        //Grab Fire 2 / High Fire 2 action ID
+                        if (Gauge.UmbralHearts is 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                            return Flare;
+
+                        // Polyglot usage 
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
+                            LevelChecked(Foul) && Gauge.HasPolyglotStacks() && lastComboMove is Flare)
+                            return Foul;
+
+                        if (currentMP >= MP.AllMPSpells)
                         {
-                            //Grab Fire 2 / High Fire 2 action ID
-                            if (Gauge.UmbralHearts is 1 && LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
+                            if (currentMP >= MP.FireAoE || !HasEffect(Buffs.EnhancedFlare))
+                                return OriginalHook(Fire2);
+
+                            else if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
                                 return Flare;
 
-                            // Polyglot usage 
-                            if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
-                                LevelChecked(Foul) && Gauge.HasPolyglotStacks() && lastComboMove is Flare)
-                                return Foul;
-
-                            if (currentMP >= MP.AllMPSpells)
-                            {
-                                if (currentMP >= MP.FireAoE || !HasEffect(Buffs.EnhancedFlare))
-                                    return OriginalHook(Fire2);
-
-                                else if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare))
-                                    return Flare;
-
-                                else if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                                    return Transpose;
-                            }
-
-                            if (currentMP < MP.AllMPSpells)
+                            else if (!TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
                         }
 
-                        // Ice phase
-                        if (Gauge.InUmbralIce)
-                        {
-                            if (Gauge.UmbralHearts < 3)
-                                return Freeze;
-
-                            if (lastComboMove is Transpose)
-                                return OriginalHook(Thunder2);
-
-                            return (Gauge.UmbralHearts is 3 && currentMP is MP.MaxMP)
-                                ? OriginalHook(Fire2)
-                                : OriginalHook(Blizzard2);
-                        }
+                        if (currentMP < MP.AllMPSpells)
+                            return Transpose;
                     }
+
+                    // Ice phase
+                    if (Gauge.InUmbralIce)
+                    {
+                        if (Gauge.UmbralHearts < 3)
+                            return Freeze;
+
+                        if (lastComboMove is Transpose)
+                            return OriginalHook(Thunder2);
+
+                        return (Gauge.UmbralHearts is 3 && currentMP is MP.MaxMP)
+                            ? OriginalHook(Fire2)
+                            : OriginalHook(Blizzard2);
+                    }
+
                 }
                 return actionID;
             }
