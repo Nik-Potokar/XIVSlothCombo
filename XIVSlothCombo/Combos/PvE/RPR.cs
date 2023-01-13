@@ -104,17 +104,22 @@ namespace XIVSlothCombo.Combos.PvE
                 bool trueNorthReadyDyn = trueNorthReady;
                 bool opener = IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 30 && LevelChecked(Communio);
 
-				// Prevent the dynamic true north option from using the last charge
-				if( trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2 ) {
-					trueNorthReadyDyn = false;
-				}
-
+                // Skip True North logic when not needed
+                if( TargetNeedsPositionals() )
+                {
+                    // Prevent the dynamic true north option from using the last charge
+                    if( trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2 ) {
+                        trueNorthReadyDyn = false;
+                    }
+                }
+                
                 // Gibbet and Gallows on Shadow of Death
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) && soulReaver && LevelChecked(Gibbet))
                 {
+
                     // True North overcap use
-                    if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
-                        return All.TrueNorth;
+                    if ( IsEnabled(CustomComboPreset.RPR_TrueNorth) && TargetNeedsPositionals() && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
+                         return All.TrueNorth;
 
                     if (positionalChoice is 0 or 1 or 2)
                     {
@@ -142,7 +147,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     bool interruptReady = LevelChecked(All.LegSweep) && CanInterruptEnemy() && IsOffCooldown(All.LegSweep);
 
-                    if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && TargetNeedsPositionals() && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
                         return All.TrueNorth;
 
                     if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
@@ -160,14 +165,14 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (HasEffect(Buffs.EnhancedGibbet)) {
                                 // If we are not on the flank, but need to use gibbet, pop true north if not already up
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && TargetNeedsPositionals() && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
                                     return All.TrueNorth;
                                 }
                                 return OriginalHook(Gibbet);
                             }
                             if (HasEffect(Buffs.EnhancedGallows)) {
                                 // If we are not on the rear, but need to use gallows, pop true north if not already up
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && TargetNeedsPositionals() && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
                                     return All.TrueNorth;
                                 }
                                 return OriginalHook(Gallows);
@@ -181,19 +186,20 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget() )
                         {
-                            if (positionalChoice is 0 or 1) {
+                            if ( TargetNeedsPositionals() && positionalChoice is 0 or 1) {
                                 if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
                                     return All.TrueNorth;
                                 }
                                 return Gallows;
                             }
-                            if (positionalChoice == 2) {
+                            if ( TargetNeedsPositionals() && positionalChoice == 2) {
                                 if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
                                     return All.TrueNorth;
                                 }
                                 return Gibbet;
                             }
                         }
+
                     }
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_RangedFiller) && !InMeleeRange() && LevelChecked(Harpe) && HasBattleTarget())
@@ -435,10 +441,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is BloodStalk)
                 {
-                    bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                    if ( TargetNeedsPositionals() )
+                    {
+                        bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
-                    if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
-                        return All.TrueNorth;
+                        if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
+                            return All.TrueNorth;
+                    }
 
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Enshroud) && HasEffect(Buffs.Enshrouded))
                     {
@@ -553,10 +562,13 @@ namespace XIVSlothCombo.Combos.PvE
                 int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
                 if (actionID is Enshroud)
                 {
-                    bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                    if( TargetNeedsPositionals() )
+                    {
+                        bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
-                    if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
-                        return All.TrueNorth;
+                        if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
+                            return All.TrueNorth;
+                    }
 
                     if (HasEffect(Buffs.SoulReaver))
                     {
