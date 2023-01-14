@@ -1,12 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
-using Lumina.Data.Parsing;
 using System.Collections.Generic;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
