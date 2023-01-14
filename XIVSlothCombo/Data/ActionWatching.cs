@@ -212,9 +212,9 @@ namespace XIVSlothCombo.Data
     internal unsafe static class ActionManagerHelper
     {
         private static readonly IntPtr actionMgrPtr;
-        internal static IntPtr FpUseAction => (IntPtr)ActionManager.fpUseAction;
-        internal static IntPtr FpUseActionLocation => (IntPtr)ActionManager.fpUseActionLocation;
-        internal static IntPtr CheckActionResources => (IntPtr)ActionManager.fpCheckActionResources;
+        internal static IntPtr FpUseAction => (IntPtr)ActionManager.Addresses.UseAction.Value;
+        internal static IntPtr FpUseActionLocation => (IntPtr)ActionManager.Addresses.UseActionLocation.Value;
+        internal static IntPtr CheckActionResources => (IntPtr)ActionManager.Addresses.CheckActionResources.Value;
         public static ushort CurrentSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x110) : (ushort)0;
         public static ushort LastRecievedSeq => actionMgrPtr != IntPtr.Zero ? (ushort)Marshal.ReadInt16(actionMgrPtr + 0x112) : (ushort)0;
         public static bool IsCasting => actionMgrPtr != IntPtr.Zero && Marshal.ReadByte(actionMgrPtr + 0x28) != 0;
