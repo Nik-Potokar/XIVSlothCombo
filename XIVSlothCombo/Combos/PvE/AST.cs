@@ -196,7 +196,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (Gauge.DrawnCard.Equals(CardType.NONE)) return false;
                 CardType cardDrawn = Gauge.DrawnCard;
                 if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
-
+                PartyTargets.Clear();
                 for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
                 {
                     if (GetPartySlot(i) is not BattleChara member) continue;
