@@ -11,6 +11,7 @@ using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using Dalamud.Interface;
+using Dalamud.Interface.Style;
 using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Window.Functions
@@ -1538,42 +1539,115 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region RED MAGE
 
-            if (preset == CustomComboPreset.RDM_oGCD)
+            if (preset is CustomComboPreset.RDM_ST_oGCD)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Scatter\n-Impact", "Select for one button rotation", 3);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 4);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Riposte\n-Moulinet", "", 5);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_OGCD_OnAction, "-Fleche\n-Riposte\n-Moulinet", "", 6);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_OnAction_Adv, "Advanced Action Options.", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_oGCD_OnAction_Adv)
+                {
+                    ImGui.Indent();ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Jolts", "", 3, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Fleche", "", 3, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Riposte", "", 3, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
+
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_Fleche, "Fleche", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_ContraSixte, "Contra Sixte", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_Engagement, "Engagement", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_oGCD_Engagement)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_Engagement_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps, "Corp-a-Corps", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_oGCD_CorpACorps)
+                {
+                    ImGui.Indent();ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Melee, "Use only in melee range.", "");
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_ST_MeleeCombo)
+            if (preset is CustomComboPreset.RDM_ST_MeleeCombo)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Jolt\n-Jolt II", "Select for one button rotation", 2);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_ST_MeleeCombo_OnAction, "-Riposte\n-Jolt\n-Jolt II", "Select for one button rotation", 3);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_MeleeCombo_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_MeleeCombo_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Jolts", "", 2, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeCombo_OnAction, "Riposte", "", 2, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo)
+            if (preset is CustomComboPreset.RDM_ST_MeleeFinisher)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "-Moulinet\n-Scatter\n-Impact", "Select for one button rotation", 2);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_MeleeFinisher_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_ST_MeleeFinisher_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeFinisher_OnAction, "Jolts", "", 3, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeFinisher_OnAction, "Riposte", "", 3, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_MeleeFinisher_OnAction, "VerAero & VerThunder", "", 3, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_MeleeFinisher)
+            if (preset is CustomComboPreset.RDM_ST_Lucid)
+                UserConfig.DrawSliderInt(0, 10000, RDM.Config.RDM_ST_Lucid_Threshold, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
+
+            // AoE
+            if (preset is CustomComboPreset.RDM_AoE_oGCD)
             {
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet", "", 1);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 2);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Riposte\n-Moulinet\n-Jolt\n-Jolt II\n-Scatter\n-Impact", "Select for one button rotation", 3);
-                UserConfig.DrawHorizontalRadioButton(RDM.Config.RDM_MeleeFinisher_OnAction, "-Veraero 1/2/3\n-Verthunder 1/2/3", "", 4);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_Fleche, "Fleche", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_ContraSixte, "Contra Sixte", "");
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_Engagement, "Engagement", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_oGCD_Engagement)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_Engagement_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_CorpACorps, "Corp-a-Corps", "", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_oGCD_CorpACorps)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_CorpACorps_Melee, "Use only in melee range.", "");
+                    UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_CorpACorps_Pooling, "Pool one charge for manual use.", "");
+                    ImGui.Unindent();
+                }
             }
 
-            if (preset == CustomComboPreset.RDM_Lucid && enabled)
-                UserConfig.DrawSliderInt(0, 10000, RDM.Config.RDM_Lucid_Threshold, "Add Lucid Dreaming when below this MP", 300, SliderIncrements.Hundreds);
+            if (preset is CustomComboPreset.RDM_AoE_MeleeCombo)
+            {
+                UserConfig.DrawSliderInt(3, 8, RDM.Config.RDM_AoE_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", sliderIncrement: SliderIncrements.Ones);
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_MeleeCombo_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_MeleeCombo_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "Scatter/Impact", "", 2, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeCombo_OnAction, "Moulinet", "", 2, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
+            }
 
-            if (preset == CustomComboPreset.RDM_AoE_MeleeCombo && enabled)
-                UserConfig.DrawSliderInt(3, 8, RDM.Config.RDM_MoulinetRange, "Range to use first Moulinet; no range restrictions after first Moulinet", 150, SliderIncrements.Ones);
+            if (preset is CustomComboPreset.RDM_AoE_MeleeFinisher)
+            {
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_MeleeFinisher_Adv, "Advanced Action Options", "Changes which action this option will replace.", isConditionalChoice: true);
+                if (RDM.Config.RDM_AoE_MeleeFinisher_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeFinisher_OnAction, "Scatter/Impact", "", 3, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeFinisher_OnAction, "Moulinet", "", 3, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_AoE_MeleeFinisher_OnAction, "VerAero II & VerThunder II", "", 3, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    ImGui.Unindent();
+                }
+            }
+
+            if (preset is CustomComboPreset.RDM_AoE_Lucid)
+                UserConfig.DrawSliderInt(0, 10000, RDM.Config.RDM_AoE_Lucid_Threshold, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================
