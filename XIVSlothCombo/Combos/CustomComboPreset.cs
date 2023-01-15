@@ -1767,9 +1767,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 17, "", "")]
         MNK_ST_Meditation_Uptime = 9028,
 
-        [CustomComboInfo("Riddle Of Earth Protection", "Prevents the use of Riddle Of Earth when its buff is already active by replacing it with Fire.", MNK.JobID, 67, "", "")]
-        MNK_RiddleOfEarthProtection = 9035,
-
         [ParentCombo(MNK_ST_SimpleMode)]
         [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
         MNK_ST_Simple_Thunderclap = 9036,

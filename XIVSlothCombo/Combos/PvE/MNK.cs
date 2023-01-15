@@ -100,7 +100,6 @@ namespace XIVSlothCombo.Combos.PvE
 
         }
 
-
         internal class MNK_ST_BasicCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_BasicCombo;
@@ -855,19 +854,6 @@ namespace XIVSlothCombo.Combos.PvE
                  actionID is HowlingFist or Enlightenment && GetJobGauge<MNKGauge>().Chakra < 5       
                 ? Meditation
                 : actionID;
-        }
-
-        internal class MNK_RiddleOfEarthProtection : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_RiddleOfEarthProtection;
-            //Riddle Of Earth spam Protection 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is RiddleOfEarth && HasEffect(Buffs.RiddleOfEarth))
-                    return BLM.Fire;
-                else
-                    return actionID;
-            }
         }
 
         internal class MNK_AOE_BasicCombo : CustomCombo
