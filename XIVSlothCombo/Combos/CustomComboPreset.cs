@@ -440,6 +440,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Umbral Soul", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
         BLM_AoEUmbralSoul = 2049,
 
+        [ParentCombo(BLM_AoE_SimpleMode)]
+        [CustomComboInfo("Manafont", "Add Manafont for an extra Flare in AstralFire", BLM.JobID, 0, "", "")]
+        BLM_AoE_Simple_Manafont = 2052,
+
         #endregion
 
         #region Variant
