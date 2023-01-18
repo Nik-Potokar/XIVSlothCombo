@@ -75,7 +75,7 @@ namespace XIVSlothCombo.Combos.PvP
                         return DoubleDown;
 
                     if ((IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && HasEffect(Buffs.NoMercy)) ||
-                        WasLastWeaponskill(GnashingFang) || WasLastWeaponskill(JugularRip) || WasLastWeaponskill(SavageClaw) || WasLastWeaponskill(WickedTalon))
+                        WasLastWeaponskill(GnashingFang) || WasLastWeaponskill(JugularRip) || WasLastWeaponskill(SavageClaw))
                         return OriginalHook(GnashingFang);
                 }
 
