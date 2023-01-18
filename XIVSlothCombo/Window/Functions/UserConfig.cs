@@ -1726,6 +1726,11 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Heal_Diagnosis)
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Use Diagnosis when Target HP is at or below set percentage");
 
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
+                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
+                    "Check for Enhanced Kerachole Trait (Heal over Time)", 
+                    "Enabling this will prevent Kerachole from being used when the Heal over Time trait is unavailable.");
+
             if (preset is CustomComboPreset.SGE_Eukrasia)
             {
                 UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Dosis", "", 0);
