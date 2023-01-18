@@ -7,9 +7,9 @@ namespace XIVSlothCombo.Extensions
 {
     internal static class PresetExtensions
     {
-        internal static Dictionary<CustomComboPreset, ReplaceSkillAttribute> replaceSkillCache = new Dictionary<CustomComboPreset, ReplaceSkillAttribute>();
-        internal static Dictionary<CustomComboPreset, CustomComboInfoAttribute> comboInfoCache = new Dictionary<CustomComboPreset, CustomComboInfoAttribute>();
-        internal static Dictionary<CustomComboPreset, HoverInfoAttribute> hoverInfoCache = new Dictionary<CustomComboPreset, HoverInfoAttribute>();
+        internal static Dictionary<CustomComboPreset, ReplaceSkillAttribute> replaceSkillCache = new();
+        internal static Dictionary<CustomComboPreset, CustomComboInfoAttribute> comboInfoCache = new();
+        internal static Dictionary<CustomComboPreset, HoverInfoAttribute> hoverInfoCache = new();
 
         ///<summary> Retrieves the <see cref="ReplaceSkillAttribute"/> for the preset if it exists.</summary>
         internal static ReplaceSkillAttribute? GetReplaceAttribute(this CustomComboPreset preset)
@@ -19,8 +19,8 @@ namespace XIVSlothCombo.Extensions
                 return replaceSkillAttribute;
             }
 
-            ReplaceSkillAttribute att = preset.GetAttribute<ReplaceSkillAttribute>();
-            return replaceSkillCache.TryAdd(preset, att) ? replaceSkillCache[preset] : null;
+            ReplaceSkillAttribute? att = preset.GetAttribute<ReplaceSkillAttribute>();
+            return att != null && replaceSkillCache.TryAdd(preset, att) ? replaceSkillCache[preset] : null;
         }
 
         ///<summary> Retrieves the <see cref="CustomComboInfoAttribute"/> for the preset if it exists.</summary>
@@ -31,8 +31,8 @@ namespace XIVSlothCombo.Extensions
                 return customComboInfoAttribute;
             }
 
-            CustomComboInfoAttribute att = preset.GetAttribute<CustomComboInfoAttribute>();
-            return comboInfoCache.TryAdd(preset, att) ? comboInfoCache[preset] : null;
+            CustomComboInfoAttribute? att = preset.GetAttribute<CustomComboInfoAttribute>();
+            return att != null && comboInfoCache.TryAdd(preset, att) ? comboInfoCache[preset] : null;
 
         }
 
@@ -44,8 +44,8 @@ namespace XIVSlothCombo.Extensions
                 return hoverInfoAttribute;
             }
 
-            HoverInfoAttribute att = preset.GetAttribute<HoverInfoAttribute>();
-            return hoverInfoCache.TryAdd(preset, att) ? hoverInfoCache[preset] : null;
+            HoverInfoAttribute? att = preset.GetAttribute<HoverInfoAttribute>();
+            return att != null && hoverInfoCache.TryAdd(preset, att) ? hoverInfoCache[preset] : null;
 
         }
     }
