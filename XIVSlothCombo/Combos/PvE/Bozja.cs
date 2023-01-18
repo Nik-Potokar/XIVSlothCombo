@@ -9,47 +9,45 @@ namespace XIVSlothCombo.Combos.PvE
     internal static class Bozja
     {
         public const uint
-            fontofpower = 20717,
-            fontofmagic = 20715,
-            bannerofhonoredsacrifice = 20721,
-            bannerofnobleends = 20720,
-            lostexcellence = 23919,
-            lostassassination = 23914,
-            lostseraphstrike = 22354,
-            lostchainspell = 23913,
-            lostrendarmor = 22353,
-            lostbloodrage = 23921,
-            lostflarestar = 22352,
-            lostdervish = 22356,
-            lostcure2 = 20727,
-            lostcure4 = 20729,
-            Lostrampage = 23910,
-            Lostburst = 23909;
+            fontOfMagic = 20715,
+            fontOfPower = 20717,
+            bannerOfNobleEnds = 20720,
+            bannerOfHonoredSacrifice = 20721,
+            lostCure2 = 20727,
+            lostCure4 = 20729,
+            lostIncense = 20731,
+            lostFlareStar = 22352,
+            lostRendArmor = 22353,
+            lostSeraphStrike = 22354,
+            lostDervish = 22356,
+            lostBurst = 23909,
+            lostRampage = 23910,
+            lostChainspell = 23913,
+            lostAssassination = 23914,
+            lostExcellence = 23919,
+            lostBloodRage = 23921;
 
         public static class Buffs
         {
             public const ushort
-                fontofpower = 2346,
-                fontofmagic = 2332,
-                lostexcellence = 2564,
-                lostchainspell = 2560,
-                clericstance = 2484,
-                lostbloodrage = 2566,
-                lostaethershield = 2443,
-                lostbravery2 = 2341,
-                beastessence = 2324,
-                bannerofhonoredsacrifice = 2327,
-                bannerofnobleends = 2326;
-
+                beastEssence = 2324,
+                bannerOfNobleEnds = 2326,
+                bannerOfHonoredSacrifice = 2327,
+                fontOfMagic = 2332,
+                lostBravery2 = 2341,
+                fontOfPower = 2346,
+                lostAethershield = 2443,
+                clericStance = 2484,
+                lostChainspell = 2560,
+                lostExcellence = 2564,
+                lostBloodRage = 2566;
         }
 
         public static class Debuffs
         {
             public const ushort
-                lostflarestar = 2440,
-                lostrendarmor = 2441;
+                lostFlareStar = 2440,
+                lostRendArmor = 2441;
         }
-
-
     }
 }
