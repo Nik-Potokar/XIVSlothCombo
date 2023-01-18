@@ -1468,6 +1468,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Intervene && enabled)
                 UserConfig.DrawSliderInt(0, 1, PLD.Config.PLD_Intervene_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Intervene)
+                UserConfig.DrawAdditionalBoolChoice(PLD.Config.PLD_Intervene_MeleeOnly, "Melee Only", "Only uses Intervene whilst in melee range");
+
             if (preset == CustomComboPreset.PLD_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, PLD.Config.PLD_VariantCure, "HP% to be at or under", 200);
 

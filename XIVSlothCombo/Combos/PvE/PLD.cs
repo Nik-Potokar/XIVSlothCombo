@@ -62,6 +62,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 PLD_Intervene_HoldCharges = "PLDKeepInterveneCharges",
+                PLD_Intervene_MeleeOnly = "PLD_Intervene_MeleeOnly",
                 PLD_VariantCure = "PLD_VariantCure",
                 PLD_RequiescatOption = "PLD_RequiescatOption",
                 PLD_SpiritsWithinOption = "PLD_SpiritsWithinOption",
@@ -119,8 +120,15 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GoringBlade.LevelChecked() && IsOffCooldown(GoringBlade))
                                 return OriginalHook(GoringBlade);
 
-                            if ((Confiteor.LevelChecked() && HasEffect(Buffs.ConfiteorReady)) || (BladeOfFaith.LevelChecked() && HasEffect(Buffs.Requiescat)) && GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)
-                                return OriginalHook(Confiteor);
+                            if (HasEffect(Buffs.Requiescat))
+                            {
+                                if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) && GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)
+                                    return OriginalHook(Confiteor);
+
+                                if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                    return OriginalHook(HolySpirit);
+                            }
+
 
                             if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                 return OriginalHook(HolySpirit);
@@ -205,10 +213,19 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if ((Confiteor.LevelChecked() && HasEffect(Buffs.ConfiteorReady)) || (BladeOfFaith.LevelChecked() && HasEffect(Buffs.Requiescat)) && GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)
-                            return OriginalHook(Confiteor);
+                        if (HasEffect(Buffs.Requiescat))
+                        {
+                            if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) && GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)
+                                return OriginalHook(Confiteor);
 
-                        if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                            if (GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && HolyCircle.LevelChecked())
+                                return OriginalHook(HolyCircle);
+
+                            if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && HolySpirit.LevelChecked())
+                                return OriginalHook(HolySpirit);
+                        }
+
+                        if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && HolyCircle.LevelChecked())
                             return OriginalHook(HolyCircle);
                     }
 
@@ -228,7 +245,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)) && CanWeave(actionID) && !WasLastAction(FightOrFlight) && IsOnCooldown(FightOrFlight))
                         return OriginalHook(SpiritsWithin);
 
-                    if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                    if ((HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
                         return OriginalHook(HolyCircle);
 
 
@@ -311,7 +328,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) &&
                                     OriginalHook(Intervene).LevelChecked() &&
-                                    GetRemainingCharges(Intervene) > GetOptionValue(Config.PLD_Intervene_HoldCharges))
+                                    GetRemainingCharges(Intervene) > GetOptionValue(Config.PLD_Intervene_HoldCharges) &&
+                                    ((GetOptionBool(Config.PLD_Intervene_MeleeOnly) && InMeleeRange()) || (!GetOptionBool(Config.PLD_Intervene_MeleeOnly))))
                                     return OriginalHook(Intervene);
 
                             }
@@ -321,16 +339,26 @@ namespace XIVSlothCombo.Combos.PvE
                                 IsOffCooldown(GoringBlade))
                                 return OriginalHook(GoringBlade);
 
-                            if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
-                                Confiteor.LevelChecked() &&
-                                HasEffect(Buffs.ConfiteorReady))
-                                ||
-                                (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) &&
-                                BladeOfFaith.LevelChecked() &&
-                                HasEffect(Buffs.Requiescat) &&
-                                OriginalHook(Confiteor) != Confiteor &&
-                                GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
-                                return OriginalHook(Confiteor);
+
+                            if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
+                            {
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                    return OriginalHook(HolySpirit);
+                            }
+                            else
+                            {
+                                if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
+                                    Confiteor.LevelChecked() &&
+                                    HasEffect(Buffs.ConfiteorReady))
+                                    ||
+                                    (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) &&
+                                    BladeOfFaith.LevelChecked() &&
+                                    HasEffect(Buffs.Requiescat) &&
+                                    OriginalHook(Confiteor) != Confiteor &&
+                                    GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
+                                    return OriginalHook(Confiteor);
+                            }
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
                                 HasEffect(Buffs.DivineMight) &&
@@ -386,7 +414,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(SpiritsWithin);
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
-                            HasEffect(Buffs.DivineMight) &&
+                            (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) &&
                             GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                             return OriginalHook(HolySpirit);
 
@@ -467,18 +495,30 @@ namespace XIVSlothCombo.Combos.PvE
 
                         }
 
-                        if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) &&
-                            Confiteor.LevelChecked() &&
-                            HasEffect(Buffs.ConfiteorReady))
-                            ||
-                            (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) &&
-                            BladeOfFaith.LevelChecked() &&
-                            HasEffect(Buffs.Requiescat) &&
-                            OriginalHook(Confiteor) != Confiteor &&
-                            GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
-                            return OriginalHook(Confiteor);
+                        if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
+                        {
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
+                                GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                                return OriginalHook(HolyCircle);
+                        }
+                        else
+                        {
+                            if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) &&
+                                Confiteor.LevelChecked() &&
+                                HasEffect(Buffs.ConfiteorReady))
+                                ||
+                                (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) &&
+                                BladeOfFaith.LevelChecked() &&
+                                HasEffect(Buffs.Requiescat) &&
+                                OriginalHook(Confiteor) != Confiteor &&
+                                GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
+                                return OriginalHook(Confiteor);
+                        }
 
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && 
+                            (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && 
+                            GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp &&
+                            HolyCircle.LevelChecked())
                             return OriginalHook(HolyCircle);
                     }
 
