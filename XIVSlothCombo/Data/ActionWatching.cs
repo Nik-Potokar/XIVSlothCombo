@@ -129,6 +129,16 @@ namespace XIVSlothCombo.Data
             return count;
         }
 
+        public static bool WasLast2ActionsAbilities()
+        {
+            if (CombatActions.Count < 2) return false;
+            var lastAction = CombatActions.Last();
+            var secondLastAction = CombatActions[CombatActions.Count - 2];
+
+            return (GetAttackType(lastAction) == GetAttackType(secondLastAction) && GetAttackType(lastAction) == ActionAttackType.Ability);
+        }
+
+
         public static uint LastAction { get; set; } = 0;
         public static int LastActionUseCount { get; set; } = 0;
         public static uint ActionType { get; set; } = 0;
