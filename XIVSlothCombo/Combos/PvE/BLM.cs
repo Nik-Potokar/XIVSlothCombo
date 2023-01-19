@@ -100,7 +100,6 @@ namespace XIVSlothCombo.Combos.PvE
         internal static class Config
         {
             internal const string BLM_AstralFireRefresh = "BlmAstralFireRefresh";
-            internal const string BLM_MovementTime = "BlmMovementTime";
             internal const string BLM_VariantCure = "BlmVariantCure";
             internal const string BLM_SimpleOpenerSelection = "BLM_SimpleOpenerSelection";
             internal const string BLM_AdvancedOpenerSelection = "BLM_AdvancedOpenerSelection";
@@ -513,7 +512,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                         Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
+                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
                                             return dot;
                                     }
                                 }
@@ -552,7 +551,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                         Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
+                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
                                             return dot; //Use appropriate DoT Action
                                     }
                                 }
@@ -1374,7 +1373,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (Gauge.AstralFireStacks < 3 || (Gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter)))
                                 return Fire3;
 
-                            // Use Paradox instead of hardcasting Fire3 if we can
+                            // Use Paradox instead of hardcasting Fire if we can
                             if (Gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.Fire)
                             {
                                 if (LevelChecked(Paradox))
