@@ -3575,19 +3575,19 @@ namespace XIVSlothCombo.Combos
         #region Medica Feature
 
         [ReplaceSkill(WHM.Medica2)]
-        [CustomComboInfo("Medica Feature", "Replaces Medica II with Medica whenever you are under Medica II's regen.", WHM.JobID, 60, "", "")]
+        [CustomComboInfo("Medica II Feature", "Replaces Medica II with Medica whenever you are under Medica II's regen effect or below Lv.50.", WHM.JobID, 60, "", "")]
         WHM_Medica = 19007,
 
             [ParentCombo(WHM_Medica)]
-            [CustomComboInfo("Afflatus Rapture on Medica Option", "Adds Afflatus Rapture to the Medica Feature when available.", WHM.JobID, 61, "", "")]
+            [CustomComboInfo("Afflatus Rapture Option", "Adds Afflatus Rapture when available.", WHM.JobID, 61, "", "")]
             WHM_Medica_Rapture = 19011,
 
             [ParentCombo(WHM_Medica)]
-            [CustomComboInfo("Afflatus Misery on Medica Option", "Adds Afflatus Misery to the Medica Feature when Misery is ready to be used.", WHM.JobID, 62, "", "")]
+            [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery when available.", WHM.JobID, 62, "", "")]
             WHM_Medica_Misery = 19010,
 
             [ParentCombo(WHM_Medica)]
-            [CustomComboInfo("Thin Air on Medica Option", "Adds Thin Air to the Medica Feature when available.", WHM.JobID, 63, "", "")]
+            [CustomComboInfo("Thin Air Option", "Adds Thin Air when available.", WHM.JobID, 63, "", "")]
             WHM_Medica_ThinAir = 19200,
 
         #endregion
