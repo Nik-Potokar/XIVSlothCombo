@@ -1127,21 +1127,21 @@ namespace XIVSlothCombo.Window.Functions
             #region BLACK MAGE
 
             if (preset is CustomComboPreset.BLM_SimpleMode or CustomComboPreset.BLM_AdvancedMode)
-                UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
+                UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFire_Refresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
 
             if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
 
             if (preset is CustomComboPreset.BLM_Adv_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_AdvancedOpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_AdvancedOpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
             }
 
             if (preset is CustomComboPreset.BLM_Simple_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_SimpleOpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_SimpleOpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Simple_OpenerSelection, "General Opener", "Uses General Purpose Opener. ", 1);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Simple_OpenerSelection, "Double Transpose Opener", "Uses F3 opener - double transpose variation.", 2);
             }
 
             #endregion

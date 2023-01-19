@@ -328,26 +328,26 @@ namespace XIVSlothCombo.Combos
         #region Simple ST
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_ScatheXeno, BLM_AdvancedMode)]
+        [ConflictingCombos(BLM_Scathe_Xeno, BLM_AdvancedMode)]
         [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -10, "", "")]
         BLM_SimpleMode = 2012,
 
         [ParentCombo(BLM_SimpleMode)]
         [CustomComboInfo("Pool Triplecast option", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Casts_Pooling = 2016,
+        BLM_Simple_Triplecast_Pooling = 2016,
 
         [ParentCombo(BLM_SimpleMode)]
         [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
-        BLM_Simple_CastMovement = 2026,
+        BLM_Simple_Movement = 2026,
 
         [ParentCombo(BLM_SimpleMode)]
         [CustomComboInfo("Umbral Soul", "Changes Single Target button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
-        BLM_SimpleUmbralSoul = 2031,
+        BLM_Simple_UmbralSoul = 2031,
 
         [ParentCombo(BLM_SimpleMode)]
-        [ConflictingCombos(BLM_Simple_CastMovement_Xeno)]
+        [ConflictingCombos(BLM_Simple_Movement_Xeno)]
         [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
-        BLM_Simple_Transpose_Lines = 2048,
+        BLM_Simple_Transpose_Rotation = 2048,
 
         [ParentCombo(BLM_SimpleMode)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Simple Blm feature.", BLM.JobID, -5, "", "")]
@@ -357,48 +357,48 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Opener", "Adds the lvl 90 opener.\nChoose which one u want to use.\nIf nothing selected will default to Standard opener.", BLM.JobID, -10, "", "")]
         BLM_Simple_Opener = 2051,
 
-        [ParentCombo(BLM_Simple_CastMovement)]
+        [ParentCombo(BLM_Simple_Movement)]
         [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving and no triplecast or xenoglossy charges left.", BLM.JobID, 0, "", "")]
-        BLM_Simple_CastMovement_Scathe = 2028,
+        BLM_Simple_Movement_Scathe = 2028,
 
-        [ParentCombo(BLM_Simple_CastMovement)]
-        [ConflictingCombos(BLM_Simple_Transpose_Lines)]
+        [ParentCombo(BLM_Simple_Movement)]
+        [ConflictingCombos(BLM_Simple_Transpose_Rotation)]
         [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, -1, "", "")]
-        BLM_Simple_CastMovement_Xeno = 2047,
+        BLM_Simple_Movement_Xeno = 2047,
 
         #endregion
 
         #region Advanced ST
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode)]
+        [ConflictingCombos(BLM_Scathe_Xeno, BLM_SimpleMode)]
         [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -9, "", "")]
         BLM_AdvancedMode = 2021,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Thundercloud Option", "Adds Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available to Advanced BLM.", BLM.JobID, 0, "", "")]
-        BLM_AdvThunder = 2029,
+        BLM_Adv_Thunder = 2029,
 
-        [ParentCombo(BLM_AdvThunder)]
+        [ParentCombo(BLM_Adv_Thunder)]
         [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Advanced BLM.", BLM.JobID, 0, "", "")]
-        BLM_AdvThunderUptime = 2030,
+        BLM_Adv_Thunder_Uptime = 2030,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Umbral Soul", "Changes Single target button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
-        BLM_AdvUmbralSoul = 2035,
+        BLM_Adv_UmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
-        BLM_Adv_CastMovement = 2036,
+        BLM_Adv_Movement = 2036,
 
-        [ParentCombo(BLM_Adv_CastMovement)]
-        [ConflictingCombos(BLM_Adv_Transpose_Lines)]
+        [ParentCombo(BLM_Adv_Movement)]
+        [ConflictingCombos(BLM_Adv_Transpose_Rotation)]
         [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
-        BLM_Adv_CastMovement_Xeno = 2037,
+        BLM_Adv_Movement_Xeno = 2037,
 
-        [ParentCombo(BLM_Adv_CastMovement)]
+        [ParentCombo(BLM_Adv_Movement)]
         [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving and no triplecast or xenoglossy charges left.", BLM.JobID, 0, "", "")]
-        BLM_Adv_CastMovement_Scathe = 2038,
+        BLM_Adv_Movement_Scathe = 2038,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Advanced BLM feature.", BLM.JobID, -8, "", "")]
@@ -406,7 +406,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_Adv_Casts)]
         [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Casts_Pooling = 2040,
+        BLM_Adv_Triplecast_Pooling = 2040,
 
         [ParentCombo(BLM_Adv_Buffs)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced Blm feature.", BLM.JobID, 0, "", "")]
@@ -421,9 +421,9 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Opener = 2043,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [ConflictingCombos(BLM_Adv_CastMovement_Xeno)]
+        [ConflictingCombos(BLM_Adv_Movement_Xeno)]
         [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.\nWill only work on lvl 90.", BLM.JobID, -9, "", "")]
-        BLM_Adv_Transpose_Lines = 2045,
+        BLM_Adv_Transpose_Rotation = 2045,
 
         #endregion
 
@@ -467,20 +467,20 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.Transpose)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "", "")]
-        BLM_Mana = 2001,
+        BLM_UmbralSoul = 2001,
 
         [ReplaceSkill(BLM.LeyLines)]
-        [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Ley Lines when Ley Lines is active.", BLM.JobID, 0, "", "")]
-        BLM_LeyLines = 2002,
+        [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Lines when Ley Lines is active.", BLM.JobID, 0, "", "")]
+        BLM_Between_The_LeyLines = 2002,
 
         [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
-        [CustomComboInfo("Blizzard 1/2/3 Feature", "Replaces Blizzard 1 with Blizzard 3 when out of Umbral Ice. Replaces Freeze with Blizzard 2 when synced.", BLM.JobID, 0, "", "")]
-        BLM_Blizzard = 2003,
+        [CustomComboInfo("Blizzard 1/3 Feature", "Replaces Blizzard 1 with Blizzard 3 when out of Umbral Ice. Replaces Freeze with Blizzard 2 when synced.", BLM.JobID, 0, "", "")]
+        BLM_Blizzard_1to3 = 2003,
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_SimpleMode, BLM_AdvancedMode)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID, 0, "", "")]
-        BLM_ScatheXeno = 2004,
+        BLM_Scathe_Xeno = 2004,
 
         [ReplaceSkill(BLM.Fire)]
         [CustomComboInfo("Fire 1/3 Feature", "Replaces Fire 1 with Fire 3 outside of Astral Fire or when Firestarter proc is up.", BLM.JobID, 0, "", "")]
@@ -488,7 +488,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
-        BLM_AetherialManipulation = 2046,
+        BLM_Aetherial_Manipulation = 2046,
 
         // Last value = 2052
 
