@@ -1463,6 +1463,77 @@ namespace XIVSlothCombo.Combos
 
         #region MACHINIST
 
+        #region ST Simple
+
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
+        [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
+        MCH_ST_SimpleMode = 8020,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 99, "", "")]
+        MCH_ST_Simple_Interrupt = 8021,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.", MCH.JobID, -10, "", "")]
+        MCH_ST_Simple_GaussRicochet = 8024,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Wildcharge Option", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chainsaw.", MCH.JobID, -7, "", "")]
+        MCH_ST_Simple_WildCharge = 8025,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, -8, "", "")]
+        MCH_ST_Simple_Stabilizer = 8026,
+
+        [ParentCombo(MCH_ST_Simple_Stabilizer)]
+        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use in even minute burst.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        MCH_ST_SecondWind = 8037,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -99, "", "")]
+        MCH_ST_Opener = 8041,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Turret/Queen Option", "Adds AutoTurret/Automaton Queen to the rotation.\nUses battery values of The Balance.", MCH.JobID, -1, "", "")]
+        MCH_Simple_QueenUsage = 8043,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.\nWill be used on Chainsaw and Airanchor.\nWill be used on Drill below lvl 76.", MCH.JobID, -9, "", "")]
+        MCH_ST_Simple_Reassembled = 8044,
+
+        [ParentCombo(MCH_ST_Simple_Reassembled)]
+        [CustomComboInfo("Drill option", "Adds Drill to the rotation.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Drill = 8045,
+
+        [ParentCombo(MCH_ST_Simple_Reassembled)]
+        [CustomComboInfo("Air Anchor option", "Adds Hot Shot/Air Anchor to the rotation.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_AirAnchor = 8046,
+
+        [ParentCombo(MCH_ST_Simple_Reassembled)]
+        [CustomComboInfo("Chainsaw option", "Adds Chainsaw to the rotation.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_ChainSaw = 8047,
+
+        #endregion
+
+        #region Variant
+
+        [Variant]
+        [VariantParent(MCH_ST_SimpleMode, MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MCH.JobID)]
+        MCH_Variant_Rampart = 8039,
+
+        [Variant]
+        [VariantParent(MCH_ST_SimpleMode, MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
+        MCH_Variant_Cure = 8040,
+
+        #endregion
+
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
         [CustomComboInfo("(Heated) Shot Combo Feature", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "", "")]
@@ -1544,31 +1615,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
         MCH_ST_AutoBarrel = 8019,
 
-        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
-        MCH_ST_SimpleMode = 8020,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Interrupt = 8021,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Assembling Option", "Pairs reassemble uses with the following skills.\nBefore acquiring Drill it will be used with Clean Shot.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Assembling = 8023,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_GaussRicochet = 8024,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Wildcharge Option", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chain Saw.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_WildCharge = 8025,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Stabilizer = 8026,
-
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the AoE.", MCH.JobID, 0, "", "")]
         MCH_AoE_Simple_Hypercharge = 8027,
@@ -1577,37 +1623,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, 0, "", "")]
         MCH_AoE_SimpleMode = 8028,
 
-        [ParentCombo(MCH_ST_Simple_Stabilizer)]
-        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use in even minute burst.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("High Ping Mode Option", "A high-ping-friendly mode.\nIt limits the uses of Gauss Round/Ricochet inside Hypercharge windows to prevent drift.\nExpect a small DPS loss when using this feature.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_High_Latency_Mode = 8036,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
-        MCH_ST_SecondWind = 8037,
-
         [ParentCombo(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
         MCH_AoE_SecondWind = 8038,
 
-        [Variant]
-        [VariantParent(MCH_ST_SimpleMode, MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MCH.JobID)]
-        MCH_Variant_Rampart = 8039,
+        [ReplaceSkill(MCH.Dismantle)]
+        [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID, 50, "", "")]
+        All_PRanged_Dismantle = 8042,
 
-        [Variant]
-        [VariantParent(MCH_ST_SimpleMode, MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
-        MCH_Variant_Cure = 8040,
-
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -1, "", "")]
-        MCH_ST_Opener = 8041,
-        
-        // Last value = 8040
+        // Last value = 8047
 
         #endregion
 
