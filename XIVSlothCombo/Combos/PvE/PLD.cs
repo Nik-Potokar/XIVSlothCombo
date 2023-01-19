@@ -245,7 +245,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)) && CanWeave(actionID) && !WasLastAction(FightOrFlight) && IsOnCooldown(FightOrFlight))
                         return OriginalHook(SpiritsWithin);
 
-                    if ((HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                    if ((HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                         return OriginalHook(HolyCircle);
 
 
@@ -498,7 +498,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
                         {
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
-                                GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                                GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                                 return OriginalHook(HolyCircle);
                         }
                         else
@@ -567,7 +567,7 @@ namespace XIVSlothCombo.Combos.PvE
                         IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF))
                         return OriginalHook(Confiteor);
 
-                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                         return OriginalHook(HolyCircle);
 
 
