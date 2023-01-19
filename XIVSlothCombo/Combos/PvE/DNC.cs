@@ -1,5 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
-using XIVSlothCombo.Combos.Content;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;

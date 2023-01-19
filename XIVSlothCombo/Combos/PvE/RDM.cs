@@ -1,7 +1,7 @@
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System;
-using XIVSlothCombo.Combos.Content;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using static XIVSlothCombo.Combos.JobHelpers.RDM;

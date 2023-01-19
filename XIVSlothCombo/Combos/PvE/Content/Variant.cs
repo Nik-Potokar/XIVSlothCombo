@@ -1,4 +1,4 @@
-﻿namespace XIVSlothCombo.Combos.Content
+﻿namespace XIVSlothCombo.Combos.PvE.Content
 {
     internal static class Variant
     {
