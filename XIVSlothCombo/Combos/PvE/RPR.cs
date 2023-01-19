@@ -82,6 +82,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RPR_SoDRefreshRange = "RPRSoDRefreshRange",
                 RPR_OpenerChoice = "RPR_OpenerChoice",
                 RPR_SoulsowOptions = "RPRSoulsowOptions",
+                RPR_BozjaAssassinationDPS = "RPRBozjaBanner",
+                RPR_BozjaDPS = "RPRBozjaDPS",
                 RPR_VariantCure = "RPRVariantCure";
         }
 
@@ -94,6 +96,7 @@ namespace XIVSlothCombo.Combos.PvE
                 RPRGauge? gauge = GetJobGauge<RPRGauge>();
                 bool enshrouded = HasEffect(Buffs.Enshrouded);
                 bool soulReaver = HasEffect(Buffs.SoulReaver);
+                bool bannerOverride = false;
                 bool deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
                 double playerHP = PlayerHealthPercentageHp();
                 double enemyHP = GetTargetHPPercent();
@@ -105,10 +108,22 @@ namespace XIVSlothCombo.Combos.PvE
                 bool trueNorthReadyDyn = trueNorthReady;
                 bool opener = IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 30 && LevelChecked(Communio);
 
-				// Prevent the dynamic true north option from using the last charge
-				if( trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2 ) {
-					trueNorthReadyDyn = false;
-				}
+                // Prevent the dynamic true north option from using the last charge
+                if (trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2) {
+                    trueNorthReadyDyn = false;
+                }
+
+                // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
+                if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                {
+                    if ((IsEnabled(Bozja.fontOfPower) && IsOffCooldown(Bozja.Buffs.fontOfPower)) ||
+                    HasEffect(Bozja.Buffs.fontOfPower) ||
+                    (!IsEnabled(Bozja.fontOfPower)))
+                    {
+                        bannerOverride = true;
+                    }
+                }
+                
 
                 // Gibbet and Gallows on Shadow of Death
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) && soulReaver && LevelChecked(Gibbet))
@@ -155,20 +170,87 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
+                    // This action MUST hard clip as Bozja actions with Haste need to clip... need to add a menu to turn this on or off...
+                    // If they dont have Beast dont clip, if they do clip. But only after Gibbet / Gallows is done due to the way RPR gage works.
+                    // SAM will need code like this to make sure it does not eat their buff... I asked around and DRG may need some code to not bust combo?
+                    // There is a gap closer that gives the foes a weakness up... Bozja.Rend... but idk how it would be best to add that.
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal)) 
+                    {
+                        if (IsEnabled(Bozja.lostCure4) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                        return Bozja.lostCure4;
+
+                        if (IsEnabled(Bozja.lostCure3) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.lostCure3;
+
+                        if (IsEnabled(Bozja.lostCure2) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                            return Bozja.lostCure2;
+
+                        if (IsEnabled(Bozja.lostCure) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.lostCure;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
+                        IsEnabled(Bozja.lostRendArmor) && IsOffCooldown(Bozja.lostRendArmor) &&
+                        HasBattleTarget() && !HasEffect(Buffs.SoulReaver) && !TargetHasEffect(Bozja.Debuffs.lostRendArmor))
+                    {
+                            return Bozja.lostRendArmor;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
+                        IsEnabled(Bozja.lostAssassination) && IsOffCooldown(Bozja.lostAssassination) &&
+                        HasBattleTarget() && !HasEffect(Buffs.SoulReaver))
+                    {
+                        if (!HasEffect(Bozja.Buffs.fontOfPower) && HasEffect(Bozja.Buffs.beastEssence))
+                            return Bozja.lostAssassination;
+
+                        if (CanWeave(actionID))
+                            return Bozja.lostAssassination;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
+                    {
+
+                        if (IsEnabled(Bozja.lostExcellence) && IsOffCooldown(Bozja.lostExcellence))
+                            return Bozja.lostExcellence;
+
+                        if (IsEnabled(Bozja.fontOfPower) && IsOffCooldown(Bozja.fontOfPower))
+                            return Bozja.fontOfPower;
+
+                        if (bannerOverride)
+                        {
+                            if (IsEnabled(Bozja.bannerOfHonoredSacrifice) && IsOffCooldown(Bozja.bannerOfHonoredSacrifice))
+                                return Bozja.bannerOfHonoredSacrifice;
+
+                            if (IsEnabled(Bozja.bannerOfNobleEnds) && IsOffCooldown(Bozja.bannerOfNobleEnds))
+                                return Bozja.bannerOfNobleEnds;
+                        }
+                    }
+
                     if ((IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) || opener) && HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
                     {
                         if (positionalChoice is 0 or 1 or 2)
                         {
-                            if (HasEffect(Buffs.EnhancedGibbet)) {
+                            if (HasEffect(Buffs.EnhancedGibbet))
+                            {
                                 // If we are not on the flank, but need to use gibbet, pop true north if not already up
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return OriginalHook(Gibbet);
                             }
-                            if (HasEffect(Buffs.EnhancedGallows)) {
+                            if (HasEffect(Buffs.EnhancedGallows))
+                            {
                                 // If we are not on the rear, but need to use gallows, pop true north if not already up
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return OriginalHook(Gallows);
@@ -180,16 +262,20 @@ namespace XIVSlothCombo.Combos.PvE
                         if (positionalChoice == 4)
                             return OriginalHook(Gibbet);
 
-                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget() )
+                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget())
                         {
-                            if (positionalChoice is 0 or 1) {
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                            if (positionalChoice is 0 or 1)
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return Gallows;
                             }
-                            if (positionalChoice == 2) {
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
+                            if (positionalChoice == 2)
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return Gibbet;
@@ -367,6 +453,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(Guillotine);
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_WoD) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 3 && !soulReaver && enemyHP > 5 && LevelChecked(WhorlOfDeath))
                         return WhorlOfDeath;
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
+                        IsEnabled(Bozja.lostRampage) && !soulReaver && !enshrouded)
+                        return Bozja.lostRampage;
 
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_ArcaneCircle) && InCombat())
                     {

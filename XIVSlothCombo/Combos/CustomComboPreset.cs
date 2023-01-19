@@ -164,11 +164,106 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region Global Bozja Features
+        [CustomComboInfo("[BETA TESTING] Global Bozja Features", "Features and options involving shared dps bozja actions for All Classes.\nCollapsing this category does NOT disable the features inside.", ADV.JobID)]
+        ALL_Bozja_Menu = 20000100,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_Bozja_Menu)]
+        [CustomComboInfo("Actions on Phy DPS Option", "Use Font of Power, Lost Excellence, \nBanner of Honored Sacrifice, and Banner of Noble Ends on cooldown.", ADV.JobID)]
+        ALL_BozjaDPS = 20000101,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_Bozja_Menu)]
+        [CustomComboInfo("Actions on Magic DPS Option", "Use Font of Magic, Lost Excellence, \nBanner of Honored Sacrifice, and Banner of Noble Ends, \nLost Seraph Strike, Lost Chainspell on cooldown.", ADV.JobID)]
+        ALL_BozjaMagicDPS = 20000102,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaMagicDPS)]
+        [CustomComboInfo("Hold Banners (Magic)", "Hold Banners to line up with Font of Magic, giving a really big dps buff.", ADV.JobID)]
+        ALL_BozjaHoldBannerMagix = 20000103,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaMagicDPS)]
+        [CustomComboInfo("Lost Burst AOE", "Changes your AOE to Lost Burst.", ADV.JobID)]
+        ALL_BozjaMagicAOE = 200001032,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaMagicDPS)]
+        [CustomComboInfo("Lost Banish AOE", "Changes your AOE to Lost Banish. If both banish and burst are slotted, will use banish.", ADV.JobID)]
+        ALL_BozjaMagicbanAOE = 200001033,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaDPS)]
+        [CustomComboInfo("Assassination on DPS Option", "Use Lost Assassination on cooldown, if you are using Essence of the Beast, keeps full uptime of Font of Power. \nWill try to not use stacks / gage from each class.", ADV.JobID)]
+        ALL_BozjaAssassinationDPS = 20000104,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaDPS)]
+        [CustomComboInfo("Hold Banners (Phys)", "Hold Banners to line up with Font of Power, giving a really big dps buff.", ADV.JobID)]
+        ALL_BozjaHoldBannerPhys = 20000105,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaDPS)]
+        [CustomComboInfo("Lost Rampage AOE", "Changes your AOE to Lost Rampage. \nThis feature will ensure maintenance of Self dmg buffs", ADV.JobID)]
+        ALL_BozjaPhysAOE = 200001052,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_Bozja_Menu)]
+        [CustomComboInfo("DPS / Healer Auto Provoke", "Use Lost Incense on cooldown.", ADV.JobID)]
+        ALL_BozjaOffClassTankSct = 20000106,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_Bozja_Menu)]
+        [CustomComboInfo("Lost Action Cures", "Unlocks the using of Lost Cure 1, 2, 3, or 4. \nThis does nothing, just shows the other menus.", ADV.JobID)]
+        ALL_BozjaCures = 20000107,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaCures)]
+        [CustomComboInfo("Self Heal", "Use Lost Cure 1, 2, 3, or 4. To heal yourself", ADV.JobID)]
+        ALL_BozjaCureSelfheal = 20000108,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaCures)]
+        [CustomComboInfo("Phys Ranged - Cure 2", "Use Lost Cure 2 to make sure the focus target does not run out of mana, Only works in DRN / DRS", ADV.JobID)]
+        ALL_BozjaCure2Phys = 20000109,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaCures)]
+        [CustomComboInfo("Caster - Cure 4", "Use Lost Cure 4 once a min to keep Lost Bravery buff on party, Only works in DRN / DRS", ADV.JobID)]
+        ALL_BozjaCure4Caster = 20000110,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_Bozja_Menu)]
+        [CustomComboInfo("Role Actions", "Unlocks the using of role actions. \nThis does nothing, just shows the other menus. \nFor Caster / (Cure 2 / Mana Battery) Phys Ranged please see Lost Action Cures.", ADV.JobID)]
+        ALL_BozjaRoleActions = 20000111,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaRoleActions)]
+        [CustomComboInfo("Melee - Rend", "Use Lost Rend Armor to make sure the Target has the debuff, will not let you rend if the target already has it.", ADV.JobID)]
+        ALL_BozjaRendArmor = 20000112,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaRoleActions)]
+        [CustomComboInfo("Phys Ranged - Dervish", "Use Lost Dervish to make sure the party has Dervish, will not let you Dervish if the party already has it.", ADV.JobID)]
+        ALL_BozjaPhysDerv = 20000113,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaRoleActions)]
+        [CustomComboInfo("Caster - Flare Star", "CHECK WITH RAID LEAD BEFORE USING FLARE STAR, If the boss does not have flare star, Cast flare star.", ADV.JobID)]
+        ALL_BozjaFlareStar = 200001034,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaRoleActions)]
+        [CustomComboInfo("Tanks - Blood Rage", "Will try to use blood rage, will switch your GCD to your GAPCLOSER 3s before blood rage runs out.", ADV.JobID)]
+        ALL_BozjaBloodRage = 20000114,
+        #endregion
+
         //Non-gameplay Features
         //[CustomComboInfo("Output Combat Log", "Outputs your performed actions to the chat.", ADV.JobID)]
         //AllOutputCombatLog = 100094,
 
-        // Last value = 100094
+        // Last value = 100093
 
         #endregion
 
