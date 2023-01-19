@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XIVSlothCombo.Combos.PvE
+﻿namespace XIVSlothCombo.Combos.PvE.Content
 {
     internal static class Variant
     {
@@ -21,9 +15,8 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 EmnityUp = 3358,
                 VulnDown = 3360,
-                DamageBarrier = 3405,
-                Rehabilitation = 3367;
-
+                Rehabilitation = 3367,
+                DamageBarrier = 3405;
         }
 
         public static class Debuffs
@@ -31,6 +24,5 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 SustainedDamage = 3359;
         }
-
     }
 }
